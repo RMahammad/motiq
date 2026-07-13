@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.turbo/
+.next/
+*.tgz
+*.log
+*.tsbuildinfo
+.DS_Store
+
+# ephemeral fixture install (references gitignored tarballs)
+fixtures/tarball-consumer/pnpm-lock.yaml

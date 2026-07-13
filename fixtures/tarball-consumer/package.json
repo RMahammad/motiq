@@ -1,0 +1,16 @@
+{
+  "name": "tarball-consumer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Consumes the PACKED @scope/* tarballs (extracted into node_modules, not workspace source) to prove the published dist resolves across packages, preserves 'use client', and SSR-renders. Outside the pnpm workspace globs.",
+  "scripts": {
+    "smoke": "node smoke.mjs"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.3.0"
+  }
+}

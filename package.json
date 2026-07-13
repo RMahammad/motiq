@@ -1,0 +1,23 @@
+{
+  "name": "animated-lib-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.13.0",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "build": "turbo run build --filter=./packages/*",
+    "build:all": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "eslint .",
+    "docs:check": "node docs/tooling/check-links.mjs && node docs/tooling/check-adr-index.mjs && node docs/tooling/check-duplicate-titles.mjs && node docs/tooling/check-stale-dates.mjs && node docs/tooling/check-inventory.mjs"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "@scope/eslint-config": "workspace:*",
+    "eslint": "^9.18.0",
+    "turbo": "^2.5.0",
+    "typescript": "^5.7.3"
+  }
+}

@@ -1,0 +1,21 @@
+/* Design + motion token CSS variables. Canonical doc: docs/10-design-tokens.md. */
+:root {
+  /* motion durations */
+  --motion-duration-instant: 0ms;
+  --motion-duration-fast: 120ms;
+  --motion-duration-normal: 220ms;
+  --motion-duration-slow: 360ms;
+
+  /* motion easings */
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* motion distances */
+  --motion-distance-sm: 8px;
+  --motion-distance-md: 16px;
+  --motion-distance-lg: 32px;
+
+  /* motion stagger */
+  --motion-stagger-sm: 40ms;
+  --motion-stagger-md: 80ms;
+}
