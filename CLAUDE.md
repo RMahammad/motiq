@@ -64,8 +64,9 @@ When code changes, update the **canonical owner**, then only refresh summaries/l
 - 🟢 `pnpm install` · `pnpm build` (packages, turbo → tsdown) · `pnpm build:all` · `pnpm typecheck` · `pnpm test` (vitest) · `pnpm lint` (import-boundary firewall) · `pnpm docs:check`
 - 🟢 Doc validation: `node docs/tooling/check-links.mjs` · `check-adr-index.mjs` · `check-duplicate-titles.mjs` · `check-stale-dates.mjs` · `check-inventory.mjs`
 - 🟢 Fixture builds: from `apps/playground-next` / `apps/playground-vite`, run `./node_modules/.bin/next build` / `./node_modules/.bin/vite build` (also wired in CI's `fixtures` job).
-- 🟡 `pnpm changeset` — configured (`.changeset/`), but `changeset status`/`version` need the repo under git with a `main` branch.
-- 🔵 Planned: `pnpm dev` · `pnpm test:a11y` · `pnpm size` · `pnpm storybook`.
+- 🟢 `pnpm changeset` / `changeset status` — configured (`.changeset/`), git initialized on `main`; reports the pending `@scope/*` minor bump.
+- 🟢 Packed-artifact check: `bash fixtures/tarball-consumer/verify.sh` (installs tarballs, checks resolution + `"use client"` + SSR).
+- 🔵 Planned: `pnpm dev` · `pnpm size` · `pnpm storybook` (`test:a11y` now runs inside `pnpm test` via axe).
 
 > ⚠️ Env note: pnpm 11's `verify-deps-before-run` pre-check (which Turbo also triggers via `pnpm run`) can fail when a native dep (e.g. `sharp`) has an un-built script. Reliable fix used in CI: set env `npm_config_verify_deps_before_run=false`. Native builds are allow-listed in `pnpm-workspace.yaml` (`onlyBuiltDependencies: [esbuild, sharp]`). If a filtered app build still trips it, invoke the app's local bin directly.
 
