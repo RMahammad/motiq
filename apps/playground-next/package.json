@@ -10,6 +10,7 @@
   "dependencies": {
     "@scope/motion": "workspace:*",
     "@scope/react": "workspace:*",
+    "@scope/sections": "workspace:*",
     "@scope/tokens": "workspace:*",
     "next": "latest",
     "react": "^19.0.0",

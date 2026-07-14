@@ -1,0 +1,67 @@
+/* Structural CSS for @scope/sections. Requires @scope/tokens/styles.css + @scope/motion/styles.css.
+   Import via `@scope/sections/styles.css`. */
+.scope-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6, 32px);
+  align-items: center;
+  padding: var(--space-6, 32px) var(--space-5, 24px);
+  font-family: var(--font-sans, system-ui, sans-serif);
+  color: var(--color-fg, #18181b);
+}
+/* Two columns when a media slot is present, on wider viewports. */
+@media (min-width: 768px) {
+  .scope-hero:has(.scope-hero__media) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.scope-hero[data-align="center"] {
+  text-align: center;
+  justify-items: center;
+}
+.scope-hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+  min-width: 0;
+}
+.scope-hero__eyebrow {
+  margin: 0;
+  color: var(--color-accent, #4f46e5);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.8125rem;
+}
+.scope-hero__title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.scope-hero__subtitle {
+  margin: 0;
+  color: var(--color-muted, #71717a);
+  font-size: 1.125rem;
+  max-width: 52ch;
+}
+.scope-hero[data-align="center"] .scope-hero__subtitle {
+  margin-inline: auto;
+}
+.scope-hero__actions {
+  display: flex;
+  gap: var(--space-3, 12px);
+  flex-wrap: wrap;
+}
+.scope-hero[data-align="center"] .scope-hero__actions {
+  justify-content: center;
+}
+.scope-hero__media {
+  min-width: 0;
+}
+.scope-hero__media :where(img, video, svg) {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg, 16px);
+}

@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import "@scope/tokens/styles.css";
 import "@scope/motion/styles.css";
 import "@scope/react/styles.css";
+import "@scope/sections/styles.css";
 
 export const metadata = { title: "Playground — Next App Router" };
 

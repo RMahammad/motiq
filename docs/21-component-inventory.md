@@ -31,7 +31,7 @@
 | [Tooltip](components/tooltip.md)/[Popover](components/popover.md) | Overlay | 🟡 spike | Premium | MVP | Radix | hints | M | L | ✅ [pages](components/tooltip.md) | ✅ interaction+axe | v1.0 |
 | Skeleton | Feedback | 🔵 | Free | MVP | css | loading | L | L | — | — | v1.0 |
 | Marquee | Media | 🔵 | Premium | MVP | css | logo cloud | M | M | — | — | v1.0 |
-| HeroSection | Section | 🔵 | Premium | MVP | compose | landing | L | L | — | — | v1.0 |
+| [HeroSection](components/hero-section.md) | Section | 🟡 spike | Premium | MVP | Stagger/Reveal | landing | L | L | ✅ [page](components/hero-section.md) | ✅ slots+SSR+axe | v1.0 |
 | FeatureGrid + CTASection | Section | 🔵 | Premium | MVP | compose | landing | L | L | — | — | v1.0 |
 | Magnetic | Controls | 🔵 | Premium | V1 | pointer | CTA delight | M | M | — | — | v1.1 |
 | TiltCard | Cards | 🔵 | Premium | V1 | Tilt | product | M | M | — | — | v1.1 |
