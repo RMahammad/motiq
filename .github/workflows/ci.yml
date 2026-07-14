@@ -52,6 +52,8 @@ jobs:
       - run: pnpm build
       - run: pnpm --filter playground-next build
       - run: pnpm --filter playground-vite build
+      # Static Storybook build (catalog previews; docs/15).
+      - run: pnpm --filter storybook-app build-storybook
       # Packed-artifact consumer: install the tarballs (not source), verify resolution +
       # "use client" + SSR across packages. Registry-free (docs/14).
       - run: bash fixtures/tarball-consumer/verify.sh
