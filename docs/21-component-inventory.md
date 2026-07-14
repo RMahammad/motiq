@@ -27,8 +27,8 @@
 | [PricingCard](components/pricing-card.md) | Cards | 🟡 spike | Premium | MVP | Reveal | pricing | L | L | ✅ [page](components/pricing-card.md) | ✅ unit+SSR+axe | v1.0 |
 | ImageReveal | Media | 🔵 | Premium | MVP | Reveal | gallery | L | M | — | — | v1.0 |
 | [Dialog](components/dialog.md) | Overlay | 🟡 spike | Premium | MVP | Radix | modal | H | L | ✅ [page](components/dialog.md) | ✅ focus/esc+SSR+axe | v1.0 |
-| Drawer/Sheet | Overlay | 🔵 | Premium | MVP | Radix | mobile nav | H | L | — | — | v1.0 |
-| Tooltip/Popover | Overlay | 🔵 | Premium | MVP | Radix | hints | M | L | — | — | v1.0 |
+| [Drawer/Sheet](components/sheet.md) | Overlay | 🟡 spike | Premium | MVP | Radix | mobile nav | H | L | ✅ [page](components/sheet.md) | ✅ focus/esc+SSR+axe | v1.0 |
+| [Tooltip](components/tooltip.md)/[Popover](components/popover.md) | Overlay | 🟡 spike | Premium | MVP | Radix | hints | M | L | ✅ [pages](components/tooltip.md) | ✅ interaction+axe | v1.0 |
 | Skeleton | Feedback | 🔵 | Free | MVP | css | loading | L | L | — | — | v1.0 |
 | Marquee | Media | 🔵 | Premium | MVP | css | logo cloud | M | M | — | — | v1.0 |
 | HeroSection | Section | 🔵 | Premium | MVP | compose | landing | L | L | — | — | v1.0 |

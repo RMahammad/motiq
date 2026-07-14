@@ -40,5 +40,26 @@
     "import": "{ AnimatedDialog }",
     "ignore": ["react", "react-dom", "react/jsx-runtime", "@radix-ui/react-dialog", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
     "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/react Sheet wrapper (brotli, excl. radix + workspace)",
+    "path": "packages/react/dist/sheet.js",
+    "import": "{ Sheet }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@radix-ui/react-dialog", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/react Tooltip wrapper (brotli, excl. radix + workspace)",
+    "path": "packages/react/dist/tooltip.js",
+    "import": "{ Tooltip }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@radix-ui/react-tooltip", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/react Popover wrapper (brotli, excl. radix + workspace)",
+    "path": "packages/react/dist/popover.js",
+    "import": "{ Popover }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@radix-ui/react-popover", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
   }
 ]

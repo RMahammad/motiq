@@ -18,6 +18,18 @@
       "types": "./dist/dialog.d.ts",
       "import": "./dist/dialog.js"
     },
+    "./sheet": {
+      "types": "./dist/sheet.d.ts",
+      "import": "./dist/sheet.js"
+    },
+    "./tooltip": {
+      "types": "./dist/tooltip.d.ts",
+      "import": "./dist/tooltip.js"
+    },
+    "./popover": {
+      "types": "./dist/popover.d.ts",
+      "import": "./dist/popover.js"
+    },
     "./styles.css": "./styles.css"
   },
   "files": ["dist", "styles.css"],
@@ -28,6 +40,8 @@
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.0",
+    "@radix-ui/react-popover": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.0",
     "@scope/motion": "workspace:*",
     "@scope/tokens": "workspace:*"
   },

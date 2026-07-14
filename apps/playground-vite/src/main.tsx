@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { AnimatedButton, PricingCard, Reveal } from "@scope/react";
+import { AnimatedButton, PricingCard, Popover, Reveal, Sheet, Tooltip } from "@scope/react";
 import "@scope/tokens/styles.css";
 import "@scope/motion/styles.css";
 import "@scope/react/styles.css";
@@ -15,6 +15,22 @@ function App() {
       <AnimatedButton revealOnMount type="button">
         Animated button
       </AnimatedButton>
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+        <Tooltip content="Saves your work">
+          <button type="button" className="scope-btn">Hover me</button>
+        </Tooltip>
+        <Popover trigger={<button type="button" className="scope-btn">Popover</button>} closeLabel="Close">
+          <p>Popover panel content.</p>
+        </Popover>
+        <Sheet
+          trigger={<button type="button" className="scope-btn">Open sheet</button>}
+          title="Filters"
+          description="Refine the results."
+          side="right"
+        >
+          <button type="button" className="scope-btn">Apply</button>
+        </Sheet>
+      </div>
       <PricingCard
         planName="Pro"
         price="$29"
