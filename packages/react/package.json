@@ -34,6 +34,14 @@
       "types": "./dist/skeleton.d.ts",
       "import": "./dist/skeleton.js"
     },
+    "./spotlight-card": {
+      "types": "./dist/spotlight-card.d.ts",
+      "import": "./dist/spotlight-card.js"
+    },
+    "./bento-grid": {
+      "types": "./dist/bento-grid.d.ts",
+      "import": "./dist/bento-grid.js"
+    },
     "./styles.css": "./styles.css"
   },
   "files": ["dist", "styles.css"],

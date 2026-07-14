@@ -56,6 +56,20 @@
     "limit": "1 kB"
   },
   {
+    "name": "@scope/react SpotlightCard (brotli)",
+    "path": "packages/react/dist/spotlight-card.js",
+    "import": "{ SpotlightCard }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/react BentoGrid + Item (brotli)",
+    "path": "packages/react/dist/bento-grid.js",
+    "import": "{ BentoGrid, BentoGridItem }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
     "name": "@scope/react PricingCard (brotli, excl. peers + workspace deps)",
     "path": "packages/react/dist/pricing-card.js",
     "import": "{ PricingCard }",

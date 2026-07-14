@@ -1,6 +1,14 @@
 // SERVER COMPONENT importing client components from @scope/react. A successful build
 // proves "use client" survived (RSC boundary; ADR-0006 / question B4).
-import { AnimatedButton, AnimatedDialog, PricingCard, Reveal } from "@scope/react";
+import {
+  AnimatedButton,
+  AnimatedDialog,
+  BentoGrid,
+  BentoGridItem,
+  PricingCard,
+  Reveal,
+  SpotlightCard,
+} from "@scope/react";
 import { HeroSection } from "@scope/sections";
 
 export default function Page() {
@@ -33,6 +41,15 @@ export default function Page() {
       >
         <button type="button" className="scope-btn">Confirm delete</button>
       </AnimatedDialog>
+      <BentoGrid columns={3}>
+        <BentoGridItem colSpan={2} rowSpan={2} title="Fast" description="Sub-second builds." revealOnView />
+        <BentoGridItem title="Accessible" description="WCAG 2.2 AA." revealOnView />
+        <BentoGridItem title="Typed" description="Strict TypeScript." revealOnView />
+      </BentoGrid>
+      <SpotlightCard radius={240}>
+        <h3>Hover for a spotlight</h3>
+        <p>Pointer-tracked highlight, hidden on touch.</p>
+      </SpotlightCard>
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
         <PricingCard
           planName="Starter"

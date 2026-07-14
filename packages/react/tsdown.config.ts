@@ -10,6 +10,8 @@ export default defineConfig({
     "src/tooltip.tsx",
     "src/popover.tsx",
     "src/skeleton.tsx",
+    "src/spotlight-card.tsx",
+    "src/bento-grid.tsx",
   ],
   format: "esm",
   dts: true,

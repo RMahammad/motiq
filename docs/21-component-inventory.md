@@ -22,8 +22,8 @@
 | RotatingWords | Text | 🔵 | Premium | MVP | Presence | hero | M | L | — | — | v1.0 |
 | AnimatedButton | Controls | 🔵 | Premium | MVP | motion | CTA | L | L | — | — | v1.0 |
 | LoadingButton | Controls | 🔵 | Premium | MVP | — | forms | M | L | — | — | v1.0 |
-| SpotlightCard | Cards | 🔵 | Premium | MVP | pointer | pricing/feature | L | M | — | — | v1.0 |
-| BentoGridItem | Cards | 🔵 | Premium | MVP | Reveal | landing | L | L | — | — | v1.0 |
+| [SpotlightCard](components/spotlight-card.md) | Cards | 🟡 spike | Premium | MVP | pointer | pricing/feature | L | M | ✅ [page](components/spotlight-card.md) | ✅ unit+SSR+axe | v1.0 |
+| [BentoGrid/Item](components/bento-grid.md) | Cards | 🟡 spike | Premium | MVP | Reveal | landing | L | L | ✅ [page](components/bento-grid.md) | ✅ unit+SSR+axe | v1.0 |
 | [PricingCard](components/pricing-card.md) | Cards | 🟡 spike | Premium | MVP | Reveal | pricing | L | L | ✅ [page](components/pricing-card.md) | ✅ unit+SSR+axe | v1.0 |
 | ImageReveal | Media | 🔵 | Premium | MVP | Reveal | gallery | L | M | — | — | v1.0 |
 | [Dialog](components/dialog.md) | Overlay | 🟡 spike | Premium | MVP | Radix | modal | H | L | ✅ [page](components/dialog.md) | ✅ focus/esc+SSR+axe | v1.0 |

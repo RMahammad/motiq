@@ -349,3 +349,89 @@
     background-image: none;
   }
 }
+
+/* ---- SpotlightCard ---- */
+.scope-spotlight-card {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-5, 24px);
+  border-radius: var(--radius-lg, 16px);
+  border: var(--border-width, 1px) solid var(--color-border, #e4e4e7);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+.scope-spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-duration-normal, 220ms) var(--motion-ease-standard, ease);
+  background: radial-gradient(
+    var(--spotlight-radius, 200px) circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+    var(--spotlight-color, color-mix(in srgb, var(--color-accent, #4f46e5) 22%, transparent)),
+    transparent 70%
+  );
+}
+.scope-spotlight-card:hover::before,
+.scope-spotlight-card:focus-within::before {
+  opacity: 1;
+}
+.scope-spotlight-card > * {
+  position: relative;
+}
+@media (hover: none) {
+  .scope-spotlight-card::before { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-spotlight-card::before { transition: none; }
+}
+
+/* ---- BentoGrid / BentoGridItem ---- */
+.scope-bento {
+  display: grid;
+  gap: var(--space-4, 16px);
+  grid-template-columns: repeat(var(--bento-cols, 3), minmax(0, 1fr));
+  grid-auto-rows: minmax(140px, auto);
+}
+@media (max-width: 640px) {
+  .scope-bento { grid-template-columns: 1fr; }
+}
+.scope-bento-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+  padding: var(--space-5, 24px);
+  border-radius: var(--radius-lg, 16px);
+  border: var(--border-width, 1px) solid var(--color-border, #e4e4e7);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+@media (min-width: 641px) {
+  .scope-bento-item[data-col-span="2"] { grid-column: span 2; }
+  .scope-bento-item[data-col-span="3"] { grid-column: span 3; }
+  .scope-bento-item[data-row-span="2"] { grid-row: span 2; }
+}
+.scope-bento-item__icon {
+  display: inline-flex;
+  color: var(--color-accent, #4f46e5);
+}
+.scope-bento-item__title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+.scope-bento-item__desc {
+  margin: 0;
+  color: var(--color-muted, #71717a);
+}
+.scope-bento-item__media {
+  margin-top: auto;
+}
+.scope-bento-item__media :where(img, video, svg) {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md, 10px);
+}
