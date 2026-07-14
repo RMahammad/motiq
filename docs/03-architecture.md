@@ -131,7 +131,7 @@ Design targets: React 19 (and 18.3+ peer range), Next.js 16 App Router (primary)
 ## Monorepo layout (planned)
 
 ```
-apps/       playground-next 🟡 · playground-vite 🟡 · storybook 🟡 · docs (Next.js) 🔵 · remotion-studio 🔵
+apps/       playground-next 🟡 · playground-vite 🟡 · storybook 🟡 · docs (Next.js) 🟡 · remotion-studio 🔵
 packages/   tokens 🟡 · motion 🟡 · react 🟡 · sections 🔵 · tailwind-preset 🔵 · styles 🔵 · cli 🔵 ·
             registry 🔵 · remotion 🔵 · remotion-templates 🔵 · eslint-config 🔵 · tsconfig 🔵 · test-utils 🔵
 root/       package.json · pnpm-workspace.yaml · turbo.json · tsconfig.base.json (all 🟢)

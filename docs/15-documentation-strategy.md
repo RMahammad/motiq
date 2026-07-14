@@ -9,7 +9,7 @@
 | Surface | Status | Responsibility |
 |---|---|---|
 | **Storybook 9** (`apps/storybook`) | 🟡 In progress — **static build works** (CSF3 stories for the hero components; CI `build-storybook`). Vitest-addon interaction/a11y/visual tests not wired yet (need a Playwright browser in CI). | isolated dev, interaction/a11y/visual tests, API playground |
-| **Next.js docs site** (`apps/docs`) | 🔵 Planned | sellable catalog, marketing, guides, versioned reference |
+| **Next.js docs site** (`apps/docs`) | 🟡 In progress — **builds** (App Router); dogfoods the library on its landing (`HeroSection` + `BentoGrid`) + live component pages (PricingCard/Dialog/SpotlightCard). Full IA still to flesh out. | sellable catalog, marketing, guides, versioned reference |
 | **`docs/` (this folder)** | 🟢 Implemented | engineering/product source of truth (what you're reading) |
 
 Storybook 9 provides Vitest-backed interaction/a11y/visual tests in one workbench ([`14`](14-testing-strategy.md), sources in [`05`](05-dependency-decisions.md#sources)).

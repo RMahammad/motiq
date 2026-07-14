@@ -19,7 +19,7 @@ Per our ADR rule, a decision is **Accepted** only when it is *supported by the c
 | [0005](0005-component-primitives.md) | Primitive-layer architecture (own primitives wrap engine) | Proposed | [`09`](../09-component-api-standard.md) | no |
 | [0006](0006-library-bundler.md) | Library bundler (tsdown; tsup fallback) | **Accepted** (spike-validated) | [`05`](../05-dependency-decisions.md) | no |
 | [0007](0007-package-format.md) | Package format (ESM-only, subpath exports, preserve directives) | **Accepted** (publint-clean) | [`03`](../03-architecture.md) | no |
-| [0008](0008-documentation-platform.md) | Documentation platform (Storybook 9 + Next.js docs) | **Accepted** (Storybook builds; docs site Planned) | [`15`](../15-documentation-strategy.md) | no |
+| [0008](0008-documentation-platform.md) | Documentation platform (Storybook 9 + Next.js docs) | **Accepted** (both surfaces build) | [`15`](../15-documentation-strategy.md) | no |
 | [0009](0009-testing-stack.md) | Testing stack (Vitest+RTL+SB9+Playwright+axe; tarball fixtures) | Proposed | [`14`](../14-testing-strategy.md) | no |
 | [0010](0010-commercial-distribution.md) | Commercial distribution (private npm + authed registry; no runtime checks) | Proposed | [`16`](../16-commercial-packaging.md) | needs legal review |
 | [0011](0011-accessible-primitives.md) | Accessible primitives (Radix default; React Aria later) | **Accepted** (Dialog spike-validated) | [`12`](../12-accessibility-standard.md) | no |

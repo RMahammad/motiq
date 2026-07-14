@@ -52,6 +52,8 @@ jobs:
       - run: pnpm build
       - run: pnpm --filter playground-next build
       - run: pnpm --filter playground-vite build
+      # Docs site (dogfoods the library; renders live component pages; docs/15).
+      - run: pnpm --filter docs-site build
       # Static Storybook build (catalog previews; docs/15).
       - run: pnpm --filter storybook-app build-storybook
       # Packed-artifact consumer: install the tarballs (not source), verify resolution +

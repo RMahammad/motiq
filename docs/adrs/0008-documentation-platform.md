@@ -1,6 +1,6 @@
 # ADR-0008: Documentation platform — Storybook 9 + Next.js docs site
 
-- Status: **Accepted** (Storybook validated by spike 2026-07-14; docs site still Planned)
+- Status: **Accepted** (both surfaces validated by spike 2026-07-14)
 - Date: 2026-07-14
 - Owners: Eng, Docs
 - Related documents: [`../15-documentation-strategy.md`](../15-documentation-strategy.md) (canonical), [`../14-testing-strategy.md`](../14-testing-strategy.md)
@@ -28,7 +28,13 @@ Use **Storybook 9** (`apps/storybook`) for isolated dev + interaction/a11y/visua
 - Two apps to maintain; must prevent standards drift between `docs/` and the site.
 
 ## Validation
-**Storybook validated — spike passed 2026-07-14.** `apps/storybook` (Storybook 9, `@storybook/react-vite`) **builds a static site** from co-located CSF3 stories (Reveal, GradientText, PricingCard, SpotlightCard, BentoGrid, HeroSection), consuming the library CSS + built packages; wired into CI (`build-storybook`). **Still Planned before this ADR is fully closed:** (a) the Vitest-addon interaction/a11y/visual tests run in CI (needs a Playwright browser in CI — see [ADR-0009](0009-testing-stack.md)); (b) the `apps/docs` Next.js docs site rendering a real component page.
+**Both surfaces validated — spike passed 2026-07-14.**
+- `apps/storybook` (Storybook 9, `@storybook/react-vite`) **builds a static site** from co-located CSF3 stories (Reveal, GradientText, PricingCard, SpotlightCard, BentoGrid, HeroSection).
+- `apps/docs` (**Next.js 16 App Router**) **builds** and prerenders a landing page that **dogfoods the library** (`HeroSection` + `BentoGrid`, server-safe) plus live component pages (PricingCard, AnimatedDialog, SpotlightCard rendered from Server Components — the RSC boundary again proven).
+- Both are wired into CI (`build-storybook`, `docs-site build`) and consume the library CSS + built packages.
+
+The engineering `docs/` folder remains the standards source of truth; the site presents and links.
+**Follow-on (not blocking this ADR):** the Storybook **Vitest-addon** interaction/a11y/visual tests in CI (needs a Playwright browser — see [ADR-0009](0009-testing-stack.md)), and fleshing out the full docs IA ([`../15`](../15-documentation-strategy.md)).
 
 ## Revisit conditions
 - Storybook testing direction changes materially.
