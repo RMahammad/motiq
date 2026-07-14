@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { cn } from "@scope/tokens/cn";
+import { useInView } from "./use-in-view";
 
 export interface RevealProps extends React.HTMLAttributes<HTMLDivElement> {
   direction?: "up" | "down" | "left" | "right" | "none";
@@ -21,10 +22,10 @@ const DIST: Record<NonNullable<RevealProps["distance"]>, string> = {
 };
 
 /**
- * Reveal — CSS + IntersectionObserver entrance primitive. SSR-safe (renders final
- * state markup; animates after hydrate), reduced-motion aware, ref-forwarded.
- * Contract: docs/09-component-api-standard.md. When NOT to use: for spring/layout/
- * gesture behavior, escalate to a Motion-backed primitive (docs/06).
+ * Reveal — CSS + IntersectionObserver entrance primitive (via `useInView`). SSR-safe
+ * (renders final-state markup; animates after hydrate), reduced-motion aware, ref-forwarded.
+ * Contract: docs/09-component-api-standard.md. When NOT to use: for spring/layout/gesture
+ * behavior, escalate to a Motion-backed primitive (docs/06).
  */
 export const Reveal = React.forwardRef<HTMLDivElement, RevealProps>(function Reveal(
   {
@@ -34,7 +35,7 @@ export const Reveal = React.forwardRef<HTMLDivElement, RevealProps>(function Rev
     delay = "none",
     trigger = "in-view",
     once = true,
-    viewportMargin = "0px 0px -10% 0px",
+    viewportMargin,
     reducedMotion = "respect",
     onVisibilityChange,
     className,
@@ -44,35 +45,13 @@ export const Reveal = React.forwardRef<HTMLDivElement, RevealProps>(function Rev
   },
   ref,
 ) {
-  const innerRef = React.useRef<HTMLDivElement | null>(null);
+  const [innerRef, shown] = useInView<HTMLDivElement>({
+    once,
+    rootMargin: viewportMargin,
+    enabled: trigger === "in-view",
+    onChange: onVisibilityChange,
+  });
   React.useImperativeHandle(ref, () => innerRef.current as HTMLDivElement);
-  const [shown, setShown] = React.useState(trigger === "mount");
-
-  React.useEffect(() => {
-    if (trigger !== "in-view") {
-      setShown(true);
-      return;
-    }
-    const el = innerRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (!entry) return;
-        if (entry.isIntersecting) {
-          setShown(true);
-          onVisibilityChange?.(true);
-          if (once) io.disconnect();
-        } else if (!once) {
-          setShown(false);
-          onVisibilityChange?.(false);
-        }
-      },
-      { rootMargin: viewportMargin },
-    );
-    io.observe(el);
-    return () => io.disconnect(); // cleanup: no leaked observer
-  }, [trigger, once, viewportMargin, onVisibilityChange]);
 
   const sign = direction === "down" || direction === "right" ? "" : "-";
   const offset = direction === "none" ? "0px" : `${sign}${DIST[distance]}`;

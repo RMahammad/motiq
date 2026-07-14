@@ -12,8 +12,8 @@
 | MotionProvider | Foundation | 🔵 | Free | MVP | — | global config | — | L | — | — | v1.0 |
 | [Reveal](components/reveal.md) | Foundation | 🟡 spike | Free | MVP | InView | scroll reveal | L | L | ✅ [page](components/reveal.md)+story | ✅ unit+SSR+axe | v1.0 |
 | Fade/Slide/Scale | Foundation | 🔵 | Free | MVP | InView | entrances | L | L | — | — | v1.0 |
-| Stagger/StaggerItem | Foundation | 🟡 spike | Free | MVP | InView | list entrance | L | L | 🟡 | ✅ unit+SSR+axe | v1.0 |
-| InView | Foundation | 🟡 spike | Free | MVP | — | viewport trigger | L | L | 🟡 | ✅ unit+SSR+axe | v1.0 |
+| [Stagger/StaggerItem](components/stagger.md) | Foundation | 🟡 spike | Free | MVP | InView | list entrance | L | L | ✅ [page](components/stagger.md) | ✅ unit+SSR+axe | v1.0 |
+| [InView](components/in-view.md) | Foundation | 🟡 spike | Free | MVP | — | viewport trigger | L | L | ✅ [page](components/in-view.md) | ✅ unit+SSR+axe | v1.0 |
 | ScrollProgress | Scroll | 🔵 | Free | MVP | useScroll | reading progress | L | L | — | — | v1.0 |
 | BlurReveal | Foundation | 🔵 | Premium | MVP | Reveal | headline | L | M | — | — | v1.0 |
 | AnimatedNumber/Counter | Text | 🔵 | Premium | MVP | — | stats | L | L | — | — | v1.0 |
@@ -24,7 +24,7 @@
 | LoadingButton | Controls | 🔵 | Premium | MVP | — | forms | M | L | — | — | v1.0 |
 | SpotlightCard | Cards | 🔵 | Premium | MVP | pointer | pricing/feature | L | M | — | — | v1.0 |
 | BentoGridItem | Cards | 🔵 | Premium | MVP | Reveal | landing | L | L | — | — | v1.0 |
-| PricingCard | Cards | 🔵 | Premium | MVP | Reveal | pricing | L | L | — | — | v1.0 |
+| [PricingCard](components/pricing-card.md) | Cards | 🟡 spike | Premium | MVP | Reveal | pricing | L | L | ✅ [page](components/pricing-card.md) | ✅ unit+SSR+axe | v1.0 |
 | ImageReveal | Media | 🔵 | Premium | MVP | Reveal | gallery | L | M | — | — | v1.0 |
 | Dialog | Overlay | 🔵 | Premium | MVP | Radix | modal | H | L | — | — | v1.0 |
 | Drawer/Sheet | Overlay | 🔵 | Premium | MVP | Radix | mobile nav | H | L | — | — | v1.0 |

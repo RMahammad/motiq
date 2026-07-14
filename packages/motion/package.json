@@ -9,6 +9,7 @@
     "./reveal": { "types": "./dist/reveal.d.ts", "import": "./dist/reveal.js" },
     "./in-view": { "types": "./dist/in-view.d.ts", "import": "./dist/in-view.js" },
     "./stagger": { "types": "./dist/stagger.d.ts", "import": "./dist/stagger.js" },
+    "./use-in-view": { "types": "./dist/use-in-view.d.ts", "import": "./dist/use-in-view.js" },
     "./styles.css": "./styles.css"
   },
   "files": ["dist", "styles.css"],

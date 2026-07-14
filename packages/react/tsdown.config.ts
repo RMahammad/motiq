@@ -1,7 +1,7 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/animated-button.tsx"],
+  entry: ["src/index.ts", "src/animated-button.tsx", "src/pricing-card.tsx"],
   format: "esm",
   dts: true,
   clean: true,

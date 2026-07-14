@@ -1,6 +1,6 @@
 # 10 — Design tokens
 
-> **Type:** 🟢 Canonical for the token system · **Implementation status:** 🔵 Planned (`@scope/tokens` not yet built) · **Last reviewed:** 2026-07-14
+> **Type:** 🟢 Canonical for the token system · **Implementation status:** 🟡 In progress — `@scope/tokens` ships motion tokens (CSS vars + typed constants) **and** semantic visual tokens (`--color-*`, `--space-*`, `--radius-*`, `--shadow-*`, `--font-sans`) with a `[data-theme="dark"]` / `.dark` override. Intensity modes + a single CSS↔TS generator still Planned · **Last reviewed:** 2026-07-14
 > **Owns:** token categories, CSS-variable naming, TS representation, motion-intensity modes, deprecation policy.
 > **Related:** [`11-tailwind-strategy.md`](11-tailwind-strategy.md) (how tokens reach Tailwind) · [`09-component-api-standard.md`](09-component-api-standard.md) · [ADR-0012](adrs/0012-design-token-contract.md) · [`design-system-consistency` skill](../.claude/skills/design-system-consistency/SKILL.md)
 

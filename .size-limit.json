@@ -26,5 +26,12 @@
     "import": "*",
     "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
     "limit": "3 kB"
+  },
+  {
+    "name": "@scope/react PricingCard (brotli, excl. peers + workspace deps)",
+    "path": "packages/react/dist/pricing-card.js",
+    "import": "{ PricingCard }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "2 kB"
   }
 ]

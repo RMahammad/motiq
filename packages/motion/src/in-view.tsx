@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { useInView } from "./use-in-view";
 
 export interface InViewProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "onChange"> {
@@ -15,38 +16,15 @@ export interface InViewProps
 /**
  * InView — behavioral primitive that reports when its wrapper enters the viewport.
  * Exposes state via `data-inview`, an `onChange` callback, and a render-prop.
- * SSR-safe (initial `false`; observer only runs after hydrate); cleans up on unmount.
+ * SSR-safe (initial `false`); cleans up on unmount. Built on `useInView`.
  * When NOT to use: if you just want an entrance animation, use `Reveal`.
  */
 export const InView = React.forwardRef<HTMLDivElement, InViewProps>(function InView(
-  { once = true, rootMargin = "0px 0px -10% 0px", amount = 0, onChange, children, ...rest },
+  { once = true, rootMargin, amount = 0, onChange, children, ...rest },
   ref,
 ) {
-  const innerRef = React.useRef<HTMLDivElement | null>(null);
+  const [innerRef, inView] = useInView<HTMLDivElement>({ once, rootMargin, amount, onChange });
   React.useImperativeHandle(ref, () => innerRef.current as HTMLDivElement);
-  const [inView, setInView] = React.useState(false);
-
-  React.useEffect(() => {
-    const el = innerRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (!entry) return;
-        if (entry.isIntersecting) {
-          setInView(true);
-          onChange?.(true);
-          if (once) io.disconnect();
-        } else if (!once) {
-          setInView(false);
-          onChange?.(false);
-        }
-      },
-      { rootMargin, threshold: amount },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [once, rootMargin, amount, onChange]);
 
   return (
     <div ref={innerRef} data-inview={inView} {...rest}>

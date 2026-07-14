@@ -1,0 +1,111 @@
+/* Structural CSS for @scope/react components. Non-Tailwind consumers import this;
+   requires @scope/tokens/styles.css for the variables. Import via `@scope/react/styles.css`. */
+
+.scope-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  border-radius: var(--radius-md, 10px);
+  border: var(--border-width, 1px) solid var(--color-border, #e4e4e7);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  font: inherit;
+  cursor: pointer;
+  transition: background var(--motion-duration-fast, 120ms) var(--motion-ease-standard, ease);
+}
+.scope-btn:hover {
+  background: var(--color-surface-raised, #f4f4f5);
+}
+
+/* ---- PricingCard ---- */
+.scope-pricing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  padding: var(--space-5, 24px);
+  border-radius: var(--radius-lg, 16px);
+  border: var(--border-width, 1px) solid var(--color-border, #e4e4e7);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.06));
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+.scope-pricing-card[data-featured] {
+  border-color: var(--color-accent, #4f46e5);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.1));
+}
+.scope-pricing-card__badge {
+  position: absolute;
+  top: calc(-1 * var(--space-3, 12px));
+  right: var(--space-4, 16px);
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  border-radius: var(--radius-sm, 6px);
+  background: var(--color-accent, #4f46e5);
+  color: var(--color-accent-fg, #fff);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.scope-pricing-card__plan {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.scope-pricing-card__price {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1, 4px);
+}
+.scope-pricing-card__amount {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.scope-pricing-card__period {
+  color: var(--color-muted, #71717a);
+  font-size: 0.95rem;
+}
+.scope-pricing-card__desc {
+  margin: 0;
+  color: var(--color-muted, #71717a);
+}
+.scope-pricing-card__features {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+.scope-pricing-card__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2, 8px);
+}
+.scope-pricing-card__feature::before {
+  content: "✓";
+  color: var(--color-accent, #4f46e5);
+  font-weight: 700;
+}
+.scope-pricing-card__cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  border-radius: var(--radius-md, 10px);
+  border: 0;
+  background: var(--color-accent, #4f46e5);
+  color: var(--color-accent-fg, #fff);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity var(--motion-duration-fast, 120ms) var(--motion-ease-standard, ease);
+}
+.scope-pricing-card__cta:hover {
+  opacity: 0.92;
+}

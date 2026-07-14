@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { cn } from "@scope/tokens/cn";
+import { useInView } from "./use-in-view";
 
 export interface StaggerProps extends React.HTMLAttributes<HTMLDivElement> {
   once?: boolean;
@@ -51,33 +52,12 @@ export const Stagger = React.forwardRef<HTMLDivElement, StaggerProps>(function S
   },
   ref,
 ) {
-  const innerRef = React.useRef<HTMLDivElement | null>(null);
+  const [innerRef, shown] = useInView<HTMLDivElement>({
+    once,
+    rootMargin,
+    enabled: trigger === "in-view",
+  });
   React.useImperativeHandle(ref, () => innerRef.current as HTMLDivElement);
-  const [shown, setShown] = React.useState(trigger === "mount");
-
-  React.useEffect(() => {
-    if (trigger !== "in-view") {
-      setShown(true);
-      return;
-    }
-    const el = innerRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (!entry) return;
-        if (entry.isIntersecting) {
-          setShown(true);
-          if (once) io.disconnect();
-        } else if (!once) {
-          setShown(false);
-        }
-      },
-      { rootMargin },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [trigger, once, rootMargin]);
 
   let i = 0;
   const items = React.Children.map(children, (child) => {

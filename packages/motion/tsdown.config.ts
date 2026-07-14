@@ -1,7 +1,13 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/reveal.tsx", "src/in-view.tsx", "src/stagger.tsx"],
+  entry: [
+    "src/index.ts",
+    "src/reveal.tsx",
+    "src/in-view.tsx",
+    "src/stagger.tsx",
+    "src/use-in-view.ts",
+  ],
   format: "esm",
   dts: true,
   clean: true,

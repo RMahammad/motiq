@@ -1,21 +1,60 @@
-/* Design + motion token CSS variables. Canonical doc: docs/10-design-tokens.md. */
+/* Design + motion token CSS variables. Canonical doc: docs/10-design-tokens.md.
+   Themes override these via [data-theme] / .dark without touching component source. */
 :root {
-  /* motion durations */
+  /* ---- motion ---- */
   --motion-duration-instant: 0ms;
   --motion-duration-fast: 120ms;
   --motion-duration-normal: 220ms;
   --motion-duration-slow: 360ms;
-
-  /* motion easings */
   --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --motion-ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
-
-  /* motion distances */
   --motion-distance-sm: 8px;
   --motion-distance-md: 16px;
   --motion-distance-lg: 32px;
-
-  /* motion stagger */
   --motion-stagger-sm: 40ms;
   --motion-stagger-md: 80ms;
+
+  /* ---- color (semantic) ---- */
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-fg: #18181b;
+  --color-muted: #71717a;
+  --color-border: #e4e4e7;
+  --color-accent: #4f46e5;
+  --color-accent-fg: #ffffff;
+
+  /* ---- space ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* ---- radius / border / shadow ---- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --border-width: 1px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.10);
+
+  /* ---- typography ---- */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* Dark theme: token overrides only (not a naive inversion — contrast re-checked). */
+:root[data-theme="dark"],
+.dark {
+  --color-bg: #09090b;
+  --color-surface: #18181b;
+  --color-surface-raised: #27272a;
+  --color-fg: #fafafa;
+  --color-muted: #a1a1aa;
+  --color-border: #3f3f46;
+  --color-accent: #818cf8;
+  --color-accent-fg: #0b0b12;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
