@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+/* Scan the canonical registry source (outside this app) so preview components'
+   Tailwind classes are generated. */
+@source "../../../packages/registry/registry";
+
+/* Design tokens (--color-*, --radius-*, etc.) come from @scope/tokens/styles.css,
+   imported before this file in layout.tsx. Direction A "Violet studio". */
+
+:root {
+  color-scheme: light dark;
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 28%, transparent);
+}
+
+/* Accessible focus ring for all interactive chrome. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--radius-sm);
+}
+
+/* Brand gradient text helper (used sparingly in the hero). */
+.text-gradient {
+  background: linear-gradient(120deg, var(--color-fg), var(--color-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Checkerboard used by preview stages to read on any surface. */
+.stage-grid {
+  background-color: var(--color-stage-bg);
+  background-image:
+    radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-fg) 8%, transparent) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

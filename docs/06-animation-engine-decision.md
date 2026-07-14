@@ -41,7 +41,7 @@
 Apply in order; use the lowest tier that satisfies the requirement.
 
 1. **CSS transitions / keyframes** — default for opacity/transform entrances, hovers, simple reveals, marquee. No JS animation runtime. This is what protects the [performance budget](13-performance-standard.md).
-2. **WAAPI (internal)** — one-shot imperative animations where CSS can't express the sequence but a spring isn't needed. Not exposed publicly.
+2. **WAAPI (internal)** — one-shot imperative animations where CSS can't express the sequence but a spring isn't needed. Not exposed publicly. In registry items, the sanctioned form is **`motion/mini`'s `animate()`** (WAAPI-backed, ~11 KB gz lighter than the hybrid engine) — first used by Kinetic Emphasis, where it also enables final-designed-state SSR/no-JS markup (declarative `initial` props would serialize the pre-animation state). Components using it must guard `typeof el.animate === "function"` and settle in the final state when WAAPI is absent.
 3. **Motion for React** — required when you need **springs, layout/shared-layout animation, gestures (drag/hover physics), scroll-linked values, or `AnimatePresence` exit animations.** Use `m` + `LazyMotion` (never the full `motion` import) to stay within budget.
 4. **GSAP adapter (opt-in package)** — only for **unusually complex, tightly-sequenced timelines** that Motion expresses poorly. Must live in `@scope/gsap-adapter`, never a core dep.
 5. **View Transitions API** — progressive enhancement for route/page morphs; always ship a Motion/CSS fallback because support is uneven.

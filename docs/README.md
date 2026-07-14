@@ -46,6 +46,15 @@ Used throughout the docs:
 - [`20-mvp-roadmap.md`](20-mvp-roadmap.md) — MVP scope, phases, hero components
 - [`21-component-inventory.md`](21-component-inventory.md) — component matrix
 - [`19-support-and-deprecation.md`](19-support-and-deprecation.md) — support & deprecation policy
+- [`30-showcase-visual-system.md`](30-showcase-visual-system.md) — **canonical** showcase visual system (Direction A violet studio)
+- [`31-competitive-product-review.md`](31-competitive-product-review.md) — 2026-07-14 pivot review
+- [`32-component-quality-tracker.md`](32-component-quality-tracker.md) — **canonical** per-component sellability status
+- [`33-independent-component-audit.md`](33-independent-component-audit.md) — independent audit findings
+- [`34-signature-component-sprint.md`](34-signature-component-sprint.md) — signature sprint log
+- [`35-react-bits-quality-study.md`](35-react-bits-quality-study.md) — **canonical** reference-product research + do-not-recreate lists + licensing
+- [`36-premium-creative-component-strategy.md`](36-premium-creative-component-strategy.md) — **canonical** signature strategy, candidate scores, slice selection, motion personalities
+- [`37-signature-component-roadmap.md`](37-signature-component-roadmap.md) — **canonical** catalog demotion decisions + signature sequencing
+- [`signature-components/`](signature-components/) — per-component signature design briefs
 
 ### Architecture & engineering
 - [`03-architecture.md`](03-architecture.md) — **canonical** system architecture & boundaries

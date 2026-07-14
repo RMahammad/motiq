@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.13.0",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "turbo run build --filter=./packages/*",
     "build:all": "turbo run build",
@@ -13,7 +15,10 @@
     "lint": "eslint .",
     "size": "size-limit",
     "check:exports": "publint packages/tokens && publint packages/motion && publint packages/react",
-    "docs:check": "node docs/tooling/check-links.mjs && node docs/tooling/check-adr-index.mjs && node docs/tooling/check-duplicate-titles.mjs && node docs/tooling/check-stale-dates.mjs && node docs/tooling/check-inventory.mjs"
+    "docs:check": "node docs/tooling/check-links.mjs && node docs/tooling/check-adr-index.mjs && node docs/tooling/check-duplicate-titles.mjs && node docs/tooling/check-stale-dates.mjs && node docs/tooling/check-inventory.mjs",
+    "check:launch": "node scripts/check-launch-config.mjs",
+    "check:exposure": "node scripts/audit-pro-exposure.mjs",
+    "test:staging": "node scripts/staging-lifecycle-test.mjs"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.0",
@@ -21,6 +26,7 @@
     "@scope/eslint-config": "workspace:*",
     "@size-limit/preset-small-lib": "^11.1.0",
     "eslint": "^9.18.0",
+    "playwright": "^1.61.1",
     "publint": "^0.3.0",
     "size-limit": "^11.1.0",
     "turbo": "^2.5.0",

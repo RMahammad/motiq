@@ -1,308 +1,272 @@
 import Link from "next/link";
-import { MotionScene, MotionStep } from "@scope/motion";
-import { ProductIntroduction } from "@scope/recipes";
-import { MotionLab } from "./_components/motion-lab";
-import { CATALOG } from "./components/_registry";
 
-// Server Component. The interactive Motion Laboratory is the only client island (ADR-0016).
-// ProductIntroduction is a client leaf composed directly (server-safe shell).
+import { product, installCommand } from "../lib/product";
+import { categories, featuredItems, catalog, categoryCount, componentItems, bySlug } from "../lib/catalog";
+import { packs } from "../lib/packs";
+import { completeCatalogCta, statusLabel } from "../lib/commerce";
+import { PreviewStage } from "./_components/preview-stage";
+import { Preview } from "./_previews";
+import { KpiNumberMorphHeroPreview } from "./_previews/kpi-number-morph";
+import { CatalogCard } from "./_components/catalog-card";
+import { InstallCommand } from "./_components/code-block";
+import { AccessCta } from "./_components/access-cta";
+import { PageView } from "./_components/page-view";
 
-// Only the first recipe is built today; the rest are honestly labelled as planned.
-const PLANNED_RECIPES = [
-  { name: "Pricing selection", used: "PricingCard · StateTransition", intents: "confirm · focus" },
-  { name: "Search → results", used: "Stagger · Presence", intents: "transition · reorder" },
-  { name: "File-upload lifecycle", used: "MotionSequence", intents: "progress · confirm · notify" },
-];
+// One representative preview per category for the category showcase.
+const CATEGORY_HERO: Record<string, string> = {
+  ai: "ai-response-stream",
+  "developer-tools": "deployment-pipeline",
+  collaboration: "live-presence-stack",
+  "data-motion": "kpi-number-morph",
+  mobile: "swipe-action-row",
+  file: "file-upload-pipeline",
+  commerce: "product-variant-selector",
+  security: "passkey-setup-flow",
+  communication: "message-delivery-states",
+  productivity: "kanban-card-movement",
+  text: "kinetic-emphasis",
+  creative: "spotlight-card",
+  backgrounds: "luminous-topography",
+  "animated-shadcn": "animated-tabs",
+  icons: "animated-icons",
+};
 
-export default function Home() {
+export default function HomePage() {
+  const featured = featuredItems();
+  const complete = completeCatalogCta();
   return (
-    <>
-      {/* ---------- Hero: live motion stage above the fold ---------- */}
-      <section className="wrap hero">
-        <div className="hero__copy">
-          <p className="eyebrow">Semantic motion system · React &amp; Next.js</p>
-          <h1 className="display">
-            Author motion by <em style={{ color: "var(--lab-signal)", fontStyle: "normal" }}>intent</em>,
-            not keyframes.
+    <div className="mx-auto max-w-[1440px] px-4 sm:px-6">
+      <PageView event="homepage_viewed" />
+      {/* ---- Hero ---- */}
+      <section className="grid items-center gap-10 py-16 lg:grid-cols-[1.05fr_1fr] lg:py-24">
+        <div>
+          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-1 text-[12.5px] text-[var(--color-muted)]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" /> {statusLabel()} · {product.freeTierLabel} & {product.premiumTierLabel}
+          </span>
+          <h1 className="mt-5 text-[clamp(2.6rem,6vw,4.5rem)] font-semibold leading-[1.02] tracking-tight text-[var(--color-fg)]">
+            Animated components and complete workflows for real products.
           </h1>
-          <p className="lead" style={{ marginTop: 18 }}>
-            Describe what a section should <em>do</em> — introduce, emphasize, confirm — and the
-            system compiles safe, consistent, choreographed motion. Accessibility, reduced motion,
-            mobile and interruption are built in.
+          <p className="mt-5 max-w-xl text-[clamp(1rem,2.2vw,1.15rem)] leading-relaxed text-[var(--color-muted)]">
+            For AI products, developer tools, collaboration, and live data interfaces. You drive the state — every
+            component and composed workflow block is application-controlled, accessible, reduced-motion-safe, and yours
+            to edit. No backend lock-in; install as source with one shadcn command.
           </p>
-          <div className="hero__actions">
-            <Link href="/components/pricing-card" className="btn btn--signal">
-              Get started
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Link
+              href="/components"
+              className="rounded-xl bg-[var(--color-accent)] px-5 py-3 text-[15px] font-medium text-[var(--color-accent-fg)] transition-colors hover:bg-[var(--color-accent-hover)]"
+            >
+              Browse components
             </Link>
-            <a href="#lab" className="btn">
-              Try the Motion Lab ↓
-            </a>
+            <Link
+              href="/components/blur-text"
+              className="rounded-xl border border-[var(--color-border)] px-5 py-3 text-[15px] font-medium text-[var(--color-fg)] transition-colors hover:bg-[var(--color-bg-secondary)]"
+            >
+              View documentation
+            </Link>
           </div>
-          <div className="hero__meta">
-            <span>
-              <b>22</b> components
-            </span>
-            <span>
-              <b>123</b> tests
-            </span>
-            <span>
-              <b>RSC</b>-safe
-            </span>
-            <span>
-              <b>WCAG</b> 2.2 AA
-            </span>
+          <div className="mt-8 max-w-md">
+            <InstallCommand command={installCommand("blur-text")} />
+            {product.namespaceIsPreview ? (
+              <p className="mt-2 text-[12px] text-[var(--color-muted)]">
+                Registry namespace is a temporary preview value during development.
+              </p>
+            ) : null}
           </div>
         </div>
-        <div id="lab">
-          <MotionLab />
-        </div>
-      </section>
 
-      <hr className="rule" />
-
-      {/* ---------- Choreography: the moat, shown ---------- */}
-      <section className="wrap pad" id="choreography">
-        <p className="section-tag">01 · Choreography, not isolated effects</p>
-        <h2 className="display">A section enters as one scene.</h2>
-        <p className="lead" style={{ marginTop: 14, marginBottom: 32 }}>
-          Instead of every element inventing its own timing, a <code className="mono">MotionScene</code>{" "}
-          coordinates heading → copy → preview → action in sequence — typed by role and intent.
-        </p>
-        <div className="split">
-          <div className="code" style={{ borderRadius: "var(--lab-radius)", border: "1px solid var(--lab-hairline)" }}>
-            <pre>
-              <code>{`<MotionScene preset="product-introduction">
-  <MotionStep role="heading">
-    <Heading />
-  </MotionStep>
-  <MotionStep role="supporting-content" intent="deemphasize">
-    <Description />
-  </MotionStep>
-  <MotionStep role="product-preview" intent="introduce">
-    <ProductPreview />
-  </MotionStep>
-  <MotionStep role="primary-action" intent="emphasize">
-    <CTA />
-  </MotionStep>
-</MotionScene>`}</code>
-            </pre>
+        {/* Hero montage — the creative centerpiece + real product workflows */}
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <PreviewStage stage="text" showControls={false}>
+              <Preview id="kinetic-emphasis" />
+            </PreviewStage>
           </div>
-          <div className="card" style={{ display: "flex", alignItems: "center", minHeight: 280 }}>
-            <MotionScene trigger="in-view" intensity="expressive" gap="lg" className="demo-col" style={{ margin: "0 auto" }}>
-              <MotionStep role="heading">
-                <h3 className="demo-h" style={{ color: "var(--lab-ink)" }}>
-                  Introducing Scenes
-                </h3>
-              </MotionStep>
-              <MotionStep role="supporting-content" intent="deemphasize">
-                <p className="demo-p" style={{ color: "var(--lab-muted)" }}>
-                  Heading, copy, preview and action arrive as a coordinated sequence.
-                </p>
-              </MotionStep>
-              <MotionStep role="product-preview" intent="introduce">
-                <div className="card" style={{ background: "var(--lab-panel-2)" }}>
-                  <span className="stat">preview</span>
-                  <p className="muted" style={{ margin: "6px 0 0", fontSize: "0.9rem" }}>
-                    Any real component can be a step.
-                  </p>
-                </div>
-              </MotionStep>
-              <MotionStep role="primary-action" intent="emphasize">
-                <button type="button" className="btn btn--signal btn--sm">
-                  Primary action
-                </button>
-              </MotionStep>
-            </MotionScene>
-          </div>
+          <PreviewStage stage="interactive" showControls={false}>
+            <Preview id="ai-response-stream" />
+          </PreviewStage>
+          <PreviewStage stage="card" showControls={false}>
+            <KpiNumberMorphHeroPreview />
+          </PreviewStage>
         </div>
       </section>
 
-      <hr className="rule" />
-
-      {/* ---------- Production proof: asymmetric editorial, not 3 equal cards ---------- */}
-      <section className="wrap pad">
-        <p className="section-tag">02 · Verifiable production quality</p>
-        <div className="proof">
-          <div className="card card--wide proof__lead">
-            <h3>The boring 80%, handled for you.</h3>
-            <p style={{ marginBottom: 14 }}>
-              Free effects hand you a fade and walk away. Every preset here ships the parts teams
-              actually re-implement on every component — and proves them, live, on each page.
-            </p>
-            <p className="stat">reduced-motion · keyboard-interrupt · SSR-safe · tree-shaken · typed · tested</p>
-          </div>
-          <div className="card">
-            <h3>Reduced motion, built in</h3>
-            <p>Toggle it in the Lab above — steps render at final state, no transform, fully usable.</p>
-          </div>
-          <div className="card">
-            <h3>RSC-safe packaging</h3>
-            <p>
-              <code className="mono">"use client"</code> preserved through the build; sections are
-              server-safe and compose client leaves.
-            </p>
-          </div>
-          <div className="card">
-            <h3>Tiny &amp; tree-shaken</h3>
-            <p>Per-component size budgets in CI. The choreography primitive is ~1&nbsp;kB brotli.</p>
-          </div>
-          <div className="card">
-            <h3>Tested motion</h3>
-            <p>Fake-timer + in-view + SSR + axe tests across 123 cases — motion you can assert on.</p>
-          </div>
+      {/* ---- Category showcase ---- */}
+      <section className="py-12">
+        <div className="mb-6 flex items-end justify-between">
+          <h2 className="text-[clamp(1.6rem,3vw,2.4rem)] font-semibold tracking-tight text-[var(--color-fg)]">
+            Browse by category
+          </h2>
+          <Link href="/components" className="text-[14px] font-medium text-[var(--color-accent)] hover:underline">
+            All components →
+          </Link>
         </div>
-      </section>
-
-      <hr className="rule" />
-
-      {/* ---------- Recipes: workflows, not effects — led by a live one ---------- */}
-      <section className="wrap pad" id="recipes">
-        <p className="section-tag">03 · Motion recipes — complete workflows</p>
-        <h2 className="display" style={{ marginBottom: 14 }}>
-          Sell outcomes, not parts.
-        </h2>
-        <p className="lead" style={{ marginBottom: 28 }}>
-          A recipe is a whole workflow you install and fill with your own content. The first one is
-          live below — a choreographed product hero from{" "}
-          <code className="mono">@scope/recipes</code>, 635&nbsp;B, one coordinated scene.
-        </p>
-        <div
-          className="card"
-          style={{ padding: "clamp(24px, 4vw, 48px)", borderRadius: "var(--lab-radius)" }}
-        >
-          <ProductIntroduction
-            headingLevel={2}
-            intensity="expressive"
-            eyebrow="Recipe · ProductIntroduction"
-            title="Author motion by intent"
-            subtitle="Eyebrow, heading, copy, preview and actions arrive as one coordinated sequence — you supply the content through slots."
-            media={
-              <div className="card" style={{ background: "var(--lab-panel-2)", minHeight: 150 }}>
-                <span className="stat">product preview</span>
-                <p className="muted" style={{ margin: "6px 0 0", fontSize: "0.9rem" }}>
-                  Any real component drops in here.
-                </p>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {categories.map((c) => (
+            <div
+              key={c.id}
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] transition-colors focus-within:border-[var(--color-accent)] hover:border-[color-mix(in_oklab,var(--color-accent)_50%,var(--color-border))]"
+            >
+              {/* The category preview is a non-interactive thumbnail: `inert` keeps
+                  its buttons/links out of the tab order and, crucially, out of the
+                  card's stretched navigation link (no nested interactive elements). */}
+              <div inert aria-hidden className="pointer-events-none">
+                <PreviewStage stage="icon" showControls={false}>
+                  <Preview id={CATEGORY_HERO[c.id]} />
+                </PreviewStage>
               </div>
-            }
-            primaryAction={
-              <Link href="/components/product-introduction" className="btn btn--signal btn--sm">
-                Open the live recipe →
-              </Link>
-            }
-            secondaryAction={
-              <a href="#catalog" className="btn btn--sm">
-                Browse components
-              </a>
-            }
-          />
-        </div>
-        <p className="section-tag" style={{ margin: "32px 0 12px" }}>
-          More recipes — <b>planned</b>
-        </p>
-        {PLANNED_RECIPES.map((r) => (
-          <div className="strip" key={r.name} data-planned>
-            <span style={{ fontFamily: "var(--lab-display)", fontWeight: 600 }}>
-              {r.name} <span className="muted" style={{ fontWeight: 400 }}>· planned</span>
-            </span>
-            <span className="strip__meta">
-              <span>
-                uses · <b>{r.used}</b>
-              </span>
-              <span>
-                intents · <b>{r.intents}</b>
-              </span>
-            </span>
-          </div>
-        ))}
-      </section>
-
-      <hr className="rule" />
-
-      {/* ---------- Live catalog ---------- */}
-      <section className="wrap pad" id="catalog">
-        <p className="section-tag">04 · Component catalog · {CATALOG.length} live pages</p>
-        <h2 className="display" style={{ marginBottom: 28 }}>
-          Real components, real pages.
-        </h2>
-        <div className="catalog">
-          {CATALOG.map((c) => (
-            <Link key={c.slug} href={`/components/${c.slug}`} className="tile">
-              <span className="tile__cat">{c.category}</span>
-              <span className="tile__name">{c.name}</span>
-              <span className="tile__desc">{c.tagline}</span>
-              <span className="tile__go">Open live →</span>
-            </Link>
+              <div className="flex items-center justify-between gap-2 p-4">
+                <div>
+                  <Link
+                    href={`/components?category=${c.id}`}
+                    className="text-[15px] font-semibold text-[var(--color-fg)] outline-none after:absolute after:inset-0 after:rounded-2xl"
+                  >
+                    {c.label}
+                  </Link>
+                  <p className="mt-0.5 text-[13px] text-[var(--color-muted)]">{c.blurb}</p>
+                </div>
+                <span className="shrink-0 rounded-full bg-[var(--color-bg-secondary)] px-2 py-0.5 text-[12px] text-[var(--color-muted)]">
+                  {categoryCount(c.id)}
+                </span>
+              </div>
+            </div>
           ))}
         </div>
       </section>
 
-      <hr className="rule" />
-
-      {/* ---------- Pricing (proposed — no invented numbers) ---------- */}
-      <section className="wrap pad" id="pricing">
-        <p className="section-tag">05 · Offering · proposed</p>
-        <h2 className="display" style={{ marginBottom: 8 }}>
-          Free foundation, paid system.
+      {/* ---- Popular components ---- */}
+      <section className="py-12">
+        <h2 className="mb-6 text-[clamp(1.6rem,3vw,2.4rem)] font-semibold tracking-tight text-[var(--color-fg)]">
+          Popular components
         </h2>
-        <p className="lead" style={{ marginBottom: 28 }}>
-          Pricing is <b>proposed</b> and not yet final — no numbers are shown until approved.
-        </p>
-        <div className="tiers">
-          <div className="tier">
-            <span className="tier__name">Free</span>
-            <span className="tier__price">$0 · open</span>
-            <ul>
-              <li>MotionProvider · Reveal · Stagger · InView</li>
-              <li>Core semantic presets</li>
-              <li>Reduced-motion utilities</li>
-              <li>Basic testing helpers</li>
-            </ul>
-          </div>
-          <div className="tier" data-featured>
-            <span className="badge">Proposed</span>
-            <span className="tier__name">Pro</span>
-            <span className="tier__price">Pricing coming soon</span>
-            <ul>
-              <li>MotionScene · MotionStep · StateTransition</li>
-              <li>Advanced choreography presets</li>
-              <li>Signature workflow recipes</li>
-              <li>Interactive production catalog</li>
-            </ul>
-          </div>
-          <div className="tier">
-            <span className="tier__name">Team / Agency</span>
-            <span className="tier__price">Pricing coming soon</span>
-            <ul>
-              <li>Everything in Pro</li>
-              <li>Source-registry access</li>
-              <li>Company-wide motion theme</li>
-              <li>Priority support</li>
-            </ul>
-          </div>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((item) => (
+            <CatalogCard key={item.id} item={item} />
+          ))}
         </div>
       </section>
 
-      <hr className="rule" />
-
-      {/* ---------- Final CTA ---------- */}
-      <section className="wrap final">
-        <p className="eyebrow" style={{ justifyContent: "center" }}>
-          Start free
-        </p>
-        <h2 className="display">Motion your team can actually ship.</h2>
-        <p className="lead" style={{ margin: "16px auto 0" }}>
-          Accessible, reduced-motion-safe, RSC-safe, typed, tested — with a source-registry escape
-          hatch when you need to customize.
-        </p>
-        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/components/pricing-card" className="btn btn--signal">
-            Browse components
+      {/* ---- Complete workflow packs ---- */}
+      <section className="py-12">
+        <div className="mb-6 flex items-end justify-between">
+          <div>
+            <h2 className="text-[clamp(1.6rem,3vw,2.4rem)] font-semibold tracking-tight text-[var(--color-fg)]">
+              Complete workflow packs
+            </h2>
+            <p className="mt-2 max-w-xl text-[14px] text-[var(--color-muted)]">
+              Finished product outcomes — four components composed into one installable, app-controlled block.
+            </p>
+          </div>
+          <Link href="/packs" className="shrink-0 text-[14px] font-medium text-[var(--color-accent)] hover:underline">
+            All packs →
           </Link>
-          <a href="#lab" className="btn">
-            Replay the Motion Lab
-          </a>
+        </div>
+        {/* Cards link to each pack page, where the full live block renders — so the
+            homepage never mounts four heavy blocks on initial load. */}
+        <div className="grid gap-5 md:grid-cols-2">
+          {packs.map((p) => {
+            const comps = p.components.map((s) => bySlug.get(s)).filter(Boolean);
+            const free = comps.filter((c) => c!.access === "free").length;
+            return (
+              <Link
+                key={p.slug}
+                href={`/packs/${p.slug}`}
+                className="group flex flex-col justify-between rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-colors hover:border-[var(--color-accent)]"
+              >
+                <div>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2.5 py-0.5 text-[11.5px] text-[var(--color-muted)]">
+                    Workflow pack · {comps.length} components · 1 block
+                  </span>
+                  <h3 className="mt-3 text-[18px] font-semibold text-[var(--color-fg)]">{p.name}</h3>
+                  <p className="mt-1.5 text-[13.5px] leading-relaxed text-[var(--color-muted)]">{p.tagline}</p>
+                </div>
+                <div className="mt-4 flex flex-wrap items-center gap-1.5">
+                  {comps.map((c) => (
+                    <span key={c!.id} className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2 py-0.5 text-[11.5px] text-[var(--color-muted)]">
+                      {c!.name}
+                    </span>
+                  ))}
+                  <span className="ml-auto text-[12px] text-[var(--color-accent)]">{free} Free · View pack →</span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
-    </>
+
+      {/* ---- Installation ---- */}
+      <section className="py-12">
+        <div className="grid gap-8 rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-8 lg:grid-cols-2 lg:p-12">
+          <div>
+            <h2 className="text-[clamp(1.6rem,3vw,2.4rem)] font-semibold tracking-tight text-[var(--color-fg)]">
+              Install the source, not a black box.
+            </h2>
+            <p className="mt-4 text-[15px] leading-relaxed text-[var(--color-muted)]">
+              Every component installs through the shadcn CLI as editable TypeScript + Tailwind source, directly into your
+              project. No runtime dependency on us, no lock-in — customize freely.
+            </p>
+            <ul className="mt-6 space-y-2 text-[14px] text-[var(--color-muted)]">
+              <li>· Editable source copied into your repo</li>
+              <li>· Declares its own dependencies (Motion / Radix only where needed)</li>
+              <li>· Works with your existing shadcn setup and Tailwind</li>
+            </ul>
+          </div>
+          <div className="flex flex-col justify-center gap-3">
+            <p className="text-[13px] font-medium text-[var(--color-fg)]">Add a component</p>
+            <InstallCommand command={installCommand("animated-dialog")} />
+            <p className="mt-2 text-[13px] font-medium text-[var(--color-fg)]">Add the shared utility</p>
+            <InstallCommand command={installCommand("utils")} />
+          </div>
+        </div>
+      </section>
+
+      {/* ---- Free / Pro ---- */}
+      <section className="py-12">
+        <div className="grid gap-5 md:grid-cols-2">
+          <div className="rounded-2xl border border-[var(--color-border)] p-8">
+            <p className="text-[13px] font-medium uppercase tracking-wide text-[var(--color-muted)]">
+              {product.freeTierLabel}
+            </p>
+            <h3 className="mt-2 text-2xl font-semibold text-[var(--color-fg)]">Free components</h3>
+            <p className="mt-3 text-[14px] text-[var(--color-muted)]">
+              A genuinely useful set — animated shadcn components, text animations, entrance primitives, icons, and a
+              background. Public registry, editable source, full accessibility.
+            </p>
+            <Link href="/components?access=free" className="mt-5 inline-block text-[14px] font-medium text-[var(--color-accent)] hover:underline">
+              Browse free →
+            </Link>
+          </div>
+          <div className="rounded-2xl border border-[color-mix(in_oklab,var(--color-accent)_40%,var(--color-border))] bg-[color-mix(in_oklab,var(--color-accent)_6%,transparent)] p-8">
+            <p className="text-[13px] font-medium uppercase tracking-wide text-[var(--color-accent)]">
+              {product.premiumTierLabel}
+            </p>
+            <h3 className="mt-2 text-2xl font-semibold text-[var(--color-fg)]">Pro catalog</h3>
+            <p className="mt-3 text-[14px] text-[var(--color-muted)]">
+              The full catalog, advanced creative components and backgrounds, complete workflow blocks and packs,
+              private registry delivery of editable source, updates, and support.
+            </p>
+            <div className="mt-5">
+              <AccessCta cta={complete} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ---- Final CTA ---- */}
+      <section className="py-16 text-center">
+        <h2 className="mx-auto max-w-2xl text-[clamp(1.8rem,4vw,3rem)] font-semibold tracking-tight text-[var(--color-fg)]">
+          Start with the free registry.
+        </h2>
+        <p className="mx-auto mt-4 max-w-lg text-[15px] text-[var(--color-muted)]">
+          Browse the catalog, preview every component live, and install the ones you want as editable source.
+        </p>
+        <Link
+          href="/components"
+          className="mt-8 inline-block rounded-xl bg-[var(--color-accent)] px-6 py-3 text-[15px] font-medium text-[var(--color-accent-fg)] transition-colors hover:bg-[var(--color-accent-hover)]"
+        >
+          Browse components
+        </Link>
+      </section>
+    </div>
   );
 }

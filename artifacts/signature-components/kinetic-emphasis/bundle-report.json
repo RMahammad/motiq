@@ -1,0 +1,18 @@
+{
+  "slug": "kinetic-emphasis",
+  "capturedAt": "2026-07-14T14:54:06.574Z",
+  "componentOnly": {
+    "minified": 5561,
+    "gzip": 2261,
+    "note": "motion/clsx/tailwind-merge external (motion is the shared catalog peer dependency)"
+  },
+  "withAllDeps": {
+    "minified": 40761,
+    "gzip": 13481,
+    "note": "everything bundled except react — worst-case standalone install cost incl. the motion/mini WAAPI animate() + cn()"
+  },
+  "budget": {
+    "componentOnlyGzipMaxBytes": 5120,
+    "verdict": "PASS"
+  }
+}

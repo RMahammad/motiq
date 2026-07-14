@@ -20,7 +20,7 @@ When a package moves from 🔵 Planned to 🟢 Implemented, update its row's **S
 | `@scope/tailwind-preset` | 🔵 Planned | ✅ | build-time | no | n/a | preset | free | Tailwind | no | tailwindcss |
 | `@scope/styles` | 🔵 Planned | ✅ | build asset | no | n/a | **yes** | free | no | no | — |
 | `@scope/cli` | 🔵 Planned | ✅ | node | no | n/a | no | free | no | no | — |
-| `@scope/registry` | 🔵 Planned | ✅ (gated) | data | n/a | n/a | source | paid | no | no | — |
+| `@scope/registry` | 🟢 Implemented (generator + 11 items) | ✅ (gated) | data + build tool | n/a | n/a | source | free+paid | no | no | — |
 | `@scope/remotion` | 🔵 Planned | ✅ (gated) | browser+node | player=yes | ✅ | no | **paid, separate** | no | **yes** | react, remotion |
 | `@scope/remotion/server` | 🔵 Planned | ✅ (gated) | **node only** | no | n/a | no | paid | no | yes | @remotion/renderer |
 | `@scope/gsap-adapter` | 🔵 Planned (optional) | ✅ (gated) | browser | yes | ✅ | no | paid | no | no | gsap |
@@ -55,8 +55,11 @@ Purpose: Tailwind v4 preset exposing tokens via `@theme`. Consumed at build time
 ### `@scope/styles`
 Purpose: compiled, namespaced CSS fallback for **non-Tailwind consumers**. No Preflight assumptions. See [`11`](11-tailwind-strategy.md).
 
-### `@scope/cli` + `@scope/registry`
-Purpose: shadcn-style source edition — `npx <name> add <component>` pulls source from an authenticated registry. Commercial rationale: [`16`](16-commercial-packaging.md).
+### `@scope/registry` (🟢 generator + 11 items — 2026-07-14 pivot)
+Purpose: shadcn-compatible source distribution. Holds the canonical clean-room component source in `registry/**` (the same files `apps/docs` imports for live previews — no package/registry divergence), a `registry.json` manifest, and `scripts/build-registry.mjs`, which inlines each item's source and emits `apps/docs/public/r/*.json` (installable via `npx shadcn add <url>`) plus an `index.json` for the catalog UI. Brand/namespace/base-URL come from [`product.config.json`](../product.config.json) (single rename point). Own tsconfig + devDeps so the source type-checks. Canonical: [`31`](31-competitive-product-review.md), [ADR-0017](adrs/0017-shadcn-primitive-foundation.md).
+
+### `@scope/cli`
+Purpose: optional wrapper CLI — `npx <name> add <component>` over the authenticated registry. Commercial rationale: [`16`](16-commercial-packaging.md). Not required (the shadcn CLI + registry URLs already work).
 
 ### `@scope/remotion` + `@scope/remotion/server`
 Purpose: the video product line — compositions, templates, Player preview, server render. **Separate license** — see [`08`](08-remotion-license-analysis.md) before touching. Server render code is Node-only behind `./server`. Package rules: [`packages/remotion/CLAUDE.md`](../packages/remotion/CLAUDE.md) (planned scaffold).

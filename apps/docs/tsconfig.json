@@ -10,6 +10,108 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/lib/utils": [
+        "../../packages/registry/registry/lib/utils.ts"
+      ],
+      "@/lib/motionkit": [
+        "../../packages/registry/registry/lib/motion.ts"
+      ],
+      "@/registry/*": [
+        "../../packages/registry/registry/*"
+      ],
+      "@/components/motionkit/ai-response-stream": [
+        "../../packages/registry/registry/ai/ai-response-stream.tsx"
+      ],
+      "@/components/motionkit/deployment-pipeline": [
+        "../../packages/registry/registry/developer-tools/deployment-pipeline.tsx"
+      ],
+      "@/components/motionkit/live-presence-stack": [
+        "../../packages/registry/registry/collaboration/live-presence-stack.tsx"
+      ],
+      "@/components/motionkit/kpi-number-morph": [
+        "../../packages/registry/registry/data/kpi-number-morph.tsx"
+      ],
+      "@/components/motionkit/tool-call-activity": [
+        "../../packages/registry/registry/ai/tool-call-activity.tsx"
+      ],
+      "@/components/motionkit/live-log-stream": [
+        "../../packages/registry/registry/developer-tools/live-log-stream.tsx"
+      ],
+      "@/components/motionkit/activity-stream": [
+        "../../packages/registry/registry/collaboration/activity-stream.tsx"
+      ],
+      "@/components/motionkit/streaming-data-rows": [
+        "../../packages/registry/registry/data/streaming-data-rows.tsx"
+      ],
+      "@/components/motionkit/luminous-topography": [
+        "../../packages/registry/registry/backgrounds/luminous-topography.tsx"
+      ],
+      "@/components/motionkit/source-citation-rail": [
+        "../../packages/registry/registry/ai/source-citation-rail.tsx"
+      ],
+      "@/components/motionkit/api-request-inspector": [
+        "../../packages/registry/registry/developer-tools/api-request-inspector.tsx"
+      ],
+      "@/components/motionkit/approval-workflow": [
+        "../../packages/registry/registry/collaboration/approval-workflow.tsx"
+      ],
+      "@/components/motionkit/filter-result-transition": [
+        "../../packages/registry/registry/data/filter-result-transition.tsx"
+      ],
+      "@/components/motionkit/swipe-action-row": [
+        "../../packages/registry/registry/mobile/swipe-action-row.tsx"
+      ],
+      "@/components/motionkit/agent-run-timeline": [
+        "../../packages/registry/registry/ai/agent-run-timeline.tsx"
+      ],
+      "@/components/motionkit/environment-switcher": [
+        "../../packages/registry/registry/developer-tools/environment-switcher.tsx"
+      ],
+      "@/components/motionkit/comment-thread": [
+        "../../packages/registry/registry/collaboration/comment-thread.tsx"
+      ],
+      "@/components/motionkit/data-refresh-state": [
+        "../../packages/registry/registry/data/data-refresh-state.tsx"
+      ],
+      "@/components/motionkit/mobile-filter-sheet": [
+        "../../packages/registry/registry/mobile/mobile-filter-sheet.tsx"
+      ],
+      "@/components/motionkit/kinetic-emphasis": [
+        "../../packages/registry/registry/text/kinetic-emphasis.tsx"
+      ],
+      "@/components/motionkit/blur-text": [
+        "../../packages/registry/registry/text/blur-text.tsx"
+      ],
+      "@/components/motionkit/spotlight-card": [
+        "../../packages/registry/registry/creative/spotlight-card.tsx"
+      ],
+      "@/components/motionkit/animated-dialog": [
+        "../../packages/registry/registry/animated-shadcn/animated-dialog.tsx"
+      ],
+      "@/components/motionkit/animated-tabs": [
+        "../../packages/registry/registry/animated-shadcn/animated-tabs.tsx"
+      ],
+      "@/components/motionkit/animated-accordion": [
+        "../../packages/registry/registry/animated-shadcn/animated-accordion.tsx"
+      ],
+      "@/components/motionkit/animated-button": [
+        "../../packages/registry/registry/animated-shadcn/animated-button.tsx"
+      ],
+      "@/components/motionkit/rotating-text": [
+        "../../packages/registry/registry/text/rotating-text.tsx"
+      ],
+      "@/components/motionkit/animated-list": [
+        "../../packages/registry/registry/creative/animated-list.tsx"
+      ],
+      "@/components/motionkit/animated-grid": [
+        "../../packages/registry/registry/backgrounds/animated-grid.tsx"
+      ],
+      "@/components/motionkit/animated-icons": [
+        "../../packages/registry/registry/icons/animated-icons.tsx"
+      ]
+    },
     "noEmit": true,
     "allowJs": true,
     "esModuleInterop": true,

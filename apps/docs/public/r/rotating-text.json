@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "rotating-text",
+  "type": "registry:ui",
+  "title": "Rotating Text",
+  "description": "Cycles through phrases in place with slide or fade motion. Polite aria-live announces the current word, pauses on hover/focus, and keeps a stable layout. Reduced-motion safe.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "@motionkit/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/text/rotating-text.tsx",
+      "type": "registry:ui",
+      "target": "components/motionkit/rotating-text.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { AnimatePresence, motion, useReducedMotion } from \"motion/react\";\n\nimport { cn } from \"@/lib/utils\";\n\ntype TransitionKind = \"slide\" | \"fade\";\n\nexport interface RotatingTextProps\n  extends Omit<React.HTMLAttributes<HTMLSpanElement>, \"children\"> {\n  /** Phrases to cycle through. */\n  words: string[];\n  /** Milliseconds each word is shown. Guarded to a 1200ms minimum. */\n  interval?: number;\n  /** Motion style between words. */\n  transition?: TransitionKind;\n}\n\n/**\n * RotatingText — cycles through an array of words in place.\n *\n * Accessibility: an `aria-live=\"polite\"` region announces only the current\n * word, so screen readers hear the change without the animated duplicates.\n * Cycling pauses on hover; the element is intentionally not focusable (no\n * role-less tab stop). Layout is stable (inline-grid stacks on one cell). Under\n * `prefers-reduced-motion` the text swaps with no transform. Clean-room\n * original.\n */\nexport function RotatingText({\n  words,\n  interval = 2200,\n  transition = \"slide\",\n  className,\n  ...props\n}: RotatingTextProps) {\n  const reduce = useReducedMotion();\n  const [index, setIndex] = React.useState(0);\n  const [paused, setPaused] = React.useState(false);\n\n  const safeWords = words.length > 0 ? words : [\"\"];\n  const delay = Math.max(1200, interval);\n\n  React.useEffect(() => {\n    if (paused || safeWords.length <= 1) return;\n    const id = window.setTimeout(() => {\n      setIndex((i) => (i + 1) % safeWords.length);\n    }, delay);\n    return () => window.clearTimeout(id);\n  }, [index, paused, delay, safeWords.length]);\n\n  // Keep the index valid if the words array shrinks.\n  React.useEffect(() => {\n    if (index >= safeWords.length) setIndex(0);\n  }, [index, safeWords.length]);\n\n  const current = safeWords[index] ?? \"\";\n  const y = transition === \"slide\" ? \"0.9em\" : 0;\n\n  return (\n    <span\n      className={cn(\"relative inline-grid align-bottom\", className)}\n      // Pause on hover so readers can keep up. We deliberately do NOT make this a\n      // focusable element — a role-less tabbable span is an a11y smell (WCAG\n      // 4.1.2); keyboard users are served by the polite live region + reduced-motion.\n      onMouseEnter={() => setPaused(true)}\n      onMouseLeave={() => setPaused(false)}\n      {...props}\n    >\n      {/* Polite live region: announces the current word only. */}\n      <span aria-live=\"polite\" className=\"sr-only\">\n        {current}\n      </span>\n\n      <AnimatePresence initial={false} mode=\"popLayout\">\n        <motion.span\n          key={index}\n          aria-hidden=\"true\"\n          // All words share cell [1/1/1/1] so width follows the widest via grid.\n          className=\"col-start-1 row-start-1 inline-block whitespace-nowrap [will-change:transform,opacity]\"\n          initial={reduce ? false : { opacity: 0, y }}\n          animate={{ opacity: 1, y: 0 }}\n          exit={reduce ? { opacity: 0 } : { opacity: 0, y: `-${y}` }}\n          transition={{ duration: reduce ? 0 : 0.32, ease: [0.2, 0, 0, 1] }}\n        >\n          {current}\n        </motion.span>\n      </AnimatePresence>\n    </span>\n  );\n}\n\nexport default RotatingText;\n"
+    }
+  ],
+  "meta": {
+    "tier": "free",
+    "category": "text",
+    "keywords": [
+      "text",
+      "rotating",
+      "words",
+      "hero",
+      "headline"
+    ]
+  }
+}

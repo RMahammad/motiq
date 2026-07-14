@@ -54,6 +54,25 @@
 >
 > `Reveal` exists in `@scope/motion` (CSS + IntersectionObserver, SSR-safe, reduced-motion) with **14 passing vitest tests** — unit + SSR + **3 axe a11y (WCAG 2.2 AA scope)** — a **CSF3 story**, and a **[docs page](components/reveal.md)**. It now meets the [motion-primitive Definition of Done](25-definition-of-done.md#motion-primitive) except: Storybook infra isn't stood up yet (story is written), and there is no performance *benchmark* number recorded. Its `@scope/motion` bundle is ~1.06 kB gzip (from the tsdown build). A demo `AnimatedButton` lives in `@scope/react` to exercise the react→motion boundary — a spike fixture, **not** a catalog component, intentionally omitted from this matrix.
 
+## Animated-catalog vertical slice (2026-07-14 pivot — 🟢 shipped)
+
+The [pivot](27-product-differentiation.md) leads with a shadcn-registry catalog. These 10 items ship as clean-room registry source in [`packages/registry/registry/**`](../packages/registry/) (the same source `apps/docs` previews live — no divergence), generated to `apps/docs/public/r/*.json`, driven by [`apps/docs/lib/catalog.ts`](../apps/docs/lib/catalog.ts). Tier = Free/Pro; engine per [ADR-0002]/[05](05-dependency-decisions.md); foundation Radix per [ADR-0017](adrs/0017-shadcn-primitive-foundation.md).
+
+| Item | Category | Tier | Engine | Registry item |
+|---|---|---|---|---|
+| Animated Dialog | animated-shadcn | Free | motion + Radix | `animated-dialog` |
+| Animated Tabs | animated-shadcn | Free | motion + Radix | `animated-tabs` |
+| Animated Accordion | animated-shadcn | Free | motion + Radix | `animated-accordion` |
+| Animated Button | animated-shadcn | Free | motion | `animated-button` |
+| Blur Text | text | Free | motion | `blur-text` |
+| Rotating Text | text | Free | motion | `rotating-text` |
+| Animated List | creative | Pro | motion | `animated-list` |
+| Spotlight Card | creative | Pro | CSS | `spotlight-card` |
+| Animated Grid | backgrounds | Free | CSS | `animated-grid` |
+| Animated Icons (Arrow, Copy) | icons | Free | motion | `animated-icons` |
+
+Plus `utils` (`registry:lib`). Install: `npx shadcn@latest add <registryBaseUrl>/<item>.json` (base URL from [`product.config.json`](../product.config.json)). Validated 2026-07-14: registry generation + schema validation + a clean-fixture `shadcn add` (see [`31`](31-competitive-product-review.md)). Full free/premium rationale: [`27`](27-product-differentiation.md).
+
 ## Full catalog scope (build-out reference)
 
 The complete catalog (same columns) spans these areas; add rows as components are scheduled:

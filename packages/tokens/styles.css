@@ -1,6 +1,9 @@
 /* Design + motion token CSS variables. Canonical doc: docs/10-design-tokens.md.
-   Themes override these via [data-theme] / .dark without touching component source. */
-:root {
+   Visual system: docs/30-showcase-visual-system.md — Direction A "Violet studio".
+   Themes override these via [data-theme] / .dark without touching component source.
+   Selectors are scopeable: a nested [data-theme="…"] container re-themes its subtree. */
+:root,
+[data-theme="light"] {
   /* ---- motion ---- */
   --motion-duration-instant: 0ms;
   --motion-duration-fast: 120ms;
@@ -14,15 +17,36 @@
   --motion-stagger-sm: 40ms;
   --motion-stagger-md: 80ms;
 
-  /* ---- color (semantic) ---- */
+  /* ---- color (semantic) — Direction A, light ---- */
   --color-bg: #ffffff;
+  --color-bg-secondary: #f6f7fb;
   --color-surface: #ffffff;
   --color-surface-raised: #ffffff;
-  --color-fg: #18181b;
-  --color-muted: #71717a;
-  --color-border: #e4e4e7;
-  --color-accent: #4f46e5;
+  --color-fg: #111318;
+  --color-muted: #667085;
+  --color-border: #e4e7ec;
+  --color-accent: #695cff;
+  --color-accent-hover: #5748f5;
   --color-accent-fg: #ffffff;
+  /* Accent used AS text on surface/bg — meets 4.5:1 at body sizes (WCAG 1.4.3). */
+  --color-accent-text: #5648ee;
+  --color-focus: #695cff;
+  /* Status colors are used as text/icon/border on surfaces (contrast-safe);
+     the -foreground pair is the text placed ON a solid status fill. Status is
+     never conveyed by color alone — always with an icon/label/shape. */
+  --color-success: #15803d;
+  --color-success-foreground: #ffffff;
+  --color-warning: #b45309;
+  --color-warning-foreground: #ffffff;
+  --color-error: #dc2626;
+  --color-error-foreground: #ffffff;
+  --color-info: #1d4ed8;
+  --color-info-foreground: #ffffff;
+  --color-neutral: #52525b;
+  --color-neutral-foreground: #ffffff;
+  --color-code-bg: #f6f7fb;
+  --color-code-fg: #24283b;
+  --color-stage-bg: #fafbfd;
 
   /* ---- space ---- */
   --space-1: 4px;
@@ -37,24 +61,47 @@
   --radius-md: 10px;
   --radius-lg: 16px;
   --border-width: 1px;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.10);
+  --shadow-sm: 0 1px 2px rgba(16, 19, 33, 0.06);
+  --shadow-md: 0 8px 24px rgba(16, 19, 33, 0.10);
+  --shadow-lg: 0 24px 60px -12px rgba(16, 19, 33, 0.18);
+  --ring: 0 0 0 3px color-mix(in oklab, var(--color-focus) 40%, transparent);
 
   /* ---- typography ---- */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 }
 
 /* Dark theme: token overrides only (not a naive inversion — contrast re-checked). */
-:root[data-theme="dark"],
+[data-theme="dark"],
 .dark {
-  --color-bg: #09090b;
-  --color-surface: #18181b;
-  --color-surface-raised: #27272a;
-  --color-fg: #fafafa;
-  --color-muted: #a1a1aa;
-  --color-border: #3f3f46;
-  --color-accent: #818cf8;
-  --color-accent-fg: #0b0b12;
+  --color-bg: #08090c;
+  --color-bg-secondary: #0e1015;
+  --color-surface: #14171d;
+  --color-surface-raised: #1b1f27;
+  --color-fg: #f7f8fa;
+  --color-muted: #9ba3b4;
+  --color-border: #252a34;
+  --color-accent: #8176ff;
+  --color-accent-hover: #9a90ff;
+  --color-accent-fg: #0a0a12;
+  /* Accent used AS text on surface/bg — meets 4.5:1 at body sizes (WCAG 1.4.3). */
+  --color-accent-text: #8176ff;
+  --color-focus: #8176ff;
+  --color-success: #4ade80;
+  --color-success-foreground: #052e16;
+  --color-warning: #fbbf24;
+  --color-warning-foreground: #431407;
+  --color-error: #f87171;
+  --color-error-foreground: #450a0a;
+  --color-info: #60a5fa;
+  --color-info-foreground: #0a1633;
+  --color-neutral: #a1a1aa;
+  --color-neutral-foreground: #18181b;
+  --color-code-bg: #0e1015;
+  --color-code-fg: #c7ccd8;
+  --color-stage-bg: #0b0d12;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.7);
 }

@@ -28,6 +28,7 @@ Per our ADR rule, a decision is **Accepted** only when it is *supported by the c
 | [0014](0014-visual-direction.md) | Visual direction ("Motion Laboratory") | Proposed | [`28`](../28-visual-direction.md) | no |
 | [0015](0015-semantic-motion-api.md) | Semantic motion & choreography API | Proposed | [`27`](../27-product-differentiation.md) | no |
 | [0016](0016-interactive-demo-platform.md) | Interactive demo / Motion Laboratory platform | Proposed | [`28`](../28-visual-direction.md) | no |
+| [0017](0017-shadcn-primitive-foundation.md) | shadcn primitive foundation (Radix, single foundation) | Proposed | [`31`](../31-competitive-product-review.md) | no |
 
 ## Rules
 

@@ -9,11 +9,26 @@
 
 Only `clsx`, `tailwind-merge`, and `class-variance-authority` ship as **runtime deps** of `@scope/react`. Everything else is a **peer**, **dev**, or quarantined into the Remotion line. Before adding any runtime dependency, answer the checklist in [`dependency-review`](../.claude/skills/dependency-review/SKILL.md) — most notably: *can this be maintained safely in <100 lines?*
 
+## Dependency review — `motion` (installed 2026-07-14)
+
+Run through [`dependency-review`](../.claude/skills/dependency-review/SKILL.md); result: **approve**.
+
+- **Exact package & version:** `motion@12.42.2` (the renamed `framer-motion` lineage; import surface `motion/react`).
+- **License:** **MIT** (verified in the installed `package.json`). Safe for a commercial product; no copyleft, no attribution burden.
+- **Why needed:** the pivot's animated catalog needs layout/shared-element animation (`layout`, `AnimatePresence`), spring gestures, and `useReducedMotion` — things CSS cannot do coherently (tab indicator that morphs between tabs, list add/remove exit animation, dialog spring scale). It is the stated default engine ([`06`](06-animation-engine-decision.md), [ADR-0002](adrs/0002-animation-engine.md)).
+- **Runtime classification:** **client-only** (`"use client"`). In shipped **registry items** it is a **peer/`dependencies`** entry the *consumer* installs (their copied source imports `motion/react`). In our **`apps/docs`** it is a direct **dependency** so live previews render. It is **not** added to the core `@scope/*` build packages — those stay CSS-only unless a specific component needs it.
+- **Bundle:** full ≈34 kB min+gzip; `sideEffects:false` → tree-shakeable; the `m` component + `LazyMotion` path drops to ≈4.6 kB. Per-registry-item, only items that import it pull it in — CSS-only items (SpotlightCard, backgrounds where CSS suffices) declare **no** motion dependency.
+- **SSR:** client-only; components carry `"use client"`. `useReducedMotion`/`whileInView` are safe under React 19 App Router (no hydration flash when `initial` is set or reduced-motion returns final state).
+- **Next.js compatibility:** works with Next 16 App Router / React 19; `apps/docs` is server-rendered with client islands for the animated leaves. No `transpilePackages` needed for `motion` itself (published ESM).
+- **Registry-item dependency behavior:** items that use it declare `"dependencies": ["motion"]` in `registry.json`; `shadcn add` installs `motion` into the consumer's project. Items that don't use it must not list it (verified by [`catalog-consistency-review`](../.claude/skills/catalog-consistency-review/SKILL.md)).
+- **Why not in every item:** CSS transitions/keyframes are lighter and sufficient for simple entrances, shimmers, and pointer glows; adding Motion there would be dead weight in the consumer's bundle. Motion is reserved for meaningful layout/gesture/presence animation.
+- **Why Remotion stays excluded:** Remotion is a video renderer (node + heavy, separate license, [`08`](08-remotion-license-analysis.md)); it has no role in browser UI and remains forbidden in core UI packages by the [import firewall](03-architecture.md#forbidden-import-matrix). Motion ≠ Remotion.
+
 ## Canonical dependency table
 
 | Dependency | Purpose | Classification | License | Version / policy | Bundle | SSR | Alternatives | Status | Verified |
 |---|---|---|---|---|---|---|---|---|---|
-| `motion` (`motion/react`) | Core animation engine | **peer** | MIT [FACT] | 12.x; pin, track majors | ~34kb full → ~4.6kb via `m`+LazyMotion [FACT] | client-only | framer-motion (renamed to this), react-spring (weaker layout) | ✅ chosen | 2026-07-14 |
+| `motion` (`motion/react`) | Core animation engine | **peer** (registry items) / **dep** in `apps/docs` demos | MIT [FACT] | **12.42.2 installed** [FACT]; pin, track majors | ~34kb full → ~4.6kb via `m`+LazyMotion; `sideEffects:false` (tree-shakeable) [FACT] | client-only (`"use client"`) | framer-motion (renamed to this), react-spring (weaker layout) | ✅ **installed 2026-07-14** (apps/docs) | 2026-07-14 |
 | `react` / `react-dom` | Framework | **peer** | MIT | `>=18.3 <20` | — | — | — | ✅ | 2026-07-14 |
 | `@radix-ui/react-*` | Accessible primitives | **peer/dep per-component** | MIT [FACT] | latest per primitive | SSR-safe | ✅ | Base UI (newer), React Aria (heavier; add later) | ✅ chosen | 2026-07-14 |
 | `clsx` | Conditional classNames | **dep** | MIT | 2.x | tiny | safe | hand-rolled | ✅ | 2026-07-14 |

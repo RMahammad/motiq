@@ -1,0 +1,58 @@
+# 49 — Commercial threat model
+
+> **Type:** 🟡 Canonical threat model for the commerce & Pro-source-delivery surface · **Last reviewed:** 2026-07-14
+> **Status:** Living threat model for a **development / private-preview** posture. It references the controls actually built ([`docs/42`](42-pro-source-delivery-audit.md), [`docs/43`](43-private-registry-architecture.md)) and marks everything not yet built as a **required control** with a residual risk and an owner (**TBD**). Provider-dependent controls are gated on vendor selection ([`docs/46`](46-commerce-provider-evaluation.md)).
+> **Related:** exposure audit [`docs/42`](42-pro-source-delivery-audit.md) · delivery [`docs/43`](43-private-registry-architecture.md) · analytics [`docs/44`](44-product-analytics-plan.md) · launch gate [`docs/45`](45-paid-launch-decision-gate.md) · monitoring [`docs/48`](48-launch-monitoring-plan.md) · preview runbook [`docs/47`](47-private-preview-runbook.md).
+
+## Scope & honest framing
+
+This model covers the assets a commercial launch introduces: paid **Pro `.tsx` source**, **access tokens**, **entitlements**, the **registry route**, **checkout/webhooks**, **customer data**, and the **delivery infrastructure**.
+
+**This is reasonable access control, not DRM.** The protection boundary (stated in [`docs/42`](42-pro-source-delivery-audit.md) §F4) is: the distributable, pristine `.tsx` artifact is gated behind entitlement; the compiled preview may render. Two honest limits shape everything below:
+
+- **Compiled/minified preview code is recoverable.** Any client component's behaviour ships to the browser to run; approximate behaviour can always be reconstructed. We do **not** claim otherwise.
+- **Already-downloaded source cannot be technically recalled.** Once entitled source is installed into a customer's repository, revocation stops *future* installs but cannot delete what they already have. Post-download restrictions are **contractual**, enforced by the License, not by technology.
+
+## Existing controls (referenced by the table)
+
+- **Registry Free/Pro split + build assertion** — Pro source never written under `public/`; build fails if it is ([`docs/42`](42-pro-source-delivery-audit.md)).
+- **Entitlement-aware route, Bearer-only tokens** — token in the `Authorization` header only, never a query string; server-side entitlement check; dependency re-check under the same token ([`docs/43`](43-private-registry-architecture.md)).
+- **Hashed token storage** — tokens stored hashed, not in plaintext.
+- **Durable audit log** — every access decision (granted/denied, free/paid) recorded.
+- **Rate limiting** — per-token/IP limiting on the protected route.
+- **Launch assertions** — `scripts/audit-pro-exposure.mjs` (0 Pro leaks), `index.json` has no `content`, clean-fixture install checks.
+- **Revocation** — refund/chargeback/expiry flips state to non-active → `403 "revoked"` on next request.
+
+## Threat table
+
+Legend — **Status**: ✅ controlled · 🟡 partial (dev-only or hardening needed) · 🔴 open. **Residual risk** assumes existing controls only.
+
+| Asset | Attacker | Attack | Impact | Existing control | Required control | Residual risk | Owner | Status |
+|---|---|---|---|---|---|---|---|---|
+| Pro `.tsx` source | Anonymous visitor | Fetch Pro source from a public path / static output | Paid source leaks for free | Free/Pro registry split + build assertion; `audit-pro-exposure.mjs` reports 0; no `content` in `index.json` ([`docs/42`](42-pro-source-delivery-audit.md)) | Keep assertion in CI on every registry change; monitor for regressions | Low — no static public Pro JSON remains | TBD | ✅ |
+| Access token | Network / infra attacker | Steal a token in transit or from storage | Impersonate an entitled customer | Bearer-in-header only (no query-string keys); hashed token storage; TLS assumed at deploy ([`docs/43`](43-private-registry-architecture.md)) | Signed, short-lived, rotatable tokens; self-serve revoke in portal | Medium until signed/expiring tokens land | TBD | 🟡 |
+| Entitlement | Paying customer | Share one token across many people/orgs | Revenue loss; one seat used as many | Per-customer token; audit log of every access; rate limiting | Seat/org tokens with seat limits; anomaly detection on token reuse across IPs | Medium — sharing detectable but not prevented pre-launch | TBD | 🟡 |
+| Registry item names | Anonymous visitor | Guess item names to probe the route | Map the paid catalog; targeted scraping | Names are already public catalog metadata (`index.json`); Pro requires entitlement regardless of name knowledge | Treat item names as non-secret by design; monitor denial spikes ([`docs/48`](48-launch-monitoring-plan.md) M2) | Low — name knowledge alone grants nothing | TBD | ✅ |
+| Whole catalog | Competitor / scraper | Automated bulk enumeration of the registry | Metadata/catalog harvested; DoS pressure | Rate limiting per token/IP; audit log; acceptable-use prohibition (draft Terms) | Enumeration/abuse detection; escalating limits; CAPTCHA/proof-of-work if needed | Medium — metadata is semi-public; source stays gated | TBD | 🟡 |
+| Registry route | Determined attacker | Bypass rate limits (rotating IPs, distributed requests) | Scraping / brute-force at scale | Per-token/IP rate limiting; audit log | Distributed-abuse detection; per-token global quotas; provider-side WAF | Medium — single-key limits exist; distributed abuse not fully mitigated | TBD | 🟡 |
+| Checkout webhook | Forger | POST a forged "payment succeeded" webhook | Grant entitlement without payment | Server-only entitlement logic; client `pro=true` grants nothing ([`docs/43`](43-private-registry-architecture.md)) | Verify webhook signatures; idempotency keys; verification-failure alert = `critical` ([`docs/48`](48-launch-monitoring-plan.md) M5) | High until real provider + signature verification integrated | TBD | 🔴 |
+| Checkout flow | Malicious buyer | Manipulate checkout params (grant scope, quantity) | Obtain a broader entitlement than paid for | Entitlement→item mapping derived server-side from `packs.ts`, not from client input | Server-side price/scope validation against provider's authoritative record | High until checkout provider integrated | TBD | 🔴 |
+| Price | Malicious buyer | Tamper with client-side price | Pay less than list | No price is currently rendered or trusted client-side (`pricingEnabled: false`) | Authoritative pricing held by provider; server verifies amount on webhook | High until checkout provider integrated | TBD | 🔴 |
+| Entitlement | Authenticated customer | Escalate a single/pack entitlement to the full catalog | Access unpurchased Pro items | `canAccessRegistryItem` checks the specific entitlement server-side; dependencies re-checked under the same token | Continuous authz tests; least-privilege entitlement mapping review | Low — enforcement is server-side per item | TBD | ✅ |
+| Organization identity | Impostor | Claim to act for an org to obtain its entitlements | Unauthorized access to org's seats | Dev-mock provider only; no real org identity yet | Verified org identity + admin-controlled seat assignment | High — org model not built ([`docs/43`](43-private-registry-architecture.md) hardening) | TBD | 🔴 |
+| Source maps | Anonymous visitor | Read prod client source maps to recover source | Approximate source reconstruction | Next default: production browser source maps **off** ([`docs/42`](42-pro-source-delivery-audit.md) F5) | Keep `productionBrowserSourceMaps` unset/false; verify in release checks | Low — maps not emitted in prod | TBD | ✅ |
+| Build artifacts | Anonymous visitor | Extract Pro source from `.next/` / prerendered output | Paid source leaks via build output | F2 fix removed Pro source from RSC/prerender; server-only `.next/server` not served statically ([`docs/42`](42-pro-source-delivery-audit.md) F6) | Re-run `audit-pro-exposure.mjs` (scans `.next/` when present) in CI | Low | TBD | ✅ |
+| Logs | Insider / log-store attacker | Read logs to harvest tokens or source | Credential/source leak via logs | Analytics/monitoring privacy rule: no source, secrets, tokens, bodies, headers, query text in payloads ([`docs/44`](44-product-analytics-plan.md), [`docs/48`](48-launch-monitoring-plan.md)); tokens hashed | Log-field allowlist enforced in code; access-controlled log store; retention limits | Medium — depends on disciplined logging + store hardening | TBD | 🟡 |
+| ZIP download link | Entitled customer | Share a download/ZIP link with unlicensed parties | Paid source spreads beyond license | ZIP fallback not yet built; CLI path uses per-request Bearer auth ([`docs/43`](43-private-registry-architecture.md)) | Signed, short-expiry, single-use download URLs; per-download audit | High until ZIP fallback is designed with expiring links | TBD | 🔴 |
+| Customer records | Enumerator | Probe endpoints to enumerate customers | Privacy breach; targeted attack list | Audit log; denials counted ([`docs/48`](48-launch-monitoring-plan.md) M2); no customer PII in analytics | Uniform error responses (no "user exists" oracle); rate-limit + alert on enumeration | Medium — depends on uniform errors in the real provider | TBD | 🟡 |
+| Access-request intake | Spammer / bot | Flood invite/access-request intake ([`docs/47`](47-private-preview-runbook.md)) | Noise, resource exhaustion, abuse of invites | Manual invite issuance in preview; rate limiting on routes | Bot mitigation on the intake form; per-source throttling; manual review | Medium — small cohort limits blast radius | TBD | 🟡 |
+| Analytics data | Insider / misconfig | Leak PII through analytics events | Privacy violation | Whitelist-only events; small non-sensitive props; no PII/source/secrets by rule ([`docs/44`](44-product-analytics-plan.md)) | Enforce whitelist + prop allowlist in code review/tests; consent model before any vendor | Low — dev-logger only; no data leaves the app today | TBD | 🟡 |
+| Service availability | External / provider | Checkout or auth **provider outage** | Cannot sell or deliver during outage | Provider-neutral interfaces isolate the vendor; degrade rather than crash | Graceful degradation, retries, status page; provider SLA review ([`docs/46`](46-commerce-provider-evaluation.md)) | Medium — no provider selected yet; inherent third-party risk | TBD | 🔴 |
+| Delivery data | External / provider | **Database / durable-store outage** | Audit log or entitlement state unavailable | File-backed durable store in preview; provider-neutral store interface | Production DB with backups, HA, and audit-log durability guarantees | High until production data store chosen and hardened | TBD | 🔴 |
+| Revoked access | Refunded/abusive customer | Exploit any window before revocation propagates | Continued access after refund/ban | Durable revocation; next request after `revokeAccess` → `403 "revoked"` ([`docs/43`](43-private-registry-architecture.md)) | Minimize token TTL so cached/short-lived grants expire quickly; monitor revocation latency ([`docs/48`](48-launch-monitoring-plan.md)) | Medium — revocation is immediate for new requests; already-installed source is never recallable | TBD | 🟡 |
+
+## Standing honesty rules
+
+- Do **not** claim DRM, unrecoverable previews, or the ability to recall installed source. The moat is access control + license + audit, plus the value of pristine, maintained, editable source and updates.
+- Every 🔴/🟡 required control is an input to the paid-launch decision gate ([`docs/45`](45-paid-launch-decision-gate.md)); provider-dependent rows unblock only after vendor selection ([`docs/46`](46-commerce-provider-evaluation.md)).
+- Re-review this model whenever the registry route, entitlement logic, checkout, or provider selection changes.

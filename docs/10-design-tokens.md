@@ -27,6 +27,7 @@ Level-1 component props map to these token **names**, never raw milliseconds (se
 
 - Global/semantic tokens: `--motion-*`, `--color-*`, `--space-*`, `--radius-*`, `--shadow-*`, `--z-*`.
 - Component-scoped tokens: `--<component>-*` (e.g. `--dialog-overlay-opacity`).
+- **`--color-accent-text`** (added 2026-07-14): the accent used **as text** on `surface`/`bg`. Guaranteed ≥ 4.5:1 at body sizes in both themes (light `#5648ee`, dark `#8176ff`) — use it instead of `--color-accent` whenever accent-colored *text* can appear below large-text sizes (first consumer: Kinetic Emphasis; see the WCAG 1.4.3 finding in its independent review). `--color-accent` remains the decorative/large-text accent.
 - Themes override tokens via the cascade — `:root`, `[data-theme="…"]`, `.dark` — **without touching component source.**
 
 ## TypeScript token representation

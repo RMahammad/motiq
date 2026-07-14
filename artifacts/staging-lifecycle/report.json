@@ -1,0 +1,139 @@
+{
+  "base": "http://localhost:3000",
+  "generatedBy": "scripts/staging-lifecycle-test.mjs",
+  "passed": true,
+  "total": 26,
+  "failures": 0,
+  "steps": [
+    {
+      "name": "reset durable stores",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "seed customer A (pack.ai-interface)",
+      "ok": true,
+      "detail": "{\"customerId\":\"cust_a61de27668a9456bb4c0\",\"tokenId\":\"tok_829da44533ab4285a565\",\"tokenPrefix\":\"mk_test_cHAAxOPl\",\"token\":\"mk_test_cHAAxOPlGYEbNWMHfAkDKLml4dz3CPww\"}"
+    },
+    {
+      "name": "Free ai-response-stream (no auth) → 200",
+      "ok": true,
+      "detail": "expected 200, got 200 "
+    },
+    {
+      "name": "Free item returns installable files",
+      "ok": true,
+      "detail": "no files"
+    },
+    {
+      "name": "Pro in-pack agent-run-timeline (tokenA) → 200",
+      "ok": true,
+      "detail": "expected 200, got 200 "
+    },
+    {
+      "name": "Pro item returns installable source content",
+      "ok": true,
+      "detail": "no content"
+    },
+    {
+      "name": "Pro out-of-pack comment-thread (tokenA) → 403",
+      "ok": true,
+      "detail": "expected 403, got 403 missing-entitlement"
+    },
+    {
+      "name": "denied response carries NO source",
+      "ok": true,
+      "detail": "leaked files in denial"
+    },
+    {
+      "name": "Block ai-agent-workspace (tokenA) → 200",
+      "ok": true,
+      "detail": "expected 200, got 200 "
+    },
+    {
+      "name": "block resolves protected dependencies",
+      "ok": true,
+      "detail": "[{\"name\":\"agent-run-timeline\",\"granted\":true,\"result\":\"granted\"},{\"name\":\"tool-call-activity\",\"granted\":true,\"result\":\"granted\"}]"
+    },
+    {
+      "name": "seed customer B (catalog.complete, purchase PURCHASE_1)",
+      "ok": true,
+      "detail": "{\"customerId\":\"cust_663f568d3cff4c13abc5\",\"tokenId\":\"tok_975e04085e214ddfb0de\",\"tokenPrefix\":\"mk_test_v8IQyVkX\",\"token\":\"mk_test_v8IQ…\"}"
+    },
+    {
+      "name": "Pack ai-interface-pack (tokenB, complete) → 200",
+      "ok": true,
+      "detail": "expected 200, got 200 "
+    },
+    {
+      "name": "Free item still works for B → 200",
+      "ok": true,
+      "detail": "expected 200, got 200 "
+    },
+    {
+      "name": "rotate tokenA",
+      "ok": true,
+      "detail": "{\"tokenId\":\"tok_0a890b80023f4ab08fbb\",\"tokenPrefix\":\"mk_test_Vafbia_L\",\"token\":\"mk_test_Vafb…\"}"
+    },
+    {
+      "name": "old tokenA after rotation → 403 revoked",
+      "ok": true,
+      "detail": "expected 403, got 403 revoked-token"
+    },
+    {
+      "name": "old token error is revoked-token",
+      "ok": true,
+      "detail": "revoked-token"
+    },
+    {
+      "name": "new tokenA2 → 200",
+      "ok": true,
+      "detail": "expected 200, got 200 "
+    },
+    {
+      "name": "revoke customer A",
+      "ok": true,
+      "detail": "{\"entitlements\":1,\"tokens\":1}"
+    },
+    {
+      "name": "revoked A tokenA2 → 403",
+      "ok": true,
+      "detail": "expected 403, got 403 revoked-token"
+    },
+    {
+      "name": "Free access still works after revoke → 200",
+      "ok": true,
+      "detail": "expected 200, got 200 "
+    },
+    {
+      "name": "refund PURCHASE_1",
+      "ok": true,
+      "detail": "{\"entitlements\":1,\"customers\":1}"
+    },
+    {
+      "name": "refunded B tokenB → 403",
+      "ok": true,
+      "detail": "expected 403, got 403 revoked-token"
+    },
+    {
+      "name": "durable audit has entries",
+      "ok": true,
+      "detail": "count=15"
+    },
+    {
+      "name": "audit captured granted + denied results",
+      "ok": true,
+      "detail": "revoked-token,granted,missing-entitlement"
+    },
+    {
+      "name": "audit contains NO full tokens (token ids only)",
+      "ok": true,
+      "detail": "token plaintext found in audit"
+    },
+    {
+      "name": "public static Pro path /r/agent-run-timeline.json → not 200",
+      "ok": true,
+      "detail": "status 404"
+    }
+  ]
+}
