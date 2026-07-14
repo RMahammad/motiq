@@ -13,6 +13,8 @@
     "./gradient-text": { "types": "./dist/gradient-text.d.ts", "import": "./dist/gradient-text.js" },
     "./marquee": { "types": "./dist/marquee.d.ts", "import": "./dist/marquee.js" },
     "./text-reveal": { "types": "./dist/text-reveal.d.ts", "import": "./dist/text-reveal.js" },
+    "./counter": { "types": "./dist/counter.d.ts", "import": "./dist/counter.js" },
+    "./rotating-words": { "types": "./dist/rotating-words.d.ts", "import": "./dist/rotating-words.js" },
     "./use-in-view": { "types": "./dist/use-in-view.d.ts", "import": "./dist/use-in-view.js" },
     "./styles.css": "./styles.css"
   },

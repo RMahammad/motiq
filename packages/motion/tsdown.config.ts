@@ -10,6 +10,8 @@ export default defineConfig({
     "src/gradient-text.tsx",
     "src/marquee.tsx",
     "src/text-reveal.tsx",
+    "src/counter.tsx",
+    "src/rotating-words.tsx",
     "src/use-in-view.ts",
   ],
   format: "esm",

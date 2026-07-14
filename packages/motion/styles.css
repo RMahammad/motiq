@@ -175,3 +175,19 @@
   transform: none;
   transition: none;
 }
+
+/* ---- RotatingWords ---- */
+.scope-rotating-words {
+  display: inline-block;
+}
+.scope-rotating-words__word {
+  display: inline-block;
+  animation: scope-rotate-in 320ms var(--motion-ease-emphasized, ease);
+}
+@keyframes scope-rotate-in {
+  from { opacity: 0; transform: translateY(0.35em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-rotating-words__word { animation: none; }
+}

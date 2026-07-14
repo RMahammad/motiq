@@ -16,10 +16,10 @@
 | [InView](components/in-view.md) | Foundation | 🟡 spike | Free | MVP | — | viewport trigger | L | L | ✅ [page](components/in-view.md) | ✅ unit+SSR+axe | v1.0 |
 | ScrollProgress | Scroll | 🔵 | Free | MVP | useScroll | reading progress | L | L | — | — | v1.0 |
 | [BlurReveal](components/blur-reveal.md) | Foundation | 🟡 spike | Premium | MVP | InView | headline | L | M | ✅ [page](components/blur-reveal.md) | ✅ unit+SSR | v1.0 |
-| AnimatedNumber/Counter | Text | 🔵 | Premium | MVP | — | stats | L | L | — | — | v1.0 |
+| [AnimatedNumber/Counter](components/counter.md) | Text | 🟡 spike | Premium | MVP | InView | stats | L | L | ✅ [page](components/counter.md) | ✅ unit+timer+SSR | v1.0 |
 | [TextReveal](components/text-reveal.md) | Text | 🟡 spike | Premium | MVP | InView | hero | L | M | ✅ [page](components/text-reveal.md) | ✅ unit+SSR+axe | v1.0 |
 | [GradientText](components/gradient-text.md) | Text | 🟡 spike | Free | MVP | css | hero | L | L | ✅ [page](components/gradient-text.md) | ✅ unit+SSR+axe | v1.0 |
-| RotatingWords | Text | 🔵 | Premium | MVP | Presence | hero | M | L | — | — | v1.0 |
+| [RotatingWords](components/rotating-words.md) | Text | 🟡 spike | Premium | MVP | — | hero | M | L | ✅ [page](components/rotating-words.md) | ✅ unit+timer+axe | v1.0 |
 | AnimatedButton | Controls | 🔵 | Premium | MVP | motion | CTA | L | L | — | — | v1.0 |
 | LoadingButton | Controls | 🔵 | Premium | MVP | — | forms | M | L | — | — | v1.0 |
 | [SpotlightCard](components/spotlight-card.md) | Cards | 🟡 spike | Premium | MVP | pointer | pricing/feature | L | M | ✅ [page](components/spotlight-card.md) | ✅ unit+SSR+axe | v1.0 |
