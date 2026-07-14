@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { createElement } from "react";
 import { renderToString } from "react-dom/server";
-import { Reveal, AnimatedButton } from "@scope/react";
+import { Reveal, AnimatedButton, PricingCard, AnimatedDialog } from "@scope/react";
 
 let failed = false;
 function check(ok, msg) {
@@ -27,5 +27,18 @@ check(html.includes("scope-reveal") && html.includes("hello from tarball") && ht
 
 const btnHtml = renderToString(createElement(AnimatedButton, { type: "button" }, "Go"));
 check(btnHtml.includes("scope-btn") && btnHtml.includes("Go"), `AnimatedButton (react->motion->tokens) SSR renders`);
+
+// PricingCard (paid component) SSR-renders from the tarball
+const priceHtml = renderToString(
+  createElement(PricingCard, { planName: "Pro", price: "$29", features: ["A"], cta: { label: "Buy", href: "/x" } }),
+);
+check(priceHtml.includes("scope-pricing-card") && priceHtml.includes("$29"), `PricingCard SSR renders from tarball`);
+
+// AnimatedDialog resolves (pulls @radix-ui/react-dialog transitively) and SSRs the trigger
+check(typeof AnimatedDialog === "function", `AnimatedDialog resolves (with @radix-ui/react-dialog)`);
+const dlgHtml = renderToString(
+  createElement(AnimatedDialog, { title: "T", trigger: createElement("button", { type: "button" }, "Open") }),
+);
+check(dlgHtml.includes("Open"), `AnimatedDialog SSR renders its trigger`);
 
 process.exit(failed ? 1 : 0);

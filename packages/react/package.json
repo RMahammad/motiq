@@ -14,6 +14,10 @@
       "types": "./dist/pricing-card.d.ts",
       "import": "./dist/pricing-card.js"
     },
+    "./dialog": {
+      "types": "./dist/dialog.d.ts",
+      "import": "./dist/dialog.js"
+    },
     "./styles.css": "./styles.css"
   },
   "files": ["dist", "styles.css"],
@@ -23,6 +27,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.0",
     "@scope/motion": "workspace:*",
     "@scope/tokens": "workspace:*"
   },
@@ -32,6 +37,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",

@@ -22,7 +22,7 @@ Per our ADR rule, a decision is **Accepted** only when it is *supported by the c
 | [0008](0008-documentation-platform.md) | Documentation platform (Storybook 9 + Next.js docs) | Proposed | [`15`](../15-documentation-strategy.md) | no |
 | [0009](0009-testing-stack.md) | Testing stack (Vitest+RTL+SB9+Playwright+axe; tarball fixtures) | Proposed | [`14`](../14-testing-strategy.md) | no |
 | [0010](0010-commercial-distribution.md) | Commercial distribution (private npm + authed registry; no runtime checks) | Proposed | [`16`](../16-commercial-packaging.md) | needs legal review |
-| [0011](0011-accessible-primitives.md) | Accessible primitives (Radix default; React Aria later) | Proposed | [`12`](../12-accessibility-standard.md) | no |
+| [0011](0011-accessible-primitives.md) | Accessible primitives (Radix default; React Aria later) | **Accepted** (Dialog spike-validated) | [`12`](../12-accessibility-standard.md) | no |
 | [0012](0012-design-token-contract.md) | Design-token contract (semantic tokens, CSS vars + TS) | Proposed | [`10`](../10-design-tokens.md) | no |
 
 ## Rules

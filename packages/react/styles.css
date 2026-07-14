@@ -109,3 +109,93 @@
 .scope-pricing-card__cta:hover {
   opacity: 0.92;
 }
+
+/* ---- AnimatedDialog (Radix + CSS keyframes; Radix waits for exit animation) ---- */
+@keyframes scope-dialog-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scope-dialog-overlay-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes scope-dialog-content-in {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes scope-dialog-content-out {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  to { opacity: 0; transform: translate(-50%, -48%) scale(0.98); }
+}
+.scope-dialog__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+.scope-dialog__overlay[data-state="open"] {
+  animation: scope-dialog-overlay-in 160ms var(--motion-ease-standard, ease);
+}
+.scope-dialog__overlay[data-state="closed"] {
+  animation: scope-dialog-overlay-out 140ms var(--motion-ease-standard, ease);
+}
+.scope-dialog__content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 480px);
+  max-height: 85vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  padding: var(--space-5, 24px);
+  border-radius: var(--radius-lg, 16px);
+  border: var(--border-width, 1px) solid var(--color-border, #e4e4e7);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.1));
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+.scope-dialog__content[data-state="open"] {
+  animation: scope-dialog-content-in 180ms var(--motion-ease-emphasized, ease);
+}
+.scope-dialog__content[data-state="closed"] {
+  animation: scope-dialog-content-out 140ms var(--motion-ease-standard, ease);
+}
+.scope-dialog__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.scope-dialog__desc {
+  margin: 0;
+  color: var(--color-muted, #71717a);
+}
+.scope-dialog__close {
+  position: absolute;
+  top: var(--space-3, 12px);
+  right: var(--space-3, 12px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm, 6px);
+  border: 0;
+  background: transparent;
+  color: var(--color-muted, #71717a);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.scope-dialog__close:hover {
+  background: var(--color-surface-raised, #f4f4f5);
+  color: var(--color-fg, #18181b);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-dialog__overlay,
+  .scope-dialog__content {
+    animation: none !important;
+  }
+}

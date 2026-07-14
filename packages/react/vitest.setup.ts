@@ -28,3 +28,31 @@ class MockIntersectionObserver {
 
 (globalThis as unknown as { IntersectionObserver: unknown }).IntersectionObserver =
   MockIntersectionObserver;
+
+// ---- jsdom polyfills required by Radix Dialog (focus-scope + react-remove-scroll) ----
+const g = globalThis as unknown as {
+  ResizeObserver?: unknown;
+  matchMedia?: unknown;
+};
+g.ResizeObserver ??= class {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
+if (!(window as unknown as { matchMedia?: unknown }).matchMedia) {
+  (window as unknown as { matchMedia: (q: string) => unknown }).matchMedia = (query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener() {},
+    removeListener() {},
+    addEventListener() {},
+    removeEventListener() {},
+    dispatchEvent: () => false,
+  });
+}
+const proto = Element.prototype as unknown as Record<string, unknown>;
+proto["hasPointerCapture"] ??= () => false;
+proto["setPointerCapture"] ??= () => {};
+proto["releasePointerCapture"] ??= () => {};
+proto["scrollIntoView"] ??= () => {};

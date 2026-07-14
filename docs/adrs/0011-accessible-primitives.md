@@ -1,6 +1,6 @@
 # ADR-0011: Accessible primitives — Radix default; React Aria later
 
-- Status: Proposed
+- Status: **Accepted** (validated by spike 2026-07-14)
 - Date: 2026-07-14
 - Owners: Eng, A11y
 - Related documents: [`../12-accessibility-standard.md`](../12-accessibility-standard.md) (canonical), [`../05-dependency-decisions.md`](../05-dependency-decisions.md)
@@ -32,7 +32,7 @@ Use **Radix Primitives** (MIT) as the default for overlays/menus/tabs/tooltips/a
 - Two primitive libs (Radix + React Aria) later → document which to use when ([`../12`](../12-accessibility-standard.md)).
 
 ## Validation
-Move to **Accepted** once Dialog/Drawer/Tooltip ship on Radix with axe = 0 and keyboard/focus tests passing.
+**Partially validated — spike passed 2026-07-14.** `AnimatedDialog` (`@scope/react`) ships on **Radix Dialog** with a **CSS-keyframe** enter/exit (Radix waits for the exit animation — no Motion dependency needed, [ADR-0002](0002-animation-engine.md)/[docs/06](../06-animation-engine-decision.md)). Tests verify **focus trap, focus restore to trigger, Escape-to-close, controlled `onOpenChange`, SSR (trigger-only when closed), and axe = 0** (with and without a description). Builds/consumes in the Next 16 App Router + Vite fixtures. **Still to do before fully closing:** Drawer/Sheet, Tooltip/Popover on Radix with the same test bar. Radix decision is Accepted; the remaining overlays are tracked in [`../21-component-inventory.md`](../21-component-inventory.md).
 
 ## Revisit conditions
 - Base UI matures enough to consolidate, or Radix maintenance changes.

@@ -26,7 +26,7 @@
 | BentoGridItem | Cards | 🔵 | Premium | MVP | Reveal | landing | L | L | — | — | v1.0 |
 | [PricingCard](components/pricing-card.md) | Cards | 🟡 spike | Premium | MVP | Reveal | pricing | L | L | ✅ [page](components/pricing-card.md) | ✅ unit+SSR+axe | v1.0 |
 | ImageReveal | Media | 🔵 | Premium | MVP | Reveal | gallery | L | M | — | — | v1.0 |
-| Dialog | Overlay | 🔵 | Premium | MVP | Radix | modal | H | L | — | — | v1.0 |
+| [Dialog](components/dialog.md) | Overlay | 🟡 spike | Premium | MVP | Radix | modal | H | L | ✅ [page](components/dialog.md) | ✅ focus/esc+SSR+axe | v1.0 |
 | Drawer/Sheet | Overlay | 🔵 | Premium | MVP | Radix | mobile nav | H | L | — | — | v1.0 |
 | Tooltip/Popover | Overlay | 🔵 | Premium | MVP | Radix | hints | M | L | — | — | v1.0 |
 | Skeleton | Feedback | 🔵 | Free | MVP | css | loading | L | L | — | — | v1.0 |

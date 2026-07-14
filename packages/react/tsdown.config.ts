@@ -1,9 +1,10 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/animated-button.tsx", "src/pricing-card.tsx"],
+  entry: ["src/index.ts", "src/animated-button.tsx", "src/pricing-card.tsx", "src/dialog.tsx"],
   format: "esm",
   dts: true,
   clean: true,
-  external: ["react", "react-dom", "react/jsx-runtime", /^@scope\//],
+  // peers, workspace deps, and Radix stay external (consumer dedupes; keeps our bundle small)
+  external: ["react", "react-dom", "react/jsx-runtime", /^@scope\//, /^@radix-ui\//],
 });

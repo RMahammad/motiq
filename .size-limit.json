@@ -33,5 +33,12 @@
     "import": "{ PricingCard }",
     "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
     "limit": "2 kB"
+  },
+  {
+    "name": "@scope/react AnimatedDialog wrapper (brotli, excl. peers + radix + workspace)",
+    "path": "packages/react/dist/dialog.js",
+    "import": "{ AnimatedDialog }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@radix-ui/react-dialog", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
   }
 ]

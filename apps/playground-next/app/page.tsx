@@ -1,6 +1,6 @@
 // SERVER COMPONENT importing client components from @scope/react. A successful build
 // proves "use client" survived (RSC boundary; ADR-0006 / question B4).
-import { AnimatedButton, PricingCard, Reveal } from "@scope/react";
+import { AnimatedButton, AnimatedDialog, PricingCard, Reveal } from "@scope/react";
 
 export default function Page() {
   return (
@@ -12,6 +12,13 @@ export default function Page() {
       <AnimatedButton revealOnMount type="button">
         Animated button
       </AnimatedButton>
+      <AnimatedDialog
+        trigger={<button type="button" className="scope-btn">Open dialog</button>}
+        title="Delete project"
+        description="This action cannot be undone."
+      >
+        <button type="button" className="scope-btn">Confirm delete</button>
+      </AnimatedDialog>
       <div style={{ display: "grid", gap: 16, gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))" }}>
         <PricingCard
           planName="Starter"
