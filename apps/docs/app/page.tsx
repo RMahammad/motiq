@@ -1,13 +1,9 @@
 import Link from "next/link";
 import { MotionScene, MotionStep } from "@scope/motion";
 import { MotionLab } from "./_components/motion-lab";
+import { CATALOG } from "./components/_registry";
 
 // Server Component. The interactive Motion Laboratory is the only client island (ADR-0016).
-const CATALOG = [
-  { slug: "pricing-card", cat: "Production", name: "PricingCard", desc: "Themeable, accessible plan card." },
-  { slug: "dialog", cat: "Overlay", name: "AnimatedDialog", desc: "Radix modal, focus trap + restore." },
-  { slug: "spotlight-card", cat: "Signature", name: "SpotlightCard", desc: "Pointer spotlight, mobile-safe." },
-];
 
 const RECIPES = [
   { name: "Product introduction", used: "MotionScene · Reveal", intents: "introduce · emphasize" },
@@ -182,17 +178,17 @@ export default function Home() {
 
       {/* ---------- Live catalog ---------- */}
       <section className="wrap pad" id="catalog">
-        <p className="section-tag">04 · Component catalog</p>
+        <p className="section-tag">04 · Component catalog · {CATALOG.length} live pages</p>
         <h2 className="display" style={{ marginBottom: 28 }}>
           Real components, real pages.
         </h2>
         <div className="catalog">
           {CATALOG.map((c) => (
             <Link key={c.slug} href={`/components/${c.slug}`} className="tile">
-              <span className="tile__cat">{c.cat}</span>
+              <span className="tile__cat">{c.category}</span>
               <span className="tile__name">{c.name}</span>
-              <span className="tile__desc">{c.desc}</span>
-              <span className="tile__go">Open →</span>
+              <span className="tile__desc">{c.tagline}</span>
+              <span className="tile__go">Open live →</span>
             </Link>
           ))}
         </div>
