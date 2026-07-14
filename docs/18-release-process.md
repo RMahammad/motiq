@@ -1,6 +1,6 @@
 # 18 — Release process
 
-> **Type:** 🟢 Canonical for the release pipeline & checklist · **Implementation status:** 🔵 Planned (no CI yet) · **Last reviewed:** 2026-07-14
+> **Type:** 🟢 Canonical for the release pipeline & checklist · **Implementation status:** 🟡 In progress — the **version→changelog→build→pack→publint** half is validated (packages at **v0.1.0**, per-package CHANGELOGs generated, `scope-*-0.1.0.tgz` packs are publint-clean and pass the tarball-consumer fixture). **Publish is not yet wired:** packages are `"private": true` and need `private:false` + `publishConfig` (restricted access, private registry) + provenance in CI before an actual `changeset publish`. · **Last reviewed:** 2026-07-14
 > **Owns:** the release pipeline, versioning policy, release checklist.
 > **Related:** [`14-testing-strategy.md`](14-testing-strategy.md) · [`19-support-and-deprecation.md`](19-support-and-deprecation.md) · [`17-security-and-supply-chain.md`](17-security-and-supply-chain.md) · [`release-readiness` skill](../.claude/skills/release-readiness/SKILL.md)
 

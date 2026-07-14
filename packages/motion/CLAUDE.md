@@ -1,6 +1,6 @@
 # CLAUDE.md — `@scope/motion`
 
-> 🔵 **Planned package.** Scaffold only; not built yet. Root rules: [`/CLAUDE.md`](../../CLAUDE.md). Package spec: [`docs/04-package-map.md`](../../docs/04-package-map.md). Use the [`motion-primitive-authoring`](../../.claude/skills/motion-primitive-authoring/SKILL.md) skill.
+> 🟡 **Active (v0.1.0).** Ships Reveal, InView, Stagger, BlurReveal, GradientText, Marquee, TextReveal, Counter, RotatingWords (+ `useInView`, `prefersReducedMotion`). The CSS-first path (no `motion` engine import yet) currently satisfies every primitive. Root rules: [`/CLAUDE.md`](../../CLAUDE.md). Package spec: [`docs/04-package-map.md`](../../docs/04-package-map.md). Use the [`motion-primitive-authoring`](../../.claude/skills/motion-primitive-authoring/SKILL.md) skill.
 
 ## Purpose
 The low-level motion primitive layer (`MotionProvider`, `Reveal`, `Fade/Slide/Scale`, `Stagger`, `InView`, `ScrollProgress`, …) that powers components.

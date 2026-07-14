@@ -1,11 +1,16 @@
 {
   "name": "@scope/react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
-  "sideEffects": ["*.css"],
+  "sideEffects": [
+    "*.css"
+  ],
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
     "./animated-button": {
       "types": "./dist/animated-button.d.ts",
       "import": "./dist/animated-button.js"
@@ -44,7 +49,10 @@
     },
     "./styles.css": "./styles.css"
   },
-  "files": ["dist", "styles.css"],
+  "files": [
+    "dist",
+    "styles.css"
+  ],
   "scripts": {
     "build": "tsdown",
     "typecheck": "tsc --noEmit",

@@ -1,6 +1,6 @@
 # CLAUDE.md — `@scope/react`
 
-> 🔵 **Planned package.** This directory is a scaffold: the package is not built yet. These rules apply once code lands here. Root rules: [`/CLAUDE.md`](../../CLAUDE.md). Package spec: [`docs/04-package-map.md`](../../docs/04-package-map.md).
+> 🟡 **Active (v0.1.0).** Ships PricingCard, AnimatedButton, Skeleton, SpotlightCard, BentoGrid/Item, and the Radix overlays (AnimatedDialog, Sheet, Tooltip, Popover). Root rules: [`/CLAUDE.md`](../../CLAUDE.md). Package spec: [`docs/04-package-map.md`](../../docs/04-package-map.md).
 
 ## Purpose
 Interactive components (buttons, cards, overlays, text effects) composed on the motion primitive layer.

@@ -24,7 +24,9 @@ mkdir -p "$DEST/node_modules/@scope"
 for p in tokens motion react; do
   rm -rf "$DEST/node_modules/@scope/$p"
   mkdir -p "$DEST/node_modules/@scope/$p"
-  tar -xzf "$DEST/scope-$p-0.0.0.tgz" -C "$DEST/node_modules/@scope/$p" --strip-components=1
+  # version-agnostic: pnpm pack names the tarball scope-<pkg>-<version>.tgz
+  tgz="$(ls "$DEST"/scope-"$p"-*.tgz | head -1)"
+  tar -xzf "$tgz" -C "$DEST/node_modules/@scope/$p" --strip-components=1
 done
 
 echo "==> smoke"
