@@ -17,6 +17,15 @@ export { Counter } from "./counter";
 export type { CounterProps } from "./counter";
 export { RotatingWords } from "./rotating-words";
 export type { RotatingWordsProps } from "./rotating-words";
+export { MotionScene, MotionStep } from "./motion-scene";
+export type {
+  MotionSceneProps,
+  MotionStepProps,
+  MotionIntent,
+  ScenePreset,
+  MotionIntensity,
+  StepRole,
+} from "./motion-scene";
 export { prefersReducedMotion } from "./prefers-reduced-motion";
 export { useInView } from "./use-in-view";
 export type { UseInViewOptions } from "./use-in-view";

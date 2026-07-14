@@ -47,6 +47,10 @@
       "types": "./dist/rotating-words.d.ts",
       "import": "./dist/rotating-words.js"
     },
+    "./motion-scene": {
+      "types": "./dist/motion-scene.d.ts",
+      "import": "./dist/motion-scene.js"
+    },
     "./use-in-view": {
       "types": "./dist/use-in-view.d.ts",
       "import": "./dist/use-in-view.js"

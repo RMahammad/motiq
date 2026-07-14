@@ -9,6 +9,7 @@
 
 | Component | Category | Status | Tier | Stage | Primitives | Buyer value | A11y risk | Perf risk | Doc | Test | Target release |
 |---|---|---|---|---|---|---|---|---|---|---|---|
+| MotionScene/MotionStep | Choreography | 🟡 spike | Premium | MVP | InView | semantic choreography (moat) | L | L | 🟡 | ✅ unit+timer+SSR+axe | v1.0 |
 | MotionProvider | Foundation | 🔵 | Free | MVP | — | global config | — | L | — | — | v1.0 |
 | [Reveal](components/reveal.md) | Foundation | 🟡 spike | Free | MVP | InView | scroll reveal | L | L | ✅ [page](components/reveal.md)+story | ✅ unit+SSR+axe | v1.0 |
 | Fade/Slide/Scale | Foundation | 🔵 | Free | MVP | InView | entrances | L | L | — | — | v1.0 |
