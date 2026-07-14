@@ -1,6 +1,6 @@
 # 14 — Testing strategy
 
-> **Type:** 🟢 Canonical for test layers & required CI checks · **Implementation status:** 🟡 In progress — Vitest+RTL for `Reveal`: **14 passing** (unit + SSR + reduced-motion + **axe a11y**, WCAG 2.2 AA scope). Import-boundary lint + `.github/workflows/ci.yml` gate exist. Visual, size-limit still Planned; the packed-tarball consumer fixture is 🟡 (see below) · **Last reviewed:** 2026-07-14
+> **Type:** 🟢 Canonical for test layers & required CI checks · **Implementation status:** 🟡 In progress — Vitest+RTL across `Reveal`/`InView`/`Stagger`: **27 passing** (unit + SSR + reduced-motion + **axe a11y**). Import-boundary lint, `publint` (exports), `size-limit` (budgets), and the packed-tarball consumer fixture all run in `.github/workflows/ci.yml`. Storybook/Playwright visual+mobile and `attw` (blocked, Node-24 crash) still open · **Last reviewed:** 2026-07-14
 > **Owns:** the test pyramid, the fixture rule, the required CI checks.
 > **Related:** [`13-performance-standard.md`](13-performance-standard.md) · [`12-accessibility-standard.md`](12-accessibility-standard.md) · [`18-release-process.md`](18-release-process.md) · [`testing-review` skill](../.claude/skills/testing-review/SKILL.md)
 > Storybook 9 / Vitest facts verified 2026-07-14 — see [`05`](05-dependency-decisions.md#sources).

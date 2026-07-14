@@ -1,0 +1,55 @@
+/* Companion CSS for @scope/motion primitives. Reduced motion neutralizes transform/opacity.
+   Import via `@scope/motion/styles.css`. Requires @scope/tokens/styles.css for the vars. */
+
+/* ---- Reveal ---- */
+.scope-reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-offset, 0), 0);
+  transition:
+    opacity var(--reveal-duration, 220ms) var(--motion-ease-standard, ease) var(--reveal-delay, 0ms),
+    transform var(--reveal-duration, 220ms) var(--motion-ease-emphasized, ease) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.scope-reveal[data-motion="shown"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-reveal:not([data-reduced-motion="allow"]) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+.scope-reveal[data-reduced-motion="force-reduce"] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* ---- Stagger ---- */
+.scope-stagger-item {
+  opacity: 0;
+  transform: translate3d(0, var(--motion-distance-md, 16px), 0);
+  transition:
+    opacity var(--motion-duration-normal, 220ms) var(--motion-ease-standard, ease),
+    transform var(--motion-duration-normal, 220ms) var(--motion-ease-emphasized, ease);
+  transition-delay: calc(var(--stagger-gap, var(--motion-stagger-md, 80ms)) * var(--stagger-index, 0));
+  will-change: opacity, transform;
+}
+.scope-stagger[data-motion="shown"] .scope-stagger-item {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-stagger:not([data-reduced-motion="allow"]) .scope-stagger-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+.scope-stagger[data-reduced-motion="force-reduce"] .scope-stagger-item {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}

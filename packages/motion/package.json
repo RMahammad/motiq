@@ -7,9 +7,11 @@
   "exports": {
     ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
     "./reveal": { "types": "./dist/reveal.d.ts", "import": "./dist/reveal.js" },
-    "./styles.css": "./reveal.css"
+    "./in-view": { "types": "./dist/in-view.d.ts", "import": "./dist/in-view.js" },
+    "./stagger": { "types": "./dist/stagger.d.ts", "import": "./dist/stagger.js" },
+    "./styles.css": "./styles.css"
   },
-  "files": ["dist", "reveal.css"],
+  "files": ["dist", "styles.css"],
   "scripts": {
     "build": "tsdown",
     "typecheck": "tsc --noEmit",

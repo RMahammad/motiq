@@ -12,8 +12,8 @@
 | MotionProvider | Foundation | 🔵 | Free | MVP | — | global config | — | L | — | — | v1.0 |
 | [Reveal](components/reveal.md) | Foundation | 🟡 spike | Free | MVP | InView | scroll reveal | L | L | ✅ [page](components/reveal.md)+story | ✅ unit+SSR+axe | v1.0 |
 | Fade/Slide/Scale | Foundation | 🔵 | Free | MVP | InView | entrances | L | L | — | — | v1.0 |
-| Stagger/StaggerItem | Foundation | 🔵 | Free | MVP | Reveal | list entrance | L | L | — | — | v1.0 |
-| InView | Foundation | 🔵 | Free | MVP | — | viewport trigger | L | L | — | — | v1.0 |
+| Stagger/StaggerItem | Foundation | 🟡 spike | Free | MVP | InView | list entrance | L | L | 🟡 | ✅ unit+SSR+axe | v1.0 |
+| InView | Foundation | 🟡 spike | Free | MVP | — | viewport trigger | L | L | 🟡 | ✅ unit+SSR+axe | v1.0 |
 | ScrollProgress | Scroll | 🔵 | Free | MVP | useScroll | reading progress | L | L | — | — | v1.0 |
 | BlurReveal | Foundation | 🔵 | Premium | MVP | Reveal | headline | L | M | — | — | v1.0 |
 | AnimatedNumber/Counter | Text | 🔵 | Premium | MVP | — | stats | L | L | — | — | v1.0 |
@@ -47,7 +47,9 @@
 
 > **Novelty/high-perf-risk items (ParticleField, HorizontalScroll, ScrollScrub) are gated to V2/experimental with mandatory mobile fallbacks** ([`13`](13-performance-standard.md)).
 >
-> **Spike note (2026-07-14):** `Reveal` exists in `@scope/motion` (CSS + IntersectionObserver, SSR-safe, reduced-motion) with **14 passing vitest tests** — unit + SSR + **3 axe a11y (WCAG 2.2 AA scope)** — a **CSF3 story**, and a **[docs page](components/reveal.md)**. It now meets the [motion-primitive Definition of Done](25-definition-of-done.md#motion-primitive) except: Storybook infra isn't stood up yet (story is written), and there is no performance *benchmark* number recorded. Its `@scope/motion` bundle is ~1.06 kB gzip (from the tsdown build). A demo `AnimatedButton` lives in `@scope/react` to exercise the react→motion boundary — a spike fixture, **not** a catalog component, intentionally omitted from this matrix.
+> **Spike note (2026-07-14):** Three primitives now exist in `@scope/motion` — `Reveal`, `InView`, and `Stagger`/`StaggerItem` — with **27 passing tests** (unit + SSR + axe), `publint`-clean exports, and `size-limit`-green budgets (Reveal 714 B, InView 489 B, Stagger 738 B, brotli; full index 1.22 kB). `Reveal` has a docs page + story; `InView`/`Stagger` still need docs pages + stories.
+>
+> `Reveal` exists in `@scope/motion` (CSS + IntersectionObserver, SSR-safe, reduced-motion) with **14 passing vitest tests** — unit + SSR + **3 axe a11y (WCAG 2.2 AA scope)** — a **CSF3 story**, and a **[docs page](components/reveal.md)**. It now meets the [motion-primitive Definition of Done](25-definition-of-done.md#motion-primitive) except: Storybook infra isn't stood up yet (story is written), and there is no performance *benchmark* number recorded. Its `@scope/motion` bundle is ~1.06 kB gzip (from the tsdown build). A demo `AnimatedButton` lives in `@scope/react` to exercise the react→motion boundary — a spike fixture, **not** a catalog component, intentionally omitted from this matrix.
 
 ## Full catalog scope (build-out reference)
 

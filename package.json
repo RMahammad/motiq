@@ -11,12 +11,18 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "lint": "eslint .",
+    "size": "size-limit",
+    "check:exports": "publint packages/tokens && publint packages/motion && publint packages/react",
     "docs:check": "node docs/tooling/check-links.mjs && node docs/tooling/check-adr-index.mjs && node docs/tooling/check-duplicate-titles.mjs && node docs/tooling/check-stale-dates.mjs && node docs/tooling/check-inventory.mjs"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.0",
     "@changesets/cli": "^2.27.0",
     "@scope/eslint-config": "workspace:*",
+    "@size-limit/preset-small-lib": "^11.1.0",
     "eslint": "^9.18.0",
+    "publint": "^0.3.0",
+    "size-limit": "^11.1.0",
     "turbo": "^2.5.0",
     "typescript": "^5.7.3"
   }

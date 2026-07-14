@@ -33,7 +33,9 @@ jobs:
       - run: pnpm lint            # import-boundary firewall (docs/03)
       - run: pnpm typecheck       # strict TS
       - run: pnpm build           # tsdown; preserves "use client"
-      - run: pnpm test            # vitest (unit + SSR + reduced-motion)
+      - run: pnpm test            # vitest (unit + SSR + reduced-motion + axe)
+      - run: pnpm check:exports   # publint (export-map correctness)
+      - run: pnpm size            # size-limit budgets (docs/13)
 
   fixtures:
     # Proves the built library is consumable in real apps (App Router RSC + Vite).

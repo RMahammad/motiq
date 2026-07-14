@@ -51,10 +51,12 @@ if (!existsSync(INVENTORY)) {
   console.error("check-inventory: docs/21-component-inventory.md missing");
   process.exit(1);
 }
-const inv = readFileSync(INVENTORY, "utf8").toLowerCase();
+// Normalize (drop separators/case) so `in-view.tsx` matches an "InView" catalog row.
+const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+const invNorm = norm(readFileSync(INVENTORY, "utf8"));
 let missing = 0;
 for (const { pkg, base } of files) {
-  if (!inv.includes(base.toLowerCase())) {
+  if (!invNorm.includes(norm(base))) {
     console.error(`Component source not found in inventory: ${pkg}/src/${base}.tsx`);
     missing++;
   }
