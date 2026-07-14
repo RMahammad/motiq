@@ -53,3 +53,85 @@
   transform: none;
   transition: none;
 }
+
+/* ---- GradientText ---- */
+.scope-gradient-text {
+  background-image: var(--gradient, linear-gradient(90deg, var(--color-accent, #4f46e5), #ec4899));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.scope-gradient-text[data-animate] {
+  animation: scope-gradient-move 4s linear infinite;
+}
+@keyframes scope-gradient-move {
+  to { background-position: 200% center; }
+}
+@media (forced-colors: active) {
+  .scope-gradient-text {
+    background: none;
+    -webkit-text-fill-color: CanvasText;
+    color: CanvasText;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-gradient-text[data-animate] { animation: none; }
+}
+
+/* ---- BlurReveal ---- */
+.scope-blur-reveal {
+  opacity: 0;
+  filter: blur(var(--blur-amount, 8px));
+  transition:
+    opacity var(--blur-duration, 220ms) var(--motion-ease-standard, ease),
+    filter var(--blur-duration, 220ms) var(--motion-ease-standard, ease);
+  will-change: opacity, filter;
+}
+.scope-blur-reveal[data-motion="shown"] {
+  opacity: 1;
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-blur-reveal:not([data-reduced-motion="allow"]) {
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
+}
+.scope-blur-reveal[data-reduced-motion="force-reduce"] {
+  opacity: 1;
+  filter: none;
+  transition: none;
+}
+
+/* ---- Marquee ---- */
+.scope-marquee {
+  overflow: hidden;
+  width: 100%;
+}
+.scope-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: scope-marquee-scroll var(--marquee-duration, 20s) linear infinite;
+}
+.scope-marquee[data-reverse] .scope-marquee__track {
+  animation-direction: reverse;
+}
+.scope-marquee[data-pause-hover]:hover .scope-marquee__track,
+.scope-marquee[data-pause-hover]:focus-within .scope-marquee__track {
+  animation-play-state: paused;
+}
+.scope-marquee__group {
+  display: flex;
+  gap: var(--space-5, 24px);
+  padding-inline: var(--space-3, 12px);
+  flex-shrink: 0;
+}
+@keyframes scope-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-marquee__track { animation: none; }
+}

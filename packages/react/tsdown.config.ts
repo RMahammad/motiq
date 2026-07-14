@@ -9,6 +9,7 @@ export default defineConfig({
     "src/sheet.tsx",
     "src/tooltip.tsx",
     "src/popover.tsx",
+    "src/skeleton.tsx",
   ],
   format: "esm",
   dts: true,

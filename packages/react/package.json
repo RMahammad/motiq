@@ -30,6 +30,10 @@
       "types": "./dist/popover.d.ts",
       "import": "./dist/popover.js"
     },
+    "./skeleton": {
+      "types": "./dist/skeleton.d.ts",
+      "import": "./dist/skeleton.js"
+    },
     "./styles.css": "./styles.css"
   },
   "files": ["dist", "styles.css"],

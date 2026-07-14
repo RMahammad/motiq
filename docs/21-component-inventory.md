@@ -15,10 +15,10 @@
 | [Stagger/StaggerItem](components/stagger.md) | Foundation | 🟡 spike | Free | MVP | InView | list entrance | L | L | ✅ [page](components/stagger.md) | ✅ unit+SSR+axe | v1.0 |
 | [InView](components/in-view.md) | Foundation | 🟡 spike | Free | MVP | — | viewport trigger | L | L | ✅ [page](components/in-view.md) | ✅ unit+SSR+axe | v1.0 |
 | ScrollProgress | Scroll | 🔵 | Free | MVP | useScroll | reading progress | L | L | — | — | v1.0 |
-| BlurReveal | Foundation | 🔵 | Premium | MVP | Reveal | headline | L | M | — | — | v1.0 |
+| [BlurReveal](components/blur-reveal.md) | Foundation | 🟡 spike | Premium | MVP | InView | headline | L | M | ✅ [page](components/blur-reveal.md) | ✅ unit+SSR | v1.0 |
 | AnimatedNumber/Counter | Text | 🔵 | Premium | MVP | — | stats | L | L | — | — | v1.0 |
 | TextReveal/WordReveal | Text | 🔵 | Premium | MVP | Stagger | hero | M | M | — | — | v1.0 |
-| GradientText | Text | 🔵 | Free | MVP | css | hero | L | L | — | — | v1.0 |
+| [GradientText](components/gradient-text.md) | Text | 🟡 spike | Free | MVP | css | hero | L | L | ✅ [page](components/gradient-text.md) | ✅ unit+SSR+axe | v1.0 |
 | RotatingWords | Text | 🔵 | Premium | MVP | Presence | hero | M | L | — | — | v1.0 |
 | AnimatedButton | Controls | 🔵 | Premium | MVP | motion | CTA | L | L | — | — | v1.0 |
 | LoadingButton | Controls | 🔵 | Premium | MVP | — | forms | M | L | — | — | v1.0 |
@@ -29,8 +29,8 @@
 | [Dialog](components/dialog.md) | Overlay | 🟡 spike | Premium | MVP | Radix | modal | H | L | ✅ [page](components/dialog.md) | ✅ focus/esc+SSR+axe | v1.0 |
 | [Drawer/Sheet](components/sheet.md) | Overlay | 🟡 spike | Premium | MVP | Radix | mobile nav | H | L | ✅ [page](components/sheet.md) | ✅ focus/esc+SSR+axe | v1.0 |
 | [Tooltip](components/tooltip.md)/[Popover](components/popover.md) | Overlay | 🟡 spike | Premium | MVP | Radix | hints | M | L | ✅ [pages](components/tooltip.md) | ✅ interaction+axe | v1.0 |
-| Skeleton | Feedback | 🔵 | Free | MVP | css | loading | L | L | — | — | v1.0 |
-| Marquee | Media | 🔵 | Premium | MVP | css | logo cloud | M | M | — | — | v1.0 |
+| [Skeleton](components/skeleton.md) | Feedback | 🟡 spike | Free | MVP | css | loading | L | L | ✅ [page](components/skeleton.md) | ✅ unit+SSR+axe | v1.0 |
+| [Marquee](components/marquee.md) | Media | 🟡 spike | Premium | MVP | css | logo cloud | M | M | ✅ [page](components/marquee.md) | ✅ unit+SSR+axe | v1.0 |
 | [HeroSection](components/hero-section.md) | Section | 🟡 spike | Premium | MVP | Stagger/Reveal | landing | L | L | ✅ [page](components/hero-section.md) | ✅ slots+SSR+axe | v1.0 |
 | FeatureGrid + CTASection | Section | 🔵 | Premium | MVP | compose | landing | L | L | — | — | v1.0 |
 | Magnetic | Controls | 🔵 | Premium | V1 | pointer | CTA delight | M | M | — | — | v1.1 |

@@ -25,7 +25,35 @@
     "path": "packages/motion/dist/index.js",
     "import": "*",
     "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
-    "limit": "3 kB"
+    "limit": "4 kB"
+  },
+  {
+    "name": "@scope/motion GradientText (brotli)",
+    "path": "packages/motion/dist/gradient-text.js",
+    "import": "{ GradientText }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1 kB"
+  },
+  {
+    "name": "@scope/motion BlurReveal (brotli)",
+    "path": "packages/motion/dist/blur-reveal.js",
+    "import": "{ BlurReveal }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/motion Marquee (brotli)",
+    "path": "packages/motion/dist/marquee.js",
+    "import": "{ Marquee }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1 kB"
+  },
+  {
+    "name": "@scope/react Skeleton (brotli)",
+    "path": "packages/react/dist/skeleton.js",
+    "import": "{ Skeleton }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1 kB"
   },
   {
     "name": "@scope/react PricingCard (brotli, excl. peers + workspace deps)",

@@ -318,3 +318,34 @@
     animation: none !important;
   }
 }
+
+/* ---- Skeleton ---- */
+.scope-skeleton {
+  display: block;
+  background: var(--color-border, #e4e4e7);
+  border-radius: var(--radius-md, 10px);
+  background-image: linear-gradient(
+    90deg,
+    var(--color-border, #e4e4e7) 0%,
+    var(--color-surface-raised, #f4f4f5) 50%,
+    var(--color-border, #e4e4e7) 100%
+  );
+  background-size: 200% 100%;
+  animation: scope-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+.scope-skeleton[data-variant="text"] {
+  height: 1em;
+  border-radius: var(--radius-sm, 6px);
+}
+.scope-skeleton[data-variant="circle"] {
+  border-radius: 9999px;
+}
+@keyframes scope-skeleton-shimmer {
+  to { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-skeleton {
+    animation: none;
+    background-image: none;
+  }
+}

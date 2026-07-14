@@ -6,11 +6,13 @@ export default defineConfig({
     "src/reveal.tsx",
     "src/in-view.tsx",
     "src/stagger.tsx",
+    "src/blur-reveal.tsx",
+    "src/gradient-text.tsx",
+    "src/marquee.tsx",
     "src/use-in-view.ts",
   ],
   format: "esm",
   dts: true,
   clean: true,
-  // peers + workspace deps stay external; must NOT be bundled into the library
   external: ["react", "react-dom", "react/jsx-runtime", /^@scope\//],
 });

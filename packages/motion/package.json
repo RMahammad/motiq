@@ -9,6 +9,9 @@
     "./reveal": { "types": "./dist/reveal.d.ts", "import": "./dist/reveal.js" },
     "./in-view": { "types": "./dist/in-view.d.ts", "import": "./dist/in-view.js" },
     "./stagger": { "types": "./dist/stagger.d.ts", "import": "./dist/stagger.js" },
+    "./blur-reveal": { "types": "./dist/blur-reveal.d.ts", "import": "./dist/blur-reveal.js" },
+    "./gradient-text": { "types": "./dist/gradient-text.d.ts", "import": "./dist/gradient-text.js" },
+    "./marquee": { "types": "./dist/marquee.d.ts", "import": "./dist/marquee.js" },
     "./use-in-view": { "types": "./dist/use-in-view.d.ts", "import": "./dist/use-in-view.js" },
     "./styles.css": "./styles.css"
   },
