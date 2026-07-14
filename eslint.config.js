@@ -5,6 +5,7 @@ export default [
     ignores: [
       "**/dist/**",
       "**/.next/**",
+      "**/storybook-static/**",
       "**/node_modules/**",
       "**/*.config.{js,ts,mjs}",
       "**/*.test.{ts,tsx}",
