@@ -1,6 +1,6 @@
 {
   "name": "motionkit",
-  "count": 50,
+  "count": 60,
   "items": [
     {
       "name": "utils",
@@ -867,6 +867,299 @@
       ],
       "url": "https://motionkit.dev/api/registry/kanban-card-movement",
       "install": "npx shadcn@latest add https://motionkit.dev/api/registry/kanban-card-movement"
+    },
+    {
+      "name": "multi-file-queue",
+      "type": "registry:component",
+      "title": "Multi-file Queue",
+      "description": "A presentation-only queue MANAGER for a collection of files/jobs — priority lanes, concurrency-slot occupancy, blocked-item explanation, queue-level progress, per-item reorder + priority, and pause-all/resume-all/retry-failed/clear-completed. Distinct from File Upload Pipeline; never uploads internally.",
+      "category": "file",
+      "tier": "free",
+      "kind": "component",
+      "protected": false,
+      "keywords": [
+        "queue",
+        "batch",
+        "upload",
+        "processing",
+        "files",
+        "priority",
+        "concurrency",
+        "media",
+        "jobs"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "url": "https://motionkit.dev/r/multi-file-queue.json",
+      "install": "npx shadcn@latest add https://motionkit.dev/r/multi-file-queue.json"
+    },
+    {
+      "name": "cart-item-transition",
+      "type": "registry:component",
+      "title": "Cart Item Transition",
+      "description": "An app-controlled animated cart LINE ITEM (not a full cart) — arrival, quantity/total morph, variant crossfade, price-change, limited/unavailable, removal→Undo→restore, with optimistic mutation + automatic rollback and honest failed/Retry. Never touches a backend or payment; price/inventory are app-owned. No manipulative urgency.",
+      "category": "commerce",
+      "tier": "free",
+      "kind": "component",
+      "protected": false,
+      "keywords": [
+        "cart",
+        "quantity",
+        "checkout",
+        "purchase",
+        "product",
+        "variant",
+        "price",
+        "order",
+        "commerce"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "url": "https://motionkit.dev/r/cart-item-transition.json",
+      "install": "npx shadcn@latest add https://motionkit.dev/r/cart-item-transition.json"
+    },
+    {
+      "name": "two-factor-setup-flow",
+      "type": "registry:component",
+      "title": "Two-Factor Setup Flow",
+      "description": "Orchestration + presentation for adding a second auth factor (authenticator/security-key/SMS/email/recovery-codes/custom). The app supplies all operations + state; the component never implements crypto, shows real secrets, stores codes, or claims the account is secure because setup finished. Recovery codes are treated as sensitive; an alternative method is always offered.",
+      "category": "security",
+      "tier": "free",
+      "kind": "component",
+      "protected": false,
+      "keywords": [
+        "two-factor",
+        "2fa",
+        "authenticator",
+        "security",
+        "mfa",
+        "recovery-codes",
+        "account",
+        "setup"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "url": "https://motionkit.dev/r/two-factor-setup-flow.json",
+      "install": "npx shadcn@latest add https://motionkit.dev/r/two-factor-setup-flow.json"
+    },
+    {
+      "name": "typing-and-presence",
+      "type": "registry:component",
+      "title": "Typing and Presence",
+      "description": "A combined real-time typing + participant-presence strip for messaging/collaboration — presence (online/active/idle/away/offline/reconnecting) + typing (typing/recording/uploading/editing) by shape+text, avatar initials, overflow summary (\"Three people are typing\"), compact/inline/floating modes. App supplies all data; a debounced polite live region avoids keystroke spam; ambient motion pauses when hidden.",
+      "category": "communication",
+      "tier": "free",
+      "kind": "component",
+      "protected": false,
+      "keywords": [
+        "typing",
+        "presence",
+        "thread",
+        "messaging",
+        "conversation",
+        "collaboration",
+        "status",
+        "avatars"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "url": "https://motionkit.dev/r/typing-and-presence.json",
+      "install": "npx shadcn@latest add https://motionkit.dev/r/typing-and-presence.json"
+    },
+    {
+      "name": "task-dependency-map",
+      "type": "registry:component",
+      "title": "Task Dependency Map",
+      "description": "An app-controlled task DEPENDENCY visualization (not a graph editor / not pan-zoom-only). Deterministic dependency-depth layout with static SVG lines, blocked/blocking relationships, prerequisite + dependent inspection, highlighted active path, app-supplied cycle error, status filter, and a compact list/mobile fallback. Keyboard-first (dragging never required); optimistic move with rollback.",
+      "category": "productivity",
+      "tier": "pro",
+      "kind": "component",
+      "protected": true,
+      "keywords": [
+        "dependency",
+        "blocked",
+        "project",
+        "planning",
+        "tasks",
+        "graph",
+        "milestone",
+        "roadmap",
+        "productivity"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "url": "https://motionkit.dev/api/registry/task-dependency-map",
+      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/task-dependency-map"
+    },
+    {
+      "name": "processing-timeline",
+      "type": "registry:component",
+      "title": "Processing Timeline",
+      "description": "A presentation-only timeline for ONE ingested item moving through multiple app-owned processing stages (scan → transcode → thumbnail → caption → publish) — per-stage status/progress/output/logs/warnings/errors, current-stage focus, stage expansion, retry/skip/cancel/restart, duration summary, and vertical/horizontal layouts. Distinct from File Upload Pipeline + Multi-file Queue; never fakes progress.",
+      "category": "file",
+      "tier": "pro",
+      "kind": "component",
+      "protected": true,
+      "keywords": [
+        "processing",
+        "pipeline",
+        "stages",
+        "encoding",
+        "transcode",
+        "files",
+        "media",
+        "job"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "url": "https://motionkit.dev/api/registry/processing-timeline",
+      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/processing-timeline"
+    },
+    {
+      "name": "checkout-progress",
+      "type": "registry:component",
+      "title": "Checkout Progress",
+      "description": "An app-controlled multi-step checkout progress/orchestration surface (not a payment processor) — current + completed + editable steps, per-step validation + blocked reasons, async step save, return-to-previous, error/progress summaries, sticky order-summary slot, and optional guest/account modes. Never collects or processes payment; no fake processing progress.",
+      "category": "commerce",
+      "tier": "pro",
+      "kind": "component",
+      "protected": true,
+      "keywords": [
+        "checkout",
+        "steps",
+        "commerce",
+        "purchase",
+        "booking",
+        "subscription",
+        "wizard",
+        "order"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "url": "https://motionkit.dev/api/registry/checkout-progress",
+      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/checkout-progress"
+    },
+    {
+      "name": "session-security-center",
+      "type": "registry:component",
+      "title": "Session Security Center",
+      "description": "A presentation + control surface for reviewing and revoking active account sessions — device/browser/os, app-supplied approximate location + IP summary + trust/risk labels, current-session identification, single + bulk revocation with confirmation (current session preserved), rename/trust, filter/sort, and honest failed-revocation + retry. The app owns revocation; never labels a session compromised without app data.",
+      "category": "security",
+      "tier": "pro",
+      "kind": "component",
+      "protected": true,
+      "keywords": [
+        "session",
+        "security",
+        "account",
+        "device",
+        "revoke",
+        "trust",
+        "login",
+        "sessions"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "url": "https://motionkit.dev/api/registry/session-security-center",
+      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/session-security-center"
+    },
+    {
+      "name": "thread-expansion",
+      "type": "registry:component",
+      "title": "Thread Expansion",
+      "description": "A presentation-only navigation + expansion surface for deeply nested discussions — expand/collapse branches, jump to next unread branch, go-to-parent, selected-path breadcrumb, collapse-resolved, deleted-reply placeholder, and lazy reply loading (loading/error/retry/load-more). Rendered as an accessible tree; depth-capped so pathological threads never render unbounded. Distinct from Comment Thread.",
+      "category": "communication",
+      "tier": "free",
+      "kind": "component",
+      "protected": false,
+      "keywords": [
+        "thread",
+        "replies",
+        "unread",
+        "conversation",
+        "messaging",
+        "nested",
+        "tree",
+        "navigation"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "url": "https://motionkit.dev/r/thread-expansion.json",
+      "install": "npx shadcn@latest add https://motionkit.dev/r/thread-expansion.json"
+    },
+    {
+      "name": "project-timeline",
+      "type": "registry:component",
+      "title": "Project Timeline",
+      "description": "An app-controlled, time-scaled project timeline (not a Gantt/charting library) — milestones/phases/tasks/releases/events on a day/week/month axis, current-date marker (from a today prop), horizontal nav + jump-to-today, phase collapse, item selection with textual date ranges, dependency indication, status filtering, delayed/blocked surfacing, a structured list/mobile fallback, and a non-drag keyboard reschedule (optimistic + rollback). No scheduling algorithms; the app owns dates.",
+      "category": "productivity",
+      "tier": "pro",
+      "kind": "component",
+      "protected": true,
+      "keywords": [
+        "timeline",
+        "roadmap",
+        "project",
+        "milestone",
+        "planning",
+        "gantt",
+        "schedule",
+        "productivity"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "url": "https://motionkit.dev/api/registry/project-timeline",
+      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/project-timeline"
     },
     {
       "name": "ai-agent-workspace",

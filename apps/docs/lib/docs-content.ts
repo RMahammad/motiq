@@ -17,6 +17,307 @@ export interface DocContent {
 }
 
 export const docsContent: Record<string, DocContent> = {
+  "processing-timeline": {
+    usage: `import { ProcessingTimeline, type ProcessingStage } from "@/components/motionkit/processing-timeline";
+
+// The app owns the pipeline; the component renders one item's stages.
+<ProcessingTimeline
+  title="clip-2043.mov"
+  stages={stages}
+  currentStageId={current}
+  onRetryStage={(s) => retry(s.id)}
+  onCancel={cancel}
+  layout="vertical"
+/>`,
+    api: [
+      { prop: "stages", type: "ProcessingStage[]", def: "—", desc: "{ id, label, description?, status, progress?, startTime?, endTime?, duration?, attempt?, error?, warning?, output?, logs?, metadata?, skippable? }. App-owned." },
+      { prop: "currentStageId / jobStatus / layout / compact", type: "misc", def: "vertical", desc: "Current-stage focus, overall job status, vertical/horizontal layout, and a compact mode." },
+      { prop: "onRetryStage / onSkipStage / onCancel / onRestart", type: "cb", def: "—", desc: "Stage + workflow intents (skip only where allowed). Progress is never faked — only app-supplied progress renders." },
+      { prop: "activeStageId / onActiveStageChange / renderStageOutput / formatTimestamp", type: "misc", def: "—", desc: "Controlled expansion, custom output rendering, and timestamp formatting." },
+    ],
+    accessibility: [
+      "Ordered-stage semantics with the current stage marked (aria-current); progress uses progressbar semantics.",
+      "Status is icon + text (never colour alone); errors + warnings are associated with their stage.",
+      "Stage expansion is keyboard-operable; retry/cancel are real buttons.",
+      "Reduced motion; mobile stacked layout.",
+    ],
+    performance: [
+      "Only the active stage pulses; completed stages do not animate; overall progress counts resolved stages.",
+      "Presentation-only — the host owns the pipeline; no timers/network.",
+      "Output/logs mount lazily on expansion.",
+    ],
+  },
+  "checkout-progress": {
+    usage: `import { CheckoutProgress, type CheckoutStep } from "@/components/motionkit/checkout-progress";
+
+// You own step content + validation; this orchestrates progress.
+<CheckoutProgress
+  steps={steps}
+  currentStepId={current}
+  state={checkoutState}
+  onNext={next}
+  onPrevious={prev}
+  onSaveStep={async (id) => save(id)}
+  onSubmit={submit}
+  orderSummary={<OrderSummary />}
+/>`,
+    api: [
+      { prop: "steps", type: "CheckoutStep[]", def: "—", desc: "App-defined (Cart/Customer/Delivery/Billing/Payment/Review/Confirmation or custom). Step states incomplete·current·valid·invalid·saving·completed·blocked·skipped." },
+      { prop: "state / mode", type: "CheckoutState / guest|account", def: "editing", desc: "Checkout-level state (editing·validating·submitting·processing·completed·failed·cancelled) and guest/account mode." },
+      { prop: "onNext / onPrevious / onGoToStep / onSaveStep / onSubmit / onRetry", type: "cb", def: "—", desc: "Controlled navigation + async step save. Never collects or processes payment (the payment field is your renderStep)." },
+      { prop: "orderSummary / renderStep", type: "ReactNode / cb", def: "—", desc: "Sticky order-summary slot and per-step content renderer." },
+    ],
+    accessibility: [
+      "Ordered step semantics with current-step indication; a validation summary lists errors.",
+      "Focus moves after a step change; keyboard navigation between steps; blocked reason is surfaced.",
+      "Status is not colour-only; 200%-zoom + mobile keyboard-safe.",
+      "Reduced motion keeps transitions minimal.",
+    ],
+    performance: [
+      "No artificial delays or fake processing progress; async save reflects the app's real state (useAsyncStatus).",
+      "Presentation-only — the host owns pricing, validation, and payment.",
+      "Completed steps render statically.",
+    ],
+  },
+  "session-security-center": {
+    usage: `import { SessionSecurityCenter, type Session } from "@/components/motionkit/session-security-center";
+
+// The app owns revocation; this presents + confirms it.
+<SessionSecurityCenter
+  sessions={sessions}
+  onRevoke={(s) => revoke(s.id)}
+  onRevokeAllOthers={revokeOthers}
+  onRefresh={refresh}
+/>`,
+    api: [
+      { prop: "sessions", type: "Session[]", def: "—", desc: "{ id, device, browser, os, location?, ipSummary?, createdTime, lastActiveTime, current?, trustLabel?, riskLabel?, authMethod?, organization?, metadata? }. IP/location/risk are app-supplied verbatim." },
+      { prop: "onRevoke / onRevokeAllOthers / onRenameDevice / onMarkTrusted / onRemoveTrust / onRefresh", type: "cb", def: "—", desc: "Intents. Bulk revocation is confirmed and provably excludes the current session unless allowRevokeCurrent." },
+      { prop: "allowRevokeCurrent / error / onRetry / refreshing", type: "misc", def: "false", desc: "Current-session protection, honest failed-revocation banner + retry, and a refreshing state." },
+      { prop: "filter / sort / now / formatTimestamp", type: "misc", def: "—", desc: "Controlled filter/sort and deterministic relative timestamps." },
+    ],
+    accessibility: [
+      "Semantic list; the current session is identified in text; revocation buttons are labelled.",
+      "Confirmation dialogs are accessible; focus is preserved onto a neighbour after removal.",
+      "Risk/trust is icon + text (never colour alone); no alarming pulsing for app-supplied risk.",
+      "Reduced motion; mobile details view; timestamps are understandable.",
+    ],
+    performance: [
+      "Presentation-only — the host owns session data + revocation; never labels a session compromised itself.",
+      "Motion communicates insertion/removal/status only.",
+      "Never exposes full IPs or precise location unless the app supplies them.",
+    ],
+  },
+  "thread-expansion": {
+    usage: `import { ThreadExpansion, type ThreadNode } from "@/components/motionkit/thread-expansion";
+
+// Navigate + expand a nested discussion (Comment Thread owns authoring).
+<ThreadExpansion
+  nodes={nodes}
+  selectedId={selected}
+  onSelect={setSelected}
+  onLoadMore={(id) => loadReplies(id)}
+  onNavigateUnread={jumpUnread}
+/>`,
+    api: [
+      { prop: "nodes", type: "ThreadNode[]", def: "—", desc: "{ id, parentId?, author, body?, timestamp, replyCount?, unreadCount?, unread?, resolved?, deleted?, collapsed?, metadata?, children? }. Flat parentId or nested." },
+      { prop: "expandedIds / onExpandedChange / defaultExpandDepth / maxAutoDepth", type: "misc", def: "—", desc: "Controlled expansion; auto-expand/expand-all are depth-capped so deep threads never render unbounded." },
+      { prop: "onLoadMore / loadingId / errorId / onRetryLoad", type: "cb / id", def: "—", desc: "Lazy reply loading with loading/error/retry rows." },
+      { prop: "onNavigateParent / onNavigateUnread / collapseResolved", type: "cb / bool", def: "—", desc: "Go-to-parent, jump-to-next-unread (expands the path), and collapse-resolved branches." },
+    ],
+    accessibility: [
+      "Rendered as an accessible tree (role=tree/treeitem, aria-level/expanded/selected) with roving tabindex.",
+      "Expand/collapse are buttons; parent/child relationships and the selected path are conveyed in text.",
+      "Focus is preserved across jumps and when a focus-containing branch collapses.",
+      "Unread is text (\"N unread in branch\"), not colour alone; loading/error labelled; reduced motion.",
+    ],
+    performance: [
+      "Indentation + auto-expand are capped; no large stagger for deep conversations.",
+      "Replies load lazily via onLoadMore; the component never renders every nested reply indefinitely.",
+      "Presentation-only — the host owns the conversation data.",
+    ],
+  },
+  "project-timeline": {
+    usage: `import { ProjectTimeline, type TimelineItem } from "@/components/motionkit/project-timeline";
+
+// App owns dates + persistence; pass \`today\` for the current-date marker.
+<ProjectTimeline
+  items={items}
+  groups={groups}
+  today={todayMs}
+  scale="week"
+  selectedItemId={selected}
+  onSelectedItemChange={setSelected}
+/>`,
+    api: [
+      { prop: "items", type: "TimelineItem[]", def: "—", desc: "{ id, title, type, startDate, endDate, status, progress?, group?, milestone?, dependencyIds?, assignee?, priority?, metadata? }. type phase/task/milestone/release/event; status planned/active/blocked/completed/delayed/cancelled." },
+      { prop: "today / scale / onScaleChange", type: "number / day|week|month / cb", def: "—", desc: "Current-date marker from a prop (never Date.now); day/week/month scale (onScaleChange = zoom)." },
+      { prop: "mode / compact / groups / loading / empty", type: "misc", def: "—", desc: "Timeline or structured list/mobile fallback, group collapse, and loading/empty states." },
+      { prop: "onMove / onResize / nudgeUnits / renderItem / renderDetails", type: "cb / misc", def: "—", desc: "Optional non-drag keyboard reschedule (optimistic + rollback). No scheduling algorithms — the app owns dates." },
+    ],
+    accessibility: [
+      "A structured grouped list fallback with dates as text; keyboard item navigation + selection.",
+      "Selected-item details show the date range + duration in words; status is icon + text (never colour alone).",
+      "Reduced motion; focus preservation; a mobile alternative; 200%-zoom safe.",
+      "Dependency connectors are decorative (aria-hidden) with a textual dependency list.",
+    ],
+    performance: [
+      "Deterministic layout (x from time, greedy row-packing, UTC ticks); no continuous ambient movement.",
+      "Presentation-only — no charting/Gantt library; the host owns date calc/persistence.",
+      "Non-drag reschedule uses the shared useOptimisticAction (optimistic + rollback).",
+    ],
+  },
+  "multi-file-queue": {
+    usage: `import { MultiFileQueue, type QueueItem } from "@/components/motionkit/multi-file-queue";
+
+// Your app owns scheduling + uploading; this manages the collection.
+<MultiFileQueue
+  items={items}
+  concurrency={3}
+  onPauseAll={pauseAll}
+  onResumeAll={resumeAll}
+  onRetryFailed={retryFailed}
+  onClearCompleted={clearCompleted}
+  onReorder={(from, to) => reorder(from, to)}
+  onPriorityChange={(id, p) => setPriority(id, p)}
+/>`,
+    api: [
+      { prop: "items", type: "QueueItem[]", def: "—", desc: "{ id, fileName, fileType, fileSize, priority, queuePosition, status, progress, speed?, remainingTime?, retryCount?, error?, thumbnail?, dependency?, destination?, metadata? }. App-owned." },
+      { prop: "concurrency", type: "number", def: "—", desc: "App-supplied active-slot limit; the queue shows slot occupancy and which items are active vs waiting." },
+      { prop: "onPauseAll / onResumeAll / onRetryFailed / onClearCompleted", type: "cb", def: "—", desc: "Queue-level batch operations." },
+      { prop: "onReorder / onPriorityChange / onPause / onResume / onRetry / onCancel / onRemove / onAdd", type: "cb", def: "—", desc: "Per-item intents + reorder. Never uploads — the app executes transfers." },
+    ],
+    accessibility: [
+      "Semantic list; status + priority are icon + text (never colour alone); progress uses progressbar semantics.",
+      "Keyboard reorder / move-menu alternative with position announcements; focus preserved after removal or movement.",
+      "Errors are associated with their item; blocked items expose their reason.",
+      "Reduced motion renders final state; progress announcements are throttled to status changes.",
+    ],
+    performance: [
+      "No React state update per animation frame; progress supplied by the app; a changed item doesn't replay all item animations.",
+      "Presentation-only — no network/scheduling; the host owns concurrency + transfers.",
+      "Large queues should be virtualized by the host.",
+    ],
+  },
+  "cart-item-transition": {
+    usage: `import { CartItemTransition, type CartLineItem } from "@/components/motionkit/cart-item-transition";
+
+// App owns price/inventory/backend; this animates the line + optimistic state.
+<CartItemTransition
+  item={line}
+  onQuantityChange={(q) => updateQty(line.id, q)}
+  onRemove={() => remove(line.id)}
+  onUndoRemove={() => undo(line.id)}
+  onRetry={retry}
+  maxQuantity={line.availability?.limit}
+/>`,
+    api: [
+      { prop: "item", type: "CartLineItem", def: "—", desc: "{ id, productName, variantSummary?, image?, unitPrice, quantity, total, previousPrice?, discount?, availability?, inventoryMessage?, fulfilmentMessage?, subscriptionInterval?, metadata? }. App-owned." },
+      { prop: "onQuantityChange / onRemove / onUndoRemove / onChangeVariant / onSaveForLater / onRetry", type: "cb", def: "—", desc: "Intents. Mutations are optimistic (via useOptimisticAction) and roll back on a rejected handler; never touches a backend/payment." },
+      { prop: "mutationState / minQuantity / maxQuantity / confirmRemove", type: "misc", def: "min 1", desc: "App-driven mutation status, quantity bounds, and optional remove confirmation." },
+      { prop: "formatPrice / currency / locale / layout", type: "misc", def: "comfortable", desc: "Locale-aware price formatting and comfortable/compact layout." },
+    ],
+    accessibility: [
+      "Quantity controls labelled; price + total changes are conveyed in text (not animation alone).",
+      "Unavailable/limited state is text; remove + undo are keyboard-accessible.",
+      "Focus is preserved on the pressed quantity control; after removal, focus falls back to Undo then Remove.",
+      "Reduced motion keeps transitions brief/none; no colour-only price or stock.",
+    ],
+    performance: [
+      "Brief, interruptible animation (number morph on quantity/total); no exaggerated fly-to-cart.",
+      "Presentation-only — the host owns pricing/inventory/backend.",
+      "Optimistic value + rollback handled by the shared useOptimisticAction primitive.",
+    ],
+  },
+  "two-factor-setup-flow": {
+    usage: `import { TwoFactorSetupFlow, type TwoFactorState } from "@/components/motionkit/two-factor-setup-flow";
+
+// The APP performs QR/secret generation, delivery, and verification.
+<TwoFactorSetupFlow
+  state={state}
+  methods={methods}
+  setupData={setupData} // app-supplied QR/secret (synthetic in the demo)
+  onBegin={begin}
+  onVerify={(code) => verify(code)}
+  onUseAlternative={usePasskey}
+  onConfirmRecoveryCodes={saveCodes}
+/>`,
+    api: [
+      { prop: "state", type: "TwoFactorState", def: "—", desc: "App-owned phase: introduction · method-selection · preparing · secret-or-QR-ready · waiting-for-code · verifying · success · invalid-code · expired-code · method-unavailable · cancelled · recovery-codes · complete." },
+      { prop: "methods / selectedMethod / setupData / recoveryCodes / error", type: "app-supplied", def: "—", desc: "authenticator/security-key/SMS/email/recovery-codes/custom (with app tradeoff notes). Secrets + codes are app-owned; the component never generates or stores them." },
+      { prop: "onBegin / onVerify / onResend / onCancel / onRetry / onUseAlternative / onComplete", type: "cb", def: "—", desc: "Lifecycle intents; an alternative method is always offered." },
+      { prop: "onCopySetupKey / onConfirmRecoveryCodes", type: "cb", def: "—", desc: "Copy passes intent only (no auto-copy); recovery codes are gated behind an explicit \"I've saved\" confirmation." },
+    ],
+    accessibility: [
+      "Step labels; focus moves between states; verification errors associated with the input (aria-describedby/aria-invalid).",
+      "Code input keyboard support (paste left to normal input); recovery codes remain selectable and are marked sensitive.",
+      "No forced countdown pressure; status is text; mobile layout.",
+      "Reduced motion; never claims the account is secure merely because setup completed.",
+    ],
+    performance: [
+      "Presentation-only — no crypto/WebAuthn/SMS; the host owns generation + verification.",
+      "Motion animates step progression/verification/reveal only; no distracting celebration.",
+      "No secret ever enters analytics; demo uses obvious synthetic placeholders.",
+    ],
+  },
+  "typing-and-presence": {
+    usage: `import { TypingAndPresence, type Participant } from "@/components/motionkit/typing-and-presence";
+
+// App supplies presence + typing (e.g. from your realtime channel).
+<TypingAndPresence
+  participants={participants}
+  typingParticipantIds={typingIds}
+  mode="inline" // compact | inline | floating-panel
+  maxVisible={4}
+/>`,
+    api: [
+      { prop: "participants", type: "Participant[]", def: "—", desc: "{ id, displayName, avatar?, presenceState, typingState?, activeContext?, lastActiveTime?, color?, role?, connectionState? }. Presence online/active/idle/away/offline/reconnecting; typing typing/recording/uploading/editing." },
+      { prop: "typingParticipantIds / context", type: "string[] / string", def: "—", desc: "Who is currently typing; summarised (\"Jamie and Morgan are typing\" / \"Three people are typing\")." },
+      { prop: "mode / maxVisible / compact", type: "misc", def: "inline / 4", desc: "compact/inline/floating-panel layout, overflow threshold, and a density modifier." },
+      { prop: "onParticipantSelect / renderParticipant / formatActivity / announceTyping", type: "misc", def: "announce true", desc: "Selection, custom rendering, activity formatting, and whether to voice typing." },
+    ],
+    accessibility: [
+      "Presence conveyed by shape + text (away/offline hollow, never colour-only); avatars fall back to initials.",
+      "A debounced polite live region voices the settled summary + reconnection — never every keystroke.",
+      "Overflow opens a keyboard-navigable participant list (Arrow/Home/End/Escape); touch-friendly detail panel.",
+      "Reduced motion; the low-energy typing pulse pauses when hidden.",
+    ],
+    performance: [
+      "Only join/leave/presence/typing/overflow/reconnection animate; no endless high-energy typing motion.",
+      "Ambient motion pauses offscreen/hidden (useVisibilityPause).",
+      "Presentation-only — the host supplies all presence/typing; no socket opened.",
+    ],
+  },
+  "task-dependency-map": {
+    usage: `import { TaskDependencyMap, type Task } from "@/components/motionkit/task-dependency-map";
+
+// App owns tasks + persistence; supply cycleError when a dependency would loop.
+<TaskDependencyMap
+  tasks={tasks}
+  selectedTaskId={selected}
+  onSelectedTaskChange={setSelected}
+  onAddDependency={(id, dep) => addDep(id, dep)}
+  onRemoveDependency={(id, dep) => removeDep(id, dep)}
+  onMoveTask={async (id, group) => move(id, group)}
+  activePath={activePath}
+/>`,
+    api: [
+      { prop: "tasks", type: "Task[]", def: "—", desc: "{ id, title, status, priority?, assignee?, startDate?, dueDate?, progress?, dependencyIds, blockedReason?, group?, milestone?, metadata? }. Statuses planned/ready/active/blocked/completed/cancelled." },
+      { prop: "onAddDependency / onRemoveDependency / onMoveTask", type: "cb", def: "—", desc: "Intents. onMoveTask may be async → optimistic move with rollback (useOptimisticAction). The app updates tasks + supplies cycleError on a loop." },
+      { prop: "selectedTaskId / onSelectedTaskChange / activePath / cycleError", type: "misc", def: "—", desc: "Controlled selection, highlighted dependency path, and an app-supplied cycle-error banner." },
+      { prop: "layout / groups / compact / renderTask / renderDetails", type: "misc", def: 'map', desc: "map or list view (list doubles as the mobile detail mode), groups, and custom renderers." },
+    ],
+    accessibility: [
+      "Keyboard-first — roving-tabindex arrow navigation; dragging is never required.",
+      "SVG dependency lines are decorative (aria-hidden); all relationships are conveyed in text and announced.",
+      "Focus is preserved on selection/move; status is icon + text (never colour alone).",
+      "Reduced motion; a compact list fallback works on mobile and at 200% zoom.",
+    ],
+    performance: [
+      "Deterministic dependency-depth layout computed in plain JS (cycle-guarded); SVG lines are static (not continuously animated).",
+      "Presentation-only — the host owns scheduling/critical-path/persistence.",
+      "Optimistic move + rollback via the shared useOptimisticAction primitive.",
+    ],
+  },
   "file-upload-pipeline": {
     usage: `import { FileUploadPipeline, type UploadItem } from "@/components/motionkit/file-upload-pipeline";
 

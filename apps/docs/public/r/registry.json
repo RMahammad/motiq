@@ -1052,6 +1052,359 @@
       }
     },
     {
+      "name": "multi-file-queue",
+      "type": "registry:component",
+      "title": "Multi-file Queue",
+      "description": "A presentation-only queue MANAGER for a collection of files/jobs — priority lanes, concurrency-slot occupancy, blocked-item explanation, queue-level progress, per-item reorder + priority, and pause-all/resume-all/retry-failed/clear-completed. Distinct from File Upload Pipeline; never uploads internally.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "files": [
+        {
+          "path": "registry/file/multi-file-queue.tsx",
+          "type": "registry:component",
+          "target": "components/motionkit/multi-file-queue.tsx"
+        }
+      ],
+      "meta": {
+        "category": "file",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "queue",
+          "batch",
+          "upload",
+          "processing",
+          "files",
+          "priority",
+          "concurrency",
+          "media",
+          "jobs"
+        ]
+      }
+    },
+    {
+      "name": "cart-item-transition",
+      "type": "registry:component",
+      "title": "Cart Item Transition",
+      "description": "An app-controlled animated cart LINE ITEM (not a full cart) — arrival, quantity/total morph, variant crossfade, price-change, limited/unavailable, removal→Undo→restore, with optimistic mutation + automatic rollback and honest failed/Retry. Never touches a backend or payment; price/inventory are app-owned. No manipulative urgency.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "files": [
+        {
+          "path": "registry/commerce/cart-item-transition.tsx",
+          "type": "registry:component",
+          "target": "components/motionkit/cart-item-transition.tsx"
+        }
+      ],
+      "meta": {
+        "category": "commerce",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "cart",
+          "quantity",
+          "checkout",
+          "purchase",
+          "product",
+          "variant",
+          "price",
+          "order",
+          "commerce"
+        ]
+      }
+    },
+    {
+      "name": "two-factor-setup-flow",
+      "type": "registry:component",
+      "title": "Two-Factor Setup Flow",
+      "description": "Orchestration + presentation for adding a second auth factor (authenticator/security-key/SMS/email/recovery-codes/custom). The app supplies all operations + state; the component never implements crypto, shows real secrets, stores codes, or claims the account is secure because setup finished. Recovery codes are treated as sensitive; an alternative method is always offered.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "files": [
+        {
+          "path": "registry/security/two-factor-setup-flow.tsx",
+          "type": "registry:component",
+          "target": "components/motionkit/two-factor-setup-flow.tsx"
+        }
+      ],
+      "meta": {
+        "category": "security",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "two-factor",
+          "2fa",
+          "authenticator",
+          "security",
+          "mfa",
+          "recovery-codes",
+          "account",
+          "setup"
+        ]
+      }
+    },
+    {
+      "name": "typing-and-presence",
+      "type": "registry:component",
+      "title": "Typing and Presence",
+      "description": "A combined real-time typing + participant-presence strip for messaging/collaboration — presence (online/active/idle/away/offline/reconnecting) + typing (typing/recording/uploading/editing) by shape+text, avatar initials, overflow summary (\"Three people are typing\"), compact/inline/floating modes. App supplies all data; a debounced polite live region avoids keystroke spam; ambient motion pauses when hidden.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "files": [
+        {
+          "path": "registry/communication/typing-and-presence.tsx",
+          "type": "registry:component",
+          "target": "components/motionkit/typing-and-presence.tsx"
+        }
+      ],
+      "meta": {
+        "category": "communication",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "typing",
+          "presence",
+          "thread",
+          "messaging",
+          "conversation",
+          "collaboration",
+          "status",
+          "avatars"
+        ]
+      }
+    },
+    {
+      "name": "task-dependency-map",
+      "type": "registry:component",
+      "title": "Task Dependency Map",
+      "description": "An app-controlled task DEPENDENCY visualization (not a graph editor / not pan-zoom-only). Deterministic dependency-depth layout with static SVG lines, blocked/blocking relationships, prerequisite + dependent inspection, highlighted active path, app-supplied cycle error, status filter, and a compact list/mobile fallback. Keyboard-first (dragging never required); optimistic move with rollback.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "files": [
+        {
+          "path": "registry/productivity/task-dependency-map.tsx",
+          "type": "registry:component",
+          "target": "components/motionkit/task-dependency-map.tsx"
+        }
+      ],
+      "meta": {
+        "category": "productivity",
+        "tier": "pro",
+        "signature": false,
+        "keywords": [
+          "dependency",
+          "blocked",
+          "project",
+          "planning",
+          "tasks",
+          "graph",
+          "milestone",
+          "roadmap",
+          "productivity"
+        ]
+      }
+    },
+    {
+      "name": "processing-timeline",
+      "type": "registry:component",
+      "title": "Processing Timeline",
+      "description": "A presentation-only timeline for ONE ingested item moving through multiple app-owned processing stages (scan → transcode → thumbnail → caption → publish) — per-stage status/progress/output/logs/warnings/errors, current-stage focus, stage expansion, retry/skip/cancel/restart, duration summary, and vertical/horizontal layouts. Distinct from File Upload Pipeline + Multi-file Queue; never fakes progress.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "files": [
+        {
+          "path": "registry/file/processing-timeline.tsx",
+          "type": "registry:component",
+          "target": "components/motionkit/processing-timeline.tsx"
+        }
+      ],
+      "meta": {
+        "category": "file",
+        "tier": "pro",
+        "signature": false,
+        "keywords": [
+          "processing",
+          "pipeline",
+          "stages",
+          "encoding",
+          "transcode",
+          "files",
+          "media",
+          "job"
+        ]
+      }
+    },
+    {
+      "name": "checkout-progress",
+      "type": "registry:component",
+      "title": "Checkout Progress",
+      "description": "An app-controlled multi-step checkout progress/orchestration surface (not a payment processor) — current + completed + editable steps, per-step validation + blocked reasons, async step save, return-to-previous, error/progress summaries, sticky order-summary slot, and optional guest/account modes. Never collects or processes payment; no fake processing progress.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "files": [
+        {
+          "path": "registry/commerce/checkout-progress.tsx",
+          "type": "registry:component",
+          "target": "components/motionkit/checkout-progress.tsx"
+        }
+      ],
+      "meta": {
+        "category": "commerce",
+        "tier": "pro",
+        "signature": false,
+        "keywords": [
+          "checkout",
+          "steps",
+          "commerce",
+          "purchase",
+          "booking",
+          "subscription",
+          "wizard",
+          "order"
+        ]
+      }
+    },
+    {
+      "name": "session-security-center",
+      "type": "registry:component",
+      "title": "Session Security Center",
+      "description": "A presentation + control surface for reviewing and revoking active account sessions — device/browser/os, app-supplied approximate location + IP summary + trust/risk labels, current-session identification, single + bulk revocation with confirmation (current session preserved), rename/trust, filter/sort, and honest failed-revocation + retry. The app owns revocation; never labels a session compromised without app data.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "files": [
+        {
+          "path": "registry/security/session-security-center.tsx",
+          "type": "registry:component",
+          "target": "components/motionkit/session-security-center.tsx"
+        }
+      ],
+      "meta": {
+        "category": "security",
+        "tier": "pro",
+        "signature": false,
+        "keywords": [
+          "session",
+          "security",
+          "account",
+          "device",
+          "revoke",
+          "trust",
+          "login",
+          "sessions"
+        ]
+      }
+    },
+    {
+      "name": "thread-expansion",
+      "type": "registry:component",
+      "title": "Thread Expansion",
+      "description": "A presentation-only navigation + expansion surface for deeply nested discussions — expand/collapse branches, jump to next unread branch, go-to-parent, selected-path breadcrumb, collapse-resolved, deleted-reply placeholder, and lazy reply loading (loading/error/retry/load-more). Rendered as an accessible tree; depth-capped so pathological threads never render unbounded. Distinct from Comment Thread.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "files": [
+        {
+          "path": "registry/communication/thread-expansion.tsx",
+          "type": "registry:component",
+          "target": "components/motionkit/thread-expansion.tsx"
+        }
+      ],
+      "meta": {
+        "category": "communication",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "thread",
+          "replies",
+          "unread",
+          "conversation",
+          "messaging",
+          "nested",
+          "tree",
+          "navigation"
+        ]
+      }
+    },
+    {
+      "name": "project-timeline",
+      "type": "registry:component",
+      "title": "Project Timeline",
+      "description": "An app-controlled, time-scaled project timeline (not a Gantt/charting library) — milestones/phases/tasks/releases/events on a day/week/month axis, current-date marker (from a today prop), horizontal nav + jump-to-today, phase collapse, item selection with textual date ranges, dependency indication, status filtering, delayed/blocked surfacing, a structured list/mobile fallback, and a non-drag keyboard reschedule (optimistic + rollback). No scheduling algorithms; the app owns dates.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "@motionkit/utils",
+        "@motionkit/primitives"
+      ],
+      "files": [
+        {
+          "path": "registry/productivity/project-timeline.tsx",
+          "type": "registry:component",
+          "target": "components/motionkit/project-timeline.tsx"
+        }
+      ],
+      "meta": {
+        "category": "productivity",
+        "tier": "pro",
+        "signature": false,
+        "keywords": [
+          "timeline",
+          "roadmap",
+          "project",
+          "milestone",
+          "planning",
+          "gantt",
+          "schedule",
+          "productivity"
+        ]
+      }
+    },
+    {
       "name": "ai-agent-workspace",
       "type": "registry:block",
       "title": "AI Agent Workspace",

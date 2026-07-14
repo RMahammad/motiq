@@ -37,6 +37,16 @@ import { ProductVariantSelectorPreview } from "./product-variant-selector";
 import { PasskeySetupFlowPreview } from "./passkey-setup-flow";
 import { MessageDeliveryStatesPreview } from "./message-delivery-states";
 import { KanbanCardMovementPreview } from "./kanban-card-movement";
+import { MultiFileQueuePreview } from "./multi-file-queue";
+import { CartItemTransitionPreview } from "./cart-item-transition";
+import { TwoFactorSetupFlowPreview } from "./two-factor-setup-flow";
+import { TypingAndPresencePreview } from "./typing-and-presence";
+import { TaskDependencyMapPreview } from "./task-dependency-map";
+import { ProcessingTimelinePreview } from "./processing-timeline";
+import { CheckoutProgressPreview } from "./checkout-progress";
+import { SessionSecurityCenterPreview } from "./session-security-center";
+import { ThreadExpansionPreview } from "./thread-expansion";
+import { ProjectTimelinePreview } from "./project-timeline";
 import { RotatingText } from "@/registry/text/rotating-text";
 import { SpotlightCard } from "@/registry/creative/spotlight-card";
 import { AnimatedList, AnimatedListItem } from "@/registry/creative/animated-list";
@@ -647,6 +657,16 @@ export const previewMap: Record<string, React.ComponentType> = {
   "passkey-setup-flow": PasskeySetupFlowPreview,
   "message-delivery-states": MessageDeliveryStatesPreview,
   "kanban-card-movement": KanbanCardMovementPreview,
+  "multi-file-queue": MultiFileQueuePreview,
+  "cart-item-transition": CartItemTransitionPreview,
+  "two-factor-setup-flow": TwoFactorSetupFlowPreview,
+  "typing-and-presence": TypingAndPresencePreview,
+  "task-dependency-map": TaskDependencyMapPreview,
+  "processing-timeline": ProcessingTimelinePreview,
+  "checkout-progress": CheckoutProgressPreview,
+  "session-security-center": SessionSecurityCenterPreview,
+  "thread-expansion": ThreadExpansionPreview,
+  "project-timeline": ProjectTimelinePreview,
   "kinetic-emphasis": KineticEmphasisPreview,
   "blur-text": BlurTextPreview,
   "rotating-text": RotatingTextPreview,

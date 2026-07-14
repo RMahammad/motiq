@@ -429,3 +429,54 @@ export function useAsyncStatus(initial: AsyncStatus = "idle") {
 
   return { status, error, setStatus, setError, run, cancel, reset };
 }
+
+export type OptimisticPhase = "idle" | "pending" | "success" | "error";
+
+/**
+ * Optimistic mutation with automatic rollback. Show `value` immediately, run the
+ * async `action`, and on failure restore the previous committed value + expose
+ * an error. Adopts a new `committed` value from the app whenever not mid-flight,
+ * so real state catching up replaces the optimistic value cleanly.
+ *
+ * Shared by Cart Item Transition, Task Dependency Map, and Project Timeline —
+ * each applies an optimistic change (quantity, dependency, move) that must roll
+ * back if the app's async handler rejects. Focus restoration after a rollback is
+ * the component's responsibility (it holds the DOM refs).
+ */
+export function useOptimisticAction<T>(committed: T) {
+  const [state, setState] = React.useState<{ value: T; active: boolean }>({ value: committed, active: false });
+  const [phase, setPhase] = React.useState<OptimisticPhase>("idle");
+  const [error, setError] = React.useState<string | null>(null);
+  const baseRef = React.useRef(committed);
+
+  // Adopt the app's committed value whenever we're not mid-flight.
+  React.useEffect(() => {
+    if (phase === "pending") return;
+    baseRef.current = committed;
+    setState({ value: committed, active: false });
+    if (phase === "success") setPhase("idle");
+  }, [committed, phase]);
+
+  const commit = React.useCallback(async (next: T, action: () => Promise<void> | void) => {
+    const prev = baseRef.current;
+    setState({ value: next, active: true });
+    setPhase("pending");
+    setError(null);
+    try {
+      await action();
+      setPhase("success");
+    } catch (e) {
+      setState({ value: prev, active: false }); // rollback
+      setError(e instanceof Error ? e.message : String(e));
+      setPhase("error");
+    }
+  }, []);
+
+  const reset = React.useCallback(() => {
+    setPhase("idle");
+    setError(null);
+    setState({ value: baseRef.current, active: false });
+  }, []);
+
+  return { value: state.value, optimistic: state.active, phase, error, commit, reset };
+}

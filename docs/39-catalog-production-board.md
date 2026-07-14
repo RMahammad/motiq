@@ -129,3 +129,34 @@ Catalog now **40 components (31 Free / 9 Pro) + 4 blocks + 4 packs + 2 libs = 50
 | Productivity Pack | Kanban Card Movement | Task Dependency Map · Project Timeline · Bulk Action Bar |
 
 A pack block is built only at **4/4** (existing rule). The five new packs stay component-only until then; the four original workflow packs remain the only shippable blocks/packs.
+
+## Batch 7 + Batch 8 (delivered) — final component development
+
+The owner fixed the scope to Batch 7 + Batch 8, then **stop** (no Batch 9). All ten Released on the rapid track. Shared primitive added: `useOptimisticAction` (Cart Item Transition, Task Dependency Map, Project Timeline).
+
+| Component | Category | Tier | Batch | Status |
+|---|---|---|---|---|
+| Multi-file Queue | file | Free | 7 | **Released** |
+| Cart Item Transition | commerce | Free | 7 | **Released** |
+| Two-Factor Setup Flow | security | Free | 7 | **Released** |
+| Typing and Presence | communication | Free | 7 | **Released** |
+| Task Dependency Map | productivity | Pro | 7 | **Released** |
+| Processing Timeline | file | Pro | 8 | **Released** |
+| Checkout Progress | commerce | Pro | 8 | **Released** |
+| Session Security Center | security | Pro | 8 | **Released** |
+| Thread Expansion | communication | Free | 8 | **Released** |
+| Project Timeline | productivity | Pro | 8 | **Released** |
+
+Catalog now **60 registry items = 50 components (35 Free / 15 Pro) + 4 blocks + 4 packs + 2 libs** across 15 categories. None Experimental.
+
+### Pack progress after Batch 8 (each 3/4 — NO block built; blocks require 4/4)
+
+| Pack | Components (3/4) | Deferred 4th anchor — **not approved for implementation** |
+|---|---|---|
+| File Workflow Pack | File Upload Pipeline · Multi-file Queue · Processing Timeline | Export Progress (Deferred) |
+| Commerce Motion Pack | Product Variant Selector · Cart Item Transition · Checkout Progress | Order Tracking (Deferred) |
+| Security & Account Pack | Passkey Setup Flow · Two-Factor Setup Flow · Session Security Center | API Key Management (Deferred) |
+| Communication Pack | Message Delivery States · Typing and Presence · Thread Expansion | Voice Message (Deferred) |
+| Productivity Pack | Kanban Card Movement · Task Dependency Map · Project Timeline | Bulk Action Bar (Deferred) |
+
+**Component development is STOPPED after Batch 8.** No Batch 9 is planned, selected, or recommended. The five Deferred anchors above are recorded for the owner's future reference only and are **not approved for implementation**. No new blocks, pack pages for incomplete packs, templates, backgrounds, text effects, cards, or animated-shadcn components are to be built. The four original workflow packs (AI Interface, Developer Tools, Collaboration, Data Motion) remain the only shippable 4/4 blocks/packs.
