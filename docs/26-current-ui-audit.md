@@ -12,7 +12,7 @@
 | Layout / nav | [`apps/docs/app/layout.tsx`](../apps/docs/app/layout.tsx) |
 | Site CSS | [`apps/docs/app/docs.css`](../apps/docs/app/docs.css) |
 | Component pages | [`apps/docs/app/components/{pricing-card,dialog,spotlight-card}/page.tsx`](../apps/docs/app/components/) |
-| Preview wrapper | [`apps/docs/app/_components/preview.tsx`](../apps/docs/app/_components/preview.tsx) |
+| Preview wrapper (pre‑redesign) | `apps/docs/app/_components/preview.tsx` — static demo + code; **replaced** by the live `ComponentStage` in the redesign |
 | Reused library sections | `HeroSection`, `FeatureGrid`, `CTASection` ([`@scope/sections`](../packages/sections/src/)), `BentoGrid` ([`@scope/react`](../packages/react/src/bento-grid.tsx)) |
 
 ## Verdict (one line)
@@ -61,7 +61,7 @@
 
 | Capability | Present? |
 |---|---|
-| Live preview | ✅ (the component renders live in [`Preview`](../apps/docs/app/_components/preview.tsx)) |
+| Live preview | ✅ (the component renders live in the pre‑redesign `Preview` wrapper) |
 | Replay animation | ❌ |
 | Change motion preset / intent | ❌ |
 | Change motion intensity | ❌ |
