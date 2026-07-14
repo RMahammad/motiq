@@ -24,6 +24,10 @@ Per our ADR rule, a decision is **Accepted** only when it is *supported by the c
 | [0010](0010-commercial-distribution.md) | Commercial distribution (private npm + authed registry; no runtime checks) | Proposed | [`16`](../16-commercial-packaging.md) | needs legal review |
 | [0011](0011-accessible-primitives.md) | Accessible primitives (Radix default; React Aria later) | **Accepted** (Dialog spike-validated) | [`12`](../12-accessibility-standard.md) | no |
 | [0012](0012-design-token-contract.md) | Design-token contract (semantic tokens, CSS vars + TS) | Proposed | [`10`](../10-design-tokens.md) | no |
+| [0013](0013-product-moat.md) | Product moat (semantic motion + choreography) | Proposed | [`27`](../27-product-differentiation.md) | no |
+| [0014](0014-visual-direction.md) | Visual direction ("Motion Laboratory") | Proposed | [`28`](../28-visual-direction.md) | no |
+| [0015](0015-semantic-motion-api.md) | Semantic motion & choreography API | Proposed | [`27`](../27-product-differentiation.md) | no |
+| [0016](0016-interactive-demo-platform.md) | Interactive demo / Motion Laboratory platform | Proposed | [`28`](../28-visual-direction.md) | no |
 
 ## Rules
 

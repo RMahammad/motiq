@@ -40,6 +40,9 @@ Used throughout the docs:
 - [`00-executive-summary.md`](00-executive-summary.md) — the whole plan in one page
 - [`01-product-strategy.md`](01-product-strategy.md) — positioning, audience, commercial terms
 - [`02-market-analysis.md`](02-market-analysis.md) — competitive landscape
+- [`27-product-differentiation.md`](27-product-differentiation.md) — **canonical** product moat & differentiation
+- [`26-current-ui-audit.md`](26-current-ui-audit.md) — pre‑redesign UI audit
+- [`28-visual-direction.md`](28-visual-direction.md) — **canonical** visual system + anti‑patterns
 - [`20-mvp-roadmap.md`](20-mvp-roadmap.md) — MVP scope, phases, hero components
 - [`21-component-inventory.md`](21-component-inventory.md) — component matrix
 - [`19-support-and-deprecation.md`](19-support-and-deprecation.md) — support & deprecation policy
@@ -68,7 +71,7 @@ Used throughout the docs:
 - [`18-release-process.md`](18-release-process.md) — release pipeline & checklist
 - [`22-risk-register.md`](22-risk-register.md) — **canonical** risk register
 - [`23-open-questions.md`](23-open-questions.md) — **canonical** unresolved decisions
-- [`26-go-live-checklist.md`](26-go-live-checklist.md) — **canonical** launch runbook (what's between v0.1.0 and a paid launch)
+- [`29-go-live-checklist.md`](29-go-live-checklist.md) — **canonical** launch runbook (what's between v0.1.0 and a paid launch)
 
 ### Claude Code system
 - [`24-claude-code-workflow.md`](24-claude-code-workflow.md) — how CLAUDE.md / skills / hooks / ADRs fit together
@@ -86,6 +89,8 @@ See [`adrs/README.md`](adrs/README.md) for the full status table. All ADRs are c
 
 | When you change… | Update this canonical doc | Also refresh (links/summaries) |
 |---|---|---|
+| Product positioning / moat | [`27-product-differentiation.md`](27-product-differentiation.md) | [`01`](01-product-strategy.md), [ADR-0013](adrs/0013-product-moat.md) |
+| Visual language / homepage structure | [`28-visual-direction.md`](28-visual-direction.md) | [ADR-0014](adrs/0014-visual-direction.md) |
 | Package structure / a new package | [`04-package-map.md`](04-package-map.md) | [`03-architecture.md`](03-architecture.md) |
 | A boundary / forbidden import | [`03-architecture.md`](03-architecture.md) | package `CLAUDE.md`, [`24`](24-claude-code-workflow.md) |
 | A public component API | [`09-component-api-standard.md`](09-component-api-standard.md) | component doc page, changeset |
@@ -101,7 +106,7 @@ See [`adrs/README.md`](adrs/README.md) for the full status table. All ADRs are c
 | MVP scope / roadmap | [`20-mvp-roadmap.md`](20-mvp-roadmap.md) | [`21`](21-component-inventory.md) |
 | A component's status | [`21-component-inventory.md`](21-component-inventory.md) | component doc page |
 | A risk | [`22-risk-register.md`](22-risk-register.md) | — |
-| A launch‑blocking decision resolves | [`26-go-live-checklist.md`](26-go-live-checklist.md) | its canonical doc + ADR if durable |
+| A launch‑blocking decision resolves | [`29-go-live-checklist.md`](29-go-live-checklist.md) | its canonical doc + ADR if durable |
 
 Follow the [`documentation-maintenance`](../.claude/skills/documentation-maintenance/SKILL.md) skill so linked summaries stay in sync.
 

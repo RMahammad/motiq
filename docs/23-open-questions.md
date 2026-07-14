@@ -3,7 +3,7 @@
 > **Type:** 🟢 Canonical for unresolved decisions · **Implementation status:** 🔵 Planned (living) · **Last reviewed:** 2026-07-14
 > **Related:** [`08-remotion-license-analysis.md`](08-remotion-license-analysis.md) · [`16-commercial-packaging.md`](16-commercial-packaging.md) · [`22-risk-register.md`](22-risk-register.md)
 > Resolve blocking items before the phase noted. When resolved, record the decision in the owning canonical doc and/or an ADR, then move the row to "Resolved".
-> **For launch specifically**, the consolidated, prioritized runbook is [`26-go-live-checklist.md`](26-go-live-checklist.md) — it maps each of these decisions to a recommendation + what it unblocks.
+> **For launch specifically**, the consolidated, prioritized runbook is [`29-go-live-checklist.md`](29-go-live-checklist.md) — it maps each of these decisions to a recommendation + what it unblocks.
 
 ## Blocking (before Phase 2 / as noted)
 

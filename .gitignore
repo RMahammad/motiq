@@ -10,3 +10,6 @@ storybook-static/
 
 # ephemeral fixture install (references gitignored tarballs)
 fixtures/tarball-consumer/pnpm-lock.yaml
+
+# third-party skills (Taste Skill) — provenance recorded in docs, not vendored
+.agents/

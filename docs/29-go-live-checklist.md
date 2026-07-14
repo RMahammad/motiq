@@ -1,4 +1,4 @@
-# 26 — Go‑live checklist
+# 29 — Go‑live checklist
 
 > **Type:** 🟢 Canonical launch runbook · **Implementation status:** 🟡 Engineering MVP done (v0.1.0); launch is **decision‑gated** · **Last reviewed:** 2026-07-14
 > **Owns:** the single list of what stands between the tested `v0.1.0` and a paid launch, each with a recommendation and what unblocks it.
