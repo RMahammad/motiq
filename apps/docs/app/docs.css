@@ -225,6 +225,34 @@ section { position: relative; }
 .pad { padding-block: clamp(56px, 9vw, 104px); }
 .pad-sm { padding-block: clamp(36px, 6vw, 64px); }
 
+/* ---------- component page ---------- */
+.article { padding-block: clamp(40px, 7vw, 80px); display: flex; flex-direction: column; gap: 28px; }
+.article__head { max-width: 760px; }
+.article__head h1 { font-family: var(--lab-display); font-weight: 700; letter-spacing: -0.02em; font-size: clamp(2rem, 5vw, 3rem); margin: 12px 0 10px; }
+.article__head p { color: var(--lab-muted); font-size: 1.05rem; margin: 0; }
+.crumb { font-family: var(--lab-mono); font-size: 0.74rem; color: var(--lab-faint); }
+.crumb a { color: var(--lab-signal); text-decoration: none; }
+
+.cstage { background: var(--lab-stage); color: #14161c; padding: 32px; display: flex; justify-content: center; min-height: 300px; }
+.cstage[data-theme="dark"] { background: #0f1115; color: #fafafa; }
+.cstage__inner { width: 100%; display: flex; align-items: center; justify-content: center; transition: max-width 200ms ease; }
+.cstage__inner[data-reduced] *,
+.cstage__inner[data-reduced] {
+  animation-duration: 0.001ms !important;
+  animation-delay: 0s !important;
+  transition-duration: 0.001ms !important;
+  transition-delay: 0s !important;
+}
+.cstage__controls { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 12px 16px; border-top: 1px solid var(--lab-hairline); background: var(--lab-panel); }
+
+.panel { display: grid; grid-template-columns: 1fr; gap: 0; margin: 0; border-top: 1px solid var(--lab-hairline); }
+.panel__row { display: grid; grid-template-columns: 160px 1fr; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--lab-hairline); background: var(--lab-panel); }
+.panel__row:last-child { border-bottom: 0; }
+.panel dt { font-family: var(--lab-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--lab-faint); margin: 0; }
+.panel dd { margin: 0; font-size: 0.9rem; color: var(--lab-ink); }
+.panel dd code { font-family: var(--lab-mono); font-size: 0.82rem; color: var(--lab-signal-2); }
+@media (max-width: 560px) { .panel__row { grid-template-columns: 1fr; gap: 3px; } }
+
 /* ---------- light-mode (docs brand invert) ---------- */
 @media (prefers-color-scheme: light) {
   :root {
