@@ -12,6 +12,7 @@
     "./blur-reveal": { "types": "./dist/blur-reveal.d.ts", "import": "./dist/blur-reveal.js" },
     "./gradient-text": { "types": "./dist/gradient-text.d.ts", "import": "./dist/gradient-text.js" },
     "./marquee": { "types": "./dist/marquee.d.ts", "import": "./dist/marquee.js" },
+    "./text-reveal": { "types": "./dist/text-reveal.d.ts", "import": "./dist/text-reveal.js" },
     "./use-in-view": { "types": "./dist/use-in-view.d.ts", "import": "./dist/use-in-view.js" },
     "./styles.css": "./styles.css"
   },

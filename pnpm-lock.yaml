@@ -293,6 +293,9 @@ importers:
       '@scope/motion':
         specifier: workspace:*
         version: link:../motion
+      '@scope/react':
+        specifier: workspace:*
+        version: link:../react
       '@scope/tokens':
         specifier: workspace:*
         version: link:../tokens

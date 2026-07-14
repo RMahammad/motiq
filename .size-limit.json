@@ -110,5 +110,26 @@
     "import": "{ HeroSection }",
     "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
     "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/motion TextReveal (brotli)",
+    "path": "packages/motion/dist/text-reveal.js",
+    "import": "{ TextReveal }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/sections FeatureGrid (brotli, excl. peers + workspace)",
+    "path": "packages/sections/dist/feature-grid.js",
+    "import": "{ FeatureGrid }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/react", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/sections CTASection (brotli, excl. peers + workspace)",
+    "path": "packages/sections/dist/cta-section.js",
+    "import": "{ CTASection }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
   }
 ]

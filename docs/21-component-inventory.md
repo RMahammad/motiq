@@ -17,7 +17,7 @@
 | ScrollProgress | Scroll | 🔵 | Free | MVP | useScroll | reading progress | L | L | — | — | v1.0 |
 | [BlurReveal](components/blur-reveal.md) | Foundation | 🟡 spike | Premium | MVP | InView | headline | L | M | ✅ [page](components/blur-reveal.md) | ✅ unit+SSR | v1.0 |
 | AnimatedNumber/Counter | Text | 🔵 | Premium | MVP | — | stats | L | L | — | — | v1.0 |
-| TextReveal/WordReveal | Text | 🔵 | Premium | MVP | Stagger | hero | M | M | — | — | v1.0 |
+| [TextReveal](components/text-reveal.md) | Text | 🟡 spike | Premium | MVP | InView | hero | L | M | ✅ [page](components/text-reveal.md) | ✅ unit+SSR+axe | v1.0 |
 | [GradientText](components/gradient-text.md) | Text | 🟡 spike | Free | MVP | css | hero | L | L | ✅ [page](components/gradient-text.md) | ✅ unit+SSR+axe | v1.0 |
 | RotatingWords | Text | 🔵 | Premium | MVP | Presence | hero | M | L | — | — | v1.0 |
 | AnimatedButton | Controls | 🔵 | Premium | MVP | motion | CTA | L | L | — | — | v1.0 |
@@ -32,7 +32,8 @@
 | [Skeleton](components/skeleton.md) | Feedback | 🟡 spike | Free | MVP | css | loading | L | L | ✅ [page](components/skeleton.md) | ✅ unit+SSR+axe | v1.0 |
 | [Marquee](components/marquee.md) | Media | 🟡 spike | Premium | MVP | css | logo cloud | M | M | ✅ [page](components/marquee.md) | ✅ unit+SSR+axe | v1.0 |
 | [HeroSection](components/hero-section.md) | Section | 🟡 spike | Premium | MVP | Stagger/Reveal | landing | L | L | ✅ [page](components/hero-section.md) | ✅ slots+SSR+axe | v1.0 |
-| FeatureGrid + CTASection | Section | 🔵 | Premium | MVP | compose | landing | L | L | — | — | v1.0 |
+| [FeatureGrid](components/feature-grid.md) | Section | 🟡 spike | Premium | MVP | BentoGrid | landing | L | L | ✅ [page](components/feature-grid.md) | ✅ slots+SSR+axe | v1.0 |
+| [CTASection](components/cta-section.md) | Section | 🟡 spike | Premium | MVP | Reveal | landing | L | L | ✅ [page](components/cta-section.md) | ✅ slots+SSR+axe | v1.0 |
 | Magnetic | Controls | 🔵 | Premium | V1 | pointer | CTA delight | M | M | — | — | v1.1 |
 | TiltCard | Cards | 🔵 | Premium | V1 | Tilt | product | M | M | — | — | v1.1 |
 | BeforeAfter | Media | 🔵 | Premium | V1 | pointer | comparison | M | M | — | — | v1.1 |

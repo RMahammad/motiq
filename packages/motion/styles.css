@@ -135,3 +135,43 @@
 @media (prefers-reduced-motion: reduce) {
   .scope-marquee__track { animation: none; }
 }
+
+/* ---- TextReveal ---- */
+.scope-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.scope-text-reveal__unit {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0;
+  transform: translateY(var(--motion-distance-sm, 8px));
+  transition:
+    opacity var(--motion-duration-normal, 220ms) var(--motion-ease-standard, ease),
+    transform var(--motion-duration-normal, 220ms) var(--motion-ease-emphasized, ease);
+  transition-delay: calc(var(--stagger-gap, var(--motion-stagger-sm, 40ms)) * var(--stagger-index, 0));
+  will-change: opacity, transform;
+}
+.scope-text-reveal[data-motion="shown"] .scope-text-reveal__unit {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-text-reveal:not([data-reduced-motion="allow"]) .scope-text-reveal__unit {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+.scope-text-reveal[data-reduced-motion="force-reduce"] .scope-text-reveal__unit {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}

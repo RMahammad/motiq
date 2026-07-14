@@ -10,6 +10,14 @@
       "types": "./dist/hero-section.d.ts",
       "import": "./dist/hero-section.js"
     },
+    "./feature-grid": {
+      "types": "./dist/feature-grid.d.ts",
+      "import": "./dist/feature-grid.js"
+    },
+    "./cta-section": {
+      "types": "./dist/cta-section.d.ts",
+      "import": "./dist/cta-section.js"
+    },
     "./styles.css": "./styles.css"
   },
   "files": ["dist", "styles.css"],
@@ -20,6 +28,7 @@
   },
   "dependencies": {
     "@scope/motion": "workspace:*",
+    "@scope/react": "workspace:*",
     "@scope/tokens": "workspace:*"
   },
   "peerDependencies": {

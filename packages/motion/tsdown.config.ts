@@ -9,6 +9,7 @@ export default defineConfig({
     "src/blur-reveal.tsx",
     "src/gradient-text.tsx",
     "src/marquee.tsx",
+    "src/text-reveal.tsx",
     "src/use-in-view.ts",
   ],
   format: "esm",

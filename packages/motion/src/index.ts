@@ -11,5 +11,7 @@ export { GradientText } from "./gradient-text";
 export type { GradientTextProps } from "./gradient-text";
 export { Marquee } from "./marquee";
 export type { MarqueeProps } from "./marquee";
+export { TextReveal } from "./text-reveal";
+export type { TextRevealProps } from "./text-reveal";
 export { useInView } from "./use-in-view";
 export type { UseInViewOptions } from "./use-in-view";

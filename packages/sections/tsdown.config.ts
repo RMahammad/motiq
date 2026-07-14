@@ -1,7 +1,7 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/hero-section.tsx"],
+  entry: ["src/index.ts", "src/hero-section.tsx", "src/feature-grid.tsx", "src/cta-section.tsx"],
   format: "esm",
   dts: true,
   clean: true,
