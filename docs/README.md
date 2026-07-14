@@ -68,6 +68,7 @@ Used throughout the docs:
 - [`18-release-process.md`](18-release-process.md) — release pipeline & checklist
 - [`22-risk-register.md`](22-risk-register.md) — **canonical** risk register
 - [`23-open-questions.md`](23-open-questions.md) — **canonical** unresolved decisions
+- [`26-go-live-checklist.md`](26-go-live-checklist.md) — **canonical** launch runbook (what's between v0.1.0 and a paid launch)
 
 ### Claude Code system
 - [`24-claude-code-workflow.md`](24-claude-code-workflow.md) — how CLAUDE.md / skills / hooks / ADRs fit together
@@ -100,6 +101,7 @@ See [`adrs/README.md`](adrs/README.md) for the full status table. All ADRs are c
 | MVP scope / roadmap | [`20-mvp-roadmap.md`](20-mvp-roadmap.md) | [`21`](21-component-inventory.md) |
 | A component's status | [`21-component-inventory.md`](21-component-inventory.md) | component doc page |
 | A risk | [`22-risk-register.md`](22-risk-register.md) | — |
+| A launch‑blocking decision resolves | [`26-go-live-checklist.md`](26-go-live-checklist.md) | its canonical doc + ADR if durable |
 
 Follow the [`documentation-maintenance`](../.claude/skills/documentation-maintenance/SKILL.md) skill so linked summaries stay in sync.
 
