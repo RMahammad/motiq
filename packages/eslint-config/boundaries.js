@@ -20,7 +20,11 @@ const FORBIDDEN_IN_CORE = [
 
 export default tseslint.config(
   {
-    files: ["packages/react/src/**/*.{ts,tsx}", "packages/sections/src/**/*.{ts,tsx}"],
+    files: [
+      "packages/react/src/**/*.{ts,tsx}",
+      "packages/sections/src/**/*.{ts,tsx}",
+      "packages/recipes/src/**/*.{ts,tsx}",
+    ],
     languageOptions: { parser: tseslint.parser },
     rules: {
       "no-restricted-imports": ["error", { patterns: FORBIDDEN_IN_CORE }],

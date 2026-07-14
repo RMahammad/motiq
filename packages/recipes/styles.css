@@ -1,0 +1,97 @@
+/* @scope/recipes — ProductIntroduction.
+   Layout + typography only; entrance choreography comes from @scope/motion/styles.css
+   (.scope-motion-scene / .scope-motion-step). Import both stylesheets. */
+
+.scope-recipe-intro {
+  color: var(--color-fg, inherit);
+  font-family: var(--font-sans, inherit);
+}
+
+/* Stacked layout (default / mobile / no media). */
+.scope-recipe-intro__scene {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+}
+
+.scope-recipe-intro__eyebrow {
+  color: var(--color-accent, currentColor);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.scope-recipe-intro__title :is(h1, h2) {
+  margin: 0;
+  font-family: var(--font-display, var(--font-sans, inherit));
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+}
+
+.scope-recipe-intro__subtitle p {
+  margin: 0;
+  max-width: 52ch;
+  color: var(--color-muted, inherit);
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.scope-recipe-intro__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3, 12px);
+}
+
+.scope-recipe-intro__media :where(img, video, svg, canvas) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg, 12px);
+}
+
+/* Centered variant (no media). */
+.scope-recipe-intro[data-align="center"] .scope-recipe-intro__scene {
+  align-items: center;
+  text-align: center;
+}
+
+/* Two-column editorial layout once there is a media slot and room for it. */
+@media (min-width: 900px) {
+  .scope-recipe-intro[data-has-media] .scope-recipe-intro__scene {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    grid-template-areas:
+      "eyebrow  media"
+      "title    media"
+      "subtitle media"
+      "actions  media";
+    grid-template-rows: auto auto auto auto;
+    align-content: center;
+    align-items: center;
+    column-gap: clamp(24px, 5vw, 64px);
+    row-gap: var(--space-4, 16px);
+    text-align: left;
+  }
+  .scope-recipe-intro[data-has-media] .scope-recipe-intro__eyebrow {
+    grid-area: eyebrow;
+    align-self: end;
+  }
+  .scope-recipe-intro[data-has-media] .scope-recipe-intro__title {
+    grid-area: title;
+  }
+  .scope-recipe-intro[data-has-media] .scope-recipe-intro__subtitle {
+    grid-area: subtitle;
+  }
+  .scope-recipe-intro[data-has-media] .scope-recipe-intro__actions {
+    grid-area: actions;
+    align-self: start;
+  }
+  .scope-recipe-intro[data-has-media] .scope-recipe-intro__media {
+    grid-area: media;
+    justify-self: end;
+    width: 100%;
+  }
+}

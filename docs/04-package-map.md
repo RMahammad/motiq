@@ -16,6 +16,7 @@ When a package moves from 🔵 Planned to 🟢 Implemented, update its row's **S
 | `@scope/motion` | 🟡 In progress (spike) | ✅ | browser | **yes** | ✅ | no | free | no | no | react, react-dom |
 | `@scope/react` | 🟡 In progress (spike) | ✅ | browser | **yes** | ✅ | optional | paid | no (fallback) | no | react, react-dom |
 | `@scope/sections` | 🟡 In progress (spike) | ✅ | browser | **no*** | ✅ | optional | paid | no (fallback) | no | react, react-dom |
+| `@scope/recipes` | 🟡 In progress (spike) | ✅ | browser | **yes** | ✅ | yes | paid | no (fallback) | no | react, react-dom |
 | `@scope/tailwind-preset` | 🔵 Planned | ✅ | build-time | no | n/a | preset | free | Tailwind | no | tailwindcss |
 | `@scope/styles` | 🔵 Planned | ✅ | build asset | no | n/a | **yes** | free | no | no | — |
 | `@scope/cli` | 🔵 Planned | ✅ | node | no | n/a | no | free | no | no | — |
@@ -44,6 +45,9 @@ Purpose: interactive components (buttons, cards, overlays, text effects). Allowe
 Purpose: marketing sections (Hero, FeatureGrid, CTA, …) composed from the primitives/components. Accepts content via props/slots — **no hard-coded marketing copy**. Adds no new engine. See [`animated-section-authoring`](../.claude/skills/animated-section-authoring/SKILL.md).
 
 **\*`"use client"`:** sections are authored **server-safe by default** — `HeroSection` has no `"use client"`; it composes client primitives (`Stagger`/`Reveal` from `@scope/motion`) as leaves, so a Server Component can render it directly. Only add `"use client"` to a section that itself uses hooks/handlers. This is the "no unnecessary client boundary around static content" rule ([`03`](03-architecture.md), [`25`](25-definition-of-done.md#marketing-section)). `@scope/sections` depends on `@scope/motion` + `@scope/tokens` (not `@scope/react`) for `HeroSection`.
+
+### `@scope/recipes` (🟡 `ProductIntroduction` shipped)
+Purpose: complete, opinionated **workflow recipes** (the paid "sell outcomes, not parts" layer, [`27`](27-product-differentiation.md)) composed from the choreography primitive. Content is supplied through slots — **no hard-coded copy**. Each recipe encodes a semantic choreography (roles + intents) via `MotionScene`/`MotionStep` and adds no new engine. `ProductIntroduction` carries `"use client"` because it re-exports client primitives; it is still a server-safe shell over a single client leaf. Depends on `@scope/motion` + `@scope/tokens` (not `@scope/react`). Ships `@scope/recipes/styles.css`. Forbidden: Remotion, Node, Next (core-UI boundary). See [`animated-section-authoring`](../.claude/skills/animated-section-authoring/SKILL.md).
 
 ### `@scope/tailwind-preset`
 Purpose: Tailwind v4 preset exposing tokens via `@theme`. Consumed at build time only; never in runtime bundles. See [`11`](11-tailwind-strategy.md).

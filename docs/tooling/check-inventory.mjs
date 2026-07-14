@@ -12,7 +12,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "..", "..");
 const PKGS = join(ROOT, "packages");
 const INVENTORY = join(ROOT, "docs/21-component-inventory.md");
-const COMPONENT_PACKAGES = ["motion", "react", "sections"];
+const COMPONENT_PACKAGES = ["motion", "react", "sections", "recipes"];
 
 const exceptionsFile = join(HERE, "inventory-exceptions.txt");
 const exceptions = existsSync(exceptionsFile)

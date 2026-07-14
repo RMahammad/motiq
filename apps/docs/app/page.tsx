@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { MotionScene, MotionStep } from "@scope/motion";
+import { ProductIntroduction } from "@scope/recipes";
 import { MotionLab } from "./_components/motion-lab";
 import { CATALOG } from "./components/_registry";
 
 // Server Component. The interactive Motion Laboratory is the only client island (ADR-0016).
+// ProductIntroduction is a client leaf composed directly (server-safe shell).
 
-const RECIPES = [
-  { name: "Product introduction", used: "MotionScene · Reveal", intents: "introduce · emphasize" },
+// Only the first recipe is built today; the rest are honestly labelled as planned.
+const PLANNED_RECIPES = [
   { name: "Pricing selection", used: "PricingCard · StateTransition", intents: "confirm · focus" },
   { name: "Search → results", used: "Stagger · Presence", intents: "transition · reorder" },
   { name: "File-upload lifecycle", used: "MotionSequence", intents: "progress · confirm · notify" },
@@ -38,10 +40,10 @@ export default function Home() {
           </div>
           <div className="hero__meta">
             <span>
-              <b>21</b> components
+              <b>22</b> components
             </span>
             <span>
-              <b>109</b> tests
+              <b>123</b> tests
             </span>
             <span>
               <b>RSC</b>-safe
@@ -146,22 +148,62 @@ export default function Home() {
           </div>
           <div className="card">
             <h3>Tested motion</h3>
-            <p>Fake-timer + in-view + SSR + axe tests across 109 cases — motion you can assert on.</p>
+            <p>Fake-timer + in-view + SSR + axe tests across 123 cases — motion you can assert on.</p>
           </div>
         </div>
       </section>
 
       <hr className="rule" />
 
-      {/* ---------- Recipes: workflows, not effects ---------- */}
+      {/* ---------- Recipes: workflows, not effects — led by a live one ---------- */}
       <section className="wrap pad" id="recipes">
         <p className="section-tag">03 · Motion recipes — complete workflows</p>
-        <h2 className="display" style={{ marginBottom: 28 }}>
+        <h2 className="display" style={{ marginBottom: 14 }}>
           Sell outcomes, not parts.
         </h2>
-        {RECIPES.map((r) => (
-          <div className="strip" key={r.name}>
-            <span style={{ fontFamily: "var(--lab-display)", fontWeight: 600 }}>{r.name}</span>
+        <p className="lead" style={{ marginBottom: 28 }}>
+          A recipe is a whole workflow you install and fill with your own content. The first one is
+          live below — a choreographed product hero from{" "}
+          <code className="mono">@scope/recipes</code>, 635&nbsp;B, one coordinated scene.
+        </p>
+        <div
+          className="card"
+          style={{ padding: "clamp(24px, 4vw, 48px)", borderRadius: "var(--lab-radius)" }}
+        >
+          <ProductIntroduction
+            headingLevel={2}
+            intensity="expressive"
+            eyebrow="Recipe · ProductIntroduction"
+            title="Author motion by intent"
+            subtitle="Eyebrow, heading, copy, preview and actions arrive as one coordinated sequence — you supply the content through slots."
+            media={
+              <div className="card" style={{ background: "var(--lab-panel-2)", minHeight: 150 }}>
+                <span className="stat">product preview</span>
+                <p className="muted" style={{ margin: "6px 0 0", fontSize: "0.9rem" }}>
+                  Any real component drops in here.
+                </p>
+              </div>
+            }
+            primaryAction={
+              <Link href="/components/product-introduction" className="btn btn--signal btn--sm">
+                Open the live recipe →
+              </Link>
+            }
+            secondaryAction={
+              <a href="#catalog" className="btn btn--sm">
+                Browse components
+              </a>
+            }
+          />
+        </div>
+        <p className="section-tag" style={{ margin: "32px 0 12px" }}>
+          More recipes — <b>planned</b>
+        </p>
+        {PLANNED_RECIPES.map((r) => (
+          <div className="strip" key={r.name} data-planned>
+            <span style={{ fontFamily: "var(--lab-display)", fontWeight: 600 }}>
+              {r.name} <span className="muted" style={{ fontWeight: 400 }}>· planned</span>
+            </span>
             <span className="strip__meta">
               <span>
                 uses · <b>{r.used}</b>

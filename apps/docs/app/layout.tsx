@@ -5,6 +5,7 @@ import "@scope/tokens/styles.css";
 import "@scope/motion/styles.css";
 import "@scope/react/styles.css";
 import "@scope/sections/styles.css";
+import "@scope/recipes/styles.css";
 import "./docs.css";
 
 export const metadata = {

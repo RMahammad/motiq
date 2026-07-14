@@ -23,12 +23,13 @@ import {
   Tooltip,
   Popover,
 } from "@scope/react";
+import { ProductIntroduction } from "@scope/recipes";
 import type { ProdFacts } from "../_components/component-stage";
 
 export interface CatalogEntry {
   slug: string;
   name: string;
-  category: "Primitive" | "Choreography" | "Production" | "Overlay" | "Signature" | "Text";
+  category: "Primitive" | "Choreography" | "Production" | "Overlay" | "Signature" | "Text" | "Recipe";
   tagline: string;
   code: string;
   facts: ProdFacts;
@@ -106,6 +107,54 @@ export const CATALOG: CatalogEntry[] = [
           <button type="button" className="scope-btn">Primary action</button>
         </MotionStep>
       </MotionScene>
+    ),
+  },
+  {
+    slug: "product-introduction",
+    name: "ProductIntroduction",
+    category: "Recipe",
+    tagline: "A drop-in, choreographed product hero — the first premium recipe.",
+    code: `import { ProductIntroduction } from "@scope/recipes";
+
+<ProductIntroduction
+  eyebrow="New"
+  title="Author motion by intent"
+  subtitle="A coordinated product hero in one component."
+  media={<ProductPreview />}
+  primaryAction={<a href="/start" className="scope-btn">Get started</a>}
+  secondaryAction={<a href="/docs" className="scope-btn">Read the docs</a>}
+/>`,
+    facts: base({
+      package: "@scope/recipes",
+      importPath: "@scope/recipes · @scope/recipes/product-introduction",
+      bundle: "635 B brotli",
+      deps: "peer: react, react-dom · @scope/motion · @scope/tokens",
+      ssr: "renders final markup; scene animates after hydrate",
+      a11y: "real h1/h2 heading; slots keep semantics · axe 0 (WCAG 2.2 AA scope)",
+      reducedMotion: "steps render at final state, no transform",
+      intents: "roles: heading · supporting-content · product-preview · primary-action",
+      install: "pnpm add @scope/recipes",
+      tests: "8 · slots + roles/order + headingLevel + SSR + axe",
+      limitations: "single-heading recipe; compose @scope/sections for full pages",
+    }),
+    Demo: () => (
+      <ProductIntroduction
+        trigger="mount"
+        eyebrow="New"
+        title="Author motion by intent"
+        subtitle="A coordinated product hero, assembled from slots and played as one scene."
+        media={<DemoCard>Any component can be the product preview.</DemoCard>}
+        primaryAction={
+          <button type="button" className="scope-btn">
+            Get started
+          </button>
+        }
+        secondaryAction={
+          <button type="button" className="scope-btn">
+            Read the docs
+          </button>
+        }
+      />
     ),
   },
   {

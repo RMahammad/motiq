@@ -35,6 +35,7 @@
 | [HeroSection](components/hero-section.md) | Section | 🟡 spike | Premium | MVP | Stagger/Reveal | landing | L | L | ✅ [page](components/hero-section.md) | ✅ slots+SSR+axe | v1.0 |
 | [FeatureGrid](components/feature-grid.md) | Section | 🟡 spike | Premium | MVP | BentoGrid | landing | L | L | ✅ [page](components/feature-grid.md) | ✅ slots+SSR+axe | v1.0 |
 | [CTASection](components/cta-section.md) | Section | 🟡 spike | Premium | MVP | Reveal | landing | L | L | ✅ [page](components/cta-section.md) | ✅ slots+SSR+axe | v1.0 |
+| [ProductIntroduction](components/product-introduction.md) | Recipe | 🟡 spike | Premium | MVP | MotionScene | product hero (moat recipe) | L | L | ✅ [page](components/product-introduction.md) | ✅ slots+roles+SSR+axe | v1.0 |
 | Magnetic | Controls | 🔵 | Premium | V1 | pointer | CTA delight | M | M | — | — | v1.1 |
 | TiltCard | Cards | 🔵 | Premium | V1 | Tilt | product | M | M | — | — | v1.1 |
 | BeforeAfter | Media | 🔵 | Premium | V1 | pointer | comparison | M | M | — | — | v1.1 |

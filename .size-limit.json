@@ -152,5 +152,12 @@
     "import": "{ CTASection }",
     "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
     "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/recipes ProductIntroduction (brotli, excl. peers + workspace)",
+    "path": "packages/recipes/dist/product-introduction.js",
+    "import": "{ ProductIntroduction }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
   }
 ]
