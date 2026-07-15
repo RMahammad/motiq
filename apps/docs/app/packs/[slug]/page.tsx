@@ -172,9 +172,9 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
       >
         <div id="included" className="grid gap-3 sm:grid-cols-2">
           {components.map((c) => (
-            <div key={c.id} className="flex flex-col gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
+            <div key={c.id} className="flex min-w-0 flex-col gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
               <div className="flex items-start justify-between gap-3">
-                <div>
+                <div className="min-w-0">
                   <Link href={c.documentationPath} className="text-[14px] font-medium text-[var(--color-fg)] hover:text-[var(--color-accent)]">
                     {c.name}
                   </Link>

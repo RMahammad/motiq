@@ -169,7 +169,7 @@ export function StreamingDataRowsPreview() {
   return (
     <div className="flex w-full max-w-[840px] flex-col gap-3">
       <div className="flex flex-wrap items-center gap-2">
-        <div className="mr-auto flex items-center gap-2">
+        <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
             {!paused && state === "idle" ? (
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-success)] opacity-70 motion-reduce:hidden" />
@@ -179,12 +179,6 @@ export function StreamingDataRowsPreview() {
           <span className="text-[13px] font-semibold text-[var(--color-fg)]">Order processing</span>
           <span className="text-[12px] text-[var(--color-muted)]">{paused ? "paused" : "live"}</span>
         </div>
-        <Ctrl onClick={addRow}>Add row</Ctrl>
-        <Ctrl onClick={updateRandom}>Update value</Ctrl>
-        <Ctrl onClick={changeStatus}>Change status</Ctrl>
-        <Ctrl onClick={removeRow}>Remove row</Ctrl>
-        <Ctrl onClick={() => setPaused((p) => !p)} pressed={paused}>{paused ? "Resume" : "Pause"}</Ctrl>
-        <Ctrl onClick={reset}>Reset</Ctrl>
       </div>
 
       <StreamingDataRows<Order>
@@ -215,20 +209,29 @@ export function StreamingDataRowsPreview() {
         )}
       />
 
-      <div className="flex items-center justify-between">
-        <p className="text-[12px] text-[var(--color-muted)]">Demo data — fictional orders, illustrative values.</p>
-        <div className="flex overflow-hidden rounded-md border border-[var(--color-border)] text-[12px]">
-          {(["idle", "loading", "error"] as const).map((st) => (
-            <button
-              key={st}
-              type="button"
-              aria-pressed={state === st}
-              onClick={() => setState(st)}
-              className={`px-2.5 py-1 capitalize ${state === st ? "bg-[var(--color-surface)] text-[var(--color-fg)]" : "text-[var(--color-muted)] hover:text-[var(--color-fg)]"}`}
-            >
-              {st}
-            </button>
-          ))}
+      {/* All working controls kept at the BOTTOM for a consistent showcase layout. */}
+      <div className="flex flex-wrap items-center gap-2 rounded-xl [border:1px_solid_var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5">
+        <Ctrl onClick={addRow}>Add row</Ctrl>
+        <Ctrl onClick={updateRandom}>Update value</Ctrl>
+        <Ctrl onClick={changeStatus}>Change status</Ctrl>
+        <Ctrl onClick={removeRow}>Remove row</Ctrl>
+        <Ctrl onClick={() => setPaused((p) => !p)} pressed={paused}>{paused ? "Resume" : "Pause"}</Ctrl>
+        <Ctrl onClick={reset}>Reset</Ctrl>
+        <div className="ml-auto flex items-center gap-3">
+          <p className="hidden text-[12px] text-[var(--color-muted)] sm:block">Demo data — fictional orders.</p>
+          <div className="flex overflow-hidden rounded-md border border-[var(--color-border)] text-[12px]">
+            {(["idle", "loading", "error"] as const).map((st) => (
+              <button
+                key={st}
+                type="button"
+                aria-pressed={state === st}
+                onClick={() => setState(st)}
+                className={`px-2.5 py-1 capitalize ${state === st ? "bg-[var(--color-surface)] text-[var(--color-fg)]" : "text-[var(--color-muted)] hover:text-[var(--color-fg)]"}`}
+              >
+                {st}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,3 @@
+# horizontal overflow report (after, dark)
+OVERFLOW pack-ai @390: scrollWidth 695 > 390
+OVERFLOW pack-ai @320: scrollWidth 695 > 320

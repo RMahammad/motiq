@@ -136,7 +136,8 @@ export function AiResponseStreamPreview() {
 
   return (
     <div ref={wrapRef} className="mx-auto flex w-full max-w-[680px] flex-col gap-3">
-      <div className="flex flex-wrap items-center gap-2">
+      {/* Controls rendered at the BOTTOM (order-last) for a consistent showcase layout. */}
+      <div className="order-last flex flex-wrap items-center gap-2 rounded-xl [border:1px_solid_var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5">
         <button type="button" className={ctrl} onClick={start}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="M20 11a8 8 0 1 0-.7 4.2M20 5v4h-4" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />

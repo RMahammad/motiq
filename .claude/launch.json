@@ -7,6 +7,13 @@
       "runtimeArgs": ["--filter", "docs-site", "exec", "next", "dev", "-p", "3210"],
       "env": { "npm_config_verify_deps_before_run": "false" },
       "port": 3210
+    },
+    {
+      "name": "docs-preview",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "docs-site", "exec", "next", "dev", "-p", "3317"],
+      "env": { "npm_config_verify_deps_before_run": "false" },
+      "port": 3317
     }
   ]
 }

@@ -9,7 +9,7 @@ export type StageType = "text" | "canvas" | "icon" | "interactive" | "card";
 const VARIANT: Record<StageType, { min: string; cls: string; style?: React.CSSProperties }> = {
   text: {
     min: "min-h-[280px] sm:min-h-[340px]",
-    cls: "px-6",
+    cls: "px-2 sm:px-6",
     style: {
       background:
         "radial-gradient(120% 120% at 50% 0%, color-mix(in oklab, var(--color-accent) 12%, var(--color-surface)) 0%, var(--color-surface) 55%)",
@@ -17,7 +17,7 @@ const VARIANT: Record<StageType, { min: string; cls: string; style?: React.CSSPr
   },
   interactive: {
     min: "min-h-[300px] sm:min-h-[360px]",
-    cls: "px-6",
+    cls: "px-2 sm:px-6",
     style: {
       background:
         "linear-gradient(180deg, color-mix(in oklab, var(--color-accent) 6%, var(--color-surface)), var(--color-surface))",
@@ -25,7 +25,7 @@ const VARIANT: Record<StageType, { min: string; cls: string; style?: React.CSSPr
   },
   card: {
     min: "min-h-[300px] sm:min-h-[340px]",
-    cls: "px-6",
+    cls: "px-2 sm:px-6",
     style: { background: "var(--color-bg-secondary)" },
   },
   canvas: {
@@ -35,7 +35,7 @@ const VARIANT: Record<StageType, { min: string; cls: string; style?: React.CSSPr
   },
   icon: {
     min: "min-h-[200px] sm:min-h-[240px]",
-    cls: "px-6",
+    cls: "px-2 sm:px-6",
     style: {
       background:
         "radial-gradient(90% 120% at 50% 10%, color-mix(in oklab, var(--color-accent) 10%, var(--color-surface)), var(--color-surface))",

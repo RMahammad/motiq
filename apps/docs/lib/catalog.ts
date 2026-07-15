@@ -57,6 +57,45 @@ export interface CatalogItem {
   kind?: "component" | "block" | "pack";
   /** For blocks/packs: the component slugs they compose (shown on cards + pages). */
   composes?: string[];
+
+  /* --- Catalog presentation overrides (docs/55). All optional; resolvePresentation()
+     fills category/kind/complexity defaults when absent. Individual items override. --- */
+  /** Desktop preview size taxonomy → drives height strategy + default span. */
+  previewSize?: PreviewSize;
+  /** How the catalog card renders the component. Detail pages are always interactive. */
+  previewMode?: PreviewMode;
+  /** Interior surface tone. Coherent card chrome shared; only the surface tone varies. */
+  stageFamily?: StageFamily;
+  /** 12-column desktop span. */
+  cardSpan?: CardSpan;
+}
+
+/** Preview-size taxonomy (docs/55 §3). */
+export type PreviewSize = "small" | "standard" | "wide" | "full" | "mobile" | "ambient";
+/** Catalog cards use "staged"/"ambient"; detail pages use "interactive". */
+export type PreviewMode = "staged" | "interactive" | "ambient";
+/** Controlled interior surface tones (docs/55 §5) — not one style per component. */
+export type StageFamily =
+  | "ai"
+  | "console"
+  | "collab"
+  | "data"
+  | "mobile"
+  | "commerce"
+  | "security"
+  | "productivity"
+  | "creative"
+  | "editorial"
+  | "neutral";
+export type CardSpan = 4 | 6 | 8 | 12;
+
+export interface Presentation {
+  previewSize: PreviewSize;
+  previewMode: PreviewMode;
+  stageFamily: StageFamily;
+  cardSpan: CardSpan;
+  /** Mobile always collapses to a single full-width column. */
+  mobileCardSpan: 12;
 }
 
 export interface Category {
@@ -1482,3 +1521,151 @@ export const accessLabel: Record<Access, string> = {
   free: product.freeTierLabel,
   pro: product.premiumTierLabel,
 };
+
+// ---- catalog presentation resolution (docs/55) ----
+
+/** Category → default surface family + size + span. Individual items override. */
+const CATEGORY_PRESENTATION: Record<
+  CategoryId,
+  { family: StageFamily; size: PreviewSize; span: CardSpan }
+> = {
+  ai: { family: "ai", size: "standard", span: 6 },
+  "developer-tools": { family: "console", size: "standard", span: 6 },
+  collaboration: { family: "collab", size: "standard", span: 6 },
+  "data-motion": { family: "data", size: "standard", span: 6 },
+  mobile: { family: "mobile", size: "mobile", span: 4 },
+  file: { family: "console", size: "standard", span: 6 },
+  commerce: { family: "commerce", size: "standard", span: 6 },
+  security: { family: "security", size: "standard", span: 6 },
+  communication: { family: "collab", size: "standard", span: 6 },
+  productivity: { family: "productivity", size: "wide", span: 8 },
+  "animated-shadcn": { family: "neutral", size: "standard", span: 6 },
+  text: { family: "editorial", size: "standard", span: 6 },
+  creative: { family: "creative", size: "standard", span: 6 },
+  backgrounds: { family: "creative", size: "ambient", span: 12 },
+  icons: { family: "neutral", size: "small", span: 4 },
+};
+
+const SIZE_SPAN: Record<PreviewSize, CardSpan> = {
+  small: 4,
+  standard: 6,
+  wide: 8,
+  full: 12,
+  mobile: 4,
+  ambient: 12,
+};
+
+/** Per-item curation — the deliberate exceptions that give strong components room. */
+const PRESENTATION_OVERRIDES: Record<string, Partial<Presentation>> = {
+  // Signature text — headline scale, deserves the full row.
+  "kinetic-emphasis": { previewSize: "full", stageFamily: "editorial", cardSpan: 12 },
+  "blur-text": { previewSize: "wide", stageFamily: "editorial", cardSpan: 8 },
+  "rotating-text": { previewSize: "standard", stageFamily: "editorial", cardSpan: 6 },
+  // Ambient backgrounds — full-bleed environments.
+  "luminous-topography": { previewSize: "ambient", stageFamily: "creative", cardSpan: 12 },
+  "animated-grid": { previewSize: "ambient", stageFamily: "creative", cardSpan: 12 },
+  // Complex AI/dev/data workflows — wide.
+  "ai-response-stream": { previewSize: "wide", cardSpan: 8 },
+  "tool-call-activity": { previewSize: "wide", cardSpan: 8 },
+  "agent-run-timeline": { previewSize: "wide", cardSpan: 8 },
+  "prompt-composer": { previewSize: "wide", cardSpan: 8 },
+  "api-request-inspector": { previewSize: "wide", cardSpan: 8 },
+  "streaming-data-rows": { previewSize: "full", cardSpan: 12 },
+  "live-log-stream": { previewSize: "wide", cardSpan: 8 },
+  "webhook-event-stream": { previewSize: "wide", cardSpan: 8 },
+  // Large spatial productivity workspaces — full width.
+  "task-dependency-map": { previewSize: "full", cardSpan: 12 },
+  "project-timeline": { previewSize: "full", cardSpan: 12 },
+  "kanban-card-movement": { previewSize: "full", cardSpan: 12 },
+  // Collaboration workflow depth.
+  "approval-workflow": { previewSize: "wide", cardSpan: 8 },
+  "comment-thread": { previewSize: "wide", cardSpan: 8 },
+  "thread-expansion": { previewSize: "wide", cardSpan: 8 },
+  // Security centers read calmly at width.
+  "session-security-center": { previewSize: "wide", cardSpan: 8 },
+  // File pipelines.
+  "processing-timeline": { previewSize: "wide", cardSpan: 8 },
+  // Small primitives.
+  "animated-button": { previewSize: "small", stageFamily: "neutral", cardSpan: 4 },
+  "animated-icons": { previewSize: "small", stageFamily: "neutral", cardSpan: 4 },
+  // Blocks & packs — always full-width workflow environments.
+};
+
+// Static span → responsive column classes (Tailwind needs literal class strings).
+export const SPAN_CLASS: Record<CardSpan, string> = {
+  4: "col-span-12 sm:col-span-6 lg:col-span-4",
+  6: "col-span-12 sm:col-span-6 lg:col-span-6",
+  8: "col-span-12 lg:col-span-8",
+  12: "col-span-12",
+};
+
+/**
+ * Row-packing (docs/57 §1). Greedy first-fit into 12-column rows; any leftover
+ * columns are distributed to the smallest items in the row so every row sums to
+ * exactly 12 — no lone 8-with-empty-4, no accidental holes. Full (12) items always
+ * take their own row. Inputs are 4/6/12, so outputs are only ever 4, 6, or 12.
+ */
+export function packSpans(items: CatalogItem[]): Map<string, CardSpan> {
+  const out = new Map<string, CardSpan>();
+  let buf: string[] = [];
+  let sum = 0;
+  const flush = () => {
+    if (buf.length === 0) return;
+    const s = buf.map((id) => out.get(id)!) as number[];
+    let leftover = 12 - sum;
+    while (leftover > 0) {
+      let mi = 0;
+      for (let i = 1; i < s.length; i++) if (s[i] < s[mi]) mi = i;
+      s[mi] += 1;
+      leftover -= 1;
+    }
+    buf.forEach((id, i) => out.set(id, s[i] as CardSpan));
+    buf = [];
+    sum = 0;
+  };
+  for (const item of items) {
+    const span = resolvePresentation(item).cardSpan;
+    if (span >= 12) {
+      flush();
+      out.set(item.id, 12);
+      continue;
+    }
+    if (sum + span > 12) flush();
+    out.set(item.id, span);
+    buf.push(item.id);
+    sum += span;
+  }
+  flush();
+  return out;
+}
+
+/** Resolve the effective catalog presentation for an item (defaults + overrides). */
+export function resolvePresentation(item: CatalogItem): Presentation {
+  const base = CATEGORY_PRESENTATION[item.category];
+  const kind = kindOf(item);
+  const override = PRESENTATION_OVERRIDES[item.id] ?? {};
+
+  // Blocks/packs are always full-width workflow environments.
+  const isEnvironment = kind === "block" || kind === "pack";
+
+  // Complex components (not already curated) earn width — but never mobile/creative/
+  // text/icon/shadcn items, whose surface is intentionally device/ambient/compact.
+  const bumpEligible = !["mobile", "backgrounds", "text", "creative", "icons", "animated-shadcn"].includes(
+    item.category,
+  );
+  const complexityBump =
+    item.complexity === "complex" && bumpEligible && !override.previewSize && !isEnvironment;
+
+  const previewSize: PreviewSize =
+    override.previewSize ?? (isEnvironment ? "full" : complexityBump ? "wide" : base.size);
+  const stageFamily: StageFamily = override.stageFamily ?? base.family;
+  const rawSpan: CardSpan = override.cardSpan ?? (isEnvironment ? 12 : SIZE_SPAN[previewSize] ?? base.span);
+  // Grid-placement policy (docs/57): only 4 / 6 / 12 spans in the catalog. A lone
+  // 8-col card leaves an un-fillable 4-col hole, so 8 collapses to 6 (pairs as 6+6)
+  // — spatial/large/table/block items are already 12 via their overrides.
+  const cardSpan: CardSpan = rawSpan === 8 ? 6 : rawSpan;
+  const previewMode: PreviewMode =
+    override.previewMode ?? (previewSize === "ambient" ? "ambient" : "staged");
+
+  return { previewSize, previewMode, stageFamily, cardSpan, mobileCardSpan: 12 };
+}

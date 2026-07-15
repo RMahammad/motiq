@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { bySlug, catalog, itemInstall } from "../../../lib/catalog";
+import { bySlug, catalog, itemInstall, resolvePresentation } from "../../../lib/catalog";
 import { product } from "../../../lib/product";
 import { proComponentCta } from "../../../lib/commerce";
 import { readAnyRegistry, canRenderFullSource, sourcePreview } from "../../../lib/registry-source";
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
-    <section id={id} className="scroll-mt-20 border-t border-[var(--color-border)] py-8">
+    <section id={id} className="scroll-mt-20 break-words border-t border-[var(--color-border)] py-8">
       <h2 className="mb-4 text-xl font-semibold tracking-tight text-[var(--color-fg)]">{title}</h2>
       {children}
     </section>
@@ -46,28 +46,44 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   const preview = sourcePreview(reg, item.dependencies, item.registryDependencies);
   const isGatedPro = item.access === "pro";
 
+  // Large/complex components get a wider preview stage than the reading column so
+  // maps, timelines, dashboards, and blocks are not squeezed into prose width (docs/56 §19).
+  const { previewSize } = resolvePresentation(item);
+  const previewMax =
+    previewSize === "full" || previewSize === "ambient"
+      ? "max-w-[1360px]"
+      : previewSize === "wide"
+        ? "max-w-[1200px]"
+        : "max-w-[1000px]";
+  const READ = "mx-auto max-w-[920px]";
+
   return (
-    <div className="mx-auto max-w-[1100px] px-4 py-10 sm:px-6">
-      <nav className="mb-4 text-[13px] text-[var(--color-muted)]">
-        <Link href="/components" className="hover:text-[var(--color-fg)]">
-          Components
-        </Link>{" "}
-        / <span className="capitalize">{item.category.replace("-", " ")}</span> / <span>{item.name}</span>
-      </nav>
+    <div className="mx-auto max-w-[1360px] px-4 py-10 sm:px-6 lg:px-8">
+      <div className={READ}>
+        <nav className="mb-4 text-[13px] text-[var(--color-muted)]">
+          <Link href="/components" className="hover:text-[var(--color-fg)]">
+            Components
+          </Link>{" "}
+          / <span className="capitalize">{item.category.replace("-", " ")}</span> / <span>{item.name}</span>
+        </nav>
 
-      <header className="mb-6 flex flex-wrap items-center gap-3">
-        <h1 className="text-[clamp(1.8rem,4vw,2.8rem)] font-semibold tracking-tight text-[var(--color-fg)]">
-          {item.name}
-        </h1>
-        <AccessBadge access={item.access} />
-      </header>
-      <p className="mb-8 max-w-2xl text-[15px] leading-relaxed text-[var(--color-muted)]">{item.description}</p>
+        <header className="mb-6 flex flex-wrap items-center gap-3">
+          <h1 className="text-[clamp(1.8rem,4vw,2.8rem)] font-semibold tracking-tight text-[var(--color-fg)]">
+            {item.name}
+          </h1>
+          <AccessBadge access={item.access} />
+        </header>
+        <p className="mb-8 max-w-2xl break-words text-[15px] leading-relaxed text-[var(--color-muted)]">{item.description}</p>
+      </div>
 
-      {/* Preview */}
-      <PreviewStage stage={item.stage}>
-        <Preview id={item.id} />
-      </PreviewStage>
+      {/* Preview — width scales with component complexity */}
+      <div className={`mx-auto ${previewMax}`}>
+        <PreviewStage stage={item.stage}>
+          <Preview id={item.id} />
+        </PreviewStage>
+      </div>
 
+      <div className={READ}>
       {/* Installation */}
       <Section id="installation" title="Installation">
         <p className="mb-3 text-[14px] text-[var(--color-muted)]">Install the editable source with the shadcn CLI:</p>
@@ -190,6 +206,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           </ul>
         </Section>
       ) : null}
+      </div>
     </div>
   );
 }

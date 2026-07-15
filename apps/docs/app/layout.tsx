@@ -5,9 +5,7 @@ import "@scope/tokens/styles.css";
 import "./globals.css";
 
 import { product, commerce } from "../lib/product";
-import { categories } from "../lib/catalog";
-import { ThemeToggle } from "./_components/theme";
-import { SearchTrigger } from "./_components/search";
+import { SiteNav } from "./_components/site-nav";
 
 export const metadata: Metadata = {
   title: `${product.productName} — ${product.tagline}`,
@@ -23,63 +21,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: noFlash }} />
       </head>
       <body>
-        <header className="sticky top-0 z-40 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-bg)_88%,transparent)] backdrop-blur-md">
-          <div className="mx-auto flex h-14 max-w-[1440px] items-center gap-4 px-4 sm:px-6">
-            <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-              <span
-                aria-hidden
-                className="inline-block h-5 w-5 rounded-md"
-                style={{ background: "linear-gradient(135deg, var(--color-accent), var(--color-accent-hover))" }}
-              />
-              <span className="text-[15px]">{product.shortName}</span>
-            </Link>
-
-            <nav aria-label="Categories" className="ml-2 hidden items-center gap-1 md:flex">
-              {categories.map((c) => (
-                <Link
-                  key={c.id}
-                  href={`/components?category=${c.id}`}
-                  className="rounded-md px-2.5 py-1.5 text-[13.5px] text-[var(--color-muted)] transition-colors hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-fg)]"
-                >
-                  {c.label}
-                </Link>
-              ))}
-              <Link
-                href="/packs"
-                className="rounded-md px-2.5 py-1.5 text-[13.5px] text-[var(--color-muted)] transition-colors hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-fg)]"
-              >
-                Packs
-              </Link>
-              <Link
-                href="/components"
-                className="rounded-md px-2.5 py-1.5 text-[13.5px] text-[var(--color-muted)] transition-colors hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-fg)]"
-              >
-                Docs
-              </Link>
-            </nav>
-
-            <div className="ml-auto flex items-center gap-1.5">
-              <SearchTrigger />
-              <ThemeToggle />
-              {product.githubUrl ? (
-                <a
-                  href={product.githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-md px-2.5 py-1.5 text-[13.5px] text-[var(--color-muted)] hover:text-[var(--color-fg)]"
-                >
-                  GitHub
-                </a>
-              ) : null}
-              <Link
-                href="/components"
-                className="rounded-lg bg-[var(--color-accent)] px-3.5 py-1.5 text-[13.5px] font-medium text-[var(--color-accent-fg)] transition-colors hover:bg-[var(--color-accent-hover)]"
-              >
-                Browse components
-              </Link>
-            </div>
-          </div>
-        </header>
+        <SiteNav
+          productName={product.shortName}
+          waitlistEnabled={commerce.waitlistEnabled}
+          ctaHref="/components"
+          ctaLabel="Browse components"
+        />
 
         <main>{children}</main>
 

@@ -684,3 +684,17 @@ export function Preview({ id }: { id: string }) {
   const Cmp = previewMap[id];
   return Cmp ? <Cmp /> : <span className="text-sm text-[var(--color-muted)]">Preview unavailable</span>;
 }
+
+/**
+ * Catalog-specific compact adapters (docs/55 §7/§10). These render the REAL
+ * component in one representative state, sized for a discovery card — no control
+ * panels, no every-state dumps. When absent, the catalog falls back to the full
+ * detail preview, which `CatalogStage` bounds + crops. Populated in catalog-previews.tsx.
+ */
+import { catalogPreviewMap } from "./catalog-previews";
+
+export function CatalogPreview({ id }: { id: string }) {
+  const Compact = catalogPreviewMap[id];
+  if (Compact) return <Compact />;
+  return <Preview id={id} />;
+}

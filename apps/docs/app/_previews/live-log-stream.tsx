@@ -106,7 +106,7 @@ export function LiveLogStreamPreview() {
       />
 
       {/* Working controls -------------------------------------------------- */}
-      <div className="mt-3 flex flex-wrap items-center gap-1.5" role="group" aria-label="Demo controls">
+      <div className="mt-3 flex flex-wrap items-center gap-1.5 rounded-xl [border:1px_solid_var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5" role="group" aria-label="Demo controls">
         <button type="button" className={controlBtn} onClick={() => addManual("info")}>Add info</button>
         <button type="button" className={controlBtn} onClick={() => addManual("warning")}>Add warning</button>
         <button type="button" className={controlBtn} onClick={() => addManual("error")}>Add error</button>

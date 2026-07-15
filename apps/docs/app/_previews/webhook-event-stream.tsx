@@ -218,7 +218,7 @@ export function WebhookEventStreamPreview() {
       />
 
       {/* Working controls -------------------------------------------------- */}
-      <div className="mt-3 flex flex-wrap items-center gap-1.5" role="group" aria-label="Demo controls">
+      <div className="mt-3 flex flex-wrap items-center gap-1.5 rounded-xl [border:1px_solid_var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5" role="group" aria-label="Demo controls">
         <button type="button" className={controlBtn} onClick={addFailed}>Add failed delivery</button>
         <span className="mx-1 h-4 w-px bg-[var(--color-border)]" aria-hidden />
         <button type="button" className={controlBtn} onClick={() => setPaused(true)} disabled={paused}>Pause</button>

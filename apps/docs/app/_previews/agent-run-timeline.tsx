@@ -339,8 +339,9 @@ export function AgentRunTimelinePreview() {
 
   return (
     <div ref={wrapRef} className="mx-auto flex w-full max-w-[760px] flex-col gap-3">
-      {/* Working controls — each mutates the fictional run the component renders. */}
-      <div className="flex flex-wrap items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5">
+      {/* Working controls — each mutates the fictional run the component renders.
+          order-last keeps this bar at the BOTTOM for a consistent showcase layout. */}
+      <div className="order-last flex flex-wrap items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5">
         <span className="mr-1 inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wide text-[var(--color-muted)]">
           <span className="grid h-5 w-5 place-items-center rounded-md bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
