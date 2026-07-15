@@ -8,6 +8,16 @@ import {
   type KanbanColumn,
   type KanbanMove,
 } from "@/registry/productivity/kanban-card-movement";
+import {
+  AnimatedDialog,
+  AnimatedDialogContent,
+  AnimatedDialogHeader,
+  AnimatedDialogTitle,
+  AnimatedDialogDescription,
+  AnimatedDialogBody,
+  AnimatedDialogFooter,
+  AnimatedDialogClose,
+} from "@/registry/animated-shadcn/animated-dialog";
 
 /* Clearly fictional demo — a made-up product backlog for an imaginary tool.
  * The PREVIEW is the "app": it owns the columns, cards, WIP limits, and
@@ -71,7 +81,12 @@ export function KanbanCardMovementPreview() {
   const [cards, setCards] = React.useState<KanbanCard[]>(seed);
   const [failNext, setFailNext] = React.useState(false);
   const [selectedCardId, setSelectedCardId] = React.useState<string | undefined>(undefined);
-  const [note, setNote] = React.useState("Drag a card, or use the Move menu / keyboard. Every path is accessible.");
+  const [detailsId, setDetailsId] = React.useState<string | null>(null);
+  const [note, setNote] = React.useState("Open a card for details, drag it, or use the Move menu / keyboard. Every path is accessible.");
+  // Distinguish a genuine click (open details) from the end of a drag: a pointer
+  // that moved past the threshold suppresses the click-to-open.
+  const pointerMovedRef = React.useRef(false);
+  const pointerDownPos = React.useRef({ x: 0, y: 0 });
   const failRef = React.useRef(false);
   failRef.current = failNext;
   const idRef = React.useRef(0);
@@ -157,9 +172,33 @@ export function KanbanCardMovementPreview() {
     setFailNext(false);
     failRef.current = false;
     setSelectedCardId(undefined);
+    setDetailsId(null);
     idRef.current = 0;
-    setNote("Reset. Drag a card, or use the Move menu / keyboard. Every path is accessible.");
+    setNote("Reset. Open a card for details, drag it, or use the Move menu / keyboard. Every path is accessible.");
   }, []);
+
+  // Open the card-details dialog on a real click on a card body (not on the Move
+  // menu / buttons, and not at the end of a drag).
+  const onBoardPointerDown = React.useCallback((e: React.PointerEvent) => {
+    pointerMovedRef.current = false;
+    pointerDownPos.current = { x: e.clientX, y: e.clientY };
+  }, []);
+  const onBoardPointerMove = React.useCallback((e: React.PointerEvent) => {
+    if (Math.hypot(e.clientX - pointerDownPos.current.x, e.clientY - pointerDownPos.current.y) > 4) {
+      pointerMovedRef.current = true;
+    }
+  }, []);
+  const onBoardClick = React.useCallback((e: React.MouseEvent) => {
+    if (pointerMovedRef.current) return; // was a drag, not a click
+    const target = e.target as HTMLElement;
+    if (target.closest("button, a, input, [role='menu'], [role='menuitem']")) return;
+    const cardEl = target.closest<HTMLElement>("[data-kanban-card]");
+    const id = cardEl?.getAttribute("data-kanban-card");
+    if (id) setDetailsId(id);
+  }, []);
+
+  const detailsCard = detailsId ? cards.find((c) => c.id === detailsId) ?? null : null;
+  const detailsColumn = detailsCard ? COLUMNS.find((c) => c.id === detailsCard.columnId) : undefined;
 
   return (
     <div className="flex w-full max-w-[900px] flex-col gap-4">
@@ -176,7 +215,13 @@ export function KanbanCardMovementPreview() {
           <span className="ml-auto text-[12px] text-[var(--color-muted)]">Sprint 14 · in planning</span>
         </div>
 
-        <div ref={boardRef} className="p-3">
+        <div
+          ref={boardRef}
+          className="p-3"
+          onPointerDownCapture={onBoardPointerDown}
+          onPointerMoveCapture={onBoardPointerMove}
+          onClick={onBoardClick}
+        >
           <KanbanCardMovement
             columns={COLUMNS}
             cards={cards}
@@ -216,6 +261,44 @@ export function KanbanCardMovementPreview() {
           {note}
         </span>
       </div>
+
+      {/* Card-details dialog — our library AnimatedDialog, opened on card click. */}
+      <AnimatedDialog
+        animation="scale"
+        open={detailsCard != null}
+        onOpenChange={(o) => { if (!o) setDetailsId(null); }}
+      >
+        <AnimatedDialogContent className="sm:max-w-md">
+          {detailsCard ? (
+            <>
+              <AnimatedDialogHeader>
+                <AnimatedDialogTitle>{detailsCard.title}</AnimatedDialogTitle>
+                <AnimatedDialogDescription>
+                  In <span className="font-medium text-[var(--color-fg)]">{detailsColumn?.title ?? detailsCard.columnId}</span> · {detailsCard.meta ?? "No details"}
+                </AnimatedDialogDescription>
+              </AnimatedDialogHeader>
+              <AnimatedDialogBody className="space-y-3">
+                <div className="grid grid-cols-[92px_1fr] gap-y-2 text-[13.5px]">
+                  <span className="text-[var(--color-muted)]">Column</span>
+                  <span className="text-[var(--color-fg)]">{detailsColumn?.title ?? detailsCard.columnId}</span>
+                  <span className="text-[var(--color-muted)]">Details</span>
+                  <span className="text-[var(--color-fg)]">{detailsCard.meta ?? "—"}</span>
+                  <span className="text-[var(--color-muted)]">Card ID</span>
+                  <span className="font-mono text-[12.5px] text-[var(--color-fg)]">{detailsCard.id}</span>
+                </div>
+                <p className="rounded-lg bg-[var(--color-bg-secondary)] px-3 py-2 text-[12.5px] leading-relaxed text-[var(--color-muted)]">
+                  Demo card — your app owns the real fields. Drag the card, use the Move menu, or keyboard to move it between columns.
+                </p>
+              </AnimatedDialogBody>
+              <AnimatedDialogFooter>
+                <AnimatedDialogClose asChild>
+                  <button type="button" className={control}>Close</button>
+                </AnimatedDialogClose>
+              </AnimatedDialogFooter>
+            </>
+          ) : null}
+        </AnimatedDialogContent>
+      </AnimatedDialog>
     </div>
   );
 }

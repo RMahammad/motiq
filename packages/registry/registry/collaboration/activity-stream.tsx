@@ -213,17 +213,18 @@ function Avatar({ actor, size = 32 }: { actor: ActivityActor; size?: number }) {
   );
 }
 
-/** Small type badge on the timeline rail — icon in a tinted, tone-bordered chip. */
+/** Type badge shown at an avatar's bottom-right. A small tone-tinted disc with a
+ *  ring in the surface color so it reads as a clean overlay, not a mixed blob. */
 function TypeBadge({ type }: { type: ActivityEventType }) {
   const meta = TYPE_META[type];
   const v = statusVars(meta.tone);
   return (
     <span
       aria-hidden
-      className="grid h-6 w-6 shrink-0 place-items-center rounded-full [border:1.5px_solid]"
-      style={{ color: v.color, background: v.bg, borderColor: v.border }}
+      className="grid h-[17px] w-[17px] shrink-0 place-items-center rounded-full ring-2 ring-[var(--color-surface)]"
+      style={{ color: v.color, background: v.bg }}
     >
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
         {meta.icon}
       </svg>
     </span>

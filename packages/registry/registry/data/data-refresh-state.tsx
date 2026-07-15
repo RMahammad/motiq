@@ -7,12 +7,112 @@ import { cn } from "@/lib/utils";
 import {
   useReducedMotion,
   useAnimatedNumber,
+  useDisclosure,
   getStatusMeta,
   statusVars,
   formatTimestamp as sharedFormatTimestamp,
   type StatusMeta,
   type StatusTone,
 } from "@/lib/motionkit";
+
+/* -------------------------------------------------------------------------- */
+/* Custom interval dropdown — a real library listbox popover (not a native
+   <select>): keyboard-navigable, dismiss-on-outside-click, animated, themed.   */
+/* -------------------------------------------------------------------------- */
+
+const formatInterval = (ms: number) => (ms >= 60000 ? `${Math.round(ms / 60000)}m` : `${Math.round(ms / 1000)}s`);
+
+function IntervalSelect({
+  value,
+  options,
+  onChange,
+}: {
+  value: number;
+  options: number[];
+  onChange: (ms: number) => void;
+}) {
+  const reduce = useReducedMotion();
+  const menu = useDisclosure({ idPrefix: "mk-interval", dismissable: true });
+  const current = options.includes(value) ? value : options[0];
+  const [activeIdx, setActiveIdx] = React.useState(() => Math.max(0, options.indexOf(current)));
+
+  React.useEffect(() => {
+    if (menu.open) setActiveIdx(Math.max(0, options.indexOf(current)));
+  }, [menu.open, current, options]);
+
+  const commit = (ms: number) => {
+    onChange(ms);
+    menu.setOpen(false);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (!menu.open) {
+      if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        menu.setOpen(true);
+      }
+      return;
+    }
+    if (e.key === "ArrowDown") { e.preventDefault(); setActiveIdx((a) => Math.min(options.length - 1, a + 1)); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setActiveIdx((a) => Math.max(0, a - 1)); }
+    else if (e.key === "Home") { e.preventDefault(); setActiveIdx(0); }
+    else if (e.key === "End") { e.preventDefault(); setActiveIdx(options.length - 1); }
+    else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); commit(options[activeIdx]); }
+  };
+
+  return (
+    <div ref={menu.rootRef as React.RefObject<HTMLDivElement>} className="relative" onKeyDown={onKeyDown}>
+      <button
+        type="button"
+        {...menu.triggerProps}
+        aria-haspopup="listbox"
+        className="inline-flex min-h-[28px] items-center gap-1.5 rounded-md bg-[var(--color-surface)] px-2 py-1 text-[12.5px] font-medium text-[var(--color-fg)] outline-none [border:1px_solid_var(--color-border)] transition-colors hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))]"
+      >
+        {formatInterval(current)}
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      </button>
+      <AnimatePresence>
+        {menu.open ? (
+          <motion.div
+            {...menu.panelProps}
+            role="listbox"
+            aria-label="Auto-refresh interval"
+            aria-activedescendant={`mk-interval-opt-${options[activeIdx]}`}
+            initial={reduce ? false : { opacity: 0, y: -4, scale: 0.98 }}
+            animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.98 }}
+            transition={{ duration: 0.14, ease: EASE }}
+            className="absolute right-0 top-full z-30 mt-1 min-w-[112px] overflow-auto rounded-lg bg-[var(--color-surface)] p-1 shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]"
+          >
+            {options.map((ms, i) => {
+              const selected = ms === current;
+              return (
+                <button
+                  key={ms}
+                  id={`mk-interval-opt-${ms}`}
+                  type="button"
+                  role="option"
+                  aria-selected={selected}
+                  onMouseEnter={() => setActiveIdx(i)}
+                  onClick={() => commit(ms)}
+                  className={cn(
+                    "flex w-full items-center justify-between gap-3 rounded-md px-2.5 py-1.5 text-left text-[12.5px] outline-none text-[var(--color-fg)]",
+                    i === activeIdx ? "bg-[var(--color-bg-secondary)]" : "hover:bg-[var(--color-bg-secondary)]",
+                  )}
+                >
+                  {formatInterval(ms)}
+                  {selected ? (
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden className="text-[var(--color-accent-text)]"><path d="m5 13 4 4L19 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  ) : null}
+                </button>
+              );
+            })}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                       */
@@ -361,12 +461,17 @@ function ProgressRegion({
           aria-label={label}
           className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--color-bg-secondary)]"
         >
-          <motion.span
+          {/* Deterministic fill: width comes straight from `pct` (a Motion
+              width-% animation with initial={false} could leave a block span at
+              its 100% default), animated smoothly with a plain CSS transition so
+              the bar always matches the number. */}
+          <span
             className="block h-full rounded-full"
-            style={{ background: vars.color }}
-            initial={false}
-            animate={{ width: `${pct}%` }}
-            transition={reduce ? { duration: 0 } : { duration: 0.5, ease: EASE }}
+            style={{
+              background: vars.color,
+              width: `${pct}%`,
+              transition: reduce ? "none" : "width 0.5s cubic-bezier(0.2,0,0,1)",
+            }}
           />
         </div>
         <span className="text-[11.5px] tabular-nums text-[var(--color-muted)]">{pct}%</span>
@@ -736,20 +841,14 @@ export function DataRefreshState({
 
       {/* interval control (auto mode) */}
       {automatic && intervalOptions && intervalOptions.length && onIntervalChange ? (
-        <label className="flex items-center justify-between gap-2 text-[12.5px] text-[var(--color-muted)]">
-          Auto-refresh every
-          <select
+        <div className="flex items-center justify-between gap-2 text-[12.5px] text-[var(--color-muted)]">
+          <span id="mk-interval-label">Auto-refresh every</span>
+          <IntervalSelect
             value={interval ?? intervalOptions[0]}
-            onChange={(e) => onIntervalChange(Number(e.target.value))}
-            className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-2 py-1 text-[12.5px] text-[var(--color-fg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)]"
-          >
-            {intervalOptions.map((ms) => (
-              <option key={ms} value={ms}>
-                {ms >= 60000 ? `${Math.round(ms / 60000)}m` : `${Math.round(ms / 1000)}s`}
-              </option>
-            ))}
-          </select>
-        </label>
+            options={intervalOptions}
+            onChange={onIntervalChange}
+          />
+        </div>
       ) : null}
 
       {/* footer actions */}

@@ -172,11 +172,11 @@ export function DeploymentPipelinePreview() {
             <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-warning,var(--color-muted))] opacity-70" />
             <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-success,var(--color-muted))] opacity-70" />
           </span>
-          <span className="ml-1 font-mono text-[12px] text-[var(--color-muted)]">
+          <span className="ml-1 min-w-0 truncate font-mono text-[12px] text-[var(--color-muted)]">
             deploy · commit a1f3c9d
           </span>
-          <span className="ml-auto font-mono text-[11.5px] text-[var(--color-muted)]">
-            {failMode ? "main → production" : "main → production"}
+          <span className="ml-auto hidden shrink-0 font-mono text-[11.5px] text-[var(--color-muted)] sm:inline">
+            main → production
           </span>
         </div>
 

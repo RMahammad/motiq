@@ -477,6 +477,7 @@ export function KanbanCardMovement({
       if (ds.raf != null) cancelAnimationFrame(ds.raf);
       ds.el.style.transform = "";
       ds.el.style.zIndex = "";
+      ds.el.style.pointerEvents = "";
       ds.el.removeEventListener("pointermove", stableMove);
       ds.el.removeEventListener("pointerup", stableUp);
       ds.el.removeEventListener("pointercancel", stableCancel);
@@ -510,6 +511,12 @@ export function KanbanCardMovement({
       if (!ds.moved) {
         ds.moved = true;
         setDraggingId(ds.cardId); // one state write for the whole drag
+        // Make the dragged card transparent to hit-testing so elementFromPoint
+        // sees the column/cards *underneath* it — without this the card (which
+        // follows the pointer at z-50) is always the topmost element, so drops
+        // resolve to the origin column and moves between columns never register.
+        // Pointer capture keeps delivering pointermove to this element regardless.
+        ds.el.style.pointerEvents = "none";
       }
       if (ds.raf != null) cancelAnimationFrame(ds.raf);
       ds.raf = requestAnimationFrame(() => {

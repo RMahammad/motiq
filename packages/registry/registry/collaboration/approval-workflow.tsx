@@ -769,7 +769,9 @@ export function ApprovalWorkflow({
                 transition={{ duration: reduce ? 0 : 0.24, ease: EASE }}
                 className="overflow-hidden"
               >
-                <ol role="list" className="mt-1 space-y-2 border-l border-[var(--color-border)] py-2 pl-4">
+                {/* ml-4 gives the status discs room to sit ON the rail without
+                    being clipped by this panel's overflow-hidden left edge. */}
+                <ol role="list" className="mt-1 ml-4 space-y-2 border-l border-[var(--color-border)] py-2 pl-5">
                   <AnimatePresence initial={false}>
                     {workflow.history.map((d) => (
                       <HistoryRow key={d.id} decision={d} reduce={reduce} fmt={fmt} />
@@ -1081,7 +1083,7 @@ function HistoryRow({
     >
       <span
         aria-hidden
-        className="absolute -left-[21px] top-1 grid h-4 w-4 place-items-center rounded-full [border:1.5px_solid]"
+        className="absolute -left-[29px] top-0.5 grid h-4 w-4 place-items-center rounded-full ring-2 ring-[var(--color-surface)] [border:1.5px_solid]"
         style={{ color: statusVars(al.tone).color, background: statusVars(al.tone).bg, borderColor: statusVars(al.tone).border }}
       >
         <ToneIcon tone={al.tone} size={9} />
@@ -1108,15 +1110,15 @@ function HistoryRow({
 function AttachmentChip({ attachment }: { attachment: Attachment }) {
   const inner = (
     <>
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0">
         {P("M14 3v5h5M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-5Z")}
       </svg>
-      <span className="truncate">{attachment.name}</span>
-      {attachment.meta ? <span className="text-[var(--color-muted)]">· {attachment.meta}</span> : null}
+      <span className="min-w-0 truncate">{attachment.name}</span>
+      {attachment.meta ? <span className="shrink-0 whitespace-nowrap text-[var(--color-muted)]">· {attachment.meta}</span> : null}
     </>
   );
   const base =
-    "inline-flex max-w-[15rem] items-center gap-1.5 rounded-lg bg-[var(--color-bg-secondary)] px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] [border:1px_solid_var(--color-border)]";
+    "inline-flex min-w-0 max-w-[15rem] items-center gap-1.5 rounded-lg bg-[var(--color-bg-secondary)] px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] [border:1px_solid_var(--color-border)]";
   if (attachment.href) {
     return (
       <a

@@ -77,6 +77,10 @@ input:focus-visible,
   display: none;
 }
 
+/* Custom scrollbars are defined as a raw <style> in layout.tsx <head> so the
+   universal `*::-webkit-scrollbar` rules aren't pruned by the Tailwind v4
+   (Lightning CSS) pipeline. */
+
 /* Checkerboard used by preview stages to read on any surface. */
 .stage-grid {
   background-color: var(--color-stage-bg);

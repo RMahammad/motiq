@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence, type Transition } from "motion/react";
 
 import { cn } from "@/lib/utils";
@@ -258,17 +259,31 @@ interface MenuProps {
 }
 
 function Menu({ label, disabled, reduce, open, onOpenChange, trigger, children }: MenuProps) {
-  const rootRef = React.useRef<HTMLDivElement | null>(null);
   const triggerRef = React.useRef<HTMLButtonElement | null>(null);
+  const panelRef = React.useRef<HTMLDivElement | null>(null);
   const reactId = React.useId();
   const panelId = `mk-menu-${reactId}`;
+  // Portal position, anchored above the trigger. Measured on open + on scroll/
+  // resize so the panel escapes the composer's `overflow-hidden` clip and never
+  // gets cut off at the component's edge.
+  const [rect, setRect] = React.useState<{ left: number; top: number; width: number } | null>(null);
 
   const close = React.useCallback(() => onOpenChange(false), [onOpenChange]);
 
+  const place = React.useCallback(() => {
+    const t = triggerRef.current;
+    if (!t) return;
+    const r = t.getBoundingClientRect();
+    setRect({ left: r.left, top: r.top, width: r.width });
+  }, []);
+
   React.useEffect(() => {
     if (!open) return;
+    place();
     const onDown = (e: PointerEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) close();
+      const target = e.target as Node;
+      if (triggerRef.current?.contains(target) || panelRef.current?.contains(target)) return;
+      close();
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -277,16 +292,21 @@ function Menu({ label, disabled, reduce, open, onOpenChange, trigger, children }
         triggerRef.current?.focus();
       }
     };
+    const onReflow = () => place();
     document.addEventListener("pointerdown", onDown);
     document.addEventListener("keydown", onKey);
+    window.addEventListener("scroll", onReflow, true);
+    window.addEventListener("resize", onReflow);
     return () => {
       document.removeEventListener("pointerdown", onDown);
       document.removeEventListener("keydown", onKey);
+      window.removeEventListener("scroll", onReflow, true);
+      window.removeEventListener("resize", onReflow);
     };
-  }, [open, close]);
+  }, [open, close, place]);
 
   return (
-    <div ref={rootRef} className="relative">
+    <div className="relative">
       <button
         ref={triggerRef}
         type="button"
@@ -299,25 +319,38 @@ function Menu({ label, disabled, reduce, open, onOpenChange, trigger, children }
       >
         {trigger}
       </button>
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            id={panelId}
-            role="menu"
-            aria-label={label}
-            initial={reduce ? false : { opacity: 0, y: 6, scale: 0.98 }}
-            animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.98 }}
-            transition={{ duration: 0.15, ease: EASE }}
-            className="absolute bottom-full left-0 z-30 mb-2 max-h-[280px] w-[min(320px,80vw)] overflow-auto rounded-xl bg-[var(--color-surface)] p-1 shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]"
-          >
-            {children(() => {
-              close();
-              triggerRef.current?.focus();
-            })}
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      {typeof document !== "undefined"
+        ? createPortal(
+            <AnimatePresence>
+              {open && rect ? (
+                <motion.div
+                  ref={panelRef}
+                  id={panelId}
+                  role="menu"
+                  aria-label={label}
+                  initial={reduce ? false : { opacity: 0, y: 6, scale: 0.98 }}
+                  animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+                  exit={reduce ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.98 }}
+                  transition={{ duration: 0.15, ease: EASE }}
+                  style={{
+                    position: "fixed",
+                    left: rect.left,
+                    // anchor the panel's BOTTOM 8px above the trigger's top edge
+                    bottom: `calc(100vh - ${rect.top}px + 8px)`,
+                    transformOrigin: "bottom left",
+                  }}
+                  className="z-[60] max-h-[280px] w-[min(320px,80vw)] overflow-auto rounded-xl bg-[var(--color-surface)] p-1 shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]"
+                >
+                  {children(() => {
+                    close();
+                    triggerRef.current?.focus();
+                  })}
+                </motion.div>
+              ) : null}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
@@ -424,11 +457,24 @@ export function PromptComposer({
 
   const insertTemplate = React.useCallback(
     (template: PromptTemplate) => {
-      insertAtCaret(template.body);
+      // A template is a whole prompt, so applying one REPLACES the draft rather
+      // than inserting at the caret — picking another template swaps it out
+      // instead of appending onto the previous one.
+      setText(template.body);
+      const el = textareaRef.current;
+      const caret = template.body.length;
+      requestAnimationFrame(() => {
+        el?.focus();
+        try {
+          el?.setSelectionRange(caret, caret);
+        } catch {
+          /* selection unsupported — non-fatal */
+        }
+      });
       onInsertTemplate?.(template);
-      announce(`Inserted template ${template.label}`);
+      announce(`Applied template ${template.label}`);
     },
-    [insertAtCaret, onInsertTemplate, announce],
+    [setText, onInsertTemplate, announce],
   );
 
   /* -- submit ----------------------------------------------------------- */

@@ -9,7 +9,24 @@ import {
   type ActionContext,
   type Decision,
   type Reviewer,
+  type Attachment,
 } from "@/registry/collaboration/approval-workflow";
+import {
+  AnimatedDialog,
+  AnimatedDialogContent,
+  AnimatedDialogHeader,
+  AnimatedDialogTitle,
+  AnimatedDialogDescription,
+  AnimatedDialogBody,
+} from "@/registry/animated-shadcn/animated-dialog";
+
+// Fictional attachment sources for the "Attach from…" picker (same UX as Prompt Composer).
+const ATTACH_SOURCES: { key: string; label: string; hint: string; icon: string; file: { name: string; meta: string } }[] = [
+  { key: "computer", label: "Upload from computer", hint: "Choose a local file", icon: "M12 15V4m0 0 4 4m-4-4-4 4M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2", file: { name: "security-review-notes.pdf", meta: "96 KB" } },
+  { key: "drive", label: "Google Drive", hint: "Pick from your Drive", icon: "m8 3 8 14M4 17 12 3M20 17H4l4-7h8z", file: { name: "launch-plan-v4.gdoc", meta: "Google Drive" } },
+  { key: "dropbox", label: "Dropbox", hint: "Pick from Dropbox", icon: "m12 6-5 3 5 3 5-3-5-3zM2 9l5 3-5 3 5 3 5-3M22 9l-5 3 5 3-5 3-5-3", file: { name: "pentest-findings.zip", meta: "Dropbox · 3.4 MB" } },
+  { key: "link", label: "Paste a link", hint: "Attach a URL", icon: "M9 15 15 9M10.5 7.5 12 6a4 4 0 0 1 6 6l-1.5 1.5M13.5 16.5 12 18a4 4 0 0 1-6-6l1.5-1.5", file: { name: "notion.so/aurora-rollout", meta: "Link" } },
+];
 
 /* Clearly fictional demo — a launch approval for an imaginary product. No real
  * people, teams, or documents. Fixed ids + timestamps so there is no SSR/CSR
@@ -202,12 +219,21 @@ export function ApprovalWorkflowPreview() {
   const [workflow, setWorkflow] = React.useState<ApprovalWorkflowData>(seed);
   const [compact, setCompact] = React.useState(true);
   const [requireConfirm, setRequireConfirm] = React.useState(true);
+  const [attachOpen, setAttachOpen] = React.useState(false);
   const idRef = React.useRef(0);
   const extraRef = React.useRef(0);
 
   const nextId = () => {
     idRef.current += 1;
     return `live-${idRef.current}`;
+  };
+
+  const addAttachment = (key: string) => {
+    const src = ATTACH_SOURCES.find((s) => s.key === key);
+    if (!src) return;
+    const att: Attachment = { id: nextId(), name: src.file.name, meta: src.file.meta };
+    setWorkflow((wf) => ({ ...wf, attachments: [...(wf.attachments ?? []), att] }));
+    setAttachOpen(false);
   };
 
   const record = (action: ApprovalAction) => (ctx: ActionContext) => {
@@ -276,6 +302,7 @@ export function ApprovalWorkflowPreview() {
     setWorkflow(seed());
     setCompact(true);
     setRequireConfirm(true);
+    setAttachOpen(false);
     idRef.current = 0;
     extraRef.current = 0;
   };
@@ -313,6 +340,9 @@ export function ApprovalWorkflowPreview() {
         <button type="button" className={control} onClick={addReviewer} disabled={noMoreReviewers || isTerminal}>
           Add reviewer
         </button>
+        <button type="button" className={control} onClick={() => setAttachOpen(true)}>
+          Add attachment
+        </button>
         <button type="button" className={control} aria-pressed={compact} onClick={() => setCompact((c) => !c)}>
           {compact ? "Collapse done: on" : "Collapse done: off"}
         </button>
@@ -324,6 +354,36 @@ export function ApprovalWorkflowPreview() {
         </button>
         <span className="ml-auto text-[12px] text-[var(--color-muted)]">Fictional demo data</span>
       </div>
+
+      {/* Attach source picker — our library AnimatedDialog (same UX as Prompt Composer). */}
+      <AnimatedDialog animation="scale" open={attachOpen} onOpenChange={setAttachOpen}>
+        <AnimatedDialogContent className="sm:max-w-md">
+          <AnimatedDialogHeader>
+            <AnimatedDialogTitle>Attach from…</AnimatedDialogTitle>
+            <AnimatedDialogDescription>Pick a source. Demo only — nothing is uploaded.</AnimatedDialogDescription>
+          </AnimatedDialogHeader>
+          <AnimatedDialogBody className="grid gap-2 sm:grid-cols-2">
+            {ATTACH_SOURCES.map((s) => (
+              <button
+                key={s.key}
+                type="button"
+                onClick={() => addAttachment(s.key)}
+                className="flex items-center gap-3 rounded-xl [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] px-3 py-3 text-left outline-none transition-colors hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+              >
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[color-mix(in_oklab,var(--color-accent)_14%,transparent)] text-[var(--color-accent-text)]">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d={s.icon} />
+                  </svg>
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[13.5px] font-medium text-[var(--color-fg)]">{s.label}</span>
+                  <span className="block text-[12px] text-[var(--color-muted)]">{s.hint}</span>
+                </span>
+              </button>
+            ))}
+          </AnimatedDialogBody>
+        </AnimatedDialogContent>
+      </AnimatedDialog>
     </div>
   );
 }

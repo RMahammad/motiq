@@ -116,16 +116,16 @@ export function AiResponseStreamPreview() {
     }, 95);
   }, [stop]);
 
-  // Kick off once the surface first becomes visible.
-  const startedRef = React.useRef(false);
+  // Auto-start the demo stream on mount. The interval self-pauses while the
+  // surface is offscreen/backgrounded (visibleRef), so we don't gate the start
+  // on visibility — and starting here (with a matching cleanup) is robust to
+  // React StrictMode's mount → cleanup → mount cycle. The previous startedRef
+  // guard could leave the stream permanently stopped when the cleanup ran
+  // between the two StrictMode invocations ("sometimes it doesn't start").
   React.useEffect(() => {
-    if (visible && !startedRef.current) {
-      startedRef.current = true;
-      start();
-    }
-  }, [visible, start]);
-
-  React.useEffect(() => () => stop(), [stop]);
+    start();
+    return () => stop();
+  }, [start, stop]);
 
   const onStop = React.useCallback(() => {
     stop();

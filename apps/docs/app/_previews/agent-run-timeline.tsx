@@ -195,10 +195,11 @@ function Btn({
 
 export function AgentRunTimelinePreview() {
   const wrapRef = React.useRef<HTMLDivElement | null>(null);
-  useVisibilityPause(wrapRef); // available to gate host-side timers; this demo is event-driven.
+  const autoVisible = useVisibilityPause(wrapRef); // gate autoplay while offscreen/backgrounded.
 
   const [run, setRun] = React.useState<AgentRun>(initialRun);
   const [activeStepId, setActiveStepId] = React.useState<string | undefined>("s3");
+  const [auto, setAuto] = React.useState(true);
 
   const activeStep = run.steps.find((s) => s.status === "active");
   const waitingStep = run.steps.find((s) => s.status === "waiting_approval");
@@ -268,9 +269,9 @@ export function AgentRunTimelinePreview() {
 
   const requestApproval = () =>
     setRun((r) => {
-      // Prefer the dedicated approval step; else the current active step.
-      const approvalIdx = r.steps.findIndex((s) => s.id === "s5" && s.status !== "completed");
-      const idx = approvalIdx !== -1 ? approvalIdx : r.steps.findIndex((s) => s.status === "active");
+      // Only the CURRENT active step can request approval — never jump ahead to a
+      // later step while earlier ones are still pending (that skipped the sequence).
+      const idx = r.steps.findIndex((s) => s.status === "active");
       if (idx === -1) return r;
       return {
         ...r,
@@ -337,6 +338,37 @@ export function AgentRunTimelinePreview() {
     setActiveStepId("s1");
   };
 
+  // A manual control temporarily hands the run to the user (pauses autoplay).
+  const manual = React.useCallback((fn: () => void) => () => { setAuto(false); fn(); }, []);
+
+  // Autoplay: advance the run one logical step at a time so the timeline animates
+  // on its own for the showcase — start → complete each step → request + grant
+  // approval on the approval step → finish → loop. Pauses offscreen, and any
+  // manual control switches it off so the user can drive. Re-arms on Reset.
+  React.useEffect(() => {
+    if (!auto || !autoVisible) return;
+    const waiting = run.steps.find((s) => s.status === "waiting_approval");
+    const failed = run.steps.find((s) => s.status === "failed");
+    const active = run.steps.find((s) => s.status === "active");
+    const settled = run.steps.length > 0 && run.steps.every((s) => s.status === "completed" || s.status === "cancelled");
+
+    let action: (() => void) | null = null;
+    let delay = 1300;
+    if (run.status === "queued" || run.status === "paused") { action = startRun; delay = 800; }
+    else if (waiting) { action = () => approve(waiting.id); delay = 1500; }
+    else if (failed) { action = () => retry(failed.id); delay = 1600; }
+    else if (active) {
+      if (active.id === "s5") { action = requestApproval; delay = 1200; }
+      else { action = completeStep; delay = 1200; }
+    } else if (settled) { action = reset; delay = 2400; }
+
+    if (!action) return;
+    const t = window.setTimeout(action, delay);
+    return () => window.clearTimeout(t);
+    // Handlers only call setRun (stable); the effect re-derives them each run change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auto, autoVisible, run]);
+
   return (
     <div ref={wrapRef} className="mx-auto flex w-full max-w-[760px] flex-col gap-3">
       {/* Working controls — each mutates the fictional run the component renders.
@@ -351,28 +383,31 @@ export function AgentRunTimelinePreview() {
           </span>
           Agent workspace
         </span>
-        <Btn onClick={startRun} disabled={!canStart} path="M8 5v14l11-7z">
+        <Btn onClick={() => setAuto((a) => !a)} path={auto ? "M6 5h4v14H6zM14 5h4v14h-4z" : "M8 5v14l11-7z"}>
+          {auto ? "Pause auto" : "Play"}
+        </Btn>
+        <Btn onClick={manual(startRun)} disabled={!canStart} path="M8 5v14l11-7z">
           Start run
         </Btn>
-        <Btn onClick={completeStep} disabled={!activeStep} path="m5 13 4 4L19 7">
+        <Btn onClick={manual(completeStep)} disabled={!activeStep} path="m5 13 4 4L19 7">
           Complete step
         </Btn>
-        <Btn onClick={failStep} disabled={!activeStep} path="M6 6l12 12M18 6 6 18">
+        <Btn onClick={manual(failStep)} disabled={!activeStep} path="M6 6l12 12M18 6 6 18">
           Fail step
         </Btn>
-        <Btn onClick={requestApproval} disabled={!activeStep && !run.steps.some((s) => s.id === "s5" && s.status === "pending")} path="M12 3 5 6v5c0 4.2 2.9 7.7 7 9 4.1-1.3 7-4.8 7-9V6z">
+        <Btn onClick={manual(requestApproval)} disabled={!activeStep} path="M12 3 5 6v5c0 4.2 2.9 7.7 7 9 4.1-1.3 7-4.8 7-9V6z">
           Request approval
         </Btn>
-        <Btn onClick={() => waitingStep && approve(waitingStep.id)} disabled={!waitingStep} path="M12 3 5 6v5c0 4.2 2.9 7.7 7 9 4.1-1.3 7-4.8 7-9V6zM9 11l2.2 2.2L15 9.4">
+        <Btn onClick={manual(() => waitingStep && approve(waitingStep.id))} disabled={!waitingStep} path="M12 3 5 6v5c0 4.2 2.9 7.7 7 9 4.1-1.3 7-4.8 7-9V6zM9 11l2.2 2.2L15 9.4">
           Approve
         </Btn>
-        <Btn onClick={() => failedStep && retry(failedStep.id)} disabled={!failedStep} path="M20 11a8 8 0 1 0-.7 4.2M20 5v4h-4">
+        <Btn onClick={manual(() => failedStep && retry(failedStep.id))} disabled={!failedStep} path="M20 11a8 8 0 1 0-.7 4.2M20 5v4h-4">
           Retry
         </Btn>
-        <Btn onClick={cancelRun} disabled={!inFlight} path="M6 6h12v12H6z">
+        <Btn onClick={manual(cancelRun)} disabled={!inFlight} path="M6 6h12v12H6z">
           Cancel
         </Btn>
-        <Btn onClick={reset} path="M4 11a8 8 0 1 1 .7 4.2M4 17v-4h4">
+        <Btn onClick={() => { setAuto(true); reset(); }} path="M4 11a8 8 0 1 1 .7 4.2M4 17v-4h4">
           Reset
         </Btn>
       </div>

@@ -321,6 +321,13 @@ export interface UseDisclosureOptions {
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   idPrefix?: string;
+  /**
+   * When true, treat this as a popover: while open, a pointerdown outside the
+   * `rootRef` element (or an Escape key) closes it. Opt-in so inline
+   * expand/collapse disclosures are unaffected. Spread `rootRef` on the element
+   * that wraps both the trigger and the panel.
+   */
+  dismissable?: boolean;
 }
 
 /**
@@ -329,13 +336,14 @@ export interface UseDisclosureOptions {
  * audit-log rows. Keyboard activation comes free from using a real <button> for
  * the trigger (spread `triggerProps`).
  */
-export function useDisclosure({ open, defaultOpen = false, onOpenChange, idPrefix = "mk" }: UseDisclosureOptions = {}) {
+export function useDisclosure({ open, defaultOpen = false, onOpenChange, idPrefix = "mk", dismissable = false }: UseDisclosureOptions = {}) {
   const isControlled = open !== undefined;
   const [internal, setInternal] = React.useState(defaultOpen);
   const actualOpen = isControlled ? open : internal;
   const reactId = React.useId();
   const triggerId = `${idPrefix}-tr-${reactId}`;
   const panelId = `${idPrefix}-pn-${reactId}`;
+  const rootRef = React.useRef<HTMLElement | null>(null);
   const setOpen = React.useCallback(
     (next: boolean) => {
       if (!isControlled) setInternal(next);
@@ -344,10 +352,30 @@ export function useDisclosure({ open, defaultOpen = false, onOpenChange, idPrefi
     [isControlled, onOpenChange],
   );
   const toggle = React.useCallback(() => setOpen(!actualOpen), [setOpen, actualOpen]);
+
+  // Popover dismissal: close on outside pointerdown / Escape while open (opt-in).
+  React.useEffect(() => {
+    if (!dismissable || !actualOpen) return;
+    const onDown = (e: PointerEvent) => {
+      const root = rootRef.current;
+      if (root && !root.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("pointerdown", onDown, true);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown, true);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [dismissable, actualOpen, setOpen]);
+
   return {
     open: actualOpen,
     setOpen,
     toggle,
+    rootRef,
     triggerProps: {
       id: triggerId,
       "aria-expanded": actualOpen,

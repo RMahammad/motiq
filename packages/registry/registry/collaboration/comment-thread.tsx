@@ -332,11 +332,11 @@ function ReactionBar({
   canReact: boolean;
   onReact?: CommentThreadProps["onReact"];
 }) {
-  const picker = useDisclosure({ idPrefix: "react" });
+  const picker = useDisclosure({ idPrefix: "react", dismissable: true });
   if (!canReact && reactions.length === 0) return null;
 
   return (
-    <div className="relative flex flex-wrap items-center gap-1.5">
+    <div ref={picker.rootRef as React.RefObject<HTMLDivElement>} className="relative flex flex-wrap items-center gap-1.5">
       {reactions.map((r) => {
         const name = r.label ?? r.emoji;
         return (

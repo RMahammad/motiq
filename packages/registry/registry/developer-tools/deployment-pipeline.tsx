@@ -304,7 +304,7 @@ function StageRow({ stage, isLast, expanded, onToggle, onRetry, reduce, active }
             </span>
           ) : null}
 
-          <span className="ml-auto flex items-center gap-1.5">
+          <span className="flex w-full items-center gap-1.5 sm:ml-auto sm:w-auto">
             {meta.retryable && onRetry ? (
               <button
                 type="button"

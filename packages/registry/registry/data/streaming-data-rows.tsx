@@ -561,7 +561,9 @@ export function StreamingDataRows<T>({
                 </td>
               </tr>
             ) : (
-              <AnimatePresence initial={false}>
+              // popLayout: a row dropped by the cap is pulled out of layout flow as
+              // it fades, so the table never briefly grows then shrinks (no flash).
+              <AnimatePresence initial={false} mode="popLayout">
                 {sortedRows.map((row) => {
                   const id = getRowId(row);
                   return (
@@ -620,7 +622,7 @@ export function StreamingDataRows<T>({
   const mobile = renderMobileRow ? (
     <ul className="flex flex-col gap-2 p-2">
       <LayoutGroup>
-        <AnimatePresence initial={false}>
+        <AnimatePresence initial={false} mode="popLayout">
           {sortedRows.map((row) => {
             const id = getRowId(row);
             return (

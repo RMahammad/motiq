@@ -14,11 +14,26 @@ export const metadata: Metadata = {
 
 const noFlash = `(function(){try{var t=localStorage.getItem('theme')||'${product.defaultTheme}';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','${product.defaultTheme}');}})();`;
 
+/* One themed, thin, rounded scrollbar for every overflow container across the
+   product (light + dark via tokens). Raw <style> so the universal
+   `*::-webkit-scrollbar` rules survive the Tailwind v4 (Lightning CSS) pipeline,
+   which prunes them from the app stylesheet. Components that intentionally hide
+   their scrollbar (`.hero-tabs`, etc.) override via higher specificity. */
+const scrollbarCss = `
+*{scrollbar-width:thin;scrollbar-color:color-mix(in oklab,var(--color-fg) 24%,transparent) transparent}
+*::-webkit-scrollbar{width:10px;height:10px}
+*::-webkit-scrollbar-track{background:transparent}
+*::-webkit-scrollbar-thumb{background:color-mix(in oklab,var(--color-fg) 22%,transparent);border-radius:999px;border:2px solid transparent;background-clip:padding-box}
+*::-webkit-scrollbar-thumb:hover{background:color-mix(in oklab,var(--color-fg) 38%,transparent);background-clip:padding-box}
+*::-webkit-scrollbar-corner{background:transparent}
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: noFlash }} />
+        <style dangerouslySetInnerHTML={{ __html: scrollbarCss }} />
       </head>
       <body>
         <SiteNav
