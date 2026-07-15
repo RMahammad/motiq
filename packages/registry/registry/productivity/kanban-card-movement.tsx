@@ -722,16 +722,29 @@ function ColumnView({
             Drop cards here
           </li>
         ) : (
-          cardIds.map((cardId, i) => {
-            const card = byId.get(cardId);
-            if (!card) return null;
-            return (
-              <React.Fragment key={cardId}>
-                {indicatorIndex === i ? <DropIndicator /> : null}
+          (() => {
+            // The dragged card is lifted OUT of the column flow (its slot
+            // collapses), so the drop indicator must be placed in the space of
+            // the *remaining* cards — the same index space `hitTest` uses (it
+            // excludes the dragged card). Tracking `visibleIdx` (incremented only
+            // for non-dragged cards) keeps the placeholder exactly where the card
+            // will land, including for moves within the same column.
+            const nodes: React.ReactNode[] = [];
+            let visibleIdx = 0;
+            const visibleTotal = cardIds.reduce((n, id) => (id === draggingId ? n : n + 1), 0);
+            cardIds.forEach((cardId) => {
+              const card = byId.get(cardId);
+              if (!card) return;
+              const isDragged = draggingId === cardId;
+              if (!isDragged && indicatorIndex === visibleIdx) {
+                nodes.push(<DropIndicator key={`ind-${visibleIdx}`} />);
+              }
+              nodes.push(
                 <CardView
+                  key={cardId}
                   card={card}
-                  index={i}
-                  total={cardIds.length}
+                  index={visibleIdx}
+                  total={visibleTotal}
                   columnTitle={column.title}
                   columns={columns}
                   grabbed={grabCardId === cardId}
@@ -743,12 +756,16 @@ function ColumnView({
                   onMoveToColumn={onMoveToColumn}
                   onSelectCard={onSelectCard}
                   registerHandle={registerHandle}
-                />
-              </React.Fragment>
-            );
-          })
+                />,
+              );
+              if (!isDragged) visibleIdx += 1;
+            });
+            if (indicatorIndex != null && indicatorIndex >= visibleTotal && visibleTotal > 0) {
+              nodes.push(<DropIndicator key="ind-end" />);
+            }
+            return nodes;
+          })()
         )}
-        {indicatorIndex != null && indicatorIndex >= cardIds.length && cardIds.length > 0 ? <DropIndicator /> : null}
       </ul>
 
       {onAddCard ? (
@@ -856,6 +873,11 @@ const CardView = React.memo(function CardView({
           !card.disabled && "cursor-grab hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
           card.disabled && "cursor-not-allowed opacity-60",
           selected && "ring-2 ring-[var(--color-accent)]",
+          // While dragging, lift the card out of the column flow (its <li> slot
+          // collapses and the other cards reflow up) so there's no phantom gap and
+          // the drop placeholder reads clearly. `inset-x-0` keeps full width; top is
+          // auto, so it stays at its static position and the pointer transform holds.
+          dragging && "absolute inset-x-0 z-50",
         )}
         style={{
           touchAction: card.disabled ? undefined : "none",
@@ -872,8 +894,9 @@ const CardView = React.memo(function CardView({
       </motion.div>
 
       {/* Non-drag path: an always-available Move menu (sibling of the card
-          button, so it is not an interactive descendant of a role=button). */}
-      {!card.disabled && otherColumns.length > 0 ? (
+          button, so it is not an interactive descendant of a role=button).
+          Hidden while dragging so it doesn't linger in the collapsed slot. */}
+      {!dragging && !card.disabled && otherColumns.length > 0 ? (
         <div className="absolute right-1.5 top-1.5">
           <button
             ref={menuBtnRef}
