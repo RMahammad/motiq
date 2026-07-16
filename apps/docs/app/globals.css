@@ -64,6 +64,20 @@ input:focus-visible,
   animation: hero-swap-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+/* Restrained hero headline underline — grows in from the left once on load.
+   The global reduced-motion rule collapses it to the final (full) state. */
+@keyframes hero-underline {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.hero-underline {
+  animation: hero-underline 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
 /* ------------------------------------------------------------------ *
  * Hero showcase toolbar tabs (homepage). A horizontally-scrollable tablist
  * that stays swipeable on narrow viewports while hiding its scrollbar chrome.

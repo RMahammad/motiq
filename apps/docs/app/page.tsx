@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 
 import { product } from "../lib/product";
+import { AiResponseStream, type ResponseSegment } from "@/registry/ai/ai-response-stream";
 import { featuredItems, categoryCount, bySlug, packSpans, SPAN_CLASS, accessLabel, resolvePresentation, componentItems, type CatalogItem } from "../lib/catalog";
 import { packs, type Pack } from "../lib/packs";
 import { completeCatalogCta, statusLabel } from "../lib/commerce";
@@ -128,12 +129,12 @@ function AccessPill({ access }: { access: CatalogItem["access"] }) {
   );
 }
 
-/* ---- Hero product-proof stat (truthful, catalog-derived — never fake trust) ---- */
+/* ---- Hero product-proof stat tile (truthful, catalog-derived — never fake trust) ---- */
 function ProofStat({ value, label }: { value: ReactNode; label: string }) {
   return (
-    <div className="flex items-baseline gap-3">
-      <span className="w-9 shrink-0 text-right text-[22px] font-semibold tabular-nums tracking-tight text-[var(--color-fg)]">{value}</span>
-      <span className="text-[13.5px] leading-tight text-[var(--color-muted)]">{label}</span>
+    <div className="rounded-xl border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_60%,transparent)] px-3.5 py-3">
+      <div className="text-[30px] font-semibold leading-none tabular-nums tracking-tight text-[var(--color-fg)]">{value}</div>
+      <div className="mt-1.5 text-[12.5px] leading-tight text-[var(--color-muted)]">{label}</div>
     </div>
   );
 }
@@ -267,6 +268,17 @@ function PackCard({ p }: { p: Pack }) {
 }
 
 
+/* One short, representative state of a real component (AI Response Stream) shown
+   live inside the hero product panel — a concise answer + streaming caret. No
+   code block, no sources rail, and its footer controls are hidden so the panel
+   stays a clean, alive preview rather than an interactive surface. */
+const HERO_STREAM_SEGMENTS: ResponseSegment[] = [
+  {
+    type: "text",
+    text: "Cap retries with exponential backoff and full jitter, so clients never reconnect in lockstep after an outage.",
+  },
+];
+
 export default function HomePage() {
   const featured = featuredItems();
   const featuredSpans = packSpans(featured);
@@ -282,88 +294,134 @@ export default function HomePage() {
               light-first environment, with the product proof on the right and a
               large browser-style showcase below (docs/60 rebuild). ===== */}
       <section className="relative isolate overflow-hidden">
-        {/* Background environment: a fine dot lattice masked to fade toward the
-            readable content, one soft accent glow drawn up-right (off-center for
-            an editorial feel), and a base wash into the page background.
-            Restrained — no particles/beams/animated noise — and token-driven so
-            it reads intentionally in both light and dark. */}
+        {/* Background (docs/61): a restrained dot lattice masked toward the panel,
+            a soft radial light behind the product panel (upper-right) for depth, a
+            thin top edge-light, and a base wash into the page. No particles/beams.
+            Token-driven so it reads intentionally in light and dark. */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div
             className="absolute inset-0"
             style={{
               backgroundImage:
-                "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-fg) 10%, transparent) 1px, transparent 0)",
-              backgroundSize: "28px 28px",
-              opacity: 0.5,
-              WebkitMaskImage: "radial-gradient(115% 75% at 70% 4%, #000 0%, transparent 60%)",
-              maskImage: "radial-gradient(115% 75% at 70% 4%, #000 0%, transparent 60%)",
+                "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-fg) 8%, transparent) 1px, transparent 0)",
+              backgroundSize: "30px 30px",
+              opacity: 0.55,
+              WebkitMaskImage: "radial-gradient(110% 80% at 78% 8%, #000 0%, transparent 62%)",
+              maskImage: "radial-gradient(110% 80% at 78% 8%, #000 0%, transparent 62%)",
             }}
           />
           <div
             className="absolute inset-0"
-            style={{ background: "radial-gradient(48% 40% at 82% -4%, color-mix(in oklab, var(--color-accent) 14%, transparent), transparent 66%)" }}
+            style={{ background: "radial-gradient(40% 44% at 82% 14%, color-mix(in oklab, var(--color-accent) 16%, transparent), transparent 62%)" }}
           />
           <div
-            className="absolute inset-x-0 bottom-0 h-40"
+            className="absolute inset-x-0 top-0 h-px"
+            style={{ background: "linear-gradient(to right, transparent, color-mix(in oklab, var(--color-accent) 40%, transparent), transparent)" }}
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-32"
             style={{ background: "linear-gradient(to bottom, transparent, var(--color-bg))" }}
           />
         </div>
 
-        <div className="mx-auto max-w-[1440px] px-4 pb-12 pt-12 sm:px-6 sm:pt-16 lg:px-8 lg:pt-20">
-          {/* Top hero content: ~60% copy on the left, ~28% product proof on the
-              right, with breathing space between. Stacks on tablet/mobile. */}
-          <div className="grid items-start gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,320px)]">
+        <div className="mx-auto max-w-[1440px] px-4 pb-9 pt-11 sm:px-6 sm:pt-12 lg:px-8 lg:pt-14">
+          {/* Balanced two-column composition: ~61% copy / ~36% product panel,
+              vertically centered. Stacks on tablet/mobile. */}
+          <div className="grid items-center gap-x-8 gap-y-9 lg:grid-cols-[1.7fr_1fr]">
             {/* Left — headline + copy + CTAs */}
-            <div className="max-w-[640px]">
-              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3.5 py-1.5 text-[13px] font-medium text-[var(--color-muted)] shadow-[var(--shadow-sm)]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" /> {statusLabel()} · {product.freeTierLabel} &amp; {product.premiumTierLabel}
+            <div className="max-w-[620px]">
+              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_75%,transparent)] px-3.5 py-1.5 text-[12.5px] font-medium text-[var(--color-fg)] shadow-[var(--shadow-sm)] backdrop-blur">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-accent)] opacity-75 motion-reduce:hidden" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+                </span>
+                {statusLabel()}
+                <span className="text-[var(--color-muted)]">· {product.freeTierLabel} &amp; {product.premiumTierLabel}</span>
               </span>
 
-              <h1 className="mt-6 text-[clamp(2.5rem,6.2vw,5.5rem)] font-semibold leading-[1.05] tracking-tight text-[var(--color-fg)]">
+              <h1 className="mt-5 text-[clamp(2.2rem,4.4vw,3.9rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-[var(--color-fg)]">
                 Ship product interfaces
-                <br className="hidden sm:block" /> that feel{" "}
+                <br className="hidden sm:block" /> that{" "}
                 <span className="relative whitespace-nowrap text-[var(--color-accent-text)]">
-                  alive
+                  feel alive
                   <span
                     aria-hidden
-                    className="absolute inset-x-0 -bottom-1 h-[0.14em] rounded-full bg-[color-mix(in_oklab,var(--color-accent)_55%,transparent)]"
+                    className="hero-underline absolute inset-x-0 -bottom-1 h-[0.09em] origin-left rounded-full"
+                    style={{ background: "linear-gradient(to right, var(--color-accent), color-mix(in oklab, var(--color-accent) 30%, transparent))" }}
                   />
                 </span>
                 .
               </h1>
 
-              <p className="mt-6 max-w-[540px] text-[clamp(1.02rem,1.4vw,1.18rem)] leading-relaxed text-[var(--color-muted)]">
-                Animated React components and complete product workflows — editable source you
-                install with one shadcn command. Your application owns the state, always.
+              <p className="mt-5 max-w-[500px] text-[clamp(1rem,1.25vw,1.12rem)] leading-relaxed text-[var(--color-muted)]">
+                Animated React components and complete workflows, delivered as editable source through a shadcn-compatible registry. Your application owns the state.
               </p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="/components"
-                  className="inline-flex w-full items-center justify-center rounded-xl bg-[var(--color-accent)] px-7 py-3.5 text-[15.5px] font-semibold text-[var(--color-accent-fg)] shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-accent-hover)] sm:w-auto"
+                  className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-accent)] px-6 text-[15px] font-semibold text-[var(--color-accent-fg)] shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] sm:w-auto"
                 >
                   Browse components
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden className="transition-transform duration-200 group-hover:translate-x-1">
+                    <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </Link>
                 <Link
                   href="/packs"
-                  className="inline-flex w-full items-center justify-center rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-7 py-3.5 text-[15.5px] font-semibold text-[var(--color-fg)] transition-colors hover:bg-[var(--color-bg-secondary)] sm:w-auto"
+                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_70%,transparent)] px-6 text-[15px] font-semibold text-[var(--color-fg)] backdrop-blur transition-colors hover:border-[color-mix(in_oklab,var(--color-accent)_45%,var(--color-border))] hover:bg-[var(--color-bg-secondary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] sm:w-auto"
                 >
                   Explore packs
                 </Link>
               </div>
             </div>
 
-            {/* Right — truthful product proof (no fabricated trust proof) */}
-            <div className="w-full rounded-2xl border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_70%,transparent)] p-5 shadow-[var(--shadow-sm)] lg:mt-2">
-              <p className="text-[12px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">What ships today</p>
-              <div className="mt-4 flex flex-col gap-3.5">
-                <ProofStat value={`${componentTotal}`} label="released components" />
-                <ProofStat value={`${packs.length}`} label="complete workflow packs" />
-              </div>
-              <div className="my-4 h-px bg-[var(--color-border)]" />
-              <div className="flex flex-col gap-3">
-                <ProofLine>{product.freeTierLabel} &amp; {product.premiumTierLabel} editable source</ProofLine>
-                <ProofLine>Reduced-motion &amp; keyboard safe</ProofLine>
+            {/* Right — live product panel (truthful proof + one real component) */}
+            <div className="relative w-full">
+              {/* soft radial light behind the panel */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -inset-6 -z-10 rounded-[2rem] opacity-70 blur-2xl"
+                style={{ background: "radial-gradient(60% 60% at 60% 30%, color-mix(in oklab, var(--color-accent) 16%, transparent), transparent 70%)" }}
+              />
+              <div className="relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] p-4 shadow-[var(--shadow-lg)] sm:p-5">
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-6 top-0 h-px"
+                  style={{ background: "linear-gradient(to right, transparent, color-mix(in oklab, var(--color-accent) 55%, transparent), transparent)" }}
+                />
+                <div className="flex items-center justify-between">
+                  <p className="text-[12px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">What ships today</p>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3fcf8e] opacity-70 motion-reduce:hidden" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#3fcf8e]" />
+                    </span>
+                    Live
+                  </span>
+                </div>
+
+                <div className="mt-3.5 grid grid-cols-2 gap-3">
+                  <ProofStat value={`${componentTotal}`} label="released components" />
+                  <ProofStat value={`${packs.length}`} label="complete workflow packs" />
+                </div>
+
+                {/* one real component, live — footer controls hidden so it reads
+                    as a preview, not an interactive surface */}
+                <div className="mt-3.5 overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-3">
+                  <div className="mb-2 flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#8b7bff]" aria-hidden /> AI Response Stream
+                    <span className="ml-auto font-medium normal-case tracking-normal text-[var(--color-accent-text)]">Free</span>
+                  </div>
+                  <div className="[&_footer]:hidden [&_p]:text-[13.5px]">
+                    <AiResponseStream segments={HERO_STREAM_SEGMENTS} state="streaming" assistantName="Atlas" />
+                  </div>
+                </div>
+
+                <div className="mt-3.5 flex flex-col gap-2.5">
+                  <ProofLine>Editable source</ProofLine>
+                  <ProofLine>Reduced-motion support</ProofLine>
+                </div>
               </div>
             </div>
           </div>
