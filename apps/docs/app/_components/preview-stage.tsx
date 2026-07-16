@@ -59,12 +59,21 @@ export function PreviewStage({
   const [reduced, setReduced] = React.useState(false);
   const v = VARIANT[stage];
 
-  // Default the stage theme to the PAGE theme at mount (a light page must show a
-  // light stage). Deferred to an effect to avoid a hydration mismatch; the stage
-  // still has its own Light/Dark toggle afterward.
+  // The stage follows the PAGE theme live: it syncs on mount (deferred to an
+  // effect to avoid a hydration mismatch) AND whenever the site theme toggles,
+  // via a MutationObserver on <html data-theme>. The stage's own Light/Dark
+  // control is a local override that lasts until the next site-theme change,
+  // which always wins — so switching the whole site re-themes every preview.
   React.useEffect(() => {
-    const t = document.documentElement.getAttribute("data-theme");
-    if (t === "light" || t === "dark") setTheme(t);
+    const el = document.documentElement;
+    const sync = () => {
+      const t = el.getAttribute("data-theme");
+      if (t === "light" || t === "dark") setTheme(t);
+    };
+    sync();
+    const obs = new MutationObserver(sync);
+    obs.observe(el, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => obs.disconnect();
   }, []);
 
   return (
