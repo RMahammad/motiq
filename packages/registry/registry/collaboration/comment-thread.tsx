@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import {
   useReducedMotion,
   useDisclosure,
+  useAnchoredPortal,
   useCopy,
   formatTimestamp as defaultFormatTimestamp,
   statusVars,
@@ -333,6 +334,7 @@ function ReactionBar({
   onReact?: CommentThreadProps["onReact"];
 }) {
   const picker = useDisclosure({ idPrefix: "react", dismissable: true });
+  const anchor = useAnchoredPortal(picker.open, { side: "top", align: "start" });
   if (!canReact && reactions.length === 0) return null;
 
   return (
@@ -368,6 +370,7 @@ function ReactionBar({
           <button
             type="button"
             {...picker.triggerProps}
+            ref={anchor.triggerRef as React.RefObject<HTMLButtonElement>}
             className="grid h-6 w-6 place-items-center rounded-full text-[var(--color-muted)] outline-none [border:1px_solid_var(--color-border)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-fg)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -376,16 +379,19 @@ function ReactionBar({
             </svg>
             <span className="sr-only">Add reaction</span>
           </button>
-          <AnimatePresence>
-            {picker.open ? (
+          {anchor.renderInPortal(
+            <AnimatePresence>
+            {picker.open && anchor.anchored ? (
               <motion.div
                 {...picker.panelProps}
+                ref={anchor.panelRef as React.RefObject<HTMLDivElement>}
                 aria-label="Choose a reaction"
                 initial={{ opacity: 0, y: 4, scale: 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 4, scale: 0.96 }}
                 transition={{ duration: 0.15, ease: EASE }}
-                className="absolute bottom-full left-0 z-20 mb-1 flex gap-0.5 rounded-full bg-[var(--color-surface)] p-1 shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]"
+                style={anchor.panelStyle}
+                className="z-[60] flex gap-0.5 rounded-full bg-[var(--color-surface)] p-1 shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]"
               >
                 {choices.map((emoji) => {
                   const existing = reactions.find((r) => r.emoji === emoji);
@@ -406,7 +412,8 @@ function ReactionBar({
                 })}
               </motion.div>
             ) : null}
-          </AnimatePresence>
+            </AnimatePresence>,
+          )}
         </>
       ) : null}
     </div>
@@ -444,6 +451,9 @@ function Composer({
   const [query, setQuery] = React.useState("");
   const textareaRef = React.useRef<HTMLTextAreaElement | null>(null);
   const listId = React.useId();
+  // Anchor the mention listbox to the composer column and portal it to <body> so
+  // no ancestor `overflow-hidden` (thread cards, scroll areas) can crop it.
+  const mentionAnchor = useAnchoredPortal(menuOpen, { side: "bottom", align: "start" });
 
   React.useEffect(() => {
     if (autoFocus) textareaRef.current?.focus();
@@ -547,7 +557,7 @@ function Composer({
       }}
     >
       {!compact ? <Avatar author={currentUser} size={30} /> : null}
-      <div className="relative min-w-0 flex-1">
+      <div ref={mentionAnchor.triggerRef as React.RefObject<HTMLDivElement>} className="relative min-w-0 flex-1">
         <textarea
           ref={textareaRef}
           value={value}
@@ -566,17 +576,20 @@ function Composer({
           className="w-full resize-y rounded-xl bg-[var(--color-surface)] px-3 py-2 text-[13.5px] leading-relaxed text-[var(--color-fg)] outline-none [border:1px_solid_var(--color-border)] placeholder:text-[var(--color-muted)] focus-visible:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[color-mix(in_oklab,var(--color-accent)_45%,transparent)]"
         />
 
-        <AnimatePresence>
-          {menuOpen && matches.length ? (
+        {mentionAnchor.renderInPortal(
+          <AnimatePresence>
+          {menuOpen && matches.length && mentionAnchor.anchored ? (
             <motion.ul
               id={listId}
+              ref={mentionAnchor.panelRef as React.RefObject<HTMLUListElement>}
               role="listbox"
               aria-label="Mention someone"
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 4 }}
               transition={{ duration: 0.14, ease: EASE }}
-              className="absolute left-0 top-full z-30 mt-1 w-full max-w-[260px] overflow-hidden rounded-xl bg-[var(--color-surface)] py-1 shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]"
+              style={mentionAnchor.panelStyle}
+              className="z-[60] w-[260px] max-w-[calc(100vw-1.5rem)] overflow-hidden rounded-xl bg-[var(--color-surface)] py-1 shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]"
             >
               {matches.map((m, i) => (
                 <li
@@ -603,7 +616,8 @@ function Composer({
               ))}
             </motion.ul>
           ) : null}
-        </AnimatePresence>
+          </AnimatePresence>,
+        )}
 
         <div className="mt-2 flex items-center gap-2">
           <button

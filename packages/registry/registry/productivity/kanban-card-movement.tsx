@@ -43,7 +43,7 @@ import * as React from "react";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion } from "@/lib/motionkit";
+import { useReducedMotion, useAnchoredPortal } from "@/lib/motionkit";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */
@@ -829,6 +829,9 @@ const CardView = React.memo(function CardView({
 }: CardViewProps) {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const menuBtnRef = React.useRef<HTMLButtonElement | null>(null);
+  // Render the Move menu through a portal anchored to its trigger, so no
+  // ancestor `overflow-hidden` (preview cards, scroll containers) can clip it.
+  const anchor = useAnchoredPortal(menuOpen, { side: "bottom", align: "end", gap: 4 });
 
   React.useEffect(() => {
     if (!menuOpen) return;
@@ -899,7 +902,10 @@ const CardView = React.memo(function CardView({
       {!dragging && !card.disabled && otherColumns.length > 0 ? (
         <div className="absolute right-1.5 top-1.5">
           <button
-            ref={menuBtnRef}
+            ref={(el: HTMLButtonElement | null) => {
+              menuBtnRef.current = el;
+              (anchor.triggerRef as React.MutableRefObject<HTMLElement | null>).current = el;
+            }}
             type="button"
             aria-haspopup="menu"
             aria-expanded={menuOpen}
@@ -911,29 +917,33 @@ const CardView = React.memo(function CardView({
               <path d="M5 9l4-4M5 9l4 4M5 9h11a3 3 0 0 1 3 3v3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
-          {menuOpen ? (
-            <ul
-              role="menu"
-              aria-label={`Move ${card.title} to`}
-              className="absolute right-0 top-[calc(100%+4px)] z-30 min-w-[168px] overflow-hidden rounded-xl bg-[var(--color-surface)] py-1 shadow-[var(--shadow-md,0_8px_24px_rgba(0,0,0,0.14))] [border:1px_solid_var(--color-border)]"
-            >
-              {otherColumns.map((c) => (
-                <li key={c.id} role="none">
-                  <button
-                    type="button"
-                    role="menuitem"
-                    onClick={() => {
-                      setMenuOpen(false);
-                      onMoveToColumn(card.id, c.id);
-                    }}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-[13px] font-medium text-[var(--color-fg)] outline-none transition-colors hover:bg-[var(--color-bg-secondary)] focus-visible:bg-[var(--color-bg-secondary)]"
-                  >
-                    Move to {c.title}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : null}
+          {anchor.renderInPortal(
+            menuOpen && anchor.anchored ? (
+              <ul
+                ref={anchor.panelRef as React.RefObject<HTMLUListElement>}
+                style={anchor.panelStyle}
+                role="menu"
+                aria-label={`Move ${card.title} to`}
+                className="z-[60] min-w-[168px] overflow-hidden rounded-xl bg-[var(--color-surface)] py-1 shadow-[var(--shadow-md,0_8px_24px_rgba(0,0,0,0.14))] [border:1px_solid_var(--color-border)]"
+              >
+                {otherColumns.map((c) => (
+                  <li key={c.id} role="none">
+                    <button
+                      type="button"
+                      role="menuitem"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        onMoveToColumn(card.id, c.id);
+                      }}
+                      className="flex w-full items-center gap-2 px-3 py-2 text-left text-[13px] font-medium text-[var(--color-fg)] outline-none transition-colors hover:bg-[var(--color-bg-secondary)] focus-visible:bg-[var(--color-bg-secondary)]"
+                    >
+                      Move to {c.title}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : null,
+          )}
         </div>
       ) : null}
     </li>

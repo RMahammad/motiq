@@ -8,6 +8,7 @@ import {
   useReducedMotion,
   useAnimatedNumber,
   useDisclosure,
+  useAnchoredPortal,
   getStatusMeta,
   statusVars,
   formatTimestamp as sharedFormatTimestamp,
@@ -33,6 +34,7 @@ function IntervalSelect({
 }) {
   const reduce = useReducedMotion();
   const menu = useDisclosure({ idPrefix: "mk-interval", dismissable: true });
+  const anchor = useAnchoredPortal(menu.open, { align: "end" });
   const current = options.includes(value) ? value : options[0];
   const [activeIdx, setActiveIdx] = React.useState(() => Math.max(0, options.indexOf(current)));
 
@@ -65,25 +67,29 @@ function IntervalSelect({
       <button
         type="button"
         {...menu.triggerProps}
+        ref={anchor.triggerRef as React.RefObject<HTMLButtonElement>}
         aria-haspopup="listbox"
         className="inline-flex min-h-[28px] items-center gap-1.5 rounded-md bg-[var(--color-surface)] px-2 py-1 text-[12.5px] font-medium text-[var(--color-fg)] outline-none [border:1px_solid_var(--color-border)] transition-colors hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))]"
       >
         {formatInterval(current)}
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
       </button>
-      <AnimatePresence>
-        {menu.open ? (
-          <motion.div
-            {...menu.panelProps}
-            role="listbox"
-            aria-label="Auto-refresh interval"
-            aria-activedescendant={`mk-interval-opt-${options[activeIdx]}`}
-            initial={reduce ? false : { opacity: 0, y: -4, scale: 0.98 }}
-            animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.98 }}
-            transition={{ duration: 0.14, ease: EASE }}
-            className="absolute right-0 top-full z-30 mt-1 min-w-[112px] overflow-auto rounded-lg bg-[var(--color-surface)] p-1 shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]"
-          >
+      {anchor.renderInPortal(
+        <AnimatePresence>
+          {menu.open && anchor.anchored ? (
+            <motion.div
+              {...menu.panelProps}
+              ref={anchor.panelRef as React.RefObject<HTMLDivElement>}
+              role="listbox"
+              aria-label="Auto-refresh interval"
+              aria-activedescendant={`mk-interval-opt-${options[activeIdx]}`}
+              initial={reduce ? false : { opacity: 0, y: -4, scale: 0.98 }}
+              animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.98 }}
+              transition={{ duration: 0.14, ease: EASE }}
+              style={anchor.panelStyle}
+              className="z-[60] min-w-[112px] overflow-auto rounded-lg bg-[var(--color-surface)] p-1 shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]"
+            >
             {options.map((ms, i) => {
               const selected = ms === current;
               return (
@@ -107,9 +113,10 @@ function IntervalSelect({
                 </button>
               );
             })}
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>,
+      )}
     </div>
   );
 }

@@ -44,6 +44,7 @@ import {
   useReducedMotion,
   useControllableState,
   useOptimisticAction,
+  useAnchoredPortal,
   statusVars,
   type StatusTone,
 } from "@/lib/motionkit";
@@ -1426,6 +1427,17 @@ function MenuControl({
   onPick: (id: string) => void;
 }) {
   const btnRef = React.useRef<HTMLButtonElement | null>(null);
+  // The menu opens upward, left-aligned; portal it to <body> with position:fixed
+  // so an ancestor's overflow-hidden (preview cards, scroll containers) can't clip it.
+  const anchor = useAnchoredPortal(open, { side: "top", align: "start", gap: 4 });
+  // Merge the local focus-restore ref with the anchor's trigger ref.
+  const setTriggerRef = React.useCallback(
+    (node: HTMLButtonElement | null) => {
+      btnRef.current = node;
+      (anchor.triggerRef as React.MutableRefObject<HTMLElement | null>).current = node;
+    },
+    [anchor.triggerRef],
+  );
   React.useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -1441,7 +1453,7 @@ function MenuControl({
   return (
     <div className="relative">
       <button
-        ref={btnRef}
+        ref={setTriggerRef}
         type="button"
         aria-haspopup="menu"
         aria-expanded={open}
@@ -1453,11 +1465,14 @@ function MenuControl({
           {P("m6 9 6 6 6-6")}
         </svg>
       </button>
-      {open ? (
+      {anchor.renderInPortal(
+        open && anchor.anchored ? (
         <ul
           role="menu"
           aria-label={menuLabel}
-          className="absolute bottom-[calc(100%+4px)] left-0 z-30 max-h-56 w-full overflow-auto rounded-xl bg-[var(--color-surface)] py-1 shadow-[var(--shadow-md,0_8px_24px_rgba(0,0,0,0.14))] [border:1px_solid_var(--color-border)]"
+          ref={anchor.panelRef as React.RefObject<HTMLUListElement>}
+          style={anchor.panelStyle}
+          className="z-[60] max-h-56 min-w-[200px] overflow-auto rounded-xl bg-[var(--color-surface)] py-1 shadow-[var(--shadow-md,0_8px_24px_rgba(0,0,0,0.14))] [border:1px_solid_var(--color-border)]"
         >
           {items.map((it) => (
             <li key={it.id} role="none">
@@ -1476,7 +1491,8 @@ function MenuControl({
             </li>
           ))}
         </ul>
-      ) : null}
+        ) : null,
+      )}
     </div>
   );
 }

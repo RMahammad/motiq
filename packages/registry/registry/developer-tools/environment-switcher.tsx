@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 
 import { cn } from "@/lib/utils";
@@ -546,6 +547,7 @@ export function EnvironmentSwitcher({
 
   const rootRef = React.useRef<HTMLDivElement | null>(null);
   const triggerRef = React.useRef<HTMLButtonElement | null>(null);
+  const popupRef = React.useRef<HTMLDivElement | null>(null);
   const searchRef = React.useRef<HTMLInputElement | null>(null);
   const listRef = React.useRef<HTMLDivElement | null>(null);
   const confirmRef = React.useRef<HTMLDivElement | null>(null);
@@ -735,7 +737,10 @@ export function EnvironmentSwitcher({
   const onRootBlur = React.useCallback(
     (e: React.FocusEvent<HTMLDivElement>) => {
       if (pending) return; // confirm dialog owns focus
-      if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+      const rt = e.relatedTarget as Node | null;
+      // The popup (incl. its search field) is portaled outside the root, so
+      // focus landing there is still "inside" the widget — don't close.
+      if (!e.currentTarget.contains(rt) && !popupRef.current?.contains(rt)) {
         setOpen(false);
         setQuery("");
       }
@@ -746,13 +751,45 @@ export function EnvironmentSwitcher({
   React.useEffect(() => {
     if (!open) return;
     const onDown = (e: PointerEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
-        setOpen(false);
-        setQuery("");
-      }
+      const target = e.target as Node;
+      // The popup is portaled to <body>, so it is outside `rootRef`; treat clicks
+      // inside it as inside the widget.
+      if (rootRef.current?.contains(target) || popupRef.current?.contains(target)) return;
+      setOpen(false);
+      setQuery("");
     };
     document.addEventListener("pointerdown", onDown);
     return () => document.removeEventListener("pointerdown", onDown);
+  }, [open]);
+
+  /* Anchor the popup to the trigger via a portal --------------------------- */
+  // Portaled to <body> and positioned `fixed` from the trigger's rect so the
+  // menu escapes any ancestor `overflow-hidden` (cards, preview frames, scroll
+  // containers) that would otherwise clip it. A per-frame re-measure — committed
+  // only when the position actually changes — keeps it glued to the trigger
+  // through page scroll, smooth-scroll libraries, resizes, and layout shifts.
+  const [anchor, setAnchor] = React.useState<{ top: number; left: number; right: number } | null>(null);
+  React.useEffect(() => {
+    if (!open || typeof window === "undefined") return;
+    const measure = () => {
+      const t = triggerRef.current;
+      if (!t) return;
+      const r = t.getBoundingClientRect();
+      const next = { top: r.bottom + 8, left: r.left, right: window.innerWidth - r.right };
+      setAnchor((prev) =>
+        prev && prev.top === next.top && prev.left === next.left && prev.right === next.right ? prev : next,
+      );
+    };
+    // Measure synchronously so the popup renders on the next commit (no wasted
+    // frame; also works where rAF never fires, e.g. test renderers).
+    measure();
+    let raf = 0;
+    const tick = () => {
+      measure();
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, [open]);
 
   /* Confirm dialog: focus + Escape + minimal focus trap -------------------- */
@@ -895,21 +932,26 @@ export function EnvironmentSwitcher({
         ) : null}
       </AnimatePresence>
 
-      {/* Popup ---------------------------------------------------------- */}
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            key="popup"
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
-            transition={{ duration: 0.16, ease: EASE }}
-            className={cn(
-              "absolute z-20 mt-2 w-[min(92vw,26rem)] origin-top overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg,var(--shadow-md))]",
-              align === "end" ? "right-0" : "left-0",
-            )}
-            style={{ transformOrigin: align === "end" ? "top right" : "top left" }}
-          >
+      {/* Popup — portaled to <body> so no ancestor overflow can clip it -- */}
+      {typeof document !== "undefined"
+        ? createPortal(
+            <AnimatePresence>
+              {open && anchor && !pending ? (
+                <motion.div
+                  key="popup"
+                  ref={popupRef}
+                  initial={reduce ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
+                  transition={{ duration: 0.16, ease: EASE }}
+                  className="z-[60] w-[min(92vw,26rem)] origin-top overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg,var(--shadow-md))]"
+                  style={{
+                    position: "fixed",
+                    top: anchor.top,
+                    ...(align === "end" ? { right: anchor.right } : { left: anchor.left }),
+                    transformOrigin: align === "end" ? "top right" : "top left",
+                  }}
+                >
             {/* Search */}
             <div className="border-b border-[var(--color-border)] p-2">
               <label className="relative flex items-center">
@@ -1009,9 +1051,12 @@ export function EnvironmentSwitcher({
                 })
               )}
             </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>,
+            document.body,
+          )
+        : null}
 
       {/* Production confirmation dialog --------------------------------- */}
       <AnimatePresence>

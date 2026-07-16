@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 
 import { cn } from "@/lib/utils";
@@ -560,6 +561,37 @@ export function MentionSuggestions({
     return () => document.removeEventListener("pointerdown", onDown);
   }, [open, inputRef]);
 
+  /* Anchor the popup to the app's field via a portal ----------------------- */
+  // The popup is portaled to <body> and positioned `fixed` from the field's
+  // bounding rect, so it escapes any ancestor `overflow-hidden` (cards, preview
+  // frames, scroll containers) that would otherwise clip it. A per-frame
+  // re-measure — committed only when the position actually changes — keeps it
+  // glued to the field through page scroll, smooth-scroll libraries, resizes,
+  // and layout shifts.
+  const [anchor, setAnchor] = React.useState<{ top: number; left: number; right: number } | null>(null);
+  React.useEffect(() => {
+    if (!open || typeof window === "undefined") return;
+    const measure = () => {
+      const el = inputRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const next = { top: r.bottom + 4, left: r.left, right: window.innerWidth - r.right };
+      setAnchor((prev) =>
+        prev && prev.top === next.top && prev.left === next.left && prev.right === next.right ? prev : next,
+      );
+    };
+    // Measure synchronously so the popup renders on the next commit (no wasted
+    // frame; also works where rAF never fires, e.g. test renderers).
+    measure();
+    let raf = 0;
+    const tick = () => {
+      measure();
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [open, inputRef]);
+
   /* Polite announcement: match count + active option ----------------------- */
   const announcement = React.useMemo(() => {
     if (!open) return "";
@@ -573,23 +605,26 @@ export function MentionSuggestions({
 
   /* ----------------------------------------------------------------------- */
 
-  return (
-    <>
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            key="popup"
-            ref={rootRef}
+  const popup = (
+    <AnimatePresence>
+      {open && anchor ? (
+        <motion.div
+          key="popup"
+          ref={rootRef}
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15, ease: EASE }}
             className={cn(
-              "absolute z-20 mt-1 w-[min(92vw,20rem)] origin-top overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg,var(--shadow-md))]",
-              align === "end" ? "right-0" : "left-0",
+              "z-[60] w-[min(92vw,20rem)] origin-top overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg,var(--shadow-md))]",
               className,
             )}
-            style={{ transformOrigin: align === "end" ? "top right" : "top left" }}
+            style={{
+              position: "fixed",
+              top: anchor.top,
+              ...(align === "end" ? { right: anchor.right } : { left: anchor.left }),
+              transformOrigin: align === "end" ? "top right" : "top left",
+            }}
           >
             {/* header — anchors the "@" affordance */}
             <div className="flex items-center gap-1.5 border-b border-[var(--color-border)] px-2.5 py-1.5 text-[11px] font-medium text-[var(--color-muted)]">
@@ -648,8 +683,13 @@ export function MentionSuggestions({
               )}
             </div>
           </motion.div>
-        ) : null}
-      </AnimatePresence>
+      ) : null}
+    </AnimatePresence>
+  );
+
+  return (
+    <>
+      {typeof document !== "undefined" ? createPortal(popup, document.body) : null}
 
       {/* polite announcer — match count + active option */}
       <p className="sr-only" role="status" aria-live="polite">

@@ -34,7 +34,7 @@ import {
 } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion } from "@/lib/motionkit";
+import { useReducedMotion, useAnchoredPortal } from "@/lib/motionkit";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */
@@ -373,7 +373,10 @@ export function SwipeActionRow({
 
   const onRootBlur = (e: React.FocusEvent<HTMLDivElement>) => {
     if (draggingRef.current || confirming) return;
-    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+    const rt = e.relatedTarget as Node | null;
+    // The overflow menu is portaled outside the root; focus moving into it must
+    // still count as "inside" so the row doesn't close underneath the open menu.
+    if (!e.currentTarget.contains(rt) && !anchor.panelRef.current?.contains(rt)) {
       if (openRef.current !== null) setOpen(null);
     }
   };
@@ -381,11 +384,22 @@ export function SwipeActionRow({
   /* overflow menu ------------------------------------------------------- */
   const allActions = React.useMemo(() => [...leftActions, ...rightActions], [leftActions, rightActions]);
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const anchor = useAnchoredPortal(menuOpen, { side: "bottom", align: "end", gap: 6 });
+
+  // Merge the anchor's trigger ref with the existing overflow-button ref.
+  const setOverflowBtnRef = React.useCallback(
+    (node: HTMLButtonElement | null) => {
+      overflowBtnRef.current = node;
+      (anchor.triggerRef as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+    },
+    [anchor.triggerRef],
+  );
 
   React.useEffect(() => {
     if (!menuOpen) return;
     const onDown = (e: PointerEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) setMenuOpen(false);
+      const target = e.target as Node;
+      if (!rootRef.current?.contains(target) && !anchor.panelRef.current?.contains(target)) setMenuOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -491,7 +505,7 @@ export function SwipeActionRow({
             ) : (
               <>
                 <button
-                  ref={overflowBtnRef}
+                  ref={setOverflowBtnRef}
                   type="button"
                   disabled={disabled}
                   aria-haspopup="menu"
@@ -502,16 +516,19 @@ export function SwipeActionRow({
                 >
                   <KebabIcon />
                 </button>
+                {anchor.renderInPortal(
                 <AnimatePresence>
-                  {menuOpen && (
+                  {menuOpen && anchor.anchored && (
                     <motion.ul
+                      ref={anchor.panelRef as React.RefObject<HTMLUListElement>}
                       role="menu"
                       aria-label="Row actions"
                       initial={reduced ? false : { opacity: 0, scale: 0.96, y: -4 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={reduced ? { opacity: 0 } : { opacity: 0, scale: 0.96, y: -4 }}
                       transition={{ duration: 0.14, ease: [0.2, 0, 0, 1] }}
-                      className="absolute right-0 top-[calc(100%+6px)] z-30 min-w-[180px] overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] py-1 shadow-[var(--shadow-md,0_8px_24px_rgba(0,0,0,0.14))]"
+                      style={anchor.panelStyle}
+                      className="z-[60] min-w-[180px] overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] py-1 shadow-[var(--shadow-md,0_8px_24px_rgba(0,0,0,0.14))]"
                     >
                       {allActions.map((a) => {
                         const tone = actionTone(a);
@@ -539,7 +556,8 @@ export function SwipeActionRow({
                       })}
                     </motion.ul>
                   )}
-                </AnimatePresence>
+                </AnimatePresence>,
+                )}
               </>
             )}
           </div>

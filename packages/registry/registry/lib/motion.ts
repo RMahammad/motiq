@@ -8,6 +8,7 @@
  * agnostic. Clean-room original.
  */
 import * as React from "react";
+import { createPortal } from "react-dom";
 
 /**
  * SSR-safe `prefers-reduced-motion`. Reads synchronously on the client so a
@@ -357,8 +358,14 @@ export function useDisclosure({ open, defaultOpen = false, onOpenChange, idPrefi
   React.useEffect(() => {
     if (!dismissable || !actualOpen) return;
     const onDown = (e: PointerEvent) => {
+      const target = e.target as Node;
       const root = rootRef.current;
-      if (root && !root.contains(e.target as Node)) setOpen(false);
+      // The panel may be portaled outside `rootRef` (see `useAnchoredPortal`), so
+      // also treat a click inside the panel — matched by its stable `panelId` —
+      // as "inside". Keeps outside-dismiss correct for portaled dropdowns.
+      const panel = typeof document !== "undefined" ? document.getElementById(panelId) : null;
+      if ((root && root.contains(target)) || (panel && panel.contains(target))) return;
+      setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
@@ -388,6 +395,93 @@ export function useDisclosure({ open, defaultOpen = false, onOpenChange, idPrefi
       "aria-labelledby": triggerId,
     },
   };
+}
+
+export interface UseAnchoredPortalOptions {
+  /** Vertical side the panel opens toward relative to the trigger. Default "bottom". */
+  side?: "top" | "bottom";
+  /** Horizontal edge the panel aligns to. Default "start" (left in LTR). */
+  align?: "start" | "end";
+  /** Gap in px between the trigger and the panel. Default 4. */
+  gap?: number;
+}
+
+/**
+ * Anchor a portaled popover/menu/listbox panel to a trigger so it escapes any
+ * ancestor `overflow-hidden` / `overflow: clip` (cards, scroll areas, preview
+ * frames) that would otherwise crop it. The panel is rendered into `<body>` via
+ * `renderInPortal` and positioned `fixed` from the trigger's rect.
+ *
+ * A per-frame re-measure — committed only when the position actually changes, so
+ * a static open menu causes no re-renders — keeps the panel glued to its trigger
+ * through page scroll, smooth-scroll libraries, resizes, and layout shifts
+ * (matches Floating UI's `autoUpdate({ animationFrame: true })`).
+ *
+ * Wiring:
+ *   const { triggerRef, panelRef, anchored, panelStyle, renderInPortal } = useAnchoredPortal(open);
+ *   <button ref={triggerRef} ... />
+ *   {renderInPortal(
+ *     <AnimatePresence>
+ *       {open && anchored ? (
+ *         <motion.div ref={panelRef} style={panelStyle} ...>…</motion.div>
+ *       ) : null}
+ *     </AnimatePresence>,
+ *   )}
+ *
+ * Keep the `AnimatePresence` mounted (portal it unconditionally) and gate the
+ * inner child on `open && anchored` so exit animations still play. For outside-
+ * click dismissal, treat `panelRef.current?.contains(target)` as "inside"
+ * (`useDisclosure` already does this by panel id).
+ */
+export function useAnchoredPortal(
+  open: boolean,
+  { side = "bottom", align = "start", gap = 4 }: UseAnchoredPortalOptions = {},
+) {
+  const triggerRef = React.useRef<HTMLElement | null>(null);
+  const panelRef = React.useRef<HTMLElement | null>(null);
+  const [pos, setPos] = React.useState<React.CSSProperties | null>(null);
+
+  React.useEffect(() => {
+    if (!open || typeof window === "undefined") return;
+    const measure = () => {
+      const t = triggerRef.current;
+      if (!t) return;
+      const r = t.getBoundingClientRect();
+      const next: React.CSSProperties =
+        side === "top" ? { bottom: window.innerHeight - r.top + gap } : { top: r.bottom + gap };
+      if (align === "end") next.right = window.innerWidth - r.right;
+      else next.left = r.left;
+      setPos((prev) =>
+        prev &&
+        prev.top === next.top &&
+        prev.bottom === next.bottom &&
+        prev.left === next.left &&
+        prev.right === next.right
+          ? prev
+          : next,
+      );
+    };
+    // Measure once synchronously so the panel can render on the next commit
+    // (no wasted frame, and it works under test renderers where rAF never
+    // fires). The rAF loop then keeps it glued through scroll/resize/layout.
+    measure();
+    let raf = 0;
+    const tick = () => {
+      measure();
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [open, side, align, gap]);
+
+  const panelStyle = React.useMemo<React.CSSProperties>(() => ({ position: "fixed", ...(pos ?? {}) }), [pos]);
+
+  const renderInPortal = React.useCallback(
+    (node: React.ReactNode) => (typeof document !== "undefined" ? createPortal(node, document.body) : null),
+    [],
+  );
+
+  return { triggerRef, panelRef, anchored: pos !== null, panelStyle, renderInPortal };
 }
 
 /**
