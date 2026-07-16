@@ -11,6 +11,7 @@ import {
   getStatusMeta,
   statusVars,
   formatNumber,
+  scrollIntoViewWithin,
   streamItemVariants,
   type StatusTone,
 } from "@/lib/motionkit";
@@ -382,7 +383,7 @@ export function ActivityStream({
 
   const jumpToUnread = React.useCallback(() => {
     const el = dividerRef.current ?? scrollRef.current?.querySelector<HTMLElement>("[data-unread='true']");
-    el?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    scrollIntoViewWithin(el, { smooth: !reduce });
   }, [reduce]);
 
   return (

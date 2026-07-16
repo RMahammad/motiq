@@ -7,6 +7,7 @@ import {
   type RefreshState,
   type RefreshMode,
 } from "@/registry/data/data-refresh-state";
+import { ControlBar, ControlButton, ControlToggle, ControlSegmented } from "../_components/preview-controls";
 
 /* -------------------------------------------------------------------------- *
  * Analytics dashboard shell. A small fictional metrics strip is driven by the
@@ -240,34 +241,31 @@ export function DataRefreshStatePreview() {
         {/* mode switch */}
         <div className="flex flex-col gap-2">
           <span className="text-[11px] uppercase tracking-wide text-[var(--color-muted)]">Mode</span>
-          <div className="inline-flex overflow-hidden rounded-md border border-[var(--color-border)] text-[12px]" role="group" aria-label="Display mode">
-            {(["panel", "inline", "compact"] as const).map((m) => (
-              <button
-                key={m}
-                type="button"
-                aria-pressed={mode === m}
-                onClick={() => setMode(m)}
-                className={`px-2.5 py-1 capitalize ${mode === m ? "bg-[var(--color-surface)] text-[var(--color-fg)]" : "text-[var(--color-muted)] hover:text-[var(--color-fg)]"}`}
-              >
-                {m}
-              </button>
-            ))}
-          </div>
+          <ControlSegmented
+            label="Display mode"
+            value={mode}
+            onChange={setMode}
+            options={[
+              { value: "panel", label: "Panel" },
+              { value: "inline", label: "Inline" },
+              { value: "compact", label: "Compact" },
+            ]}
+          />
         </div>
       </div>
 
       {/* working controls */}
-      <div className="flex flex-wrap items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5">
-        <Ctrl onClick={startRefresh}>Start refresh</Ctrl>
-        <Ctrl onClick={setPartial}>Set partial</Ctrl>
-        <Ctrl onClick={complete}>Complete</Ctrl>
-        <Ctrl onClick={fail}>Fail</Ctrl>
-        <Ctrl onClick={goOffline}>Go offline</Ctrl>
-        <Ctrl onClick={markStale}>Mark stale</Ctrl>
-        <Ctrl onClick={pauseAuto} pressed={state === "paused"}>Pause auto refresh</Ctrl>
-        <Ctrl onClick={retry}>Retry</Ctrl>
-        <Ctrl onClick={reset}>Reset</Ctrl>
-      </div>
+      <ControlBar>
+        <ControlButton onClick={startRefresh}>Start refresh</ControlButton>
+        <ControlButton onClick={setPartial}>Set partial</ControlButton>
+        <ControlButton onClick={complete}>Complete</ControlButton>
+        <ControlButton onClick={fail}>Fail</ControlButton>
+        <ControlButton onClick={goOffline}>Go offline</ControlButton>
+        <ControlButton onClick={markStale}>Mark stale</ControlButton>
+        <ControlToggle pressed={state === "paused"} onClick={pauseAuto}>Pause auto refresh</ControlToggle>
+        <ControlButton onClick={retry}>Retry</ControlButton>
+        <ControlButton onClick={reset}>Reset</ControlButton>
+      </ControlBar>
       <p className="text-[12px] text-[var(--color-muted)]">
         Demo data — the surrounding app simulates the fetch and reports progress; the component only presents state.
       </p>
@@ -275,19 +273,3 @@ export function DataRefreshStatePreview() {
   );
 }
 
-function Ctrl({ children, onClick, pressed }: { children: React.ReactNode; onClick: () => void; pressed?: boolean }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={pressed}
-      className={`rounded-md border px-2.5 py-1 text-[12px] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] ${
-        pressed
-          ? "border-[var(--color-accent)] bg-[color-mix(in_oklab,var(--color-accent)_14%,transparent)] text-[var(--color-accent)]"
-          : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-fg)] hover:border-[var(--color-accent)]"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}

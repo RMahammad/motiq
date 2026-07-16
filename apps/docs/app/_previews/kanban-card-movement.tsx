@@ -18,6 +18,7 @@ import {
   AnimatedDialogFooter,
   AnimatedDialogClose,
 } from "@/registry/animated-shadcn/animated-dialog";
+import { ControlBar, ControlButton, ControlHint } from "../_components/preview-controls";
 
 /* Clearly fictional demo — a made-up product backlog for an imaginary tool.
  * The PREVIEW is the "app": it owns the columns, cards, WIP limits, and
@@ -73,9 +74,6 @@ function applyMove(cards: KanbanCard[], move: KanbanMove): KanbanCard[] {
 }
 
 const raf = () => new Promise<void>((r) => (typeof requestAnimationFrame !== "undefined" ? requestAnimationFrame(() => r()) : setTimeout(r, 16)));
-
-const control =
-  "rounded-lg px-3 py-1.5 text-[13px] font-medium text-[var(--color-fg)] outline-none transition-colors [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-45";
 
 export function KanbanCardMovementPreview() {
   const [cards, setCards] = React.useState<KanbanCard[]>(seed);
@@ -238,29 +236,15 @@ export function KanbanCardMovementPreview() {
       </div>
 
       {/* working controls */}
-      <div className="flex flex-wrap items-center gap-2 rounded-xl [border:1px_solid_var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5">
-        <button type="button" className={control} onClick={demoMove}>
-          Move card between columns
-        </button>
-        <button type="button" className={control} onClick={demoKeyboard}>
-          Keyboard move
-        </button>
-        <button type="button" className={control} onClick={demoInvalid}>
-          Invalid move
-        </button>
-        <button type="button" className={control} onClick={demoFailure}>
-          Optimistic failure and rollback
-        </button>
-        <button type="button" className={control} onClick={() => addCard("backlog")}>
-          Add card
-        </button>
-        <button type="button" className={control} onClick={reset}>
-          Reset
-        </button>
-        <span aria-live="polite" className="ml-auto max-w-[320px] text-right text-[12px] text-[var(--color-muted)]">
-          {note}
-        </span>
-      </div>
+      <ControlBar>
+        <ControlButton onClick={demoMove}>Move card between columns</ControlButton>
+        <ControlButton onClick={demoKeyboard}>Keyboard move</ControlButton>
+        <ControlButton onClick={demoInvalid}>Invalid move</ControlButton>
+        <ControlButton onClick={demoFailure}>Optimistic failure and rollback</ControlButton>
+        <ControlButton onClick={() => addCard("backlog")}>Add card</ControlButton>
+        <ControlButton onClick={reset}>Reset</ControlButton>
+        <ControlHint live>{note}</ControlHint>
+      </ControlBar>
 
       {/* Card-details dialog — our library AnimatedDialog, opened on card click. */}
       <AnimatedDialog
@@ -292,7 +276,7 @@ export function KanbanCardMovementPreview() {
               </AnimatedDialogBody>
               <AnimatedDialogFooter>
                 <AnimatedDialogClose asChild>
-                  <button type="button" className={control}>Close</button>
+                  <ControlButton>Close</ControlButton>
                 </AnimatedDialogClose>
               </AnimatedDialogFooter>
             </>

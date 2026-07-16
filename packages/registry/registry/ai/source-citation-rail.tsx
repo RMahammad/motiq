@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence, type Transition } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, useCopy, useDisclosure, streamItemVariants } from "@/lib/motionkit";
+import { useReducedMotion, useCopy, useDisclosure, scrollIntoViewWithin, streamItemVariants } from "@/lib/motionkit";
 
 /**
  * SourceCitationRail — attributes an answer to its sources by keeping inline
@@ -141,9 +141,8 @@ function defaultFormatDate(d: Date): string {
 }
 
 function scrollIntoViewSafe(el: HTMLElement | null | undefined, reduce: boolean) {
-  if (el && typeof el.scrollIntoView === "function") {
-    el.scrollIntoView({ block: "nearest", inline: "nearest", behavior: reduce ? "auto" : "smooth" });
-  }
+  // Scroll only the rail/marker's own scroll region — never the page.
+  scrollIntoViewWithin(el, { smooth: !reduce });
 }
 
 function TypeGlyph({ type }: { type?: string }) {

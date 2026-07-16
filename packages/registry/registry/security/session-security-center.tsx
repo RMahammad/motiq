@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import {
   useReducedMotion,
   useDisclosure,
+  useAnchoredPortal,
   formatTimestamp as defaultFormatTimestamp,
   statusVars,
   type StatusTone,
@@ -353,6 +354,112 @@ const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--color-surface)]";
 
 const EASE: Transition["ease"] = [0.2, 0, 0, 1];
+
+/* -------------------------------------------------------------------------- */
+/* Custom sort dropdown — a real library listbox popover (not a native
+   <select>): keyboard-navigable, dismiss-on-outside-click, animated, themed,
+   and portaled so a scroll container can't crop it.                           */
+/* -------------------------------------------------------------------------- */
+
+const SORT_OPTIONS: { value: SessionSort; label: string }[] = [
+  { value: "recent", label: "Recent activity" },
+  { value: "device", label: "Device name" },
+];
+
+function SortSelect({ value, onChange }: { value: SessionSort; onChange: (v: SessionSort) => void }) {
+  const reduce = useReducedMotion();
+  const menu = useDisclosure({ idPrefix: "mk-sort", dismissable: true });
+  const anchor = useAnchoredPortal(menu.open, { align: "end" });
+  const currentIdx = Math.max(0, SORT_OPTIONS.findIndex((o) => o.value === value));
+  const [activeIdx, setActiveIdx] = React.useState(currentIdx);
+
+  React.useEffect(() => {
+    if (menu.open) setActiveIdx(currentIdx);
+  }, [menu.open, currentIdx]);
+
+  const commit = (idx: number) => {
+    onChange(SORT_OPTIONS[idx].value);
+    menu.setOpen(false);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (!menu.open) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        menu.setOpen(true);
+      }
+      return;
+    }
+    if (e.key === "ArrowDown") { e.preventDefault(); setActiveIdx((a) => Math.min(SORT_OPTIONS.length - 1, a + 1)); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setActiveIdx((a) => Math.max(0, a - 1)); }
+    else if (e.key === "Home") { e.preventDefault(); setActiveIdx(0); }
+    else if (e.key === "End") { e.preventDefault(); setActiveIdx(SORT_OPTIONS.length - 1); }
+    else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); commit(activeIdx); }
+  };
+
+  return (
+    <div ref={menu.rootRef as React.RefObject<HTMLDivElement>} className="relative" onKeyDown={onKeyDown}>
+      <button
+        type="button"
+        {...menu.triggerProps}
+        ref={anchor.triggerRef as React.RefObject<HTMLButtonElement>}
+        aria-haspopup="listbox"
+        aria-label="Sort sessions"
+        aria-activedescendant={menu.open ? `mk-sort-opt-${activeIdx}` : undefined}
+        className={cn(
+          "inline-flex min-h-[30px] items-center gap-1.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)]",
+          focusRing,
+        )}
+      >
+        {SORT_OPTIONS[currentIdx].label}
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      </button>
+      {anchor.renderInPortal(
+        <AnimatePresence>
+          {menu.open && anchor.anchored ? (
+            <motion.div
+              {...menu.panelProps}
+              ref={anchor.panelRef as React.RefObject<HTMLDivElement>}
+              role="listbox"
+              aria-label="Sort sessions"
+              aria-activedescendant={`mk-sort-opt-${activeIdx}`}
+              initial={reduce ? false : { opacity: 0, y: -4, scale: 0.98 }}
+              animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.98 }}
+              transition={{ duration: 0.14, ease: EASE }}
+              style={anchor.panelStyle}
+              className="z-[70] min-w-[150px] overflow-auto rounded-lg bg-[var(--color-surface)] p-1 shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]"
+            >
+              {SORT_OPTIONS.map((opt, i) => {
+                const selected = opt.value === value;
+                return (
+                  <button
+                    key={opt.value}
+                    id={`mk-sort-opt-${i}`}
+                    type="button"
+                    role="option"
+                    aria-selected={selected}
+                    onMouseEnter={() => setActiveIdx(i)}
+                    onClick={() => commit(i)}
+                    className={cn(
+                      "flex w-full items-center justify-between gap-3 rounded-md px-2.5 py-1.5 text-left text-[12px] text-[var(--color-fg)] outline-none",
+                      i === activeIdx ? "bg-[var(--color-bg-secondary)]" : "hover:bg-[var(--color-bg-secondary)]",
+                    )}
+                  >
+                    {opt.label}
+                    {selected ? (
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden className="text-[var(--color-accent)]"><path d="m5 13 4 4L19 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    ) : null}
+                  </button>
+                );
+              })}
+            </motion.div>
+          ) : null}
+        </AnimatePresence>,
+      )}
+    </div>
+  );
+}
 
 /* -------------------------------------------------------------------------- */
 /* Small presentational pieces                                                  */
@@ -1156,21 +1263,10 @@ export function SessionSecurityCenter({
               );
             })}
           </div>
-          <label className="ml-auto inline-flex items-center gap-1.5 text-[12px] text-[var(--color-muted)]">
-            <span>Sort</span>
-            <select
-              value={activeSort}
-              onChange={(e) => setSort(e.target.value as SessionSort)}
-              aria-label="Sort sessions"
-              className={cn(
-                "min-h-[30px] rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[12px] font-medium text-[var(--color-fg)]",
-                focusRing,
-              )}
-            >
-              <option value="recent">Recent activity</option>
-              <option value="device">Device name</option>
-            </select>
-          </label>
+          <div className="ml-auto inline-flex items-center gap-1.5 text-[12px] text-[var(--color-muted)]">
+            <span id="mk-sort-label">Sort</span>
+            <SortSelect value={activeSort} onChange={(v) => setSort(v)} />
+          </div>
         </div>
       </div>
 

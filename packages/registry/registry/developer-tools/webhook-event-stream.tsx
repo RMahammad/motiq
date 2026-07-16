@@ -9,6 +9,7 @@ import {
   useVisibilityPause,
   useAutoFollow,
   useDisclosure,
+  useAnchoredPortal,
   useCopy,
   statusVars,
   formatNumber,
@@ -466,6 +467,121 @@ const btn = cn(
 );
 
 /* -------------------------------------------------------------------------- */
+/* Custom event-type filter — a real library listbox popover (not a native
+   <select>): keyboard-navigable, dismiss-on-outside-click, animated, themed,
+   and portaled so the log's scroll container can't crop it.                   */
+/* -------------------------------------------------------------------------- */
+
+const EVENT_FILTER_EASE = [0.2, 0, 0, 1] as const;
+
+const EventTypeSelect = React.memo(function EventTypeSelect({
+  value,
+  eventTypes,
+  onChange,
+}: {
+  value: string;
+  eventTypes: string[];
+  onChange: (v: string) => void;
+}) {
+  const reduce = useReducedMotion();
+  const menu = useDisclosure({ idPrefix: "mk-evt", dismissable: true });
+  const anchor = useAnchoredPortal(menu.open, { align: "start" });
+  const options = React.useMemo(
+    () => [{ value: "__all__", label: "All event types" }, ...eventTypes.map((t) => ({ value: t, label: t }))],
+    [eventTypes],
+  );
+  const currentIdx = Math.max(0, options.findIndex((o) => o.value === value));
+  const [activeIdx, setActiveIdx] = React.useState(currentIdx);
+
+  React.useEffect(() => {
+    if (menu.open) setActiveIdx(currentIdx);
+  }, [menu.open, currentIdx]);
+
+  const commit = (idx: number) => {
+    onChange(options[idx].value);
+    menu.setOpen(false);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (!menu.open) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        menu.setOpen(true);
+      }
+      return;
+    }
+    if (e.key === "ArrowDown") { e.preventDefault(); setActiveIdx((a) => Math.min(options.length - 1, a + 1)); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setActiveIdx((a) => Math.max(0, a - 1)); }
+    else if (e.key === "Home") { e.preventDefault(); setActiveIdx(0); }
+    else if (e.key === "End") { e.preventDefault(); setActiveIdx(options.length - 1); }
+    else if (e.key === "Enter" || e.key === " ") { e.preventDefault(); commit(activeIdx); }
+  };
+
+  return (
+    <div ref={menu.rootRef as React.RefObject<HTMLDivElement>} className="relative" onKeyDown={onKeyDown}>
+      <button
+        type="button"
+        {...menu.triggerProps}
+        ref={anchor.triggerRef as React.RefObject<HTMLButtonElement>}
+        aria-haspopup="listbox"
+        aria-label="Filter by event type"
+        aria-activedescendant={menu.open ? `mk-evt-opt-${activeIdx}` : undefined}
+        className={cn(
+          "inline-flex min-h-[28px] items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-2 py-1 text-[12px] text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)]",
+          focusRing,
+        )}
+      >
+        <span className="max-w-[160px] truncate">{options[currentIdx].label}</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      </button>
+      {anchor.renderInPortal(
+        <AnimatePresence>
+          {menu.open && anchor.anchored ? (
+            <motion.div
+              {...menu.panelProps}
+              ref={anchor.panelRef as React.RefObject<HTMLDivElement>}
+              role="listbox"
+              aria-label="Filter by event type"
+              aria-activedescendant={`mk-evt-opt-${activeIdx}`}
+              initial={reduce ? false : { opacity: 0, y: -4, scale: 0.98 }}
+              animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+              exit={reduce ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.98 }}
+              transition={{ duration: 0.14, ease: EVENT_FILTER_EASE }}
+              style={{ ...anchor.panelStyle, maxHeight: 260 }}
+              className="z-[70] min-w-[180px] overflow-auto rounded-lg bg-[var(--color-surface)] p-1 shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]"
+            >
+              {options.map((opt, i) => {
+                const selected = opt.value === value;
+                return (
+                  <button
+                    key={opt.value}
+                    id={`mk-evt-opt-${i}`}
+                    type="button"
+                    role="option"
+                    aria-selected={selected}
+                    onMouseEnter={() => setActiveIdx(i)}
+                    onClick={() => commit(i)}
+                    className={cn(
+                      "flex w-full items-center justify-between gap-3 rounded-md px-2.5 py-1.5 text-left text-[12px] text-[var(--color-fg)] outline-none",
+                      i === activeIdx ? "bg-[var(--color-bg-secondary)]" : "hover:bg-[var(--color-bg-secondary)]",
+                    )}
+                  >
+                    <span className="truncate">{opt.label}</span>
+                    {selected ? (
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0 text-[var(--color-accent)]"><path d="m5 13 4 4L19 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    ) : null}
+                  </button>
+                );
+              })}
+            </motion.div>
+          ) : null}
+        </AnimatePresence>,
+      )}
+    </div>
+  );
+});
+
+/* -------------------------------------------------------------------------- */
 /* Header / payload key-value rows                                             */
 /* -------------------------------------------------------------------------- */
 
@@ -876,10 +992,19 @@ export function WebhookEventStream({
   }, []);
 
   /* distinct event types for the filter -------------------------------- */
+  // Stabilize the array *by content*: the stream re-renders on every tick, but
+  // the set of distinct types rarely changes. Returning the previous reference
+  // when unchanged lets the memoized filter dropdown skip re-renders (so an open
+  // listbox's animation isn't interrupted mid-frame while events keep arriving).
+  const eventTypesRef = React.useRef<string[]>([]);
   const eventTypes = React.useMemo(() => {
     const set = new Set<string>();
     for (const e of capped) set.add(e.event);
-    return Array.from(set).sort();
+    const next = Array.from(set).sort();
+    const prev = eventTypesRef.current;
+    if (prev.length === next.length && prev.every((v, i) => v === next[i])) return prev;
+    eventTypesRef.current = next;
+    return next;
   }, [capped]);
 
   // If the currently-filtered event type disappears, fall back to "all".
@@ -1044,26 +1169,10 @@ export function WebhookEventStream({
           />
         </label>
 
-        <label className="flex items-center gap-1.5 text-[11.5px] text-[var(--color-muted)]">
+        <div className="flex items-center gap-1.5 text-[11.5px] text-[var(--color-muted)]">
           <span className="sr-only">Filter by event type</span>
-          <select
-            value={eventType}
-            onChange={(e) => setEventType(e.target.value)}
-            className={cn(
-              "rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-2 py-1",
-              "text-[12px] text-[var(--color-fg)]",
-              focusRing,
-            )}
-            aria-label="Filter by event type"
-          >
-            <option value="__all__">All event types</option>
-            {eventTypes.map((t) => (
-              <option key={t} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
-        </label>
+          <EventTypeSelect value={eventType} eventTypes={eventTypes} onChange={setEventType} />
+        </div>
 
         <div className="flex flex-wrap items-center gap-1" role="group" aria-label="Filter by delivery status">
           {statuses.map((s) => {

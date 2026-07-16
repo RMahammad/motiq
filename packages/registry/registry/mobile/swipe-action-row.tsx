@@ -572,24 +572,24 @@ export function SwipeActionRow({
             animate={{ opacity: 1 }}
             exit={reduced ? { opacity: 0 } : { opacity: 0 }}
             transition={{ duration: 0.14 }}
-            className="absolute inset-0 z-40 flex items-center gap-3 rounded-xl border border-[var(--color-error)] bg-[var(--color-surface)] px-4"
+            className="absolute inset-0 z-40 flex items-center gap-2 rounded-xl border border-[var(--color-error)] bg-[var(--color-surface)] px-2.5"
             style={{ boxShadow: "inset 0 0 0 1px var(--color-error)" }}
             role="alertdialog"
-            aria-label={`${confirming.action.confirmLabel ?? confirming.action.label}?`}
+            aria-label={`${confirming.action.confirmLabel ?? confirming.action.label}? This can’t be undone.`}
           >
             <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-[var(--color-error)]" style={{ background: "color-mix(in oklab, var(--color-error) 16%, transparent)" }} aria-hidden>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
                 <path d="M12 8v5M12 16.5h.01M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </span>
-            <p className="min-w-0 flex-1 text-[13.5px] font-medium text-[var(--color-fg)]">
-              {confirming.action.confirmLabel ?? `${confirming.action.label}?`}
-              <span className="ml-1 font-normal text-[var(--color-muted)]">This can’t be undone here.</span>
+            <p className="min-w-0 flex-1 truncate text-[13px] text-[var(--color-fg)]">
+              <span className="font-semibold">Are you sure?</span>
+              <span className="ml-1 hidden font-normal text-[var(--color-muted)] sm:inline">This can’t be undone.</span>
             </p>
             <button
               type="button"
               onClick={cancelConfirm}
-              className="h-9 shrink-0 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[13px] font-medium text-[var(--color-fg)] outline-none transition-colors hover:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+              className="h-9 shrink-0 whitespace-nowrap rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 text-[13px] font-medium text-[var(--color-fg)] outline-none transition-colors hover:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
             >
               Cancel
             </button>
@@ -597,10 +597,10 @@ export function SwipeActionRow({
               ref={confirmBtnRef}
               type="button"
               onClick={() => commit(confirming.action, confirming.side)}
-              className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg px-3 text-[13px] font-semibold outline-none transition-[filter] hover:brightness-95 focus-visible:ring-2 focus-visible:ring-[var(--color-error)] focus-visible:ring-offset-1"
+              className="inline-flex h-9 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg px-3 text-[13px] font-semibold text-white shadow-[var(--shadow-sm)] outline-none transition-[filter] hover:brightness-95 focus-visible:ring-2 focus-visible:ring-[var(--color-error)] focus-visible:ring-offset-1"
               style={{ background: "var(--color-error)", color: "var(--color-error-foreground, #fff)" }}
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden className="shrink-0">
                 <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M6 6l1 14a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-14" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               {confirming.action.confirmLabel ?? confirming.action.label}

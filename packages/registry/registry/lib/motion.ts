@@ -30,6 +30,36 @@ export function useReducedMotion(): boolean {
 }
 
 /**
+ * Scroll `el` into view within its NEAREST scrollable ancestor only — never the
+ * window/page. `element.scrollIntoView()` bubbles through every scroll container
+ * up to the document, so a live feed/timeline that follows its active row would
+ * yank the WHOLE PAGE to itself (e.g. a "Running" demo advancing steps inside a
+ * catalog card). This scrolls just the owning scroll region and no-ops when the
+ * element has no scrollable ancestor, so it can never move the page.
+ */
+export function scrollIntoViewWithin(
+  el: HTMLElement | null | undefined,
+  { smooth = false, margin = 8 }: { smooth?: boolean; margin?: number } = {},
+): void {
+  if (!el || typeof el.getBoundingClientRect !== "function" || typeof window === "undefined") return;
+  let c: HTMLElement | null = el.parentElement;
+  while (c) {
+    const oy = getComputedStyle(c).overflowY;
+    if ((oy === "auto" || oy === "scroll") && c.scrollHeight > c.clientHeight + 1) break;
+    c = c.parentElement;
+  }
+  if (!c) return; // no inner scroll region → do nothing (never scroll the page)
+  const er = el.getBoundingClientRect();
+  const cr = c.getBoundingClientRect();
+  let delta = 0;
+  if (er.top < cr.top + margin) delta = er.top - cr.top - margin;
+  else if (er.bottom > cr.bottom - margin) delta = er.bottom - cr.bottom + margin;
+  if (delta === 0) return;
+  if (smooth && typeof c.scrollTo === "function") c.scrollTo({ top: c.scrollTop + delta, behavior: "smooth" });
+  else c.scrollTop += delta;
+}
+
+/**
  * Returns whether the referenced element is currently worth animating — i.e.
  * on-screen AND the tab is visible. Use it to pause per-frame work, autoplay,
  * or streaming when the component scrolls away or the tab is backgrounded.

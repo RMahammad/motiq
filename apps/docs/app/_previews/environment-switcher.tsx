@@ -6,6 +6,7 @@ import {
   EnvironmentSwitcher,
   type Environment,
 } from "@/registry/developer-tools/environment-switcher";
+import { ControlBar, ControlButton, ControlToggle, ControlDivider } from "../_components/preview-controls";
 
 /* -------------------------------------------------------------------------
  * DEMO ONLY — a fictional "deployment header" for the imaginary repo
@@ -106,9 +107,6 @@ const GROUPS = [
   { id: "shared", label: "Shared environments" },
   { id: "personal", label: "Your environments" },
 ];
-
-const controlBtn =
-  "inline-flex min-h-[32px] items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))] disabled:cursor-not-allowed disabled:opacity-50";
 
 const GitBranchGlyph = () => (
   <svg viewBox="0 0 24 24" width={14} height={14} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden focusable="false">
@@ -220,33 +218,26 @@ export function EnvironmentSwitcherPreview() {
       </div>
 
       {/* Working controls ------------------------------------------------- */}
-      <div className="mt-3 flex flex-wrap items-center gap-1.5" role="group" aria-label="Demo controls">
-        <button type="button" className={controlBtn} onClick={() => { setFailMode(false); runSwitch("staging"); }}>
+      <ControlBar className="mt-3">
+        <ControlButton onClick={() => { setFailMode(false); runSwitch("staging"); }}>
           Switch to staging
-        </button>
-        <button type="button" className={controlBtn} onClick={() => { setFailMode(false); runSwitch("production"); }}>
+        </ControlButton>
+        <ControlButton onClick={() => { setFailMode(false); runSwitch("production"); }}>
           Switch to production
-        </button>
-        <span className="mx-1 h-4 w-px bg-[var(--color-border)]" aria-hidden />
-        <button type="button" className={controlBtn} onClick={() => { setFailMode(false); runSwitch("development"); }}>
+        </ControlButton>
+        <ControlDivider />
+        <ControlButton onClick={() => { setFailMode(false); runSwitch("development"); }}>
           Simulate loading
-        </button>
-        <button type="button" className={controlBtn} onClick={() => { setFailMode(true); runSwitch("staging"); }}>
+        </ControlButton>
+        <ControlButton onClick={() => { setFailMode(true); runSwitch("staging"); }}>
           Simulate failure
-        </button>
-        <span className="mx-1 h-4 w-px bg-[var(--color-border)]" aria-hidden />
-        <button
-          type="button"
-          className={controlBtn}
-          aria-pressed={requireConfirm}
-          onClick={() => setRequireConfirm((c) => !c)}
-        >
-          Production confirm: {requireConfirm ? "on" : "off"}
-        </button>
-        <button type="button" className={controlBtn} onClick={reset}>
-          Reset
-        </button>
-      </div>
+        </ControlButton>
+        <ControlDivider />
+        <ControlToggle pressed={requireConfirm} onPressedChange={setRequireConfirm}>
+          Production confirm
+        </ControlToggle>
+        <ControlButton onClick={reset}>Reset</ControlButton>
+      </ControlBar>
     </div>
   );
 }

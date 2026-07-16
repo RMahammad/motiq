@@ -7,6 +7,7 @@ import {
   type MentionUser,
   type MentionGroup,
 } from "@/registry/collaboration/mention-suggestions";
+import { ControlBar, ControlButton, ControlHint } from "../_components/preview-controls";
 
 /* Clearly fictional demo — an @-mention composer for an imaginary review tool.
  * No real people, teams, or accounts and no network. The app (this preview) owns
@@ -160,9 +161,8 @@ export function MentionSuggestionsPreview() {
       </div>
 
       {/* working controls */}
-      <div className="flex flex-wrap items-center gap-2 rounded-xl [border:1px_solid_var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5">
-        <button
-          type="button"
+      <ControlBar>
+        <ControlButton
           onClick={() => {
             const el = inputRef.current;
             if (!el) return;
@@ -174,19 +174,12 @@ export function MentionSuggestionsPreview() {
               syncTrigger(next, next.length);
             });
           }}
-          className="rounded-lg px-3 py-1.5 text-[13px] font-medium text-[var(--color-fg)] outline-none transition-colors [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
         >
           Insert @ and open
-        </button>
-        <button
-          type="button"
-          onClick={reset}
-          className="rounded-lg px-3 py-1.5 text-[13px] font-medium text-[var(--color-fg)] outline-none transition-colors [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
-        >
-          Reset
-        </button>
-        <span className="ml-auto text-[12px] text-[var(--color-muted)]">The app owns the text; the popup owns selection</span>
-      </div>
+        </ControlButton>
+        <ControlButton onClick={reset}>Reset</ControlButton>
+        <ControlHint>The app owns the text; the popup owns selection</ControlHint>
+      </ControlBar>
     </div>
   );
 }

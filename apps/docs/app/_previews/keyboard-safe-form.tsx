@@ -156,7 +156,7 @@ export function KeyboardSafeFormPreview() {
                   onChange={set("note")}
                   rows={2}
                   placeholder="What is this for?"
-                  className={inputClass}
+                  className={`${inputClass} min-h-[72px] resize-none py-2.5 leading-relaxed`}
                 />
               </label>
               {saved ? (

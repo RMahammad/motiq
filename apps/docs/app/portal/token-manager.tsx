@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import type { TokenMeta } from "../../lib/server/tokens";
 import { CopyButton } from "../_components/code-block";
+import { SelectControl } from "../_components/select-control";
 
 // Client-side token management for the PREVIEW portal. Calls the gated
 // /api/portal/tokens route. A freshly-created/rotated plaintext token is shown
@@ -141,15 +142,16 @@ export function TokenManager({
           <label htmlFor="token-env" className="text-[12.5px] font-medium text-[var(--color-fg)]">
             Environment
           </label>
-          <select
+          <SelectControl
             id="token-env"
             value={environment}
-            onChange={(e) => setEnvironment(e.target.value as Environment)}
+            onChange={(next) => setEnvironment(next as Environment)}
+            options={[
+              { value: "test", label: "Test" },
+              { value: "live", label: "Live" },
+            ]}
             className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-[13px] text-[var(--color-fg)] outline-none focus-visible:border-[var(--color-accent)]"
-          >
-            <option value="test">Test</option>
-            <option value="live">Live</option>
-          </select>
+          />
         </div>
         <button
           type="submit"

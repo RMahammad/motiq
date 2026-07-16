@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 
+import { SelectControl } from "../../_components/select-control";
 import type { SupportCategory } from "../../../lib/server/support";
 
 type FormState = "idle" | "loading" | "success" | "error";
@@ -148,25 +149,19 @@ export function SupportForm() {
         <label htmlFor={ids.category} className={labelClass}>
           What kind of problem? <span className="text-[var(--color-accent)]">*</span>
         </label>
-        <select
+        <SelectControl
           id={ids.category}
-          required
           value={category}
-          onChange={(e) => {
-            setCategory(e.target.value as SupportCategory | "");
+          onChange={(next) => {
+            setCategory(next as SupportCategory | "");
             if (categoryInvalid) setCategoryInvalid(false);
           }}
-          aria-invalid={categoryInvalid || undefined}
+          options={CATEGORY_OPTIONS}
+          placeholder="Choose a category…"
+          invalid={categoryInvalid}
           aria-describedby={categoryInvalid ? ids.categoryErr : undefined}
           className={fieldClass}
-        >
-          <option value="">Choose a category…</option>
-          {CATEGORY_OPTIONS.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+        />
         {categoryInvalid ? (
           <p id={ids.categoryErr} role="alert" className="mt-1 text-[12px] text-[var(--color-accent)]">
             Please choose a category.

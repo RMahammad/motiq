@@ -21,8 +21,9 @@ export function KeyboardSafeFormCatalogPreview() {
     setState((s) => ({ ...s, [key]: e.target.value }));
 
   return (
-    <div className="w-full">
+    <div className="flex h-full w-full flex-col bg-[var(--color-bg)]">
       <KeyboardSafeForm
+        className="h-full rounded-none border-0 bg-transparent shadow-none"
         title="Add a payee"
         description="Details stay editable with the keyboard open."
         submitLabel="Add payee"
@@ -40,7 +41,7 @@ export function KeyboardSafeFormCatalogPreview() {
         </label>
         <label htmlFor="ksf-note" className={labelClass}>
           Note (optional)
-          <textarea id="ksf-note" value={state.note} onChange={set("note")} rows={2} placeholder="What is this for?" className={inputClass} />
+          <textarea id="ksf-note" value={state.note} onChange={set("note")} rows={2} placeholder="What is this for?" className={`${inputClass} min-h-[72px] resize-none py-2.5 leading-relaxed`} />
         </label>
       </KeyboardSafeForm>
     </div>

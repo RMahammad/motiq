@@ -8,6 +8,7 @@ import {
   useReducedMotion,
   useControllableState,
   statusVars,
+  scrollIntoViewWithin,
   formatTimestamp as defaultFormatTimestamp,
   type StatusTone,
 } from "@/lib/motionkit";
@@ -788,14 +789,9 @@ export function ProcessingTimeline({
     }
     prevCurrent.current = currentStageId;
     setSelectedId(currentStageId);
-    const el = rowRefs.current.get(currentStageId);
-    if (el && typeof el.scrollIntoView === "function") {
-      try {
-        el.scrollIntoView({ block: "nearest", inline: "nearest", behavior: reduce ? "auto" : "smooth" });
-      } catch {
-        /* jsdom / no layout — safe to ignore */
-      }
-    }
+    // Follow the current stage within the timeline's own scroll region only —
+    // never `scrollIntoView`, which would scroll the whole page to this card.
+    scrollIntoViewWithin(rowRefs.current.get(currentStageId), { smooth: !reduce });
   }, [currentStageId, followCurrent, reduce, setSelectedId]);
 
   // Announce stage transitions only (never per-percent).

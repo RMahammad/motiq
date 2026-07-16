@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 
+import { SelectControl } from "../_components/select-control";
 import { track } from "../../lib/analytics";
 import type { WaitlistPack, WaitlistTeamSize } from "../../lib/server/waitlist";
 
@@ -231,38 +232,26 @@ export function AccessRequestForm({
           <label htmlFor={ids.pack} className={labelClass}>
             Interested in <span className="font-normal text-[var(--color-muted)]">(optional)</span>
           </label>
-          <select
+          <SelectControl
             id={ids.pack}
             value={interestedPack}
-            onChange={(e) => setInterestedPack(e.target.value as WaitlistPack | "")}
+            onChange={(next) => setInterestedPack(next as WaitlistPack | "")}
+            options={[{ value: "", label: "No preference" }, ...PACK_OPTIONS]}
             className={fieldClass}
-          >
-            <option value="">No preference</option>
-            {PACK_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
+          />
         </div>
 
         <div>
           <label htmlFor={ids.teamSize} className={labelClass}>
             Team size <span className="font-normal text-[var(--color-muted)]">(optional)</span>
           </label>
-          <select
+          <SelectControl
             id={ids.teamSize}
             value={teamSize}
-            onChange={(e) => setTeamSize(e.target.value as WaitlistTeamSize | "")}
+            onChange={(next) => setTeamSize(next as WaitlistTeamSize | "")}
+            options={[{ value: "", label: "Prefer not to say" }, ...TEAM_SIZE_OPTIONS]}
             className={fieldClass}
-          >
-            <option value="">Prefer not to say</option>
-            {TEAM_SIZE_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
+          />
         </div>
       </div>
 

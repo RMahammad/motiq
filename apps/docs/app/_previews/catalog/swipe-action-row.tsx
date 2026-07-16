@@ -43,42 +43,45 @@ const MAIL: Mail[] = [
   { id: "m1", from: "Ada Lovelace", subject: "Q3 launch plan — final review", preview: "Pushed the deck, need your sign-off before Friday.", time: "9:24", unread: true, hue: 255 },
   { id: "m2", from: "Deploys", subject: "Production deploy succeeded", preview: "web-app · 42s · 3 services updated.", time: "8:51", unread: true, hue: 150 },
   { id: "m3", from: "Kit Marlowe", subject: "Re: onboarding copy", preview: "Two tiny tweaks and I think we ship it.", time: "8:07", unread: false, hue: 320 },
+  { id: "m4", from: "Iris Wren", subject: "Design sync moved to 3pm", preview: "Grabbed the corner room so we can sketch.", time: "7:42", unread: false, hue: 24 },
+  { id: "m5", from: "Billing", subject: "Receipt · Pro plan", preview: "Your invoice for June is ready to view.", time: "Tue", unread: false, hue: 200 },
+  { id: "m6", from: "Noor Haddad", subject: "Notes from the customer call", preview: "Two feature asks, both small. Recap inside.", time: "Mon", unread: false, hue: 285 },
 ];
 
 export function SwipeActionRowCatalogPreview() {
   return (
-    <div className="w-full overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)]">
-      <div className="flex items-center justify-between border-b border-[var(--color-border)] px-4 py-3">
+    <div className="flex h-full w-full flex-col bg-[var(--color-bg)]">
+      <div className="flex shrink-0 items-center justify-between px-4 pb-2.5 pt-1.5">
         <div>
-          <p className="text-[15px] font-semibold text-[var(--color-fg)]">Inbox</p>
-          <p className="text-[11.5px] text-[var(--color-muted)]">2 unread · 3 total</p>
+          <p className="text-[19px] font-bold leading-tight tracking-tight text-[var(--color-fg)]">Inbox</p>
+          <p className="text-[11.5px] font-medium text-[var(--color-muted)]">2 unread</p>
         </div>
-        <span className="grid h-8 w-8 place-items-center rounded-full bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]">
-          <Icon d="M4 6h16v12H4zM4 7l8 6 8-6" />
+        <span className="grid h-9 w-9 place-items-center rounded-full bg-[color-mix(in_oklab,var(--color-accent)_15%,transparent)] text-[var(--color-accent)]">
+          <Icon d="M12 5v14M5 12h14" />
         </span>
       </div>
 
-      <ul aria-label="Messages" className="flex flex-col gap-1.5 p-2">
+      <ul aria-label="Messages" className="flex min-h-0 flex-1 flex-col gap-1 overflow-hidden px-2 pb-2">
         <SwipeActionGroup>
           {MAIL.map((m) => (
             <li key={m.id}>
               <SwipeActionRow label={`${m.from}: ${m.subject}`} leftActions={LEFT} rightActions={RIGHT}>
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-3 py-0.5">
                   <span
-                    className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full text-[13px] font-semibold text-white"
-                    style={{ background: `linear-gradient(135deg, hsl(${m.hue} 68% 56%), hsl(${m.hue + 28} 66% 46%))` }}
+                    className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-[14px] font-semibold text-white shadow-[var(--shadow-sm)]"
+                    style={{ background: `linear-gradient(140deg, hsl(${m.hue} 70% 58%), hsl(${m.hue + 30} 66% 47%))` }}
                     aria-hidden
                   >
                     {m.from.slice(0, 1)}
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="flex items-center gap-2">
-                      {m.unread && <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" aria-hidden />}
-                      <span className="truncate text-[13.5px] font-semibold text-[var(--color-fg)]">{m.from}</span>
-                      <span className="ml-auto shrink-0 text-[11px] text-[var(--color-muted)]">{m.time}</span>
+                      {m.unread && <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--color-accent)]" aria-hidden />}
+                      <span className={`truncate text-[14px] text-[var(--color-fg)] ${m.unread ? "font-bold" : "font-semibold"}`}>{m.from}</span>
+                      <span className="ml-auto shrink-0 text-[11px] font-medium text-[var(--color-muted)]">{m.time}</span>
                     </span>
                     <span className="mt-0.5 block truncate text-[12.5px] font-medium text-[var(--color-fg)]">{m.subject}</span>
-                    <span className="mt-0.5 block truncate text-[12px] text-[var(--color-muted)]">{m.preview}</span>
+                    <span className="mt-0.5 block truncate text-[12px] leading-snug text-[var(--color-muted)]">{m.preview}</span>
                   </span>
                 </div>
               </SwipeActionRow>

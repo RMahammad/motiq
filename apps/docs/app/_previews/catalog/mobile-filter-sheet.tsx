@@ -38,7 +38,7 @@ const GROUPS: FilterGroup[] = [
 
 export function MobileFilterSheetCatalogPreview() {
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)]" style={{ height: 520 }}>
+    <div className="relative h-full w-full overflow-hidden bg-[var(--color-bg)]">
       <MobileFilterSheet
         groups={GROUPS}
         mode="fullscreen"

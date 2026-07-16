@@ -12,6 +12,7 @@ import {
   useDisclosure,
   useCopy,
   useControllableState,
+  scrollIntoViewWithin,
   streamItemVariants,
   type StatusTone,
 } from "@/lib/motionkit";
@@ -879,14 +880,9 @@ export function AgentRunTimeline({
     }
     prevCurrent.current = cur;
     setSelectedId(cur);
-    const el = rowRefs.current.get(cur);
-    if (el && typeof el.scrollIntoView === "function") {
-      try {
-        el.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
-      } catch {
-        /* environments without a real layout (e.g. jsdom) — safe to ignore */
-      }
-    }
+    // Follow the active step within the timeline's own scroll region only —
+    // never `scrollIntoView`, which would scroll the whole page to this card.
+    scrollIntoViewWithin(rowRefs.current.get(cur), { smooth: !reduce });
   }, [run.currentStepId, followActive, reduce, setSelectedId]);
 
   // Lifecycle live region — announce run + step status transitions only.

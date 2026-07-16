@@ -3,6 +3,8 @@
 import * as React from "react";
 import { MotionConfig } from "motion/react";
 
+import { ControlButton, ControlSegmented, ControlToggle } from "./preview-controls";
+
 export type StageType = "text" | "canvas" | "icon" | "interactive" | "card";
 
 // Category-specific backdrops so components don't all look identical.
@@ -72,7 +74,7 @@ export function PreviewStage({
         data-theme={theme}
         data-reduced={reduced || undefined}
         style={v.style}
-        className={`relative flex items-center justify-center ${v.min} ${v.cls} ${
+        className={`relative isolate flex items-center justify-center ${v.min} ${v.cls} ${
           reduced ? "[&_*]:!animate-none [&_*]:!transition-none" : ""
         }`}
       >
@@ -86,7 +88,7 @@ export function PreviewStage({
           }}
         />
         <MotionConfig reducedMotion={reduced ? "always" : "user"}>
-          <div key={nonce} className="relative flex w-full items-center justify-center">
+          <div key={nonce} className="relative flex w-full items-center justify-center py-5 py-10">
             {children}
           </div>
         </MotionConfig>
@@ -94,29 +96,29 @@ export function PreviewStage({
 
       {showControls ? (
         <div className="flex flex-wrap items-center gap-2 border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2">
-          <button
-            type="button"
+          <ControlButton
             onClick={() => setNonce((n) => n + 1)}
-            className="inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)]"
+            icon={
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M4 12a8 8 0 1 1 2.3 5.6M4 12V7m0 5h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            }
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
-              <path d="M4 12a8 8 0 1 1 2.3 5.6M4 12V7m0 5h5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
             Replay
-          </button>
-          <div className="ml-auto flex items-center gap-2 text-[12px] text-[var(--color-muted)]">
-            <div className="flex overflow-hidden rounded-md border border-[var(--color-border)]">
-              <button type="button" aria-pressed={theme === "light"} onClick={() => setTheme("light")} className={`px-2 py-1 ${theme === "light" ? "bg-[var(--color-surface)] text-[var(--color-fg)]" : "hover:text-[var(--color-fg)]"}`}>
-                Light
-              </button>
-              <button type="button" aria-pressed={theme === "dark"} onClick={() => setTheme("dark")} className={`px-2 py-1 ${theme === "dark" ? "bg-[var(--color-surface)] text-[var(--color-fg)]" : "hover:text-[var(--color-fg)]"}`}>
-                Dark
-              </button>
-            </div>
-            <label className="flex cursor-pointer items-center gap-1.5 select-none">
-              <input type="checkbox" checked={reduced} onChange={(e) => setReduced(e.target.checked)} className="accent-[var(--color-accent)]" />
+          </ControlButton>
+          <div className="ml-auto flex items-center gap-2">
+            <ControlSegmented
+              label="Preview theme"
+              value={theme}
+              onChange={setTheme}
+              options={[
+                { value: "light", label: "Light" },
+                { value: "dark", label: "Dark" },
+              ]}
+            />
+            <ControlToggle pressed={reduced} onPressedChange={setReduced}>
               Reduce motion
-            </label>
+            </ControlToggle>
           </div>
         </div>
       ) : null}

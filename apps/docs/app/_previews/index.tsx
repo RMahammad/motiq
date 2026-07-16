@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { BlurText } from "@/registry/text/blur-text";
 import { KineticEmphasis } from "@/registry/text/kinetic-emphasis";
+import { SelectControl } from "../_components/select-control";
 import { AiResponseStreamPreview } from "./ai-response-stream";
 import { DeploymentPipelinePreview } from "./deployment-pipeline";
 import { LivePresenceStackPreview } from "./live-presence-stack";
@@ -170,6 +171,7 @@ const fieldClass =
   "w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-[14px] text-[var(--color-fg)] outline-none placeholder:text-[var(--color-muted)] focus-visible:border-[var(--color-accent)]";
 
 function InviteDialog() {
+  const [role, setRole] = React.useState("Editor");
   return (
     <AnimatedDialog animation="scale">
       <AnimatedDialogTrigger asChild>
@@ -184,11 +186,17 @@ function InviteDialog() {
           <label className="mb-1 block text-[12px] font-medium text-[var(--color-muted)]">Email address</label>
           <input placeholder="teammate@company.com" className={fieldClass} />
           <label className="mb-1 mt-3 block text-[12px] font-medium text-[var(--color-muted)]">Role</label>
-          <select className={fieldClass} defaultValue="Editor">
-            <option>Owner</option>
-            <option>Editor</option>
-            <option>Viewer</option>
-          </select>
+          <SelectControl
+            aria-label="Role"
+            value={role}
+            onChange={setRole}
+            options={[
+              { value: "Owner", label: "Owner" },
+              { value: "Editor", label: "Editor" },
+              { value: "Viewer", label: "Viewer" },
+            ]}
+            className={fieldClass}
+          />
         </AnimatedDialogBody>
         <AnimatedDialogFooter>
           <AnimatedDialogClose asChild>

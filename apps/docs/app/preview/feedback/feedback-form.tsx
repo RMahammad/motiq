@@ -2,6 +2,7 @@
 
 import { useId, useState } from "react";
 
+import { SelectControl } from "../../_components/select-control";
 import type {
   FeedbackCategory,
   WillingnessToUse,
@@ -269,25 +270,19 @@ export function PreviewFeedbackForm({ presetComponent }: { presetComponent?: str
           <label htmlFor={ids.category} className={labelClass}>
             Topic <span className="text-[var(--color-accent)]">*</span>
           </label>
-          <select
+          <SelectControl
             id={ids.category}
-            required
             value={category}
-            onChange={(e) => {
-              setCategory(e.target.value as FeedbackCategory | "");
+            onChange={(next) => {
+              setCategory(next as FeedbackCategory | "");
               if (categoryInvalid) setCategoryInvalid(false);
             }}
-            aria-invalid={categoryInvalid || undefined}
+            options={CATEGORY_OPTIONS}
+            placeholder="Choose a topic…"
+            invalid={categoryInvalid}
             aria-describedby={categoryInvalid ? ids.categoryErr : undefined}
             className={fieldClass}
-          >
-            <option value="">Choose a topic…</option>
-            {CATEGORY_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
+          />
           {categoryInvalid ? (
             <p id={ids.categoryErr} role="alert" className="mt-1 text-[12px] text-[var(--color-accent)]">
               Please choose a topic.
@@ -420,19 +415,13 @@ export function PreviewFeedbackForm({ presetComponent }: { presetComponent?: str
           Which access shape interests you?{" "}
           <span className="font-normal text-[var(--color-muted)]">(optional)</span>
         </label>
-        <select
+        <SelectControl
           id={ids.interest}
           value={interestInAccess}
-          onChange={(e) => setInterestInAccess(e.target.value as InterestInAccess | "")}
+          onChange={(next) => setInterestInAccess(next as InterestInAccess | "")}
+          options={[{ value: "", label: "No preference" }, ...INTEREST_OPTIONS]}
           className={fieldClass}
-        >
-          <option value="">No preference</option>
-          {INTEREST_OPTIONS.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+        />
       </div>
 
       {/* Context */}
@@ -485,19 +474,13 @@ export function PreviewFeedbackForm({ presetComponent }: { presetComponent?: str
             <label htmlFor={ids.teamSize} className={labelClass}>
               Team size
             </label>
-            <select
+            <SelectControl
               id={ids.teamSize}
               value={teamSizeRange}
-              onChange={(e) => setTeamSizeRange(e.target.value as FeedbackTeamSize | "")}
+              onChange={(next) => setTeamSizeRange(next as FeedbackTeamSize | "")}
+              options={[{ value: "", label: "Prefer not to say" }, ...TEAM_SIZE_OPTIONS]}
               className={fieldClass}
-            >
-              <option value="">Prefer not to say</option>
-              {TEAM_SIZE_OPTIONS.map((o) => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
-                </option>
-              ))}
-            </select>
+            />
           </div>
         </div>
         <div className="flex flex-col gap-2.5">

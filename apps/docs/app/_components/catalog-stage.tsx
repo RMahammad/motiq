@@ -79,6 +79,38 @@ const FAMILY: Record<StageFamily, React.CSSProperties> = {
   neutral: { background: "var(--color-bg-secondary)" },
 };
 
+/** iOS-style status bar for the phone frame: clock · dynamic island · radios. */
+function MobileStatusBar() {
+  return (
+    <div className="relative z-10 flex shrink-0 items-center justify-between px-5 pb-1 pt-2.5 text-[var(--color-fg)]" aria-hidden>
+      <span className="text-[11px] font-semibold tabular-nums tracking-tight">9:41</span>
+      {/* dynamic island */}
+      <span className="absolute left-1/2 top-2 h-[18px] w-[54px] -translate-x-1/2 rounded-full bg-[color-mix(in_oklab,var(--color-fg)_72%,var(--color-bg))]" />
+      <span className="flex items-center gap-1.5 text-[var(--color-fg)]">
+        {/* signal */}
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor">
+          <rect x="0" y="7.5" width="2.6" height="3.5" rx="0.6" />
+          <rect x="4" y="5" width="2.6" height="6" rx="0.6" />
+          <rect x="8" y="2.5" width="2.6" height="8.5" rx="0.6" />
+          <rect x="12" y="0" width="2.6" height="11" rx="0.6" opacity="0.4" />
+        </svg>
+        {/* wifi */}
+        <svg width="15" height="11" viewBox="0 0 15 11" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+          <path d="M1 3.4a9 9 0 0 1 13 0M3.4 6a5.5 5.5 0 0 1 8.2 0" />
+          <circle cx="7.5" cy="9" r="0.9" fill="currentColor" stroke="none" />
+        </svg>
+        {/* battery */}
+        <span className="flex items-center gap-0.5">
+          <span className="relative h-[11px] w-[22px] rounded-[3px] border border-[color-mix(in_oklab,var(--color-fg)_45%,transparent)] p-[1.5px]">
+            <span className="block h-full w-[70%] rounded-[1px] bg-current" />
+          </span>
+          <span className="h-[4px] w-[1.5px] rounded-r bg-[color-mix(in_oklab,var(--color-fg)_45%,transparent)]" />
+        </span>
+      </span>
+    </div>
+  );
+}
+
 export function CatalogStage({
   children,
   size,
@@ -116,9 +148,11 @@ export function CatalogStage({
   const inner = (
     <MotionConfig reducedMotion="user">
       <div
-        // Constrain interactivity — this is a discovery surface, not a mini-app.
+        // Discovery surface, not a mini-app: `inert` makes the preview fully
+        // non-interactive AND unfocusable, so a component that moves focus on
+        // mount (e.g. an open sheet/dialog) can never scroll the page to itself.
+        inert
         className="pointer-events-none relative flex w-full select-none justify-center"
-        aria-hidden={false}
       >
         {children}
       </div>
@@ -126,18 +160,26 @@ export function CatalogStage({
   );
 
   if (mobileFrame) {
-    // Properly sized phone stage; component fills the device, not floating in a void.
+    // A realistic phone "screenshot": bezel + dynamic-island status bar, and an
+    // app-content region the preview FILLS (flex-1, h-full) — so nothing floats in
+    // a void and sticky bottom bars sit at the true screen bottom, never clipped.
     return (
       <div
         data-stage="catalog"
         style={{ ...FAMILY[family], height: s.max }}
-        className="relative flex items-center justify-center overflow-hidden"
+        className="relative isolate flex items-center justify-center overflow-hidden p-4 sm:p-5"
       >
         {/* Device frame on ≥sm; full-bleed on an already-mobile viewport (docs/55 §26). */}
-        <div className="relative h-full w-full overflow-hidden rounded-none border-0 bg-transparent shadow-none sm:h-[92%] sm:w-[268px] sm:max-w-[80%] sm:rounded-[2rem] sm:border-[6px] sm:border-[color-mix(in_oklab,var(--color-fg)_22%,transparent)] sm:bg-[var(--color-bg)] sm:shadow-[var(--shadow-md)]">
-          <div className="absolute left-1/2 top-2 z-10 hidden h-1.5 w-16 -translate-x-1/2 rounded-full bg-[color-mix(in_oklab,var(--color-fg)_22%,transparent)] sm:block" />
-          <div className="pointer-events-none flex h-full w-full items-start justify-center overflow-hidden pt-2 sm:pt-7">
+        <div className="relative flex h-full w-full flex-col overflow-hidden rounded-none border-0 bg-[var(--color-bg)] shadow-none sm:h-full sm:w-[300px] sm:max-w-[88%] sm:rounded-[2.7rem] sm:border-[8px] sm:border-[color-mix(in_oklab,var(--color-fg)_18%,var(--color-bg-secondary))] sm:shadow-[var(--shadow-lg,var(--shadow-md))] sm:ring-1 sm:ring-inset sm:ring-[color-mix(in_oklab,var(--color-fg)_10%,transparent)]">
+          <MobileStatusBar />
+          <div inert className="pointer-events-none relative min-h-0 w-full flex-1 overflow-hidden">
             <MotionConfig reducedMotion="user">{children}</MotionConfig>
+            {/* Soft bottom fade — a gentle cue for any content taller than the screen. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-6"
+              style={{ background: "linear-gradient(180deg, transparent, color-mix(in oklab, var(--color-bg) 78%, transparent))" }}
+            />
           </div>
         </div>
       </div>
@@ -152,7 +194,7 @@ export function CatalogStage({
         style={{ ...FAMILY[family], height: s.max }}
         className="relative flex items-stretch justify-center overflow-hidden p-0"
       >
-        <div className="pointer-events-none relative flex w-full select-none">
+        <div inert className="pointer-events-none relative flex w-full select-none">
           <MotionConfig reducedMotion="user">{children}</MotionConfig>
         </div>
       </div>
@@ -164,7 +206,7 @@ export function CatalogStage({
       ref={boxRef}
       data-stage="catalog"
       style={{ ...FAMILY[family], minHeight: s.min, maxHeight: s.max }}
-      className={`relative flex flex-col overflow-hidden ${
+      className={`relative isolate flex flex-col overflow-hidden ${
         topAnchored ? "justify-start" : "justify-center"
       } ${s.pad}`}
     >

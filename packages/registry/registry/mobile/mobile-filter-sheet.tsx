@@ -894,7 +894,9 @@ export function MobileFilterSheet({
     if (!isOpen) return;
     const active = (triggerRef.current ?? document.activeElement) as HTMLElement | null;
     const panel = panelRef.current;
-    const raf = requestAnimationFrame(() => closeBtnRef.current?.focus());
+    // preventScroll: focusing the sheet must never scroll the background page
+    // (an embedded/`contained` sheet would otherwise yank the whole page to it).
+    const raf = requestAnimationFrame(() => closeBtnRef.current?.focus({ preventScroll: true }));
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -928,7 +930,7 @@ export function MobileFilterSheet({
       cancelAnimationFrame(raf);
       document.removeEventListener("keydown", onKeyDown, true);
       if (!contained) document.body.style.overflow = prevOverflow;
-      if (active && typeof active.focus === "function") active.focus();
+      if (active && typeof active.focus === "function") active.focus({ preventScroll: true });
     };
   }, [isOpen, contained]);
 
@@ -948,27 +950,40 @@ export function MobileFilterSheet({
         : "inset-x-0 bottom-0 max-h-[88%] rounded-t-2xl";
 
   const overlay = (
-    <AnimatePresence>
-      {isOpen ? (
-        <div className={cn(posClass, "inset-0 z-50", className)} data-mode={mode}>
+    <>
+      {/* Backdrop and panel are SEPARATE keyed AnimatePresence children so their
+          exit animations actually play on close (a plain wrapper div swallowed
+          them, causing the open/close flash). */}
+      <AnimatePresence>
+        {isOpen ? (
           <motion.div
-            className="absolute inset-0 bg-[color-mix(in_oklab,var(--color-fg)_45%,transparent)]"
+            key="mfs-overlay"
+            className={cn(posClass, "inset-0 z-50 bg-[color-mix(in_oklab,var(--color-fg)_45%,transparent)]")}
+            data-mode={mode}
             initial={reduce ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={reduce ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: reduce ? 0 : 0.2, ease: EASE }}
+            transition={{ duration: reduce ? 0 : 0.24, ease: EASE }}
             onClick={requestClose}
             aria-hidden
           />
+        ) : null}
+      </AnimatePresence>
+      <AnimatePresence>
+        {isOpen ? (
           <motion.div
+            key="mfs-panel"
             ref={panelRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby={titleId}
             aria-describedby={descId}
+            data-mode={mode}
             className={cn(
-              "absolute flex flex-col border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)] outline-none",
+              posClass,
+              "z-50 flex flex-col border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)] outline-none",
               surfaceLayout,
+              className,
             )}
             style={{
               paddingBottom: contained ? undefined : "env(safe-area-inset-bottom)",
@@ -1101,25 +1116,25 @@ export function MobileFilterSheet({
                   <button
                     type="button"
                     onClick={reset}
-                    className="min-h-[44px] rounded-lg px-3 text-[13px] font-medium text-[var(--color-muted)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-fg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
+                    className="min-h-[44px] shrink-0 whitespace-nowrap rounded-lg px-2.5 text-[13px] font-medium text-[var(--color-muted)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-fg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
                   >
                     {resetLabel}
                   </button>
                   <button
                     type="button"
                     onClick={requestClose}
-                    className="ml-auto min-h-[44px] rounded-lg border border-[var(--color-border)] px-4 text-[14px] font-medium text-[var(--color-fg)] hover:bg-[var(--color-bg-secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
+                    className="ml-auto min-h-[44px] shrink-0 whitespace-nowrap rounded-lg border border-[var(--color-border)] px-3.5 text-[14px] font-medium text-[var(--color-fg)] hover:bg-[var(--color-bg-secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
                   >
                     {cancelLabel}
                   </button>
                   <button
                     type="button"
                     onClick={apply}
-                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-[var(--color-accent)] px-4 text-[14px] font-semibold text-[var(--color-accent-fg)] hover:bg-[var(--color-accent-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+                    className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg bg-[var(--color-accent)] px-4 text-[14px] font-semibold text-[var(--color-accent-fg)] shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-accent-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
                   >
                     {applyLabel}
                     {resultCount !== undefined ? (
-                      <span className="tabular-nums">· {loading ? "…" : formatCount(roundedCount)}</span>
+                      <span className="tabular-nums opacity-80">· {loading ? "…" : formatCount(roundedCount)}</span>
                     ) : null}
                   </button>
                 </div>
@@ -1177,9 +1192,9 @@ export function MobileFilterSheet({
               ) : null}
             </AnimatePresence>
           </motion.div>
-        </div>
-      ) : null}
-    </AnimatePresence>
+        ) : null}
+      </AnimatePresence>
+    </>
   );
 
   return (
