@@ -1,7 +1,7 @@
 # HeroSection
 
 > **Status:** 🟡 In progress (spike + tests) · **Version introduced:** v0.0.0 (pre-release) · **Tier:** Premium · **Package:** `@scope/sections`
-> **Composes:** [`Stagger`](stagger.md) + [`Reveal`](reveal.md) · **Standards:** [API](../09-component-api-standard.md) · [A11y](../12-accessibility-standard.md) · [Perf](../13-performance-standard.md) · Skill: [`animated-section-authoring`](../../.claude/skills/animated-section-authoring/SKILL.md)
+> **Composes:** [`Stagger`](stagger.md) + [`Reveal`](reveal.md) · **Standards:** [API](../09-component-api-standard.md) · [A11y](../12-accessibility-standard.md) · [Perf](../13-performance-standard.md) · Skill: [`animated-section-authoring`](../../.claude/skills/component-authoring/SKILL.md)
 > Source: [`packages/sections/src/hero-section.tsx`](../../packages/sections/src/hero-section.tsx) · Tests: [`.test`](../../packages/sections/src/hero-section.test.tsx), [`.ssr`](../../packages/sections/src/hero-section.ssr.test.tsx), [`.a11y`](../../packages/sections/src/hero-section.a11y.test.tsx)
 
 A landing-page hero. **Content is entirely prop/slot-driven — no baked marketing copy.** It's **server-safe** (no `"use client"`): a Server Component can render it directly; it composes the client primitives (`Stagger`/`Reveal`) as leaves — the ideal RSC pattern.

@@ -2,7 +2,7 @@
 
 > **Type:** 🟢 Canonical for performance budgets · **Implementation status:** 🔵 Planned (budgets defined, not yet enforced) · **Last reviewed:** 2026-07-14
 > **Owns:** bundle/runtime budgets, animation rules, the performance-review checklist.
-> **Related:** [`14-testing-strategy.md`](14-testing-strategy.md) (size-limit CI) · [`06-animation-engine-decision.md`](06-animation-engine-decision.md) (escalation) · [`performance-review` skill](../.claude/skills/performance-review/SKILL.md)
+> **Related:** [`14-testing-strategy.md`](14-testing-strategy.md) (size-limit CI) · [`06-animation-engine-decision.md`](06-animation-engine-decision.md) (escalation) · [`performance-review` skill](../.claude/skills/component-review/SKILL.md)
 
 ## Budgets
 
@@ -45,7 +45,7 @@ Any effect with High perf risk must define its mobile behavior explicitly (disab
 
 ## Performance-review checklist
 
-Used by the [`performance-review`](../.claude/skills/performance-review/SKILL.md) skill and [`templates/performance-checklist.md`](templates/performance-checklist.md):
+Used by the [`performance-review`](../.claude/skills/component-review/SKILL.md) skill and [`templates/performance-checklist.md`](templates/performance-checklist.md):
 
 1. Import/bundle analysis (single-component import stays within budget).
 2. Tree-shaking verified (importing one component doesn't pull siblings).

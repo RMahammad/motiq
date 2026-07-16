@@ -73,4 +73,4 @@ Kinetic typography, logo reveals, product-launch intros, feature showcases, SaaS
 
 ## Stop condition
 
-Any work here stops at the first unresolved licensing implication. See [`08`](08-remotion-license-analysis.md) and the [`remotion-composition-authoring`](../.claude/skills/remotion-composition-authoring/SKILL.md) and [`dependency-review`](../.claude/skills/dependency-review/SKILL.md) skills.
+Any work here stops at the first unresolved licensing implication. See [`08`](08-remotion-license-analysis.md) and the [`remotion-composition-authoring`](../.claude/skills/remotion-composition-authoring/SKILL.md) and [`dependency-review`](../.claude/skills/component-review/SKILL.md) skills.

@@ -1,6 +1,6 @@
 # Performance checklist
 
-> Canonical standard + budgets: [`13-performance-standard.md`](../13-performance-standard.md). Skill: [`performance-review`](../../.claude/skills/performance-review/SKILL.md). ⛔ = release-blocking.
+> Canonical standard + budgets: [`13-performance-standard.md`](../13-performance-standard.md). Skill: [`performance-review`](../../.claude/skills/component-review/SKILL.md). ⛔ = release-blocking.
 
 - [ ] ⛔ Single-component import within size budget (`size-limit`)
 - [ ] Tree-shaking verified (importing one component doesn't pull siblings)

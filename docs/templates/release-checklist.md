@@ -1,6 +1,6 @@
 # Release checklist
 
-> Canonical process: [`18-release-process.md`](../18-release-process.md). Skill: [`release-readiness`](../../.claude/skills/release-readiness/SKILL.md). ⛔ = release-blocking.
+> Canonical process: [`18-release-process.md`](../18-release-process.md). Skill: [`release-readiness`](../../.claude/skills/registry-release/SKILL.md). ⛔ = release-blocking.
 
 ## Pre-flight
 - [ ] All CI green: lint (+boundaries), typecheck, unit/interaction, ⛔ a11y (axe), ⛔ SSR/hydration

@@ -42,7 +42,7 @@ graph LR
 
 | | Compiled edition | Source/registry edition |
 |---|---|---|
-| Updates | easy (`pnpm up`) | buyer owns code → provide **codemods/migration notes** ([`migration-authoring`](../.claude/skills/migration-authoring/SKILL.md)) |
+| Updates | easy (`pnpm up`) | buyer owns code → provide **codemods/migration notes** ([`migration-authoring`](../.claude/skills/registry-release/SKILL.md)) |
 | Customization | limited | ultimate |
 | IP | better | leak risk (accepted) |
 | Buyer type | most buyers | power users |

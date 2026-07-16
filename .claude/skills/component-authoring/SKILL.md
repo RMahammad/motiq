@@ -8,10 +8,11 @@ allowed-tools: Read, Edit, Write, Bash, Grep, Glob
 ## Use this skill when
 - Creating a new interactive component, or changing a component's public API.
 
+This skill also covers motion primitives (`@scope/motion`) and marketing sections (`@scope/sections`) — same procedure, applied to that layer.
+
 ## Do not use this skill when
-- Building a low-level motion primitive → use [`motion-primitive-authoring`](../motion-primitive-authoring/SKILL.md).
-- Building a marketing section → use [`animated-section-authoring`](../animated-section-authoring/SKILL.md).
 - Making an internal refactor with no public-API/behavior change.
+- Fixing a bug → use [`bug-fix-workflow`](../bug-fix-workflow/SKILL.md).
 
 ## Required context
 - [`docs/09-component-api-standard.md`](../../../docs/09-component-api-standard.md) (the contract)
@@ -36,7 +37,7 @@ allowed-tools: Read, Edit, Write, Bash, Grep, Glob
 2. Implement: `"use client"` if it uses hooks/motion; `forwardRef` to the primary node; semantic HTML; three-level API with a namespaced `motionProps` escape hatch ([`09`](../../../docs/09-component-api-standard.md#three-api-levels)).
 3. Reduced-motion fallback: final-state render, still functional.
 4. Use **Radix** for any overlay/menu/tabs/tooltip behavior ([ADR-0011](../../../docs/adrs/0011-accessible-primitives.md)).
-5. Style via CVA (no dynamic class strings) + `data-slot` hooks + CSS vars ([`11`](../../../docs/11-tailwind-strategy.md)); run [`design-system-consistency`](../design-system-consistency/SKILL.md).
+5. Style via CVA (no dynamic class strings) + `data-slot` hooks + CSS vars ([`11`](../../../docs/11-tailwind-strategy.md)); keep tokens consistent per [`component-review`](../component-review/SKILL.md).
 6. Storybook stories: default, dark, custom-theme, reduced-motion.
 7. Tests: interaction (RTL/`play`), axe (0 violations), SSR render, reduced-motion.
 8. Update package `exports` (+ subpath).
@@ -45,7 +46,7 @@ allowed-tools: Read, Edit, Write, Bash, Grep, Glob
 11. `pnpm changeset`.
 
 ## Required validation
-Run [`component-checklist.md`](./component-checklist.md). Then run the review skills: [`api-consistency-review`](../api-consistency-review/SKILL.md), [`accessibility-review`](../accessibility-review/SKILL.md), [`testing-review`](../testing-review/SKILL.md), and [`performance-review`](../performance-review/SKILL.md) for anything effect-heavy. Confirm the [interactive-component Definition of Done](../../../docs/25-definition-of-done.md#interactive-component).
+Run [`component-checklist.md`](./component-checklist.md). Then run [`component-review`](../component-review/SKILL.md) (API, motion, performance, tests, tokens, dependencies) and [`accessibility-review`](../accessibility-review/SKILL.md). Confirm the [interactive-component Definition of Done](../../../docs/25-definition-of-done.md#interactive-component).
 
 ## Expected outputs
 Component + public types + story + tests + docs page + export update + inventory update + changeset.
@@ -54,7 +55,7 @@ Component + public types + story + tests + docs page + export update + inventory
 - Component doc page + [`21-component-inventory.md`](../../../docs/21-component-inventory.md) status (🔵→🟢). Run [`documentation-maintenance`](../documentation-maintenance/SKILL.md).
 
 ## Stop conditions
-- Needs a new runtime dependency → [`dependency-review`](../dependency-review/SKILL.md).
+- Needs a new runtime dependency → [`dependency-review`](../component-review/SKILL.md).
 - Needs a new animation engine or Remotion → stop; that's an architectural decision (ADR).
 - Would weaken accessibility to ship → stop.
 

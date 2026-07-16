@@ -2,7 +2,7 @@
 
 > **Type:** 🟢 Canonical for competitor research & licensing posture · **Status:** Complete (2026-07-14) · **Owner:** product
 > **Note on numbering:** The pivot brief requested `docs/29-competitive-product-review.md`, but `29-go-live-checklist.md` already exists and is linked from [`CLAUDE.md`](../CLAUDE.md) and [`README.md`](README.md). To avoid clobbering the launch runbook this review lives at **`31`**. See [`catalog-consistency`](#), [`27-product-differentiation.md`](27-product-differentiation.md), [`30-showcase-visual-system.md`](30-showcase-visual-system.md).
-> **Related skill:** [`competitive-library-review`](../.claude/skills/competitive-library-review/SKILL.md) — the repeatable version of this research.
+> **Related skill:** [`competitive-library-review`](../.claude/skills/protected-source-audit/SKILL.md) — the repeatable version of this research.
 
 Research conducted **2026-07-14** against official websites, docs, and GitHub repos. Two facts flagged as *verify-before-publishing*: Aceternity's exact price (client-rendered) and Animate UI's exact `LICENSE.md` text (one fetch returned a Commons-Clause-flavored variant; repo signals say MIT).
 
@@ -68,7 +68,7 @@ We are pivoting from an abstract "semantic motion system" landing page toward a 
 | Animation tech | Framer Motion + Tailwind (v4), some WebGL/canvas shaders. |
 
 **Adopt:** above-the-fold live demos of signature components; the explicit **primitive → block → template** product-tier story (maps to our `motion → react → sections → recipes`); copy-paste **and** CLI install directly under each demo; *honest, visible* proof.
-**Avoid:** hiding prices behind CTAs (violates our [homepage-conversion](../.claude/skills/homepage-conversion-review/SKILL.md) honesty rule); vanity social-proof density; effect-maximalism; **no asset/code reuse** (restrictive license).
+**Avoid:** hiding prices behind CTAs (violates our [homepage-conversion](../.claude/skills/responsive-review/SKILL.md) honesty rule); vanity social-proof density; effect-maximalism; **no asset/code reuse** (restrictive license).
 
 ---
 
@@ -101,7 +101,7 @@ Concrete schema examples live in [ADR-0017](adrs/0017-shadcn-primitive-foundatio
 | Aceternity (paid) | Proprietary | ⚠️ ideas only | ❌ no marketplace derivatives. |
 | shadcn/ui | MIT | ✅ | ✅ (retain notice). |
 
-**Rule for this repo (binding):** Ideas, taxonomy, UX conventions, API shapes, and category structures are fair to learn from (not copyrightable). **Every component we ship is clean-room original**, built on our own motion utilities + MIT-licensed accessible primitives (Radix/shadcn). No competitor source is vendored. Enforced by [`dependency-review`](../.claude/skills/dependency-review/SKILL.md) and [`creative-component-authoring`](../.claude/skills/creative-component-authoring/SKILL.md).
+**Rule for this repo (binding):** Ideas, taxonomy, UX conventions, API shapes, and category structures are fair to learn from (not copyrightable). **Every component we ship is clean-room original**, built on our own motion utilities + MIT-licensed accessible primitives (Radix/shadcn). No competitor source is vendored. Enforced by [`dependency-review`](../.claude/skills/component-review/SKILL.md) and [`creative-component-authoring`](../.claude/skills/component-authoring/SKILL.md).
 
 ---
 

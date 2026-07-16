@@ -1,7 +1,7 @@
 # 36 — Premium creative-component strategy
 
 > **Type:** 🟢 Canonical for the signature catalog strategy, candidate scoring, slice selection, motion personalities, and creative budgets · **Last reviewed:** 2026-07-14
-> **Inputs:** competitive study [`docs/35`](35-react-bits-quality-study.md) · roadmap [`docs/37`](37-signature-component-roadmap.md) · gates: [`signature-component-conception`](../.claude/skills/signature-component-conception/SKILL.md), [`originality-review`](../.claude/skills/originality-review/SKILL.md), [`premium-visual-review`](../.claude/skills/premium-visual-review/SKILL.md), [`creative-performance-review`](../.claude/skills/creative-performance-review/SKILL.md).
+> **Inputs:** competitive study [`docs/35`](35-react-bits-quality-study.md) · roadmap [`docs/37`](37-signature-component-roadmap.md) · gates: [`signature-component-conception`](../.claude/skills/component-authoring/SKILL.md), [`originality-review`](../.claude/skills/protected-source-audit/SKILL.md), [`premium-visual-review`](../.claude/skills/responsive-review/SKILL.md), [`creative-performance-review`](../.claude/skills/component-review/SKILL.md).
 
 ## The corrected product goal
 
@@ -147,7 +147,7 @@ Shared vocabulary for all motion; tokens live in `@scope/tokens`, tuned per comp
 - 60fps desktop; **stable ≥ 50fps on mid-range mobile** (4× CPU throttle proxy).
 - JS ≤ 8 KB min+gz (CSS/SVG/Motion items); ≤ 30 KB incl. deps for canvas items (needs brief sign-off).
 - Zero work offscreen/hidden/reduced-static · bounded DOM & listeners · rAF-batched pointer state via CSS vars (no per-move React state) · compositor-only properties · no heavy blur/shadow stacks on animated elements · DPR cap ≤ 2 on any canvas.
-- Engine ladder: CSS → SVG → Motion/WAAPI → Canvas 2D → isolated lazy WebGL (last resort, [`creative-performance-review`](../.claude/skills/creative-performance-review/SKILL.md)). No global Three.js/shader framework — ever — for a single background.
+- Engine ladder: CSS → SVG → Motion/WAAPI → Canvas 2D → isolated lazy WebGL (last resort, [`creative-performance-review`](../.claude/skills/component-review/SKILL.md)). No global Three.js/shader framework — ever — for a single background.
 
 ## API & customization principles
 
@@ -155,7 +155,7 @@ Default API = semantic concepts (`intensity`, `density`, `depth`, `direction`, `
 
 ## Signature evidence requirements
 
-Per component, persisted in `artifacts/signature-components/<slug>/`: `concept-{a,b,c}.png`, `selected-concept.md`, `desktop-{dark,light}.png`, `tablet.png`, `mobile.png`, `touch.webm`, `keyboard.webm`, `normal-interaction.webm`, `rapid-interaction.webm`, `reduced-motion.webm`, `forced-colors.png`, `zoom-200.png`, `performance.json`, `bundle-report.json`, `originality-review.md`, `independent-review.md`. Static screenshots alone never approve motion. Approval thresholds: [`premium-visual-review`](../.claude/skills/premium-visual-review/SKILL.md) + [`docs/32`](32-component-quality-tracker.md).
+Per component, persisted in `artifacts/signature-components/<slug>/`: `concept-{a,b,c}.png`, `selected-concept.md`, `desktop-{dark,light}.png`, `tablet.png`, `mobile.png`, `touch.webm`, `keyboard.webm`, `normal-interaction.webm`, `rapid-interaction.webm`, `reduced-motion.webm`, `forced-colors.png`, `zoom-200.png`, `performance.json`, `bundle-report.json`, `originality-review.md`, `independent-review.md`. Static screenshots alone never approve motion. Approval thresholds: [`premium-visual-review`](../.claude/skills/responsive-review/SKILL.md) + [`docs/32`](32-component-quality-tracker.md).
 
 ## What "premium" means here (and does not)
 

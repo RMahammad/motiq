@@ -2,7 +2,7 @@
 
 > **Type:** 🟢 Canonical for test layers & required CI checks · **Implementation status:** 🟡 In progress — Vitest+RTL across `Reveal`/`InView`/`Stagger`: **27 passing** (unit + SSR + reduced-motion + **axe a11y**). Import-boundary lint, `publint` (exports), `size-limit` (budgets), and the packed-tarball consumer fixture all run in `.github/workflows/ci.yml`. Storybook/Playwright visual+mobile and `attw` (blocked, Node-24 crash) still open · **Last reviewed:** 2026-07-14
 > **Owns:** the test pyramid, the fixture rule, the required CI checks.
-> **Related:** [`13-performance-standard.md`](13-performance-standard.md) · [`12-accessibility-standard.md`](12-accessibility-standard.md) · [`18-release-process.md`](18-release-process.md) · [`testing-review` skill](../.claude/skills/testing-review/SKILL.md)
+> **Related:** [`13-performance-standard.md`](13-performance-standard.md) · [`12-accessibility-standard.md`](12-accessibility-standard.md) · [`18-release-process.md`](18-release-process.md) · [`testing-review` skill](../.claude/skills/component-review/SKILL.md)
 > Storybook 9 / Vitest facts verified 2026-07-14 — see [`05`](05-dependency-decisions.md#sources).
 
 ## Non-negotiable rule
@@ -50,7 +50,7 @@ A change is not mergeable until the checks relevant to it pass. Release adds the
 
 ## Behavior coverage over line coverage
 
-Reviews (via [`testing-review`](../.claude/skills/testing-review/SKILL.md)) identify **missing behavior** — states, reduced-motion path, SSR, keyboard — not just line percentages. A component with 100% lines but no reduced-motion test is **not** done ([`25`](25-definition-of-done.md)).
+Reviews (via [`testing-review`](../.claude/skills/component-review/SKILL.md)) identify **missing behavior** — states, reduced-motion path, SSR, keyboard — not just line percentages. A component with 100% lines but no reduced-motion test is **not** done ([`25`](25-definition-of-done.md)).
 
 ## Fixtures
 

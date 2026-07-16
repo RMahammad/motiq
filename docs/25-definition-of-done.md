@@ -39,7 +39,7 @@
 - [ ] ⛔ Reduced-motion layout.
 - [ ] No unnecessary client boundary around static content.
 - [ ] Realistic Storybook examples (default/dark/custom-theme).
-- [ ] Performance review passed ([`performance-review`](../.claude/skills/performance-review/SKILL.md)).
+- [ ] Performance review passed ([`performance-review`](../.claude/skills/component-review/SKILL.md)).
 - [ ] Docs page; changeset.
 
 ## Remotion composition
@@ -78,4 +78,4 @@
 ## Package release
 
 - [ ] Full [release checklist](18-release-process.md#release-checklist) green, including ⛔ packed-tarball fixture install, ⛔ `"use client"` preserved, ⛔ export/type validation, ⛔ size budgets, provenance.
-- [ ] Go/no-go report produced ([`release-readiness`](../.claude/skills/release-readiness/SKILL.md)).
+- [ ] Go/no-go report produced ([`release-readiness`](../.claude/skills/registry-release/SKILL.md)).

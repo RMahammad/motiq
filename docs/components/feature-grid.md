@@ -1,7 +1,7 @@
 # FeatureGrid
 
 > **Status:** 🟡 In progress (spike + tests) · **Tier:** Premium · **Package:** `@scope/sections` · **Version introduced:** v0.0.0
-> Composes [`BentoGrid`](bento-grid.md) · Source: [`feature-grid.tsx`](../../packages/sections/src/feature-grid.tsx) · Tests: [`feature-grid.test.tsx`](../../packages/sections/src/feature-grid.test.tsx) · Skill: [`animated-section-authoring`](../../.claude/skills/animated-section-authoring/SKILL.md)
+> Composes [`BentoGrid`](bento-grid.md) · Source: [`feature-grid.tsx`](../../packages/sections/src/feature-grid.tsx) · Tests: [`feature-grid.test.tsx`](../../packages/sections/src/feature-grid.test.tsx) · Skill: [`animated-section-authoring`](../../.claude/skills/component-authoring/SKILL.md)
 
 A marketing "features" section: an optional heading block over a responsive [BentoGrid](bento-grid.md) of features. **Server-safe** (composes client leaves). Content is prop-driven — **no baked copy**.
 

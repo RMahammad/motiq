@@ -1,7 +1,7 @@
 # 39 — Catalog production board
 
 > **Type:** 🟢 Canonical for live component status (the breadth-first workflow) · **Last reviewed:** 2026-07-14
-> **Statuses:** `Idea` · `Building` · `Preview-ready` · `Registry-ready` · `Released` · `Experimental` · `Deprecated`. A component becomes **Released** when it passes the lightweight gate ([`rapid-component-release`](../.claude/skills/rapid-component-release/SKILL.md)); `Experimental` = shipped but rough/behind a flag. No subjective 10-dimension scoring here — that is reserved for homepage centerpieces and complex Pro creative pieces ([`docs/36`](36-premium-creative-component-strategy.md), [`premium-visual-review`](../.claude/skills/premium-visual-review/SKILL.md)).
+> **Statuses:** `Idea` · `Building` · `Preview-ready` · `Registry-ready` · `Released` · `Experimental` · `Deprecated`. A component becomes **Released** when it passes the lightweight gate ([`rapid-component-release`](../.claude/skills/registry-release/SKILL.md)); `Experimental` = shipped but rough/behind a flag. No subjective 10-dimension scoring here — that is reserved for homepage centerpieces and complex Pro creative pieces ([`docs/36`](36-premium-creative-component-strategy.md), [`premium-visual-review`](../.claude/skills/responsive-review/SKILL.md)).
 > Plan & waves: [`docs/38`](38-component-expansion-plan.md). Per-signature-piece deep review still lives in [`docs/32`](32-component-quality-tracker.md).
 
 ## Board

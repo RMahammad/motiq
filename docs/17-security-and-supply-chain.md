@@ -2,7 +2,7 @@
 
 > **Type:** 🟢 Canonical for supply-chain, secrets, and code-quality standards · **Implementation status:** 🔵 Planned · **Last reviewed:** 2026-07-14
 > **Owns:** secret handling, publishing security, strict-TS policy, coding conventions.
-> **Related:** [`16-commercial-packaging.md`](16-commercial-packaging.md) · [`18-release-process.md`](18-release-process.md) · [`05-dependency-decisions.md`](05-dependency-decisions.md) · [`dependency-review` skill](../.claude/skills/dependency-review/SKILL.md)
+> **Related:** [`16-commercial-packaging.md`](16-commercial-packaging.md) · [`18-release-process.md`](18-release-process.md) · [`05-dependency-decisions.md`](05-dependency-decisions.md) · [`dependency-review` skill](../.claude/skills/component-review/SKILL.md)
 
 ## Security & supply chain
 
@@ -11,7 +11,7 @@
 - **Client/server separation** — server-only code behind the `node` export condition; enforced by boundaries ([`03`](03-architecture.md)).
 - **Publishing** — least-privilege npm publish permissions; **2FA required**; npm **provenance** (`--provenance`) or current equivalent; signed releases where practical.
 - **CI permissions** — minimal scopes; publish tokens only in the release job.
-- **Dependency hygiene** — committed lockfile; Renovate/Dependabot; vulnerability response process; minimal runtime deps to reduce malicious-dependency surface ([`05`](05-dependency-decisions.md), [`dependency-review`](../.claude/skills/dependency-review/SKILL.md)).
+- **Dependency hygiene** — committed lockfile; Renovate/Dependabot; vulnerability response process; minimal runtime deps to reduce malicious-dependency surface ([`05`](05-dependency-decisions.md), [`dependency-review`](../.claude/skills/component-review/SKILL.md)).
 - **Source maps** — no secrets in maps; decide public vs private maps per package.
 - **No customer-data collection.** **Telemetry off by default**, opt-in only, disclosed.
 - **Build reproducibility** — pinned toolchain; deterministic builds.

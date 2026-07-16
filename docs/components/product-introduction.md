@@ -1,7 +1,7 @@
 # ProductIntroduction
 
 > **Status:** 🟡 In progress (spike + tests) · **Version introduced:** v0.0.0 (pre-release) · **Tier:** Premium · **Package:** `@scope/recipes`
-> **Composes:** [`MotionScene`/`MotionStep`](../adrs/0015-semantic-motion-api.md) · **Standards:** [API](../09-component-api-standard.md) · [A11y](../12-accessibility-standard.md) · [Perf](../13-performance-standard.md) · Skill: [`animated-section-authoring`](../../.claude/skills/animated-section-authoring/SKILL.md)
+> **Composes:** [`MotionScene`/`MotionStep`](../adrs/0015-semantic-motion-api.md) · **Standards:** [API](../09-component-api-standard.md) · [A11y](../12-accessibility-standard.md) · [Perf](../13-performance-standard.md) · Skill: [`animated-section-authoring`](../../.claude/skills/component-authoring/SKILL.md)
 > Source: [`packages/recipes/src/product-introduction.tsx`](../../packages/recipes/src/product-introduction.tsx) · Tests: [`.test`](../../packages/recipes/src/product-introduction.test.tsx)
 
 The first **recipe** — a complete, opinionated workflow, not a single effect ([`27`](../27-product-differentiation.md), [ADR-0013](../adrs/0013-product-moat.md)). A drop-in, choreographed product hero: you supply content through slots and the recipe assigns each part a **semantic role and intent**, then plays them as one coordinated [`MotionScene`](../adrs/0015-semantic-motion-api.md) (eyebrow → heading → subtitle → preview → actions). **No baked copy.** It carries `"use client"` (it re-exports client primitives) but is still a server-safe shell over a single client leaf.

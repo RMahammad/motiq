@@ -2,16 +2,16 @@
 
 > **Type:** 🟢 Canonical for the dependency table · **Implementation status:** 🔵 Planned (nothing installed) · **Last reviewed:** 2026-07-14
 > **Owns:** the single dependency table. **Do not** reproduce this table elsewhere — link here.
-> **Related:** [`06-animation-engine-decision.md`](06-animation-engine-decision.md) · [`04-package-map.md`](04-package-map.md) · [`dependency-review` skill](../.claude/skills/dependency-review/SKILL.md)
-> **[FACT]** = verified against a cited source on the verification date; **[REC]** = classification judgment. Verify versions again before install (see [`dependency-review`](../.claude/skills/dependency-review/SKILL.md)).
+> **Related:** [`06-animation-engine-decision.md`](06-animation-engine-decision.md) · [`04-package-map.md`](04-package-map.md) · [`dependency-review` skill](../.claude/skills/component-review/SKILL.md)
+> **[FACT]** = verified against a cited source on the verification date; **[REC]** = classification judgment. Verify versions again before install (see [`dependency-review`](../.claude/skills/component-review/SKILL.md)).
 
 ## Dependency classification rule
 
-Only `clsx`, `tailwind-merge`, and `class-variance-authority` ship as **runtime deps** of `@scope/react`. Everything else is a **peer**, **dev**, or quarantined into the Remotion line. Before adding any runtime dependency, answer the checklist in [`dependency-review`](../.claude/skills/dependency-review/SKILL.md) — most notably: *can this be maintained safely in <100 lines?*
+Only `clsx`, `tailwind-merge`, and `class-variance-authority` ship as **runtime deps** of `@scope/react`. Everything else is a **peer**, **dev**, or quarantined into the Remotion line. Before adding any runtime dependency, answer the checklist in [`dependency-review`](../.claude/skills/component-review/SKILL.md) — most notably: *can this be maintained safely in <100 lines?*
 
 ## Dependency review — `motion` (installed 2026-07-14)
 
-Run through [`dependency-review`](../.claude/skills/dependency-review/SKILL.md); result: **approve**.
+Run through [`dependency-review`](../.claude/skills/component-review/SKILL.md); result: **approve**.
 
 - **Exact package & version:** `motion@12.42.2` (the renamed `framer-motion` lineage; import surface `motion/react`).
 - **License:** **MIT** (verified in the installed `package.json`). Safe for a commercial product; no copyleft, no attribution burden.
@@ -20,7 +20,7 @@ Run through [`dependency-review`](../.claude/skills/dependency-review/SKILL.md);
 - **Bundle:** full ≈34 kB min+gzip; `sideEffects:false` → tree-shakeable; the `m` component + `LazyMotion` path drops to ≈4.6 kB. Per-registry-item, only items that import it pull it in — CSS-only items (SpotlightCard, backgrounds where CSS suffices) declare **no** motion dependency.
 - **SSR:** client-only; components carry `"use client"`. `useReducedMotion`/`whileInView` are safe under React 19 App Router (no hydration flash when `initial` is set or reduced-motion returns final state).
 - **Next.js compatibility:** works with Next 16 App Router / React 19; `apps/docs` is server-rendered with client islands for the animated leaves. No `transpilePackages` needed for `motion` itself (published ESM).
-- **Registry-item dependency behavior:** items that use it declare `"dependencies": ["motion"]` in `registry.json`; `shadcn add` installs `motion` into the consumer's project. Items that don't use it must not list it (verified by [`catalog-consistency-review`](../.claude/skills/catalog-consistency-review/SKILL.md)).
+- **Registry-item dependency behavior:** items that use it declare `"dependencies": ["motion"]` in `registry.json`; `shadcn add` installs `motion` into the consumer's project. Items that don't use it must not list it (verified by [`catalog-consistency-review`](../.claude/skills/catalog-integration/SKILL.md)).
 - **Why not in every item:** CSS transitions/keyframes are lighter and sufficient for simple entrances, shimmers, and pointer glows; adding Motion there would be dead weight in the consumer's bundle. Motion is reserved for meaningful layout/gesture/presence animation.
 - **Why Remotion stays excluded:** Remotion is a video renderer (node + heavy, separate license, [`08`](08-remotion-license-analysis.md)); it has no role in browser UI and remains forbidden in core UI packages by the [import firewall](03-architecture.md#forbidden-import-matrix). Motion ≠ Remotion.
 

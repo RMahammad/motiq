@@ -64,4 +64,4 @@ AI = ink + Azure, Cyan info · Developer console = graphite + Cobalt/Cyan (Emera
 - Tokens (default = Deep Ink + Azure + Coral): [`packages/tokens/styles.css`](../packages/tokens/styles.css). Requested semantic aliases (`--background`, `--surface-strong`, `--foreground-secondary`, `--accent`, `--secondary-accent`, `--signature`, `--success`, …) are defined in `:root` as `var()` pointers to the themed `--color-*` tokens.
 - Homepage sections + category tiles: `apps/docs/app/page.tsx`; hero showcase tints: `apps/docs/app/_components/hero-showcase.tsx`.
 - Evidence (dark + light, per section): `artifacts/homepage-redesign/ink/`.
-- Validate via [`visual-quality-gate`](../.claude/skills/visual-quality-gate/SKILL.md) at 320–1920 × light/dark before calling a change done.
+- Validate via [`visual-quality-gate`](../.claude/skills/responsive-review/SKILL.md) at 320–1920 × light/dark before calling a change done.

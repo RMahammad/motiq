@@ -57,7 +57,7 @@ The **version → changelog → build → pack → publint** half is **validated
 
 | # | Gate | Priority | Note |
 |---|---|---|---|
-| E1 | **Freeze the public API for 1.0** | 🔴 Blocker for **1.0** | Lock the component/prop surface; commit to migration guarantees + codemods thereafter ([`19`](19-support-and-deprecation.md), [`migration-authoring`](../.claude/skills/migration-authoring/SKILL.md)). |
+| E1 | **Freeze the public API for 1.0** | 🔴 Blocker for **1.0** | Lock the component/prop surface; commit to migration guarantees + codemods thereafter ([`19`](19-support-and-deprecation.md), [`migration-authoring`](../.claude/skills/registry-release/SKILL.md)). |
 | E2 | **Close ADR‑0009** — Storybook Vitest‑addon interaction/a11y/visual + Playwright cross‑browser/mobile in CI | 🟠 Pre‑1.0 | Needs a Playwright browser download in CI (deferred as heavier). [ADR‑0009](adrs/0009-testing-stack.md). |
 | E3 | **`attw` (are‑the‑types‑wrong)** | 🟢 Nice‑to‑have | Blocked by an upstream crash under Node 24; `publint` + fixture typechecks cover exports meanwhile ([ADR‑0007](adrs/0007-package-format.md)). |
 | E4 | **Finish MVP catalog stragglers** — `ImageReveal`, `LoadingButton` | 🟢 Pre‑1.0 | Small; same authoring loop. |

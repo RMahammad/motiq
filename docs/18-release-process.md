@@ -2,7 +2,7 @@
 
 > **Type:** 🟢 Canonical for the release pipeline & checklist · **Implementation status:** 🟡 In progress — the **version→changelog→build→pack→publint** half is validated (packages at **v0.1.0**, per-package CHANGELOGs generated, `scope-*-0.1.0.tgz` packs are publint-clean and pass the tarball-consumer fixture). **Publish is not yet wired:** packages are `"private": true` and need `private:false` + `publishConfig` (restricted access, private registry) + provenance in CI before an actual `changeset publish`. · **Last reviewed:** 2026-07-14
 > **Owns:** the release pipeline, versioning policy, release checklist.
-> **Related:** [`14-testing-strategy.md`](14-testing-strategy.md) · [`19-support-and-deprecation.md`](19-support-and-deprecation.md) · [`17-security-and-supply-chain.md`](17-security-and-supply-chain.md) · [`release-readiness` skill](../.claude/skills/release-readiness/SKILL.md)
+> **Related:** [`14-testing-strategy.md`](14-testing-strategy.md) · [`19-support-and-deprecation.md`](19-support-and-deprecation.md) · [`17-security-and-supply-chain.md`](17-security-and-supply-chain.md) · [`release-readiness` skill](../.claude/skills/registry-release/SKILL.md)
 
 ## Pipeline
 
@@ -19,7 +19,7 @@ graph LR
 
 ## Versioning policy
 
-- **Semver.** Breaking public-API change → **major** + migration guide + codemod where feasible ([`migration-authoring`](../.claude/skills/migration-authoring/SKILL.md)).
+- **Semver.** Breaking public-API change → **major** + migration guide + codemod where feasible ([`migration-authoring`](../.claude/skills/registry-release/SKILL.md)).
 - **Changesets** drive versioning and changelog; a changeset is **required** for any public-API change (CI-checked, [`14`](14-testing-strategy.md)).
 - Peer-dependency range bumps are documented in the changelog.
 - Security releases are fast-tracked on supported majors ([`19`](19-support-and-deprecation.md)).
@@ -27,7 +27,7 @@ graph LR
 
 ## Release checklist
 
-Driven by [`release-readiness`](../.claude/skills/release-readiness/SKILL.md) and [`templates/release-checklist.md`](templates/release-checklist.md):
+Driven by [`release-readiness`](../.claude/skills/registry-release/SKILL.md) and [`templates/release-checklist.md`](templates/release-checklist.md):
 
 - [ ] All CI green (lint/boundaries, typecheck, unit/interaction, a11y, SSR/hydration).
 - [ ] Changeset consumed; CHANGELOG generated.

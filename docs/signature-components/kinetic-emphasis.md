@@ -140,7 +140,7 @@ The ownable idea: **emphasis-aware choreography with a persistent designed end s
 3. `play` modes work and are interruption-safe under rapid re-trigger.
 4. Both themes + forced-colors legible; emphasis distinguishable without color.
 5. Perf budget met (bundle + frame rate evidence persisted).
-6. Independent originality review ≤ Moderate; independent premium-visual-review meets [`premium-visual-review`](../../.claude/skills/premium-visual-review/SKILL.md) minimums.
+6. Independent originality review ≤ Moderate; independent premium-visual-review meets [`premium-visual-review`](../../.claude/skills/responsive-review/SKILL.md) minimums.
 7. Unit + a11y (axe) + reduced-motion tests; clean-fixture install passes.
 
 ---

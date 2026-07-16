@@ -41,18 +41,18 @@
 |---|---|
 | [`repository-orientation`](../.claude/skills/repository-orientation/SKILL.md) | orient before cross-cutting change |
 | [`documentation-maintenance`](../.claude/skills/documentation-maintenance/SKILL.md) | keep docs/ADRs in sync after any change |
-| [`design-system-consistency`](../.claude/skills/design-system-consistency/SKILL.md) | visual/token changes |
+| [`design-system-consistency`](../.claude/skills/component-review/SKILL.md) | visual/token changes |
 | [`component-authoring`](../.claude/skills/component-authoring/SKILL.md) | new/changed interactive component |
-| [`motion-primitive-authoring`](../.claude/skills/motion-primitive-authoring/SKILL.md) | low-level motion primitive |
-| [`animated-section-authoring`](../.claude/skills/animated-section-authoring/SKILL.md) | marketing section |
-| [`api-consistency-review`](../.claude/skills/api-consistency-review/SKILL.md) | any public API change (read-only) |
+| [`motion-primitive-authoring`](../.claude/skills/component-authoring/SKILL.md) | low-level motion primitive |
+| [`animated-section-authoring`](../.claude/skills/component-authoring/SKILL.md) | marketing section |
+| [`api-consistency-review`](../.claude/skills/component-review/SKILL.md) | any public API change (read-only) |
 | [`accessibility-review`](../.claude/skills/accessibility-review/SKILL.md) | before completing an interactive component |
-| [`performance-review`](../.claude/skills/performance-review/SKILL.md) | effects/scroll/sections/release candidates |
-| [`testing-review`](../.claude/skills/testing-review/SKILL.md) | test completeness |
-| [`dependency-review`](../.claude/skills/dependency-review/SKILL.md) | add/replace a dependency |
+| [`performance-review`](../.claude/skills/component-review/SKILL.md) | effects/scroll/sections/release candidates |
+| [`testing-review`](../.claude/skills/component-review/SKILL.md) | test completeness |
+| [`dependency-review`](../.claude/skills/component-review/SKILL.md) | add/replace a dependency |
 | [`remotion-composition-authoring`](../.claude/skills/remotion-composition-authoring/SKILL.md) | Remotion templates |
-| [`release-readiness`](../.claude/skills/release-readiness/SKILL.md) | releases |
-| [`migration-authoring`](../.claude/skills/migration-authoring/SKILL.md) | breaking changes |
+| [`release-readiness`](../.claude/skills/registry-release/SKILL.md) | releases |
+| [`migration-authoring`](../.claude/skills/registry-release/SKILL.md) | breaking changes |
 
 ## How documentation synchronization works
 

@@ -30,7 +30,7 @@ Theming must work without forking component source; motion timing must be consis
 - A token generator to maintain; discipline needed to avoid one-off values.
 
 ## Risks and mitigations
-- One-off values creeping in → review via [`design-system-consistency`](../../.claude/skills/design-system-consistency/SKILL.md).
+- One-off values creeping in → review via [`design-system-consistency`](../../.claude/skills/component-review/SKILL.md).
 - Too many themes → cap at 2 shipped ([`../22`](../22-risk-register.md)).
 
 ## Validation

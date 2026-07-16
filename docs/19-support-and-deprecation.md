@@ -2,7 +2,7 @@
 
 > **Type:** 🟢 Canonical for support & deprecation policy · **Implementation status:** 🔵 Planned (policy draft; some items are business decisions) · **Last reviewed:** 2026-07-14
 > **Owns:** supported-version policy, deprecation policy, support tiers, customer communication.
-> **Related:** [`18-release-process.md`](18-release-process.md) · [`16-commercial-packaging.md`](16-commercial-packaging.md) · [`01-product-strategy.md`](01-product-strategy.md) · [`migration-authoring` skill](../.claude/skills/migration-authoring/SKILL.md)
+> **Related:** [`18-release-process.md`](18-release-process.md) · [`16-commercial-packaging.md`](16-commercial-packaging.md) · [`01-product-strategy.md`](01-product-strategy.md) · [`migration-authoring` skill](../.claude/skills/registry-release/SKILL.md)
 > ⚠️ Commercial support/SLA terms are business decisions — confirm before publishing customer-facing promises. Several items below are [open questions](23-open-questions.md).
 
 ## Supported-version policy (draft)

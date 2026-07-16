@@ -2,7 +2,7 @@
 
 > **Type:** 🟢 Canonical for the token system · **Implementation status:** 🟡 In progress — `@scope/tokens` ships motion tokens (CSS vars + typed constants) **and** semantic visual tokens (`--color-*`, `--space-*`, `--radius-*`, `--shadow-*`, `--font-sans`) with a `[data-theme="dark"]` / `.dark` override. Intensity modes + a single CSS↔TS generator still Planned · **Last reviewed:** 2026-07-14
 > **Owns:** token categories, CSS-variable naming, TS representation, motion-intensity modes, deprecation policy.
-> **Related:** [`11-tailwind-strategy.md`](11-tailwind-strategy.md) (how tokens reach Tailwind) · [`09-component-api-standard.md`](09-component-api-standard.md) · [ADR-0012](adrs/0012-design-token-contract.md) · [`design-system-consistency` skill](../.claude/skills/design-system-consistency/SKILL.md)
+> **Related:** [`11-tailwind-strategy.md`](11-tailwind-strategy.md) (how tokens reach Tailwind) · [`09-component-api-standard.md`](09-component-api-standard.md) · [ADR-0012](adrs/0012-design-token-contract.md) · [`design-system-consistency` skill](../.claude/skills/component-review/SKILL.md)
 
 ## Token categories
 
@@ -69,7 +69,7 @@ Selectable via `MotionProvider` / `data-motion-intensity`:
 
 ## Dark mode & themes
 
-Dark mode and additional themes are **token overrides only** (`data-theme`/`.dark` + CSS var values). Components never branch on theme. Dark mode is **not** a naive color inversion — contrast must be re-checked per theme (see the [`design-system-consistency`](../.claude/skills/design-system-consistency/SKILL.md) skill). Keep shipped themes to a small number (2) to bound test/visual-regression cost ([`22`](22-risk-register.md)).
+Dark mode and additional themes are **token overrides only** (`data-theme`/`.dark` + CSS var values). Components never branch on theme. Dark mode is **not** a naive color inversion — contrast must be re-checked per theme (see the [`design-system-consistency`](../.claude/skills/component-review/SKILL.md) skill). Keep shipped themes to a small number (2) to bound test/visual-regression cost ([`22`](22-risk-register.md)).
 
 ## Theme extension policy
 
@@ -78,9 +78,9 @@ Consumers extend by overriding CSS variables (and, for Tailwind users, the prese
 ## Token deprecation policy
 
 - Deprecate a token by marking it in `@scope/tokens` with a `@deprecated` JSDoc + a replacement pointer, keeping it functional for one major version.
-- Removal is a **breaking change** → changeset + migration guide ([`migration-authoring`](../.claude/skills/migration-authoring/SKILL.md), [ADR-0012](adrs/0012-design-token-contract.md)).
+- Removal is a **breaking change** → changeset + migration guide ([`migration-authoring`](../.claude/skills/registry-release/SKILL.md), [ADR-0012](adrs/0012-design-token-contract.md)).
 - Never rename a shared token silently.
 
 ## Rule against one-off values
 
-No arbitrary hex colors, radii, shadows, spacings, durations, or easings when a semantic token exists. Never create a token named after a single component when the concept is reusable. Never mutate a shared token to fix one component. Enforced in review by [`design-system-consistency`](../.claude/skills/design-system-consistency/SKILL.md).
+No arbitrary hex colors, radii, shadows, spacings, durations, or easings when a semantic token exists. Never create a token named after a single component when the concept is reusable. Never mutate a shared token to fix one component. Enforced in review by [`design-system-consistency`](../.claude/skills/component-review/SKILL.md).

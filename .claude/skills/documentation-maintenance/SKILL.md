@@ -56,7 +56,7 @@ This skill **is** the documentation update. Always finish by listing changed fil
 
 ## Stop conditions
 - If two documents both claim to be canonical for the same topic, stop and resolve ownership first (pick one; make the other link to it).
-- If a version/license claim can't be sourced, stop and verify (hand to [`dependency-review`](../dependency-review/SKILL.md)).
+- If a version/license claim can't be sourced, stop and verify (hand to [`dependency-review`](../component-review/SKILL.md)).
 
 ## Prohibited actions
 - Do not duplicate canonical content across files.

@@ -1,6 +1,6 @@
 # Migration guide — vX → vY
 
-> Used by the [`migration-authoring`](../../.claude/skills/migration-authoring/SKILL.md) skill. One guide per breaking major.
+> Used by the [`migration-authoring`](../../.claude/skills/registry-release/SKILL.md) skill. One guide per breaking major.
 
 ## Summary
 What changed and why (link the ADR).

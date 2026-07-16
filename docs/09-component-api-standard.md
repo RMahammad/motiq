@@ -2,7 +2,7 @@
 
 > **Type:** 🟢 Canonical component-authoring contract · **Implementation status:** 🔵 Planned · **Last reviewed:** 2026-07-14
 > **Owns:** the three API levels, the universal prop contract, naming conventions, and the reference implementations.
-> **Related:** [`10-design-tokens.md`](10-design-tokens.md) · [`11-tailwind-strategy.md`](11-tailwind-strategy.md) · [`12-accessibility-standard.md`](12-accessibility-standard.md) · [`component-authoring` skill](../.claude/skills/component-authoring/SKILL.md) · [`api-consistency-review` skill](../.claude/skills/api-consistency-review/SKILL.md)
+> **Related:** [`10-design-tokens.md`](10-design-tokens.md) · [`11-tailwind-strategy.md`](11-tailwind-strategy.md) · [`12-accessibility-standard.md`](12-accessibility-standard.md) · [`component-authoring` skill](../.claude/skills/component-authoring/SKILL.md) · [`api-consistency-review` skill](../.claude/skills/component-review/SKILL.md)
 
 ## Three API levels
 

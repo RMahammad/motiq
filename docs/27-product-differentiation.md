@@ -17,7 +17,7 @@ Not "the largest catalog", not an effect‑per‑card gallery chasing component 
 
 ## The standard workflow (how every component is built)
 
-Every catalog item follows the same pipeline — this consistency *is* part of the value ([`animated-shadcn-authoring`](../.claude/skills/animated-shadcn-authoring/SKILL.md), [`creative-component-authoring`](../.claude/skills/creative-component-authoring/SKILL.md)):
+Every catalog item follows the same pipeline — this consistency *is* part of the value ([`animated-shadcn-authoring`](../.claude/skills/component-authoring/SKILL.md), [`creative-component-authoring`](../.claude/skills/component-authoring/SKILL.md)):
 
 1. **Start from a reliable primitive** — an accessible shadcn/Radix primitive (Radix is our sole primitive foundation, [ADR-0017](adrs/0017-shadcn-primitive-foundation.md)), or an original creative base for text/background effects.
 2. **Preserve accessibility & semantics** — keyboard operation, focus management, ARIA roles/state, and composition (`asChild`, ref‑forwarding) survive the animation layer. Where a motion technique forces a tradeoff, we **document it honestly** ([`31`](31-competitive-product-review.md) §1).
@@ -45,7 +45,7 @@ Every component page *renders* the proof: **accessibility & keyboard behavior, r
 Because every interactive component wraps an accessible Radix primitive ([ADR-0017](adrs/0017-shadcn-primitive-foundation.md)), it inherits correct roles, keyboard support, and focus management — and we keep them through the animation layer. Copying a free animated component usually means inheriting *none* of that ([`02`](02-market-analysis.md)).
 
 ### 3. Clean‑room & license‑safe — **[MOAT, structural]**
-Ideas, taxonomy, and UX conventions are fair to learn from; **every component we ship is clean‑room original**, built on our own motion utilities + MIT‑licensed primitives (Radix/shadcn). We do **not** vendor competitor source. In particular, **React Bits (MIT + Commons Clause) and Aceternity / React Bits Pro code must never ship in this paid product** — their licenses target exactly our use case; Animate UI and shadcn are MIT and may be *adapted* (not copied) with notice retained. Binding rule and matrix: [`31`](31-competitive-product-review.md) §5. Enforced by [`dependency-review`](../.claude/skills/dependency-review/SKILL.md) and [`creative-component-authoring`](../.claude/skills/creative-component-authoring/SKILL.md).
+Ideas, taxonomy, and UX conventions are fair to learn from; **every component we ship is clean‑room original**, built on our own motion utilities + MIT‑licensed primitives (Radix/shadcn). We do **not** vendor competitor source. In particular, **React Bits (MIT + Commons Clause) and Aceternity / React Bits Pro code must never ship in this paid product** — their licenses target exactly our use case; Animate UI and shadcn are MIT and may be *adapted* (not copied) with notice retained. Binding rule and matrix: [`31`](31-competitive-product-review.md) §5. Enforced by [`dependency-review`](../.claude/skills/component-review/SKILL.md) and [`creative-component-authoring`](../.claude/skills/component-authoring/SKILL.md).
 
 ## Distribution & paid gating
 
@@ -87,4 +87,4 @@ These are strong ideas with real build cost and unproven launch‑stage demand. 
 
 ## Do not build everything at once
 
-Ship the **catalog** — a useful free set plus signature premium components, each with a large live preview, working controls, install/copy, and live production‑readiness panels. Layer blocks, backgrounds, and templates. **Defer** the semantic‑motion / choreography / inspector layer to a later release. Every addition passes [`product-differentiation-review`](../.claude/skills/product-differentiation-review/SKILL.md).
+Ship the **catalog** — a useful free set plus signature premium components, each with a large live preview, working controls, install/copy, and live production‑readiness panels. Layer blocks, backgrounds, and templates. **Defer** the semantic‑motion / choreography / inspector layer to a later release. Every addition passes [`product-differentiation-review`](../.claude/skills/catalog-integration/SKILL.md).

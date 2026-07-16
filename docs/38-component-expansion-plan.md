@@ -1,7 +1,7 @@
 # 38 — Component expansion plan (breadth-first catalog)
 
 > **Type:** 🟢 Canonical for the catalog target, waves, and candidate backlog · **Last reviewed:** 2026-07-14
-> **Operating model:** breadth + originality + practical usefulness + rapid growth on a **lightweight** production baseline ([`rapid-component-release`](../.claude/skills/rapid-component-release/SKILL.md)). Production board: [`docs/39`](39-catalog-production-board.md). Signature/centerpiece pieces still use the heavier gates ([`docs/36`](36-premium-creative-component-strategy.md)); everything else does not.
+> **Operating model:** breadth + originality + practical usefulness + rapid growth on a **lightweight** production baseline ([`rapid-component-release`](../.claude/skills/registry-release/SKILL.md)). Production board: [`docs/39`](39-catalog-production-board.md). Signature/centerpiece pieces still use the heavier gates ([`docs/36`](36-premium-creative-component-strategy.md)); everything else does not.
 
 ## The niche
 

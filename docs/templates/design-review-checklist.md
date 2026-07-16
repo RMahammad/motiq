@@ -1,6 +1,6 @@
 # Design review checklist
 
-> Canonical standards: [`10-design-tokens.md`](../10-design-tokens.md) · [`11-tailwind-strategy.md`](../11-tailwind-strategy.md) · [`09-component-api-standard.md`](../09-component-api-standard.md). Skill: [`design-system-consistency`](../../.claude/skills/design-system-consistency/SKILL.md).
+> Canonical standards: [`10-design-tokens.md`](../10-design-tokens.md) · [`11-tailwind-strategy.md`](../11-tailwind-strategy.md) · [`09-component-api-standard.md`](../09-component-api-standard.md). Skill: [`design-system-consistency`](../../.claude/skills/component-review/SKILL.md).
 
 ## Token consistency
 - [ ] Reuses existing **semantic tokens** (color, space, radius, border, shadow, typography)

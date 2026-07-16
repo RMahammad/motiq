@@ -87,7 +87,7 @@ Each new token: name · purpose · default · light value · **forced‑colors**
 
 ## Design‑quality anti‑patterns (reject unless documented)
 
-Enforced by [`visual-quality-gate`](../.claude/skills/visual-quality-gate/SKILL.md). Reject:
+Enforced by [`visual-quality-gate`](../.claude/skills/responsive-review/SKILL.md). Reject:
 
 - Repeated three‑equal‑card rows · identical bordered cards for every content type.
 - Browser‑default‑looking buttons · excessive pill controls · random rounded rectangles.

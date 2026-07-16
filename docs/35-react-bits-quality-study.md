@@ -1,7 +1,7 @@
 # 35 — React Bits quality study (clean-room competitive research)
 
 > **Type:** 🟢 Canonical for reference-product research and the do-not-recreate lists · **Last reviewed:** 2026-07-14
-> **Method:** rendered-site + docs + repo-metadata research by independent research subagents. **No competitor source code was fetched into this repo, read for implementation, or copied.** Consumers: [`signature-component-conception`](../.claude/skills/signature-component-conception/SKILL.md), [`originality-review`](../.claude/skills/originality-review/SKILL.md), strategy [`docs/36`](36-premium-creative-component-strategy.md).
+> **Method:** rendered-site + docs + repo-metadata research by independent research subagents. **No competitor source code was fetched into this repo, read for implementation, or copied.** Consumers: [`signature-component-conception`](../.claude/skills/component-authoring/SKILL.md), [`originality-review`](../.claude/skills/protected-source-audit/SKILL.md), strategy [`docs/36`](36-premium-creative-component-strategy.md).
 
 ## 0. Licensing restrictions (read first — they bind everything below)
 
@@ -49,7 +49,7 @@ React Bits **Pro** adds ~100 premium components (Text 8 · **Backgrounds 45** ·
 |---|---|---|
 | Accessibility retrofitted, not designed-in | Stream of GitHub issues adding keyboard support to Dock, Carousel, CircularGallery, Folder, CardNav after release; no WCAG claim | WCAG 2.2 AA + keyboard/touch parity as a release requirement, with per-component evidence |
 | Reduced motion aspirational | Their materials describe consistent `prefers-reduced-motion` as *planned* | Reduced-motion behavior mandatory per component, tested |
-| Performance problems on record | Closed issues: "CPU at almost 100%" background, "Extreme GPU Overhead on Mobile (LightPillar)"; guidance warns vs >2–3 components per page | Per-component budgets, offscreen pausing, mobile targets ([`creative-performance-review`](../.claude/skills/creative-performance-review/SKILL.md)); components that compose |
+| Performance problems on record | Closed issues: "CPU at almost 100%" background, "Extreme GPU Overhead on Mobile (LightPillar)"; guidance warns vs >2–3 components per page | Per-component budgets, offscreen pausing, mobile targets ([`creative-performance-review`](../.claude/skills/component-review/SKILL.md)); components that compose |
 | No system coherence | 4 variants of standalone snippets; no shared tokens, no choreography, no theming | Semantic tokens, motion personalities, components designed to coexist |
 | No tests as a product guarantee | Not observable in repo/product claims | Unit + a11y + SSR + reduced-motion tests per item |
 | Docs depth: params/edge cases thin | Third-party review (PkgPulse) | Production-grade docs: states, limits, budgets |

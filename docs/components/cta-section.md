@@ -1,7 +1,7 @@
 # CTASection
 
 > **Status:** 🟡 In progress (spike + tests) · **Tier:** Premium · **Package:** `@scope/sections` · **Version introduced:** v0.0.0
-> Source: [`cta-section.tsx`](../../packages/sections/src/cta-section.tsx) · Tests: [`cta-section.test.tsx`](../../packages/sections/src/cta-section.test.tsx) · Skill: [`animated-section-authoring`](../../.claude/skills/animated-section-authoring/SKILL.md)
+> Source: [`cta-section.tsx`](../../packages/sections/src/cta-section.tsx) · Tests: [`cta-section.test.tsx`](../../packages/sections/src/cta-section.test.tsx) · Skill: [`animated-section-authoring`](../../.claude/skills/component-authoring/SKILL.md)
 
 A call-to-action band: title + subtitle + an actions slot. **Server-safe** (wraps content in [`Reveal`](reveal.md) as a client leaf when `animate`). Content is prop/slot-driven — **no baked copy**.
 

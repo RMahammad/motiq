@@ -14,7 +14,7 @@ Build the interactive stages as **lazy client islands inside otherwise server‑
 
 ## Decision drivers
 - Keep static content server‑rendered (perf, SSR) while allowing rich interaction ([`13`](../13-performance-standard.md)).
-- "No control unless it works" and "understandable with animation disabled" are hard requirements ([`interactive-demo-authoring`](../../.claude/skills/interactive-demo-authoring/SKILL.md)).
+- "No control unless it works" and "understandable with animation disabled" are hard requirements ([`interactive-demo-authoring`](../../.claude/skills/preview-authoring/SKILL.md)).
 
 ## Alternatives considered
 - **Whole page as a client component** — rejected (bundle/SSR regression; [`13`](../13-performance-standard.md)).

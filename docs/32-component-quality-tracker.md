@@ -1,7 +1,7 @@
 # 32 — Component quality tracker
 
 > **Type:** 🟢 Canonical for per-component sellability status · **Last reviewed:** 2026-07-14
-> **Gate:** [`component-sellability-review`](../.claude/skills/component-sellability-review/SKILL.md) · **Loop:** [`rendered-preview-iteration`](../.claude/skills/rendered-preview-iteration/SKILL.md) · **Screenshots:** `artifacts/component-reviews/<slug>/`
+> **Gate:** [`component-sellability-review`](../.claude/skills/component-review/SKILL.md) · **Loop:** [`rendered-preview-iteration`](../.claude/skills/preview-authoring/SKILL.md) · **Screenshots:** `artifacts/component-reviews/<slug>/`
 > **Statuses:** Draft · Functional · Visually reviewed · Production reviewed · **Sellable** · Needs redesign · Deferred.
 > **Rule:** No component is **Sellable** without persisted, reviewed screenshots. Free = same gate as Pro. Scores are A Product · B Visual · C Motion · D Originality · E A11y · F Responsive · G Perf · H API · I Showcase · J Production (minimums 8/8/8/7/9/8/8/8/8/9).
 
