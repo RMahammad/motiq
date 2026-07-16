@@ -10,7 +10,7 @@
 - **API sketch:** `environments`, `value`, `defaultValue`, `onValueChange`, `switching?`, `error?`, `onRetry?`, `requireProductionConfirmation?`, `recentIds?`, `favoriteIds?`, `groups?`, `renderEnvironment?`, `formatTimestamp?`.
 - **Accessibility:** appropriate combobox/listbox/menu/dialog semantics; keyboard nav; current value announced; disabled reason; production warning in text; reduced-motion; focus restoration; touch-friendly.
 - **Mobile:** trigger opens a full-width sheet/menu; targets ≥44px.
-- **Dependencies:** motion + `@motionkit/utils` + `@motionkit/primitives` (useControllableState, useAsyncStatus, getStatusMeta, statusVars, useReducedMotion). No new deps.
+- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives` (useControllableState, useAsyncStatus, getStatusMeta, statusVars, useReducedMotion). No new deps.
 - **Similarity concern:** avoid a generic combobox clone; differentiate via status/health + production guard + recents/favorites. Low.
 - **Tier:** Free.
 - **Release criteria:** rapid gate + controlled selection + production confirmation + disabled reason + error retry verified.

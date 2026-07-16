@@ -4,12 +4,12 @@
 // version resolves the customer from an authenticated session, never a URL). This
 // page walks an activated preview participant through: what the preview includes,
 // which packs exist, which features are unfinished, creating a registry token,
-// configuring components.json (with the ${MOTIONKIT_TOKEN} placeholder — NEVER a
+// configuring components.json (with the ${MOTIONSTACK_TOKEN} placeholder — NEVER a
 // real token), installing Free/Pro/block/pack items, rotating/revoking a token,
 // where to report bugs / request components, expiration, and the honest limits of
 // preview participation.
 //
-// SECRET-SAFE: every example uses the ${MOTIONKIT_TOKEN} placeholder. The only
+// SECRET-SAFE: every example uses the ${MOTIONSTACK_TOKEN} placeholder. The only
 // place a real token appears is the one-time reveal in the client token widget.
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -59,7 +59,7 @@ function componentsJsonSnippet(): string {
 
 function previewTermsApproved(): boolean {
   // The RUNTIME gate is the env var, not the config mirror (see product.config.json).
-  return process.env.MOTIONKIT_PREVIEW_TERMS_APPROVED === "1";
+  return process.env.MOTIONSTACK_PREVIEW_TERMS_APPROVED === "1";
 }
 
 function fmtDate(ms: number | null): string {

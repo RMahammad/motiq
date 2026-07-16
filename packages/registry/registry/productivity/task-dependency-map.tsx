@@ -47,7 +47,7 @@ import {
   useAnchoredPortal,
   statusVars,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */

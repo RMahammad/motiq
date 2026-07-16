@@ -21,97 +21,97 @@
       "@/lib/utils": [
         "registry/lib/utils.ts"
       ],
-      "@/lib/motionkit": [
+      "@/lib/motionstack": [
         "registry/lib/motion.ts"
       ],
-      "@/components/motionkit/ai-response-stream": [
+      "@/components/motionstack/ai-response-stream": [
         "registry/ai/ai-response-stream.tsx"
       ],
-      "@/components/motionkit/deployment-pipeline": [
+      "@/components/motionstack/deployment-pipeline": [
         "registry/developer-tools/deployment-pipeline.tsx"
       ],
-      "@/components/motionkit/live-presence-stack": [
+      "@/components/motionstack/live-presence-stack": [
         "registry/collaboration/live-presence-stack.tsx"
       ],
-      "@/components/motionkit/kpi-number-morph": [
+      "@/components/motionstack/kpi-number-morph": [
         "registry/data/kpi-number-morph.tsx"
       ],
-      "@/components/motionkit/tool-call-activity": [
+      "@/components/motionstack/tool-call-activity": [
         "registry/ai/tool-call-activity.tsx"
       ],
-      "@/components/motionkit/live-log-stream": [
+      "@/components/motionstack/live-log-stream": [
         "registry/developer-tools/live-log-stream.tsx"
       ],
-      "@/components/motionkit/activity-stream": [
+      "@/components/motionstack/activity-stream": [
         "registry/collaboration/activity-stream.tsx"
       ],
-      "@/components/motionkit/streaming-data-rows": [
+      "@/components/motionstack/streaming-data-rows": [
         "registry/data/streaming-data-rows.tsx"
       ],
-      "@/components/motionkit/luminous-topography": [
+      "@/components/motionstack/luminous-topography": [
         "registry/backgrounds/luminous-topography.tsx"
       ],
-      "@/components/motionkit/source-citation-rail": [
+      "@/components/motionstack/source-citation-rail": [
         "registry/ai/source-citation-rail.tsx"
       ],
-      "@/components/motionkit/api-request-inspector": [
+      "@/components/motionstack/api-request-inspector": [
         "registry/developer-tools/api-request-inspector.tsx"
       ],
-      "@/components/motionkit/approval-workflow": [
+      "@/components/motionstack/approval-workflow": [
         "registry/collaboration/approval-workflow.tsx"
       ],
-      "@/components/motionkit/filter-result-transition": [
+      "@/components/motionstack/filter-result-transition": [
         "registry/data/filter-result-transition.tsx"
       ],
-      "@/components/motionkit/swipe-action-row": [
+      "@/components/motionstack/swipe-action-row": [
         "registry/mobile/swipe-action-row.tsx"
       ],
-      "@/components/motionkit/agent-run-timeline": [
+      "@/components/motionstack/agent-run-timeline": [
         "registry/ai/agent-run-timeline.tsx"
       ],
-      "@/components/motionkit/environment-switcher": [
+      "@/components/motionstack/environment-switcher": [
         "registry/developer-tools/environment-switcher.tsx"
       ],
-      "@/components/motionkit/comment-thread": [
+      "@/components/motionstack/comment-thread": [
         "registry/collaboration/comment-thread.tsx"
       ],
-      "@/components/motionkit/data-refresh-state": [
+      "@/components/motionstack/data-refresh-state": [
         "registry/data/data-refresh-state.tsx"
       ],
-      "@/components/motionkit/mobile-filter-sheet": [
+      "@/components/motionstack/mobile-filter-sheet": [
         "registry/mobile/mobile-filter-sheet.tsx"
       ],
-      "@/components/motionkit/kinetic-emphasis": [
+      "@/components/motionstack/kinetic-emphasis": [
         "registry/text/kinetic-emphasis.tsx"
       ],
-      "@/components/motionkit/blur-text": [
+      "@/components/motionstack/blur-text": [
         "registry/text/blur-text.tsx"
       ],
-      "@/components/motionkit/spotlight-card": [
+      "@/components/motionstack/spotlight-card": [
         "registry/creative/spotlight-card.tsx"
       ],
-      "@/components/motionkit/animated-dialog": [
+      "@/components/motionstack/animated-dialog": [
         "registry/animated-shadcn/animated-dialog.tsx"
       ],
-      "@/components/motionkit/animated-tabs": [
+      "@/components/motionstack/animated-tabs": [
         "registry/animated-shadcn/animated-tabs.tsx"
       ],
-      "@/components/motionkit/animated-accordion": [
+      "@/components/motionstack/animated-accordion": [
         "registry/animated-shadcn/animated-accordion.tsx"
       ],
-      "@/components/motionkit/animated-button": [
+      "@/components/motionstack/animated-button": [
         "registry/animated-shadcn/animated-button.tsx"
       ],
-      "@/components/motionkit/rotating-text": [
+      "@/components/motionstack/rotating-text": [
         "registry/text/rotating-text.tsx"
       ],
-      "@/components/motionkit/animated-list": [
+      "@/components/motionstack/animated-list": [
         "registry/creative/animated-list.tsx"
       ],
-      "@/components/motionkit/animated-grid": [
+      "@/components/motionstack/animated-grid": [
         "registry/backgrounds/animated-grid.tsx"
       ],
-      "@/components/motionkit/animated-icons": [
+      "@/components/motionstack/animated-icons": [
         "registry/icons/animated-icons.tsx"
       ]
     }

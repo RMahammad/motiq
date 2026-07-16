@@ -9,7 +9,7 @@
 - **Accessibility:** level via label/icon/prefix not color alone; keyboard for search/filter/pause/copy/jump; preserve text selection; live region rate-limited.
 - **Performance:** bounded retained history (`maxEntries`), efficient insertion, visibility pause; document where to integrate virtualization (no virtualization dep by default).
 - **Mobile:** compact rows, horizontal scroll for long lines.
-- **Dependencies:** motion + `@motionkit/utils` + `@motionkit/primitives`. No new deps.
+- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives`. No new deps.
 - **Similarity concern:** generic log viewers exist; differentiate via follow/pause UX + filter/search + tokenized levels. Low.
 - **Tier:** Free.
 - **Release criteria:** as in the rapid gate (render, interactions, responsive, themes, reduced-motion, keyboard, typecheck, build, registry validate, clean-fixture, no errors, clean-room).

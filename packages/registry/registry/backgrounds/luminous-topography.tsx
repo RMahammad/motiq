@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, useVisibilityPause } from "@/lib/motionkit";
+import { useReducedMotion, useVisibilityPause } from "@/lib/motionstack";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */

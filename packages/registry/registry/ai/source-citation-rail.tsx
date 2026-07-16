@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence, type Transition } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, useCopy, useDisclosure, scrollIntoViewWithin, streamItemVariants } from "@/lib/motionkit";
+import { useReducedMotion, useCopy, useDisclosure, scrollIntoViewWithin, streamItemVariants } from "@/lib/motionstack";
 
 /**
  * SourceCitationRail — attributes an answer to its sources by keeping inline

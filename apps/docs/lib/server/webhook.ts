@@ -68,7 +68,7 @@ export interface WebhookEvent {
 
 // ---------------------------------------------------------------------------
 // Signature verification — HMAC-SHA256, constant-time compare. The STAGING path
-// signs the raw body with MOTIONKIT_WEBHOOK_SECRET; a real provider adapter can
+// signs the raw body with MOTIONSTACK_WEBHOOK_SECRET; a real provider adapter can
 // override this with its own scheme. Returns false on ANY mismatch or bad input.
 // ---------------------------------------------------------------------------
 export function verifyWebhook(rawBody: string, signature: string | null, secret: string | null): boolean {
@@ -134,7 +134,7 @@ export function withinTolerance(eventCreatedAt: number, nowMs: number, tolerance
 // replayed event id is never processed twice.
 // ---------------------------------------------------------------------------
 function dataDir(): string {
-  return process.env.MOTIONKIT_DATA_DIR ? resolve(process.env.MOTIONKIT_DATA_DIR) : resolve(process.cwd(), ".data");
+  return process.env.MOTIONSTACK_DATA_DIR ? resolve(process.env.MOTIONSTACK_DATA_DIR) : resolve(process.cwd(), ".data");
 }
 
 interface ProcessedRecord {

@@ -61,7 +61,7 @@ See §"Component bug audit" table below (populated during rendered review at 375
 | B5 | top nav | ≥md | 15 category links crammed + horizontally scrolling; hard to scan | **Major** | header enumerated every category | new `SiteNav`: Components/Explore▾/Packs/Access + Explore mega-menu (grouped, counts) + Search + CTA | **fixed** |
 | B6 | production build | — | `next build` failed prerendering `/_not-found` | **Critical (build)** | `SiteNav` used `useSearchParams()` in the root-layout header → static-prerender bailout | read `window.location.search` client-side instead | **fixed** (build 74/74) |
 | B7 | /packs/[slug] | 320/390 | Page overflow (695px) | **Major** | `InstallCommand` inside a non-shrinking `grid sm:grid-cols-2` card | `min-w-0` on the pack grid card + text column | **fixed** (320 @320) |
-| B8 | /components/[slug] | 320 | Page overflow on 5 pages (message-delivery-states 536, +4 by 7–47px) | **Major** (worst) / Moderate | detail description + prose `<li>` bullets + "Installs to …" path contain long unbreakable slash/path tokens (`draft/sending/sent/…`, `components/motionkit/blocks/…`) that don't wrap | `break-words` on the description `<p>` and the `Section` wrapper | **fixed** (all 320 @320) |
+| B8 | /components/[slug] | 320 | Page overflow on 5 pages (message-delivery-states 536, +4 by 7–47px) | **Major** (worst) / Moderate | detail description + prose `<li>` bullets + "Installs to …" path contain long unbreakable slash/path tokens (`draft/sending/sent/…`, `components/motionstack/blocks/…`) that don't wrap | `break-words` on the description `<p>` and the `Section` wrapper | **fixed** (all 320 @320) |
 
 ## Component overflow audit (§20/§22)
 

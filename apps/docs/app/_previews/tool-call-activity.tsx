@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { ToolCallActivity, type ToolCall, type ToolCallStatus } from "@/registry/ai/tool-call-activity";
-import { useVisibilityPause } from "@/lib/motionkit";
+import { useVisibilityPause } from "@/lib/motionstack";
 
 /* -------------------------------------------------------------------------
  * DEMO ONLY. This preview drives clearly-fictional agent activity from local

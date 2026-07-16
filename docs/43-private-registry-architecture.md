@@ -48,20 +48,20 @@ The CLI supports per-registry headers via `components.json` `registries`:
 // components.json (customer side)
 {
   "registries": {
-    "@motionkit": {
-      "url": "https://motionkit.dev/api/registry/{name}",
-      "headers": { "Authorization": "Bearer ${MOTIONKIT_TOKEN}" }
+    "@motionstack": {
+      "url": "https://motionstack.dev/api/registry/{name}",
+      "headers": { "Authorization": "Bearer ${MOTIONSTACK_TOKEN}" }
     }
   }
 }
 ```
-Then `npx shadcn add @motionkit/tool-call-activity` sends the header. The token is read from the customer's environment — never committed, never in a URL.
+Then `npx shadcn add @motionstack/tool-call-activity` sends the header. The token is read from the customer's environment — never committed, never in a URL.
 
 ### 3–5. Verify token → verify entitlement → return JSON
 `canAccessRegistryItem(name, token)` resolves the customer, checks revocation/refund/expiry, then checks whether any entitlement that grants `name` is held. Entitlement→item mapping is derived from `packs.ts` (no duplication): `catalog.complete` grants everything; `pack.<slug>` grants that pack's four components + its block + the pack item; `component.<name>` grants a single item (only meaningful if individual sales are enabled).
 
 ### 6. Dependencies resolved under the same authorization
-The item's protected `registryDependencies` are re-checked with the same token and reported in `meta.resolvedDependencies`. The CLI fetches each dependency URL itself (same header), so each is independently authorized. Free dependencies (`@motionkit/utils`, `@motionkit/primitives`) resolve publicly.
+The item's protected `registryDependencies` are re-checked with the same token and reported in `meta.resolvedDependencies`. The CLI fetches each dependency URL itself (same header), so each is independently authorized. Free dependencies (`@motionstack/utils`, `@motionstack/primitives`) resolve publicly.
 
 ### 7. Access is logged
 Every decision (granted or denied, free or paid) is appended to the provider's audit log via `recordRegistryAccess`. The dev adapter keeps an in-memory ring buffer; production uses a durable store (open decision).

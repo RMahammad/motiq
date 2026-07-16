@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import {
   useReducedMotion,
   formatTimestamp as defaultFormatTimestamp,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /* --------------------------------------------------------------------------
  * ThreadExpansion — a NAVIGATION + EXPANSION surface for a deeply nested

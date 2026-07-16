@@ -11,7 +11,7 @@ import {
   useReducedMotion,
   streamItemVariants,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /**
  * ToolCallActivity — a live inspector for the tool/step activity of an AI agent

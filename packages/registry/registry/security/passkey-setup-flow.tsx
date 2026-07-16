@@ -9,7 +9,7 @@ import {
   useControllableState,
   statusVars,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /* --------------------------------------------------------------------------
  * PasskeySetupFlow — presentation + orchestration for an app-owned passkey

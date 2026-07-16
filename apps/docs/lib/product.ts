@@ -46,7 +46,7 @@ export interface CommerceConfig {
   /** Configurable preview entitlement duration in days. */
   previewEntitlementDurationDays?: number;
   /** Documentation mirror of the owner's preview-terms approval. The RUNTIME
-   *  gate uses env MOTIONKIT_PREVIEW_TERMS_APPROVED=1, not this flag. */
+   *  gate uses env MOTIONSTACK_PREVIEW_TERMS_APPROVED=1, not this flag. */
   previewTermsApproved?: boolean;
   individualComponentsEnabled: boolean;
   packsEnabled: boolean;

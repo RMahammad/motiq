@@ -13,7 +13,7 @@ import {
   statusVars,
   formatNumber,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /**
  * LiveLogStream — a production log viewer for developer surfaces (deploy/build

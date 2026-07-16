@@ -7,7 +7,7 @@
  * revoke → refund → verify-denied, and confirms no Pro source is public.
  *
  * Requires a running server (default http://localhost:3000) started with
- *   MOTIONKIT_ENABLE_DEV_ADMIN=1  (and launchMode NOT launched/public-beta).
+ *   MOTIONSTACK_ENABLE_DEV_ADMIN=1  (and launchMode NOT launched/public-beta).
  * Set STAGING_BASE to override the base URL.
  *
  * Writes a REDACTED report (token PREFIXES only, never full tokens) to
@@ -54,7 +54,7 @@ async function main() {
   // Preflight: dev admin must be enabled.
   const ping = await admin({ action: "reset" });
   if (ping.status !== 200) {
-    record("dev-admin enabled (MOTIONKIT_ENABLE_DEV_ADMIN=1)", false, `reset returned ${ping.status} ${JSON.stringify(ping.json)}`);
+    record("dev-admin enabled (MOTIONSTACK_ENABLE_DEV_ADMIN=1)", false, `reset returned ${ping.status} ${JSON.stringify(ping.json)}`);
     return finish();
   }
   record("reset durable stores", true, "");

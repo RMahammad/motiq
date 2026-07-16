@@ -101,7 +101,12 @@ export function AnimatedTabs({
         // can read the active value; consumer control is preserved via effect.
         value={value}
         onValueChange={handleValueChange}
-        className={cn("w-full", className)}
+        // Single-column grid: the List sits in row 1 and EVERY content panel is
+        // placed in row 2 col 1 — so all panels overlap in one cell instead of
+        // stacking as separate blocks. Only the active panel occupies layout, so
+        // the content sits directly below the tabs no matter which tab is active
+        // (no phantom gap from empty panels) and there is no vertical reflow.
+        className={cn("grid w-full grid-cols-[minmax(0,1fr)] content-start", className)}
         {...props}
       >
         {children}
@@ -117,6 +122,9 @@ export const AnimatedTabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
+      // Row 1 of the grid, kept at content width and left-aligned (a grid item
+      // would otherwise stretch to fill the column).
+      "[grid-area:1/1] justify-self-start",
       "inline-flex items-center gap-1 rounded-xl border border-[var(--color-border,#e4e7ec)]",
       "bg-[var(--color-surface,#fff)] p-1",
       className,
@@ -191,16 +199,23 @@ export const AnimatedTabsContent = React.forwardRef<
       value={value}
       // Keep the panel mounted so Radix retains it in the a11y tree; Motion
       // handles the visual enter/exit. `forceMount` + AnimatePresence lets the
-      // outgoing panel finish its exit before unmount.
+      // outgoing panel finish its exit before unmount. `relative` anchors the
+      // popped-out exiting panel (see mode="popLayout" below).
       forceMount
       className={cn(
-        "mt-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent,#695cff)]",
+        // Row 2, col 1 — every panel shares this one cell so they overlap
+        // instead of stacking as separate blocks.
+        "mt-3 [grid-area:2/1] min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent,#695cff)]",
         !isActive && "pointer-events-none",
         className,
       )}
       {...props}
     >
-      <AnimatePresence mode="wait" initial={false}>
+      {/* Panels overlap in the shared grid cell, so the outgoing and incoming
+          panels cross-fade in place — no vertical stacking. The row track sizes
+          to the taller of the two during the transition, so the exiting panel is
+          never clipped or spilled outside the container while it fades. */}
+      <AnimatePresence initial={false}>
         {isActive ? (
           <motion.div
             key={value}

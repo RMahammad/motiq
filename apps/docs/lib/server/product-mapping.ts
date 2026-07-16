@@ -118,7 +118,7 @@ export function resolveCheckoutItem(id: string): CheckoutItemDefinition | null {
 // unparseable value yields null, and a null result must never grant anything.
 // ---------------------------------------------------------------------------
 export function providerProductMap(): Record<string, string> {
-  const raw = process.env.MOTIONKIT_PROVIDER_PRODUCT_MAP;
+  const raw = process.env.MOTIONSTACK_PROVIDER_PRODUCT_MAP;
   if (!raw) return {};
   try {
     const parsed = JSON.parse(raw) as unknown;

@@ -10,7 +10,7 @@
 - **API sketch:** `leftActions?`, `rightActions?`, `threshold?`, `fullSwipe?`, `open?`, `onOpenChange?`, `onAction?`, `disabled?`, `group?`, `renderActionMenu?`, `confirmAction?`, `children`.
 - **Accessibility:** actions available without swiping (buttons on focus + overflow menu); descriptive labels; focus management after row removal; reduced-motion; destructive safeguards; no gesture-only functionality; ≥44px touch targets; SR announcement for completed actions.
 - **Mobile:** the primary surface — drag with resistance; full-swipe only when opted in.
-- **Dependencies:** motion (drag / useMotionValue / animate) + `@motionkit/utils` + `@motionkit/primitives` (useReducedMotion). No new deps.
+- **Dependencies:** motion (drag / useMotionValue / animate) + `@motionstack/utils` + `@motionstack/primitives` (useReducedMotion). No new deps.
 - **Similarity concern:** swipe rows are common; differentiate via keyboard/overflow parity + safety model + group behavior. Low–moderate.
 - **Tier:** Free.
 - **Release criteria:** rapid gate + threshold/open/close + keyboard actions + destructive safeguard + only-one-open group + reduced-motion verified.

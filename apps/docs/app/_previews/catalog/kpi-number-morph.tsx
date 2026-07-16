@@ -11,7 +11,7 @@ import { KpiNumberMorph } from "@/registry/data/kpi-number-morph";
  */
 export function KpiNumberMorphCatalogPreview() {
   return (
-    <div className="mx-auto grid w-full max-w-[460px] grid-cols-1 gap-3 sm:grid-cols-3">
+    <div className="mx-auto grid w-full max-w-[760px] grid-cols-1 gap-4 sm:grid-cols-3">
       <KpiNumberMorph
         label="Revenue"
         value={55240}
@@ -20,7 +20,7 @@ export function KpiNumberMorphCatalogPreview() {
         change={17.5}
         changeAsPercent
         changeLabel="7d"
-        className="min-w-0 p-4"
+        className="min-w-0 p-5"
       />
       <KpiNumberMorph
         label="Users"
@@ -29,7 +29,7 @@ export function KpiNumberMorphCatalogPreview() {
         change={5.2}
         changeAsPercent
         changeLabel="7d"
-        className="min-w-0 p-4"
+        className="min-w-0 p-5"
       />
       <KpiNumberMorph
         label="Conversion"
@@ -39,7 +39,7 @@ export function KpiNumberMorphCatalogPreview() {
         change={0.3}
         changeAsPercent
         changeLabel="7d"
-        className="min-w-0 p-4"
+        className="min-w-0 p-5"
       />
     </div>
   );

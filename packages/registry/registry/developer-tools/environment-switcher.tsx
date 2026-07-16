@@ -12,7 +12,7 @@ import {
   statusVars,
   formatTimestamp as defaultFormatTimestamp,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /**
  * EnvironmentSwitcher — a presentation + control surface for choosing the

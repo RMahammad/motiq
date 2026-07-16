@@ -38,7 +38,7 @@ All required evidence present in `artifacts/signature-components/kinetic-emphasi
 | 13 | Reduced motion | **7** | Motion is fully removed, instantly, content never hidden — but the delivered rest state is a *downgraded* design (accent lost, only underline + weight remain), contradicting the component's own contract ("reduced motion renders the FINAL designed state") and the concept's selection rationale. |
 | 14 | Performance | **9** | 120.2fps desktop / 118.8fps at 4× CPU throttle, zero frames >26ms (`performance.json`); transform/opacity/color only; IO-gated; interruption cancels in-flight animations; 2.26 KB gz component-only, within budget (`bundle-report.json`). Blemish: 134/262ms long tasks at sweep start under 4× throttle. |
 | 15 | Production usefulness | **9** | Real job (emphasis in marketing/editorial copy); the `<em>`-as-API is genuinely better ergonomics than every string/indices competitor; SSR-safe final state, controlled mode, `as` polymorphism, soft word cap with dev warning, tested, tiny. |
-| 16 | Showcase quality | **9** | Live preview dominates the page, every control is real, install command is brand-correct (`motionkit.dev/r/kinetic-emphasis.json`, no `@scope` placeholder), stage has working light/dark + reduce-motion toggles, two scales demonstrated. |
+| 16 | Showcase quality | **9** | Live preview dominates the page, every control is real, install command is brand-correct (`motionstack.dev/r/kinetic-emphasis.json`, no `@scope` placeholder), stage has working light/dark + reduce-motion toggles, two scales demonstrated. |
 
 ## Issues
 

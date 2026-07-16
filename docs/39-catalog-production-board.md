@@ -13,7 +13,7 @@
 | Deployment Pipeline | developer-tools | Free | medium | motion, primitives | Deployment block | **Released** | 2026-07-14 |
 | Live Presence Stack | collaboration | Free | medium | motion, primitives | Collaboration block | **Released** | 2026-07-14 |
 | KPI Number Morph | data-motion | Free | simple | motion, primitives | Dashboard block | **Released** | 2026-07-14 |
-| Motion primitives (`@motionkit/primitives`) | lib | Free | — | — | — | **Released** (internal foundation, incl. status model, timestamp, auto-follow, stream variants) | 2026-07-14 |
+| Motion primitives (`@motionstack/primitives`) | lib | Free | — | — | — | **Released** (internal foundation, incl. status model, timestamp, auto-follow, stream variants) | 2026-07-14 |
 | Tool Call Activity | ai | Pro | complex | motion, primitives | AI block | **Released** (batch 2) | 2026-07-14 |
 | Live Log Stream | developer-tools | Free | medium | motion, primitives | Deployment block | **Released** (batch 2) | 2026-07-14 |
 | Activity Stream | collaboration | Free | medium | motion, primitives | Collaboration block | **Released** (batch 2) | 2026-07-14 |
@@ -43,12 +43,12 @@
 
 | Pack | Block (Released) | Pack registry item | Pack page | Components (4/4) |
 |---|---|---|---|---|
-| AI Interface Pack | AI Agent Workspace | `@motionkit/ai-interface-pack` | `/packs/ai-interface` | AI Response Stream · Tool Call Activity · Source Citation Rail · Agent Run Timeline |
-| Developer Tools Pack | Deployment Command Center | `@motionkit/developer-tools-pack` | `/packs/developer-tools` | Deployment Pipeline · Live Log Stream · API Request Inspector · Environment Switcher |
-| Collaboration Pack | Collaborative Review Workspace | `@motionkit/collaboration-pack` | `/packs/collaboration` | Live Presence Stack · Activity Stream · Approval Workflow · Comment Thread |
-| Data Motion Pack | Live Operations Dashboard | `@motionkit/data-motion-pack` | `/packs/data-motion` | KPI Number Morph · Streaming Data Rows · Filter Result Transition · Data Refresh State |
+| AI Interface Pack | AI Agent Workspace | `@motionstack/ai-interface-pack` | `/packs/ai-interface` | AI Response Stream · Tool Call Activity · Source Citation Rail · Agent Run Timeline |
+| Developer Tools Pack | Deployment Command Center | `@motionstack/developer-tools-pack` | `/packs/developer-tools` | Deployment Pipeline · Live Log Stream · API Request Inspector · Environment Switcher |
+| Collaboration Pack | Collaborative Review Workspace | `@motionstack/collaboration-pack` | `/packs/collaboration` | Live Presence Stack · Activity Stream · Approval Workflow · Comment Thread |
+| Data Motion Pack | Live Operations Dashboard | `@motionstack/data-motion-pack` | `/packs/data-motion` | KPI Number Morph · Streaming Data Rows · Filter Result Transition · Data Refresh State |
 
-A pack registry item ships its block file + the block's four component `registryDependencies` (deduped on install); installing `@motionkit/<pack>-pack` delivers the complete block + all four components as editable source. Pack pages present the live block, the component list, Free/Pro breakdown, both install commands, and license/pricing placeholders (commercial model: [`docs/40`](40-commercial-packaging.md)). **Pack sales pages / pricing are not built** — placeholders only. Mobile Interaction Pack remains 2/4 (Swipe Action Row + Mobile Filter Sheet); its block is not built yet.
+A pack registry item ships its block file + the block's four component `registryDependencies` (deduped on install); installing `@motionstack/<pack>-pack` delivers the complete block + all four components as editable source. Pack pages present the live block, the component list, Free/Pro breakdown, both install commands, and license/pricing placeholders (commercial model: [`docs/40`](40-commercial-packaging.md)). **Pack sales pages / pricing are not built** — placeholders only. Mobile Interaction Pack remains 2/4 (Swipe Action Row + Mobile Filter Sheet); its block is not built yet.
 
 Everything else from [`docs/38`](38-component-expansion-plan.md) sits in **Backlog / Idea** until pulled into a batch.
 

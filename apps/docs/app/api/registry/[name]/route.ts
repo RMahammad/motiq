@@ -45,7 +45,7 @@ function protectedDepNames(regDeps: string[] | undefined): string[] {
 }
 
 // Development bypass of rate limiting only in explicit development mode.
-const RATE_LIMIT_ENABLED = commerce.launchMode !== "development" || process.env.MOTIONKIT_FORCE_RATELIMIT === "1";
+const RATE_LIMIT_ENABLED = commerce.launchMode !== "development" || process.env.MOTIONSTACK_FORCE_RATELIMIT === "1";
 
 export async function GET(req: Request, ctx: { params: Promise<{ name: string }> }) {
   const { name: raw } = await ctx.params;

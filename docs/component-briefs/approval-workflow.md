@@ -10,7 +10,7 @@
 - **API sketch:** `workflow`, `currentUserId?`, `onApprove?`, `onReject?`, `onRequestChanges?`, `onComment?`, `onCancel?`, `renderAttachment?`, `renderReviewer?`, `compactCompleted?`, `confirmReject?`.
 - **Accessibility:** status in text; stage semantics; keyboard-accessible actions; confirmation for destructive reject where configured; focus management after actions; comment labels; reduced-motion; state not color-only; app-supplied disabled reasons surfaced.
 - **Mobile:** stages stack; actions become a bottom action bar; reviewers wrap.
-- **Dependencies:** motion + `@motionkit/utils` + `@motionkit/primitives`. No new deps.
+- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives`. No new deps.
 - **Similarity concern:** approval UIs exist; differentiate via sequential+parallel model + current-user action state + decision history. Low–moderate.
 - **Tier:** Pro.
 - **Release criteria:** rapid gate + action callbacks + disabled-action behavior verified.

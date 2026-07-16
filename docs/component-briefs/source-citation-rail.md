@@ -8,7 +8,7 @@
 - **API sketch:** `sources: Source[]` ({id, index, title, domain?, url?, type?, excerpt?, author?, publishedAt?, retrievedAt?, relevance?, thumbnail?, favicon?, location?, verified?}), `activeSourceId?`, `onActiveSourceChange?`, `onOpenSource?`, `layout?`, `showExcerpts?`, `renderMarker?`, `renderSource?`, `formatDate?`, `mobileBehavior?`.
 - **Accessibility:** semantic `<a>` when a URL is provided + external-link labeling; keyboard source selection; focus-visible; meaningful names; active state not color-only; reduced-motion; the component never asserts verification (only shows an app-provided `verified` state, labeled as such).
 - **Mobile:** rail collapses to a stacked/bottom panel; markers remain tappable.
-- **Dependencies:** motion + `@motionkit/utils` + `@motionkit/primitives` (useCopy, useDisclosure, useReducedMotion). No new deps.
+- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives` (useCopy, useDisclosure, useReducedMotion). No new deps.
 - **Similarity concern:** citation UIs are generic; differentiate via marker↔rail sync + layout modes. Low.
 - **Tier:** Free.
 - **Release criteria:** rapid gate (render, interactions, responsive, themes, reduced-motion, keyboard, typecheck, build, registry validate, clean-fixture, no console/hydration errors, clean-room). No invented sources/verification/confidence.

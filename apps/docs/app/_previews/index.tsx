@@ -344,7 +344,7 @@ function AnimatedTabsPreview() {
           <AnimatedTabsTrigger value="analytics">Analytics</AnimatedTabsTrigger>
           <AnimatedTabsTrigger value="reports">Reports</AnimatedTabsTrigger>
         </AnimatedTabsList>
-        <AnimatedTabsContent value="overview" className="pt-5">
+        <AnimatedTabsContent value="overview">
           <div className="grid grid-cols-3 gap-3">
             {[
               ["Revenue", "$48.2k"],
@@ -358,7 +358,7 @@ function AnimatedTabsPreview() {
             ))}
           </div>
         </AnimatedTabsContent>
-        <AnimatedTabsContent value="analytics" className="pt-5">
+        <AnimatedTabsContent value="analytics">
           <div className="flex h-[72px] items-end gap-1.5">
             {bars.map((h, i) => (
               <div key={i} className="flex-1 rounded-t bg-[var(--color-accent)]" style={{ height: `${h}%`, opacity: 0.35 + (h / 100) * 0.65 }} />
@@ -366,7 +366,7 @@ function AnimatedTabsPreview() {
           </div>
           <p className="mt-2 text-[12px] text-[var(--color-muted)]">Sessions, last 7 days</p>
         </AnimatedTabsContent>
-        <AnimatedTabsContent value="reports" className="pt-5">
+        <AnimatedTabsContent value="reports">
           <ul className="space-y-2 text-[13.5px] text-[var(--color-fg)]">
             {["Q3 summary.pdf", "Cohort retention.csv", "Funnel breakdown.xlsx"].map((f) => (
               <li key={f} className="flex items-center justify-between rounded-lg border border-[var(--color-border)] px-3 py-2">

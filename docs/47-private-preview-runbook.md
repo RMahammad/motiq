@@ -24,7 +24,7 @@ Run a small, invite-only preview that (1) proves the entitlement-aware registry 
 - **Cohort limit:** `<CONFIG>` (default 10). Keep the first cohort small enough to support individually and to review every audit trail by hand.
 - Invites are issued manually. Each participant receives a **dev-fixture access token** (e.g. `dev-ai-pack`, `dev-collab-pack`, `dev-complete`) — tokens are obviously fake, never secrets, and scoped to the packs that participant should see.
 - Record per-invite: pseudonymous participant id, token id, granted entitlement, invite date, expiration date. Do **not** record marketing profiles or unnecessary personal data (see §Data collection).
-- Provide each participant the `components.json` `registries` snippet from [`docs/43`](43-private-registry-architecture.md) and the environment-variable name for their token (`MOTIONKIT_TOKEN`) — the token is never committed or placed in a URL.
+- Provide each participant the `components.json` `registries` snippet from [`docs/43`](43-private-registry-architecture.md) and the environment-variable name for their token (`MOTIONSTACK_TOKEN`) — the token is never committed or placed in a URL.
 
 ## Supported packs
 
@@ -117,4 +117,4 @@ Preview participants may be offered a first-cohort path at that point, but any s
 
 ## Phase status (2026-07-14)
 
-The private-preview-only phase decision is recorded in [docs/45 §Private-preview phase decision](45-paid-launch-decision-gate.md). **Before inviting any real cohort**, the owner must approve preview terms by setting `MOTIONKIT_PREVIEW_TERMS_APPROVED=1` (the `private-preview` launch-config gate blocks until then). Cohort size and preview entitlement duration are configurable via `commerce.previewCohortSize` (default 10) and `commerce.previewEntitlementDurationDays` (default 30). **No real users have been invited by this automated work** — see the final report's "Actual private-preview users invited" item.
+The private-preview-only phase decision is recorded in [docs/45 §Private-preview phase decision](45-paid-launch-decision-gate.md). **Before inviting any real cohort**, the owner must approve preview terms by setting `MOTIONSTACK_PREVIEW_TERMS_APPROVED=1` (the `private-preview` launch-config gate blocks until then). Cohort size and preview entitlement duration are configurable via `commerce.previewCohortSize` (default 10) and `commerce.previewEntitlementDurationDays` (default 30). **No real users have been invited by this automated work** — see the final report's "Actual private-preview users invited" item.

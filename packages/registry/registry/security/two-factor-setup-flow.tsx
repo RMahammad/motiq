@@ -10,7 +10,7 @@ import {
   useCopy,
   statusVars,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /* --------------------------------------------------------------------------
  * TwoFactorSetupFlow — presentation + orchestration for adding a SECOND

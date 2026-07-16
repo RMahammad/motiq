@@ -58,12 +58,12 @@ export function readAnyRegistry(name: string): RegistryDoc | null {
  * Whether the FULL editable source of an item may be rendered into the page.
  * Free → always. Pro/block/pack → only in local development (never in a
  * production build, so paid source is never baked into static output).
- * A dev author can force-lock with MOTIONKIT_DEV_LOCK=1 to preview the gated UX.
+ * A dev author can force-lock with MOTIONSTACK_DEV_LOCK=1 to preview the gated UX.
  */
 export function canRenderFullSource(access: "free" | "pro"): boolean {
   if (access === "free") return true;
   if (process.env.NODE_ENV === "production") return false;
-  return process.env.MOTIONKIT_DEV_LOCK !== "1";
+  return process.env.MOTIONSTACK_DEV_LOCK !== "1";
 }
 
 /** The non-source "preview policy" surface for a gated item: paths + deps only. */

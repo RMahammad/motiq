@@ -13,7 +13,7 @@ import {
   useAnimatedNumber,
   formatTimestamp as defaultFormatTimestamp,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /**
  * ApiRequestInspector — a presentation-only inspection surface for a single

@@ -11,7 +11,7 @@ import {
   formatNumber,
   statusVars,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /**
  * ProductVariantSelector — a presentation + orchestration surface for choosing a

@@ -7,7 +7,7 @@ import {
   StatusPill,
   type Column,
 } from "@/registry/data/streaming-data-rows";
-import { formatNumber, formatTimestamp } from "@/lib/motionkit";
+import { formatNumber, formatTimestamp } from "@/lib/motionstack";
 
 /**
  * Compact catalog adapter (docs/55 §7). A settled, sorted live table — no

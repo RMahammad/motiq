@@ -1,12 +1,12 @@
 {
-  "name": "motionkit",
+  "name": "motionstack",
   "count": 60,
   "items": [
     {
       "name": "utils",
       "type": "registry:lib",
       "title": "cn() utility",
-      "description": "Tailwind class-merge helper used by every Motionkit component.",
+      "description": "Tailwind class-merge helper used by every Motionstack component.",
       "category": "lib",
       "tier": "free",
       "kind": "component",
@@ -17,8 +17,8 @@
         "tailwind-merge"
       ],
       "registryDependencies": [],
-      "url": "https://motionkit.dev/r/utils.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/utils.json"
+      "url": "https://motionstack.dev/r/utils.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/utils.json"
     },
     {
       "name": "primitives",
@@ -32,8 +32,8 @@
       "keywords": [],
       "dependencies": [],
       "registryDependencies": [],
-      "url": "https://motionkit.dev/r/primitives.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/primitives.json"
+      "url": "https://motionstack.dev/r/primitives.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/primitives.json"
     },
     {
       "name": "ai-response-stream",
@@ -58,11 +58,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/ai-response-stream.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/ai-response-stream.json"
+      "url": "https://motionstack.dev/r/ai-response-stream.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/ai-response-stream.json"
     },
     {
       "name": "deployment-pipeline",
@@ -87,11 +87,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/deployment-pipeline.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/deployment-pipeline.json"
+      "url": "https://motionstack.dev/r/deployment-pipeline.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/deployment-pipeline.json"
     },
     {
       "name": "live-presence-stack",
@@ -114,11 +114,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/live-presence-stack.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/live-presence-stack.json"
+      "url": "https://motionstack.dev/r/live-presence-stack.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/live-presence-stack.json"
     },
     {
       "name": "kpi-number-morph",
@@ -139,11 +139,11 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/kpi-number-morph.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/kpi-number-morph.json"
+      "url": "https://motionstack.dev/r/kpi-number-morph.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/kpi-number-morph.json"
     },
     {
       "name": "tool-call-activity",
@@ -168,11 +168,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/tool-call-activity",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/tool-call-activity"
+      "url": "https://motionstack.dev/api/registry/tool-call-activity",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/tool-call-activity"
     },
     {
       "name": "live-log-stream",
@@ -197,11 +197,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/live-log-stream.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/live-log-stream.json"
+      "url": "https://motionstack.dev/r/live-log-stream.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/live-log-stream.json"
     },
     {
       "name": "activity-stream",
@@ -225,11 +225,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/activity-stream.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/activity-stream.json"
+      "url": "https://motionstack.dev/r/activity-stream.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/activity-stream.json"
     },
     {
       "name": "streaming-data-rows",
@@ -253,11 +253,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/streaming-data-rows",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/streaming-data-rows"
+      "url": "https://motionstack.dev/api/registry/streaming-data-rows",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/streaming-data-rows"
     },
     {
       "name": "luminous-topography",
@@ -278,11 +278,11 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/luminous-topography.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/luminous-topography.json"
+      "url": "https://motionstack.dev/r/luminous-topography.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/luminous-topography.json"
     },
     {
       "name": "source-citation-rail",
@@ -307,11 +307,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/source-citation-rail.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/source-citation-rail.json"
+      "url": "https://motionstack.dev/r/source-citation-rail.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/source-citation-rail.json"
     },
     {
       "name": "api-request-inspector",
@@ -337,11 +337,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/api-request-inspector",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/api-request-inspector"
+      "url": "https://motionstack.dev/api/registry/api-request-inspector",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/api-request-inspector"
     },
     {
       "name": "approval-workflow",
@@ -365,11 +365,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/approval-workflow",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/approval-workflow"
+      "url": "https://motionstack.dev/api/registry/approval-workflow",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/approval-workflow"
     },
     {
       "name": "filter-result-transition",
@@ -393,11 +393,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/filter-result-transition.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/filter-result-transition.json"
+      "url": "https://motionstack.dev/r/filter-result-transition.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/filter-result-transition.json"
     },
     {
       "name": "swipe-action-row",
@@ -421,11 +421,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/swipe-action-row.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/swipe-action-row.json"
+      "url": "https://motionstack.dev/r/swipe-action-row.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/swipe-action-row.json"
     },
     {
       "name": "agent-run-timeline",
@@ -451,11 +451,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/agent-run-timeline",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/agent-run-timeline"
+      "url": "https://motionstack.dev/api/registry/agent-run-timeline",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/agent-run-timeline"
     },
     {
       "name": "environment-switcher",
@@ -481,11 +481,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/environment-switcher.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/environment-switcher.json"
+      "url": "https://motionstack.dev/r/environment-switcher.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/environment-switcher.json"
     },
     {
       "name": "comment-thread",
@@ -509,11 +509,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/comment-thread",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/comment-thread"
+      "url": "https://motionstack.dev/api/registry/comment-thread",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/comment-thread"
     },
     {
       "name": "data-refresh-state",
@@ -538,11 +538,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/data-refresh-state.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/data-refresh-state.json"
+      "url": "https://motionstack.dev/r/data-refresh-state.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/data-refresh-state.json"
     },
     {
       "name": "mobile-filter-sheet",
@@ -568,11 +568,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/mobile-filter-sheet.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/mobile-filter-sheet.json"
+      "url": "https://motionstack.dev/r/mobile-filter-sheet.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/mobile-filter-sheet.json"
     },
     {
       "name": "prompt-composer",
@@ -598,11 +598,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/prompt-composer",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/prompt-composer"
+      "url": "https://motionstack.dev/api/registry/prompt-composer",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/prompt-composer"
     },
     {
       "name": "webhook-event-stream",
@@ -628,11 +628,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/webhook-event-stream.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/webhook-event-stream.json"
+      "url": "https://motionstack.dev/r/webhook-event-stream.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/webhook-event-stream.json"
     },
     {
       "name": "mention-suggestions",
@@ -657,11 +657,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/mention-suggestions.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/mention-suggestions.json"
+      "url": "https://motionstack.dev/r/mention-suggestions.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/mention-suggestions.json"
     },
     {
       "name": "data-quality-status",
@@ -686,11 +686,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/data-quality-status.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/data-quality-status.json"
+      "url": "https://motionstack.dev/r/data-quality-status.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/data-quality-status.json"
     },
     {
       "name": "keyboard-safe-form",
@@ -716,11 +716,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/keyboard-safe-form.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/keyboard-safe-form.json"
+      "url": "https://motionstack.dev/r/keyboard-safe-form.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/keyboard-safe-form.json"
     },
     {
       "name": "file-upload-pipeline",
@@ -745,11 +745,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/file-upload-pipeline.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/file-upload-pipeline.json"
+      "url": "https://motionstack.dev/r/file-upload-pipeline.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/file-upload-pipeline.json"
     },
     {
       "name": "product-variant-selector",
@@ -774,11 +774,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/product-variant-selector.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/product-variant-selector.json"
+      "url": "https://motionstack.dev/r/product-variant-selector.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/product-variant-selector.json"
     },
     {
       "name": "passkey-setup-flow",
@@ -803,11 +803,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/passkey-setup-flow.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/passkey-setup-flow.json"
+      "url": "https://motionstack.dev/r/passkey-setup-flow.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/passkey-setup-flow.json"
     },
     {
       "name": "message-delivery-states",
@@ -832,11 +832,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/message-delivery-states.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/message-delivery-states.json"
+      "url": "https://motionstack.dev/r/message-delivery-states.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/message-delivery-states.json"
     },
     {
       "name": "kanban-card-movement",
@@ -862,11 +862,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/kanban-card-movement",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/kanban-card-movement"
+      "url": "https://motionstack.dev/api/registry/kanban-card-movement",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/kanban-card-movement"
     },
     {
       "name": "multi-file-queue",
@@ -892,11 +892,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/multi-file-queue.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/multi-file-queue.json"
+      "url": "https://motionstack.dev/r/multi-file-queue.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/multi-file-queue.json"
     },
     {
       "name": "cart-item-transition",
@@ -922,11 +922,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/cart-item-transition.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/cart-item-transition.json"
+      "url": "https://motionstack.dev/r/cart-item-transition.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/cart-item-transition.json"
     },
     {
       "name": "two-factor-setup-flow",
@@ -951,11 +951,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/two-factor-setup-flow.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/two-factor-setup-flow.json"
+      "url": "https://motionstack.dev/r/two-factor-setup-flow.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/two-factor-setup-flow.json"
     },
     {
       "name": "typing-and-presence",
@@ -980,11 +980,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/typing-and-presence.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/typing-and-presence.json"
+      "url": "https://motionstack.dev/r/typing-and-presence.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/typing-and-presence.json"
     },
     {
       "name": "task-dependency-map",
@@ -1010,11 +1010,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/task-dependency-map",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/task-dependency-map"
+      "url": "https://motionstack.dev/api/registry/task-dependency-map",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/task-dependency-map"
     },
     {
       "name": "processing-timeline",
@@ -1039,11 +1039,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/processing-timeline",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/processing-timeline"
+      "url": "https://motionstack.dev/api/registry/processing-timeline",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/processing-timeline"
     },
     {
       "name": "checkout-progress",
@@ -1068,11 +1068,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/checkout-progress",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/checkout-progress"
+      "url": "https://motionstack.dev/api/registry/checkout-progress",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/checkout-progress"
     },
     {
       "name": "session-security-center",
@@ -1097,11 +1097,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/session-security-center",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/session-security-center"
+      "url": "https://motionstack.dev/api/registry/session-security-center",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/session-security-center"
     },
     {
       "name": "thread-expansion",
@@ -1126,11 +1126,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/r/thread-expansion.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/thread-expansion.json"
+      "url": "https://motionstack.dev/r/thread-expansion.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/thread-expansion.json"
     },
     {
       "name": "project-timeline",
@@ -1155,11 +1155,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/project-timeline",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/project-timeline"
+      "url": "https://motionstack.dev/api/registry/project-timeline",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/project-timeline"
     },
     {
       "name": "ai-agent-workspace",
@@ -1180,15 +1180,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/agent-run-timeline",
-        "@motionkit/tool-call-activity",
-        "@motionkit/ai-response-stream",
-        "@motionkit/source-citation-rail",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/agent-run-timeline",
+        "@motionstack/tool-call-activity",
+        "@motionstack/ai-response-stream",
+        "@motionstack/source-citation-rail",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/ai-agent-workspace",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/ai-agent-workspace"
+      "url": "https://motionstack.dev/api/registry/ai-agent-workspace",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/ai-agent-workspace"
     },
     {
       "name": "deployment-command-center",
@@ -1209,15 +1209,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/environment-switcher",
-        "@motionkit/deployment-pipeline",
-        "@motionkit/live-log-stream",
-        "@motionkit/api-request-inspector",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/environment-switcher",
+        "@motionstack/deployment-pipeline",
+        "@motionstack/live-log-stream",
+        "@motionstack/api-request-inspector",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/deployment-command-center",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/deployment-command-center"
+      "url": "https://motionstack.dev/api/registry/deployment-command-center",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/deployment-command-center"
     },
     {
       "name": "collaborative-review-workspace",
@@ -1238,15 +1238,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/live-presence-stack",
-        "@motionkit/approval-workflow",
-        "@motionkit/comment-thread",
-        "@motionkit/activity-stream",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/live-presence-stack",
+        "@motionstack/approval-workflow",
+        "@motionstack/comment-thread",
+        "@motionstack/activity-stream",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/collaborative-review-workspace",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/collaborative-review-workspace"
+      "url": "https://motionstack.dev/api/registry/collaborative-review-workspace",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/collaborative-review-workspace"
     },
     {
       "name": "live-operations-dashboard",
@@ -1267,15 +1267,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/kpi-number-morph",
-        "@motionkit/data-refresh-state",
-        "@motionkit/filter-result-transition",
-        "@motionkit/streaming-data-rows",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/kpi-number-morph",
+        "@motionstack/data-refresh-state",
+        "@motionstack/filter-result-transition",
+        "@motionstack/streaming-data-rows",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/live-operations-dashboard",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/live-operations-dashboard"
+      "url": "https://motionstack.dev/api/registry/live-operations-dashboard",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/live-operations-dashboard"
     },
     {
       "name": "ai-interface-pack",
@@ -1295,15 +1295,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/agent-run-timeline",
-        "@motionkit/tool-call-activity",
-        "@motionkit/ai-response-stream",
-        "@motionkit/source-citation-rail",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/agent-run-timeline",
+        "@motionstack/tool-call-activity",
+        "@motionstack/ai-response-stream",
+        "@motionstack/source-citation-rail",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/ai-interface-pack",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/ai-interface-pack"
+      "url": "https://motionstack.dev/api/registry/ai-interface-pack",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/ai-interface-pack"
     },
     {
       "name": "developer-tools-pack",
@@ -1323,15 +1323,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/environment-switcher",
-        "@motionkit/deployment-pipeline",
-        "@motionkit/live-log-stream",
-        "@motionkit/api-request-inspector",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/environment-switcher",
+        "@motionstack/deployment-pipeline",
+        "@motionstack/live-log-stream",
+        "@motionstack/api-request-inspector",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/developer-tools-pack",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/developer-tools-pack"
+      "url": "https://motionstack.dev/api/registry/developer-tools-pack",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/developer-tools-pack"
     },
     {
       "name": "collaboration-pack",
@@ -1351,15 +1351,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/live-presence-stack",
-        "@motionkit/approval-workflow",
-        "@motionkit/comment-thread",
-        "@motionkit/activity-stream",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/live-presence-stack",
+        "@motionstack/approval-workflow",
+        "@motionstack/comment-thread",
+        "@motionstack/activity-stream",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/collaboration-pack",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/collaboration-pack"
+      "url": "https://motionstack.dev/api/registry/collaboration-pack",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/collaboration-pack"
     },
     {
       "name": "data-motion-pack",
@@ -1379,15 +1379,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/kpi-number-morph",
-        "@motionkit/data-refresh-state",
-        "@motionkit/filter-result-transition",
-        "@motionkit/streaming-data-rows",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/kpi-number-morph",
+        "@motionstack/data-refresh-state",
+        "@motionstack/filter-result-transition",
+        "@motionstack/streaming-data-rows",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
-      "url": "https://motionkit.dev/api/registry/data-motion-pack",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/data-motion-pack"
+      "url": "https://motionstack.dev/api/registry/data-motion-pack",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/data-motion-pack"
     },
     {
       "name": "kinetic-emphasis",
@@ -1411,10 +1411,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
-      "url": "https://motionkit.dev/r/kinetic-emphasis.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/kinetic-emphasis.json"
+      "url": "https://motionstack.dev/r/kinetic-emphasis.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/kinetic-emphasis.json"
     },
     {
       "name": "blur-text",
@@ -1436,10 +1436,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
-      "url": "https://motionkit.dev/r/blur-text.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/blur-text.json"
+      "url": "https://motionstack.dev/r/blur-text.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/blur-text.json"
     },
     {
       "name": "spotlight-card",
@@ -1463,10 +1463,10 @@
         "tailwind-merge"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
-      "url": "https://motionkit.dev/api/registry/spotlight-card",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/spotlight-card"
+      "url": "https://motionstack.dev/api/registry/spotlight-card",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/spotlight-card"
     },
     {
       "name": "animated-dialog",
@@ -1489,10 +1489,10 @@
         "@radix-ui/react-dialog"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
-      "url": "https://motionkit.dev/r/animated-dialog.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/animated-dialog.json"
+      "url": "https://motionstack.dev/r/animated-dialog.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-dialog.json"
     },
     {
       "name": "animated-tabs",
@@ -1515,10 +1515,10 @@
         "@radix-ui/react-tabs"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
-      "url": "https://motionkit.dev/r/animated-tabs.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/animated-tabs.json"
+      "url": "https://motionstack.dev/r/animated-tabs.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-tabs.json"
     },
     {
       "name": "animated-accordion",
@@ -1541,10 +1541,10 @@
         "@radix-ui/react-accordion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
-      "url": "https://motionkit.dev/r/animated-accordion.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/animated-accordion.json"
+      "url": "https://motionstack.dev/r/animated-accordion.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-accordion.json"
     },
     {
       "name": "animated-button",
@@ -1566,10 +1566,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
-      "url": "https://motionkit.dev/r/animated-button.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/animated-button.json"
+      "url": "https://motionstack.dev/r/animated-button.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-button.json"
     },
     {
       "name": "rotating-text",
@@ -1591,10 +1591,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
-      "url": "https://motionkit.dev/r/rotating-text.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/rotating-text.json"
+      "url": "https://motionstack.dev/r/rotating-text.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/rotating-text.json"
     },
     {
       "name": "animated-list",
@@ -1616,10 +1616,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
-      "url": "https://motionkit.dev/api/registry/animated-list",
-      "install": "npx shadcn@latest add https://motionkit.dev/api/registry/animated-list"
+      "url": "https://motionstack.dev/api/registry/animated-list",
+      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/animated-list"
     },
     {
       "name": "animated-grid",
@@ -1642,10 +1642,10 @@
         "tailwind-merge"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
-      "url": "https://motionkit.dev/r/animated-grid.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/animated-grid.json"
+      "url": "https://motionstack.dev/r/animated-grid.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-grid.json"
     },
     {
       "name": "animated-icons",
@@ -1667,10 +1667,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
-      "url": "https://motionkit.dev/r/animated-icons.json",
-      "install": "npx shadcn@latest add https://motionkit.dev/r/animated-icons.json"
+      "url": "https://motionstack.dev/r/animated-icons.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-icons.json"
     }
   ]
 }

@@ -4,9 +4,9 @@
 // GATE (three layers, in order):
 //   1. In `launched` / `public-beta` this route 404s — it can never run in a paid
 //      production. (Same posture as app/api/dev-admin/route.ts.)
-//   2. The env var MOTIONKIT_ADMIN_SECRET MUST be set. If it is not, every request
+//   2. The env var MOTIONSTACK_ADMIN_SECRET MUST be set. If it is not, every request
 //      403s "admin-disabled" — the admin surface is OFF unless the owner enables it.
-//   3. Every request must carry `x-motionkit-admin-secret` header matching that
+//   3. Every request must carry `x-motionstack-admin-secret` header matching that
 //      secret (constant-time compare). A missing/wrong header 401s.
 //
 // This is the INTERIM protected internal route for driving the preview cohort
@@ -66,15 +66,15 @@ function adminGuard(req: Request): NextResponse | null {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
   // 2. The secret MUST be configured, or the admin surface stays off.
-  const secret = process.env.MOTIONKIT_ADMIN_SECRET;
+  const secret = process.env.MOTIONSTACK_ADMIN_SECRET;
   if (!secret) {
     return NextResponse.json(
-      { error: "admin-disabled", hint: "set MOTIONKIT_ADMIN_SECRET to enable preview-admin" },
+      { error: "admin-disabled", hint: "set MOTIONSTACK_ADMIN_SECRET to enable preview-admin" },
       { status: 403 },
     );
   }
   // 3. Header must match.
-  const provided = req.headers.get("x-motionkit-admin-secret") ?? "";
+  const provided = req.headers.get("x-motionstack-admin-secret") ?? "";
   if (!provided || !constantTimeEqual(provided, secret)) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }

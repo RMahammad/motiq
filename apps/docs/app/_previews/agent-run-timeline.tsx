@@ -8,7 +8,7 @@ import {
   type RunStep,
   type StepStatus,
 } from "@/registry/ai/agent-run-timeline";
-import { useVisibilityPause } from "@/lib/motionkit";
+import { useVisibilityPause } from "@/lib/motionstack";
 
 /* -------------------------------------------------------------------------
  * DEMO ONLY. This preview drives a clearly-fictional agent run from local

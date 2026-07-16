@@ -9,7 +9,7 @@ import {
   useAsyncStatus,
   statusVars,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /* --------------------------------------------------------------------------
  * CheckoutProgress — a presentation + orchestration surface for an app-owned,

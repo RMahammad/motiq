@@ -10,7 +10,7 @@
 - **Animation purpose:** sheet entrance, group expansion, selected-chip insertion, result-count change, apply/cancel transitions, clear-all. No long stagger across every option.
 - **API sketch:** `open`, `onOpenChange`, `groups`, `value`, `defaultValue`, `onValueChange`, `onApply`, `onCancel`, `onClear`, `resultCount?`, `loading?`, `error?`, `mode?` ("sheet"|"fullscreen"|"panel"), `confirmDiscard?`, `renderFilter?`, `renderFooter?`.
 - **Accessibility:** dialog/sheet semantics; focus trap + restoration; keyboard-accessible controls; group labels; selected state; result-count announcement; reduced-motion; ≥44px targets; sticky footer reachable at 200% zoom; no gesture-only close.
-- **Dependencies:** motion + `@motionkit/utils` + `@motionkit/primitives` (useControllableState, useAnimatedNumber, useReducedMotion, useDisclosure). No new deps.
+- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives` (useControllableState, useAnimatedNumber, useReducedMotion, useDisclosure). No new deps.
 - **Similarity concern:** filter sheets exist; differentiate via draft/apply model + group types + desktop fallback + focus/zoom safety. Low–moderate.
 - **Tier:** Free.
 - **Release criteria:** rapid gate + draft-vs-applied + apply + cancel-restore + clear-all + focus-trap + focus-restoration + result-count announcement + unsaved-change verified.

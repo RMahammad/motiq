@@ -6,7 +6,7 @@
 
 ## 0. What this product actually sells
 
-"Motionkit" (temporary preview brand — never hardcode it; comes from [`product.config.json`](../product.config.json)) sells **editable React component source** as **one-time purchases** — individual components, packs, and the complete catalog — delivered through an **entitlement-aware private registry**. Source is a **digital good** (not a physical/shipped item), so provider capabilities around shipping/inventory are irrelevant; what matters is:
+"Motionstack" (temporary preview brand — never hardcode it; comes from [`product.config.json`](../product.config.json)) sells **editable React component source** as **one-time purchases** — individual components, packs, and the complete catalog — delivered through an **entitlement-aware private registry**. Source is a **digital good** (not a physical/shipped item), so provider capabilities around shipping/inventory are irrelevant; what matters is:
 
 - Checkout + tax handling
 - Webhooks with signature verification (to grant entitlements reliably)

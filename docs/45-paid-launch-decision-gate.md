@@ -136,7 +136,7 @@ To move a blocking row toward launch: a human owner fills the placeholder/value,
 | Legal completion | **deferred** until paid-launch preparation | legal pages remain drafts (gate-enforced) |
 | Preview cohort size | **configurable, default 10** | `commerce.previewCohortSize` |
 | Preview entitlement duration | **configurable** (default 30 days) | `commerce.previewEntitlementDurationDays` |
-| Preview terms | **require owner approval** | env `MOTIONKIT_PREVIEW_TERMS_APPROVED=1` (NOT set) |
+| Preview terms | **require owner approval** | env `MOTIONSTACK_PREVIEW_TERMS_APPROVED=1` (NOT set) |
 
 **This decision is explicitly NOT approval of:** final prices · final licenses · public checkout · paid launch · lifetime updates · refund terms · team or agency terms · a specific commerce provider. **No public claim may be made that the product is launched or available for purchase.**
 
@@ -145,7 +145,7 @@ To move a blocking row toward launch: a human owner fills the placeholder/value,
 The private-preview *go-live* assertion (`scripts/check-launch-config.mjs`, mode `private-preview`) intentionally **fails** until the owner approves the preview terms. To approve:
 
 1. Review the preview terms (the draft `/legal/*` pages + the preview scope in [docs/47](47-private-preview-runbook.md)).
-2. Set the environment variable **`MOTIONKIT_PREVIEW_TERMS_APPROVED=1`** in the deployment/runtime environment (never commit it to source).
+2. Set the environment variable **`MOTIONSTACK_PREVIEW_TERMS_APPROVED=1`** in the deployment/runtime environment (never commit it to source).
 3. Re-run `node scripts/check-launch-config.mjs` — it must report **OK** for `private-preview` before any real cohort is invited.
 
 This flag is **not** set automatically by this change, and setting `commerce.previewTermsApproved` in config is only a documentation mirror — the runtime gate reads the env var. Approving preview terms does **not** approve paid launch, pricing, or legal terms.

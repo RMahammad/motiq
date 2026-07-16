@@ -24,7 +24,7 @@ Name · Problem · Use case · Main states · Main animation · Accessibility re
 ## Build steps
 
 1. Read the short brief.
-2. Implement the original component in `packages/registry/registry/<category>/<slug>.tsx` (`"use client"` if it uses hooks/motion). Reuse the shared foundations (`@/lib/motionkit`: `useReducedMotion`, `useVisibilityPause`, `formatNumber`, `useAnimatedNumber`) and `@/lib/utils` `cn` instead of re-implementing them. Keep heavy/creative deps component-local; core boundary rules still apply (no `next/*`, Node built-ins, or `remotion`).
+2. Implement the original component in `packages/registry/registry/<category>/<slug>.tsx` (`"use client"` if it uses hooks/motion). Reuse the shared foundations (`@/lib/motionstack`: `useReducedMotion`, `useVisibilityPause`, `formatNumber`, `useAnimatedNumber`) and `@/lib/utils` `cn` instead of re-implementing them. Keep heavy/creative deps component-local; core boundary rules still apply (no `next/*`, Node built-ins, or `remotion`).
 3. Add realistic **clearly-fictional** sample content.
 4. Create the live preview `apps/docs/app/_previews/<slug>.tsx` (self-contained, imports the component, component dominates the stage) and register it in `_previews/index.tsx` (`previewMap`).
 5. Add practical, working controls to the preview (every control must do something real).

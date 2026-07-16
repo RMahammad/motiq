@@ -18,7 +18,7 @@ export interface DocContent {
 
 export const docsContent: Record<string, DocContent> = {
   "processing-timeline": {
-    usage: `import { ProcessingTimeline, type ProcessingStage } from "@/components/motionkit/processing-timeline";
+    usage: `import { ProcessingTimeline, type ProcessingStage } from "@/components/motionstack/processing-timeline";
 
 // The app owns the pipeline; the component renders one item's stages.
 <ProcessingTimeline
@@ -48,7 +48,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "checkout-progress": {
-    usage: `import { CheckoutProgress, type CheckoutStep } from "@/components/motionkit/checkout-progress";
+    usage: `import { CheckoutProgress, type CheckoutStep } from "@/components/motionstack/checkout-progress";
 
 // You own step content + validation; this orchestrates progress.
 <CheckoutProgress
@@ -80,7 +80,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "session-security-center": {
-    usage: `import { SessionSecurityCenter, type Session } from "@/components/motionkit/session-security-center";
+    usage: `import { SessionSecurityCenter, type Session } from "@/components/motionstack/session-security-center";
 
 // The app owns revocation; this presents + confirms it.
 <SessionSecurityCenter
@@ -108,7 +108,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "thread-expansion": {
-    usage: `import { ThreadExpansion, type ThreadNode } from "@/components/motionkit/thread-expansion";
+    usage: `import { ThreadExpansion, type ThreadNode } from "@/components/motionstack/thread-expansion";
 
 // Navigate + expand a nested discussion (Comment Thread owns authoring).
 <ThreadExpansion
@@ -137,7 +137,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "project-timeline": {
-    usage: `import { ProjectTimeline, type TimelineItem } from "@/components/motionkit/project-timeline";
+    usage: `import { ProjectTimeline, type TimelineItem } from "@/components/motionstack/project-timeline";
 
 // App owns dates + persistence; pass \`today\` for the current-date marker.
 <ProjectTimeline
@@ -167,7 +167,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "multi-file-queue": {
-    usage: `import { MultiFileQueue, type QueueItem } from "@/components/motionkit/multi-file-queue";
+    usage: `import { MultiFileQueue, type QueueItem } from "@/components/motionstack/multi-file-queue";
 
 // Your app owns scheduling + uploading; this manages the collection.
 <MultiFileQueue
@@ -199,7 +199,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "cart-item-transition": {
-    usage: `import { CartItemTransition, type CartLineItem } from "@/components/motionkit/cart-item-transition";
+    usage: `import { CartItemTransition, type CartLineItem } from "@/components/motionstack/cart-item-transition";
 
 // App owns price/inventory/backend; this animates the line + optimistic state.
 <CartItemTransition
@@ -229,7 +229,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "two-factor-setup-flow": {
-    usage: `import { TwoFactorSetupFlow, type TwoFactorState } from "@/components/motionkit/two-factor-setup-flow";
+    usage: `import { TwoFactorSetupFlow, type TwoFactorState } from "@/components/motionstack/two-factor-setup-flow";
 
 // The APP performs QR/secret generation, delivery, and verification.
 <TwoFactorSetupFlow
@@ -260,7 +260,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "typing-and-presence": {
-    usage: `import { TypingAndPresence, type Participant } from "@/components/motionkit/typing-and-presence";
+    usage: `import { TypingAndPresence, type Participant } from "@/components/motionstack/typing-and-presence";
 
 // App supplies presence + typing (e.g. from your realtime channel).
 <TypingAndPresence
@@ -288,7 +288,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "task-dependency-map": {
-    usage: `import { TaskDependencyMap, type Task } from "@/components/motionkit/task-dependency-map";
+    usage: `import { TaskDependencyMap, type Task } from "@/components/motionstack/task-dependency-map";
 
 // App owns tasks + persistence; supply cycleError when a dependency would loop.
 <TaskDependencyMap
@@ -319,7 +319,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "file-upload-pipeline": {
-    usage: `import { FileUploadPipeline, type UploadItem } from "@/components/motionkit/file-upload-pipeline";
+    usage: `import { FileUploadPipeline, type UploadItem } from "@/components/motionstack/file-upload-pipeline";
 
 // Your app owns uploading; the component presents app-supplied items + emits intent.
 <FileUploadPipeline
@@ -352,7 +352,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "product-variant-selector": {
-    usage: `import { ProductVariantSelector, type OptionGroup } from "@/components/motionkit/product-variant-selector";
+    usage: `import { ProductVariantSelector, type OptionGroup } from "@/components/motionstack/product-variant-selector";
 
 // App owns inventory, availability, and pricing.
 <ProductVariantSelector
@@ -384,7 +384,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "passkey-setup-flow": {
-    usage: `import { PasskeySetupFlow, type PasskeyState } from "@/components/motionkit/passkey-setup-flow";
+    usage: `import { PasskeySetupFlow, type PasskeyState } from "@/components/motionstack/passkey-setup-flow";
 
 // The APP performs WebAuthn and sets state; this component presents it.
 <PasskeySetupFlow
@@ -415,7 +415,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "message-delivery-states": {
-    usage: `import { MessageDeliveryStates, type DeliveryMessage } from "@/components/motionkit/message-delivery-states";
+    usage: `import { MessageDeliveryStates, type DeliveryMessage } from "@/components/motionstack/message-delivery-states";
 
 // App owns delivery; the component presents app-supplied states.
 <MessageDeliveryStates
@@ -444,7 +444,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "kanban-card-movement": {
-    usage: `import { KanbanCardMovement, type KanbanColumn, type KanbanCard } from "@/components/motionkit/kanban-card-movement";
+    usage: `import { KanbanCardMovement, type KanbanColumn, type KanbanCard } from "@/components/motionstack/kanban-card-movement";
 
 // App owns the board data + persistence; onMove may be async (optimistic + rollback).
 <KanbanCardMovement
@@ -473,7 +473,7 @@ export const docsContent: Record<string, DocContent> = {
     ],
   },
   "prompt-composer": {
-    usage: `import { PromptComposer, type PromptModel } from "@/components/motionkit/prompt-composer";
+    usage: `import { PromptComposer, type PromptModel } from "@/components/motionstack/prompt-composer";
 
 // Presentation only: your app owns models, token counts, submission — nothing is sent here.
 const models: PromptModel[] = [{ id: "fast", name: "Fast" }, { id: "long", name: "Long context" }];
@@ -512,7 +512,7 @@ const models: PromptModel[] = [{ id: "fast", name: "Fast" }, { id: "long", name:
     ],
   },
   "webhook-event-stream": {
-    usage: `import { WebhookEventStream, type WebhookEvent } from "@/components/motionkit/webhook-event-stream";
+    usage: `import { WebhookEventStream, type WebhookEvent } from "@/components/motionstack/webhook-event-stream";
 
 // Your app owns the events; secrets are redacted and never enter the DOM/search/copies.
 <WebhookEventStream
@@ -545,7 +545,7 @@ const models: PromptModel[] = [{ id: "fast", name: "Fast" }, { id: "long", name:
     ],
   },
   "mention-suggestions": {
-    usage: `import { MentionSuggestions, type MentionUser } from "@/components/motionkit/mention-suggestions";
+    usage: `import { MentionSuggestions, type MentionUser } from "@/components/motionstack/mention-suggestions";
 
 // The app owns the input + text insertion; this renders the accessible popup only.
 <MentionSuggestions
@@ -577,7 +577,7 @@ const models: PromptModel[] = [{ id: "fast", name: "Fast" }, { id: "long", name:
     ],
   },
   "data-quality-status": {
-    usage: `import { DataQualityStatus, type QualityCheck } from "@/components/motionkit/data-quality-status";
+    usage: `import { DataQualityStatus, type QualityCheck } from "@/components/motionstack/data-quality-status";
 
 // Metrics + checks are app-supplied. Unmeasured metrics render "Unknown" — never fabricated.
 <DataQualityStatus
@@ -610,7 +610,7 @@ const models: PromptModel[] = [{ id: "fast", name: "Fast" }, { id: "long", name:
     ],
   },
   "keyboard-safe-form": {
-    usage: `import { KeyboardSafeForm, type FieldError } from "@/components/motionkit/keyboard-safe-form";
+    usage: `import { KeyboardSafeForm, type FieldError } from "@/components/motionstack/keyboard-safe-form";
 
 // Your app owns the fields + submission; the sticky bar stays above the mobile keyboard.
 <KeyboardSafeForm
@@ -641,7 +641,7 @@ const models: PromptModel[] = [{ id: "fast", name: "Fast" }, { id: "long", name:
     ],
   },
   "ai-agent-workspace": {
-    usage: `import { AiAgentWorkspace } from "@/components/motionkit/blocks/ai-agent-workspace";
+    usage: `import { AiAgentWorkspace } from "@/components/motionstack/blocks/ai-agent-workspace";
 
 // A full-page AI agent workspace composing 4 components. Presentation-only:
 // your app owns the state end-to-end; it never talks to a model. Renders
@@ -669,7 +669,7 @@ export default function AgentPage() {
     ],
   },
   "deployment-command-center": {
-    usage: `import { DeploymentCommandCenter } from "@/components/motionkit/blocks/deployment-command-center";
+    usage: `import { DeploymentCommandCenter } from "@/components/motionstack/blocks/deployment-command-center";
 
 // A composed, app-controlled deploy console. It owns a small demo state machine
 // and wires each component's callbacks together; rewire to your real backend.
@@ -694,7 +694,7 @@ export default function AgentPage() {
     ],
   },
   "collaborative-review-workspace": {
-    usage: `import { CollaborativeReviewWorkspace } from "@/components/motionkit/blocks/collaborative-review-workspace";
+    usage: `import { CollaborativeReviewWorkspace } from "@/components/motionstack/blocks/collaborative-review-workspace";
 
 // Renders standalone with fictional demo data. The block owns a state machine
 // that wires the four components together: approving a stage advances the
@@ -719,7 +719,7 @@ export default function AgentPage() {
     ],
   },
   "live-operations-dashboard": {
-    usage: `import { LiveOperationsDashboard, type OpsService } from "@/components/motionkit/blocks/live-operations-dashboard";
+    usage: `import { LiveOperationsDashboard, type OpsService } from "@/components/motionstack/blocks/live-operations-dashboard";
 
 // Presentation-only: your app owns the data and every lifecycle transition. Ships
 // with fictional demo services so it renders standalone; it never fetches.
@@ -741,7 +741,7 @@ export default function AgentPage() {
     ],
   },
   "agent-run-timeline": {
-    usage: `import { AgentRunTimeline, type AgentRun } from "@/components/motionkit/agent-run-timeline";
+    usage: `import { AgentRunTimeline, type AgentRun } from "@/components/motionstack/agent-run-timeline";
 
 // Presentation-only: your app owns the run + every status. It never runs an agent.
 const run: AgentRun = {
@@ -778,7 +778,7 @@ const run: AgentRun = {
     ],
   },
   "environment-switcher": {
-    usage: `import { EnvironmentSwitcher, type Environment } from "@/components/motionkit/environment-switcher";
+    usage: `import { EnvironmentSwitcher, type Environment } from "@/components/motionstack/environment-switcher";
 
 // Presentation + control only: your app owns the data AND the actual switch.
 const environments: Environment[] = [
@@ -808,7 +808,7 @@ const environments: Environment[] = [
     ],
   },
   "comment-thread": {
-    usage: `import { CommentThread, type Comment, type CommentAuthor } from "@/components/motionkit/comment-thread";
+    usage: `import { CommentThread, type Comment, type CommentAuthor } from "@/components/motionstack/comment-thread";
 
 // Presentation + optimistic UX only: your app owns persistence + permissions.
 const currentUser: CommentAuthor = { id: "you", name: "You", role: "Reviewer" };
@@ -845,7 +845,7 @@ const currentUser: CommentAuthor = { id: "you", name: "You", role: "Reviewer" };
     ],
   },
   "data-refresh-state": {
-    usage: `import { DataRefreshState, type RefreshState } from "@/components/motionkit/data-refresh-state";
+    usage: `import { DataRefreshState, type RefreshState } from "@/components/motionstack/data-refresh-state";
 
 // Presentation-only: your app owns the fetch, the progress, and every state.
 <DataRefreshState
@@ -886,7 +886,7 @@ const currentUser: CommentAuthor = { id: "you", name: "You", role: "Reviewer" };
     ],
   },
   "mobile-filter-sheet": {
-    usage: `import { MobileFilterSheet, type FilterGroup, type FilterValue } from "@/components/motionkit/mobile-filter-sheet";
+    usage: `import { MobileFilterSheet, type FilterGroup, type FilterValue } from "@/components/motionstack/mobile-filter-sheet";
 
 // Your app owns the data, the applied value, and the result count.
 const groups: FilterGroup[] = [
@@ -927,7 +927,7 @@ const groups: FilterGroup[] = [
     ],
   },
   "source-citation-rail": {
-    usage: `import { SourceCitationRail, CitationMarker, type CitationSource } from "@/components/motionkit/source-citation-rail";
+    usage: `import { SourceCitationRail, CitationMarker, type CitationSource } from "@/components/motionstack/source-citation-rail";
 
 // Presentation-only: your app owns the sources and decides "active".
 const sources: CitationSource[] = [
@@ -959,7 +959,7 @@ const sources: CitationSource[] = [
     ],
   },
   "api-request-inspector": {
-    usage: `import { ApiRequestInspector, type ApiRequest } from "@/components/motionkit/api-request-inspector";
+    usage: `import { ApiRequestInspector, type ApiRequest } from "@/components/motionstack/api-request-inspector";
 
 // Presentation only: your app owns the data + state. It never sends the request.
 const request: ApiRequest = {
@@ -990,7 +990,7 @@ const request: ApiRequest = {
     ],
   },
   "approval-workflow": {
-    usage: `import { ApprovalWorkflow, type ApprovalWorkflowData } from "@/components/motionkit/approval-workflow";
+    usage: `import { ApprovalWorkflow, type ApprovalWorkflowData } from "@/components/motionstack/approval-workflow";
 
 // Presentation + control only: your app owns the data AND authorization.
 <ApprovalWorkflow
@@ -1024,7 +1024,7 @@ const request: ApiRequest = {
     ],
   },
   "filter-result-transition": {
-    usage: `import { FilterResultTransition, type ActiveFilter } from "@/components/motionkit/filter-result-transition";
+    usage: `import { FilterResultTransition, type ActiveFilter } from "@/components/motionstack/filter-result-transition";
 
 // You own filtering; the component animates the resulting delta.
 const items = assets.filter(matchesQueryAndFacets);
@@ -1060,7 +1060,7 @@ const items = assets.filter(matchesQueryAndFacets);
     ],
   },
   "swipe-action-row": {
-    usage: `import { SwipeActionRow, SwipeActionGroup, type SwipeAction } from "@/components/motionkit/swipe-action-row";
+    usage: `import { SwipeActionRow, SwipeActionGroup, type SwipeAction } from "@/components/motionstack/swipe-action-row";
 
 const right: SwipeAction[] = [
   { id: "snooze", label: "Snooze", tone: "info" },
@@ -1096,7 +1096,7 @@ const right: SwipeAction[] = [
     ],
   },
   "tool-call-activity": {
-    usage: `import { ToolCallActivity, type ToolCall } from "@/components/motionkit/tool-call-activity";
+    usage: `import { ToolCallActivity, type ToolCall } from "@/components/motionstack/tool-call-activity";
 
 // Presentation-only: your app owns the calls + statuses. It never runs a tool.
 <ToolCallActivity
@@ -1128,7 +1128,7 @@ const right: SwipeAction[] = [
     ],
   },
   "live-log-stream": {
-    usage: `import { LiveLogStream, type LogEntry } from "@/components/motionkit/live-log-stream";
+    usage: `import { LiveLogStream, type LogEntry } from "@/components/motionstack/live-log-stream";
 
 // Your app owns the buffer; append as lines arrive.
 const [entries, setEntries] = React.useState<LogEntry[]>([]);
@@ -1160,7 +1160,7 @@ const [entries, setEntries] = React.useState<LogEntry[]>([]);
     ],
   },
   "activity-stream": {
-    usage: `import { ActivityStream, type ActivityEvent } from "@/components/motionkit/activity-stream";
+    usage: `import { ActivityStream, type ActivityEvent } from "@/components/motionstack/activity-stream";
 
 // Your app owns the events (from any realtime or history source).
 const events: ActivityEvent[] = [
@@ -1190,7 +1190,7 @@ const events: ActivityEvent[] = [
     ],
   },
   "streaming-data-rows": {
-    usage: `import { StreamingDataRows, StatusPill, type Column } from "@/components/motionkit/streaming-data-rows";
+    usage: `import { StreamingDataRows, StatusPill, type Column } from "@/components/motionstack/streaming-data-rows";
 
 const columns: Column<Order>[] = [
   { key: "ref", header: "Order", sortable: true, value: (r) => r.ref },
@@ -1220,7 +1220,7 @@ const columns: Column<Order>[] = [
     ],
   },
   "luminous-topography": {
-    usage: `import { LuminousTopography } from "@/components/motionkit/luminous-topography";
+    usage: `import { LuminousTopography } from "@/components/motionstack/luminous-topography";
 
 <LuminousTopography
   focalPoint={[{ x: 0.74, y: 0.32 }, { x: 0.9, y: 0.72 }]}
@@ -1252,7 +1252,7 @@ const columns: Column<Order>[] = [
     ],
   },
   "ai-response-stream": {
-    usage: `import { AiResponseStream } from "@/components/motionkit/ai-response-stream";
+    usage: `import { AiResponseStream } from "@/components/motionstack/ai-response-stream";
 
 // Your app owns the stream; this component only renders it.
 <AiResponseStream
@@ -1283,7 +1283,7 @@ const columns: Column<Order>[] = [
     ],
   },
   "deployment-pipeline": {
-    usage: `import { DeploymentPipeline, type Stage } from "@/components/motionkit/deployment-pipeline";
+    usage: `import { DeploymentPipeline, type Stage } from "@/components/motionstack/deployment-pipeline";
 
 const stages: Stage[] = [
   { id: "install", name: "Install", status: "passed", durationMs: 8400, logs: ["$ pnpm install", "Done in 8.4s"] },
@@ -1312,7 +1312,7 @@ const stages: Stage[] = [
     ],
   },
   "live-presence-stack": {
-    usage: `import { LivePresenceStack, type PresenceUser } from "@/components/motionkit/live-presence-stack";
+    usage: `import { LivePresenceStack, type PresenceUser } from "@/components/motionstack/live-presence-stack";
 
 const users: PresenceUser[] = [
   { id: "1", name: "Ada L.", status: "editing" },
@@ -1341,7 +1341,7 @@ const users: PresenceUser[] = [
     ],
   },
   "kpi-number-morph": {
-    usage: `import { KpiNumberMorph } from "@/components/motionkit/kpi-number-morph";
+    usage: `import { KpiNumberMorph } from "@/components/motionstack/kpi-number-morph";
 
 <KpiNumberMorph
   label="Revenue"
@@ -1374,7 +1374,7 @@ const users: PresenceUser[] = [
     ],
   },
   "kinetic-emphasis": {
-    usage: `import { KineticEmphasis } from "@/components/motionkit/kinetic-emphasis";
+    usage: `import { KineticEmphasis } from "@/components/motionstack/kinetic-emphasis";
 
 export function Hero() {
   return (
@@ -1408,7 +1408,7 @@ export function Hero() {
     ],
   },
   "blur-text": {
-    usage: `import { BlurText } from "@/components/motionkit/blur-text";
+    usage: `import { BlurText } from "@/components/motionstack/blur-text";
 
 export function Hero() {
   return <BlurText text="Ship animated interfaces" as="h1" animateBy="words" delay={80} />;
@@ -1431,7 +1431,7 @@ export function Hero() {
     ],
   },
   "rotating-text": {
-    usage: `import { RotatingText } from "@/components/motionkit/rotating-text";
+    usage: `import { RotatingText } from "@/components/motionstack/rotating-text";
 
 <RotatingText words={["faster", "accessible", "in motion"]} interval={2200} />`,
     api: [
@@ -1446,7 +1446,7 @@ export function Hero() {
     performance: ["Single AnimatePresence node; stable inline-grid layout avoids reflow."],
   },
   "animated-button": {
-    usage: `import { AnimatedButton } from "@/components/motionkit/animated-button";
+    usage: `import { AnimatedButton } from "@/components/motionstack/animated-button";
 
 <AnimatedButton variant="solid" loading={saving}>Save changes</AnimatedButton>`,
     api: [
@@ -1466,7 +1466,7 @@ export function Hero() {
   AnimatedDialog, AnimatedDialogTrigger, AnimatedDialogContent,
   AnimatedDialogHeader, AnimatedDialogBody, AnimatedDialogFooter,
   AnimatedDialogTitle, AnimatedDialogDescription, AnimatedDialogClose,
-} from "@/components/motionkit/animated-dialog";
+} from "@/components/motionstack/animated-dialog";
 
 // mobileVariant="sheet" (default) → centered modal on desktop, bottom sheet on mobile.
 <AnimatedDialog mobileVariant="sheet">
@@ -1505,7 +1505,7 @@ export function Hero() {
   "animated-tabs": {
     usage: `import {
   AnimatedTabs, AnimatedTabsList, AnimatedTabsTrigger, AnimatedTabsContent,
-} from "@/components/motionkit/animated-tabs";
+} from "@/components/motionstack/animated-tabs";
 
 <AnimatedTabs defaultValue="a">
   <AnimatedTabsList>
@@ -1530,7 +1530,7 @@ export function Hero() {
     usage: `import {
   AnimatedAccordion, AnimatedAccordionItem,
   AnimatedAccordionTrigger, AnimatedAccordionContent,
-} from "@/components/motionkit/animated-accordion";
+} from "@/components/motionstack/animated-accordion";
 
 <AnimatedAccordion type="single" collapsible>
   <AnimatedAccordionItem value="a">
@@ -1549,7 +1549,7 @@ export function Hero() {
     performance: ["Animates height (auto) + opacity; chevron rotates via transform."],
   },
   "animated-list": {
-    usage: `import { AnimatedList, AnimatedListItem } from "@/components/motionkit/animated-list";
+    usage: `import { AnimatedList, AnimatedListItem } from "@/components/motionstack/animated-list";
 
 <AnimatedList>
   {items.map((it) => (
@@ -1567,7 +1567,7 @@ export function Hero() {
     performance: ["layout + AnimatePresence; transform/opacity only."],
   },
   "spotlight-card": {
-    usage: `import { SpotlightCard } from "@/components/motionkit/spotlight-card";
+    usage: `import { SpotlightCard } from "@/components/motionstack/spotlight-card";
 
 <SpotlightCard radius={320}>…</SpotlightCard>`,
     api: [
@@ -1584,7 +1584,7 @@ export function Hero() {
     ],
   },
   "animated-grid": {
-    usage: `import { AnimatedGrid } from "@/components/motionkit/animated-grid";
+    usage: `import { AnimatedGrid } from "@/components/motionstack/animated-grid";
 
 <div className="relative">
   <AnimatedGrid />
@@ -1605,7 +1605,7 @@ export function Hero() {
     performance: ["CSS-only: two gradient grid layers (background-position drift) + one radial glow (transform/opacity pulse). No JS loop, no canvas."],
   },
   "animated-icons": {
-    usage: `import { AnimatedArrow, AnimatedCopy } from "@/components/motionkit/animated-icons";
+    usage: `import { AnimatedArrow, AnimatedCopy } from "@/components/motionstack/animated-icons";
 
 <button>Next <AnimatedArrow triggerOn="hover" /></button>
 <button onClick={copy}><AnimatedCopy copied={copied} /> Copy</button>`,

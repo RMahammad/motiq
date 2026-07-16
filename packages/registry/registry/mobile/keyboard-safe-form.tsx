@@ -37,7 +37,7 @@ import * as React from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, useAsyncStatus } from "@/lib/motionkit";
+import { useReducedMotion, useAsyncStatus } from "@/lib/motionstack";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */

@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence, type Transition } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, useVisibilityPause, statusVars, type StatusTone } from "@/lib/motionkit";
+import { useReducedMotion, useVisibilityPause, statusVars, type StatusTone } from "@/lib/motionstack";
 
 /* --------------------------------------------------------------------------
  * TypingAndPresence — a combined real-time TYPING + PARTICIPANT-PRESENCE strip

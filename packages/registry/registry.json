@@ -1,13 +1,13 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "motionkit",
-  "homepage": "https://motionkit.dev",
+  "name": "motionstack",
+  "homepage": "https://motionstack.dev",
   "items": [
     {
       "name": "utils",
       "type": "registry:lib",
       "title": "cn() utility",
-      "description": "Tailwind class-merge helper used by every Motionkit component.",
+      "description": "Tailwind class-merge helper used by every Motionstack component.",
       "dependencies": [
         "clsx",
         "tailwind-merge"
@@ -34,7 +34,7 @@
         {
           "path": "registry/lib/motion.ts",
           "type": "registry:lib",
-          "target": "lib/motionkit.ts"
+          "target": "lib/motionstack.ts"
         }
       ],
       "meta": {
@@ -51,14 +51,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/ai/ai-response-stream.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/ai-response-stream.tsx"
+          "target": "components/motionstack/ai-response-stream.tsx"
         }
       ],
       "meta": {
@@ -86,14 +86,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/developer-tools/deployment-pipeline.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/deployment-pipeline.tsx"
+          "target": "components/motionstack/deployment-pipeline.tsx"
         }
       ],
       "meta": {
@@ -121,14 +121,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/collaboration/live-presence-stack.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/live-presence-stack.tsx"
+          "target": "components/motionstack/live-presence-stack.tsx"
         }
       ],
       "meta": {
@@ -152,14 +152,14 @@
       "description": "An accessible KPI stat that smoothly morphs between values with a direction-aware trend (arrow + sign, never color alone). Controlled value; locale, compact, and currency formatting; loading and error states. Reduced-motion snaps.",
       "dependencies": [],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/data/kpi-number-morph.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/kpi-number-morph.tsx"
+          "target": "components/motionstack/kpi-number-morph.tsx"
         }
       ],
       "meta": {
@@ -185,14 +185,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/ai/tool-call-activity.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/tool-call-activity.tsx"
+          "target": "components/motionstack/tool-call-activity.tsx"
         }
       ],
       "meta": {
@@ -220,14 +220,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/developer-tools/live-log-stream.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/live-log-stream.tsx"
+          "target": "components/motionstack/live-log-stream.tsx"
         }
       ],
       "meta": {
@@ -255,14 +255,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/collaboration/activity-stream.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/activity-stream.tsx"
+          "target": "components/motionstack/activity-stream.tsx"
         }
       ],
       "meta": {
@@ -289,14 +289,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/data/streaming-data-rows.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/streaming-data-rows.tsx"
+          "target": "components/motionstack/streaming-data-rows.tsx"
         }
       ],
       "meta": {
@@ -321,14 +321,14 @@
       "description": "A distinctive SVG background of layered topographic contours that flow around configurable focal regions, thinning near a foreground safe area so text stays readable. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. No canvas, no WebGL, no heavy deps.",
       "dependencies": [],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/backgrounds/luminous-topography.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/luminous-topography.tsx"
+          "target": "components/motionstack/luminous-topography.tsx"
         }
       ],
       "meta": {
@@ -354,14 +354,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/ai/source-citation-rail.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/source-citation-rail.tsx"
+          "target": "components/motionstack/source-citation-rail.tsx"
         }
       ],
       "meta": {
@@ -389,14 +389,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/developer-tools/api-request-inspector.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/api-request-inspector.tsx"
+          "target": "components/motionstack/api-request-inspector.tsx"
         }
       ],
       "meta": {
@@ -425,14 +425,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/collaboration/approval-workflow.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/approval-workflow.tsx"
+          "target": "components/motionstack/approval-workflow.tsx"
         }
       ],
       "meta": {
@@ -459,14 +459,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/data/filter-result-transition.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/filter-result-transition.tsx"
+          "target": "components/motionstack/filter-result-transition.tsx"
         }
       ],
       "meta": {
@@ -493,14 +493,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/mobile/swipe-action-row.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/swipe-action-row.tsx"
+          "target": "components/motionstack/swipe-action-row.tsx"
         }
       ],
       "meta": {
@@ -527,14 +527,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/ai/agent-run-timeline.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/agent-run-timeline.tsx"
+          "target": "components/motionstack/agent-run-timeline.tsx"
         }
       ],
       "meta": {
@@ -563,14 +563,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/developer-tools/environment-switcher.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/environment-switcher.tsx"
+          "target": "components/motionstack/environment-switcher.tsx"
         }
       ],
       "meta": {
@@ -599,14 +599,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/collaboration/comment-thread.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/comment-thread.tsx"
+          "target": "components/motionstack/comment-thread.tsx"
         }
       ],
       "meta": {
@@ -633,14 +633,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/data/data-refresh-state.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/data-refresh-state.tsx"
+          "target": "components/motionstack/data-refresh-state.tsx"
         }
       ],
       "meta": {
@@ -668,14 +668,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/mobile/mobile-filter-sheet.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/mobile-filter-sheet.tsx"
+          "target": "components/motionstack/mobile-filter-sheet.tsx"
         }
       ],
       "meta": {
@@ -704,14 +704,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/ai/prompt-composer.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/prompt-composer.tsx"
+          "target": "components/motionstack/prompt-composer.tsx"
         }
       ],
       "meta": {
@@ -740,14 +740,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/developer-tools/webhook-event-stream.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/webhook-event-stream.tsx"
+          "target": "components/motionstack/webhook-event-stream.tsx"
         }
       ],
       "meta": {
@@ -776,14 +776,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/collaboration/mention-suggestions.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/mention-suggestions.tsx"
+          "target": "components/motionstack/mention-suggestions.tsx"
         }
       ],
       "meta": {
@@ -811,14 +811,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/data/data-quality-status.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/data-quality-status.tsx"
+          "target": "components/motionstack/data-quality-status.tsx"
         }
       ],
       "meta": {
@@ -846,14 +846,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/mobile/keyboard-safe-form.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/keyboard-safe-form.tsx"
+          "target": "components/motionstack/keyboard-safe-form.tsx"
         }
       ],
       "meta": {
@@ -882,14 +882,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/file/file-upload-pipeline.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/file-upload-pipeline.tsx"
+          "target": "components/motionstack/file-upload-pipeline.tsx"
         }
       ],
       "meta": {
@@ -917,14 +917,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/commerce/product-variant-selector.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/product-variant-selector.tsx"
+          "target": "components/motionstack/product-variant-selector.tsx"
         }
       ],
       "meta": {
@@ -952,14 +952,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/security/passkey-setup-flow.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/passkey-setup-flow.tsx"
+          "target": "components/motionstack/passkey-setup-flow.tsx"
         }
       ],
       "meta": {
@@ -987,14 +987,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/communication/message-delivery-states.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/message-delivery-states.tsx"
+          "target": "components/motionstack/message-delivery-states.tsx"
         }
       ],
       "meta": {
@@ -1022,14 +1022,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/productivity/kanban-card-movement.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/kanban-card-movement.tsx"
+          "target": "components/motionstack/kanban-card-movement.tsx"
         }
       ],
       "meta": {
@@ -1058,14 +1058,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/file/multi-file-queue.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/multi-file-queue.tsx"
+          "target": "components/motionstack/multi-file-queue.tsx"
         }
       ],
       "meta": {
@@ -1094,14 +1094,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/commerce/cart-item-transition.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/cart-item-transition.tsx"
+          "target": "components/motionstack/cart-item-transition.tsx"
         }
       ],
       "meta": {
@@ -1130,14 +1130,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/security/two-factor-setup-flow.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/two-factor-setup-flow.tsx"
+          "target": "components/motionstack/two-factor-setup-flow.tsx"
         }
       ],
       "meta": {
@@ -1165,14 +1165,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/communication/typing-and-presence.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/typing-and-presence.tsx"
+          "target": "components/motionstack/typing-and-presence.tsx"
         }
       ],
       "meta": {
@@ -1200,14 +1200,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/productivity/task-dependency-map.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/task-dependency-map.tsx"
+          "target": "components/motionstack/task-dependency-map.tsx"
         }
       ],
       "meta": {
@@ -1236,14 +1236,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/file/processing-timeline.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/processing-timeline.tsx"
+          "target": "components/motionstack/processing-timeline.tsx"
         }
       ],
       "meta": {
@@ -1271,14 +1271,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/commerce/checkout-progress.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/checkout-progress.tsx"
+          "target": "components/motionstack/checkout-progress.tsx"
         }
       ],
       "meta": {
@@ -1306,14 +1306,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/security/session-security-center.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/session-security-center.tsx"
+          "target": "components/motionstack/session-security-center.tsx"
         }
       ],
       "meta": {
@@ -1341,14 +1341,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/communication/thread-expansion.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/thread-expansion.tsx"
+          "target": "components/motionstack/thread-expansion.tsx"
         }
       ],
       "meta": {
@@ -1376,14 +1376,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/productivity/project-timeline.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/project-timeline.tsx"
+          "target": "components/motionstack/project-timeline.tsx"
         }
       ],
       "meta": {
@@ -1411,18 +1411,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/agent-run-timeline",
-        "@motionkit/tool-call-activity",
-        "@motionkit/ai-response-stream",
-        "@motionkit/source-citation-rail",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/agent-run-timeline",
+        "@motionstack/tool-call-activity",
+        "@motionstack/ai-response-stream",
+        "@motionstack/source-citation-rail",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/ai-agent-workspace.tsx",
           "type": "registry:block",
-          "target": "components/motionkit/blocks/ai-agent-workspace.tsx"
+          "target": "components/motionstack/blocks/ai-agent-workspace.tsx"
         }
       ],
       "meta": {
@@ -1447,18 +1447,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/environment-switcher",
-        "@motionkit/deployment-pipeline",
-        "@motionkit/live-log-stream",
-        "@motionkit/api-request-inspector",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/environment-switcher",
+        "@motionstack/deployment-pipeline",
+        "@motionstack/live-log-stream",
+        "@motionstack/api-request-inspector",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/deployment-command-center.tsx",
           "type": "registry:block",
-          "target": "components/motionkit/blocks/deployment-command-center.tsx"
+          "target": "components/motionstack/blocks/deployment-command-center.tsx"
         }
       ],
       "meta": {
@@ -1483,18 +1483,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/live-presence-stack",
-        "@motionkit/approval-workflow",
-        "@motionkit/comment-thread",
-        "@motionkit/activity-stream",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/live-presence-stack",
+        "@motionstack/approval-workflow",
+        "@motionstack/comment-thread",
+        "@motionstack/activity-stream",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/collaborative-review-workspace.tsx",
           "type": "registry:block",
-          "target": "components/motionkit/blocks/collaborative-review-workspace.tsx"
+          "target": "components/motionstack/blocks/collaborative-review-workspace.tsx"
         }
       ],
       "meta": {
@@ -1519,18 +1519,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/kpi-number-morph",
-        "@motionkit/data-refresh-state",
-        "@motionkit/filter-result-transition",
-        "@motionkit/streaming-data-rows",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/kpi-number-morph",
+        "@motionstack/data-refresh-state",
+        "@motionstack/filter-result-transition",
+        "@motionstack/streaming-data-rows",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/live-operations-dashboard.tsx",
           "type": "registry:block",
-          "target": "components/motionkit/blocks/live-operations-dashboard.tsx"
+          "target": "components/motionstack/blocks/live-operations-dashboard.tsx"
         }
       ],
       "meta": {
@@ -1555,18 +1555,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/agent-run-timeline",
-        "@motionkit/tool-call-activity",
-        "@motionkit/ai-response-stream",
-        "@motionkit/source-citation-rail",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/agent-run-timeline",
+        "@motionstack/tool-call-activity",
+        "@motionstack/ai-response-stream",
+        "@motionstack/source-citation-rail",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/ai-agent-workspace.tsx",
           "type": "registry:block",
-          "target": "components/motionkit/blocks/ai-agent-workspace.tsx"
+          "target": "components/motionstack/blocks/ai-agent-workspace.tsx"
         }
       ],
       "meta": {
@@ -1590,18 +1590,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/environment-switcher",
-        "@motionkit/deployment-pipeline",
-        "@motionkit/live-log-stream",
-        "@motionkit/api-request-inspector",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/environment-switcher",
+        "@motionstack/deployment-pipeline",
+        "@motionstack/live-log-stream",
+        "@motionstack/api-request-inspector",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/deployment-command-center.tsx",
           "type": "registry:block",
-          "target": "components/motionkit/blocks/deployment-command-center.tsx"
+          "target": "components/motionstack/blocks/deployment-command-center.tsx"
         }
       ],
       "meta": {
@@ -1625,18 +1625,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/live-presence-stack",
-        "@motionkit/approval-workflow",
-        "@motionkit/comment-thread",
-        "@motionkit/activity-stream",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/live-presence-stack",
+        "@motionstack/approval-workflow",
+        "@motionstack/comment-thread",
+        "@motionstack/activity-stream",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/collaborative-review-workspace.tsx",
           "type": "registry:block",
-          "target": "components/motionkit/blocks/collaborative-review-workspace.tsx"
+          "target": "components/motionstack/blocks/collaborative-review-workspace.tsx"
         }
       ],
       "meta": {
@@ -1660,18 +1660,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/kpi-number-morph",
-        "@motionkit/data-refresh-state",
-        "@motionkit/filter-result-transition",
-        "@motionkit/streaming-data-rows",
-        "@motionkit/utils",
-        "@motionkit/primitives"
+        "@motionstack/kpi-number-morph",
+        "@motionstack/data-refresh-state",
+        "@motionstack/filter-result-transition",
+        "@motionstack/streaming-data-rows",
+        "@motionstack/utils",
+        "@motionstack/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/live-operations-dashboard.tsx",
           "type": "registry:block",
-          "target": "components/motionkit/blocks/live-operations-dashboard.tsx"
+          "target": "components/motionstack/blocks/live-operations-dashboard.tsx"
         }
       ],
       "meta": {
@@ -1695,13 +1695,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
       "files": [
         {
           "path": "registry/text/kinetic-emphasis.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/kinetic-emphasis.tsx"
+          "target": "components/motionstack/kinetic-emphasis.tsx"
         }
       ],
       "meta": {
@@ -1728,13 +1728,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
       "files": [
         {
           "path": "registry/text/blur-text.tsx",
           "type": "registry:component",
-          "target": "components/motionkit/blur-text.tsx"
+          "target": "components/motionstack/blur-text.tsx"
         }
       ],
       "meta": {
@@ -1759,13 +1759,13 @@
         "tailwind-merge"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
       "files": [
         {
           "path": "registry/creative/spotlight-card.tsx",
           "type": "registry:ui",
-          "target": "components/motionkit/spotlight-card.tsx"
+          "target": "components/motionstack/spotlight-card.tsx"
         }
       ],
       "meta": {
@@ -1791,13 +1791,13 @@
         "@radix-ui/react-dialog"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
       "files": [
         {
           "path": "registry/animated-shadcn/animated-dialog.tsx",
           "type": "registry:ui",
-          "target": "components/motionkit/animated-dialog.tsx"
+          "target": "components/motionstack/animated-dialog.tsx"
         }
       ],
       "meta": {
@@ -1822,13 +1822,13 @@
         "@radix-ui/react-tabs"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
       "files": [
         {
           "path": "registry/animated-shadcn/animated-tabs.tsx",
           "type": "registry:ui",
-          "target": "components/motionkit/animated-tabs.tsx"
+          "target": "components/motionstack/animated-tabs.tsx"
         }
       ],
       "meta": {
@@ -1853,13 +1853,13 @@
         "@radix-ui/react-accordion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
       "files": [
         {
           "path": "registry/animated-shadcn/animated-accordion.tsx",
           "type": "registry:ui",
-          "target": "components/motionkit/animated-accordion.tsx"
+          "target": "components/motionstack/animated-accordion.tsx"
         }
       ],
       "meta": {
@@ -1883,13 +1883,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
       "files": [
         {
           "path": "registry/animated-shadcn/animated-button.tsx",
           "type": "registry:ui",
-          "target": "components/motionkit/animated-button.tsx"
+          "target": "components/motionstack/animated-button.tsx"
         }
       ],
       "meta": {
@@ -1913,13 +1913,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
       "files": [
         {
           "path": "registry/text/rotating-text.tsx",
           "type": "registry:ui",
-          "target": "components/motionkit/rotating-text.tsx"
+          "target": "components/motionstack/rotating-text.tsx"
         }
       ],
       "meta": {
@@ -1943,13 +1943,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
       "files": [
         {
           "path": "registry/creative/animated-list.tsx",
           "type": "registry:ui",
-          "target": "components/motionkit/animated-list.tsx"
+          "target": "components/motionstack/animated-list.tsx"
         }
       ],
       "meta": {
@@ -1974,13 +1974,13 @@
         "tailwind-merge"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
       "files": [
         {
           "path": "registry/backgrounds/animated-grid.tsx",
           "type": "registry:ui",
-          "target": "components/motionkit/animated-grid.tsx"
+          "target": "components/motionstack/animated-grid.tsx"
         }
       ],
       "meta": {
@@ -2004,13 +2004,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionkit/utils"
+        "@motionstack/utils"
       ],
       "files": [
         {
           "path": "registry/icons/animated-icons.tsx",
           "type": "registry:ui",
-          "target": "components/motionkit/animated-icons.tsx"
+          "target": "components/motionstack/animated-icons.tsx"
         }
       ],
       "meta": {

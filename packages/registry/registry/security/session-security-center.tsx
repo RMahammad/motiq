@@ -11,7 +11,7 @@ import {
   formatTimestamp as defaultFormatTimestamp,
   statusVars,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /* --------------------------------------------------------------------------
  * SessionSecurityCenter — a presentation + control surface for reviewing and

@@ -9,7 +9,7 @@
 - **API sketch:** `<PasskeySetupFlow state capability error existingCredential onBegin onCancel onRetry onNameChange onComplete onUseAlternative alternativeLabel />`.
 - **Accessibility:** ordered step semantics (`aria-current=step`); focus moves to the active phase; error associated (`aria-describedby`); keyboard access; reduced motion; status in text; **no countdown**; mobile.
 - **Mobile:** single-column steps, large targets, alternative path always reachable.
-- **Dependencies:** motion + `@motionkit/{utils,primitives}`. **No crypto/WebAuthn deps.**
+- **Dependencies:** motion + `@motionstack/{utils,primitives}`. **No crypto/WebAuthn deps.**
 - **Similarity concern:** the honest, no-crypto, alternative-always-present framing is the differentiator; clean-room. Low.
 - **Security invariants:** never collect/display key material; never claim "impossible to compromise"; never simulate success without app state; always offer an alternative; surface failure details.
 - **Release criteria:** 6 tests (step progression, onBegin, onRetry, unsupported, failure semantics, onUseAlternative) + axe; rapid gate.

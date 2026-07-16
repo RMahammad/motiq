@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence, type Transition } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, statusVars, type StatusTone } from "@/lib/motionkit";
+import { useReducedMotion, statusVars, type StatusTone } from "@/lib/motionstack";
 
 /* --------------------------------------------------------------------------
  * MultiFileQueue — a presentation-only view for *managing a collection* of

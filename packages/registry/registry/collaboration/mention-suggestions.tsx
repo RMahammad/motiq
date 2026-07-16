@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, statusVars, type StatusTone } from "@/lib/motionkit";
+import { useReducedMotion, statusVars, type StatusTone } from "@/lib/motionstack";
 
 /**
  * MentionSuggestions — the accessible popup half of an @-mention experience.

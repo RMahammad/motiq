@@ -9,7 +9,7 @@ A distinctive, professional component-library identity — **not** a generic pur
 - **Neutrals — Deep Ink** (dark) / **cool porcelain + blue-gray** (light). A five-step surface hierarchy (page → subtle band → surface → elevated → strong) so nothing flattens into an undifferentiated black page.
 - **Azure** `#4F7CFF` (dark) / `#315FEA` (light) is the **primary interaction colour** — buttons, active nav, selected tabs, focus rings, links, progress, primary motion emphasis.
 - **Cyan** `#22C7D9` / `#009FB3` is the **secondary / data** accent — supporting details, dev-tool accents, informational states, subtle indicators.
-- **Coral** `#FF6B5E` / `#E9564A` is the **rare Motionkit signature** — new-release indicators, one short highlighted phrase, small memorable brand moments. Never a general CTA colour; never paired with Azure on every card.
+- **Coral** `#FF6B5E` / `#E9564A` is the **rare Motionstack signature** — new-release indicators, one short highlighted phrase, small memorable brand moments. Never a general CTA colour; never paired with Azure on every card.
 - **Status:** Emerald = success, Amber = warning, Red = error, Sky = info. Danger actions use Error, never Coral.
 - Purple is retired as a brand colour (kept only where a creative component genuinely requires it). No brown/olive/beige/sepia.
 

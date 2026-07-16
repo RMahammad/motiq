@@ -34,7 +34,7 @@ import {
 } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, useAnchoredPortal } from "@/lib/motionkit";
+import { useReducedMotion, useAnchoredPortal } from "@/lib/motionstack";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */

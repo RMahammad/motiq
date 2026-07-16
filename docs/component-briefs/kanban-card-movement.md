@@ -9,7 +9,7 @@
 - **API sketch:** `<KanbanCardMovement columns cards onMove(cardId,toColumnId,toIndex) moveValidation selectedCardId onAddCard />`; card = { id, columnId, title, order, disabled?, meta? }; column = { id, title, limit? }.
 - **Accessibility:** **dragging never required** — keyboard/menu movement always available; announce origin + destination (aria-live); focus returns to the moved card; drop targets labelled; reduced motion; no colour-only column/status.
 - **Mobile:** touch drag + a move-menu fallback; large targets.
-- **Dependencies:** motion + `@motionkit/{utils,primitives}` **only — no external drag library** (clean-room pointer/keyboard implementation).
+- **Dependencies:** motion + `@motionstack/{utils,primitives}` **only — no external drag library** (clean-room pointer/keyboard implementation).
 - **Similarity concern:** boards are common, but the no-library, keyboard-first, optimistic-rollback design is original + clean-room. Medium — kept original (no copied APIs/effects).
 - **Performance:** move only the dragged card via transform/ref (no per-pointermove React state); document virtualization for very large boards.
 - **Release criteria:** 6 tests (move callback, invalid move, keyboard movement, rollback, focus preservation, non-drag alternative) + axe; rapid gate; Pro → protected registry routing.

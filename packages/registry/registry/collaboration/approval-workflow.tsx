@@ -12,7 +12,7 @@ import {
   useDisclosure,
   streamItemVariants,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /* --------------------------------------------------------------------------
  * ApprovalWorkflow — presentation + control for an app-owned approval/sign-off
@@ -769,12 +769,18 @@ export function ApprovalWorkflow({
                 transition={{ duration: reduce ? 0 : 0.24, ease: EASE }}
                 className="overflow-hidden"
               >
-                {/* ml-4 gives the status discs room to sit ON the rail without
-                    being clipped by this panel's overflow-hidden left edge. */}
-                <ol role="list" className="mt-1 ml-4 space-y-2 border-l border-[var(--color-border)] py-2 pl-5">
+                {/* Same rail language as the stage timeline: a node disc sitting
+                    on a connector that runs green through approvals. */}
+                <ol role="list" className="mt-1.5 flex flex-col pb-1 pl-1">
                   <AnimatePresence initial={false}>
-                    {workflow.history.map((d) => (
-                      <HistoryRow key={d.id} decision={d} reduce={reduce} fmt={fmt} />
+                    {workflow.history.map((d, i, arr) => (
+                      <HistoryRow
+                        key={d.id}
+                        decision={d}
+                        isLast={i === arr.length - 1}
+                        reduce={reduce}
+                        fmt={fmt}
+                      />
                     ))}
                   </AnimatePresence>
                 </ol>
@@ -1064,14 +1070,17 @@ const ACTION_LABEL: Record<ApprovalAction, { verb: string; tone: StatusTone }> =
 
 function HistoryRow({
   decision,
+  isLast,
   reduce,
   fmt,
 }: {
   decision: Decision;
+  isLast: boolean;
   reduce: boolean;
   fmt: (v: Date | number | string) => string;
 }) {
   const al = ACTION_LABEL[decision.action];
+  const v = statusVars(al.tone);
   return (
     <motion.li
       layout={!reduce}
@@ -1079,28 +1088,49 @@ function HistoryRow({
       animate={streamItemVariants.animate}
       exit={reduce ? { opacity: 0 } : streamItemVariants.exit}
       transition={{ duration: 0.24, ease: EASE }}
-      className="relative"
+      className="relative flex gap-3"
     >
-      <span
-        aria-hidden
-        className="absolute -left-[29px] top-0.5 grid h-4 w-4 place-items-center rounded-full ring-2 ring-[var(--color-surface)] [border:1.5px_solid]"
-        style={{ color: statusVars(al.tone).color, background: statusVars(al.tone).bg, borderColor: statusVars(al.tone).border }}
-      >
-        <ToneIcon tone={al.tone} size={9} />
-      </span>
-      <p className="text-[12.5px] leading-snug text-[var(--color-fg)]">
-        <span className="font-medium">{decision.actorName}</span>{" "}
-        <span className="text-[var(--color-muted)]">{al.verb}</span>
-        {decision.stageName ? <span className="text-[var(--color-muted)]"> {decision.stageName}</span> : null}
-      </p>
-      {decision.comment ? (
-        <p className="mt-0.5 rounded-md border-l-2 border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2 py-1 text-[11.5px] leading-snug text-[var(--color-muted)]">
-          {decision.comment}
+      {/* rail — identical treatment to the stage timeline: a tone-colored node
+          disc on a connector that runs green through approvals, neutral otherwise. */}
+      <div className="flex flex-col items-center">
+        <span
+          aria-hidden
+          className="relative z-10 grid h-7 w-7 shrink-0 place-items-center rounded-full [border:2px_solid]"
+          style={{ color: v.color, background: v.bg, borderColor: v.border }}
+        >
+          <ToneIcon tone={al.tone} size={14} />
+        </span>
+        {!isLast ? (
+          <span
+            aria-hidden
+            className="w-0.5 flex-1"
+            style={{
+              minHeight: 16,
+              background: al.tone === "success" ? "var(--color-success)" : "var(--color-border)",
+            }}
+          />
+        ) : null}
+      </div>
+
+      {/* body */}
+      <div className={cn("min-w-0 flex-1", isLast ? "pb-1" : "pb-3")}>
+        <p className="text-[12.5px] leading-snug text-[var(--color-fg)]">
+          <span className="font-medium">{decision.actorName}</span>{" "}
+          <span className="text-[var(--color-muted)]">{al.verb}</span>
+          {decision.stageName ? <span className="text-[var(--color-muted)]"> {decision.stageName}</span> : null}
         </p>
-      ) : null}
-      <time className="text-[11px] text-[var(--color-muted)]" dateTime={new Date(toMs(decision.timestamp)).toISOString()}>
-        {fmt(decision.timestamp)}
-      </time>
+        {decision.comment ? (
+          <p className="mt-1 rounded-md border-l-2 border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2 py-1 text-[11.5px] leading-snug text-[var(--color-muted)]">
+            {decision.comment}
+          </p>
+        ) : null}
+        <time
+          className="mt-0.5 block text-[11px] text-[var(--color-muted)]"
+          dateTime={new Date(toMs(decision.timestamp)).toISOString()}
+        >
+          {fmt(decision.timestamp)}
+        </time>
+      </div>
     </motion.li>
   );
 }

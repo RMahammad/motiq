@@ -3,7 +3,7 @@
   "name": "utils",
   "type": "registry:lib",
   "title": "cn() utility",
-  "description": "Tailwind class-merge helper used by every Motionkit component.",
+  "description": "Tailwind class-merge helper used by every Motionstack component.",
   "dependencies": [
     "clsx",
     "tailwind-merge"

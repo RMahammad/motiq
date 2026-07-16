@@ -9,7 +9,7 @@
 - **Accessibility:** decorative → `aria-hidden`; foreground content readable over the safe area; contrast preserved via density/intensity; forced-colors fallback.
 - **Performance:** CSS/WAAPI/SVG only; no continuous React re-renders (animate via CSS vars / attributes, not state); pause offscreen (`useVisibilityPause`) + when tab hidden; mobile reduced density; deterministic initial render.
 - **Mobile:** reduced density preset, no pointer dependency.
-- **Dependencies:** `@motionkit/utils` + `@motionkit/primitives` (visibility/reduced-motion). motion optional. No new deps.
+- **Dependencies:** `@motionstack/utils` + `@motionstack/primitives` (visibility/reduced-motion). motion optional. No new deps.
 - **Similarity concern:** must not copy recognizable contour/threads/waves implementations; the focal-region + safe-area behavior is the differentiator. Low–moderate.
 - **Tier:** Free.
 - **Release criteria:** stable SSR render (no hydration mismatch), reduced-motion static output, forced-colors fallback, no runtime loop when paused/hidden, light+dark, foreground-readable, responsive.

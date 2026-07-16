@@ -11,7 +11,7 @@
 - **API sketch:** `steps`, `currentStepId?`, `state?`, `mode?`, `orderSummary?`, `renderStep?`, `onNext?`, `onPrevious?`, `onGoToStep?`, `onSaveStep?`, `onSubmit?`, `onRetry?`, `continueLabel?`, `submitLabel?`, `showSaveStep?`.
 - **Accessibility:** ordered `<ol>` steps with `aria-current="step"`; status in text; error summary focused on invalid advance; focus moved to the active step heading after every step change; keyboard-operable Back/Continue/Save; blocked reason exposed; ≥44px targets; 200%-zoom-safe; reduced-motion renders final state; polite live region.
 - **Mobile:** stepper hidden, replaced by a compact active-step summary; order summary drops below the steps; keyboard-safe touch targets.
-- **Dependencies:** motion + `@motionkit/utils` + `@motionkit/primitives` (`useReducedMotion`, `useAsyncStatus`, `statusVars`). No new deps.
+- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives` (`useReducedMotion`, `useAsyncStatus`, `statusVars`). No new deps.
 - **Similarity concern:** step/wizard progress UIs are common; differentiate via editable completed steps + per-step validation/blocked/async-save + checkout lifecycle + order-summary slot, and by explicitly not being a payment processor. Low–moderate.
 - **Tier:** Pro.
 - **Release criteria:** rapid gate + navigation callbacks + validation/blocked behavior + async-save transition verified.

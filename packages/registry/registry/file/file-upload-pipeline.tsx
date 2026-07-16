@@ -10,7 +10,7 @@ import {
   useCopy,
   statusVars,
   type StatusTone,
-} from "@/lib/motionkit";
+} from "@/lib/motionstack";
 
 /* --------------------------------------------------------------------------
  * FileUploadPipeline — a presentation-only view of an upload queue with

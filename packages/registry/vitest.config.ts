@@ -6,7 +6,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@/lib/utils": new URL("./registry/lib/utils.ts", import.meta.url).pathname,
-      "@/lib/motionkit": new URL("./registry/lib/motion.ts", import.meta.url).pathname,
+      "@/lib/motionstack": new URL("./registry/lib/motion.ts", import.meta.url).pathname,
     },
   },
   test: {

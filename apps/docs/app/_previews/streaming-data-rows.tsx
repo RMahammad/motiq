@@ -8,7 +8,7 @@ import {
   type Column,
   type SortState,
 } from "@/registry/data/streaming-data-rows";
-import { formatNumber, formatTimestamp } from "@/lib/motionkit";
+import { formatNumber, formatTimestamp } from "@/lib/motionstack";
 
 /* Clearly-fictional order-processing feed. Data is illustrative demo data. */
 

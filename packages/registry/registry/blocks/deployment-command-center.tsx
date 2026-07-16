@@ -4,30 +4,30 @@ import * as React from "react";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion } from "@/lib/motionkit";
+import { useReducedMotion } from "@/lib/motionstack";
 
 import {
   EnvironmentSwitcher,
   type Environment,
-} from "@/components/motionkit/environment-switcher";
+} from "@/components/motionstack/environment-switcher";
 import {
   DeploymentPipeline,
   type Stage,
   type StageStatus,
-} from "@/components/motionkit/deployment-pipeline";
+} from "@/components/motionstack/deployment-pipeline";
 import {
   LiveLogStream,
   type LogEntry,
   type LogLevel,
   type LogStreamStatus,
-} from "@/components/motionkit/live-log-stream";
+} from "@/components/motionstack/live-log-stream";
 import {
   ApiRequestInspector,
   type ApiRequest,
   type ApiResponse,
   type InspectorState,
   type AuthSummary,
-} from "@/components/motionkit/api-request-inspector";
+} from "@/components/motionstack/api-request-inspector";
 
 /**
  * DeploymentCommandCenter — a composed, app-controlled "deploy console" block
