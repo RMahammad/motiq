@@ -43,38 +43,59 @@ const SIZE: Record<PreviewSize, { min: number; max: number; pad: string }> = {
  */
 const CENTER_FAMILIES = new Set<StageFamily>(["editorial", "creative"]);
 
-// Family surface tone: an interior background + a faint accent hue. Theme-aware via tokens.
+/**
+ * Preview-stage templates (docs/30 §preview templates). Each family maps to a
+ * reusable Deep-Ink "color template": a graphite/ink interior lifted by ONE
+ * accent family, so previews feel varied without drowning component content in
+ * colour. All values are token-driven (theme-aware).
+ *
+ *   ai / editorial → ink + Azure (primary), Cyan info details
+ *   console        → cool graphite + Cobalt/Cyan (developer console)
+ *   collab         → neutral + Cyan/Azure
+ *   data           → navy/graphite + Cyan/teal data accents
+ *   security       → cool navy + Azure/indigo (info blend), minimal
+ *   commerce       → neutral + Emerald availability detail
+ *   creative       → ink + Azure/Cyan atmosphere with a Coral signature edge
+ *   mobile         → neutral elevated surface (no strong hue)
+ *   productivity / neutral → quiet neutral graphite
+ */
 const FAMILY: Record<StageFamily, React.CSSProperties> = {
   ai: {
     background:
-      "radial-gradient(120% 120% at 50% -10%, color-mix(in oklab, var(--color-accent) 9%, var(--color-surface)) 0%, var(--color-surface) 60%)",
+      "radial-gradient(120% 120% at 50% -10%, color-mix(in oklab, var(--color-accent) 10%, var(--color-surface)) 0%, var(--color-surface) 60%)",
   },
   console: {
     background:
-      "linear-gradient(180deg, color-mix(in oklab, var(--color-fg) 4%, var(--color-surface)), var(--color-surface))",
+      "linear-gradient(180deg, color-mix(in oklab, var(--color-accent-3) 9%, var(--color-surface)), var(--color-surface))",
   },
   collab: {
     background:
-      "radial-gradient(130% 120% at 20% -10%, color-mix(in oklab, var(--color-accent) 7%, var(--color-surface)) 0%, var(--color-surface) 55%)",
+      "radial-gradient(130% 120% at 18% -10%, color-mix(in oklab, var(--color-secondary-accent) 10%, var(--color-surface)) 0%, var(--color-surface) 58%)",
   },
-  data: { background: "var(--color-surface)" },
+  data: {
+    background:
+      "linear-gradient(180deg, color-mix(in oklab, var(--color-secondary-accent) 8%, var(--color-surface)), var(--color-surface))",
+  },
   mobile: {
     background:
-      "radial-gradient(120% 120% at 50% 0%, color-mix(in oklab, var(--color-accent) 8%, var(--color-bg-secondary)), var(--color-bg-secondary))",
+      "linear-gradient(180deg, var(--color-surface-2), var(--color-bg-secondary))",
   },
   commerce: {
     background:
-      "linear-gradient(180deg, color-mix(in oklab, var(--color-accent) 5%, var(--color-surface)), var(--color-bg-secondary))",
+      "radial-gradient(120% 120% at 50% -10%, color-mix(in oklab, var(--color-success) 8%, var(--color-surface)) 0%, var(--color-surface) 60%)",
   },
   security: {
     background:
-      "radial-gradient(120% 120% at 50% -10%, color-mix(in oklab, var(--color-success) 7%, var(--color-surface)) 0%, var(--color-surface) 60%)",
+      "radial-gradient(120% 120% at 50% -10%, color-mix(in oklab, var(--color-info) 9%, var(--color-surface)) 0%, var(--color-surface) 60%)",
   },
   productivity: { background: "var(--color-bg-secondary)" },
-  creative: { background: "var(--color-surface)" },
+  creative: {
+    background:
+      "radial-gradient(130% 120% at 82% -10%, color-mix(in oklab, var(--color-signature) 8%, var(--color-surface)) 0%, color-mix(in oklab, var(--color-accent) 8%, var(--color-surface)) 100%)",
+  },
   editorial: {
     background:
-      "radial-gradient(130% 130% at 50% 0%, color-mix(in oklab, var(--color-accent) 10%, var(--color-surface)) 0%, var(--color-surface) 62%)",
+      "radial-gradient(130% 130% at 50% 0%, color-mix(in oklab, var(--color-accent) 11%, var(--color-surface)) 0%, var(--color-surface) 62%)",
   },
   neutral: { background: "var(--color-bg-secondary)" },
 };

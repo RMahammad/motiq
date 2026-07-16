@@ -33,14 +33,14 @@ type Family = {
   c: string;
 };
 const FAMILIES: Family[] = [
-  { cat: "ai", name: "AI workspace", value: "Streaming responses, agent runs, and tool activity.", count: 6, c: "#8b7bff", icon: "M12 3l1.8 4.7L18.5 9l-4.7 1.3L12 15l-1.8-4.7L5.5 9l4.7-1.3zM18 15l.9 2.3L21 18l-2.1.7L18 21l-.9-2.3L15 18l2.1-.7z" },
-  { cat: "developer-tools", name: "Developer console", value: "Pipelines, logs, inspectors, and environments.", count: 6, c: "#5b9dff", icon: "M5 6l6 6-6 6M13 18h6" },
-  { cat: "collaboration", name: "Collaboration", value: "Presence, approvals, comments, and activity.", count: 6, c: "#f0b000", icon: "M9 11a3 3 0 100-6 3 3 0 000 6zM3 20a6 6 0 0112 0M17 11a3 3 0 10-2-5.2M15.5 14.5A6 6 0 0121 20" },
-  { cat: "data-motion", name: "Data motion", value: "KPIs, refresh states, and streaming tables.", count: 6, c: "#31c5f0", icon: "M5 20V11M12 20V4M19 20v-6" },
-  { cat: "commerce", name: "Commerce", value: "Variants, cart, and checkout flows.", count: 3, c: "#3fcf8e", icon: "M4 6h15l-1.6 8.5a2 2 0 01-2 1.6H8.6a2 2 0 01-2-1.7L4.7 4.6A1 1 0 003.7 4H2M8 20a1 1 0 100-2 1 1 0 000 2zM17 20a1 1 0 100-2 1 1 0 000 2z" },
-  { cat: "security", name: "Security", value: "Passkeys, two-factor, and session safety.", count: 3, c: "#2dd4bf", icon: "M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6zM9 12l2 2 4-4" },
-  { cat: "productivity", name: "Productivity", value: "Boards, timelines, and dependencies.", count: 3, c: "#fb8c4b", icon: "M4 4h5v16H4zM10 4h4v10h-4zM15 4h5v7h-5z" },
-  { cat: "text", name: "Text & creative", value: "Kinetic text, cards, and backgrounds.", count: 6, c: "#f472b6", icon: "M4 7V5h16v2M12 5v14M9 19h6" },
+  { cat: "ai", name: "AI workspace", value: "Streaming responses, agent runs, and tool activity.", count: 6, c: "#4f7cff", icon: "M12 3l1.8 4.7L18.5 9l-4.7 1.3L12 15l-1.8-4.7L5.5 9l4.7-1.3zM18 15l.9 2.3L21 18l-2.1.7L18 21l-.9-2.3L15 18l2.1-.7z" },
+  { cat: "developer-tools", name: "Developer console", value: "Pipelines, logs, inspectors, and environments.", count: 6, c: "#3e5ae8", icon: "M5 6l6 6-6 6M13 18h6" },
+  { cat: "collaboration", name: "Collaboration", value: "Presence, approvals, comments, and activity.", count: 6, c: "#22c7d9", icon: "M9 11a3 3 0 100-6 3 3 0 000 6zM3 20a6 6 0 0112 0M17 11a3 3 0 10-2-5.2M15.5 14.5A6 6 0 0121 20" },
+  { cat: "data-motion", name: "Data motion", value: "KPIs, refresh states, and streaming tables.", count: 6, c: "#14b8a6", icon: "M5 20V11M12 20V4M19 20v-6" },
+  { cat: "commerce", name: "Commerce", value: "Variants, cart, and checkout flows.", count: 3, c: "#10b981", icon: "M4 6h15l-1.6 8.5a2 2 0 01-2 1.6H8.6a2 2 0 01-2-1.7L4.7 4.6A1 1 0 003.7 4H2M8 20a1 1 0 100-2 1 1 0 000 2zM17 20a1 1 0 100-2 1 1 0 000 2z" },
+  { cat: "security", name: "Security", value: "Passkeys, two-factor, and session safety.", count: 3, c: "#6366f1", icon: "M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6zM9 12l2 2 4-4" },
+  { cat: "productivity", name: "Productivity", value: "Boards, timelines, and dependencies.", count: 3, c: "#f59e0b", icon: "M4 4h5v16H4zM10 4h4v10h-4zM15 4h5v7h-5z" },
+  { cat: "text", name: "Text & creative", value: "Kinetic text, cards, and backgrounds.", count: 6, c: "#ff6b5e", icon: "M4 7V5h16v2M12 5v14M9 19h6" },
 ];
 
 const categoryHref = (cat: string) => `/components?category=${cat}`;
@@ -98,7 +98,7 @@ function FeaturedCard({ item, wide }: { item: CatalogItem; wide?: boolean }) {
   );
 
   return (
-    <div className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] transition-shadow hover:shadow-[var(--shadow-md)]">
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] ring-1 ring-transparent transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--color-accent)_35%,var(--color-border))] hover:shadow-[var(--shadow-md)] hover:ring-[color-mix(in_oklab,var(--color-accent)_18%,transparent)]">
       {wide ? (
         <div className="grid lg:grid-cols-[1.35fr_0.65fr]">
           <div className="min-w-0 border-b border-[var(--color-border)] lg:border-b-0 lg:border-r">{preview}</div>
@@ -120,7 +120,7 @@ function AccessPill({ access }: { access: CatalogItem["access"] }) {
     <span
       className={`rounded-full px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${
         pro
-          ? "bg-[color-mix(in_oklab,var(--color-accent)_18%,transparent)] text-[var(--color-accent-text)]"
+          ? "bg-[var(--color-accent-soft)] text-[var(--color-accent-text)]"
           : "bg-[var(--color-bg-secondary)] text-[var(--color-muted)]"
       }`}
     >
@@ -172,20 +172,24 @@ function CategoryTile({ f }: { f: Family }) {
       className="group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
       style={{ ["--fam" as string]: f.c }}
     >
-      {/* Bold family cover — a colored panel with the family glyph + a soft grid
-          motif. Distinct per family so the section never reads as a dark-dashboard grid. */}
+      {/* Family cover — restrained: a top-border accent + a SOFT top-down tint +
+          a colored glyph chip. The family colour reads through the icon, border,
+          and a faint wash only — never a filled colour panel (cool identity rule). */}
       <div
-        className="relative flex h-[150px] items-center justify-center overflow-hidden"
-        style={{ background: "linear-gradient(135deg, color-mix(in oklab, var(--fam) 30%, var(--color-surface)) 0%, color-mix(in oklab, var(--fam) 10%, var(--color-surface)) 100%)" }}
+        className="relative flex h-[136px] items-center justify-center overflow-hidden border-t-2"
+        style={{
+          borderTopColor: "var(--fam)",
+          background: "radial-gradient(120% 120% at 50% 0%, color-mix(in oklab, var(--fam) 13%, var(--color-surface)) 0%, var(--color-surface) 72%)",
+        }}
         aria-hidden
       >
         <div
-          className="absolute inset-0 opacity-[0.4]"
-          style={{ background: "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--fam) 45%, transparent) 1px, transparent 0)", backgroundSize: "18px 18px" }}
+          className="absolute inset-0 opacity-[0.3]"
+          style={{ backgroundImage: "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--fam) 34%, transparent) 1px, transparent 0)", backgroundSize: "18px 18px", WebkitMaskImage: "radial-gradient(90% 90% at 50% 0%, #000, transparent 75%)", maskImage: "radial-gradient(90% 90% at 50% 0%, #000, transparent 75%)" }}
         />
         <span
           className="relative grid h-16 w-16 place-items-center rounded-2xl border shadow-[var(--shadow-sm)] transition-transform duration-300 group-hover:scale-105"
-          style={{ background: "color-mix(in oklab, var(--fam) 22%, var(--color-surface))", borderColor: "color-mix(in oklab, var(--fam) 45%, transparent)", color: "var(--fam)" }}
+          style={{ background: "color-mix(in oklab, var(--fam) 16%, var(--color-surface))", borderColor: "color-mix(in oklab, var(--fam) 40%, transparent)", color: "var(--fam)" }}
         >
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
             <path d={f.icon} stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
@@ -294,30 +298,45 @@ export default function HomePage() {
               light-first environment, with the product proof on the right and a
               large browser-style showcase below (docs/60 rebuild). ===== */}
       <section className="relative isolate overflow-hidden">
-        {/* Background (docs/61): a restrained dot lattice masked toward the panel,
-            a soft radial light behind the product panel (upper-right) for depth, a
-            thin top edge-light, and a base wash into the page. No particles/beams.
-            Token-driven so it reads intentionally in light and dark. */}
+        {/* Hero atmosphere (docs/30): a deep-ink wash with a very subtle AZURE
+            spotlight behind the product panel (upper-right), a faint CYAN
+            counter-glow lower-left for depth, a restrained dot lattice masked
+            toward the panel, a thin azure top edge-light, and a base wash into the
+            page. No particles/beams. Token-driven so it reads in both themes. */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          {/* base wash — lifts the page off flat bg for a lit-studio feel */}
+          <div
+            className="absolute inset-0"
+            style={{ background: "radial-gradient(120% 90% at 50% -20%, var(--color-bg-elevated), transparent 70%)" }}
+          />
+          {/* fine dot lattice, masked toward the product panel */}
           <div
             className="absolute inset-0"
             style={{
               backgroundImage:
-                "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-fg) 8%, transparent) 1px, transparent 0)",
+                "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-fg) 7%, transparent) 1px, transparent 0)",
               backgroundSize: "30px 30px",
-              opacity: 0.55,
-              WebkitMaskImage: "radial-gradient(110% 80% at 78% 8%, #000 0%, transparent 62%)",
-              maskImage: "radial-gradient(110% 80% at 78% 8%, #000 0%, transparent 62%)",
+              opacity: 0.6,
+              WebkitMaskImage: "radial-gradient(120% 85% at 80% 4%, #000 0%, transparent 60%)",
+              maskImage: "radial-gradient(120% 85% at 80% 4%, #000 0%, transparent 60%)",
             }}
           />
+          {/* azure spotlight behind the panel */}
           <div
             className="absolute inset-0"
-            style={{ background: "radial-gradient(40% 44% at 82% 14%, color-mix(in oklab, var(--color-accent) 16%, transparent), transparent 62%)" }}
+            style={{ background: "radial-gradient(42% 46% at 84% 12%, var(--color-spotlight), transparent 64%)" }}
           />
+          {/* cyan counter-glow, very faint, lower-left */}
+          <div
+            className="absolute inset-0"
+            style={{ background: "radial-gradient(38% 40% at 6% 88%, var(--color-secondary-accent-soft), transparent 60%)" }}
+          />
+          {/* azure top edge-light */}
           <div
             className="absolute inset-x-0 top-0 h-px"
-            style={{ background: "linear-gradient(to right, transparent, color-mix(in oklab, var(--color-accent) 40%, transparent), transparent)" }}
+            style={{ background: "linear-gradient(to right, transparent, color-mix(in oklab, var(--color-accent) 45%, transparent), transparent)" }}
           />
+          {/* base wash into the page */}
           <div
             className="absolute inset-x-0 bottom-0 h-32"
             style={{ background: "linear-gradient(to bottom, transparent, var(--color-bg))" }}
@@ -342,12 +361,14 @@ export default function HomePage() {
               <h1 className="mt-5 text-[clamp(2.2rem,4.4vw,3.9rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-[var(--color-fg)]">
                 Ship product interfaces
                 <br className="hidden sm:block" /> that{" "}
-                <span className="relative whitespace-nowrap text-[var(--color-accent-text)]">
+                {/* The one Coral signature moment of the hero — headline is
+                    otherwise strong-neutral; Azure carries all interaction. */}
+                <span className="relative whitespace-nowrap text-[var(--color-signature)]">
                   feel alive
                   <span
                     aria-hidden
                     className="hero-underline absolute inset-x-0 -bottom-1 h-[0.09em] origin-left rounded-full"
-                    style={{ background: "linear-gradient(to right, var(--color-accent), color-mix(in oklab, var(--color-accent) 30%, transparent))" }}
+                    style={{ background: "linear-gradient(to right, var(--color-signature), color-mix(in oklab, var(--color-signature) 25%, transparent))" }}
                   />
                 </span>
                 .
@@ -394,8 +415,8 @@ export default function HomePage() {
                   <p className="text-[12px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">What ships today</p>
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">
                     <span className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3fcf8e] opacity-70 motion-reduce:hidden" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#3fcf8e]" />
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-success)] opacity-70 motion-reduce:hidden" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-success)]" />
                     </span>
                     Live
                   </span>
@@ -410,7 +431,7 @@ export default function HomePage() {
                     as a preview, not an interactive surface */}
                 <div className="mt-3.5 overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-3">
                   <div className="mb-2 flex items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#8b7bff]" aria-hidden /> AI Response Stream
+                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden /> AI Response Stream
                     <span className="ml-auto font-medium normal-case tracking-normal text-[var(--color-accent-text)]">Free</span>
                   </div>
                   <div className="[&_footer]:hidden [&_p]:text-[13.5px]">
@@ -444,33 +465,45 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
-      {/* ===== 2 · Product differentiation ===== */}
-      <section className="py-8">
-        <div className="rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6 sm:p-8 lg:p-10">
+      {/* ===== 2 · Product differentiation — restrained, informative band ===== */}
+      <section className="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-6 shadow-[var(--shadow-sm)] sm:p-8 lg:p-10">
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px" style={{ background: "linear-gradient(to right, transparent, var(--color-border-strong), transparent)" }} />
           <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">Why this library</p>
           <h2 className="mt-2 max-w-2xl text-[clamp(1.5rem,3vw,2.1rem)] font-semibold tracking-tight text-[var(--color-fg)]">
             A motion system for real products — not a pile of effects.
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {DIFFERENTIATORS.map((d) => (
+            {DIFFERENTIATORS.map((d, i) => {
+              // Azure carries the icons; exactly ONE proof point (accessibility)
+              // is the Coral signature moment of this section.
+              const sig = i === 2;
+              return (
               <div key={d.t} className="flex flex-col gap-2.5">
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-[color-mix(in_oklab,var(--color-accent)_14%,transparent)] text-[var(--color-accent-text)]">
+                <span
+                  className={`grid h-10 w-10 place-items-center rounded-xl ring-1 ring-inset ${
+                    sig
+                      ? "bg-[var(--color-signature-soft)] text-[var(--color-signature-text)] ring-[color-mix(in_oklab,var(--color-signature)_28%,transparent)]"
+                      : "bg-[var(--color-accent-soft)] text-[var(--color-accent-text)] ring-[color-mix(in_oklab,var(--color-accent)_22%,transparent)]"
+                  }`}
+                >
                   <PropIcon path={d.icon} />
                 </span>
                 <h3 className="text-[15.5px] font-semibold text-[var(--color-fg)]">{d.t}</h3>
                 <p className="text-[13.5px] leading-relaxed text-[var(--color-muted)]">{d.d}</p>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* ===== 3 · Featured components ===== */}
-      <section className="py-14">
+      {/* ===== 3 · Featured components — editorial showcase on the page base ===== */}
+      <section className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-xl">
-            <h2 className="text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Featured components</h2>
+            <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">The catalog</p>
+            <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Featured components</h2>
             <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Six of the catalog’s strongest — each preview is the real component in one representative state.</p>
           </div>
           <Link href="/components" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
@@ -489,44 +522,59 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 4 · Workflow categories ===== */}
-      <section className="py-14">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-          <div className="max-w-xl">
-            <h2 className="text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Built for real workflows</h2>
-            <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Eight product families — pick a surface, preview it live, install what you need.</p>
+      {/* ===== 4 · Workflow categories — vibrant but controlled, warm sand band ===== */}
+      <section className="relative">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 border-y border-[var(--color-border)] bg-[var(--color-bg-secondary)]" />
+        <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-xl">
+              <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">By workflow</p>
+              <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Built for real workflows</h2>
+              <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Eight product families — each with its own accent — pick a surface, preview it live, install what you need.</p>
+            </div>
+            <Link href="/components" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
+              All categories →
+            </Link>
           </div>
-          <Link href="/components" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
-            All categories →
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {FAMILIES.map((f) => (
-            <CategoryTile key={f.cat} f={f} />
-          ))}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {FAMILIES.map((f) => (
+              <CategoryTile key={f.cat} f={f} />
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ===== 5 · Complete packs ===== */}
-      <section className="py-14">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-          <div className="max-w-xl">
-            <h2 className="text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Complete workflow packs</h2>
-            <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Finished product outcomes — four components composed into one installable, app-controlled block.</p>
+      {/* ===== 5 · Complete packs — productized, azure-lit elevated band ===== */}
+      <section className="relative">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[var(--color-bg-elevated)]" />
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10" style={{ background: "radial-gradient(55% 55% at 88% -5%, var(--color-spotlight), transparent 62%)" }} />
+        {/* subtle azure edge-light across the top of the band */}
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px" style={{ background: "linear-gradient(to right, transparent, color-mix(in oklab, var(--color-accent) 40%, transparent), transparent)" }} />
+        <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div className="max-w-xl">
+              {/* the one small Coral commercial highlight in this section */}
+              <p className="inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-signature)]" aria-hidden />
+                Ship faster
+              </p>
+              <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Complete workflow packs</h2>
+              <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Finished product outcomes — four components composed into one installable, app-controlled block.</p>
+            </div>
+            <Link href="/packs" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
+              All packs →
+            </Link>
           </div>
-          <Link href="/packs" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
-            All packs →
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2">
-          {packs.map((p) => (
-            <PackCard key={p.slug} p={p} />
-          ))}
+          <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2">
+            {packs.map((p) => (
+              <PackCard key={p.slug} p={p} />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ===== 6 · Free vs Pro ===== */}
-      <section className="py-14">
+      <section className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-5 md:grid-cols-2">
           <div className="flex flex-col rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-sm)]">
             <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">{product.freeTierLabel}</p>
@@ -542,28 +590,43 @@ export default function HomePage() {
               Install the free registry →
             </Link>
           </div>
-          <div className="flex flex-col rounded-3xl border border-[color-mix(in_oklab,var(--color-accent)_40%,var(--color-border))] bg-[color-mix(in_oklab,var(--color-accent)_7%,var(--color-surface))] p-8 shadow-[var(--shadow-md)]">
-            <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">{product.premiumTierLabel}</p>
-            <h3 className="mt-2 text-[26px] font-semibold tracking-tight text-[var(--color-fg)]">Go Pro</h3>
-            <p className="mt-3 max-w-md text-[14.5px] leading-relaxed text-[var(--color-muted)]">
-              The full catalog, advanced creative components and backgrounds, every complete workflow block and pack, private registry delivery, updates, and support.
-            </p>
-            <div className="mt-6 flex-1" />
-            <AccessCta cta={complete} />
+          <div className="relative flex flex-col overflow-hidden rounded-3xl border border-[color-mix(in_oklab,var(--color-accent)_40%,var(--color-border))] bg-[color-mix(in_oklab,var(--color-accent)_8%,var(--color-surface))] p-8 shadow-[var(--shadow-md)]">
+            <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(70% 90% at 100% 0%, var(--color-card-glow), transparent 62%)" }} />
+            <div className="relative flex flex-1 flex-col">
+              <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">{product.premiumTierLabel}</p>
+              <h3 className="mt-2 text-[26px] font-semibold tracking-tight text-[var(--color-fg)]">Go Pro</h3>
+              <p className="mt-3 max-w-md text-[14.5px] leading-relaxed text-[var(--color-muted)]">
+                The full catalog, advanced creative components and backgrounds, every complete workflow block and pack, private registry delivery, updates, and support.
+              </p>
+              <div className="mt-6 flex-1" />
+              <AccessCta cta={complete} />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ===== 7 · Final CTA ===== */}
-      <section className="py-16">
-        <div className="relative overflow-hidden rounded-[2rem] border border-[var(--color-border)] bg-[var(--color-surface-raised)] px-6 py-16 text-center shadow-[var(--shadow-md)] sm:px-12">
+      {/* ===== 7 · Final CTA — a deep-ink azure-lit panel that speaks the hero's
+              visual language (strong neutral surface + azure/cyan lighting + one
+              small Coral detail). Theme-aware, not a disconnected bright rectangle. ===== */}
+      <section className="mx-auto max-w-[1440px] px-4 pb-20 pt-4 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-[2rem] border border-[var(--color-border-strong)] bg-[var(--color-surface-strong)] px-6 py-16 text-center shadow-[var(--shadow-lg)] sm:px-12">
+          {/* azure spotlight + cyan counter-glow — the hero's lighting, echoed */}
+          <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(70% 100% at 50% -15%, var(--color-spotlight), transparent 60%)" }} />
+          <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(50% 60% at 92% 8%, var(--color-secondary-accent-soft), transparent 62%)" }} />
+          {/* azure top edge-light */}
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px" style={{ background: "linear-gradient(to right, transparent, color-mix(in oklab, var(--color-accent) 55%, transparent), transparent)" }} />
+          {/* faint dot lattice masked toward the top, like the hero */}
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0"
-            style={{ background: "radial-gradient(80% 120% at 50% -10%, color-mix(in oklab, var(--color-accent) 14%, transparent), transparent 60%)" }}
+            className="pointer-events-none absolute inset-0 opacity-[0.5]"
+            style={{ backgroundImage: "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-fg) 8%, transparent) 1px, transparent 0)", backgroundSize: "28px 28px", WebkitMaskImage: "radial-gradient(120% 85% at 50% 0%, #000, transparent 65%)", maskImage: "radial-gradient(120% 85% at 50% 0%, #000, transparent 65%)" }}
           />
           <div className="relative">
-            <h2 className="mx-auto max-w-2xl text-[clamp(1.9rem,4vw,3rem)] font-semibold tracking-tight text-[var(--color-fg)]">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3.5 py-1.5 text-[12.5px] font-semibold uppercase tracking-wide text-[var(--color-fg-secondary)] shadow-[var(--shadow-sm)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-signature)]" aria-hidden />
+              Start today
+            </span>
+            <h2 className="mx-auto mt-5 max-w-2xl text-[clamp(1.9rem,4vw,3rem)] font-semibold tracking-tight text-[var(--color-fg)]">
               Ship product motion today.
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-[15.5px] leading-relaxed text-[var(--color-muted)]">
@@ -572,13 +635,13 @@ export default function HomePage() {
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link
                 href="/components"
-                className="rounded-xl bg-[var(--color-accent)] px-6 py-3 text-[15px] font-semibold text-[var(--color-accent-fg)] shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-accent-hover)]"
+                className="rounded-xl bg-[var(--color-accent)] px-6 py-3 text-[15px] font-semibold text-[var(--color-accent-fg)] shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface-strong)]"
               >
                 Browse components
               </Link>
               <Link
                 href="/packs"
-                className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-3 text-[15px] font-semibold text-[var(--color-fg)] transition-colors hover:bg-[var(--color-bg-secondary)]"
+                className="rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-6 py-3 text-[15px] font-semibold text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface-strong)]"
               >
                 Explore packs
               </Link>
@@ -586,7 +649,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      </div>
     </>
   );
 }

@@ -1,78 +1,67 @@
 # 30 — Showcase visual system
 
-> **Type:** 🟢 Canonical for the showcase (docs/marketing/catalog) visual identity · **Status:** **Direction A selected** (2026-07-14) · **Supersedes** the "Motion Laboratory" chrome in [`28-visual-direction.md`](28-visual-direction.md) for the product surface. · **Related:** [ADR-0014](adrs/0014-visual-direction.md) (to be revised), [`10-design-tokens.md`](10-design-tokens.md), [`31-competitive-product-review.md`](31-competitive-product-review.md).
+> **Type:** 🟢 Canonical for the showcase (docs/marketing/catalog) visual identity · **Status:** **"Deep Ink + Azure + Coral" selected** (2026-07-16) · **Supersedes** every prior identity (violet-on-near-black, warm graphite/cobalt, graphite/electric-violet). · **Related:** [ADR-0014](adrs/0014-visual-direction.md) (to be revised), [`10-design-tokens.md`](10-design-tokens.md), [`31-competitive-product-review.md`](31-competitive-product-review.md).
 
-## Problem this fixes
+## Identity
 
-The old showcase ran **two clashing palettes**: the docs chrome (`apps/docs/app/docs.css`) used a lime `#c8ff2f` signal (dark) that flipped to beige `#faf9f6` + olive `#3a7d00` (light), while component previews (`packages/tokens/styles.css`) used a separate indigo `#4f46e5`/`#818cf8`. Plus tiny type, terminal micro-labels, and narrow width. **One coherent identity** for the product surface is required; individual component *demos* may still expose customizable colors, but the chrome around them must be consistent.
+A distinctive, professional component-library identity — **not** a generic purple AI site.
 
-Scope: this system styles the **product surface** (homepage, catalog, docs, component pages). It is **not** the per-component demo palette (those use `--color-*` tokens and can be themed by controls).
+- **Neutrals — Deep Ink** (dark) / **cool porcelain + blue-gray** (light). A five-step surface hierarchy (page → subtle band → surface → elevated → strong) so nothing flattens into an undifferentiated black page.
+- **Azure** `#4F7CFF` (dark) / `#315FEA` (light) is the **primary interaction colour** — buttons, active nav, selected tabs, focus rings, links, progress, primary motion emphasis.
+- **Cyan** `#22C7D9` / `#009FB3` is the **secondary / data** accent — supporting details, dev-tool accents, informational states, subtle indicators.
+- **Coral** `#FF6B5E` / `#E9564A` is the **rare Motionkit signature** — new-release indicators, one short highlighted phrase, small memorable brand moments. Never a general CTA colour; never paired with Azure on every card.
+- **Status:** Emerald = success, Amber = warning, Red = error, Sky = info. Danger actions use Error, never Coral.
+- Purple is retired as a brand colour (kept only where a creative component genuinely requires it). No brown/olive/beige/sepia.
 
-## Selected: Direction A — "Violet studio" ✅
+Colour budget ≈ 65% neutral bg/surfaces · 20% elevated neutral · 10% Azure/Cyan · 5% Coral + status.
 
-Neutral white/graphite surfaces with one electric-violet accent. Closest to the Linear/Animate-UI register: premium, calm, broad appeal, lets colorful component demos pop without the chrome competing. Implemented in [`packages/tokens/styles.css`](../packages/tokens/styles.css).
+Scope: the **product surface** (homepage, catalog, docs, component pages). Per-component demo palettes (product swatches, avatar identity colours, chart series) remain component-specific customizable APIs and are out of scope.
 
-| Role | Light | Dark |
+## Palette
+
+| Role | Dark | Light |
 |---|---|---|
-| Background | `#FFFFFF` | `#08090C` |
-| Secondary bg | `#F6F7FB` | `#0E1015` |
-| Surface (elevated) | `#FFFFFF` | `#14171D` |
-| Surface raised | `#FFFFFF` | `#1B1F27` |
-| Primary text | `#111318` | `#F7F8FA` |
-| Secondary text | `#667085` | `#9BA3B4` |
-| Border | `#E4E7EC` | `#252A34` |
-| Primary accent | `#695CFF` | `#8176FF` |
-| Accent hover | `#5748F5` | `#9A90FF` |
-| Focus ring | `#695CFF` (3px @40% via `--ring`) | `#8176FF` |
-| Success | `#16A34A` | `#4ADE80` |
-| Warning | `#B45309` | `#FBBF24` |
-| Error | `#DC2626` | `#F87171` |
-| Code bg | `#F6F7FB` | `#0E1015` |
-| Preview-stage bg | `#FAFBFD` | `#0B0D12` |
+| Background | `#080C14` | `#F7F9FC` |
+| Background subtle | `#0D1420` | `#F0F4F9` |
+| Surface | `#111827` | `#FFFFFF` |
+| Surface elevated | `#192337` | `#F8FAFD` |
+| Surface hover | `#202D43` | `#EEF3FA` |
+| Surface strong | `#243249` | `#E8EEF7` |
+| Border / strong | `#263449` / `#354863` | `#DCE4EF` / `#C5D1E1` |
+| Foreground | `#F8FAFC` | `#101828` |
+| Foreground secondary | `#CBD5E1` | `#344054` |
+| Foreground muted | `#9CAABD` | `#667085` |
+| Foreground subtle | `#748197` | `#8793A5` |
+| Azure / hover / pressed | `#4F7CFF` / `#6F91FF` / `#3D65E6` | `#315FEA` / `#244FD1` / `#1D40B3` |
+| Azure soft | `rgba(79,124,255,0.14)` | `rgba(49,95,234,0.10)` |
+| Cyan / soft | `#22C7D9` / `rgba(34,199,217,0.12)` | `#009FB3` / `rgba(0,159,179,0.10)` |
+| Coral / hover / soft | `#FF6B5E` / `#FF8176` / `rgba(255,107,94,0.12)` | `#E9564A` / `#D9483D` / `rgba(233,86,74,0.10)` |
+| Success / Warning / Error / Info | `#32D583` / `#F6B94A` / `#FF5C70` / `#38BDF8` | `#128A55` / `#B86E00` / `#D92D4A` / `#087DBD` |
 
-- **Gradient policy:** restrained. One brand gradient `linear-gradient(135deg, #695CFF, #8176FF)` for the hero accent + CTA glow only; never behind body text. No rainbow/mesh chrome (component demos may use their own).
-- **Typography:** `--font-display`/`--font-sans` = system UI stack (swap to a variable display face later); `--font-mono` for code. Scale: hero 56–80 / 40–52 mobile; section 36–52; card title 18–24; body 15–18; metadata ≥12–13. No all-caps micro-labels as the default; letter-spacing near-0 except the eyebrow.
-- **Radius:** 6/10/16 (`--radius-sm/md/lg`); cards 16, controls 10, chips 6.
-- **Shadow:** `--shadow-sm/md/lg`, tuned to the graphite ink so they read on white without muddiness.
-- **Spacing/grid:** 4-based scale; content max ~1200–1440; catalog grid `repeat(auto-fill, minmax(320px, 1fr))` so previews stay large (never 4–5 tiny cards per row).
-- **Motion character:** confident and quick — 120–360ms, `cubic-bezier(0.2,0,0,1)`; springs only for gestures. Reduced-motion preserves final state.
-- **Contrast (informal WCAG 2.2 AA):** fg/bg ~19:1 (light) / ~18:1 (dark) ✓; muted/bg ~4.7:1 (light) / ~7:1 (dark) ✓ AA normal; accent-as-fill with `--color-accent-fg` white ≈ 3.9:1 → **AA for large/bold UI text (≥3:1) only** — small text on accent must use `--color-accent-hover` (darker) or dark ink. Focus ring meets 3:1 non-text.
-- **Strengths:** widest appeal, premium/neutral, demo colors pop. **Risks:** violet-on-white button labels need the large-text caveat above; must not become "generic SaaS" — signature component demos above the fold carry the personality.
+Primary button — dark: Azure bg + deep-ink text; light: darker Azure bg + white text. Secondary button: neutral elevated surface + strong border, Azure border on hover. Focus: visible Azure ring with offset, both themes.
 
-## Direction B — "Mono + electric cyan" (not selected)
+## Section-level treatment (homepage)
 
-Black-and-white studio, teal/cyan accent. More technical/distinctive.
+| Section | Treatment |
+|---|---|
+| Hero | Deep-ink / porcelain base, very subtle Azure spotlight + Cyan counter-glow, masked dot lattice, Azure top edge-light; strong neutral headline with **one Coral signature phrase** ("feel alive"); Azure primary CTA + neutral secondary |
+| Differentiation | Mostly neutral; small Azure icon chips; exactly **one Coral proof point** (accessibility) |
+| Featured | Neutral surface cards; Azure reserved for interaction/selected/hover; category secondary accents only in small details |
+| Categories | One neutral card system; family colour only as a **top-border + soft tint + icon** (never a filled card) |
+| Packs | Deep-ink azure-lit band (soft blue-gray in light), elevated pack cards, subtle Azure edge-light, **one small Coral commercial highlight** (the "Ship faster" dot) |
+| Final CTA | A strong neutral (surface-strong) panel that **echoes the hero** — Azure/Cyan lighting + one Coral detail (the "Start today" dot). Not a disconnected bright rectangle |
+| Footer | Quiet neutral, hairline top rule |
 
-| Role | Light | Dark |
-|---|---|---|
-| Background / Secondary | `#FFFFFF` / `#F4F7F8` | `#07090B` / `#0C1014` |
-| Surface | `#FFFFFF` | `#101419` |
-| Text / Muted | `#0A0D10` / `#5F6B76` | `#F8FAFC` / `#9AA7B3` |
-| Border | `#DDE3E7` | `#242B33` |
-| Accent / hover | `#007A8A` / `#006875` | `#32D6C5` / `#5FE3D6` |
+### Category accents
+AI = Azure `#4F7CFF` · Developer tools = Cobalt `#3E5AE8` · Collaboration = Cyan `#22C7D9` · Data = Teal `#14B8A6` · Commerce = Emerald `#10B981` · Security = Indigo `#6366F1` · Productivity = Amber `#F59E0B` · Text & creative = Coral `#FF6B5E`. Icons, small badges, active details, soft tints, links only.
 
-Success `#0E9F6E`/`#34D399`, Warning `#B45309`/`#FBBF24`, Error `#D64550`/`#F87171`; code `#F4F7F8`/`#0C1014`; stage `#F7FAFB`/`#090C0E`. Gradient: cyan→teal, sparse. Same type/radius/spacing as A. **Contrast:** teal `#007A8A` + white ≈ 4.6:1 (AA normal ✓ — better than A's accent). **Strengths:** distinctive, strong on dark, best accent contrast. **Risks:** teal can read "fintech/ops"; less warm; dark cyan can vibrate on large fills.
+## Preview-stage templates (`apps/docs/app/_components/catalog-stage.tsx`)
 
-## Direction C — "Graphite + vivid coral" (not selected)
-
-Warm graphite neutrals, bold coral accent. Energetic, creative-tool feel.
-
-| Role | Light | Dark |
-|---|---|---|
-| Background / Secondary | `#FCFCFD` / `#F5F5F6` | `#0A0A0C` / `#101013` |
-| Surface | `#FFFFFF` | `#151518` |
-| Text / Muted | `#16161A` / `#6D6D75` | `#FAFAFA` / `#A3A3AA` |
-| Border | `#E5E5E8` | `#2A2A30` |
-| Accent / hover | `#F04F47` / `#DB4039` | `#FF6B63` / `#FF8079` |
-
-Success `#16A34A`/`#4ADE80`, Warning `#B45309`/`#FBBF24`, Error reuses a deeper red `#C4342C` to stay distinct from the coral accent; code `#F5F5F6`/`#101013`; stage `#FBFBFC`/`#0C0C0E`. Gradient: coral→amber, hero only. **Contrast:** coral `#F04F47` + white ≈ 3.4:1 → **large/bold UI text only**; error vs accent proximity is a risk (mitigated by the deeper error red). **Strengths:** memorable, energetic. **Risks:** coral is polarizing for a dev tool; accent/error hue collision; harder to keep "premium" vs "playful."
-
-## Decision rationale
-
-A wins on **broadest appeal + letting colorful demos be the star** without the chrome shouting. B is the strongest runner-up (best accent contrast, distinctive) and is kept as the documented fallback if violet ever reads too "generic." C is deferred — coral's appeal is narrower and its accent/error hue proximity adds risk. Contrast caveats for A's accent are encoded as a rule: **small text never sits on raw `--color-accent`.**
+AI = ink + Azure, Cyan info · Developer console = graphite + Cobalt/Cyan (Emerald/Amber/Red status) · Collaboration = neutral + Cyan/Azure · Data = navy/graphite + Cyan/teal · Commerce = neutral + Emerald · Security = cool navy + Azure/indigo (minimal) · Creative = ink + Azure/Cyan with a Coral signature edge · Mobile = neutral elevated. Tints stay faint so component content reads clearly; dev-console previews may remain internally dark.
 
 ## Implementation
 
-- Tokens: [`packages/tokens/styles.css`](../packages/tokens/styles.css) (done).
-- Docs chrome: `apps/docs/app/docs.css` re-based on the `--color-*` tokens (removes the lime/olive/beige layer).
-- Validate via [`visual-quality-gate`](../.claude/skills/visual-quality-gate/SKILL.md) at desktop/tablet/mobile × light/dark before calling the redesign done.
+- Tokens (default = Deep Ink + Azure + Coral): [`packages/tokens/styles.css`](../packages/tokens/styles.css). Requested semantic aliases (`--background`, `--surface-strong`, `--foreground-secondary`, `--accent`, `--secondary-accent`, `--signature`, `--success`, …) are defined in `:root` as `var()` pointers to the themed `--color-*` tokens.
+- Homepage sections + category tiles: `apps/docs/app/page.tsx`; hero showcase tints: `apps/docs/app/_components/hero-showcase.tsx`.
+- Evidence (dark + light, per section): `artifacts/homepage-redesign/ink/`.
+- Validate via [`visual-quality-gate`](../.claude/skills/visual-quality-gate/SKILL.md) at 320–1920 × light/dark before calling a change done.

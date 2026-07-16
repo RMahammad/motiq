@@ -1,7 +1,14 @@
 /* Design + motion token CSS variables. Canonical doc: docs/10-design-tokens.md.
-   Visual system: docs/30-showcase-visual-system.md — Direction A "Violet studio".
+   Visual system: docs/30-showcase-visual-system.md — "Deep Ink + Azure + Coral".
    Themes override these via [data-theme] / .dark without touching component source.
-   Selectors are scopeable: a nested [data-theme="…"] container re-themes its subtree. */
+   Selectors are scopeable: a nested [data-theme="…"] container re-themes its subtree.
+
+   Identity (2026-07-16): a distinctive, professional component-library identity.
+   Deep-ink neutrals, an AZURE primary interaction accent, a CYAN secondary/data
+   accent, and a CORAL signature used rarely for memorable brand moments. Emerald =
+   success, amber = warning, red = error, sky = info. Purple is no longer a brand
+   colour. Light mode is a cool porcelain / blue-gray system designed on its own
+   terms — not an inverted dark theme. */
 :root,
 [data-theme="light"] {
   /* ---- motion ---- */
@@ -17,36 +24,87 @@
   --motion-stagger-sm: 40ms;
   --motion-stagger-md: 80ms;
 
-  /* ---- color (semantic) — Direction A, light ---- */
-  --color-bg: #ffffff;
-  --color-bg-secondary: #f6f7fb;
+  /* ---- color (semantic) — Light: cool porcelain + blue-gray ---- */
+  --color-bg: #f7f9fc;
+  --color-bg-elevated: #f0f4f9;
+  --color-bg-secondary: #f0f4f9;
+  --color-bg-muted: #f0f4f9;
   --color-surface: #ffffff;
-  --color-surface-raised: #ffffff;
-  --color-fg: #111318;
+  --color-surface-2: #f8fafd;
+  --color-surface-raised: #f8fafd;
+  --color-surface-hover: #eef3fa;
+  --color-surface-strong: #e8eef7;
+  --color-border: #dce4ef;
+  --color-border-strong: #c5d1e1;
+  --color-fg: #101828;
+  --color-fg-secondary: #344054;
   --color-muted: #667085;
-  --color-border: #e4e7ec;
-  --color-accent: #695cff;
-  --color-accent-hover: #5748f5;
+  --color-subtle: #8793a5;
+  /* Azure — primary interaction. -text is AA on light surfaces. */
+  --color-accent: #315fea;
+  --color-accent-hover: #244fd1;
+  --color-accent-pressed: #1d40b3;
   --color-accent-fg: #ffffff;
-  /* Accent used AS text on surface/bg — meets 4.5:1 at body sizes (WCAG 1.4.3). */
-  --color-accent-text: #5648ee;
-  --color-focus: #695cff;
-  /* Status colors are used as text/icon/border on surfaces (contrast-safe);
-     the -foreground pair is the text placed ON a solid status fill. Status is
-     never conveyed by color alone — always with an icon/label/shape. */
-  --color-success: #15803d;
+  --color-accent-text: #244fd1;
+  --color-accent-soft: rgba(49, 95, 234, 0.1);
+  /* Cyan — secondary / data accent. */
+  --color-secondary-accent: #009fb3;
+  --color-secondary-accent-soft: rgba(0, 159, 179, 0.1);
+  --color-accent-2: #009fb3;
+  --color-accent-2-text: #087d93;
+  --color-accent-3: #087dbd;
+  --color-accent-3-text: #0a6ba0;
+  /* Coral — the rare signature. -text is a deeper coral for AA at small sizes. */
+  --color-signature: #e9564a;
+  --color-signature-hover: #d9483d;
+  --color-signature-soft: rgba(233, 86, 74, 0.1);
+  --color-signature-text: #c53a2e;
+  --color-focus: #315fea;
+  /* Status: emerald=success, amber=warning, red=error, sky=info. */
+  --color-success: #128a55;
   --color-success-foreground: #ffffff;
-  --color-warning: #b45309;
+  --color-warning: #b86e00;
   --color-warning-foreground: #ffffff;
-  --color-error: #dc2626;
+  --color-error: #d92d4a;
   --color-error-foreground: #ffffff;
-  --color-info: #1d4ed8;
+  --color-info: #087dbd;
   --color-info-foreground: #ffffff;
-  --color-neutral: #52525b;
+  --color-neutral: #475467;
   --color-neutral-foreground: #ffffff;
-  --color-code-bg: #f6f7fb;
-  --color-code-fg: #24283b;
-  --color-stage-bg: #fafbfd;
+  --color-code-bg: #f0f4f9;
+  --color-code-fg: #2a3444;
+  --color-stage-bg: #f7f9fc;
+  --color-card-glow: color-mix(in oklab, var(--color-accent) 12%, transparent);
+  --color-spotlight: color-mix(in oklab, var(--color-accent) 16%, transparent);
+  --color-gradient-start: #315fea;
+  --color-gradient-end: #009fb3;
+
+  /* ---- requested semantic aliases (map to the themed --color-* tokens) ---- */
+  --background: var(--color-bg);
+  --background-subtle: var(--color-bg-elevated);
+  --surface: var(--color-surface);
+  --surface-elevated: var(--color-surface-2);
+  --surface-hover: var(--color-surface-hover);
+  --surface-strong: var(--color-surface-strong);
+  --border: var(--color-border);
+  --border-strong: var(--color-border-strong);
+  --foreground: var(--color-fg);
+  --foreground-secondary: var(--color-fg-secondary);
+  --foreground-muted: var(--color-muted);
+  --foreground-subtle: var(--color-subtle);
+  --accent: var(--color-accent);
+  --accent-hover: var(--color-accent-hover);
+  --accent-pressed: var(--color-accent-pressed);
+  --accent-soft: var(--color-accent-soft);
+  --secondary-accent: var(--color-secondary-accent);
+  --secondary-accent-soft: var(--color-secondary-accent-soft);
+  --signature: var(--color-signature);
+  --signature-hover: var(--color-signature-hover);
+  --signature-soft: var(--color-signature-soft);
+  --success: var(--color-success);
+  --warning: var(--color-warning);
+  --error: var(--color-error);
+  --info: var(--color-info);
 
   /* ---- space ---- */
   --space-1: 4px;
@@ -61,10 +119,11 @@
   --radius-md: 10px;
   --radius-lg: 16px;
   --border-width: 1px;
-  --shadow-sm: 0 1px 2px rgba(16, 19, 33, 0.06);
-  --shadow-md: 0 8px 24px rgba(16, 19, 33, 0.10);
-  --shadow-lg: 0 24px 60px -12px rgba(16, 19, 33, 0.18);
-  --ring: 0 0 0 3px color-mix(in oklab, var(--color-focus) 40%, transparent);
+  /* Subtle blue-tinted shadows so cards separate from the porcelain page. */
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 8px 24px -6px rgba(16, 24, 40, 0.10);
+  --shadow-lg: 0 28px 64px -16px rgba(16, 24, 40, 0.18);
+  --ring: 0 0 0 3px color-mix(in oklab, var(--color-focus) 42%, transparent);
 
   /* ---- typography ---- */
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -72,36 +131,65 @@
   --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
 }
 
-/* Dark theme: token overrides only (not a naive inversion — contrast re-checked). */
+/* Dark theme (default): Deep Ink neutrals with a five-step surface hierarchy,
+   azure interaction, cyan support, rare coral signature. Token overrides only.
+   Not pure black; surfaces are visibly distinct so the page never flattens. */
 [data-theme="dark"],
 .dark {
-  --color-bg: #08090c;
-  --color-bg-secondary: #0e1015;
-  --color-surface: #14171d;
-  --color-surface-raised: #1b1f27;
-  --color-fg: #f7f8fa;
-  --color-muted: #9ba3b4;
-  --color-border: #252a34;
-  --color-accent: #8176ff;
-  --color-accent-hover: #9a90ff;
-  --color-accent-fg: #0a0a12;
-  /* Accent used AS text on surface/bg — meets 4.5:1 at body sizes (WCAG 1.4.3). */
-  --color-accent-text: #8176ff;
-  --color-focus: #8176ff;
-  --color-success: #4ade80;
-  --color-success-foreground: #052e16;
-  --color-warning: #fbbf24;
-  --color-warning-foreground: #431407;
-  --color-error: #f87171;
-  --color-error-foreground: #450a0a;
-  --color-info: #60a5fa;
-  --color-info-foreground: #0a1633;
-  --color-neutral: #a1a1aa;
-  --color-neutral-foreground: #18181b;
-  --color-code-bg: #0e1015;
-  --color-code-fg: #c7ccd8;
-  --color-stage-bg: #0b0d12;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.7);
+  --color-bg: #080c14;
+  --color-bg-elevated: #0d1420;
+  --color-bg-secondary: #0d1420;
+  --color-bg-muted: #0d1420;
+  --color-surface: #111827;
+  --color-surface-2: #192337;
+  --color-surface-raised: #192337;
+  --color-surface-hover: #202d43;
+  --color-surface-strong: #243249;
+  --color-border: #263449;
+  --color-border-strong: #354863;
+  --color-fg: #f8fafc;
+  --color-fg-secondary: #cbd5e1;
+  --color-muted: #9caabd;
+  --color-subtle: #748197;
+  /* Azure — primary. -text is a brighter azure for AA across all surfaces. */
+  --color-accent: #4f7cff;
+  --color-accent-hover: #6f91ff;
+  --color-accent-pressed: #3d65e6;
+  --color-accent-fg: #080c14;
+  --color-accent-text: #7f9fff;
+  --color-accent-soft: rgba(79, 124, 255, 0.14);
+  /* Cyan — secondary / data. */
+  --color-secondary-accent: #22c7d9;
+  --color-secondary-accent-soft: rgba(34, 199, 217, 0.12);
+  --color-accent-2: #22c7d9;
+  --color-accent-2-text: #45d5e4;
+  --color-accent-3: #38bdf8;
+  --color-accent-3-text: #6fd0fa;
+  /* Coral — rare signature. */
+  --color-signature: #ff6b5e;
+  --color-signature-hover: #ff8176;
+  --color-signature-soft: rgba(255, 107, 94, 0.12);
+  --color-signature-text: #ff8176;
+  --color-focus: #4f7cff;
+  --color-success: #32d583;
+  --color-success-foreground: #04150c;
+  --color-warning: #f6b94a;
+  --color-warning-foreground: #2a1a00;
+  --color-error: #ff5c70;
+  --color-error-foreground: #2a0308;
+  --color-info: #38bdf8;
+  --color-info-foreground: #04121f;
+  --color-neutral: #b2bccd;
+  --color-neutral-foreground: #111827;
+  --color-code-bg: #0d1420;
+  --color-code-fg: #cbd5e1;
+  --color-stage-bg: #080c14;
+  --color-card-glow: color-mix(in oklab, var(--color-accent) 22%, transparent);
+  --color-spotlight: color-mix(in oklab, var(--color-accent) 26%, transparent);
+  --color-gradient-start: #4f7cff;
+  --color-gradient-end: #22c7d9;
+  /* Blue-black shadows so elevation reads on deep ink. */
+  --shadow-sm: 0 1px 2px rgba(0, 3, 10, 0.5);
+  --shadow-md: 0 8px 24px -6px rgba(0, 3, 10, 0.62);
+  --shadow-lg: 0 28px 64px -16px rgba(0, 3, 10, 0.72);
 }

@@ -27,8 +27,16 @@ Level-1 component props map to these token **names**, never raw milliseconds (se
 
 - Global/semantic tokens: `--motion-*`, `--color-*`, `--space-*`, `--radius-*`, `--shadow-*`, `--z-*`.
 - Component-scoped tokens: `--<component>-*` (e.g. `--dialog-overlay-opacity`).
-- **`--color-accent-text`** (added 2026-07-14): the accent used **as text** on `surface`/`bg`. Guaranteed ≥ 4.5:1 at body sizes in both themes (light `#5648ee`, dark `#8176ff`) — use it instead of `--color-accent` whenever accent-colored *text* can appear below large-text sizes (first consumer: Kinetic Emphasis; see the WCAG 1.4.3 finding in its independent review). `--color-accent` remains the decorative/large-text accent.
-- Themes override tokens via the cascade — `:root`, `[data-theme="…"]`, `.dark` — **without touching component source.**
+- **`--color-accent-text`** (added 2026-07-14): the accent used **as text** on `surface`/`bg`. Guaranteed ≥ 4.5:1 at body sizes in both themes (Direction "Deep Ink + Azure + Coral": light Azure `#244FD1` ≈ 6.7:1, dark Azure `#7F9FFF` ≈ 7.0:1) — use it instead of `--color-accent` whenever accent-colored *text* can appear below large-text sizes (first consumer: Kinetic Emphasis; see the WCAG 1.4.3 finding in its independent review). `--color-accent` remains the decorative/large-text accent.
+- **Extended semantic color set** (added 2026-07-16 with the "Deep Ink + Azure + Coral" identity — see [`30-showcase-visual-system.md`](30-showcase-visual-system.md)). All theme-aware, all defined in `@scope/tokens/styles.css`:
+  - **Backgrounds:** `--color-bg` (page) · `--color-bg-elevated` (subtle lifted band) · `--color-bg-secondary` / `--color-bg-muted`.
+  - **Surfaces:** `--color-surface` (card) · `--color-surface-2` / `--color-surface-raised` (elevated) · `--color-surface-hover` · `--color-surface-strong` (highest elevation, e.g. the CTA panel).
+  - **Text:** `--color-fg` · `--color-fg-secondary` · `--color-muted` · `--color-subtle` (least-important; large-text/decorative only in light).
+  - **Borders:** `--color-border` (hairline) · `--color-border-strong` (emphasis rule).
+  - **Accent (Azure):** `--color-accent` · `--color-accent-hover` · `--color-accent-pressed` · `--color-accent-text` · `--color-accent-fg` · `--color-accent-soft`. **Secondary accent (Cyan)** `--color-secondary-accent` + `--color-secondary-accent-soft` (mirrored as `--color-accent-2`/`-3` with AA `-text` pairs for preview templates). **Signature (Coral)** `--color-signature` · `--color-signature-hover` · `--color-signature-soft` · `--color-signature-text` — used rarely, never for danger (use `--color-error`) and never as the only signal.
+  - **Atmosphere:** `--color-card-glow` · `--color-spotlight` (radial azure lighting) · `--color-gradient-start` / `--color-gradient-end` (azure→cyan, reserved).
+  - **Requested aliases:** `--background`, `--background-subtle`, `--surface`, `--surface-elevated`, `--surface-hover`, `--surface-strong`, `--border`, `--border-strong`, `--foreground`, `--foreground-secondary`, `--foreground-muted`, `--foreground-subtle`, `--accent`, `--accent-hover`, `--accent-pressed`, `--accent-soft`, `--secondary-accent`, `--secondary-accent-soft`, `--signature`, `--signature-hover`, `--signature-soft`, `--success`, `--warning`, `--error`, `--info` are defined in `:root` as `var()` pointers to the themed `--color-*` tokens, so either naming resolves correctly per theme.
+- Themes override tokens via the cascade — `:root`, `[data-theme="…"]`, `.dark` — **without touching component source.** (There is a single product identity; no `[data-brand]` alternates.)
 
 ## TypeScript token representation
 

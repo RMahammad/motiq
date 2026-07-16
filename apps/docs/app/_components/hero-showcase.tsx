@@ -39,11 +39,11 @@ type CategoryTab = {
 // Curated best-of, grouped by the strongest product families. Order = sellability.
 // Individual components only (their detail previews are live + interactive).
 const TABS: CategoryTab[] = [
-  { id: "ai", label: "AI Interfaces", tint: "#8b7bff", slugs: ["ai-response-stream", "agent-run-timeline", "tool-call-activity", "prompt-composer"] },
-  { id: "dev", label: "Developer Tools", tint: "#5b9dff", slugs: ["deployment-pipeline", "live-log-stream", "api-request-inspector", "webhook-event-stream"] },
-  { id: "data", label: "Data & Dashboards", tint: "#31c5f0", slugs: ["streaming-data-rows", "kpi-number-morph", "data-refresh-state", "data-quality-status"] },
-  { id: "collab", label: "Collaboration", tint: "#f0b000", slugs: ["live-presence-stack", "comment-thread", "approval-workflow", "activity-stream"] },
-  { id: "prod", label: "Productivity", tint: "#fb8c4b", slugs: ["kanban-card-movement", "task-dependency-map", "project-timeline"] },
+  { id: "ai", label: "AI Interfaces", tint: "#4f7cff", slugs: ["ai-response-stream", "agent-run-timeline", "tool-call-activity", "prompt-composer"] },
+  { id: "dev", label: "Developer Tools", tint: "#3e5ae8", slugs: ["deployment-pipeline", "live-log-stream", "api-request-inspector", "webhook-event-stream"] },
+  { id: "data", label: "Data & Dashboards", tint: "#14b8a6", slugs: ["streaming-data-rows", "kpi-number-morph", "data-refresh-state", "data-quality-status"] },
+  { id: "collab", label: "Collaboration", tint: "#22c7d9", slugs: ["live-presence-stack", "comment-thread", "approval-workflow", "activity-stream"] },
+  { id: "prod", label: "Productivity", tint: "#f59e0b", slugs: ["kanban-card-movement", "task-dependency-map", "project-timeline"] },
 ];
 
 // Wide, tabular, board, timeline and dashboard components read best FULL-WIDTH
