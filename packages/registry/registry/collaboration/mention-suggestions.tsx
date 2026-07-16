@@ -111,6 +111,14 @@ export interface MentionSuggestionsProps {
   loadingLabel?: string;
   /** Popup alignment relative to its container. */
   align?: "start" | "end";
+  /**
+   * Portal + anchor the popup INSIDE this positioned ancestor (`position: absolute`)
+   * instead of `<body>` (`position: fixed`). Use for contained previews / cards
+   * where a viewport-fixed overlay would escape the frame and re-anchor on page
+   * scroll. The referenced element should be `position: relative`. Defaults to the
+   * document body (the normal app behaviour).
+   */
+  container?: React.RefObject<HTMLElement | null>;
   className?: string;
 }
 
@@ -169,31 +177,35 @@ const SpinnerGlyph = ({ reduce }: { reduce: boolean }) => (
   </motion.svg>
 );
 
-/** Presence indicator: a distinct SHAPE per state (not colour alone) + sr text. */
-function PresenceDot({ presence }: { presence: MentionPresence }) {
+/** Presence indicator: a distinct SHAPE per state (not colour alone) + sr text.
+ *  Discord-style glyphs — solid disc (online), crescent (away), minus (dnd),
+ *  hollow ring (offline). Size-parametric so the same glyph reads cleanly as a
+ *  tiny inline label dot and as a slightly larger avatar-corner badge. */
+function PresenceDot({ presence, size = 10 }: { presence: MentionPresence; size?: number }) {
   const meta = presenceMeta(presence);
   const svars = statusVars(meta.tone);
   const key = String(presence);
+  const box: React.CSSProperties = { width: size, height: size };
+  const cut = Math.round(size * 0.72); // away-crescent cutout
+  const off = -Math.round(size * 0.2);
   return (
-    <span className="relative inline-grid h-2.5 w-2.5 place-items-center" title={meta.label}>
+    <span className="relative inline-block shrink-0 align-middle" style={box} title={meta.label}>
       {key === "online" ? (
         // filled disc
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: svars.color }} aria-hidden />
+        <span className="block h-full w-full rounded-full" style={{ background: svars.color }} aria-hidden />
       ) : key === "offline" ? (
-        // hollow ring
-        <span className="h-2.5 w-2.5 rounded-full [border:1.5px_solid]" style={{ borderColor: svars.color }} aria-hidden />
+        // hollow ring (surface fill so it reads as an outline on any backdrop)
+        <span className="block h-full w-full rounded-full bg-[var(--color-surface)]" style={{ border: `2px solid ${svars.color}` }} aria-hidden />
       ) : key === "dnd" ? (
         // minus / no-entry bar
-        <span className="grid h-2.5 w-2.5 place-items-center rounded-full" style={{ background: svars.color }} aria-hidden>
-          <span className="h-[1.5px] w-1.5 rounded-full bg-[var(--color-surface)]" />
+        <span className="grid h-full w-full place-items-center rounded-full" style={{ background: svars.color }} aria-hidden>
+          <span className="rounded-full bg-[var(--color-surface)]" style={{ height: Math.max(1.5, size * 0.18), width: size * 0.55 }} />
         </span>
       ) : (
-        // away — half disc
-        <span
-          className="h-2.5 w-2.5 overflow-hidden rounded-full [border:1.5px_solid]"
-          style={{ borderColor: svars.color, background: `linear-gradient(90deg, ${svars.color} 50%, transparent 50%)` }}
-          aria-hidden
-        />
+        // away — crescent moon (a disc with an offset surface-coloured cutout)
+        <span className="relative block h-full w-full overflow-hidden rounded-full" style={{ background: svars.color }} aria-hidden>
+          <span className="absolute rounded-full bg-[var(--color-surface)]" style={{ width: cut, height: cut, right: off, top: off }} aria-hidden />
+        </span>
       )}
       <span className="sr-only">{meta.label}</span>
     </span>
@@ -293,10 +305,10 @@ function OptionRow({
       style={active && !disabled ? { boxShadow: "inset 2px 0 0 0 var(--color-accent)" } : undefined}
     >
       <span className="relative shrink-0">
-        <Avatar user={item} />
+        <Avatar user={item} size={36} />
         {item.presence ? (
-          <span className="absolute -bottom-0.5 -right-0.5 rounded-full bg-[var(--color-surface)] p-0.5">
-            <PresenceDot presence={item.presence} />
+          <span className="absolute bottom-0 right-0 grid place-items-center rounded-full bg-[var(--color-surface)] ring-2 ring-[var(--color-surface)]">
+            <PresenceDot presence={item.presence} size={11} />
           </span>
         ) : null}
       </span>
@@ -351,6 +363,7 @@ export function MentionSuggestions({
   emptyLabel = "No people match",
   loadingLabel = "Searching…",
   align = "start",
+  container,
   className,
 }: MentionSuggestionsProps) {
   const reduce = useReducedMotion();
@@ -568,14 +581,33 @@ export function MentionSuggestions({
   // re-measure — committed only when the position actually changes — keeps it
   // glued to the field through page scroll, smooth-scroll libraries, resizes,
   // and layout shifts.
+  // Resolve the portal host from the `container` ref into state, so the portal
+  // and the anchoring re-run once the referenced element is actually attached
+  // (a ref read during render can be null on the first commit). Null = portal to
+  // <body> (the default viewport-fixed behaviour).
+  const [hostEl, setHostEl] = React.useState<HTMLElement | null>(null);
+  React.useEffect(() => {
+    setHostEl(container?.current ?? null);
+  }, [container, open]);
+
   const [anchor, setAnchor] = React.useState<{ top: number; left: number; right: number } | null>(null);
   React.useEffect(() => {
     if (!open || typeof window === "undefined") return;
+    const host = hostEl;
     const measure = () => {
       const el = inputRef.current;
       if (!el) return;
       const r = el.getBoundingClientRect();
-      const next = { top: r.bottom + 4, left: r.left, right: window.innerWidth - r.right };
+      // Contained: position ABSOLUTE relative to the host box (which scrolls with
+      // the page), so the popup stays inside the frame and never re-anchors on
+      // page scroll. Otherwise: position FIXED from the viewport.
+      const next = host
+        ? {
+            top: r.bottom - host.getBoundingClientRect().top + host.scrollTop + 4,
+            left: r.left - host.getBoundingClientRect().left + host.scrollLeft,
+            right: host.getBoundingClientRect().right - r.right,
+          }
+        : { top: r.bottom + 4, left: r.left, right: window.innerWidth - r.right };
       setAnchor((prev) =>
         prev && prev.top === next.top && prev.left === next.left && prev.right === next.right ? prev : next,
       );
@@ -583,6 +615,13 @@ export function MentionSuggestions({
     // Measure synchronously so the popup renders on the next commit (no wasted
     // frame; also works where rAF never fires, e.g. test renderers).
     measure();
+    // Contained popups are static relative to their host, so a per-frame re-measure
+    // would only cause churn/flicker — re-measure on resize instead. Viewport-fixed
+    // popups keep the rAF loop so they stay glued through page/library scrolling.
+    if (host) {
+      window.addEventListener("resize", measure);
+      return () => window.removeEventListener("resize", measure);
+    }
     let raf = 0;
     const tick = () => {
       measure();
@@ -590,7 +629,7 @@ export function MentionSuggestions({
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [open, inputRef]);
+  }, [open, inputRef, hostEl]);
 
   /* Polite announcement: match count + active option ----------------------- */
   const announcement = React.useMemo(() => {
@@ -620,7 +659,7 @@ export function MentionSuggestions({
               className,
             )}
             style={{
-              position: "fixed",
+              position: hostEl ? "absolute" : "fixed",
               top: anchor.top,
               ...(align === "end" ? { right: anchor.right } : { left: anchor.left }),
               transformOrigin: align === "end" ? "top right" : "top left",
@@ -687,9 +726,11 @@ export function MentionSuggestions({
     </AnimatePresence>
   );
 
+  // Portal into the provided container (contained mode) or the document body.
+  const portalTarget = container ? hostEl : typeof document !== "undefined" ? document.body : null;
   return (
     <>
-      {typeof document !== "undefined" ? createPortal(popup, document.body) : null}
+      {portalTarget ? createPortal(popup, portalTarget) : null}
 
       {/* polite announcer — match count + active option */}
       <p className="sr-only" role="status" aria-live="polite">

@@ -75,7 +75,7 @@ export function PasskeySetupFlowPreview() {
   };
 
   return (
-    <div className="flex w-full max-w-[760px] flex-col gap-4">
+    <div className="flex w-full max-w-[1000px] flex-col gap-4">
       {/* account security settings shell */}
       <div className="overflow-hidden rounded-2xl [border:1px_solid_var(--color-border)] bg-[var(--color-bg-secondary)]">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-[var(--color-border)] px-4 py-2.5">
@@ -91,9 +91,9 @@ export function PasskeySetupFlowPreview() {
           <span className="ml-auto text-[12px] text-[var(--color-muted)]">Sign-in methods</span>
         </div>
 
-        <div className="grid gap-4 p-4 md:grid-cols-[1fr_minmax(0,30rem)]">
-          {/* settings context column */}
-          <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-6 p-4 md:flex-row md:items-start">
+          {/* settings context column — fixed, narrow */}
+          <div className="flex w-full shrink-0 flex-col gap-3 md:w-72">
             <div>
               <p className="text-[13px] font-semibold text-[var(--color-fg)]">Passkeys</p>
               <p className="mt-0.5 text-[12.5px] leading-relaxed text-[var(--color-muted)]">
@@ -116,8 +116,8 @@ export function PasskeySetupFlowPreview() {
             </div>
           </div>
 
-          {/* the component under test */}
-          <div className="flex justify-center md:justify-end">
+          {/* the component under test — takes the remaining width */}
+          <div className="min-w-0 flex-1">
             <PasskeySetupFlow
               state={state}
               name={name}

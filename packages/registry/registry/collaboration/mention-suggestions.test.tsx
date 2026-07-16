@@ -119,6 +119,43 @@ describe("MentionSuggestions", () => {
     expect(within(listbox).getByRole("option", { name: /Mira Delacroix/i })).toBeTruthy();
   });
 
+  it("portals the popup INTO a provided container (position: absolute), not <body>", async () => {
+    const user = userEvent.setup();
+    function ContainedHarness() {
+      const inputRef = React.useRef<HTMLTextAreaElement | null>(null);
+      const containerRef = React.useRef<HTMLDivElement | null>(null);
+      const [open, setOpen] = React.useState(false);
+      return (
+        <div ref={containerRef} data-testid="host" style={{ position: "relative" }}>
+          <label htmlFor="c2">Message</label>
+          <textarea id="c2" ref={inputRef} aria-label="Message" />
+          <button type="button" onClick={() => setOpen(true)}>
+            open
+          </button>
+          <MentionSuggestions
+            open={open}
+            query=""
+            items={ITEMS}
+            groups={GROUPS}
+            inputRef={inputRef}
+            container={containerRef}
+            onSelect={() => {}}
+          />
+        </div>
+      );
+    }
+    render(<ContainedHarness />);
+    await user.click(screen.getByText("open"));
+    const listbox = await screen.findByRole("listbox");
+    const host = screen.getByTestId("host");
+    // The popup is a DOM descendant of the container (not a direct child of <body>)…
+    expect(host.contains(listbox)).toBe(true);
+    expect(listbox.closest("body > *")).not.toBe(document.querySelector("body > [role=listbox]"));
+    // …and is positioned ABSOLUTE within it (not viewport-fixed).
+    const popup = listbox.closest("[style]") as HTMLElement;
+    expect(popup.style.position).toBe("absolute");
+  });
+
   it("keeps DOM focus in the app's input and wires the combobox ARIA onto it", async () => {
     const user = userEvent.setup();
     render(<Harness />);

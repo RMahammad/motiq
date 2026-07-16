@@ -214,18 +214,21 @@ function Avatar({ actor, size = 32 }: { actor: ActivityActor; size?: number }) {
   );
 }
 
-/** Type badge shown at an avatar's bottom-right. A small tone-tinted disc with a
- *  ring in the surface color so it reads as a clean overlay, not a mixed blob. */
+/** Type badge shown at an avatar's bottom-right. A solid tone-filled disc with a
+ *  knockout (surface-coloured) glyph and a surface-coloured ring, so the action
+ *  type is instantly legible as a clean overlay in BOTH themes — the glyph reads
+ *  dark-on-light in dark mode and light-on-dark in light mode (the tone tokens
+ *  invert lightness between themes, so a fixed white glyph would wash out). */
 function TypeBadge({ type }: { type: ActivityEventType }) {
   const meta = TYPE_META[type];
   const v = statusVars(meta.tone);
   return (
     <span
       aria-hidden
-      className="grid h-[17px] w-[17px] shrink-0 place-items-center rounded-full ring-2 ring-[var(--color-surface)]"
-      style={{ color: v.color, background: v.bg }}
+      className="grid h-[18px] w-[18px] shrink-0 place-items-center rounded-full ring-2 ring-[var(--color-surface)] shadow-[0_1px_2px_rgba(0,0,0,0.28)]"
+      style={{ color: "var(--color-surface)", background: v.color }}
     >
-      <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
         {meta.icon}
       </svg>
     </span>
@@ -448,8 +451,8 @@ export function ActivityStream({
               {rows.map((row) => {
                 if (row.kind === "date") {
                   return (
-                    <li key={row.key} className="sticky top-0 z-10 px-2 py-1.5">
-                      <span className="inline-block rounded-full bg-[var(--color-surface)] text-[11px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">
+                    <li key={row.key} className="sticky top-0 z-10 px-2 py-2">
+                      <span className="inline-block rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-muted)] shadow-[var(--shadow-sm)]">
                         {row.label}
                       </span>
                     </li>

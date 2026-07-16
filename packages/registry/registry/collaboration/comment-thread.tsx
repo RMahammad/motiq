@@ -766,14 +766,22 @@ function CommentNode({ comment, depth, ctx }: { comment: Comment; depth: number;
         aria-label={isDeleted ? "Deleted comment" : `Comment by ${comment.author.name}`}
         aria-current={isSelected ? "true" : undefined}
         className={cn(
-          "relative rounded-xl px-3 py-2.5 transition-colors [border:1px_solid_transparent]",
-          isSelected && "[border-color:var(--color-accent)] bg-[color-mix(in_oklab,var(--color-accent)_6%,transparent)]",
+          "relative rounded-lg px-3 py-2.5 transition-colors",
+          // One calm hover: a light row tint, no border/shadow, no layout shift.
+          !isSelected && !isDeleted && "hover:bg-[var(--color-bg-secondary)]",
+          // Selection: a single accent left-bar (below) over a very light tint.
+          isSelected && "bg-[color-mix(in_oklab,var(--color-accent)_6%,transparent)]",
           isHighlighted && !isSelected && "bg-[color-mix(in_oklab,var(--color-warning)_12%,transparent)]",
-          isUnread && !isSelected && !isHighlighted && "bg-[color-mix(in_oklab,var(--color-accent)_6%,transparent)]",
-          isFailed && "[border-color:color-mix(in_oklab,var(--color-error)_45%,var(--color-border))]",
+          isUnread && !isSelected && !isHighlighted && "bg-[color-mix(in_oklab,var(--color-accent)_5%,transparent)]",
           isPending && "opacity-80",
         )}
       >
+        {/* Single, quiet status rail — selection (accent) or failed (error). */}
+        {isSelected ? (
+          <span aria-hidden className="absolute inset-y-1.5 left-0 w-[3px] rounded-full bg-[var(--color-accent)]" />
+        ) : isFailed ? (
+          <span aria-hidden className="absolute inset-y-1.5 left-0 w-[3px] rounded-full bg-[var(--color-error)]" />
+        ) : null}
         {isDeleted ? (
           <p className="flex items-center gap-2 py-1 text-[13px] italic text-[var(--color-muted)]">
             <StatusIcon status="deleted" />
@@ -962,9 +970,9 @@ function CommentNode({ comment, depth, ctx }: { comment: Comment; depth: number;
         )}
       </article>
 
-      {/* replies */}
+      {/* replies — one quiet thread guide rail per depth (no nested cards) */}
       {children.length > 0 ? (
-        <div className="ml-4 mt-1 border-l border-[var(--color-border)] pl-2 sm:ml-5 sm:pl-3">
+        <div className="ml-5 mt-0.5 border-l border-[var(--color-border)] pl-2.5 sm:ml-6 sm:pl-3.5">
           {autoCollapse ? (
             <button
               type="button"

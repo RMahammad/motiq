@@ -442,7 +442,7 @@ export function SwipeActionRow({
       data-disabled={disabled || undefined}
       onBlur={onRootBlur}
       className={cn(
-        "relative isolate overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]",
+        "relative isolate overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[0_1px_2px_rgba(0,0,0,0.06)]",
         className,
       )}
     >

@@ -471,7 +471,7 @@ function StateBadge({ state, reduce }: { state: SessionState; reduce: boolean })
   const inFlight = state === "pending-revocation";
   return (
     <span
-      className="inline-flex items-center gap-1 rounded-full border px-1.5 py-0.5 text-[11px] font-semibold leading-none"
+      className="inline-flex items-center gap-1 rounded-full border px-2 py-[3px] text-[11px] font-semibold leading-none"
       style={{ color: v.color, borderColor: v.border, background: v.bg }}
     >
       {inFlight ? (
@@ -494,7 +494,7 @@ function RiskBadge({ risk }: { risk: SessionRisk }) {
   const v = statusVars(tone);
   return (
     <span
-      className="inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 text-[11px] font-medium leading-none"
+      className="inline-flex items-center gap-1 rounded-md border px-2 py-[3px] text-[11px] font-medium leading-none"
       style={{ color: v.color, borderColor: v.border, background: v.bg }}
     >
       <FlagGlyph />
@@ -510,7 +510,7 @@ function TrustBadge({ label }: { label: string }) {
   const v = statusVars("success");
   return (
     <span
-      className="inline-flex items-center gap-1 rounded-md border px-1.5 py-0.5 text-[11px] font-medium leading-none"
+      className="inline-flex items-center gap-1 rounded-md border px-2 py-[3px] text-[11px] font-medium leading-none"
       style={{ color: v.color, borderColor: v.border, background: v.bg }}
     >
       <ShieldCheckGlyph />
@@ -520,7 +520,11 @@ function TrustBadge({ label }: { label: string }) {
 }
 
 const controlBtn =
-  "inline-flex min-h-[32px] items-center gap-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50";
+  "inline-flex min-h-[32px] items-center gap-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors hover:border-[color-mix(in_oklab,var(--color-accent)_50%,var(--color-border))] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50";
+
+/** Secondary-destructive: error-tinted outlined chip (never a loud solid red). */
+const dangerBtn =
+  "inline-flex min-h-[32px] items-center gap-1 rounded-lg border px-2.5 py-1 text-[12px] font-semibold text-[var(--color-error)] transition-colors border-[color-mix(in_oklab,var(--color-error)_36%,var(--color-border))] bg-[color-mix(in_oklab,var(--color-error)_12%,transparent)] hover:bg-[color-mix(in_oklab,var(--color-error)_20%,transparent)] hover:border-[color-mix(in_oklab,var(--color-error)_55%,var(--color-border))] disabled:cursor-not-allowed disabled:opacity-50";
 
 /* -------------------------------------------------------------------------- */
 /* Session row                                                                  */
@@ -628,16 +632,21 @@ function SessionRow({
     >
       <div
         className={cn(
-          "rounded-xl border px-3 py-2.5 transition-colors",
+          "rounded-xl border px-3 py-2.5 transition-[background-color,border-color,box-shadow] duration-200",
           current
-            ? "border-[color-mix(in_oklab,var(--color-accent)_45%,var(--color-border))] bg-[color-mix(in_oklab,var(--color-accent)_6%,transparent)]"
-            : "border-[var(--color-border)] bg-[var(--color-surface)]",
+            ? "border-[color-mix(in_oklab,var(--color-accent)_42%,var(--color-border))] bg-[color-mix(in_oklab,var(--color-accent)_7%,var(--color-surface))] shadow-[0_1px_0_color-mix(in_oklab,var(--color-accent)_18%,transparent),var(--shadow-sm)]"
+            : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[color-mix(in_oklab,var(--color-fg)_16%,var(--color-border))] hover:bg-[color-mix(in_oklab,var(--color-fg)_3%,var(--color-surface))] hover:shadow-[var(--shadow-sm)]",
           pending && "opacity-75",
         )}
       >
         <div className="flex items-start gap-3">
           <span
-            className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-[var(--color-bg-secondary)] text-[var(--color-fg)]"
+            className={cn(
+              "mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-xl border transition-colors",
+              current
+                ? "border-[color-mix(in_oklab,var(--color-accent)_28%,transparent)] bg-[color-mix(in_oklab,var(--color-accent)_14%,var(--color-surface))] text-[var(--color-accent)]"
+                : "border-[color-mix(in_oklab,var(--color-border)_70%,transparent)] bg-[var(--color-bg-secondary)] text-[var(--color-fg)]",
+            )}
             aria-hidden
           >
             <DeviceIcon session={session} />
@@ -691,7 +700,7 @@ function SessionRow({
 
             {/* Actions */}
             {!renaming ? (
-              <div className="mt-2 flex flex-wrap items-center gap-1.5">
+              <div className="mt-2.5 flex flex-wrap items-center gap-1.5 border-t border-[color-mix(in_oklab,var(--color-border)_65%,transparent)] pt-2.5">
                 {onInspect ? (
                   <button
                     type="button"
@@ -764,15 +773,7 @@ function SessionRow({
                         ? `Sign out this device (${session.device})`
                         : `Revoke session on ${session.device}`
                     }
-                    className={cn(
-                      "ml-auto inline-flex min-h-[32px] items-center gap-1 rounded-lg border px-2 py-1 text-[12px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60",
-                      focusRing,
-                    )}
-                    style={{
-                      color: statusVars("error").color,
-                      borderColor: statusVars("error").border,
-                      background: statusVars("error").bg,
-                    }}
+                    className={cn(dangerBtn, "ml-auto", focusRing)}
                   >
                     <RevokeGlyph />
                     {current ? "Sign out" : "Revoke"}
@@ -780,8 +781,9 @@ function SessionRow({
                 ) : current ? (
                   <span
                     ref={anchorRef as unknown as React.Ref<HTMLButtonElement>}
-                    className="ml-auto text-[11.5px] italic text-[var(--color-muted)]"
+                    className="ml-auto inline-flex items-center gap-1 rounded-full border border-[color-mix(in_oklab,var(--color-accent)_28%,var(--color-border))] bg-[color-mix(in_oklab,var(--color-accent)_9%,transparent)] px-2 py-[3px] text-[11px] font-medium text-[var(--color-accent)]"
                   >
+                    <ShieldCheckGlyph />
                     Current session — kept active
                   </span>
                 ) : null}
@@ -1196,7 +1198,7 @@ export function SessionSecurityCenter({
           >
             {label}
           </h2>
-          <span className="rounded-full bg-[var(--color-bg-secondary)] px-2 py-0.5 text-[12px] font-medium tabular-nums text-[var(--color-muted)]">
+          <span className="inline-flex min-w-[22px] justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2 py-0.5 text-[12px] font-semibold tabular-nums text-[var(--color-muted)]">
             {sessions.length}
           </span>
           <div className="ml-auto flex items-center gap-1.5">
@@ -1217,15 +1219,7 @@ export function SessionSecurityCenter({
                 type="button"
                 onClick={requestRevokeOthers}
                 disabled={otherCount === 0}
-                className={cn(
-                  "inline-flex min-h-[32px] items-center gap-1 rounded-lg border px-2 py-1 text-[12px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50",
-                  focusRing,
-                )}
-                style={{
-                  color: statusVars("error").color,
-                  borderColor: statusVars("error").border,
-                  background: statusVars("error").bg,
-                }}
+                className={cn(dangerBtn, focusRing)}
               >
                 <RevokeGlyph />
                 Revoke all other sessions

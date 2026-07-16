@@ -11,9 +11,9 @@ import { KeyboardSafeForm } from "@/registry/mobile/keyboard-safe-form";
  * (nothing is sent). Deterministic; fields are lightly pre-filled.
  */
 
-const labelClass = "block text-[13px] font-medium text-[var(--color-fg)]";
+const labelClass = "block text-[12.5px] font-semibold text-[var(--color-muted)]";
 const inputClass =
-  "mt-1 min-h-[44px] w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3 text-[15px] text-[var(--color-fg)] outline-none placeholder:text-[var(--color-muted)] focus-visible:border-[var(--color-accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]";
+  "mt-1.5 min-h-[46px] w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3.5 text-[15px] font-medium text-[var(--color-fg)] shadow-[inset_0_1px_2px_rgba(0,0,0,0.18)] outline-none transition-colors placeholder:font-normal placeholder:text-[var(--color-muted)] focus-visible:border-[var(--color-accent)] focus-visible:bg-[var(--color-bg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[var(--color-accent)]";
 
 export function KeyboardSafeFormCatalogPreview() {
   const [state, setState] = React.useState({ recipient: "Riverside Studio", amount: "180", note: "" });
@@ -37,7 +37,17 @@ export function KeyboardSafeFormCatalogPreview() {
         </label>
         <label htmlFor="ksf-amount" className={labelClass}>
           Amount
-          <input id="ksf-amount" value={state.amount} onChange={set("amount")} inputMode="decimal" className={inputClass} />
+          <span className="relative mt-1.5 block">
+            <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[15px] font-semibold text-[var(--color-muted)]">$</span>
+            <input
+              id="ksf-amount"
+              value={state.amount}
+              onChange={set("amount")}
+              inputMode="decimal"
+              className={`${inputClass} mt-0 pl-7 tabular-nums`}
+            />
+            <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[12px] font-medium text-[var(--color-muted)]">USD</span>
+          </span>
         </label>
         <label htmlFor="ksf-note" className={labelClass}>
           Note (optional)

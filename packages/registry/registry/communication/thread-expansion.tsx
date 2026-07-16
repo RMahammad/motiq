@@ -699,7 +699,6 @@ export function ThreadExpansion({
                         node={row.node}
                         expandable={row.expandable}
                         expanded={row.expanded}
-                        selectedInPath={pathIds.includes(row.node.id)}
                         active={isActive}
                         reduce={reduce}
                         fmt={fmt}
@@ -731,7 +730,6 @@ interface NodeRowProps extends React.HTMLAttributes<HTMLDivElement> {
   node: ThreadNode;
   expandable: boolean;
   expanded: boolean;
-  selectedInPath: boolean;
   active: boolean;
   reduce: boolean;
   fmt: (v: ThreadNode["timestamp"]) => string;
@@ -740,7 +738,7 @@ interface NodeRowProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const NodeRow = React.forwardRef<HTMLDivElement, NodeRowProps>(function NodeRow(
-  { node, expandable, expanded, selectedInPath, active, reduce, fmt, onToggle, onSelect, ...rest },
+  { node, expandable, expanded, active, reduce, fmt, onToggle, onSelect, ...rest },
   ref,
 ) {
   const isSelected = rest["aria-selected"] === true;
@@ -753,14 +751,15 @@ const NodeRow = React.forwardRef<HTMLDivElement, NodeRowProps>(function NodeRow(
       {...rest}
       onClick={onSelect}
       className={cn(
-        "group flex cursor-pointer items-start gap-1.5 rounded-lg px-1.5 py-1.5 outline-none transition-colors",
+        "group flex cursor-pointer items-start gap-1.5 rounded-lg px-2 py-1.5 outline-none transition-colors",
         "focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
+        // ONE calm selection cue: a single accent left-bar over a light tint. The
+        // ancestry of the selection is shown by the "Selected path" breadcrumb, so
+        // path rows carry no extra tint (which read as competing filled cards).
         isSelected
-          ? "bg-[color-mix(in_oklab,var(--color-accent)_10%,transparent)] [box-shadow:inset_2px_0_0_var(--color-accent)]"
-          : selectedInPath
-            ? "bg-[color-mix(in_oklab,var(--color-accent)_5%,transparent)]"
-            : "hover:bg-[var(--color-bg-secondary)]",
-        node.unread && !isSelected && "bg-[color-mix(in_oklab,var(--color-accent)_6%,transparent)]",
+          ? "bg-[color-mix(in_oklab,var(--color-accent)_9%,transparent)] [box-shadow:inset_3px_0_0_var(--color-accent)]"
+          : "hover:bg-[var(--color-bg-secondary)]",
+        node.unread && !isSelected && "bg-[color-mix(in_oklab,var(--color-accent)_5%,transparent)]",
       )}
     >
       {/* expand/collapse chevron — decorative; the treeitem carries the

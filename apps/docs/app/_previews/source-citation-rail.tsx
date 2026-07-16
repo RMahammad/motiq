@@ -8,6 +8,13 @@ import {
   type CitationSource,
   type CitationLayout,
 } from "@/registry/ai/source-citation-rail";
+import {
+  ControlBar,
+  ControlButton,
+  ControlToggle,
+  ControlSegmented,
+  ControlDivider,
+} from "../_components/preview-controls";
 
 /* -------------------------------------------------------------------------
  * DEMO ONLY. Every source below is clearly fictional and lives in local state.
@@ -100,12 +107,6 @@ const EXTRA_SOURCES: CitationSource[] = [
   },
 ];
 
-const ctrl =
-  "inline-flex items-center gap-1.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 text-[12.5px] font-medium text-[var(--color-fg)] outline-none transition-colors hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] disabled:opacity-50";
-
-const seg =
-  "px-2.5 py-1 text-[12px] font-medium capitalize transition-colors data-[on=true]:bg-[var(--color-surface)] data-[on=true]:text-[var(--color-fg)] text-[var(--color-muted)] hover:text-[var(--color-fg)]";
-
 export function SourceCitationRailPreview() {
   const [sources, setSources] = React.useState<CitationSource[]>(INITIAL_SOURCES);
   const [activeId, setActiveId] = React.useState<string | null>("s1");
@@ -145,39 +146,54 @@ export function SourceCitationRailPreview() {
   return (
     <div className="mx-auto flex w-full max-w-[860px] flex-col gap-4">
       {/* Controls -------------------------------------------------------- */}
-      <div className="flex flex-wrap items-center gap-2">
-        <button type="button" className={ctrl} onClick={selectNext}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M13 5l7 7-7 7M4 12h16" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+      <ControlBar label="Citation rail controls">
+        <ControlButton
+          onClick={selectNext}
+          icon={
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M13 5l7 7-7 7M4 12h16" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          }
+        >
           Select next source
-        </button>
-        <button type="button" className={ctrl} onClick={addSource} disabled={!canAdd}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          </svg>
+        </ControlButton>
+        <ControlButton
+          onClick={addSource}
+          disabled={!canAdd}
+          icon={
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          }
+        >
           Add source
-        </button>
-        <button type="button" className={ctrl} onClick={() => setShowExcerpts((v) => !v)} aria-pressed={showExcerpts}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
-          </svg>
+        </ControlButton>
+        <ControlToggle pressed={showExcerpts} onPressedChange={setShowExcerpts}>
           {showExcerpts ? "Hide excerpts" : "Show excerpts"}
-        </button>
-        <div className="flex overflow-hidden rounded-lg border border-[var(--color-border)]" role="group" aria-label="Layout">
-          {(["rail", "list", "cards"] as const).map((l) => (
-            <button key={l} type="button" data-on={layout === l} aria-pressed={layout === l} className={seg} onClick={() => setLayout(l)}>
-              {l}
-            </button>
-          ))}
-        </div>
-        <button type="button" className={ctrl} onClick={reset}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M4 11a8 8 0 1 1 .7 4.2M4 17v-4h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+        </ControlToggle>
+        <ControlDivider />
+        <ControlSegmented
+          label="Layout"
+          value={layout}
+          onChange={setLayout}
+          options={[
+            { value: "rail", label: "Rail" },
+            { value: "list", label: "List" },
+            { value: "cards", label: "Cards" },
+          ]}
+        />
+        <ControlDivider />
+        <ControlButton
+          onClick={reset}
+          icon={
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M4 11a8 8 0 1 1 .7 4.2M4 17v-4h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          }
+        >
           Reset
-        </button>
-      </div>
+        </ControlButton>
+      </ControlBar>
 
       {/* Component ------------------------------------------------------- */}
       <SourceCitationRail

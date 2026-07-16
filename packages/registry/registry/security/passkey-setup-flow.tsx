@@ -221,7 +221,6 @@ export function PasskeySetupFlow({
     onChange: onNameChange,
   });
 
-  const headingRef = React.useRef<HTMLHeadingElement | null>(null);
   const errorId = React.useId();
   const nameFieldId = React.useId();
 
@@ -230,13 +229,9 @@ export function PasskeySetupFlow({
 
   const copy: StateCopy = React.useMemo(() => stateCopy(state, site, capability), [state, site, capability]);
 
-  // Focus moves to the phase heading after every app-driven transition, so
-  // keyboard and screen-reader users land on the new context. (No auto-scroll,
-  // no motion — just focus.)
-  React.useEffect(() => {
-    const id = requestAnimationFrame(() => headingRef.current?.focus());
-    return () => cancelAnimationFrame(id);
-  }, [state]);
+  // Phase changes are announced through the polite live region below; we do NOT
+  // move DOM focus to the (non-interactive) heading, which some environments
+  // render with a forced focus box around a full-width heading.
 
   const showStepper = active >= 0;
   const regionLabel = label ?? `Set up a passkey for ${site}`;
@@ -254,7 +249,7 @@ export function PasskeySetupFlow({
     <section
       aria-label={regionLabel}
       className={cn(
-        "flex w-full max-w-[30rem] flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
+        "flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
         className,
       )}
     >
@@ -353,11 +348,7 @@ export function PasskeySetupFlow({
                 )}
               </span>
               <div className="min-w-0 flex-1">
-                <h4
-                  ref={headingRef}
-                  tabIndex={-1}
-                  className="text-[15px] font-semibold leading-snug text-[var(--color-fg)] outline-none"
-                >
+                <h4 className="text-[15px] font-semibold leading-snug text-[var(--color-fg)]">
                   {copy.title}
                 </h4>
                 <p className="mt-1 text-[13px] leading-relaxed text-[var(--color-muted)]">{copy.body}</p>
@@ -463,71 +454,60 @@ export function PasskeySetupFlow({
         </AnimatePresence>
       </div>
 
-      {/* actions */}
-      <div className="flex flex-col gap-2 border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-5 py-4">
+      {/* actions — a calm footer: an in-flight status line on its own row, then a
+          button row with the low-emphasis escape hatch on the left and the primary
+          action cluster (secondary → primary) right-aligned. */}
+      <div className="flex flex-col gap-3 border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-5 py-4">
+        {(state === "registration-starting" || state === "system-prompt-waiting") ? (
+          <span className="inline-flex items-center gap-2 text-[13px] font-medium text-[var(--color-muted)]">
+            <Spinner reduce={reduce} />
+            Waiting for your device… take as long as you need
+          </span>
+        ) : null}
+
         <div className="flex flex-wrap items-center gap-2">
-          {/* primary action per phase */}
-          {(state === "intro" || state === "device-capability") && canBegin ? (
-            <PrimaryButton onClick={beginRegistration} busy={busy}>
-              Set up a passkey
-            </PrimaryButton>
+          {/* escape hatch — low emphasis, left; offered so the user is never trapped */}
+          {onUseAlternative ? (
+            <GhostButton onClick={() => onUseAlternative()}>{alternativeLabel}</GhostButton>
           ) : null}
 
-          {(state === "naming" || state === "retry") && canBegin ? (
-            <PrimaryButton onClick={beginRegistration} busy={busy}>
-              Create passkey
-            </PrimaryButton>
-          ) : null}
+          {/* right-aligned action cluster: secondary first, primary rightmost */}
+          <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
+            {(state === "registration-starting" || state === "system-prompt-waiting") && onCancel ? (
+              <SecondaryButton onClick={() => onCancel()}>Cancel</SecondaryButton>
+            ) : null}
 
-          {(state === "registration-starting" || state === "system-prompt-waiting") ? (
-            <span className="inline-flex items-center gap-2 text-[13px] font-medium text-[var(--color-muted)]">
-              <Spinner reduce={reduce} />
-              Waiting for your device… take as long as you need
-            </span>
-          ) : null}
+            {(state === "intro" || state === "device-capability") && canBegin ? (
+              <PrimaryButton onClick={beginRegistration} busy={busy}>
+                Set up a passkey
+              </PrimaryButton>
+            ) : null}
 
-          {state === "success" ? (
-            <PrimaryButton tone="success" onClick={() => onComplete?.()}>
-              Done
-            </PrimaryButton>
-          ) : null}
+            {(state === "naming" || state === "retry") && canBegin ? (
+              <PrimaryButton onClick={beginRegistration} busy={busy}>
+                Create passkey
+              </PrimaryButton>
+            ) : null}
 
-          {(state === "failure" || state === "cancelled") ? (
-            <PrimaryButton
-              onClick={() => onRetry?.()}
-              aria-describedby={state === "failure" && error ? errorId : undefined}
-            >
-              Try again
-            </PrimaryButton>
-          ) : null}
+            {state === "success" ? (
+              <PrimaryButton onClick={() => onComplete?.()}>Done</PrimaryButton>
+            ) : null}
 
-          {state === "existing-credential" ? (
-            <PrimaryButton onClick={() => onBegin?.()} busy={busy}>
-              Add another passkey
-            </PrimaryButton>
-          ) : null}
+            {(state === "failure" || state === "cancelled") ? (
+              <PrimaryButton
+                onClick={() => onRetry?.()}
+                aria-describedby={state === "failure" && error ? errorId : undefined}
+              >
+                Try again
+              </PrimaryButton>
+            ) : null}
 
-          {/* cancel for in-flight steps */}
-          {(state === "registration-starting" || state === "system-prompt-waiting") && onCancel ? (
-            <SecondaryButton onClick={() => onCancel()}>Cancel</SecondaryButton>
-          ) : null}
-
-          {/* alternative path — offered on every non-success screen */}
-          {state !== "success" && onUseAlternative ? (
-            <SecondaryButton
-              className={state === "unsupported" ? undefined : "ml-auto"}
-              onClick={() => onUseAlternative()}
-            >
-              {alternativeLabel}
-            </SecondaryButton>
-          ) : null}
-
-          {/* on success, still let people manage keys / continue without trapping */}
-          {state === "success" && onUseAlternative ? (
-            <SecondaryButton className="ml-auto" onClick={() => onUseAlternative()}>
-              {alternativeLabel}
-            </SecondaryButton>
-          ) : null}
+            {state === "existing-credential" ? (
+              <PrimaryButton onClick={() => onBegin?.()} busy={busy}>
+                Add another passkey
+              </PrimaryButton>
+            ) : null}
+          </div>
         </div>
 
         {/* unsupported browsers must never be a dead end */}
@@ -691,6 +671,23 @@ function SecondaryButton({
       onClick={onClick}
       className={cn(
         "inline-flex items-center gap-1.5 rounded-lg bg-[var(--color-surface)] px-3.5 py-2 text-[13px] font-medium text-[var(--color-fg)] outline-none transition-colors [border:1px_solid_var(--color-border)] hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
+        className,
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+// Low-emphasis "escape hatch" action (e.g. "Use a password instead") — a quiet
+// text button that never competes with the primary/secondary actions.
+function GhostButton({ onClick, children, className }: { onClick: () => void; children: React.ReactNode; className?: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-[var(--color-muted)] outline-none transition-colors hover:bg-[var(--color-surface)] hover:text-[var(--color-fg)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
         className,
       )}
     >

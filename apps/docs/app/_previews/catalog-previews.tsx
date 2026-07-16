@@ -27,6 +27,7 @@ import { KpiNumberMorphCatalogPreview } from "./catalog/kpi-number-morph";
 import { LiveLogStreamCatalogPreview } from "./catalog/live-log-stream";
 import { LiveOperationsDashboardCatalogPreview } from "./catalog/live-operations-dashboard";
 import { LivePresenceStackCatalogPreview } from "./catalog/live-presence-stack";
+import { LuminousTopographyCatalogPreview } from "./catalog/luminous-topography";
 import { MentionSuggestionsCatalogPreview } from "./catalog/mention-suggestions";
 import { MessageDeliveryStatesCatalogPreview } from "./catalog/message-delivery-states";
 import { MobileFilterSheetCatalogPreview } from "./catalog/mobile-filter-sheet";
@@ -83,6 +84,7 @@ export const catalogPreviewMap: Record<string, React.ComponentType> = {
   "live-log-stream": LiveLogStreamCatalogPreview,
   "live-operations-dashboard": LiveOperationsDashboardCatalogPreview,
   "live-presence-stack": LivePresenceStackCatalogPreview,
+  "luminous-topography": LuminousTopographyCatalogPreview,
   "mention-suggestions": MentionSuggestionsCatalogPreview,
   "message-delivery-states": MessageDeliveryStatesCatalogPreview,
   "mobile-filter-sheet": MobileFilterSheetCatalogPreview,

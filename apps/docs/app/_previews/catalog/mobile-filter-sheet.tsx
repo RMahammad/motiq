@@ -45,6 +45,7 @@ export function MobileFilterSheetCatalogPreview() {
         defaultOpen
         contained
         title="Filter products"
+        applyLabel="Apply"
         defaultValue={{ status: ["active"], owner: "ada" }}
         resultCount={5}
       />

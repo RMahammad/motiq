@@ -64,29 +64,55 @@ const GROUPS: OptionGroup[] = [
   },
 ];
 
-// No real product photography exists in this demo, so we synthesize a tinted
-// backpack silhouette as an inline SVG data-URI per colour. This gives the
-// component a genuine, valid image that visibly changes with the selection
-// (and exercises its onImageChange + crossfade), with no external asset.
+// No real product photography exists in this demo, so we synthesize a premium,
+// studio-lit backpack illustration as an inline SVG data-URI per colour — a
+// colour-tinted glow, a soft ground shadow, and a detailed daypack (grab handle,
+// front pocket + zipper, shoulder straps, rim light). It gives the component a
+// genuine, valid image that visibly changes with the selection (and exercises
+// its onImageChange + crossfade), with no external asset.
 const COLOR_STOPS: Record<string, [string, string]> = {
-  graphite: ["#2b2f34", "#474d55"],
-  clay: ["#9c5a41", "#c48064"],
-  moss: ["#4c5a3c", "#6f8055"],
-  bone: ["#d9d2c1", "#efe9df"],
+  graphite: ["#23262b", "#4a5058"],
+  clay: ["#8f4f38", "#c9866a"],
+  moss: ["#434f34", "#74855a"],
+  bone: ["#cfc6b4", "#f1ece2"],
 };
 
 function productImage(colorId: string): string {
   const [a, b] = COLOR_STOPS[colorId] ?? COLOR_STOPS.graphite;
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'>
-    <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-      <stop offset='0' stop-color='${a}'/><stop offset='1' stop-color='${b}'/>
-    </linearGradient></defs>
-    <rect width='240' height='240' fill='#00000000'/>
-    <g fill='url(#g)' stroke='rgba(0,0,0,0.18)' stroke-width='2'>
-      <path d='M78 70c0-26 84-26 84 0v118c0 12-10 20-22 20H100c-12 0-22-8-22-20z'/>
-    </g>
-    <path d='M96 70c0-18 48-18 48 0' fill='none' stroke='rgba(255,255,255,0.35)' stroke-width='6'/>
-    <rect x='96' y='128' width='48' height='40' rx='8' fill='rgba(255,255,255,0.14)'/>
+    <defs>
+      <radialGradient id='glow' cx='0.5' cy='0.4' r='0.62'>
+        <stop offset='0' stop-color='${b}' stop-opacity='0.34'/>
+        <stop offset='1' stop-color='${b}' stop-opacity='0'/>
+      </radialGradient>
+      <linearGradient id='body' x1='0.18' y1='0' x2='0.82' y2='1'>
+        <stop offset='0' stop-color='${b}'/>
+        <stop offset='0.55' stop-color='${a}'/>
+        <stop offset='1' stop-color='${a}'/>
+      </linearGradient>
+      <linearGradient id='sheen' x1='0' y1='0' x2='1' y2='0'>
+        <stop offset='0' stop-color='#ffffff' stop-opacity='0.22'/>
+        <stop offset='0.35' stop-color='#ffffff' stop-opacity='0'/>
+      </linearGradient>
+    </defs>
+    <circle cx='120' cy='98' r='96' fill='url(#glow)'/>
+    <ellipse cx='120' cy='201' rx='55' ry='11' fill='rgba(0,0,0,0.30)'/>
+    <!-- shoulder straps peeking behind the body -->
+    <path d='M101 58 C99 92 103 128 108 150' fill='none' stroke='${a}' stroke-opacity='0.85' stroke-width='11' stroke-linecap='round'/>
+    <path d='M139 58 C141 92 137 128 132 150' fill='none' stroke='${a}' stroke-opacity='0.85' stroke-width='11' stroke-linecap='round'/>
+    <!-- grab handle -->
+    <path d='M104 56 C104 40 136 40 136 56' fill='none' stroke='${a}' stroke-width='9' stroke-linecap='round'/>
+    <!-- main body -->
+    <path d='M78 76 C78 58 93 50 120 50 C147 50 162 58 162 76 L167 176 C167 190 156 198 143 198 L97 198 C84 198 73 190 73 176 Z' fill='url(#body)' stroke='rgba(0,0,0,0.22)' stroke-width='1.5'/>
+    <!-- lid seam / zipper -->
+    <path d='M80 106 C104 120 136 120 160 106' fill='none' stroke='rgba(255,255,255,0.30)' stroke-width='3'/>
+    <path d='M80 110 C104 124 136 124 160 110' fill='none' stroke='rgba(0,0,0,0.16)' stroke-width='2'/>
+    <!-- front pocket -->
+    <path d='M96 138 L144 138 C150 138 154 142 154 148 L154 184 L86 184 L86 148 C86 142 90 138 96 138 Z' fill='rgba(0,0,0,0.14)' stroke='rgba(255,255,255,0.10)' stroke-width='1.5'/>
+    <path d='M92 150 L148 150' fill='none' stroke='rgba(255,255,255,0.22)' stroke-width='2.5'/>
+    <circle cx='120' cy='150' r='2.4' fill='rgba(255,255,255,0.45)'/>
+    <!-- rim light -->
+    <path d='M78 76 C78 58 93 50 120 50 C147 50 162 58 162 76 L167 176 C167 190 156 198 143 198 L97 198 C84 198 73 190 73 176 Z' fill='url(#sheen)'/>
   </svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }

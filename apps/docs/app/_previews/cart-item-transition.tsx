@@ -7,6 +7,13 @@ import {
   type CartLineItem,
   type CartItemVisualState,
 } from "@/registry/commerce/cart-item-transition";
+import {
+  ControlBar,
+  ControlButton,
+  ControlToggle,
+  ControlDivider,
+  ControlHint,
+} from "../_components/preview-controls";
 
 /* -------------------------------------------------------------------------
  * DEMO ONLY — a fictional cart line for the imaginary brand "Auralite",
@@ -18,21 +25,36 @@ import {
  * ---------------------------------------------------------------------- */
 
 const HEADPHONE_STOPS: Record<string, [string, string]> = {
-  midnight: ["#2b2f3a", "#454c60"],
-  sand: ["#c9b48c", "#e3d4b4"],
-  forest: ["#3c5346", "#587567"],
+  midnight: ["#3a4152", "#20242e"],
+  sand: ["#e3d4b4", "#b49a6c"],
+  forest: ["#5c7a68", "#33463b"],
 };
 
+// A small, studio-lit headphones illustration (colour-tinted glow, soft ground
+// shadow, banded headband + cushioned ear-cups with a rim highlight) — reads as a
+// real product thumbnail that re-tints per variant, not a flat wire silhouette.
 function headphoneImage(variant: string): string {
   const [a, b] = HEADPHONE_STOPS[variant] ?? HEADPHONE_STOPS.midnight;
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'>
-    <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-      <stop offset='0' stop-color='${a}'/><stop offset='1' stop-color='${b}'/>
-    </linearGradient></defs>
-    <rect width='120' height='120' fill='#00000000'/>
-    <path d='M30 66V54a30 30 0 0 1 60 0v12' fill='none' stroke='url(#g)' stroke-width='7' stroke-linecap='round'/>
-    <rect x='22' y='62' width='16' height='30' rx='7' fill='url(#g)'/>
-    <rect x='82' y='62' width='16' height='30' rx='7' fill='url(#g)'/>
+    <defs>
+      <radialGradient id='glow' cx='0.5' cy='0.42' r='0.6'>
+        <stop offset='0' stop-color='${a}' stop-opacity='0.35'/>
+        <stop offset='1' stop-color='${a}' stop-opacity='0'/>
+      </radialGradient>
+      <linearGradient id='band' x1='0' y1='0' x2='0' y2='1'>
+        <stop offset='0' stop-color='${a}'/><stop offset='1' stop-color='${b}'/>
+      </linearGradient>
+      <linearGradient id='cup' x1='0.2' y1='0' x2='0.8' y2='1'>
+        <stop offset='0' stop-color='${a}'/><stop offset='1' stop-color='${b}'/>
+      </linearGradient>
+    </defs>
+    <circle cx='60' cy='52' r='46' fill='url(#glow)'/>
+    <ellipse cx='60' cy='98' rx='30' ry='6' fill='rgba(0,0,0,0.28)'/>
+    <path d='M28 66V52a32 32 0 0 1 64 0v14' fill='none' stroke='url(#band)' stroke-width='9' stroke-linecap='round'/>
+    <path d='M28 55V52a32 32 0 0 1 64 0v3' fill='none' stroke='#ffffff' stroke-opacity='0.16' stroke-width='2.5' stroke-linecap='round'/>
+    <rect x='19' y='60' width='20' height='34' rx='9' fill='url(#cup)' stroke='rgba(0,0,0,0.18)' stroke-width='1'/>
+    <rect x='23' y='64' width='7' height='26' rx='3.5' fill='#ffffff' fill-opacity='0.14'/>
+    <rect x='81' y='60' width='20' height='34' rx='9' fill='url(#cup)' stroke='rgba(0,0,0,0.18)' stroke-width='1'/>
   </svg>`;
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
@@ -45,9 +67,6 @@ const VARIANT_LABEL: Record<string, string> = {
 };
 
 const BASE_PRICE = 279;
-
-const controlBtn =
-  "inline-flex min-h-[32px] items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))] disabled:cursor-not-allowed disabled:opacity-50";
 
 function makeItem(over: Partial<CartLineItem> = {}): CartLineItem {
   const variant = (over.metadata?.variant as string) ?? "midnight";
@@ -197,24 +216,24 @@ export function CartItemTransitionPreview() {
       </div>
 
       {/* Working controls ------------------------------------------------- */}
-      <div className="mt-3 flex flex-wrap items-center gap-1.5" role="group" aria-label="Demo controls">
-        <button type="button" className={controlBtn} onClick={changeVariant}>Change variant</button>
-        <button type="button" className={controlBtn} onClick={changePrice}>Change price</button>
-        <button type="button" className={controlBtn} onClick={markLimited}>Mark limited</button>
-        <button type="button" className={controlBtn} onClick={markUnavailable}>Toggle unavailable</button>
-        <button
-          type="button"
-          className={controlBtn}
-          aria-pressed={failNext}
-          onClick={() => { setFailNext((f) => !f); setLog(failNext ? "Next update will succeed." : "Next update will fail."); }}
+      <ControlBar className="mt-3">
+        <ControlButton onClick={changeVariant}>Change variant</ControlButton>
+        <ControlButton onClick={changePrice}>Change price</ControlButton>
+        <ControlButton onClick={markLimited}>Mark limited</ControlButton>
+        <ControlButton onClick={markUnavailable}>Toggle unavailable</ControlButton>
+        <ControlDivider />
+        <ControlToggle
+          pressed={failNext}
+          onPressedChange={(next) => {
+            setFailNext(next);
+            setLog(next ? "Next update will fail." : "Next update will succeed.");
+          }}
         >
-          Fail next update: {failNext ? "on" : "off"}
-        </button>
-        <button type="button" className={controlBtn} onClick={reset}>Reset</button>
-        <span className="ml-auto max-w-full truncate text-[12px] text-[var(--color-muted)]" aria-live="polite">
-          {log}
-        </span>
-      </div>
+          Fail next update
+        </ControlToggle>
+        <ControlButton onClick={reset}>Reset</ControlButton>
+        <ControlHint live>{log}</ControlHint>
+      </ControlBar>
     </div>
   );
 }

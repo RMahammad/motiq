@@ -352,26 +352,47 @@ function OptionRow({
   onToggle: () => void;
   indent?: boolean;
 }) {
+  const isRadio = type === "radio";
   return (
     <label
       className={cn(
-        "flex min-h-[44px] cursor-pointer items-center gap-3 rounded-lg px-2 py-1.5 text-left transition-colors",
-        "hover:bg-[var(--color-bg-secondary)] has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[var(--color-accent)]",
+        "group/opt flex min-h-[44px] cursor-pointer items-center gap-3 rounded-xl px-2.5 py-2 text-left transition-colors",
+        checked ? "bg-[color-mix(in_oklab,var(--color-accent)_9%,transparent)]" : "hover:bg-[var(--color-bg-secondary)]",
         option.disabled && "cursor-not-allowed opacity-60",
         indent && "ml-6",
       )}
     >
+      {/* Real native control (kept for a11y + form semantics), visually replaced
+          by the custom indicator below via the `peer` sibling. */}
       <input
         type={type}
         name={name}
-        className="h-[18px] w-[18px] shrink-0 accent-[var(--color-accent)]"
+        className="peer sr-only"
         checked={checked}
         disabled={option.disabled}
         onChange={onToggle}
         aria-describedby={option.disabled && option.disabledReason ? `${name}-${option.value}-why` : undefined}
       />
+      <span
+        aria-hidden
+        className={cn(
+          "grid h-[22px] w-[22px] shrink-0 place-items-center border-2 border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] transition-all duration-150",
+          isRadio ? "rounded-full" : "rounded-[7px]",
+          "peer-checked:border-[var(--color-accent)]",
+          isRadio ? "peer-checked:[&>span]:scale-100" : "peer-checked:bg-[var(--color-accent)] peer-checked:[&_svg]:scale-100 peer-checked:[&_svg]:opacity-100",
+          "peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--color-accent)]",
+        )}
+      >
+        {isRadio ? (
+          <span className="h-[11px] w-[11px] scale-0 rounded-full bg-[var(--color-accent)] transition-transform duration-150" />
+        ) : (
+          <svg className="h-[13px] w-[13px] scale-50 text-[var(--color-accent-fg,#fff)] opacity-0 transition-all duration-150" viewBox="0 0 24 24" fill="none">
+            <path d="m5 13 4 4L19 7" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        )}
+      </span>
       <span className="min-w-0 flex-1">
-        <span className="block truncate text-[14px] text-[var(--color-fg)]">{option.label}</span>
+        <span className={cn("block truncate text-[14px] text-[var(--color-fg)]", checked && "font-medium")}>{option.label}</span>
         {option.disabled && option.disabledReason ? (
           <span id={`${name}-${option.value}-why`} className="block text-[12px] text-[var(--color-muted)]">
             {option.disabledReason}
@@ -1112,29 +1133,32 @@ export function MobileFilterSheet({
               {renderFooter ? (
                 renderFooter({ draft, resultCount, dirty, activeCount, apply, cancel: requestClose, clearAll })
               ) : (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     onClick={reset}
-                    className="min-h-[44px] shrink-0 whitespace-nowrap rounded-lg px-2.5 text-[13px] font-medium text-[var(--color-muted)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-fg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
+                    className="min-h-[44px] shrink-0 whitespace-nowrap rounded-lg px-2 text-[13px] font-medium text-[var(--color-muted)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-fg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
                   >
                     {resetLabel}
                   </button>
+                  {/* Cancel yields space first (min-w-0 + truncate) so the primary
+                      Apply action is never clipped on a narrow screen. */}
                   <button
                     type="button"
                     onClick={requestClose}
-                    className="ml-auto min-h-[44px] shrink-0 whitespace-nowrap rounded-lg border border-[var(--color-border)] px-3.5 text-[14px] font-medium text-[var(--color-fg)] hover:bg-[var(--color-bg-secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
+                    className="ml-auto min-h-[44px] min-w-0 shrink truncate rounded-xl border border-[var(--color-border)] px-3 text-[14px] font-medium text-[var(--color-fg)] transition-colors hover:bg-[var(--color-bg-secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--color-accent)]"
                   >
                     {cancelLabel}
                   </button>
                   <button
                     type="button"
                     onClick={apply}
-                    className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg bg-[var(--color-accent)] px-4 text-[14px] font-semibold text-[var(--color-accent-fg)] shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-accent-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+                    className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-xl px-3.5 text-[14px] font-semibold text-[var(--color-accent-fg)] shadow-[0_6px_16px_-6px_color-mix(in_oklab,var(--color-accent)_75%,transparent)] transition-[transform,box-shadow] duration-150 hover:-translate-y-px hover:shadow-[0_8px_20px_-6px_color-mix(in_oklab,var(--color-accent)_85%,transparent)] active:translate-y-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+                    style={{ background: "linear-gradient(180deg, color-mix(in oklab, var(--color-accent) 92%, #fff) 0%, var(--color-accent) 55%, color-mix(in oklab, var(--color-accent) 88%, #000) 100%)" }}
                   >
                     {applyLabel}
                     {resultCount !== undefined ? (
-                      <span className="tabular-nums opacity-80">· {loading ? "…" : formatCount(roundedCount)}</span>
+                      <span className="tabular-nums opacity-85">· {loading ? "…" : formatCount(roundedCount)}</span>
                     ) : null}
                   </button>
                 </div>

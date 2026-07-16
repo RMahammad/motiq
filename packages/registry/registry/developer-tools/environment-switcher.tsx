@@ -405,11 +405,19 @@ function OptionRow({
       onMouseMove={onHover}
       onClick={disabled ? undefined : onSelect}
       className={cn(
-        "flex min-h-[44px] scroll-my-1 cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 transition-colors",
-        active && !disabled ? "bg-[var(--color-bg-secondary)]" : "bg-transparent",
+        "flex min-h-[44px] scroll-my-1 cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2",
+        "transition-[background-color,box-shadow] duration-150 ease-out",
         disabled && "cursor-not-allowed opacity-60",
       )}
-      style={active && !disabled ? { boxShadow: "inset 2px 0 0 0 var(--color-accent)" } : undefined}
+      style={
+        active && !disabled
+          ? {
+              background: "color-mix(in oklab, var(--color-accent) 10%, var(--color-bg-secondary))",
+              boxShadow:
+                "inset 3px 0 0 0 var(--color-accent), inset 0 0 0 1px color-mix(in oklab, var(--color-accent) 22%, transparent), 0 1px 2px color-mix(in oklab, var(--color-accent) 16%, transparent)",
+            }
+          : undefined
+      }
     >
       {/* selected check reserves width so rows don't shift */}
       <span className="grid w-4 shrink-0 place-items-center text-[var(--color-accent)]" aria-hidden>
@@ -438,8 +446,17 @@ function OptionRow({
         ) : null}
 
         {prod && env.warning ? (
-          <span className="inline-flex items-center gap-1 text-[11.5px] font-medium" style={{ color: statusVars("warning").color }}>
-            <WarnGlyph />
+          <span
+            className="mt-1 flex w-full items-center gap-1.5 rounded-md px-2 py-1 text-[11.5px] font-medium leading-tight"
+            style={{
+              color: statusVars("warning").color,
+              background: statusVars("warning").bg,
+              border: `1px solid ${statusVars("warning").border}`,
+            }}
+          >
+            <span className="shrink-0">
+              <WarnGlyph />
+            </span>
             {env.warning}
           </span>
         ) : null}

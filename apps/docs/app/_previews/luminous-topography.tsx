@@ -3,14 +3,17 @@
 import * as React from "react";
 
 import { LuminousTopography } from "@/registry/backgrounds/luminous-topography";
+import {
+  ControlBar,
+  ControlSegmented,
+  ControlToggle,
+  ControlDivider,
+} from "../_components/preview-controls";
 
 const SAFE = { x: 0.05, y: 0.14, w: 0.5, h: 0.72 };
 
-const seg =
-  "px-2.5 py-1 text-[12px] font-medium transition-colors data-[on=true]:bg-[var(--color-surface)] data-[on=true]:text-[var(--color-fg)] text-[var(--color-muted)] hover:text-[var(--color-fg)]";
-
 export function LuminousTopographyPreview() {
-  const [density, setDensity] = React.useState(1);
+  const [density, setDensity] = React.useState(1.1);
   const [depth, setDepth] = React.useState(3);
   const [motion, setMotion] = React.useState(true);
   const [showSafe, setShowSafe] = React.useState(false);
@@ -39,7 +42,7 @@ export function LuminousTopographyPreview() {
               Layered topographic contours flow around your focal points and thin out over the safe area — so the
               headline, copy, and CTA stay crisp on top.
             </p>
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            <div className="mt-7 flex flex-wrap items-center gap-3">
               <button
                 type="button"
                 className="rounded-lg bg-[var(--color-accent)] px-4 py-2 text-[14px] font-medium text-[var(--color-accent-fg,#fff)] shadow-[var(--shadow-sm)] transition-transform hover:-translate-y-0.5"
@@ -52,20 +55,6 @@ export function LuminousTopographyPreview() {
               >
                 View docs
               </button>
-            </div>
-
-            {/* Small product panel floating over the safe area. */}
-            <div className="mt-8 w-fit rounded-xl border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_82%,transparent)] p-3.5 shadow-[var(--shadow-md)] backdrop-blur">
-              <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-muted)]">Elevation</p>
-              <div className="mt-1.5 flex items-end gap-3">
-                <span className="text-[26px] font-semibold leading-none text-[var(--color-fg)]">1,240 m</span>
-                <span className="mb-0.5 text-[12px] font-medium text-[var(--color-success)]">+38 m</span>
-              </div>
-              <div className="mt-3 flex h-8 items-end gap-1">
-                {[38, 55, 47, 68, 60, 82, 74, 90].map((h, i) => (
-                  <span key={i} className="w-2 rounded-sm bg-[var(--color-accent)]" style={{ height: `${h}%`, opacity: 0.35 + (h / 100) * 0.6 }} />
-                ))}
-              </div>
             </div>
           </div>
 
@@ -91,8 +80,8 @@ export function LuminousTopographyPreview() {
       </div>
 
       {/* Real controls, all wired to props. */}
-      <div className="flex flex-wrap items-center gap-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3.5 py-2.5">
-        <label className="flex items-center gap-2 text-[12px] text-[var(--color-muted)]">
+      <ControlBar label="Background controls">
+        <label className="flex items-center gap-2 whitespace-nowrap text-[12.5px] font-medium text-[var(--color-muted)]">
           Density
           <input
             type="range"
@@ -101,32 +90,31 @@ export function LuminousTopographyPreview() {
             step={0.1}
             value={density}
             onChange={(e) => setDensity(Number(e.target.value))}
-            className="accent-[var(--color-accent)]"
+            className="h-1 w-24 cursor-pointer accent-[var(--color-accent)]"
             aria-label="Contour density"
           />
         </label>
-
-        <div className="flex items-center gap-2 text-[12px] text-[var(--color-muted)]">
-          Depth
-          <div className="flex overflow-hidden rounded-md border border-[var(--color-border)]" role="group" aria-label="Depth layers">
-            {[1, 2, 3, 4].map((d) => (
-              <button key={d} type="button" data-on={depth === d} aria-pressed={depth === d} className={seg} onClick={() => setDepth(d)}>
-                {d}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <label className="flex cursor-pointer items-center gap-1.5 text-[12px] text-[var(--color-muted)] select-none">
-          <input type="checkbox" checked={motion} onChange={(e) => setMotion(e.target.checked)} className="accent-[var(--color-accent)]" />
+        <ControlDivider />
+        <span className="text-[12.5px] font-medium text-[var(--color-muted)]">Depth</span>
+        <ControlSegmented
+          label="Depth layers"
+          value={String(depth)}
+          onChange={(v) => setDepth(Number(v))}
+          options={[
+            { value: "1", label: "1" },
+            { value: "2", label: "2" },
+            { value: "3", label: "3" },
+            { value: "4", label: "4" },
+          ]}
+        />
+        <ControlDivider />
+        <ControlToggle pressed={motion} onPressedChange={setMotion}>
           Motion
-        </label>
-
-        <label className="flex cursor-pointer items-center gap-1.5 text-[12px] text-[var(--color-muted)] select-none">
-          <input type="checkbox" checked={showSafe} onChange={(e) => setShowSafe(e.target.checked)} className="accent-[var(--color-accent)]" />
+        </ControlToggle>
+        <ControlToggle pressed={showSafe} onPressedChange={setShowSafe}>
           Show safe area
-        </label>
-      </div>
+        </ControlToggle>
+      </ControlBar>
     </div>
   );
 }

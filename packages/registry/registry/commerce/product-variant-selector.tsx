@@ -708,6 +708,16 @@ export function ProductVariantSelector({
         {/* Product image panel (abstract; app supplies real images) --------- */}
         <div className={cn("relative", compact && "order-first")}>
           <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)]">
+            {/* Soft studio backdrop — a top-lit vignette that shows through the
+                product image's transparent areas for a little depth. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(120% 82% at 50% 26%, color-mix(in oklab, var(--color-fg) 7%, transparent) 0%, transparent 68%)",
+              }}
+            />
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.div
                 key={image ?? "placeholder"}

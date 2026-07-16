@@ -311,7 +311,6 @@ export function TwoFactorSetupFlow({
     if (state !== "recovery-codes") setSavedAck(false);
   }, [state]);
 
-  const headingRef = React.useRef<HTMLHeadingElement | null>(null);
   const codeInputRef = React.useRef<HTMLInputElement | null>(null);
   const errorId = React.useId();
   const codeFieldId = React.useId();
@@ -327,17 +326,13 @@ export function TwoFactorSetupFlow({
     [state, site, selectedMeta, setupData],
   );
 
-  // Focus moves to the phase heading after every app-driven transition so
-  // keyboard/screen-reader users land on the new context. When a code input is
-  // present, prefer focusing it so the user can type immediately.
+  // When a code input is present, focus it so the user can type immediately.
+  // Otherwise we DON'T move focus to the (non-interactive) heading — some
+  // environments draw a forced focus box around it — the phase change is
+  // announced via the polite live region instead.
   React.useEffect(() => {
-    const id = requestAnimationFrame(() => {
-      if ((state === "waiting-for-code" || state === "invalid-code" || state === "expired-code") && codeInputRef.current) {
-        codeInputRef.current.focus();
-      } else {
-        headingRef.current?.focus();
-      }
-    });
+    if (!(state === "waiting-for-code" || state === "invalid-code" || state === "expired-code")) return;
+    const id = requestAnimationFrame(() => codeInputRef.current?.focus());
     return () => cancelAnimationFrame(id);
   }, [state]);
 
@@ -356,7 +351,7 @@ export function TwoFactorSetupFlow({
     <section
       aria-label={regionLabel}
       className={cn(
-        "flex w-full max-w-[30rem] flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
+        "flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
         className,
       )}
     >
@@ -443,11 +438,7 @@ export function TwoFactorSetupFlow({
                 )}
               </span>
               <div className="min-w-0 flex-1">
-                <h4
-                  ref={headingRef}
-                  tabIndex={-1}
-                  className="text-[15px] font-semibold leading-snug text-[var(--color-fg)] outline-none"
-                >
+                <h4 className="text-[15px] font-semibold leading-snug text-[var(--color-fg)]">
                   {copyText.title}
                 </h4>
                 <p className="mt-1 text-[13px] leading-relaxed text-[var(--color-muted)]">{copyText.body}</p>
@@ -688,106 +679,90 @@ export function TwoFactorSetupFlow({
         </AnimatePresence>
       </div>
 
-      {/* actions */}
-      <div className="flex flex-col gap-2 border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-5 py-4">
+      {/* actions — a calm footer: an in-flight status line on its own row, then a
+          button row with the low-emphasis escape hatch on the left and the primary
+          action cluster (secondary → primary) right-aligned. */}
+      <div className="flex flex-col gap-3 border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-5 py-4">
+        {state === "preparing" || state === "verifying" ? (
+          <span className="inline-flex items-center gap-2 text-[13px] font-medium text-[var(--color-muted)]">
+            <Spinner reduce={reduce} />
+            {state === "preparing" ? "Preparing your setup…" : "Checking your code…"}
+          </span>
+        ) : null}
+
         <div className="flex flex-wrap items-center gap-2">
-          {state === "introduction" ? (
-            <PrimaryButton onClick={() => onBegin?.()} busy={busy}>
-              Get started
-            </PrimaryButton>
-          ) : null}
-
-          {state === "method-selection" ? (
-            <PrimaryButton onClick={() => onBegin?.()} busy={busy} disabled={!!selectedMeta?.unavailable}>
-              Continue
-            </PrimaryButton>
-          ) : null}
-
-          {state === "preparing" ? (
-            <span className="inline-flex items-center gap-2 text-[13px] font-medium text-[var(--color-muted)]">
-              <Spinner reduce={reduce} />
-              Preparing your setup…
-            </span>
-          ) : null}
-
-          {state === "secret-or-QR-ready" ? (
-            <PrimaryButton onClick={() => onBegin?.()} busy={busy}>
-              I&apos;ve added it — enter a code
-            </PrimaryButton>
-          ) : null}
-
-          {(state === "waiting-for-code" || state === "invalid-code") ? (
-            <PrimaryButton
-              onClick={submitCode}
-              busy={busy}
-              disabled={!codeReady}
-              aria-describedby={state === "invalid-code" && error ? errorId : undefined}
-            >
-              Verify
-            </PrimaryButton>
-          ) : null}
-
-          {state === "verifying" ? (
-            <span className="inline-flex items-center gap-2 text-[13px] font-medium text-[var(--color-muted)]">
-              <Spinner reduce={reduce} />
-              Checking your code…
-            </span>
-          ) : null}
-
-          {state === "expired-code" ? (
-            <PrimaryButton onClick={() => onResend?.()} busy={busy}>
-              Send a new code
-            </PrimaryButton>
-          ) : null}
-
-          {(state === "waiting-for-code" || state === "invalid-code") && onResend ? (
-            <SecondaryButton onClick={() => onResend()}>Resend code</SecondaryButton>
-          ) : null}
-
-          {state === "method-unavailable" ? (
-            <PrimaryButton onClick={() => onRetry?.()} busy={busy}>
-              Choose another method
-            </PrimaryButton>
-          ) : null}
-
-          {state === "success" ? (
-            <PrimaryButton tone="success" onClick={() => onComplete?.()}>
-              {recoveryCodes && recoveryCodes.length > 0 ? "Continue" : "Done"}
-            </PrimaryButton>
-          ) : null}
-
-          {state === "recovery-codes" ? (
-            <PrimaryButton
-              tone="success"
-              onClick={() => onConfirmRecoveryCodes?.()}
-              disabled={!savedAck}
-              aria-describedby={ackId}
-            >
-              Finish setup
-            </PrimaryButton>
-          ) : null}
-
-          {state === "complete" ? (
-            <PrimaryButton tone="success" onClick={() => onComplete?.()}>
-              Done
-            </PrimaryButton>
-          ) : null}
-
-          {state === "cancelled" ? (
-            <PrimaryButton onClick={() => onRetry?.()}>Try again</PrimaryButton>
-          ) : null}
-
-          {/* cancel for in-flight / mid-setup steps */}
-          {(state === "preparing" || state === "secret-or-QR-ready" || state === "waiting-for-code" || state === "verifying" || state === "invalid-code" || state === "expired-code") && onCancel ? (
-            <SecondaryButton onClick={() => onCancel()}>Cancel</SecondaryButton>
-          ) : null}
-
-          {/* alternative factor — offered on every screen before completion */}
+          {/* escape hatch — low emphasis, left; offered before completion */}
           {state !== "success" && state !== "complete" && state !== "recovery-codes" && onUseAlternative ? (
-            <SecondaryButton className="ml-auto" onClick={() => onUseAlternative()}>
-              {alternativeLabel}
-            </SecondaryButton>
+            <GhostButton onClick={() => onUseAlternative()}>{alternativeLabel}</GhostButton>
           ) : null}
+
+          {/* right-aligned action cluster: secondary first, primary rightmost */}
+          <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
+            {(state === "waiting-for-code" || state === "invalid-code") && onResend ? (
+              <SecondaryButton onClick={() => onResend()}>Resend code</SecondaryButton>
+            ) : null}
+
+            {(state === "preparing" || state === "secret-or-QR-ready" || state === "waiting-for-code" || state === "verifying" || state === "invalid-code" || state === "expired-code") && onCancel ? (
+              <SecondaryButton onClick={() => onCancel()}>Cancel</SecondaryButton>
+            ) : null}
+
+            {state === "introduction" ? (
+              <PrimaryButton onClick={() => onBegin?.()} busy={busy}>
+                Get started
+              </PrimaryButton>
+            ) : null}
+
+            {state === "method-selection" ? (
+              <PrimaryButton onClick={() => onBegin?.()} busy={busy} disabled={!!selectedMeta?.unavailable}>
+                Continue
+              </PrimaryButton>
+            ) : null}
+
+            {state === "secret-or-QR-ready" ? (
+              <PrimaryButton onClick={() => onBegin?.()} busy={busy}>
+                I&apos;ve added it — enter a code
+              </PrimaryButton>
+            ) : null}
+
+            {(state === "waiting-for-code" || state === "invalid-code") ? (
+              <PrimaryButton
+                onClick={submitCode}
+                busy={busy}
+                disabled={!codeReady}
+                aria-describedby={state === "invalid-code" && error ? errorId : undefined}
+              >
+                Verify
+              </PrimaryButton>
+            ) : null}
+
+            {state === "expired-code" ? (
+              <PrimaryButton onClick={() => onResend?.()} busy={busy}>
+                Send a new code
+              </PrimaryButton>
+            ) : null}
+
+            {state === "method-unavailable" ? (
+              <PrimaryButton onClick={() => onRetry?.()} busy={busy}>
+                Choose another method
+              </PrimaryButton>
+            ) : null}
+
+            {state === "success" ? (
+              <PrimaryButton onClick={() => onComplete?.()}>
+                {recoveryCodes && recoveryCodes.length > 0 ? "Continue" : "Done"}
+              </PrimaryButton>
+            ) : null}
+
+            {state === "recovery-codes" ? (
+              <PrimaryButton onClick={() => onConfirmRecoveryCodes?.()} disabled={!savedAck} aria-describedby={ackId}>
+                Finish setup
+              </PrimaryButton>
+            ) : null}
+
+            {state === "complete" ? <PrimaryButton onClick={() => onComplete?.()}>Done</PrimaryButton> : null}
+
+            {state === "cancelled" ? <PrimaryButton onClick={() => onRetry?.()}>Try again</PrimaryButton> : null}
+          </div>
         </div>
 
         {/* honest, non-absolute completion note — never "your account is secure" */}
@@ -983,6 +958,23 @@ function SecondaryButton({
       onClick={onClick}
       className={cn(
         "inline-flex items-center gap-1.5 rounded-lg bg-[var(--color-surface)] px-3.5 py-2 text-[13px] font-medium text-[var(--color-fg)] outline-none transition-colors [border:1px_solid_var(--color-border)] hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
+        className,
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+// Low-emphasis "escape hatch" action (e.g. "Use a different method") — a quiet
+// text button that never competes with the primary/secondary actions.
+function GhostButton({ onClick, children, className }: { onClick: () => void; children: React.ReactNode; className?: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-[13px] font-medium text-[var(--color-muted)] outline-none transition-colors hover:bg-[var(--color-surface)] hover:text-[var(--color-fg)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
         className,
       )}
     >

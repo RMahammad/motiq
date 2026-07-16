@@ -28,11 +28,14 @@ body {
   background: color-mix(in oklab, var(--color-accent) 28%, transparent);
 }
 
-/* Accessible focus ring for all interactive chrome. */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-[tabindex]:focus-visible {
+/* Accessible focus ring for all interactive chrome. Opt out with [data-noring]
+   (e.g. the command-palette search field + trigger, which are unmistakably the
+   focus and read cleaner bare). Components that opt out also set inline
+   box-shadow:none so the ring never shows even if this file's HMR lags. */
+a:focus-visible:not([data-noring]),
+button:focus-visible:not([data-noring]),
+input:focus-visible:not([data-noring]),
+[tabindex]:focus-visible:not([data-noring]) {
   outline: none;
   box-shadow: var(--ring);
   border-radius: var(--radius-sm);

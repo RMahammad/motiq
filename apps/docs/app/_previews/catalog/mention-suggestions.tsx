@@ -31,9 +31,12 @@ const GROUPS: MentionGroup[] = [
 
 export function MentionSuggestionsCatalogPreview() {
   const inputRef = React.useRef<HTMLTextAreaElement | null>(null);
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
   return (
     <div className="mx-auto w-full max-w-[460px]">
-      <div className="relative min-h-[340px]">
+      {/* `container` keeps the popup INSIDE this card (absolute, not a viewport-
+          fixed overlay) so it never floats over the site nav or flickers on scroll. */}
+      <div ref={containerRef} className="relative min-h-[360px]">
         <label htmlFor="catalog-mention-composer" className="sr-only">
           Write a comment — type @ to mention someone
         </label>
@@ -52,6 +55,7 @@ export function MentionSuggestionsCatalogPreview() {
           items={PEOPLE}
           groups={GROUPS}
           inputRef={inputRef}
+          container={containerRef}
           onSelect={() => {}}
           label="Mention a teammate or team"
         />
