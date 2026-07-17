@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 
 import { product } from "../lib/product";
+import { absoluteUrl } from "../lib/seo";
 import { AiResponseStream, type ResponseSegment } from "@/registry/ai/ai-response-stream";
 import { featuredItems, categoryCount, bySlug, packSpans, SPAN_CLASS, accessLabel, resolvePresentation, componentItems, type CatalogItem } from "../lib/catalog";
 import { packs, type Pack } from "../lib/packs";
@@ -300,8 +301,29 @@ export default function HomePage() {
     .map((s) => bySlug.get(s))
     .filter(Boolean) as CatalogItem[];
 
+  const catalogList = componentItems();
+  const catalogJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `${product.productName} — component catalog`,
+    description: product.description,
+    url: absoluteUrl("/"),
+    isPartOf: { "@id": `${absoluteUrl("/")}#website` },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: catalogList.length,
+      itemListElement: catalogList.slice(0, 30).map((item, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: item.name,
+        url: absoluteUrl(`/components/${item.slug}`),
+      })),
+    },
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(catalogJsonLd) }} />
       <PageView event="homepage_viewed" />
 
       {/* ===== 1 · Hero — left-aligned editorial composition over a soft

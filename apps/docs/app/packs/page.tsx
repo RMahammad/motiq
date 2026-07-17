@@ -5,14 +5,17 @@ import { packs, packInstall } from "../../lib/packs";
 import { bySlug } from "../../lib/catalog";
 import { product } from "../../lib/product";
 import { completeCatalogCta, statusLabel } from "../../lib/commerce";
+import { pageMetadata } from "../../lib/seo";
 import { AccessCta } from "../_components/access-cta";
 import { CompactPreview } from "./_compact-previews";
 import { FeaturedShowcase, type FeaturedPack } from "./_featured-showcase";
 
-export const metadata: Metadata = {
-  title: `Workflow packs — ${product.productName}`,
-  description: "Four complete, installable workflow blocks — editable source, shadcn-compatible, free and Pro components.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Workflow packs",
+  description:
+    "Complete, installable workflow blocks — AI interface, developer tools, collaboration, and data motion. Editable source, shadcn-compatible.",
+  path: "/packs",
+});
 
 /** Resolve a pack's components (name + access) from the catalog, in visual order. */
 function resolveComponents(slugs: string[]) {

@@ -3,13 +3,16 @@ import Link from "next/link";
 
 import { product, commerce } from "../../lib/product";
 import { launchMode } from "../../lib/commerce";
+import { pageMetadata } from "../../lib/seo";
 import { AccessRequestForm } from "./access-request-form";
 import type { WaitlistPack } from "../../lib/server/waitlist";
 
-export const metadata: Metadata = {
-  title: `Request access — ${product.productName}`,
-  description: "Request early access to the private preview. Recorded locally in development.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Request access",
+  description: "Request early access to the private preview.",
+  path: "/access",
+  noIndex: true,
+});
 
 const PACK_LABELS: Record<WaitlistPack, string> = {
   "ai-interface": "AI Interface Pack",

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { bySlug, catalog, itemInstall, resolvePresentation } from "../../../lib/catalog";
 import { product } from "../../../lib/product";
+import { pageMetadata, absoluteUrl } from "../../../lib/seo";
 import { proComponentCta } from "../../../lib/commerce";
 import { readAnyRegistry, canRenderFullSource, sourcePreview } from "../../../lib/registry-source";
 import { docsContent } from "../../../lib/docs-content";
@@ -21,7 +22,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const item = bySlug.get(slug);
   if (!item) return {};
-  return { title: `${item.name} — ${product.productName}`, description: item.description };
+  return pageMetadata({
+    title: item.name,
+    description: item.description,
+    path: `/components/${item.slug}`,
+    type: "article",
+  });
 }
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
@@ -57,8 +63,33 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         : "max-w-[1000px]";
   const READ = "mx-auto max-w-[920px]";
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareSourceCode",
+        name: item.name,
+        description: item.description,
+        url: absoluteUrl(`/components/${item.slug}`),
+        codeRepository: product.githubUrl,
+        programmingLanguage: "TypeScript",
+        runtimePlatform: "React",
+        isAccessibleForFree: true,
+        author: { "@type": "Organization", name: product.productName },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Components", item: absoluteUrl("/components") },
+          { "@type": "ListItem", position: 2, name: item.name, item: absoluteUrl(`/components/${item.slug}`) },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="mx-auto max-w-[1360px] px-4 py-10 sm:px-6 lg:px-8">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <div className={READ}>
         <nav className="mb-4 text-[13px] text-[var(--color-muted)]">
           <Link href="/components" className="hover:text-[var(--color-fg)]">

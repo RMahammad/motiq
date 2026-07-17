@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 
 import { product } from "../../lib/product";
 import { allReleases, CATALOG_COMPLETE, DEFAULT_VERSION } from "../../lib/server/versioning";
+import { pageMetadata } from "../../lib/seo";
 
-export const metadata: Metadata = {
-  title: `Updates — ${product.productName}`,
+export const metadata: Metadata = pageMetadata({
+  title: "Updates",
   description: "Release versions, dates, and changelog for the catalog and its components.",
-};
+  path: "/updates",
+});
 
 function labelFor(itemName: string): string {
   return itemName === CATALOG_COMPLETE ? "Complete catalog" : itemName;

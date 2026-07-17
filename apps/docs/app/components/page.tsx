@@ -1,13 +1,15 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
 
-import { product } from "../../lib/product";
 import { CatalogBrowser } from "../_components/catalog-browser";
+import { pageMetadata } from "../../lib/seo";
 
-export const metadata: Metadata = {
-  title: `Components — ${product.productName}`,
-  description: "Browse animated React and shadcn components. Preview live, install as editable source.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Components",
+  description:
+    "Browse 60+ animated React and shadcn components — AI interfaces, dashboards, developer tools, and more. Preview live and install as editable source with the shadcn CLI.",
+  path: "/components",
+});
 
 export default function ComponentsPage() {
   return (

@@ -7,6 +7,7 @@ import { bySlug, itemInstall } from "../../../lib/catalog";
 import { product } from "../../../lib/product";
 import { packPrimaryCta, completeCatalogCta, statusLabel, canShowPrice } from "../../../lib/commerce";
 import { docsContent } from "../../../lib/docs-content";
+import { pageMetadata } from "../../../lib/seo";
 import { Preview } from "../../_previews";
 import { PreviewStage } from "../../_components/preview-stage";
 import { LazyPreview } from "../../_components/lazy-preview";
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const pack = packBySlug.get(slug);
   if (!pack) return {};
-  return { title: `${pack.name} — ${product.productName}`, description: pack.tagline };
+  return pageMetadata({ title: pack.name, description: pack.tagline, path: `/packs/${pack.slug}`, type: "article" });
 }
 
 function Section({ title, sub, children }: { title: string; sub?: string; children: React.ReactNode }) {

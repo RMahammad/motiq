@@ -5,11 +5,62 @@ import "@scope/tokens/styles.css";
 import "./globals.css";
 
 import { product, commerce } from "../lib/product";
+import { siteUrl, absoluteUrl } from "../lib/seo";
 import { SiteNav } from "./_components/site-nav";
 
 export const metadata: Metadata = {
-  title: `${product.productName} — ${product.tagline}`,
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${product.productName} — ${product.tagline}`,
+    template: `%s — ${product.productName}`,
+  },
   description: product.description,
+  applicationName: product.productName,
+  keywords: [
+    "React components",
+    "shadcn components",
+    "animated components",
+    "Next.js components",
+    "Framer Motion",
+    "Motion for React",
+    "UI library",
+    "component registry",
+    "editable source",
+    "reduced motion",
+    "accessible components",
+    "Tailwind CSS",
+    "RSC",
+    "copy paste components",
+  ],
+  authors: [{ name: product.productName, url: siteUrl }],
+  creator: product.productName,
+  publisher: product.productName,
+  category: "technology",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName: product.productName,
+    title: `${product.productName} — ${product.tagline}`,
+    description: product.description,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${product.productName} — ${product.tagline}`,
+    description: product.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 const noFlash = `(function(){try{var t=localStorage.getItem('theme')||'${product.defaultTheme}';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','${product.defaultTheme}');}})();`;
@@ -36,6 +87,41 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <style dangerouslySetInnerHTML={{ __html: scrollbarCss }} />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Organization",
+                  "@id": `${siteUrl}/#organization`,
+                  name: product.productName,
+                  url: siteUrl,
+                  description: product.description,
+                  sameAs: [product.githubUrl].filter(Boolean),
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": `${siteUrl}/#website`,
+                  name: product.productName,
+                  url: siteUrl,
+                  description: product.description,
+                  publisher: { "@id": `${siteUrl}/#organization` },
+                  inLanguage: "en-US",
+                  potentialAction: {
+                    "@type": "SearchAction",
+                    target: {
+                      "@type": "EntryPoint",
+                      urlTemplate: absoluteUrl("/components?q={search_term_string}"),
+                    },
+                    "query-input": "required name=search_term_string",
+                  },
+                },
+              ],
+            }),
+          }}
+        />
         <SiteNav
           productName={product.shortName}
           waitlistEnabled={commerce.waitlistEnabled}
