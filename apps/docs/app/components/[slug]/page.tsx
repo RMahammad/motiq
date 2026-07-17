@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { bySlug, catalog, itemInstall, resolvePresentation } from "../../../lib/catalog";
+import { bySlug, catalog, itemInstall, itemsByCategory, categories, resolvePresentation } from "../../../lib/catalog";
 import { product } from "../../../lib/product";
 import { pageMetadata, absoluteUrl } from "../../../lib/seo";
+import { whenToUse, faqFor } from "../../../lib/component-seo";
 import { proComponentCta } from "../../../lib/commerce";
 import { readAnyRegistry, canRenderFullSource, sourcePreview } from "../../../lib/registry-source";
 import { docsContent } from "../../../lib/docs-content";
@@ -63,6 +64,14 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         : "max-w-[1000px]";
   const READ = "mx-auto max-w-[920px]";
 
+  const guide = whenToUse(item);
+  const faq = faqFor(item);
+  const categoryLabel = categories.find((c) => c.id === item.category)?.label ?? "Components";
+  const related = itemsByCategory(item.category)
+    .filter((c) => c.slug !== item.slug && (c.kind ?? "component") === "component")
+    .slice(0, 6);
+  const url = absoluteUrl(`/components/${item.slug}`);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -70,18 +79,54 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         "@type": "SoftwareSourceCode",
         name: item.name,
         description: item.description,
-        url: absoluteUrl(`/components/${item.slug}`),
+        url,
         codeRepository: product.githubUrl,
         programmingLanguage: "TypeScript",
         runtimePlatform: "React",
+        keywords: item.tags.join(", "),
         isAccessibleForFree: true,
         author: { "@type": "Organization", name: product.productName },
+      },
+      {
+        "@type": "HowTo",
+        name: `How to install ${item.name}`,
+        description: `Install ${item.name} as editable source with the shadcn CLI.`,
+        step: [
+          {
+            "@type": "HowToStep",
+            position: 1,
+            name: "Run the shadcn add command",
+            text: itemInstall(item),
+            url: `${url}#installation`,
+          },
+          {
+            "@type": "HowToStep",
+            position: 2,
+            name: "Import and use the component",
+            text: `Import ${item.name} from your components directory and render it in your React or Next.js app.`,
+            url: `${url}#usage`,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        mainEntity: faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
       },
       {
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Components", item: absoluteUrl("/components") },
-          { "@type": "ListItem", position: 2, name: item.name, item: absoluteUrl(`/components/${item.slug}`) },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: categoryLabel,
+            item: absoluteUrl(`/components/category/${item.category}`),
+          },
+          { "@type": "ListItem", position: 3, name: item.name, item: url },
         ],
       },
     ],
@@ -95,7 +140,11 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           <Link href="/components" className="hover:text-[var(--color-fg)]">
             Components
           </Link>{" "}
-          / <span className="capitalize">{item.category.replace("-", " ")}</span> / <span>{item.name}</span>
+          /{" "}
+          <Link href={`/components/category/${item.category}`} className="hover:text-[var(--color-fg)]">
+            {categoryLabel}
+          </Link>{" "}
+          / <span>{item.name}</span>
         </nav>
 
         <header className="mb-6 flex flex-wrap items-center gap-3">
@@ -115,6 +164,17 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
       </div>
 
       <div className={READ}>
+      {/* When to use — unique, keyword-rich prose derived from real attributes */}
+      <Section id="when-to-use" title="When to use">
+        <p className="mb-4 text-[15px] leading-relaxed text-[var(--color-muted)]">{guide.intro}</p>
+        <p className="mb-2 text-[13px] font-medium uppercase tracking-wide text-[var(--color-fg)]">Best for</p>
+        <ul className="space-y-1.5 text-[14px] text-[var(--color-muted)]">
+          {guide.bestFor.map((b) => (
+            <li key={b}>· {b}</li>
+          ))}
+        </ul>
+      </Section>
+
       {/* Installation */}
       <Section id="installation" title="Installation">
         <p className="mb-3 text-[14px] text-[var(--color-muted)]">Install the editable source with the shadcn CLI:</p>
@@ -235,6 +295,44 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
               <li key={p}>· {p}</li>
             ))}
           </ul>
+        </Section>
+      ) : null}
+
+      {/* FAQ — accurate Q&A, also emitted as FAQPage structured data above */}
+      <Section id="faq" title="Frequently asked questions">
+        <dl className="space-y-5">
+          {faq.map((f) => (
+            <div key={f.q}>
+              <dt className="mb-1 text-[15px] font-medium text-[var(--color-fg)]">{f.q}</dt>
+              <dd className="text-[14px] leading-relaxed text-[var(--color-muted)]">{f.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </Section>
+
+      {/* Related components — internal linking + crawl depth within the category */}
+      {related.length ? (
+        <Section id="related" title="Related components">
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {related.map((r) => (
+              <li key={r.slug}>
+                <Link
+                  href={`/components/${r.slug}`}
+                  className="block rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3.5 transition-colors hover:border-[var(--color-accent)]"
+                >
+                  <span className="block text-[14px] font-medium text-[var(--color-fg)]">{r.name}</span>
+                  <span className="mt-0.5 block line-clamp-2 text-[13px] text-[var(--color-muted)]">{r.description}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 text-[13.5px] text-[var(--color-muted)]">
+            See all{" "}
+            <Link href={`/components/category/${item.category}`} className="text-[var(--color-accent)] hover:underline">
+              {categoryLabel} components
+            </Link>
+            .
+          </p>
         </Section>
       ) : null}
       </div>
