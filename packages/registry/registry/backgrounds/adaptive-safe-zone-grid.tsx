@@ -270,6 +270,22 @@ function buildGrid(
   return { cols, rows, coarse, fine, motes, focalCells };
 }
 
+/**
+ * Rough advance-width estimate (in logical px) for sizing an SVG pill without a
+ * canvas measure at render — digits/caps/symbols are wide, i/l/punctuation are
+ * narrow. Only used to pad decorative chips, so an approximation is fine.
+ */
+function estWidth(text: string, size: number): number {
+  let em = 0;
+  for (const ch of text) {
+    if (ch === " ") em += 0.32;
+    else if (/[iIl.,:|']/.test(ch)) em += 0.3;
+    else if (/[A-Z0-9×%@#]/.test(ch)) em += 0.62;
+    else em += 0.52;
+  }
+  return em * size;
+}
+
 /** Normalise one-or-many safe areas to an array of ellipse mask geometry. */
 function safeEllipses(safeArea: SafeRect | SafeRect[], fieldH: number) {
   const rects = Array.isArray(safeArea) ? safeArea : [safeArea];
@@ -488,6 +504,170 @@ export function AdaptiveSafeZoneGrid({
   const cyan = "var(--color-secondary-accent, var(--color-info))";
   const cellFill = "color-mix(in oklab, var(--color-accent) 12%, transparent)";
   const cellStroke = "color-mix(in oklab, var(--color-accent) 55%, transparent)";
+  const surfaceTok = "var(--color-surface)";
+  const borderTok = "var(--color-border)";
+  const fgTok = "var(--color-fg)";
+  const mutedTok = "var(--color-muted)";
+  const successTok = "var(--color-success, var(--color-accent))";
+  const accentFg = "var(--color-accent-fg, #fff)";
+  const uiFont = "ui-sans-serif, system-ui, sans-serif";
+
+  // Designed overlay — a grid-aligned "safe zone" callout, its lit cell cluster,
+  // column axis ticks, and glassy live-metric chips. This is what lifts the field
+  // from a bare lattice to a content-aware, dashboard-grade surface. Everything is
+  // deterministic (positions derive from the focal point and grid, no RNG) and
+  // upright (never skewed), and every piece self-quiets behind the copy via
+  // `softDim` so nothing floats over the headline. Skipped for the multi-zone
+  // luminance-mask power path, which keeps its bare geometry.
+  const overlay = React.useMemo(() => {
+    if (multiZone) return null;
+    const cw = W / grid.cols;
+    const ch = fieldH / grid.rows;
+    const F = washFocal;
+    const narrow = layout.narrow;
+    const ui = narrow ? 1.9 : 1;
+    const M = 18;
+    const place = comp.placement;
+    // A narrow phone hero stacks the copy on top/bottom, and that copy is taller
+    // than the 0.5 safe rect it derives from — so treat a wider band as occupied
+    // and keep the callout inside the clearly-open strip.
+    const stackTop = narrow && (place === "top" || place === "none");
+    const stackBottom = narrow && place === "bottom";
+
+    // "SAFE ZONE" tab dimensions (needed before positioning so the tab clears the
+    // copy on stacked layouts).
+    const tabFs = 16 * ui;
+    const tabText = "SAFE ZONE";
+    const tabW = round1(estWidth(tabText, tabFs) + 22 * ui);
+    const tabH = round1(24 * ui);
+
+    // Safe-zone block snapped to a small block of cells around the focal point.
+    // Compact on a phone so the whole callout fits the short open band.
+    const colsSpan = clamp(Math.round(grid.cols * (narrow ? 0.34 : 0.26)), 2, 4);
+    const rowsSpan = clamp(Math.round(grid.rows * (narrow ? 0.12 : 0.28)), 2, 4);
+    const fc = clamp(Math.round(F.x * grid.cols), 0, grid.cols);
+    const fr = clamp(Math.round(F.y * grid.rows), 0, grid.rows);
+    let zc0 = clamp(fc - Math.round(colsSpan / 2), 0, grid.cols - colsSpan);
+    let zr0 = clamp(fr - Math.round(rowsSpan / 2), 0, grid.rows - rowsSpan);
+    // Push the zone fully clear of the (taller-than-safe) stacked copy.
+    if (stackTop) {
+      const minRow = Math.ceil((0.74 * fieldH + tabH) / ch);
+      zr0 = clamp(Math.max(zr0, minRow), 0, grid.rows - rowsSpan);
+    } else if (stackBottom) {
+      const maxRow = Math.floor((0.26 * fieldH) / ch) - rowsSpan;
+      zr0 = clamp(Math.min(zr0, maxRow), 0, grid.rows - rowsSpan);
+    }
+    const zx = round1(zc0 * cw);
+    const zy = round1(zr0 * ch);
+    const zw = round1(colsSpan * cw);
+    const zh = round1(rowsSpan * ch);
+    const zoneDim = softDim((zx + zw / 2) / W, (zy + zh / 2) / fieldH);
+    // Only draw the callout where it's essentially fully lit — a centered copy
+    // leaves no clean spot, so the grid stays ambient there rather than peeking a
+    // dimmed frame from behind the headline.
+    const showZone = zoneDim > 0.66;
+
+    // Lit cells inside the zone — brightest at the focal cell, so the cluster
+    // reads as a designed, glowing focus rather than scattered blobs.
+    const cxF = zc0 + colsSpan / 2 - 0.5;
+    const cyF = zr0 + rowsSpan / 2 - 0.5;
+    const zoneCells = [] as Array<{
+      x: number; y: number; w: number; h: number; fill: number; stroke: number; hero: boolean;
+    }>;
+    for (let r = 0; r < rowsSpan; r++) {
+      for (let c = 0; c < colsSpan; c++) {
+        const col = zc0 + c;
+        const row = zr0 + r;
+        const d = Math.hypot((col - cxF) / Math.max(1, colsSpan - 1), (row - cyF) / Math.max(1, rowsSpan - 1));
+        const near = clamp(1 - d, 0.1, 1);
+        zoneCells.push({
+          x: round1(col * cw),
+          y: round1(row * ch),
+          w: round1(cw),
+          h: round1(ch),
+          fill: round1(clamp((0.05 + near * near * 0.26) * vividness * zoneDim, 0.02, 0.42)),
+          stroke: round1(clamp((0.22 + near * 0.6) * zoneDim, 0.14, 0.95)),
+          hero: near > 0.82,
+        });
+      }
+    }
+
+    // Column axis ticks over the lit block — small indices, skipped where the tab
+    // sits so nothing overlaps it.
+    const ticks = [] as Array<{ x: number; y: number; text: string }>;
+    if (showZone) {
+      for (let c = 0; c < colsSpan; c++) {
+        const col = zc0 + c;
+        const tx = (col + 0.5) * cw;
+        if (tx < zx + tabW + 6 * ui) continue; // clear of the SAFE ZONE tab
+        ticks.push({ x: round1(tx), y: round1(zy - 13 * ui), text: String(col + 1).padStart(2, "0") });
+      }
+    }
+
+    // Glassy live-metric chips — sized deterministically, then slotted onto the
+    // zone's perimeter. A chip is dropped if it would collide with the zone or
+    // fall behind the copy, so the layout stays clean at every width. Beside a
+    // full-height copy column (left/right) only above/below are clean; a stacked
+    // phone hero gets a single chip centred in the open strip.
+    const safePct = Math.round(clamp(comp.safe.w * comp.safe.h, 0, 1) * 100);
+    const contents = [
+      { value: `${grid.cols} × ${grid.rows}`, label: "columns" },
+      { value: "60fps", label: "reflow" },
+      { value: safePct > 0 ? `${safePct}%` : "auto", label: "safe area" },
+    ];
+    const fs = 25 * ui;
+    const ls = 21 * ui;
+    const padX = 21 * ui;
+    const dotR = 6 * ui;
+    const gap = 14 * ui;
+    const chipH = 50 * ui;
+    const chips = [] as Array<{
+      bx: number; by: number; w: number; h: number; cy: number; dim: number;
+      dotX: number; dotR: number; valueX: number; labelX: number;
+      fs: number; ls: number; value: string; label: string;
+    }>;
+    const vertical = place === "left" || place === "right";
+    const stacked = stackTop || stackBottom;
+    contents.forEach((d, idx) => {
+      // The phone hero's open strip is too short for a floating pill under the
+      // callout, so it leans on the wide lit callout instead — no chips there.
+      if (stacked) return;
+      if (idx === 2 && vertical) return;
+      const vw = estWidth(d.value, fs);
+      const lw = estWidth(d.label, ls);
+      const w = padX * 2 + dotR * 2 + gap + vw + gap * 0.85 + lw;
+      let bx: number;
+      let by: number;
+      if (idx === 0) {
+        bx = zx + zw / 2 - w / 2; by = zy - tabH - chipH - 22 * ui;          // above
+      } else if (idx === 1) {
+        bx = zx + zw / 2 - w / 2; by = zy + zh + 22 * ui;                    // below
+      } else {
+        bx = zx - w - 26 * ui; by = zy + zh / 2 - chipH / 2;                 // left
+      }
+      bx = clamp(bx, M, W - M - w);
+      by = clamp(by, M, fieldH - M - chipH);
+      const dim = softDim((bx + w / 2) / W, (by + chipH / 2) / fieldH);
+      // Drop borderline-dim chips rather than floating a half-faded pill over the
+      // copy edge — a chip only reads as premium at (near) full opacity.
+      if (dim < 0.9) return;
+      const overlapsZone = showZone && bx < zx + zw && bx + w > zx && by < zy + zh && by + chipH > zy;
+      if (overlapsZone) return;
+      const dotX = bx + padX + dotR;
+      const valueX = dotX + dotR + gap;
+      chips.push({
+        bx: round1(bx), by: round1(by), w: round1(w), h: round1(chipH), cy: round1(by + chipH / 2),
+        dim: round1(dim), dotX: round1(dotX), dotR: round1(dotR),
+        valueX: round1(valueX), labelX: round1(valueX + vw + gap * 0.85),
+        fs: round1(fs), ls: round1(ls), value: d.value, label: d.label,
+      });
+    });
+
+    return {
+      ui, zx, zy, zw, zh, radius: round1(13 * ui), zoneDim, showZone, zoneCells, ticks, chips,
+      tabText, tabW, tabH, tabFs: round1(tabFs), tickFs: round1(15 * ui),
+    };
+  }, [multiZone, grid.cols, grid.rows, fieldH, washFocal, layout.narrow, comp.safe, comp.placement, vividness, softDim]);
 
   const css = `
 .${cls} { position: absolute; inset: 0; }
@@ -523,10 +703,15 @@ ${interactive ? `.${cls} .mk-aszg-cursor {
    strokes so the grid stays legible. */
 @media (forced-colors: active) {
   .${cls} .mk-aszg-wash, .${cls} .mk-aszg-light, .${cls} .mk-aszg-shimmer,
-  .${cls} .mk-aszg-mote, .${cls} .mk-aszg-cursor { display: none; }
+  .${cls} .mk-aszg-mote, .${cls} .mk-aszg-cursor, .${cls} .mk-aszg-glow2 { display: none; }
   .${cls} svg { forced-color-adjust: none; }
   .${cls} .mk-aszg-line, .${cls} .mk-aszg-fine { stroke: CanvasText !important; stroke-opacity: 0.45 !important; }
-  .${cls} .mk-aszg-cell, .${cls} .mk-aszg-focal { fill: transparent !important; stroke: CanvasText !important; }
+  .${cls} .mk-aszg-cell, .${cls} .mk-aszg-focal, .${cls} .mk-aszg-zonecell,
+  .${cls} .mk-aszg-zone rect, .${cls} .mk-aszg-zone path { fill: transparent !important; stroke: CanvasText !important; }
+  .${cls} .mk-aszg-chip-bg { fill: Canvas !important; stroke: CanvasText !important; fill-opacity: 1 !important; }
+  .${cls} .mk-aszg-tab { fill: CanvasText !important; }
+  .${cls} .mk-aszg-uitext, .${cls} .mk-aszg-overlay text { fill: CanvasText !important; fill-opacity: 1 !important; }
+  .${cls} .mk-aszg-tab + text { fill: Canvas !important; }
 }`.trim();
 
   return (
@@ -568,6 +753,15 @@ ${interactive ? `.${cls} .mk-aszg-cursor {
             <filter id={`aszg-glow-${uid}`} x="-40%" y="-40%" width="180%" height="180%">
               <feGaussianBlur stdDeviation="9" />
             </filter>
+            <filter id={`aszg-soft-${uid}`} x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="6" />
+            </filter>
+            {/* Lit-cell fill — brighter toward the top so each zone cell reads as
+                a lit face, not a flat tint. */}
+            <linearGradient id={`aszg-cell-${uid}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={azure} stopOpacity="1" />
+              <stop offset="100%" stopColor={cyan} stopOpacity="0.35" />
+            </linearGradient>
 
             {/* Attenuation: black (=hidden) at each safe-area centre, fading to
                 transparent at its edge, so the grid quiets where content sits
@@ -636,7 +830,9 @@ ${interactive ? `.${cls} .mk-aszg-cursor {
                       width={c.w}
                       height={c.h}
                       fill={azure}
-                      fillOpacity={round1(clamp(c.o * softDim(c.cx01, c.cy01), 0, 1))}
+                      // Held back to a faint ambient wash: the designed zone cluster
+                      // is the focal point now, so these only add distant depth.
+                      fillOpacity={round1(clamp(c.o * 0.42 * softDim(c.cx01, c.cy01), 0, 0.5))}
                     />
                   ))}
                 </g>
@@ -743,6 +939,191 @@ ${interactive ? `.${cls} .mk-aszg-cursor {
 
           {/* Corner vignette — frames the field with depth, in light and dark. */}
           <rect className="mk-aszg-light" x="0" y="0" width={W} height={fieldH} fill={`url(#aszg-vignette-${uid})`} pointerEvents="none" />
+
+          {/* Designed overlay: the safe-zone callout, lit cell cluster, column
+              axis ticks and glassy metric chips — upright, on top, self-quieting
+              behind the copy. */}
+          {overlay ? (
+            <g className="mk-aszg-overlay">
+              {/* Lit cells inside the zone — a glowing focus cluster. */}
+              {overlay.showZone
+                ? overlay.zoneCells.map((c, i) => (
+                    <g key={i}>
+                      {c.hero ? (
+                        <rect
+                          className="mk-aszg-glow2"
+                          x={c.x}
+                          y={c.y}
+                          width={c.w}
+                          height={c.h}
+                          fill={azure}
+                          fillOpacity={round1(clamp(c.fill * 1.4, 0, 0.6))}
+                          filter={`url(#aszg-soft-${uid})`}
+                        />
+                      ) : null}
+                      <rect
+                        className="mk-aszg-zonecell"
+                        x={c.x}
+                        y={c.y}
+                        width={c.w}
+                        height={c.h}
+                        fill={`url(#aszg-cell-${uid})`}
+                        fillOpacity={c.fill}
+                        stroke={azure}
+                        strokeOpacity={c.stroke}
+                        strokeWidth={overlay.ui}
+                      />
+                    </g>
+                  ))
+                : null}
+
+              {/* Safe-zone frame — a dashed accent guide with bright corner ticks
+                  and a labelled tab: the component's concept, drawn. */}
+              {overlay.showZone ? (
+                <g className="mk-aszg-zone">
+                  <rect
+                    x={overlay.zx}
+                    y={overlay.zy}
+                    width={overlay.zw}
+                    height={overlay.zh}
+                    rx={overlay.radius}
+                    fill={azure}
+                    fillOpacity={round1(clamp(0.05 * overlay.zoneDim, 0, 0.1))}
+                    stroke={azure}
+                    strokeOpacity={round1(clamp(0.6 * overlay.zoneDim, 0, 1))}
+                    strokeWidth={round1(1.6 * overlay.ui)}
+                    strokeDasharray={`${round1(7 * overlay.ui)} ${round1(6 * overlay.ui)}`}
+                  />
+                  {[
+                    [overlay.zx, overlay.zy, 1, 1],
+                    [overlay.zx + overlay.zw, overlay.zy, -1, 1],
+                    [overlay.zx, overlay.zy + overlay.zh, 1, -1],
+                    [overlay.zx + overlay.zw, overlay.zy + overlay.zh, -1, -1],
+                  ].map(([tx, ty, sx, sy], i) => {
+                    const t = round1(11 * overlay.ui);
+                    return (
+                      <path
+                        key={i}
+                        d={`M ${round1(tx + sx * t)} ${ty} L ${tx} ${ty} L ${tx} ${round1(ty + sy * t)}`}
+                        fill="none"
+                        stroke={azure}
+                        strokeOpacity={round1(clamp(0.95 * overlay.zoneDim, 0, 1))}
+                        strokeWidth={round1(2 * overlay.ui)}
+                        strokeLinecap="round"
+                      />
+                    );
+                  })}
+                  <g transform={`translate(${overlay.zx} ${round1(overlay.zy - overlay.tabH)})`}>
+                    <rect
+                      className="mk-aszg-tab"
+                      width={overlay.tabW}
+                      height={overlay.tabH}
+                      rx={round1(6 * overlay.ui)}
+                      fill={azure}
+                      fillOpacity={round1(clamp(0.92 * overlay.zoneDim, 0, 1))}
+                    />
+                    <text
+                      x={round1(overlay.tabW / 2)}
+                      y={round1(overlay.tabH / 2 + 1)}
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                      fontFamily={uiFont}
+                      fontSize={overlay.tabFs}
+                      fontWeight={700}
+                      letterSpacing={round1(1.2 * overlay.ui)}
+                      fill={accentFg}
+                      fillOpacity={round1(clamp(overlay.zoneDim, 0, 1))}
+                    >
+                      {overlay.tabText}
+                    </text>
+                  </g>
+                </g>
+              ) : null}
+
+              {/* Column axis ticks over the lit block. */}
+              {overlay.ticks.map((t, i) => (
+                <text
+                  key={i}
+                  className="mk-aszg-uitext"
+                  x={t.x}
+                  y={t.y}
+                  textAnchor="middle"
+                  dominantBaseline="central"
+                  fontFamily={uiFont}
+                  fontSize={overlay.tickFs}
+                  fontWeight={600}
+                  letterSpacing={round1(0.5 * overlay.ui)}
+                  fill={mutedTok}
+                  fillOpacity={round1(clamp(0.75 * overlay.zoneDim, 0, 1))}
+                >
+                  {t.text}
+                </text>
+              ))}
+
+              {/* Glassy live-metric chips. */}
+              {overlay.chips.map((c, i) => (
+                <g key={i} className="mk-aszg-chip">
+                  <rect
+                    className="mk-aszg-glow2"
+                    x={round1(c.bx - 3)}
+                    y={round1(c.by + 3)}
+                    width={round1(c.w + 6)}
+                    height={c.h}
+                    rx={round1(c.h / 2)}
+                    fill={azure}
+                    fillOpacity={round1(clamp(0.12 * c.dim, 0, 0.2))}
+                    filter={`url(#aszg-glow-${uid})`}
+                  />
+                  <rect
+                    className="mk-aszg-chip-bg"
+                    x={c.bx}
+                    y={c.by}
+                    width={c.w}
+                    height={c.h}
+                    rx={round1(c.h / 2)}
+                    fill={surfaceTok}
+                    fillOpacity={round1(clamp(0.94 * c.dim, 0, 1))}
+                    stroke={borderTok}
+                    strokeOpacity={round1(clamp(c.dim, 0, 1))}
+                    strokeWidth={overlay.ui}
+                  />
+                  <circle
+                    cx={c.dotX}
+                    cy={c.cy}
+                    r={c.dotR}
+                    fill={successTok}
+                    fillOpacity={round1(clamp(c.dim, 0, 1))}
+                  />
+                  <text
+                    className="mk-aszg-uitext"
+                    x={c.valueX}
+                    y={round1(c.cy + 1)}
+                    dominantBaseline="central"
+                    fontFamily={uiFont}
+                    fontSize={c.fs}
+                    fontWeight={700}
+                    fill={fgTok}
+                    fillOpacity={round1(clamp(c.dim, 0, 1))}
+                  >
+                    {c.value}
+                  </text>
+                  <text
+                    className="mk-aszg-uitext"
+                    x={c.labelX}
+                    y={round1(c.cy + 1)}
+                    dominantBaseline="central"
+                    fontFamily={uiFont}
+                    fontSize={c.ls}
+                    fontWeight={500}
+                    fill={mutedTok}
+                    fillOpacity={round1(clamp(0.85 * c.dim, 0, 1))}
+                  >
+                    {c.label}
+                  </text>
+                </g>
+              ))}
+            </g>
+          ) : null}
         </svg>
 
         <style dangerouslySetInnerHTML={{ __html: css }} />

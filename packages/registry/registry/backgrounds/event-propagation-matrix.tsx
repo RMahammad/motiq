@@ -286,16 +286,51 @@ interface HistoryMark {
   failed: boolean;
 }
 
+/**
+ * A clearly-FICTIONAL default event set — not real telemetry. One webhook enters,
+ * fans out across lanes, one branch is delivered (ack ✓) and one dead-letters
+ * (× halt). The live origins sit in the right two-thirds so their labelled cards
+ * land on the open side next to left-placed copy; distinct rows keep them from
+ * colliding once the grid is clamped to a smaller mobile matrix.
+ */
 function defaultEvents(): EventData[] {
   return [
-    { id: "evt-ingest", origin: { row: 1, col: 1 }, category: "webhook", severity: "info", direction: "forward" },
-    { id: "evt-fanout", origin: { row: 3, col: 4 }, category: "audit", severity: "warning", direction: "out", affectedRegions: [4] },
-    { id: "evt-deadletter", origin: { row: 2, col: 6 }, category: "delivery", severity: "critical", direction: "out", failed: true },
-    { id: "evt-ack", origin: { row: 4, col: 2 }, category: "audit", severity: "warning", direction: "down", acknowledged: true },
+    { id: "evt-ingest", origin: { row: 1, col: 6 }, category: "webhook", severity: "info", direction: "forward" },
+    { id: "evt-fanout", origin: { row: 0, col: 5 }, category: "audit", severity: "warning", direction: "out", affectedRegions: [2] },
+    { id: "evt-relay", origin: { row: 3, col: 2 }, category: "audit", severity: "info", direction: "out" },
+    { id: "evt-deadletter", origin: { row: 2, col: 8 }, category: "delivery", severity: "critical", direction: "out", failed: true },
+    { id: "evt-ack", origin: { row: 4, col: 7 }, category: "audit", severity: "warning", direction: "down", acknowledged: true },
     { id: "evt-old-1", severity: "info", history: true },
     { id: "evt-old-2", severity: "critical", history: true, failed: true },
   ];
 }
+
+/** Labelled cards for the demo origins — the "who/what" of each key event. */
+const DEMO_CARDS: Record<string, { title: string; status: string }> = {
+  "evt-ingest": { title: "webhook.received", status: "202 accepted" },
+  "evt-deadletter": { title: "dead-letter", status: "halted" },
+  "evt-ack": { title: "delivered", status: "3 subs" },
+};
+
+/** Faint section headers over the matrix columns (0–1 field x). */
+const DEMO_SECTIONS: ReadonlyArray<readonly [number, string]> = [
+  [0.22, "INGEST"],
+  [0.62, "FAN-OUT"],
+  [0.87, "DELIVERY"],
+];
+
+/** Glassy live-metric chips floated in open areas (demo only). */
+const DEMO_CHIPS: ReadonlyArray<{
+  x: number;
+  y: number;
+  value: string;
+  unit: string;
+  dot: string;
+}> = [
+  { x: 0.6, y: 0.55, value: "48k", unit: "events / min", dot: "var(--color-accent)" },
+  { x: 0.9, y: 0.68, value: "3", unit: "retries", dot: "var(--color-warning)" },
+  { x: 0.64, y: 0.83, value: "22ms", unit: "p95 latency", dot: "var(--color-success)" },
+];
 
 /* -------------------------------------------------------------------------- */
 /* Component                                                                  */
@@ -382,7 +417,7 @@ export function EventPropagationMatrix({
     const history: HistoryMark[] = [];
 
     // Bound the number of concurrently propagating events so overlap stays calm.
-    const liveSrc = src.filter((e) => !e.history).slice(0, 4);
+    const liveSrc = src.filter((e) => !e.history).slice(0, 5);
     liveSrc.forEach((e, i) => live.push(resolveEvent(e, i, effRows, effCols, seed)));
 
     // Cap per-cell intensity: when several waves reach the same cell, later
@@ -421,7 +456,7 @@ export function EventPropagationMatrix({
         const p = cellCenter(r, c, effRows, effCols);
         const keep = density >= 1 || rng() < clamp(density, 0.35, 1);
         if (!keep) continue;
-        baseDots.push({ cx: p.cx, cy: p.cy, row: r, col: c, o: round2(0.14 + rng() * 0.08) });
+        baseDots.push({ cx: p.cx, cy: p.cy, row: r, col: c, o: round2(0.22 + rng() * 0.12) });
       }
     }
 
@@ -437,9 +472,9 @@ export function EventPropagationMatrix({
     const motes = Array.from({ length: 56 }, () => ({
       x: round1(mx0 + mrng() * (mx1 - mx0)),
       y: round1(my0 + mrng() * (my1 - my0)),
-      r: round2(0.7 + mrng() * 1.7),
-      warm: mrng() > 0.66,
-      o: round2(0.16 + mrng() * 0.18),
+      r: round2(0.8 + mrng() * 1.9),
+      warm: mrng() > 0.62,
+      o: round2(0.22 + mrng() * 0.24),
       delay: round2(mrng() * 5),
       dur: round2(2.8 + mrng() * 3.4),
     }));
@@ -527,6 +562,15 @@ export function EventPropagationMatrix({
   // A narrow layout also lifts contrast so the field pops on a small, dim phone.
   const vivid = narrow ? 1.4 : 1;
 
+  // Labelled cards, section headers, and metric chips are demo storytelling — they
+  // only render for the default event set on a roomy (non-band) field. On a packed
+  // mobile band the copy overlays the matrix, so text chrome would collide; there
+  // the brighter cells/waves/motes carry the field instead. Approximate glyph width
+  // (no DOM measurement) keeps card/chip sizing SSR-deterministic.
+  const isDemo = !(events && events.length);
+  const showChrome = isDemo && !bandMode;
+  const estW = (s: string, fs: number) => round1(s.length * fs * 0.6);
+
   // Behind-copy softening for the full-bleed desktop field: instead of masking the
   // matrix away, keep it lit and only dim it toward the copy (floor ~0.6) so it
   // reads as a live matrix behind frosted glass — the scrim's blur does the
@@ -584,8 +628,8 @@ export function EventPropagationMatrix({
   const viewBox = bandMode ? `0 0 ${round1(box.w)} ${round1(box.h)}` : `0 0 ${W} ${H}`;
   const par = bandMode ? "xMidYMid meet" : "xMidYMid slice";
 
-  const gridStroke = `color-mix(in oklab, var(--color-border-strong, var(--color-border)) ${round1(clamp(78 * intensity * vivid, 42, 96))}%, transparent)`;
-  const dotFill = `color-mix(in oklab, var(--color-fg) ${round1(clamp(24 * intensity * vivid, 12, 42))}%, transparent)`;
+  const gridStroke = `color-mix(in oklab, var(--color-border-strong, var(--color-border)) ${round1(clamp(92 * intensity * vivid, 52, 100))}%, transparent)`;
+  const dotFill = `color-mix(in oklab, var(--color-fg) ${round1(clamp(34 * intensity * vivid, 18, 54))}%, transparent)`;
 
   /* Baked stage lighting — a lit backdrop so the component reads as premium
      wherever it renders (catalog card, hero, or a customer install), not a flat
@@ -597,9 +641,9 @@ export function EventPropagationMatrix({
   const glow = clamp(intensity, 0, 1.4);
   const spotX = contentPlacement === "left" ? 68 : contentPlacement === "right" ? 32 : 50;
   const spotY = upperBand ? 30 : lowerBand ? 68 : 46;
-  const spotCore = round2(clamp(0.22 * glow, 0, 0.4));
-  const spotMid = round2(clamp(0.08 * glow, 0, 0.16));
-  const floorOp = round2(clamp(0.08 * glow, 0, 0.15));
+  const spotCore = round2(clamp(0.32 * glow, 0, 0.46));
+  const spotMid = round2(clamp(0.12 * glow, 0, 0.2));
+  const floorOp = round2(clamp(0.11 * glow, 0, 0.18));
 
   // Hide the outer lanes/rows on small screens so mobile shows a smaller matrix.
   const mobileHide: string[] = [];
@@ -706,6 +750,11 @@ ${mobileHide.length ? `  ${mobileHide.join(",\n  ")} { display: none; }` : ""}
               <stop offset="52%" stopColor="var(--color-bg)" stopOpacity="0" />
               <stop offset="100%" stopColor="var(--color-bg)" stopOpacity="0.55" />
             </radialGradient>
+            {/* Soft bloom for origins, cards, and metric chips so lit marks glow
+                rather than reading as flat fills. */}
+            <filter id={`epm-glow-${uid}`} x="-70%" y="-70%" width="240%" height="240%">
+              <feGaussianBlur stdDeviation="9" />
+            </filter>
             <radialGradient id={`epm-safegrad-${uid}`} cx="50%" cy="50%" r="50%">
               <stop offset="0%" stopColor="rgb(20,20,20)" />
               <stop offset="62%" stopColor="rgb(120,120,120)" />
@@ -734,7 +783,7 @@ ${mobileHide.length ? `  ${mobileHide.join(",\n  ")} { display: none; }` : ""}
                   y1={MY(PAD_Y)}
                   x2={MX(PAD_X + c * gridStepX)}
                   y2={MY(H - PAD_Y)}
-                  strokeOpacity={bandMode ? 0.72 : 0.55}
+                  strokeOpacity={bandMode ? 0.82 : 0.64}
                   vectorEffect={vecStroke}
                 />
               ))}
@@ -747,7 +796,7 @@ ${mobileHide.length ? `  ${mobileHide.join(",\n  ")} { display: none; }` : ""}
                   y1={MY(PAD_Y + r * gridStepY)}
                   x2={MX(W - PAD_X)}
                   y2={MY(PAD_Y + r * gridStepY)}
-                  strokeOpacity={bandMode ? 0.72 : 0.55}
+                  strokeOpacity={bandMode ? 0.82 : 0.64}
                   vectorEffect={vecStroke}
                 />
               ))}
@@ -765,9 +814,9 @@ ${mobileHide.length ? `  ${mobileHide.join(",\n  ")} { display: none; }` : ""}
                 data-c={d.col}
                 cx={MX(d.cx)}
                 cy={MY(d.cy)}
-                r={round2((bandMode ? 2.6 : 2) * rk)}
+                r={round2((bandMode ? 2.9 : 2.3) * rk)}
                 fill={dotFill}
-                fillOpacity={round2(clamp(d.o * vivid * softFall(d.cx / W, d.cy / H), 0, 0.5))}
+                fillOpacity={round2(clamp(d.o * vivid * softFall(d.cx / W, d.cy / H), 0, 0.62))}
               />
             ))}
 
@@ -783,7 +832,7 @@ ${mobileHide.length ? `  ${mobileHide.join(",\n  ")} { display: none; }` : ""}
                 r={round2(m.r * rk)}
                 fill={m.warm ? "var(--color-accent)" : "var(--color-secondary-accent, var(--color-info))"}
                 style={{
-                  "--mo": round2(clamp(m.o * intensity * vivid * softFall(m.x / W, m.y / H), 0, 0.55)),
+                  "--mo": round2(clamp(m.o * intensity * vivid * softFall(m.x / W, m.y / H), 0, 0.72)),
                   "--md": `${m.delay}s`,
                   "--mdur": `${m.dur}s`,
                 } as React.CSSProperties}
@@ -800,7 +849,7 @@ ${mobileHide.length ? `  ${mobileHide.join(",\n  ")} { display: none; }` : ""}
                   {e.cells.map((cell, ci) => {
                     if (!cell.parent) return null;
                     const dl = round2(e.eventOffset + cell.reach * e.delayStep);
-                    const pk = round2(clamp(0.34 * intensity * vivid * ackScale * softFall(cell.cx / W, cell.cy / H), 0.08, 0.52));
+                    const pk = round2(clamp(0.5 * intensity * vivid * ackScale * softFall(cell.cx / W, cell.cy / H), 0.14, 0.74));
                     return (
                       <line
                         key={`lnk-${e.id}-${ci}`}
@@ -812,7 +861,7 @@ ${mobileHide.length ? `  ${mobileHide.join(",\n  ")} { display: none; }` : ""}
                         x2={MX(cell.cx)}
                         y2={MY(cell.cy)}
                         stroke={color}
-                        strokeWidth={bandMode ? 1.6 : 1.4}
+                        strokeWidth={bandMode ? 1.9 : 1.8}
                         strokeLinecap="round"
                         vectorEffect={vecStroke}
                         style={{ "--dl": `${dl}s`, "--pk": pk } as React.CSSProperties}
@@ -825,8 +874,8 @@ ${mobileHide.length ? `  ${mobileHide.join(",\n  ")} { display: none; }` : ""}
                     const isOrigin = cell.row === e.origin.row && cell.col === e.origin.col;
                     if (isOrigin) return null;
                     const dl = round2(e.eventOffset + cell.reach * e.delayStep);
-                    const peak = round2(clamp(0.62 * intensity * vivid * ackScale * cell.damp * softFall(cell.cx / W, cell.cy / H), 0.08, bandMode ? 0.88 : 0.7));
-                    const r = round2(clamp((bandMode ? 5 : 4.5) - cell.reach * 0.35, bandMode ? 2.8 : 2.4, bandMode ? 5 : 4.5) * rk);
+                    const peak = round2(clamp(0.85 * intensity * vivid * ackScale * cell.damp * softFall(cell.cx / W, cell.cy / H), 0.16, bandMode ? 0.96 : 0.9));
+                    const r = round2(clamp((bandMode ? 5.4 : 5) - cell.reach * 0.34, bandMode ? 3 : 2.8, bandMode ? 5.4 : 5) * rk);
                     return (
                       <circle
                         key={`pls-${e.id}-${ci}`}
@@ -845,6 +894,87 @@ ${mobileHide.length ? `  ${mobileHide.join(",\n  ")} { display: none; }` : ""}
               );
             })}
 
+            {/* Labelled node cards for the key demo origins — a rounded panel with
+                an icon well (the origin glyph lands in it), a title, a short status
+                line, and a health dot. Drawn under the origins group so the emitting
+                glyph sits inside the card. Demo + roomy field only; hidden near copy. */}
+            {showChrome
+              ? model.live.map((e) => {
+                  const meta = DEMO_CARDS[e.id];
+                  if (!meta || !showLabel(e.ox / W, e.oy / H)) return null;
+                  const color = colorFor(e);
+                  const titleFS = 18;
+                  const statusFS = 13.5;
+                  const iconBox = 30;
+                  const padX = 16;
+                  const gap = 12;
+                  const cardH = 52;
+                  const textW = Math.max(estW(meta.title, titleFS), estW(meta.status, statusFS));
+                  const w = round1(padX * 2 + iconBox + gap + textW);
+                  const cardX = round1(clamp(e.ox - padX - iconBox / 2, 6, W - 6 - w));
+                  const cardY = round1(e.oy - cardH / 2);
+                  const iconCX = round1(cardX + padX + iconBox / 2);
+                  const textX = round1(cardX + padX + iconBox + gap);
+                  const statusColor = e.failed ? "var(--color-error)" : "var(--color-muted)";
+                  return (
+                    <g key={`card-${e.id}`}>
+                      <rect
+                        x={round1(cardX - 3)}
+                        y={round1(cardY + 2)}
+                        width={round1(w + 6)}
+                        height={round1(cardH + 4)}
+                        rx={16}
+                        fill={color}
+                        opacity={round2(clamp(0.24 * glow, 0.1, 0.34))}
+                        filter={`url(#epm-glow-${uid})`}
+                      />
+                      <rect
+                        x={cardX}
+                        y={cardY}
+                        width={w}
+                        height={cardH}
+                        rx={12}
+                        fill="var(--color-surface)"
+                        fillOpacity={0.94}
+                        stroke={color}
+                        strokeWidth={1.4}
+                        strokeOpacity={e.failed ? 0.9 : 0.62}
+                      />
+                      <rect
+                        x={round1(iconCX - iconBox / 2)}
+                        y={round1(cardY + (cardH - iconBox) / 2)}
+                        width={iconBox}
+                        height={iconBox}
+                        rx={8}
+                        fill={color}
+                        fillOpacity={0.16}
+                      />
+                      <text
+                        x={textX}
+                        y={round1(cardY + cardH * 0.42)}
+                        fontFamily="ui-sans-serif, system-ui, sans-serif"
+                        fontSize={titleFS}
+                        fontWeight={600}
+                        fill="var(--color-fg)"
+                      >
+                        {meta.title}
+                      </text>
+                      <text
+                        x={textX}
+                        y={round1(cardY + cardH * 0.74)}
+                        fontFamily="ui-sans-serif, system-ui, sans-serif"
+                        fontSize={statusFS}
+                        fontWeight={500}
+                        fill={statusColor}
+                      >
+                        {meta.status}
+                      </text>
+                      <circle cx={round1(cardX + w - 11)} cy={round1(cardY + 11)} r={2.6} fill={color} />
+                    </g>
+                  );
+                })
+              : null}
+
             {/* Origins + non-color status glyphs (drawn on top). */}
             {model.live.map((e) => {
               const color = colorFor(e);
@@ -853,6 +983,15 @@ ${mobileHide.length ? `  ${mobileHide.join(",\n  ")} { display: none; }` : ""}
               const oy = MY(e.oy);
               return (
                 <g key={`org-${e.id}`} data-r={e.origin.row} data-c={e.origin.col} style={{ "--cyc": `${cyc}s` } as React.CSSProperties}>
+                  {/* Soft bloom so the origin reads as an emitting, lit node. */}
+                  <circle
+                    cx={ox}
+                    cy={oy}
+                    r={round2((e.acknowledged ? 15 : 20) * rk)}
+                    fill={color}
+                    opacity={round2(clamp((e.acknowledged ? 0.16 : 0.28) * glow * softFall(e.ox / W, e.oy / H), 0, 0.4))}
+                    filter={`url(#epm-glow-${uid})`}
+                  />
                   <circle
                     className="mk-epm-origin"
                     cx={ox}
@@ -893,6 +1032,96 @@ ${mobileHide.length ? `  ${mobileHide.join(",\n  ")} { display: none; }` : ""}
                 </g>
               );
             })}
+
+            {/* Faint section headers over the columns (demo only), like the
+                reference map's SERVICES / DATA labels. Each drops out near copy. */}
+            {showChrome
+              ? DEMO_SECTIONS.map(([fx, label]) =>
+                  !showLabel(fx, 0.06) ? null : (
+                    <text
+                      key={`sec-${label}`}
+                      x={round1(fx * W)}
+                      y={132}
+                      textAnchor="middle"
+                      fontFamily="ui-sans-serif, system-ui, sans-serif"
+                      fontSize={15}
+                      fontWeight={600}
+                      letterSpacing="2.5"
+                      fill="var(--color-muted)"
+                      opacity={round2(clamp(0.5 * glow, 0.2, 0.62))}
+                    >
+                      {label}
+                    </text>
+                  ),
+                )
+              : null}
+
+            {/* Glassy live-metric chips floated in open areas (demo only). */}
+            {showChrome
+              ? DEMO_CHIPS.map((c, i) => {
+                  if (!showLabel(c.x, c.y)) return null;
+                  const valueFS = 17;
+                  const unitFS = 13;
+                  const dotR = 4;
+                  const padX = 14;
+                  const gap = 8;
+                  const chipH = 32;
+                  const valueW = estW(c.value, valueFS);
+                  const unitW = estW(c.unit, unitFS);
+                  const w = round1(padX * 2 + dotR * 2 + gap + valueW + 10 + unitW);
+                  const bx = round1(clamp(c.x * W - w / 2, 6, W - 6 - w));
+                  const by = round1(c.y * H - chipH / 2);
+                  const iy = round1(by + chipH / 2);
+                  const iconX = round1(bx + padX + dotR);
+                  const valueX = round1(bx + padX + dotR * 2 + gap);
+                  return (
+                    <g key={`chip-${i}`}>
+                      <rect
+                        x={round1(bx - 2)}
+                        y={by}
+                        width={round1(w + 4)}
+                        height={round1(chipH + 2)}
+                        rx={16}
+                        fill="var(--color-accent)"
+                        opacity={round2(clamp(0.12 * glow, 0.05, 0.2))}
+                        filter={`url(#epm-glow-${uid})`}
+                      />
+                      <rect
+                        x={bx}
+                        y={by}
+                        width={w}
+                        height={chipH}
+                        rx={round1(chipH / 2)}
+                        fill="var(--color-surface)"
+                        fillOpacity={0.9}
+                        stroke="var(--color-border)"
+                        strokeWidth={1}
+                      />
+                      <circle cx={iconX} cy={iy} r={dotR} fill={c.dot} />
+                      <text
+                        x={valueX}
+                        y={round1(iy + valueFS * 0.35)}
+                        fontFamily="ui-sans-serif, system-ui, sans-serif"
+                        fontSize={valueFS}
+                        fontWeight={700}
+                        fill="var(--color-fg)"
+                      >
+                        {c.value}
+                      </text>
+                      <text
+                        x={round1(valueX + valueW + 10)}
+                        y={round1(iy + unitFS * 0.35)}
+                        fontFamily="ui-sans-serif, system-ui, sans-serif"
+                        fontSize={unitFS}
+                        fontWeight={500}
+                        fill="var(--color-muted)"
+                      >
+                        {c.unit}
+                      </text>
+                    </g>
+                  );
+                })
+              : null}
 
             {/* Quiet history band — old events settled into a low-opacity trail.
                 Full-bleed desktop only; a packed mobile band stays focused. */}

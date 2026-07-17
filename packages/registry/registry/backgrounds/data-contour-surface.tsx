@@ -242,6 +242,8 @@ const DEFAULT_SAFE: ContourRegion = { x: 0.04, y: 0.12, w: 0.46, h: 0.74 };
 interface Palette {
   accent: string;
   secondary: string;
+  /** Healthy signal — only the live-metric chips' status dot. */
+  success: string;
   fg: string;
   muted: string;
   surface: string;
@@ -258,6 +260,7 @@ function resolvePalette(el: Element): Palette {
   return {
     accent: g("--color-accent", "#6d5efc"),
     secondary,
+    success: g("--color-success", "#32d583"),
     fg: g("--color-fg", "#0b0b12"),
     muted: g("--color-muted", "#8a8a99"),
     surface,
@@ -291,6 +294,8 @@ interface LiveProps {
   comp: ResolvedComposition;
   showLabels: boolean;
   hideLabelsNearContent: boolean;
+  /** Fictional sample field (no app `points`) — gates the demo-only metric chips. */
+  isDemo: boolean;
 }
 
 const inRect = (r: ContourRegion | undefined, x: number, y: number) =>
@@ -352,6 +357,9 @@ export function DataContourSurface({
   const resolvedThresholds = thresholds && thresholds.length ? thresholds : DEFAULT_THRESHOLDS;
   const resolvedActive = activeRegion ?? (points ? undefined : DEFAULT_ACTIVE);
   const resolvedComparison = comparisonRegions ?? (points ? [] : DEFAULT_COMPARISON);
+  // Demo-only chrome (live-metric chips): only the fictional sample field; an app
+  // that supplies its own `points` keeps its own foreground annotations.
+  const isDemo = !(points && points.length);
 
   // Composition: a content-placement preset (or explicit safeArea) resolves the
   // readable region. The field runs full-bleed regardless; a glass scrim (below)
@@ -378,6 +386,7 @@ export function DataContourSurface({
     comp,
     showLabels,
     hideLabelsNearContent,
+    isDemo,
   });
   propsRef.current = {
     points: resolvedPoints,
@@ -391,6 +400,7 @@ export function DataContourSurface({
     comp,
     showLabels,
     hideLabelsNearContent,
+    isDemo,
   };
 
   // Pointer offset (0 when not interactive) — nudges points toward the cursor.
@@ -626,6 +636,10 @@ export function DataContourSurface({
       ctx.clearRect(0, 0, w, h);
 
       const glow = clamp(p.intensity, 0, 1.4);
+      // Shared type scale for the demo chrome (chips + active-window caption) so it
+      // shrinks with the container instead of overwhelming a phone hero.
+      const chipScale = clamp(w / 1180, 0.7, 1.05);
+      const chipMode = w >= 300;
       // Contour falloff behind the copy — built once, then shared by the lighting,
       // the field fills, the motes, and every contour pass so they all agree on
       // where the copy sits.
@@ -758,21 +772,105 @@ export function DataContourSurface({
           dim: fallDim,
         });
         ctx.restore();
-        if (!showAnnotation(ar.x + ar.w / 2, ar.y + ar.h / 2)) {
-          return trans.active || driftAmp !== 0;
+        // Ticks + caption only when the active region isn't behind the copy; the
+        // brightened contours above already drew regardless.
+        if (showAnnotation(ar.x + ar.w / 2, ar.y + ar.h / 2)) {
+          const t = Math.min(18, r.w * 0.18, r.h * 0.18);
+          ctx.save();
+          ctx.globalAlpha = clamp(0.75 * p.intensity, 0.3, 1);
+          ctx.strokeStyle = pal.accent;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(r.x, r.y + t); ctx.lineTo(r.x, r.y); ctx.lineTo(r.x + t, r.y);
+          ctx.moveTo(r.x + r.w - t, r.y); ctx.lineTo(r.x + r.w, r.y); ctx.lineTo(r.x + r.w, r.y + t);
+          ctx.moveTo(r.x + r.w, r.y + r.h - t); ctx.lineTo(r.x + r.w, r.y + r.h); ctx.lineTo(r.x + r.w - t, r.y + r.h);
+          ctx.moveTo(r.x + t, r.y + r.h); ctx.lineTo(r.x, r.y + r.h); ctx.lineTo(r.x, r.y + r.h - t);
+          ctx.stroke();
+          ctx.restore();
+
+          // A quiet caption above the active region (demo only) — names the reading
+          // in focus so the surface reads like a real dashboard, not a texture.
+          if (p.isDemo && chipMode && r.y > 16 * chipScale) {
+            ctx.save();
+            ctx.globalAlpha = clamp(0.62 * p.intensity, 0.32, 0.85);
+            ctx.fillStyle = pal.muted;
+            ctx.font = `600 ${9.5 * chipScale}px ui-sans-serif, system-ui, sans-serif`;
+            ctx.textBaseline = "bottom";
+            ctx.textAlign = "left";
+            ctx.fillText("ACTIVE WINDOW", r.x, r.y - 6 * chipScale);
+            ctx.restore();
+            ctx.textAlign = "left";
+            ctx.textBaseline = "alphabetic";
+          }
         }
-        const t = Math.min(18, r.w * 0.18, r.h * 0.18);
-        ctx.save();
-        ctx.globalAlpha = clamp(0.75 * p.intensity, 0.3, 1);
-        ctx.strokeStyle = pal.accent;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(r.x, r.y + t); ctx.lineTo(r.x, r.y); ctx.lineTo(r.x + t, r.y);
-        ctx.moveTo(r.x + r.w - t, r.y); ctx.lineTo(r.x + r.w, r.y); ctx.lineTo(r.x + r.w, r.y + t);
-        ctx.moveTo(r.x + r.w, r.y + r.h - t); ctx.lineTo(r.x + r.w, r.y + r.h); ctx.lineTo(r.x + r.w - t, r.y + r.h);
-        ctx.moveTo(r.x + t, r.y + r.h); ctx.lineTo(r.x, r.y + r.h); ctx.lineTo(r.x, r.y + r.h - t);
-        ctx.stroke();
-        ctx.restore();
+      }
+
+      /* Live-metric chips — a few glassy stat pills for a real dashboard feel
+         (demo field only; an app that supplies `points` keeps its own foreground).
+         Positioned in open areas of the field and gated by the composition falloff
+         so a chip never floats over the copy. */
+      if (p.isDemo && chipMode) {
+        const chips: Array<[number, number, string, string]> = [
+          [0.73, 0.1, "p99", "128ms"],
+          [0.84, 0.9, "+4.2%", "vs last"],
+          [0.58, 0.9, "3", "thresholds"],
+        ];
+        for (const [lx, ly, big, small] of chips) {
+          // Raw (un-floored) falloff so a chip fully drops out behind the copy,
+          // unlike the field itself which keeps a visible floor there.
+          const cd = fall ? fall(lx, ly) : 1;
+          if (cd < 0.55) continue;
+          const cx = lx * w;
+          const cy = ly * h;
+          ctx.font = `700 ${12.5 * chipScale}px ui-sans-serif, system-ui, sans-serif`;
+          const bw = ctx.measureText(big).width;
+          ctx.font = `500 ${11 * chipScale}px ui-sans-serif, system-ui, sans-serif`;
+          const sw = ctx.measureText(small).width;
+          const dot = 5 * chipScale;
+          const padX = 11 * chipScale;
+          const gap = 8 * chipScale;
+          const cw = padX * 2 + dot + gap + bw + 6 * chipScale + sw;
+          const ch = 25 * chipScale;
+          const bx = clamp(cx - cw / 2, 6, w - 6 - cw);
+          const by = clamp(cy - ch / 2, 6, h - 6 - ch);
+          // Soft under-glow so the pill reads as a lit, present chip.
+          ctx.save();
+          ctx.globalAlpha = clamp(0.12 * glow * cd, 0, 1);
+          ctx.filter = "blur(9px)";
+          ctx.fillStyle = pal.accent;
+          ctx.beginPath();
+          ctx.roundRect(bx - 2, by + 2, cw + 4, ch + 2, 12 * chipScale);
+          ctx.fill();
+          ctx.restore();
+          // Glass pill: elevated surface + hairline border.
+          ctx.save();
+          ctx.globalAlpha = clamp(0.9 * cd, 0, 1);
+          ctx.beginPath();
+          ctx.roundRect(bx, by, cw, ch, ch / 2);
+          ctx.fillStyle = pal.surface;
+          ctx.fill();
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = pal.border;
+          ctx.stroke();
+          const iy = by + ch / 2;
+          ctx.globalAlpha = clamp(cd, 0, 1);
+          ctx.fillStyle = pal.success;
+          ctx.beginPath();
+          ctx.arc(bx + padX + dot / 2, iy, dot / 2, 0, TAU);
+          ctx.fill();
+          const tx = bx + padX + dot + gap;
+          ctx.textBaseline = "middle";
+          ctx.textAlign = "left";
+          ctx.fillStyle = pal.fg;
+          ctx.font = `700 ${12.5 * chipScale}px ui-sans-serif, system-ui, sans-serif`;
+          ctx.fillText(big, tx, iy + 0.5);
+          ctx.globalAlpha = clamp(0.7 * cd, 0, 1);
+          ctx.fillStyle = pal.muted;
+          ctx.font = `500 ${11 * chipScale}px ui-sans-serif, system-ui, sans-serif`;
+          ctx.fillText(small, tx + bw + 6 * chipScale, iy + 0.5);
+          ctx.restore();
+        }
+        ctx.textBaseline = "alphabetic";
       }
 
       return trans.active || driftAmp !== 0;

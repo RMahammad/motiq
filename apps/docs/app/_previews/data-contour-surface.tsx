@@ -23,23 +23,16 @@ import {
  * holds the copy. Each scenario supplies a different field + threshold set so
  * reviewers watch the contours ease from one reading to the next.
  */
+type Scenario = "A" | "B" | "C";
+
+/** Override datasets (B, C) that drive the field through the public `points` API.
+ *  Scenario "A" is the shipped demo field — passed as no `points` so the demo
+ *  extras (live-metric chips + active-window caption) show, mirroring the pattern
+ *  the runtime-signal-map playground uses for its default state. */
 const SCENARIOS: Record<
-  string,
+  "B" | "C",
   { points: ContourPoint[]; thresholds: number[]; active: ContourRegion; comparison: ContourRegion[] }
 > = {
-  A: {
-    points: [
-      { x: 0.14, y: 0.24, value: 0.9, radius: 0.22 },
-      { x: 0.4, y: 0.72, value: -0.55, radius: 0.2 },
-      { x: 0.58, y: 0.2, value: 0.5, radius: 0.18 },
-      { x: 0.82, y: 0.5, value: 1.0, radius: 0.24 },
-      { x: 0.66, y: 0.82, value: 0.42, radius: 0.18 },
-      { x: 0.92, y: 0.8, value: -0.45, radius: 0.18 },
-    ],
-    thresholds: [-0.35, 0.35, 0.7],
-    active: { x: 0.62, y: 0.28, w: 0.3, h: 0.44 },
-    comparison: [{ x: 0.18, y: 0.55, w: 0.24, h: 0.3 }],
-  },
   B: {
     points: [
       { x: 0.18, y: 0.6, value: 1.05, radius: 0.26 },
@@ -77,7 +70,7 @@ const COPY: HeroCopy = {
 };
 
 export function DataContourSurfacePreview() {
-  const [scenario, setScenario] = React.useState<keyof typeof SCENARIOS>("A");
+  const [scenario, setScenario] = React.useState<Scenario>("A");
   const [placement, setPlacement] = React.useState<ContentPlacement>("left");
   const [density, setDensity] = React.useState(1);
   const [intensity, setIntensity] = React.useState(1);
@@ -87,16 +80,18 @@ export function DataContourSurfacePreview() {
   const [showSafe, setShowSafe] = React.useState(false);
   const effective = useHeroPlacement(placement);
 
-  const s = SCENARIOS[scenario];
+  // Scenario "A" passes no data → the shipped demo field + live-metric chips; the
+  // other scenarios override the field through the public `points` API.
+  const s = scenario === "A" ? null : SCENARIOS[scenario];
 
   return (
     <div className="flex w-full max-w-[960px] flex-col gap-4">
       <div className="relative w-full overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg)] shadow-[var(--shadow-md)]">
         <DataContourSurface
-          points={s.points}
-          thresholds={s.thresholds}
-          activeRegion={s.active}
-          comparisonRegions={s.comparison}
+          points={s?.points}
+          thresholds={s?.thresholds}
+          activeRegion={s?.active}
+          comparisonRegions={s?.comparison}
           contentPlacement={effective}
           density={density}
           intensity={intensity}
@@ -126,7 +121,7 @@ export function DataContourSurfacePreview() {
         <ControlSegmented
           label="Data scenario"
           value={scenario}
-          onChange={(v) => setScenario(v as keyof typeof SCENARIOS)}
+          onChange={(v) => setScenario(v as Scenario)}
           options={[
             { value: "A", label: "A" },
             { value: "B", label: "B" },

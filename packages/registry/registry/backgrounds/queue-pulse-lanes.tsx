@@ -9,7 +9,6 @@ import {
   resolveComposition,
   compositionScrimStyle,
   contentFalloff,
-  labelHiddenAt,
   type ContentPlacement,
 } from "@/lib/motionstack";
 
@@ -164,6 +163,8 @@ interface Lane {
   id: string;
   label?: string;
   status: LaneStatus;
+  /** Short status stat shown in the lane-head chip (e.g. "4 queued", "88 done"). */
+  stat: string;
   cy: number;
   h: number;
   /** 0–1 occupancy (queued+active over capacity) — drives fill + rhythm. */
@@ -176,6 +177,40 @@ interface Lane {
   pulses: Pulse[];
   delayed: boolean;
   blocked: boolean;
+}
+
+/** Aggregate readouts for the glassy metric chips — honest sums of the lane data. */
+interface QueueMetrics {
+  queued: number;
+  active: number;
+  throughput: number;
+}
+
+function computeMetrics(src: LaneData[]): QueueMetrics {
+  return src.reduce<QueueMetrics>(
+    (acc, l) => ({
+      queued: acc.queued + Math.max(0, l.queued),
+      active: acc.active + Math.max(0, l.active),
+      throughput: acc.throughput + Math.max(0, l.throughput ?? 0),
+    }),
+    { queued: 0, active: 0, throughput: 0 },
+  );
+}
+
+/** One short status line per lane, derived from its state — the chip's stat. */
+function laneStat(status: LaneStatus, queued: number, active: number, completed: number): string {
+  switch (status) {
+    case "blocked":
+      return "blocked";
+    case "delayed":
+      return "delayed";
+    case "congested":
+      return `${queued} queued`;
+    case "settling":
+      return `${completed} done`;
+    default:
+      return queued > 0 ? `${queued} queued` : `${active} active`;
+  }
 }
 
 /**
@@ -294,6 +329,7 @@ function buildLanes(
       id: l.id,
       label: l.label,
       status,
+      stat: laneStat(status, queued, active, completed),
       cy,
       h: round1(bandH),
       occ: round1(occ),
@@ -401,6 +437,13 @@ export function QueuePulseLanes({
     return buildLanes(src, seed, density, speed, board);
   }, [lanes, seed, density, speed, board]);
 
+  // Aggregate readouts for the glassy metric chips — honest sums of the source
+  // data (not fabricated), so they stay truthful for any consumer's lanes.
+  const metrics = React.useMemo(
+    () => computeMetrics(lanes && lanes.length ? lanes : defaultLanes()),
+    [lanes],
+  );
+
   const motes = React.useMemo(() => buildMotes(seed), [seed]);
   const fall = React.useMemo(() => contentFalloff(comp), [comp]);
 
@@ -441,14 +484,11 @@ export function QueuePulseLanes({
     rx: (legacySafe.w / 2) * vw * 1.14,
     ry: (legacySafe.h / 2) * VH * 1.14,
   };
-  const showLabel = (laneCy: number) =>
-    showLabels &&
-    !(hideLabelsNearContent && comp.hasSafe && labelHiddenAt(comp, board.x0 / vw, laneCy / VH));
-
   const azure = "var(--color-accent)";
   const cyan = "var(--color-secondary-accent, var(--color-info))";
   const warn = "var(--color-warning)";
   const err = "var(--color-error)";
+  const good = "var(--color-success)";
   const bg = "var(--color-bg-elevated, var(--color-bg))";
   const track = `color-mix(in oklab, var(--color-fg) ${round1(clamp(12 * intensity, 6, 20))}%, transparent)`;
   const line = `color-mix(in oklab, var(--color-fg) ${round1(clamp(18 * intensity, 8, 28))}%, transparent)`;
@@ -464,6 +504,31 @@ export function QueuePulseLanes({
     s === "delayed" ? warn : s === "settling" ? cyan : azure;
   const pulseOpacity = (s: LaneStatus) =>
     round1(clamp((s === "settling" ? 0.5 : 0.82) * intensity, 0.2, 1));
+
+  // The copy occupies one horizontal side; anchor lane-head chips + metric chips
+  // on the OPEN side (opposite the focal copy) so labels never sit under text.
+  const openRight = comp.hasSafe && comp.focal.x >= 0.55;
+  // Rough logical text width — SSR-stable (no DOM measurement during render).
+  const estText = (t: string, fs: number) => t.length * fs * 0.56;
+  // A chip only shows where it lands CLEARLY outside the copy's frosted-glass
+  // scrim, so a text badge never sits half-blurred. The falloff rect alone isn't
+  // enough — the scrim's backdrop-blur feathers past it — so this mirrors the
+  // scrim ellipse (compositionScrimStyle) and keeps the chip past its clear edge.
+  const chipClear = (cx: number, cy: number) => {
+    if (!comp.hasSafe || !hideLabelsNearContent) return true;
+    const p = comp.placement;
+    const midX = comp.safe.x + comp.safe.w / 2;
+    const midY = comp.safe.y + comp.safe.h / 2;
+    const fx = p === "left" ? 0.24 : p === "right" ? 0.76 : midX;
+    const fy = p === "top" ? 0.3 : p === "bottom" ? 0.7 : midY;
+    const vert = p === "top" || p === "bottom";
+    const rw = (vert ? 82 : 40) / 100 + 0.04; // feather horizontal radius
+    const rh = (vert ? 52 : 86) / 100 + 0.08; // feather vertical radius
+    const ex = (cx / vw - fx) / rw;
+    const ey = (cy / VH - fy) / rh;
+    return Math.hypot(ex, ey) >= 0.8; // past the feather's transparent stop (~0.84)
+  };
+  const chipVisible = (cx: number, cy: number) => showLabels && chipClear(cx, cy);
 
   const css = `
 .${cls} { position: absolute; inset: 0; }
@@ -499,6 +564,7 @@ ${interactive ? `.${cls} .mk-qpl-cursor {
   transform: translateY(calc((var(--qpl-cy, ${VH / 2}) - ${VH / 2}) * 1px));
   opacity: calc(var(--qpl-cursor, 0) * ${round1(0.5 * intensity)});
 }` : ""}
+.${cls} .mk-qpl-chip text, .${cls} .mk-qpl-metric text { paint-order: stroke; }
 @media (prefers-reduced-motion: reduce) {
   .${cls} .mk-qpl-pulse { animation: none !important; display: none !important; }
   .${cls} .mk-qpl-mote { animation: none !important; opacity: 0.6; }
@@ -508,11 +574,14 @@ ${interactive ? `.${cls} .mk-qpl-cursor {
 @media (forced-colors: active) {
   .${cls} .mk-qpl-wash, .${cls} .mk-qpl-light, .${cls} .mk-qpl-mote,
   .${cls} .mk-qpl-laneglow, .${cls} .mk-qpl-history, .${cls} .mk-qpl-cursor,
-  .${cls} .mk-qpl-pulse { display: none; }
+  .${cls} .mk-qpl-pulse, .${cls} .mk-qpl-chipglow, .${cls} .mk-qpl-metricglow { display: none; }
   .${cls} svg { forced-color-adjust: none; }
   .${cls} .mk-qpl-track { stroke: CanvasText !important; stroke-opacity: 0.5 !important; }
   .${cls} .mk-qpl-fill { fill: CanvasText !important; fill-opacity: 0.4 !important; }
   .${cls} .mk-qpl-stop, .${cls} .mk-qpl-glyph { stroke: CanvasText !important; fill: Canvas !important; }
+  .${cls} .mk-qpl-chipbg, .${cls} .mk-qpl-metricbg { fill: Canvas !important; stroke: CanvasText !important; }
+  .${cls} .mk-qpl-chip text, .${cls} .mk-qpl-metric text { fill: CanvasText !important; }
+  .${cls} .mk-qpl-chipdot, .${cls} .mk-qpl-metricdot { fill: CanvasText !important; }
 }`.trim();
 
   return (
@@ -730,23 +799,149 @@ ${interactive ? `.${cls} .mk-qpl-cursor {
                     </g>
                   ) : null}
 
-                  {lane.label && showLabel(lane.cy) ? (
-                    <text
-                      className="mk-qpl-label"
-                      x={round1(board.x0 + (lane.delayed ? 24 : 6))}
-                      y={round1(lane.cy - lane.h / 2 - 8)}
-                      fontSize={round1(clamp(lane.h * 0.32, 12, 17))}
-                      fill="var(--color-muted)"
-                      fillOpacity={round1(clamp(0.8 * intensity, 0.3, 1))}
-                      style={{ fontFamily: "inherit" }}
-                    >
-                      {lane.label}
-                    </text>
-                  ) : null}
+                  {/* Lane-head chip — a glassy, state-tinted badge naming the lane
+                      and its short status, anchored on the OPEN side (opposite the
+                      copy) so it always lands in readable space. Dropped when it
+                      would fall inside the content region. */}
+                  {(() => {
+                    const name = lane.label ?? lane.id;
+                    const stat = lane.stat;
+                    const fName = round1(clamp(lane.h * 0.32, 15, 21));
+                    const fStat = round1(fName * 0.86);
+                    const dotR = round1(fName * 0.24);
+                    const padX = round1(fName * 0.72);
+                    const gapDot = round1(fName * 0.55);
+                    const gapStat = round1(fName * 0.62);
+                    const nameW = estText(name, fName);
+                    const statW = estText(stat, fStat) + round1(fStat * 1.4); // + "· "
+                    const chipW = round1(padX * 2 + dotR * 2 + gapDot + nameW + gapStat + statW);
+                    const chipH = round1(clamp(fName * 1.95, 30, 46));
+                    const tint = laneGlow(lane.status);
+                    const chipX = openRight ? round1(board.x1 - chipW - 6) : round1(board.x0 + 6);
+                    const chipY = round1(lane.cy - chipH / 2);
+                    const chipCx = chipX + chipW / 2;
+                    if (!chipVisible(chipCx, lane.cy)) return null;
+                    const tName = round1(chipX + padX + dotR * 2 + gapDot);
+                    return (
+                      <g className="mk-qpl-chip">
+                        <rect
+                          className="mk-qpl-chipglow"
+                          x={round1(chipX - 3)}
+                          y={round1(chipY - 1)}
+                          width={round1(chipW + 6)}
+                          height={round1(chipH + 6)}
+                          rx={round1((chipH + 6) / 2)}
+                          fill={tint}
+                          fillOpacity={round1(clamp(0.18 * glow, 0.08, 0.3))}
+                          filter={`url(#qglow-${uid})`}
+                        />
+                        <rect
+                          className="mk-qpl-chipbg"
+                          x={chipX}
+                          y={chipY}
+                          width={chipW}
+                          height={chipH}
+                          rx={round1(chipH / 2)}
+                          fill="var(--color-surface)"
+                          fillOpacity={round1(clamp(0.9 * intensity, 0.6, 0.96))}
+                          stroke={tint}
+                          strokeOpacity={round1(clamp(0.6 * intensity, 0.35, 0.9))}
+                          strokeWidth={1.2}
+                        />
+                        <circle
+                          className="mk-qpl-chipdot"
+                          cx={round1(chipX + padX + dotR)}
+                          cy={round1(lane.cy)}
+                          r={dotR}
+                          fill={tint}
+                        />
+                        <text
+                          x={tName}
+                          y={round1(lane.cy)}
+                          dominantBaseline="central"
+                          fontSize={fName}
+                          style={{ fontFamily: "inherit", fontWeight: 600 }}
+                        >
+                          <tspan fill="var(--color-fg)">{name}</tspan>
+                          <tspan
+                            dx={gapStat}
+                            fontSize={fStat}
+                            fill={tint}
+                          >{`· ${stat}`}</tspan>
+                        </text>
+                      </g>
+                    );
+                  })()}
                 </g>
               );
             })}
           </g>
+
+          {/* Live-metric chips — a few glassy stat pills (throughput / queued / in
+              flight) for a real queue-dashboard feel. Honest aggregates of the lane
+              data; anchored in the open margins and dropped over the copy. */}
+          {(() => {
+            const slots: Array<{ key: string; big: string; unit: string; x: number; y: number; dot: string }> = [
+              { key: "tp", big: `${metrics.throughput}`, unit: "jobs / min", x: openRight ? 0.72 : 0.28, y: 0.05, dot: good },
+              { key: "q", big: `${metrics.queued}`, unit: "queued", x: openRight ? 0.72 : 0.28, y: 0.95, dot: azure },
+              { key: "a", big: `${metrics.active}`, unit: "in flight", x: 0.5, y: 0.05, dot: cyan },
+            ];
+            const fBig = round1(clamp(VH * 0.03, 17, 24));
+            const fUnit = round1(fBig * 0.66);
+            return slots.map((m) => {
+              const dotR = round1(fBig * 0.22);
+              const padX = round1(fBig * 0.7);
+              const gap = round1(fBig * 0.42);
+              const bigW = estText(m.big, fBig);
+              const unitW = estText(m.unit, fUnit);
+              const w = round1(padX * 2 + dotR * 2 + gap + bigW + gap + unitW);
+              const h = round1(fBig * 1.7);
+              const cx = m.x * vw;
+              const cy = round1(m.y * VH);
+              const bx = round1(clamp(cx - w / 2, 6, vw - 6 - w));
+              const by = round1(cy - h / 2);
+              if (!chipVisible(round1(bx + w / 2), cy)) return null;
+              const tBig = round1(bx + padX + dotR * 2 + gap);
+              return (
+                <g className="mk-qpl-metric" key={m.key}>
+                  <rect
+                    className="mk-qpl-metricglow"
+                    x={round1(bx - 3)}
+                    y={round1(by - 1)}
+                    width={round1(w + 6)}
+                    height={round1(h + 6)}
+                    rx={round1((h + 6) / 2)}
+                    fill={m.dot}
+                    fillOpacity={round1(clamp(0.16 * glow, 0.07, 0.28))}
+                    filter={`url(#qglow-${uid})`}
+                  />
+                  <rect
+                    className="mk-qpl-metricbg"
+                    x={bx}
+                    y={by}
+                    width={w}
+                    height={h}
+                    rx={round1(h / 2)}
+                    fill="var(--color-surface)"
+                    fillOpacity={round1(clamp(0.9 * intensity, 0.6, 0.96))}
+                    stroke={line}
+                    strokeWidth={1}
+                  />
+                  <circle className="mk-qpl-metricdot" cx={round1(bx + padX + dotR)} cy={cy} r={dotR} fill={m.dot} />
+                  <text
+                    x={tBig}
+                    y={cy}
+                    dominantBaseline="central"
+                    fontSize={fBig}
+                    style={{ fontFamily: "inherit" }}
+                  >
+                    <tspan fill="var(--color-fg)" style={{ fontWeight: 700 }}>{m.big}</tspan>
+                    <tspan dx={gap} fontSize={fUnit} fill="var(--color-muted)" style={{ fontWeight: 500 }}>{m.unit}</tspan>
+                  </text>
+                </g>
+              );
+            });
+          })()}
         </svg>
 
         <style dangerouslySetInnerHTML={{ __html: css }} />
