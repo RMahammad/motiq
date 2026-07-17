@@ -2,7 +2,7 @@
 // block (a finished product outcome). Pack pages live at /packs/<slug>; the
 // block itself is a catalog item (kind: "block") at /components/<blockSlug>.
 // Pricing/license are intentionally NOT set here — see docs/40-commercial-packaging.md.
-import { product, installCommand } from "./product";
+import { product, installCommand, namespacedInstall } from "./product";
 
 export interface Pack {
   slug: string;
@@ -84,6 +84,13 @@ export function packInstall(pack: Pack): string {
 /** Block install command (same effect: block registryDependencies pull the components). */
 export function blockInstall(pack: Pack): string {
   return installCommand(pack.blockSlug);
+}
+/** Short namespaced install forms (after the one-time /getting-started setup). */
+export function packInstallShort(pack: Pack): string {
+  return namespacedInstall(pack.packRegistryItem);
+}
+export function blockInstallShort(pack: Pack): string {
+  return namespacedInstall(pack.blockSlug);
 }
 
 export const packNamespace = product.registryNamespace;

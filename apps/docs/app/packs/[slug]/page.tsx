@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { packs, packBySlug, packInstall, blockInstall } from "../../../lib/packs";
-import { bySlug, itemInstall } from "../../../lib/catalog";
-import { product } from "../../../lib/product";
+import { packs, packBySlug, packInstallShort, blockInstallShort } from "../../../lib/packs";
+import { bySlug } from "../../../lib/catalog";
+import { product, namespacedInstall } from "../../../lib/product";
 import { packPrimaryCta, completeCatalogCta, statusLabel, canShowPrice } from "../../../lib/commerce";
 import { docsContent } from "../../../lib/docs-content";
 import { pageMetadata } from "../../../lib/seo";
@@ -184,7 +184,7 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
                 <AccessBadge access={c.access} />
               </div>
               {c.access === "free" ? (
-                <InstallCommand command={itemInstall(c)} />
+                <InstallCommand command={namespacedInstall(c.registryItem)} />
               ) : (
                 <p className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2 text-[12.5px] text-[var(--color-muted)]">
                   {product.premiumTierLabel} — included with this pack. Full source delivered on access.{" "}
@@ -217,14 +217,23 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
 
       {/* INSTALLATION */}
       <Section title="Installation" sub={`Installs ${filesInstalled} source files into your repo — you own them after install.`}>
+        <p className="mb-3 text-[13px] text-[var(--color-muted)]">
+          These use the{" "}
+          <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">{product.registryNamespace}</code>{" "}
+          namespace — a{" "}
+          <Link href="/getting-started" className="text-[var(--color-accent)] underline underline-offset-2">one-time setup</Link>.
+          Prefer no setup? The{" "}
+          <Link href="/getting-started#step-4" className="text-[var(--color-accent)] underline underline-offset-2">full-URL form</Link>{" "}
+          works with zero config.
+        </p>
         <p className="mb-2 text-[14px] text-[var(--color-muted)]">Whole pack (block + every component):</p>
-        <InstallCommand command={packInstall(pack)} />
+        <InstallCommand command={packInstallShort(pack)} />
         <p className="mt-4 mb-2 text-[14px] text-[var(--color-muted)]">Just the composed block (pulls its component dependencies):</p>
-        <InstallCommand command={blockInstall(pack)} />
+        <InstallCommand command={blockInstallShort(pack)} />
         <p className="mt-4 mb-2 text-[14px] text-[var(--color-muted)]">Individual Free components:</p>
         <div className="space-y-2">
           {components.filter((c) => c.access === "free").map((c) => (
-            <InstallCommand key={c.id} command={itemInstall(c)} />
+            <InstallCommand key={c.id} command={namespacedInstall(c.registryItem)} />
           ))}
         </div>
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
