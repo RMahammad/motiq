@@ -12,6 +12,7 @@ import { docsContent } from "../../../lib/docs-content";
 import { PreviewStage } from "../../_components/preview-stage";
 import { Preview } from "../../_previews";
 import { CodeBlock, InstallCommand } from "../../_components/code-block";
+import { PreviewCodeTabs } from "../../_components/preview-code-tabs";
 import { AccessBadge } from "../../_components/catalog-card";
 import { AccessCta } from "../../_components/access-cta";
 
@@ -166,11 +167,60 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         <p className="mb-8 max-w-2xl break-words text-[15px] leading-relaxed text-[var(--color-muted)]">{item.description}</p>
       </div>
 
-      {/* Preview — width scales with component complexity */}
-      <div className={`mx-auto ${previewMax}`}>
-        <PreviewStage stage={item.stage}>
-          <Preview id={item.id} />
-        </PreviewStage>
+      {/* Preview / Code tabs — width scales with component complexity */}
+      <div id="preview" className={`mx-auto ${previewMax}`}>
+        <PreviewCodeTabs
+          idBase={item.slug}
+          preview={
+            <PreviewStage stage={item.stage}>
+              <Preview id={item.id} />
+            </PreviewStage>
+          }
+          code={
+            source ? (
+              <div className="space-y-5">
+                {doc ? (
+                  <div id="usage">
+                    <p className="mb-2 text-[13px] font-medium text-[var(--color-fg)]">Usage</p>
+                    <CodeBlock code={doc.usage} />
+                  </div>
+                ) : null}
+                <div id="code">
+                  <p className="mb-2 text-[13px] font-medium text-[var(--color-fg)]">
+                    Source
+                    {target ? (
+                      <span className="ml-2 font-mono text-[12px] font-normal text-[var(--color-muted)]">{target}</span>
+                    ) : null}
+                  </p>
+                  <CodeBlock code={source} />
+                </div>
+              </div>
+            ) : isGatedPro ? (
+              <div id="code" className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-5">
+                <div className="mb-3 flex flex-wrap items-center gap-2">
+                  <span className="rounded-md border border-[var(--color-border)] px-2 py-0.5 text-[12px] font-medium text-[var(--color-fg)]">
+                    {product.premiumTierLabel} source
+                  </span>
+                  <span className="text-[13px] text-[var(--color-muted)]">
+                    Live preview, API, dependencies, and installed files are shown. The full editable
+                    implementation is delivered on access.
+                  </span>
+                </div>
+                <p className="mb-2 text-[13px] font-medium text-[var(--color-fg)]">Files you install</p>
+                <ul className="mb-4 space-y-1.5">
+                  {preview.files.map((f) => (
+                    <li key={f.path} className="font-mono text-[12.5px] text-[var(--color-muted)]">
+                      → <span className="text-[var(--color-fg)]">{f.target ?? f.path}</span>
+                    </li>
+                  ))}
+                </ul>
+                <AccessCta cta={proComponentCta(item.slug)} />
+              </div>
+            ) : (
+              <p className="text-[14px] text-[var(--color-muted)]">Source installs into your project with the command below.</p>
+            )
+          }
+        />
       </div>
 
       <div className={READ}>
@@ -213,43 +263,6 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           </p>
         ) : null}
       </Section>
-
-      {/* Usage */}
-      {doc ? (
-        <Section id="usage" title="Usage">
-          <CodeBlock code={doc.usage} />
-        </Section>
-      ) : null}
-
-      {/* Source code — full for Free; source-preview policy surface for gated Pro */}
-      {source ? (
-        <Section id="code" title="Source">
-          <CodeBlock code={source} />
-        </Section>
-      ) : isGatedPro ? (
-        <Section id="code" title="Source">
-          <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-5">
-            <div className="mb-3 flex flex-wrap items-center gap-2">
-              <span className="rounded-md border border-[var(--color-border)] px-2 py-0.5 text-[12px] font-medium text-[var(--color-fg)]">
-                {product.premiumTierLabel} source
-              </span>
-              <span className="text-[13px] text-[var(--color-muted)]">
-                Live preview, API, dependencies, and installed files are shown. The full editable
-                implementation is delivered on access.
-              </span>
-            </div>
-            <p className="mb-2 text-[13px] font-medium text-[var(--color-fg)]">Files you install</p>
-            <ul className="mb-4 space-y-1.5">
-              {preview.files.map((f) => (
-                <li key={f.path} className="font-mono text-[12.5px] text-[var(--color-muted)]">
-                  → <span className="text-[var(--color-fg)]">{f.target ?? f.path}</span>
-                </li>
-              ))}
-            </ul>
-            <AccessCta cta={proComponentCta(item.slug)} />
-          </div>
-        </Section>
-      ) : null}
 
       {/* API */}
       {doc ? (

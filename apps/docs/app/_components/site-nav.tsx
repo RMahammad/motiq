@@ -173,7 +173,6 @@ export function SiteNav({ productName, waitlistEnabled, ctaHref, ctaLabel }: Nav
 
         {/* Desktop primary nav */}
         <nav aria-label="Primary" className="ml-2 hidden items-center gap-0.5 md:flex">
-          {primaryLink("/getting-started", "Get started")}
           {primaryLink("/components", "Components")}
           <div className="relative">
             <button
@@ -297,7 +296,7 @@ export function SiteNav({ productName, waitlistEnabled, ctaHref, ctaLabel }: Nav
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4">
               <Link
-                href="/components"
+                href={ctaHref}
                 className="block rounded-lg border border-[var(--color-border)] px-3 py-2.5 text-center text-[14px] font-medium text-[var(--color-accent-fg)]"
                 style={{ background: "var(--color-accent)" }}
               >
@@ -305,7 +304,6 @@ export function SiteNav({ productName, waitlistEnabled, ctaHref, ctaLabel }: Nav
               </Link>
               <nav aria-label="Primary" className="mt-4 flex flex-col gap-0.5">
                 {[
-                  ["/getting-started", "Get started"],
                   ["/components", "All components"],
                   ["/components?kind=block", "Blocks"],
                   ["/packs", "Packs"],

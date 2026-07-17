@@ -125,8 +125,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteNav
           productName={product.shortName}
           waitlistEnabled={commerce.waitlistEnabled}
-          ctaHref="/components"
-          ctaLabel="Browse components"
+          ctaHref="/getting-started"
+          ctaLabel="Get started"
         />
 
         <main>{children}</main>
