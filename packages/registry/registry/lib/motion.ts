@@ -830,11 +830,14 @@ export function compositionScrimStyle(c: ResolvedComposition): React.CSSProperti
   const fx = placement === "left" ? 24 : placement === "right" ? 76 : midX;
   const fy = placement === "top" ? 30 : placement === "bottom" ? 70 : midY;
   const at = `${fx.toFixed(1)}% ${fy.toFixed(1)}%`;
-  // Frosted glass sized to the COPY only — a tight feathered ellipse so the panel
-  // blurs behind the text while the field on the open side stays crisp. Readability
-  // comes from blur (not darkening); a light wash only lifts contrast.
-  const wash = `radial-gradient(ellipse 40% 86% at ${at}, color-mix(in oklab, var(--color-bg) 46%, transparent) 0%, color-mix(in oklab, var(--color-bg) 24%, transparent) 52%, transparent 78%)`;
-  const feather = `radial-gradient(ellipse 44% 96% at ${at}, #000 52%, rgba(0,0,0,0.66) 70%, transparent 84%)`;
+  // Frosted glass sized to the COPY: tight for a half-width column (left/right),
+  // wide + short for a full-width phone hero (top/bottom). Readability comes from
+  // blur (not darkening); a light wash only lifts contrast.
+  const vert = placement === "top" || placement === "bottom";
+  const rw = vert ? 82 : 40; // wash horizontal radius
+  const rh = vert ? 52 : 86; // wash vertical radius
+  const wash = `radial-gradient(ellipse ${rw}% ${rh}% at ${at}, color-mix(in oklab, var(--color-bg) 46%, transparent) 0%, color-mix(in oklab, var(--color-bg) 24%, transparent) 52%, transparent 78%)`;
+  const feather = `radial-gradient(ellipse ${rw + 4}% ${rh + 8}% at ${at}, #000 52%, rgba(0,0,0,0.66) 70%, transparent 84%)`;
   return {
     background: wash,
     backdropFilter: "blur(13px) saturate(1.2)",

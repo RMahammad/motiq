@@ -125,12 +125,6 @@ export interface RuntimeSignalMapProps
   pauseWhenHidden?: boolean;
   /** Deterministic seed for edge-bow layout (SSR-stable). */
   seed?: number;
-  /**
-   * How the map lays out when the copy stacks above it (mobile / narrow):
-   * "overlay" runs the field full-bleed behind the copy (glass scrim keeps text
-   * readable); "stack" drops the nodes into a band below the copy. Default "stack".
-   */
-  mobileMode?: "stack" | "overlay";
   /** Force the static, motion-free snapshot regardless of system preference. */
   reducedMotion?: boolean;
 }
@@ -555,7 +549,6 @@ export function RuntimeSignalMap({
   interactive = false,
   pauseWhenHidden = true,
   seed = 1,
-  mobileMode = "stack",
   reducedMotion,
   className,
   style,
@@ -598,10 +591,10 @@ export function RuntimeSignalMap({
   // Live prop mirror so the rAF loop reads fresh values without re-subscribing.
   const isDemo = !(services && services.length);
   const paramsRef = React.useRef({
-    activity, density, intensity, speed, interactive, safeArea, comp, falloff, showLabels, hideLabelsNearContent, mobileMode, isDemo,
+    activity, density, intensity, speed, interactive, safeArea, comp, falloff, showLabels, hideLabelsNearContent, isDemo,
   });
   paramsRef.current = {
-    activity, density, intensity, speed, interactive, safeArea, comp, falloff, showLabels, hideLabelsNearContent, mobileMode, isDemo,
+    activity, density, intensity, speed, interactive, safeArea, comp, falloff, showLabels, hideLabelsNearContent, isDemo,
   };
 
   React.useEffect(() => {
@@ -661,26 +654,23 @@ export function RuntimeSignalMap({
        side OPPOSITE the content; when the layout stacks (top/bottom, or a narrow
        horizontal), it drops into a generous band below/above the copy that fills
        the frame — no dead space. */
-    const mapBox = (placement: ContentPlacement, W: number, mode: "stack" | "overlay") => {
-      const narrow = W < 640;
-      const stacked = placement === "top" || placement === "bottom" || (narrow && (placement === "left" || placement === "right"));
-      // Nodes span the FULL width on desktop — those over the copy render as soft
-      // glowing shapes behind the glass scrim, so the field fills the whole frame
-      // instead of hugging one side. The lighting + motes are always full-bleed.
-      if (stacked) {
-        // "overlay": the same full-bleed network as desktop, behind + around the
-        // copy (glass scrim keeps text readable). "stack": a tidy band below.
-        return mode === "overlay"
-          ? { x: 0.04, y: 0.08, w: 0.92, h: 0.88, stacked: true }
-          : { x: 0.05, y: 0.46, w: 0.9, h: 0.5, stacked: true };
-      }
+    const mapBox = (placement: ContentPlacement, W: number) => {
+      void W;
+      // Only an explicit top/bottom placement stacks; left/right/center keep the
+      // same full-bleed landscape at EVERY width (the hero scales, never collapses
+      // to a band). Nodes over the copy render as soft glowing shapes behind the
+      // glass scrim; lighting + motes are always full-bleed.
+      const stacked = placement === "top" || placement === "bottom";
+      // Phone hero: full-width copy at the top, the graphic full-bleed below +
+      // faintly behind it (glass scrim keeps the copy readable).
+      if (stacked) return { x: 0.03, y: 0.42, w: 0.94, h: 0.55, stacked: true };
       return { x: 0.04, y: 0.09, w: 0.93, h: 0.82, stacked: false };
     };
 
     const draw = (timeSec: number) => {
       const {
         activity: act, density: den, intensity: inten, speed: spd, interactive: inter, safeArea: safe,
-        comp: comp0, falloff: fall, showLabels: labelsOn, hideLabelsNearContent: hideNear, mobileMode: mMode, isDemo: demo,
+        comp: comp0, falloff: fall, showLabels: labelsOn, hideLabelsNearContent: hideNear, isDemo: demo,
       } = paramsRef.current;
       if (colorAge <= 0) { palette = resolvePalette(wrap); colorAge = 30; }
       colorAge -= 1;
@@ -689,10 +679,12 @@ export function RuntimeSignalMap({
       const W = width;
       const H = height;
       const glow = clamp(inten, 0, 1.4);
-      const box = mapBox(comp0.placement, W, mMode);
-      const chipMode = W >= 560;
-      const showStatus = W >= 780;
-      const s = Math.min(1.1, Math.max(0.86, W / 1180));
+      const box = mapBox(comp0.placement, W);
+      // Cards + region headers + metric chips render at EVERY width (mobile too),
+      // so tablet/phone read like the desktop hero — just scaled down.
+      const chipMode = W >= 300;
+      const showStatus = W >= 440;
+      const s = Math.min(1.1, Math.max(0.66, W / 1180));
       const stalled = spd <= 0 || staticMode;
       // Right-content mirrors the flow onto the left; stacked layouts flatten the
       // vertical spread so the chain reads across a short band.

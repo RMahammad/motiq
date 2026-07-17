@@ -68,7 +68,6 @@ export function RuntimeSignalMapPreview() {
   const [motion, setMotion] = React.useState(true);
   const [interactive, setInteractive] = React.useState(true);
   const [showSafe, setShowSafe] = React.useState(false);
-  const [mobileMode, setMobileMode] = React.useState<"stack" | "overlay">("stack");
   const effective = useHeroPlacement(placement);
   // "incident" is the component's built-in default — pass no services so the demo
   // extras (live-metric chips) show; the other scenarios override health.
@@ -87,16 +86,10 @@ export function RuntimeSignalMapPreview() {
           density={density}
           speed={speed}
           interactive={interactive}
-          mobileMode={mobileMode}
           reducedMotion={!motion || undefined}
           className="min-h-[440px]"
         >
-          <HeroContent
-            placement={effective}
-            copy={COPY}
-            showSafe={showSafe}
-            minH={mobileMode === "overlay" ? "min-h-[470px] lg:min-h-[440px]" : "min-h-[560px] lg:min-h-[440px]"}
-          />
+          <HeroContent placement={effective} copy={COPY} showSafe={showSafe} minH="min-h-[500px] sm:min-h-[460px]" />
         </RuntimeSignalMap>
       </div>
 
@@ -122,17 +115,6 @@ export function RuntimeSignalMapPreview() {
             { value: "left", label: "Left" },
             { value: "right", label: "Right" },
             { value: "center", label: "Center" },
-          ]}
-        />
-        <ControlDivider />
-        <span className="text-[12.5px] font-medium text-[var(--color-muted)]">Mobile</span>
-        <ControlSegmented
-          label="Mobile layout"
-          value={mobileMode}
-          onChange={(v) => setMobileMode(v as "stack" | "overlay")}
-          options={[
-            { value: "stack", label: "Stacked" },
-            { value: "overlay", label: "Overlay" },
           ]}
         />
         <ControlDivider />
