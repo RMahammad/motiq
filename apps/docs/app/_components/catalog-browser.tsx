@@ -14,7 +14,6 @@ import {
   SPAN_CLASS,
   type CategoryId,
   type Category,
-  type Access,
   type CatalogItem,
 } from "../../lib/catalog";
 import { CatalogCard } from "./catalog-card";
@@ -51,7 +50,7 @@ export function CatalogBrowser() {
   const params = useSearchParams();
 
   const category = (params.get("category") as CategoryId | null) ?? null;
-  const access = (params.get("access") as Access | "all" | null) ?? "all";
+  const featuredOnly = params.get("featured") === "1";
   const kind = (params.get("kind") as "component" | "block" | "pack" | "all" | null) ?? "all";
   const sort = (params.get("sort") as Sort | null) ?? "default";
   const [query, setQuery] = React.useState(params.get("q") ?? "");
@@ -70,7 +69,7 @@ export function CatalogBrowser() {
 
   let results = query ? searchCatalog(query) : catalog;
   if (category) results = results.filter((c) => c.category === category);
-  if (access !== "all") results = results.filter((c) => c.access === access);
+  if (featuredOnly) results = results.filter((c) => c.featured);
   if (kind !== "all") results = results.filter((c) => kindOf(c) === kind);
   if (sort === "recent") results = [...results].sort((a, b) => b.dateAdded.localeCompare(a.dateAdded));
 
@@ -161,13 +160,14 @@ export function CatalogBrowser() {
 
       <div className="flex flex-col gap-3 border-t border-[var(--color-border)] pt-4">
         <div>
-          <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">Tier</p>
+          <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">Highlight</p>
           <div className="flex flex-wrap gap-2">
-            {(["all", "free", "pro"] as const).map((a) => (
-              <button key={a} onClick={() => setParam("access", a)} className={chip(access === a)}>
-                {a === "all" ? "All" : a === "free" ? "Free" : "Pro"}
-              </button>
-            ))}
+            <button onClick={() => setParam("featured", null)} className={chip(!featuredOnly)}>
+              All
+            </button>
+            <button onClick={() => setParam("featured", "1")} className={chip(featuredOnly)}>
+              Featured
+            </button>
           </div>
         </div>
         <div>

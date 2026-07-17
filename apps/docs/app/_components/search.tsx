@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 
-import { catalog, searchCatalog, accessLabel, type CatalogItem } from "../../lib/catalog";
+import { catalog, searchCatalog, type CatalogItem } from "../../lib/catalog";
 
 const EASE = [0.2, 0, 0, 1] as const;
 
@@ -261,15 +261,14 @@ export function SearchTrigger() {
                           </span>
                           <span className="shrink-0 text-[12px] capitalize text-[var(--color-muted)]">{c.category}</span>
                         </span>
-                        <span
-                          className={`shrink-0 rounded-full px-1.5 py-0.5 text-[10.5px] font-medium ${
-                            c.access === "free"
-                              ? "text-[var(--color-muted)]"
-                              : "bg-[color-mix(in_oklab,var(--color-accent)_14%,transparent)] text-[var(--color-accent)]"
-                          }`}
-                        >
-                          {accessLabel[c.access]}
-                        </span>
+                        {c.featured ? (
+                          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[color-mix(in_oklab,var(--color-accent)_14%,transparent)] px-1.5 py-0.5 text-[10.5px] font-medium text-[var(--color-accent)]">
+                            <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                              <path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" />
+                            </svg>
+                            Featured
+                          </span>
+                        ) : null}
                       </li>
                     );
                   })

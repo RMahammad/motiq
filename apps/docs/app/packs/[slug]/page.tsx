@@ -12,7 +12,7 @@ import { Preview } from "../../_previews";
 import { PreviewStage } from "../../_components/preview-stage";
 import { LazyPreview } from "../../_components/lazy-preview";
 import { InstallCommand } from "../../_components/code-block";
-import { AccessBadge } from "../../_components/catalog-card";
+import { FeaturedBadge } from "../../_components/catalog-card";
 import { AccessCta } from "../../_components/access-cta";
 
 export function generateStaticParams() {
@@ -54,8 +54,6 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
   const components = pack.components
     .map((s) => bySlug.get(s))
     .filter(Boolean) as NonNullable<ReturnType<typeof bySlug.get>>[];
-  const freeCount = components.filter((c) => c.access === "free").length;
-  const proCount = components.filter((c) => c.access === "pro").length;
   const block = bySlug.get(pack.blockSlug);
   const blockDoc = docsContent[pack.blockSlug];
   const filesInstalled = components.length + 1; // each component + the block source
@@ -103,7 +101,7 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
           <span className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2.5 py-1 text-[13px] text-[var(--color-fg)]">
-            {freeCount} Free · {proCount} Pro
+            {components.length} components + 1 block
           </span>
           <span className="text-[13px] text-[var(--color-muted)]">Editable source · accessible · reduced-motion safe</span>
         </div>
@@ -168,8 +166,8 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
 
       {/* INCLUDED ITEMS */}
       <Section
-        title={`Included components — ${freeCount} Free · ${proCount} Pro`}
-        sub="Free components install individually today. Pro components are delivered with pack or complete-catalog access."
+        title="Included components"
+        sub="Every component installs individually, or all at once with the pack."
       >
         <div id="included" className="grid gap-3 sm:grid-cols-2">
           {components.map((c) => (
@@ -181,16 +179,9 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
                   </Link>
                   <p className="mt-0.5 text-[12.5px] leading-relaxed text-[var(--color-muted)]">{c.description}</p>
                 </div>
-                <AccessBadge access={c.access} />
+                <FeaturedBadge featured={c.featured} />
               </div>
-              {c.access === "free" ? (
-                <InstallCommand command={namespacedInstall(c.registryItem)} />
-              ) : (
-                <p className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2 text-[12.5px] text-[var(--color-muted)]">
-                  {product.premiumTierLabel} — included with this pack. Full source delivered on access.{" "}
-                  <Link href={c.documentationPath} className="text-[var(--color-accent)] hover:underline">Preview & API →</Link>
-                </p>
-              )}
+              <InstallCommand command={namespacedInstall(c.registryItem)} />
             </div>
           ))}
         </div>
@@ -230,9 +221,9 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
         <InstallCommand command={packInstallShort(pack)} />
         <p className="mt-4 mb-2 text-[14px] text-[var(--color-muted)]">Just the composed block (pulls its component dependencies):</p>
         <InstallCommand command={blockInstallShort(pack)} />
-        <p className="mt-4 mb-2 text-[14px] text-[var(--color-muted)]">Individual Free components:</p>
+        <p className="mt-4 mb-2 text-[14px] text-[var(--color-muted)]">Individual components:</p>
         <div className="space-y-2">
-          {components.filter((c) => c.access === "free").map((c) => (
+          {components.map((c) => (
             <InstallCommand key={c.id} command={namespacedInstall(c.registryItem)} />
           ))}
         </div>
@@ -251,7 +242,7 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
           </div>
         </div>
         {product.namespaceIsPreview ? (
-          <p className="mt-3 text-[12px] text-[var(--color-muted)]">The registry namespace/URL are temporary preview values during development. Pro items install through an authenticated registry route (docs/43).</p>
+          <p className="mt-3 text-[12px] text-[var(--color-muted)]">The registry namespace/URL are temporary preview values during development.</p>
         ) : null}
       </Section>
 
@@ -269,7 +260,7 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
             </thead>
             <tbody className="text-[var(--color-fg)]">
               {[
-                ["Components included", "You build each", `${freeCount} Free individually`, `All ${components.length} + block`],
+                ["Components included", "You build each", "One at a time", `All ${components.length} + block`],
                 ["Interaction states", "You design each", "Per component", "Across the whole workflow"],
                 ["Accessibility", "You implement", "Built in per component", "Built in, composed"],
                 ["Responsive behaviour", "You handle", "Per component", "Whole-workflow layout"],
@@ -307,7 +298,7 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
           <div>
             <p className="text-[15px] font-medium text-[var(--color-fg)]">{pack.name}</p>
             <p className="mt-1 text-[13px] text-[var(--color-muted)]">
-              {components.length} components + 1 composed block · {freeCount} Free · {proCount} Pro · {statusLabel()}
+              {components.length} components + 1 composed block · {statusLabel()}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-4">

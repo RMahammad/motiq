@@ -1,23 +1,22 @@
 import Link from "next/link";
 
 import type { CatalogItem } from "../../lib/catalog";
-import { accessLabel, itemInstall, kindOf, resolvePresentation } from "../../lib/catalog";
+import { itemInstall, kindOf, resolvePresentation } from "../../lib/catalog";
 import { CatalogStage } from "./catalog-stage";
 import { CatalogPreview } from "../_previews";
 import { LazyPreview } from "./lazy-preview";
 import { CopyButton } from "./code-block";
 
-export function AccessBadge({ access }: { access: CatalogItem["access"] }) {
-  const pro = access === "pro";
+/** Highlights a standout design. The whole catalog is free, so there is no
+ *  tier badge — only featured items carry a marker. */
+export function FeaturedBadge({ featured }: { featured: boolean }) {
+  if (!featured) return null;
   return (
-    <span
-      className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${
-        pro
-          ? "bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]"
-          : "bg-[var(--color-bg-secondary)] text-[var(--color-muted)]"
-      }`}
-    >
-      {accessLabel[access]}
+    <span className="inline-flex items-center gap-1 rounded-full bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] px-2 py-0.5 text-[11px] font-medium text-[var(--color-accent)]">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+        <path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" />
+      </svg>
+      Featured
     </span>
   );
 }
@@ -70,7 +69,7 @@ export function CatalogCard({ item }: { item: CatalogItem }) {
             {item.name}
           </Link>
           <KindBadge item={item} />
-          <AccessBadge access={item.access} />
+          <FeaturedBadge featured={item.featured} />
         </div>
         <p className="mt-1 line-clamp-2 text-[13px] leading-relaxed text-[var(--color-muted)]">
           {item.description}
@@ -79,21 +78,12 @@ export function CatalogCard({ item }: { item: CatalogItem }) {
         <div className="mt-auto flex items-center justify-between gap-2 pt-4">
           <span className="text-[12px] text-[var(--color-muted)]">{categoryLabel(item.category)}</span>
           <div className="flex items-center gap-2">
-            {item.access === "free" ? (
-              <CopyButton
-                text={itemInstall(item)}
-                label="Install"
-                trackEvent="free_install_copied"
-                trackProps={{ item: item.id }}
-              />
-            ) : (
-              <span
-                className="inline-flex items-center gap-1 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2.5 py-1 text-[12px] text-[var(--color-muted)]"
-                title="Delivered with pack or complete-catalog access"
-              >
-                🔒 Pro
-              </span>
-            )}
+            <CopyButton
+              text={itemInstall(item)}
+              label="Install"
+              trackEvent="free_install_copied"
+              trackProps={{ item: item.id }}
+            />
             <Link
               href={item.documentationPath}
               className="rounded-md px-2.5 py-1 text-[12px] font-medium text-[var(--color-accent)] hover:underline"

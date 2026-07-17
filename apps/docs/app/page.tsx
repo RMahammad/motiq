@@ -4,15 +4,14 @@ import Link from "next/link";
 import { product } from "../lib/product";
 import { absoluteUrl } from "../lib/seo";
 import { AiResponseStream, type ResponseSegment } from "@/registry/ai/ai-response-stream";
-import { featuredItems, categoryCount, bySlug, packSpans, SPAN_CLASS, accessLabel, resolvePresentation, componentItems, type CatalogItem } from "../lib/catalog";
+import { featuredItems, categoryCount, bySlug, packSpans, SPAN_CLASS, resolvePresentation, componentItems, type CatalogItem } from "../lib/catalog";
 import { packs, type Pack } from "../lib/packs";
-import { completeCatalogCta, statusLabel } from "../lib/commerce";
+import { statusLabel } from "../lib/commerce";
 import { CatalogPreview } from "./_previews";
 import { RuntimeSignalMapHeroPreview } from "./_previews/catalog/runtime-signal-map-hero";
 import { CatalogStage } from "./_components/catalog-stage";
 import { LazyPreview } from "./_components/lazy-preview";
 import { HeroShowcase } from "./_components/hero-showcase";
-import { AccessCta } from "./_components/access-cta";
 import { PageView } from "./_components/page-view";
 
 /* ------------------------------------------------------------------ *
@@ -88,7 +87,7 @@ function FeaturedCard({ item, wide }: { item: CatalogItem; wide?: boolean }) {
             {item.name}
           </Link>
         </h3>
-        <AccessPill access={item.access} />
+        <FeaturedPill featured={item.featured} />
       </div>
       <p className={`text-[var(--color-muted)] ${wide ? "max-w-md text-[15px] leading-relaxed" : "line-clamp-2 text-[13.5px] leading-relaxed"}`}>
         {item.description.split(" — ")[0].split(". ")[0]}.
@@ -116,17 +115,14 @@ function FeaturedCard({ item, wide }: { item: CatalogItem; wide?: boolean }) {
   );
 }
 
-function AccessPill({ access }: { access: CatalogItem["access"] }) {
-  const pro = access === "pro";
+function FeaturedPill({ featured }: { featured: boolean }) {
+  if (!featured) return null;
   return (
-    <span
-      className={`rounded-full px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide ${
-        pro
-          ? "bg-[var(--color-accent-soft)] text-[var(--color-accent-text)]"
-          : "bg-[var(--color-bg-secondary)] text-[var(--color-muted)]"
-      }`}
-    >
-      {accessLabel[access]}
+    <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-accent-soft)] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+        <path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" />
+      </svg>
+      Featured
     </span>
   );
 }
@@ -220,8 +216,6 @@ function CategoryTile({ f }: { f: Family }) {
 /* ---- Pack card (product offering, static composition) ---- */
 function PackCard({ p }: { p: Pack }) {
   const comps = p.components.map((s) => bySlug.get(s)).filter(Boolean) as CatalogItem[];
-  const free = comps.filter((c) => c.access === "free").length;
-  const pro = comps.length - free;
   return (
     <Link
       href={`/packs/${p.slug}`}
@@ -249,7 +243,11 @@ function PackCard({ p }: { p: Pack }) {
                   {i + 1}
                 </span>
                 <span className="truncate text-[13px] font-medium text-[var(--color-fg)]">{c.name}</span>
-                <span className="ml-auto text-[11px] font-medium uppercase tracking-wide text-[var(--color-muted)]">{accessLabel[c.access]}</span>
+                {c.featured ? (
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-label="Featured" className="ml-auto shrink-0 text-[var(--color-accent-text)]">
+                    <path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" />
+                  </svg>
+                ) : null}
               </div>
             ))}
           </div>
@@ -262,7 +260,7 @@ function PackCard({ p }: { p: Pack }) {
         <p className="mt-2 text-[14px] leading-relaxed text-[var(--color-muted)]">{p.tagline}</p>
         <div className="mt-5 flex items-center justify-between gap-3 border-t border-[var(--color-border)] pt-4">
           <span className="text-[13px] font-medium text-[var(--color-muted)]">
-            <span className="text-[var(--color-fg)]">{free} Free</span> · {pro} Pro · {p.blockName}
+            <span className="text-[var(--color-fg)]">{comps.length} components</span> · {p.blockName}
           </span>
           <span className="inline-flex items-center gap-1 rounded-lg bg-[var(--color-accent)] px-3.5 py-2 text-[13px] font-semibold text-[var(--color-accent-fg)] transition-colors group-hover:bg-[var(--color-accent-hover)]">
             View pack →
@@ -288,7 +286,6 @@ const HERO_STREAM_SEGMENTS: ResponseSegment[] = [
 export default function HomePage() {
   const featured = featuredItems();
   const featuredSpans = packSpans(featured);
-  const complete = completeCatalogCta();
 
   const componentTotal = componentItems().length;
 
@@ -387,7 +384,7 @@ export default function HomePage() {
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
                 </span>
                 {statusLabel()}
-                <span className="text-[var(--color-muted)]">· {product.freeTierLabel} &amp; {product.premiumTierLabel}</span>
+                <span className="text-[var(--color-muted)]">· Free &amp; open source</span>
               </span>
 
               <h1 className="mt-5 text-[clamp(2.2rem,4.4vw,3.9rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-[var(--color-fg)]">
@@ -585,7 +582,7 @@ export default function HomePage() {
                   {productEnvLead.name}
                 </Link>
               </h3>
-              <AccessPill access={productEnvLead.access} />
+              <FeaturedPill featured={productEnvLead.featured} />
               <span className="ml-auto inline-flex items-center gap-1 text-[13.5px] font-medium text-[var(--color-accent-text)]">
                 Open component →
               </span>
@@ -650,33 +647,38 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 6 · Free vs Pro ===== */}
+      {/* ===== 6 · What you get (free & open) ===== */}
       <section className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-5 md:grid-cols-2">
           <div className="flex flex-col rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-sm)]">
-            <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">{product.freeTierLabel}</p>
-            <h3 className="mt-2 text-[26px] font-semibold tracking-tight text-[var(--color-fg)]">Start free</h3>
+            <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">Editable source</p>
+            <h3 className="mt-2 text-[26px] font-semibold tracking-tight text-[var(--color-fg)]">Components you own</h3>
             <p className="mt-3 max-w-md text-[14.5px] leading-relaxed text-[var(--color-muted)]">
-              A genuinely useful set — animated shadcn components, text effects, icons, and workflow surfaces. Public registry, editable source, full accessibility.
+              Every component installs as real source into your repo via the shadcn CLI — animated shadcn primitives, text effects, icons, and workflow surfaces. Edit anything; your app owns the state, with full accessibility and reduced motion built in.
             </p>
             <div className="mt-6 flex-1" />
             <Link
-              href="/components?access=free"
+              href="/components"
               className="inline-flex w-fit items-center gap-1 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-5 py-3 text-[15px] font-semibold text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)]"
             >
-              Install the free registry →
+              Browse components →
             </Link>
           </div>
           <div className="relative flex flex-col overflow-hidden rounded-3xl border border-[color-mix(in_oklab,var(--color-accent)_40%,var(--color-border))] bg-[color-mix(in_oklab,var(--color-accent)_8%,var(--color-surface))] p-8 shadow-[var(--shadow-md)]">
             <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(70% 90% at 100% 0%, var(--color-card-glow), transparent 62%)" }} />
             <div className="relative flex flex-1 flex-col">
-              <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">{product.premiumTierLabel}</p>
-              <h3 className="mt-2 text-[26px] font-semibold tracking-tight text-[var(--color-fg)]">Go Pro</h3>
+              <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">Complete workflows</p>
+              <h3 className="mt-2 text-[26px] font-semibold tracking-tight text-[var(--color-fg)]">Full blocks &amp; packs</h3>
               <p className="mt-3 max-w-md text-[14.5px] leading-relaxed text-[var(--color-muted)]">
-                The full catalog, advanced creative components and backgrounds, every complete workflow block and pack, private registry delivery, updates, and support.
+                Composed workflow blocks and packs install in a single command — dashboards, AI interfaces, and more, assembled from the same accessible components. Free and open, every one.
               </p>
               <div className="mt-6 flex-1" />
-              <AccessCta cta={complete} />
+              <Link
+                href="/packs"
+                className="inline-flex w-fit items-center gap-1 rounded-xl bg-[var(--color-accent)] px-5 py-3 text-[15px] font-semibold text-[var(--color-accent-fg)] transition-colors hover:bg-[var(--color-accent-hover)]"
+              >
+                Explore packs →
+              </Link>
             </div>
           </div>
         </div>

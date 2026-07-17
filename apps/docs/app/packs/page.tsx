@@ -17,12 +17,12 @@ export const metadata: Metadata = pageMetadata({
   path: "/packs",
 });
 
-/** Resolve a pack's components (name + access) from the catalog, in visual order. */
+/** Resolve a pack's components (name + featured flag) from the catalog, in visual order. */
 function resolveComponents(slugs: string[]) {
   return slugs
     .map((s) => bySlug.get(s))
     .filter(Boolean)
-    .map((c) => ({ slug: c!.slug, name: c!.name, access: c!.access }));
+    .map((c) => ({ slug: c!.slug, name: c!.name, featured: c!.featured }));
 }
 
 const DOMAINS: Record<string, string> = {
@@ -49,7 +49,7 @@ const UPCOMING: { name: string; progress: string; tone: "progress" | "later" | "
   { name: "Productivity", progress: "Not available yet", tone: "unavailable" },
 ];
 
-const PROOF = ["4 complete packs", "Editable source", "shadcn-compatible", "Free & Pro components"];
+const PROOF = ["4 complete packs", "Editable source", "shadcn-compatible", "Free & open source"];
 
 export default function PacksIndex() {
   const complete = completeCatalogCta();
@@ -57,8 +57,7 @@ export default function PacksIndex() {
 
   const resolved = packs.map((p) => {
     const comps = resolveComponents(p.components);
-    const free = comps.filter((c) => c.access === "free").length;
-    return { pack: p, comps, free, pro: comps.length - free };
+    return { pack: p, comps };
   });
 
   const featured: FeaturedPack[] = resolved.map(({ pack, comps }) => ({
@@ -120,7 +119,7 @@ export default function PacksIndex() {
       {/* 2 ── Four pack overview cards (2×2) ──────────────────────────────── */}
       <section id="packs" className="mt-16 scroll-mt-24 sm:mt-20">
         <div className="grid gap-5 sm:grid-cols-2">
-          {resolved.map(({ pack, comps, free, pro }) => (
+          {resolved.map(({ pack, comps }) => (
             <article
               key={pack.slug}
               className="group flex flex-col rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-sm)] transition-colors hover:border-[color-mix(in_oklab,var(--color-accent)_45%,var(--color-border))] sm:p-5"
@@ -135,7 +134,7 @@ export default function PacksIndex() {
                     </Link>
                   </h2>
                   <span className="shrink-0 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2 py-0.5 text-[11px] text-[var(--color-muted)]">
-                    {free} Free · {pro} Pro
+                    {comps.length} components
                   </span>
                 </div>
 
@@ -197,14 +196,12 @@ export default function PacksIndex() {
                 <th className="px-4 py-3 font-medium">Pack</th>
                 <th className="px-4 py-3 font-medium">Best for</th>
                 <th className="px-4 py-3 font-medium">Components</th>
-                <th className="px-4 py-3 font-medium">Free</th>
-                <th className="px-4 py-3 font-medium">Pro</th>
                 <th className="px-4 py-3 font-medium">Complete block</th>
                 <th className="px-4 py-3 font-medium">Access</th>
               </tr>
             </thead>
             <tbody>
-              {resolved.map(({ pack, comps, free, pro }) => (
+              {resolved.map(({ pack, comps }) => (
                 <tr key={pack.slug} className="border-t border-[var(--color-border)] transition-colors hover:bg-[var(--color-bg-secondary)]">
                   <td className="px-4 py-3">
                     <Link href={`/packs/${pack.slug}`} className="font-medium text-[var(--color-fg)] hover:text-[var(--color-accent-text)]">
@@ -213,8 +210,6 @@ export default function PacksIndex() {
                   </td>
                   <td className="px-4 py-3 text-[var(--color-muted)]">{BEST_FOR[pack.slug]}</td>
                   <td className="px-4 py-3 text-[var(--color-fg)]">{comps.length}</td>
-                  <td className="px-4 py-3 text-[var(--color-fg)]">{free}</td>
-                  <td className="px-4 py-3 text-[var(--color-fg)]">{pro}</td>
                   <td className="px-4 py-3 text-[var(--color-muted)]">{pack.blockName}</td>
                   <td className="px-4 py-3">
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2 py-0.5 text-[11.5px] text-[var(--color-muted)]">
@@ -230,7 +225,7 @@ export default function PacksIndex() {
 
         {/* Mobile: stacked comparison cards */}
         <div className="grid gap-3 md:hidden">
-          {resolved.map(({ pack, comps, free, pro }) => (
+          {resolved.map(({ pack, comps }) => (
             <div key={pack.slug} className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
               <div className="flex items-center justify-between gap-3">
                 <Link href={`/packs/${pack.slug}`} className="text-[15px] font-semibold text-[var(--color-fg)]">
@@ -249,10 +244,6 @@ export default function PacksIndex() {
                 <div>
                   <dt className="text-[var(--color-muted)]">Components</dt>
                   <dd className="text-[var(--color-fg)]">{comps.length}</dd>
-                </div>
-                <div>
-                  <dt className="text-[var(--color-muted)]">Free / Pro</dt>
-                  <dd className="text-[var(--color-fg)]">{free} / {pro}</dd>
                 </div>
                 <div>
                   <dt className="text-[var(--color-muted)]">Complete block</dt>

@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 
-import { bySlug, accessLabel } from "../../lib/catalog";
+import { bySlug } from "../../lib/catalog";
 import { installCommand } from "../../lib/product";
 import { InstallCommand } from "./code-block";
 import { Preview } from "../_previews";
@@ -159,7 +159,6 @@ export function HeroShowcase() {
             const it = bySlug.get(s);
             if (!it) return null;
             const on = i === itemIndex;
-            const pro = it.access === "pro";
             return (
               <button
                 key={s}
@@ -174,8 +173,10 @@ export function HeroShowcase() {
               >
                 <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: on ? tab.tint : "var(--color-border)" }} aria-hidden />
                 {it.name}
-                {pro ? (
-                  <span className="rounded px-1 py-px text-[9.5px] font-bold uppercase tracking-wide text-[var(--color-accent-text)]">Pro</span>
+                {it.featured ? (
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-label="Featured" className="shrink-0 text-[var(--color-accent-text)]">
+                    <path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" />
+                  </svg>
                 ) : null}
               </button>
             );
@@ -214,15 +215,14 @@ export function HeroShowcase() {
             <Link href={item.documentationPath} className="truncate text-[13.5px] font-semibold text-[var(--color-fg)] hover:text-[var(--color-accent-text)]">
               {item.name}
             </Link>
-            <span
-              className={`shrink-0 rounded-full px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wide ${
-                item.access === "pro"
-                  ? "bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent-text)]"
-                  : "bg-[var(--color-bg-secondary)] text-[var(--color-muted)]"
-              }`}
-            >
-              {accessLabel[item.access]}
-            </span>
+            {item.featured ? (
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                  <path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" />
+                </svg>
+                Featured
+              </span>
+            ) : null}
           </div>
           <div className="min-w-0 sm:ml-auto sm:max-w-[440px] sm:flex-1">
             <InstallCommand command={installCommand(item.registryItem)} trackEvent="free_install_copied" trackProps={{ item: item.slug }} />

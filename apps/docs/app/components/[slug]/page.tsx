@@ -6,15 +6,13 @@ import { bySlug, catalog, itemInstall, itemsByCategory, categories, resolvePrese
 import { product, namespacedInstall, registriesConfig } from "../../../lib/product";
 import { pageMetadata, absoluteUrl } from "../../../lib/seo";
 import { whenToUse, faqFor } from "../../../lib/component-seo";
-import { proComponentCta } from "../../../lib/commerce";
-import { readAnyRegistry, canRenderFullSource, sourcePreview } from "../../../lib/registry-source";
+import { readAnyRegistry, sourcePreview } from "../../../lib/registry-source";
 import { docsContent } from "../../../lib/docs-content";
 import { PreviewStage } from "../../_components/preview-stage";
 import { Preview } from "../../_previews";
 import { CodeBlock, InstallCommand } from "../../_components/code-block";
 import { PreviewCodeTabs } from "../../_components/preview-code-tabs";
-import { AccessBadge } from "../../_components/catalog-card";
-import { AccessCta } from "../../_components/access-cta";
+import { FeaturedBadge } from "../../_components/catalog-card";
 
 export function generateStaticParams() {
   return catalog.map((c) => ({ slug: c.slug }));
@@ -58,11 +56,10 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
   const doc = docsContent[slug];
   const reg = readAnyRegistry(item.registryItem);
-  const showFullSource = canRenderFullSource(item.access);
-  const source = showFullSource ? reg?.files?.[0]?.content ?? "" : "";
+  // The whole catalog is free/open — full editable source is always shown.
+  const source = reg?.files?.[0]?.content ?? "";
   const target = reg?.files?.[0]?.target;
   const preview = sourcePreview(reg, item.dependencies, item.registryDependencies);
-  const isGatedPro = item.access === "pro";
 
   // Large/complex components get a wider preview stage than the reading column so
   // maps, timelines, dashboards, and blocks are not squeezed into prose width (docs/56 §19).
@@ -162,7 +159,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           <h1 className="text-[clamp(1.8rem,4vw,2.8rem)] font-semibold tracking-tight text-[var(--color-fg)]">
             {item.name}
           </h1>
-          <AccessBadge access={item.access} />
+          <FeaturedBadge featured={item.featured} />
         </header>
         <p className="mb-8 max-w-2xl break-words text-[15px] leading-relaxed text-[var(--color-muted)]">{item.description}</p>
       </div>
@@ -194,27 +191,6 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
                   </p>
                   <CodeBlock code={source} />
                 </div>
-              </div>
-            ) : isGatedPro ? (
-              <div id="code" className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-5">
-                <div className="mb-3 flex flex-wrap items-center gap-2">
-                  <span className="rounded-md border border-[var(--color-border)] px-2 py-0.5 text-[12px] font-medium text-[var(--color-fg)]">
-                    {product.premiumTierLabel} source
-                  </span>
-                  <span className="text-[13px] text-[var(--color-muted)]">
-                    Live preview, API, dependencies, and installed files are shown. The full editable
-                    implementation is delivered on access.
-                  </span>
-                </div>
-                <p className="mb-2 text-[13px] font-medium text-[var(--color-fg)]">Files you install</p>
-                <ul className="mb-4 space-y-1.5">
-                  {preview.files.map((f) => (
-                    <li key={f.path} className="font-mono text-[12.5px] text-[var(--color-muted)]">
-                      → <span className="text-[var(--color-fg)]">{f.target ?? f.path}</span>
-                    </li>
-                  ))}
-                </ul>
-                <AccessCta cta={proComponentCta(item.slug)} />
               </div>
             ) : (
               <p className="text-[14px] text-[var(--color-muted)]">Source installs into your project with the command below.</p>

@@ -15,7 +15,7 @@ export interface FeaturedPack {
   tagline: string;
   install: string;
   detailHref: string;
-  components: { slug: string; name: string; access: "free" | "pro" }[];
+  components: { slug: string; name: string; featured: boolean }[];
   states: string[];
   domain: string;
 }
@@ -112,15 +112,14 @@ export function FeaturedShowcase({ packs }: { packs: FeaturedPack[] }) {
               {pack.components.map((c) => (
                 <li key={c.slug} className="flex items-center justify-between gap-2 text-[13px]">
                   <span className="text-[var(--color-fg)]">{c.name}</span>
-                  <span
-                    className={`shrink-0 rounded-full border px-1.5 py-0.5 text-[10px] font-medium ${
-                      c.access === "free"
-                        ? "border-[var(--color-border)] text-[var(--color-muted)]"
-                        : "border-[color-mix(in_oklab,var(--color-accent)_35%,transparent)] bg-[color-mix(in_oklab,var(--color-accent)_12%,transparent)] text-[var(--color-accent-text)]"
-                    }`}
-                  >
-                    {c.access === "free" ? "Free" : "Pro"}
-                  </span>
+                  {c.featured ? (
+                    <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-[color-mix(in_oklab,var(--color-accent)_35%,transparent)] bg-[color-mix(in_oklab,var(--color-accent)_12%,transparent)] px-1.5 py-0.5 text-[10px] font-medium text-[var(--color-accent-text)]">
+                      <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                        <path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" />
+                      </svg>
+                      Featured
+                    </span>
+                  ) : null}
                 </li>
               ))}
             </ul>
