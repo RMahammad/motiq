@@ -3,9 +3,17 @@
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { spawnSync } from "node:child_process";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const ADR_DIR = join(ROOT, "docs/adrs");
+
+// Commercial ADRs are intentionally local-only (git-ignored) and absent in a
+// clean/public checkout, though the index still lists them for maintainers.
+function isLocalOnly(relFromAdrDir) {
+  const rel = `docs/adrs/${relFromAdrDir}`;
+  return spawnSync("git", ["-C", ROOT, "check-ignore", "-q", rel]).status === 0;
+}
 const INDEX = join(ADR_DIR, "README.md");
 
 if (!existsSync(INDEX)) {
@@ -36,7 +44,7 @@ const linkedRe = /\(([0-9]{4}-[a-z0-9-]+\.md)\)/g;
 let lm;
 const present = new Set(adrFiles);
 while ((lm = linkedRe.exec(index)) !== null) {
-  if (!present.has(lm[1])) {
+  if (!present.has(lm[1]) && !isLocalOnly(lm[1])) {
     console.error(`ADR index links a missing file: ${lm[1]}`);
     problems++;
   }

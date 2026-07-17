@@ -25,7 +25,8 @@ const cfg = JSON.parse(readFileSync(join(root, "product.config.json"), "utf8"));
 const commerce = cfg.commerce ?? {};
 const mode = commerce.launchMode ?? "development";
 const manifest = JSON.parse(readFileSync(join(root, "packages/registry/registry.json"), "utf8"));
-const isProtected = (i) => (i.meta?.tier ?? "free") !== "free" || ["block", "pack"].includes(i.meta?.kind);
+// Fully free/open catalog: only a non-free tier is protected (blocks/packs ship public).
+const isProtected = (i) => (i.meta?.tier ?? "free") !== "free";
 
 const results = [];
 const add = (id, ok, blocking, message) => results.push({ id, ok, blocking, message });
@@ -61,7 +62,11 @@ function legalStillDraft() {
   });
 }
 
-if (mode === "launched" || mode === "public-beta") {
+if ((mode === "launched" || mode === "public-beta") && !commerce.checkoutEnabled) {
+  // Free/open launch (reactbits-style): the full catalog is public and there is
+  // no checkout, so the paid-launch infrastructure assertions do not apply.
+  add("free-open", true, false, "Free/open launch: full catalog public, no checkout required.");
+} else if (mode === "launched" || mode === "public-beta") {
   add("checkout-provider", commerce.checkoutProvider && commerce.checkoutProvider !== "none", true, "Checkout provider must not be 'none'/dev.");
   add("pricing-finalized", cfg.pricingFinalized === true, true, "Prices are placeholders until pricingFinalized.");
   add("webhook-secret", !!env.MOTIONSTACK_WEBHOOK_SECRET, true, "MOTIONSTACK_WEBHOOK_SECRET must be set.");

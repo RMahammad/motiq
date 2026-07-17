@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node ../../packages/registry/scripts/build-registry.mjs",
     "build": "next build",
     "start": "next start"
   },

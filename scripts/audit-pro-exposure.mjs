@@ -19,7 +19,8 @@ const PUBLIC_R = join(repoRoot, "apps", "docs", "public", "r");
 const MANIFEST = join(repoRoot, "packages", "registry", "registry.json");
 
 const manifest = JSON.parse(readFileSync(MANIFEST, "utf8"));
-const isProtected = (i) => (i.meta?.tier ?? "free") !== "free" || ["block", "pack"].includes(i.meta?.kind);
+// Fully free/open catalog: only a non-free tier is protected (blocks/packs ship public).
+const isProtected = (i) => (i.meta?.tier ?? "free") !== "free";
 const protectedNames = new Set(manifest.items.filter(isProtected).map((i) => i.name));
 
 const failures = [];

@@ -49,11 +49,12 @@ if (existsSync(PROTECTED_OUT)) rmSync(PROTECTED_OUT, { recursive: true, force: t
 mkdirSync(OUT, { recursive: true });
 mkdirSync(PROTECTED_OUT, { recursive: true });
 
-/** A protected item is anything not Free: Pro components, blocks, and packs. */
+/** Protected = anything not Free. The catalog is fully free/open, so blocks and
+ *  packs are public too; only a non-free tier would route an item to the
+ *  protected store. */
 function isProtectedItem(item) {
   const tier = item.meta?.tier ?? "free";
-  const kind = item.meta?.kind ?? "component";
-  return tier !== "free" || kind === "block" || kind === "pack";
+  return tier !== "free";
 }
 
 /** Rewrite any namespaced registry dep to the configured namespace. */

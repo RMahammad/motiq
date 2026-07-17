@@ -151,9 +151,9 @@
       "title": "Tool Call Activity",
       "description": "A presentation-only live inspector for an AI agent's tool calls — concurrent calls, expand/collapse details, inline approve/reject, retry on failure, and compressed completed calls. The app owns the data; the component never runs tools or invents results.",
       "category": "ai",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "ai",
         "agent",
@@ -171,8 +171,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/tool-call-activity",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/tool-call-activity"
+      "url": "https://motionstack.dev/r/tool-call-activity.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/tool-call-activity.json"
     },
     {
       "name": "live-log-stream",
@@ -237,9 +237,9 @@
       "title": "Streaming Data Rows",
       "description": "A live operational table your app drives: animated row insertion, update, resort with continuity, per-cell change emphasis (arrow glyph, never color alone), numeric morphs, and status transitions. Loading, empty, and error states; sortable headers with aria-sort; rate-limited screen-reader summaries; reduced-motion instant swaps. Not a data-grid — for live subsets.",
       "category": "data-motion",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "table",
         "streaming",
@@ -256,8 +256,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/streaming-data-rows",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/streaming-data-rows"
+      "url": "https://motionstack.dev/r/streaming-data-rows.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/streaming-data-rows.json"
     },
     {
       "name": "luminous-topography",
@@ -368,9 +368,9 @@
       "title": "Runtime Signal Map",
       "description": "An infrastructure-flavored background where signal packets move through an application-defined service topology with health + direction: requests enter at ingress nodes, flow along edges between services grouped into regions, and degraded/error paths are marked without color (dashed strokes + slower/stalled flow + a glyph). One canvas + one rAF loop (no per-frame React state, no WebGL). Deterministic first paint, light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. Clearly-fictional default data.",
       "category": "backgrounds",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "background",
         "infrastructure",
@@ -385,8 +385,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/runtime-signal-map",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/runtime-signal-map"
+      "url": "https://motionstack.dev/r/runtime-signal-map.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/runtime-signal-map.json"
     },
     {
       "name": "event-propagation-matrix",
@@ -394,9 +394,9 @@
       "title": "Event Propagation Matrix",
       "description": "A temporal background where application events propagate through a structured cell matrix (rows = regions/streams, cols = time/lanes) — origin cells light, then neighbors along the grid, so waves step cell-to-cell rather than as free-space circles. Overlaps are damped, failed propagation halts with a non-color glyph, acknowledged events dim, and old events settle into a quiet history layer. SVG + CSS only. Deterministic (SSR-safe), light/dark, reduced-motion shows current relationships statically, forced-colors-safe, offscreen-paused.",
       "category": "backgrounds",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "background",
         "events",
@@ -411,8 +411,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/event-propagation-matrix",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/event-propagation-matrix"
+      "url": "https://motionstack.dev/r/event-propagation-matrix.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/event-propagation-matrix.json"
     },
     {
       "name": "data-contour-surface",
@@ -420,9 +420,9 @@
       "title": "Data Contour Surface",
       "description": "A data-driven contour background: contours are computed from application-supplied values (signed focal pressure points, thresholds, active/comparison regions) via canvas marching-squares — not a random topographic texture. Emphasized thresholds get heavier bands, the active region brightens, comparison regions ghost, and data changes ease smoothly. One canvas + one rAF loop (no per-frame React state, no WebGL). Deterministic first paint, intentional light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused.",
       "category": "backgrounds",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "background",
         "contours",
@@ -437,8 +437,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/data-contour-surface",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/data-contour-surface"
+      "url": "https://motionstack.dev/r/data-contour-surface.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/data-contour-surface.json"
     },
     {
       "name": "agent-operations-hero",
@@ -446,9 +446,9 @@
       "title": "Agent Operations Hero",
       "description": "An editable hero block for AI/automation products that shows a real agent workflow beside outcome copy + CTAs. Composes Agent Run Timeline (trimmed), Prompt Composer (compact), Tool Call Activity (one active tool), and Source Citation Rail (one result) at reduced complexity across idle/running/tool-active/waiting-for-approval/completed/failed. App-controlled — never simulates a model or shows chain-of-thought. SSR-safe, reduced-motion-safe. Clearly-fictional demo data.",
       "category": "ai",
-      "tier": "pro",
+      "tier": "free",
       "kind": "block",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "block",
         "hero",
@@ -468,8 +468,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/agent-operations-hero",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/agent-operations-hero"
+      "url": "https://motionstack.dev/r/agent-operations-hero.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/agent-operations-hero.json"
     },
     {
       "name": "deployment-control-hero",
@@ -477,9 +477,9 @@
       "title": "Deployment Control Hero",
       "description": "An editable hero block for developer-tool/infra products showing a real deployment control surface beside outcome copy + CTAs. Composes Environment Switcher (selected env), Deployment Pipeline (four stages), a short Live Log Stream, and one API Request Inspector result across ready/deploying/validating/failed/retrying/completed. App-controlled, provider-neutral demo data. SSR-safe, reduced-motion-safe, readable on laptop and mobile.",
       "category": "developer-tools",
-      "tier": "pro",
+      "tier": "free",
       "kind": "block",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "block",
         "hero",
@@ -499,8 +499,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/deployment-control-hero",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/deployment-control-hero"
+      "url": "https://motionstack.dev/r/deployment-control-hero.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/deployment-control-hero.json"
     },
     {
       "name": "live-data-command-hero",
@@ -508,9 +508,9 @@
       "title": "Live Data Command Hero",
       "description": "An editable hero block for operational-data products centered on continuity and changing state. Composes KPI Number Morph (three metrics), Data Refresh State, a small Streaming Data Rows subset, and Filter Result Transition across initial/live/filtering/refreshing/partial-update/stale/error/recovery. App-controlled, clearly-fictional demo data. SSR-safe, reduced-motion-safe.",
       "category": "data",
-      "tier": "pro",
+      "tier": "free",
       "kind": "block",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "block",
         "hero",
@@ -530,8 +530,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/live-data-command-hero",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/live-data-command-hero"
+      "url": "https://motionstack.dev/r/live-data-command-hero.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/live-data-command-hero.json"
     },
     {
       "name": "collaborative-launch-hero",
@@ -539,9 +539,9 @@
       "title": "Collaborative Launch Hero",
       "description": "An editable hero block for collaboration/review products showing people active, a review underway, and one pending decision beside outcome copy + CTAs. Composes Live Presence Stack, Typing and Presence, Approval Workflow (one pending decision), Comment Thread, and Activity Stream across review-open/commenting/changes-requested/approval-pending/approved/rejected/resolved. App-controlled, clearly-fictional demo data. SSR-safe, reduced-motion-safe.",
       "category": "collaboration",
-      "tier": "pro",
+      "tier": "free",
       "kind": "block",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "block",
         "hero",
@@ -562,8 +562,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/collaborative-launch-hero",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/collaborative-launch-hero"
+      "url": "https://motionstack.dev/r/collaborative-launch-hero.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/collaborative-launch-hero.json"
     },
     {
       "name": "source-citation-rail",
@@ -600,9 +600,9 @@
       "title": "API Request Inspector",
       "description": "A presentation-only inspection surface for a single HTTP request/response your app already has — method/url/status/duration/timing phases, headers/query/body, error, requestId, environment, retryCount, and an auth summary. Credential headers and fields are redacted by default and can never be revealed from inside the component. Expandable sections, in-payload search, formatted/raw + wrapped/scrolling views, and copy of url/request/response. It never sends anything.",
       "category": "developer-tools",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "api",
         "requests",
@@ -621,8 +621,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/api-request-inspector",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/api-request-inspector"
+      "url": "https://motionstack.dev/r/api-request-inspector.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/api-request-inspector.json"
     },
     {
       "name": "approval-workflow",
@@ -630,9 +630,9 @@
       "title": "Approval Workflow",
       "description": "Display and control an app-owned approval process — sequential or parallel stages, required/optional reviewers, minimum approvals, current-user actions (approve / reject / request changes / comment / cancel / resubmit), decision history, and collapsing completed stages. The app owns authorization; the component surfaces app-provided disabled reasons. Status is icon + label; reduced-motion safe.",
       "category": "collaboration",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "approval",
         "review",
@@ -649,8 +649,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/approval-workflow",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/approval-workflow"
+      "url": "https://motionstack.dev/r/approval-workflow.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/approval-workflow.json"
     },
     {
       "name": "filter-result-transition",
@@ -714,9 +714,9 @@
       "title": "Agent Run Timeline",
       "description": "A presentation-only timeline for a multi-step agent / automation run: an ordered rail of steps with tool calls, outputs, errors, retry attempts, optional nested sub-stages, human approval checkpoints, and run-level lifecycle controls (cancel / resume). The app owns the run and every status; the component never executes an agent, generates reasoning, invents confidence, or claims a step succeeded on its own.",
       "category": "ai",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "ai",
         "agent",
@@ -735,8 +735,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/agent-run-timeline",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/agent-run-timeline"
+      "url": "https://motionstack.dev/r/agent-run-timeline.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/agent-run-timeline.json"
     },
     {
       "name": "environment-switcher",
@@ -774,9 +774,9 @@
       "title": "Comment Thread",
       "description": "A production comment thread your app persists: root comments + nested replies, mentions, reactions, edit, resolve/reopen, delete, and optimistic send (pending → sent, failed → retry, temp-id replacement, focus preserved). Unread divider and sort. The app owns persistence + permissions.",
       "category": "collaboration",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "comments",
         "thread",
@@ -793,8 +793,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/comment-thread",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/comment-thread"
+      "url": "https://motionstack.dev/r/comment-thread.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/comment-thread.json"
     },
     {
       "name": "data-refresh-state",
@@ -861,9 +861,9 @@
       "title": "Prompt Composer",
       "description": "A presentation-only, production-oriented prompt-composition surface: multiline draft, caret-aware {{variable}} insertion, app-supplied attachments/templates/models, an honest app-owned token budget, and idle/loading/streaming/error states with Send/Stop/Retry. It never calls a model or sends anything.",
       "category": "ai",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "ai",
         "prompt",
@@ -882,8 +882,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/prompt-composer",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/prompt-composer"
+      "url": "https://motionstack.dev/r/prompt-composer.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/prompt-composer.json"
     },
     {
       "name": "webhook-event-stream",
@@ -1125,9 +1125,9 @@
       "title": "Kanban Card Movement",
       "description": "An application-controlled Kanban interaction layer: pointer + touch + keyboard/menu card movement, drop validation, optimistic move with failure rollback, drop indicators, and empty columns. Dragging is never required. Clean-room (no external drag library); transform-based movement that doesn't re-render every card.",
       "category": "productivity",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "productivity",
         "kanban",
@@ -1146,8 +1146,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/kanban-card-movement",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/kanban-card-movement"
+      "url": "https://motionstack.dev/r/kanban-card-movement.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/kanban-card-movement.json"
     },
     {
       "name": "multi-file-queue",
@@ -1273,9 +1273,9 @@
       "title": "Task Dependency Map",
       "description": "An app-controlled task DEPENDENCY visualization (not a graph editor / not pan-zoom-only). Deterministic dependency-depth layout with static SVG lines, blocked/blocking relationships, prerequisite + dependent inspection, highlighted active path, app-supplied cycle error, status filter, and a compact list/mobile fallback. Keyboard-first (dragging never required); optimistic move with rollback.",
       "category": "productivity",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "dependency",
         "blocked",
@@ -1294,8 +1294,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/task-dependency-map",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/task-dependency-map"
+      "url": "https://motionstack.dev/r/task-dependency-map.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/task-dependency-map.json"
     },
     {
       "name": "processing-timeline",
@@ -1303,9 +1303,9 @@
       "title": "Processing Timeline",
       "description": "A presentation-only timeline for ONE ingested item moving through multiple app-owned processing stages (scan → transcode → thumbnail → caption → publish) — per-stage status/progress/output/logs/warnings/errors, current-stage focus, stage expansion, retry/skip/cancel/restart, duration summary, and vertical/horizontal layouts. Distinct from File Upload Pipeline + Multi-file Queue; never fakes progress.",
       "category": "file",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "processing",
         "pipeline",
@@ -1323,8 +1323,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/processing-timeline",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/processing-timeline"
+      "url": "https://motionstack.dev/r/processing-timeline.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/processing-timeline.json"
     },
     {
       "name": "checkout-progress",
@@ -1332,9 +1332,9 @@
       "title": "Checkout Progress",
       "description": "An app-controlled multi-step checkout progress/orchestration surface (not a payment processor) — current + completed + editable steps, per-step validation + blocked reasons, async step save, return-to-previous, error/progress summaries, sticky order-summary slot, and optional guest/account modes. Never collects or processes payment; no fake processing progress.",
       "category": "commerce",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "checkout",
         "steps",
@@ -1352,8 +1352,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/checkout-progress",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/checkout-progress"
+      "url": "https://motionstack.dev/r/checkout-progress.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/checkout-progress.json"
     },
     {
       "name": "session-security-center",
@@ -1361,9 +1361,9 @@
       "title": "Session Security Center",
       "description": "A presentation + control surface for reviewing and revoking active account sessions — device/browser/os, app-supplied approximate location + IP summary + trust/risk labels, current-session identification, single + bulk revocation with confirmation (current session preserved), rename/trust, filter/sort, and honest failed-revocation + retry. The app owns revocation; never labels a session compromised without app data.",
       "category": "security",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "session",
         "security",
@@ -1381,8 +1381,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/session-security-center",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/session-security-center"
+      "url": "https://motionstack.dev/r/session-security-center.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/session-security-center.json"
     },
     {
       "name": "thread-expansion",
@@ -1419,9 +1419,9 @@
       "title": "Project Timeline",
       "description": "An app-controlled, time-scaled project timeline (not a Gantt/charting library) — milestones/phases/tasks/releases/events on a day/week/month axis, current-date marker (from a today prop), horizontal nav + jump-to-today, phase collapse, item selection with textual date ranges, dependency indication, status filtering, delayed/blocked surfacing, a structured list/mobile fallback, and a non-drag keyboard reschedule (optimistic + rollback). No scheduling algorithms; the app owns dates.",
       "category": "productivity",
-      "tier": "pro",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "timeline",
         "roadmap",
@@ -1439,8 +1439,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/project-timeline",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/project-timeline"
+      "url": "https://motionstack.dev/r/project-timeline.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/project-timeline.json"
     },
     {
       "name": "ai-agent-workspace",
@@ -1448,9 +1448,9 @@
       "title": "AI Agent Workspace",
       "description": "A composed, app-controlled AI agent workspace that composes Agent Run Timeline + Tool Call Activity + AI Response Stream + Source Citation Rail into one realistic full page; the app owns every state and it never simulates a model.",
       "category": "ai",
-      "tier": "pro",
+      "tier": "free",
       "kind": "block",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "block",
         "ai",
@@ -1468,8 +1468,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/ai-agent-workspace",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/ai-agent-workspace"
+      "url": "https://motionstack.dev/r/ai-agent-workspace.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/ai-agent-workspace.json"
     },
     {
       "name": "deployment-command-center",
@@ -1477,9 +1477,9 @@
       "title": "Deployment Command Center",
       "description": "A composed, app-controlled deploy console block: an Environment Switcher in the top bar, a Deployment Pipeline as the main column, a Live Log Stream beneath it, and an API Request Inspector in the side panel — wired behind one demo state machine (env selection, deploying, following logs, request inspection, failure, retry, completion). Provider-neutral fictional data; it never talks to a real deployment provider.",
       "category": "developer-tools",
-      "tier": "pro",
+      "tier": "free",
       "kind": "block",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "block",
         "deployment",
@@ -1497,8 +1497,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/deployment-command-center",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/deployment-command-center"
+      "url": "https://motionstack.dev/r/deployment-command-center.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/deployment-command-center.json"
     },
     {
       "name": "collaborative-review-workspace",
@@ -1506,9 +1506,9 @@
       "title": "Collaborative Review Workspace",
       "description": "A composed review screen: Live Presence Stack, an app-owned Approval Workflow, the Comment Thread, and an Activity Stream wired into one demo state machine — approving advances the workflow and records activity; new comments appear in the thread and the feed. Clearly fictional users; the app owns persistence + authorization.",
       "category": "collaboration",
-      "tier": "pro",
+      "tier": "free",
       "kind": "block",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "block",
         "collaboration",
@@ -1526,8 +1526,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/collaborative-review-workspace",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/collaborative-review-workspace"
+      "url": "https://motionstack.dev/r/collaborative-review-workspace.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/collaborative-review-workspace.json"
     },
     {
       "name": "live-operations-dashboard",
@@ -1535,9 +1535,9 @@
       "title": "Live Operations Dashboard",
       "description": "A composed, app-controlled ops dashboard: KPI Number Morph stats with a Data Refresh State control, a Filter Result Transition section, and a Streaming Data Rows live feed — wired to one demo state machine across loading, live, filtered, refreshing, partial update, stale, error, and recovery. Not a charting library; fictional demo data.",
       "category": "data-motion",
-      "tier": "pro",
+      "tier": "free",
       "kind": "block",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "block",
         "dashboard",
@@ -1555,8 +1555,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/live-operations-dashboard",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/live-operations-dashboard"
+      "url": "https://motionstack.dev/r/live-operations-dashboard.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/live-operations-dashboard.json"
     },
     {
       "name": "ai-interface-pack",
@@ -1564,9 +1564,9 @@
       "title": "AI Interface Pack",
       "description": "The complete AI Interface Pack — installs the AI Agent Workspace block and its four components (AI Response Stream, Tool Call Activity, Source Citation Rail, Agent Run Timeline) as editable source, deduping shared utilities.",
       "category": "ai",
-      "tier": "pro",
+      "tier": "free",
       "kind": "pack",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "pack",
         "ai",
@@ -1583,8 +1583,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/ai-interface-pack",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/ai-interface-pack"
+      "url": "https://motionstack.dev/r/ai-interface-pack.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/ai-interface-pack.json"
     },
     {
       "name": "developer-tools-pack",
@@ -1592,9 +1592,9 @@
       "title": "Developer Tools Pack",
       "description": "The complete Developer Tools Pack — installs the Deployment Command Center block and its four components (Deployment Pipeline, Live Log Stream, API Request Inspector, Environment Switcher) as editable source, deduping shared utilities.",
       "category": "developer-tools",
-      "tier": "pro",
+      "tier": "free",
       "kind": "pack",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "pack",
         "deployment",
@@ -1611,8 +1611,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/developer-tools-pack",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/developer-tools-pack"
+      "url": "https://motionstack.dev/r/developer-tools-pack.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/developer-tools-pack.json"
     },
     {
       "name": "collaboration-pack",
@@ -1620,9 +1620,9 @@
       "title": "Collaboration Pack",
       "description": "The complete Collaboration Pack — installs the Collaborative Review Workspace block and its four components (Live Presence Stack, Activity Stream, Approval Workflow, Comment Thread) as editable source, deduping shared utilities.",
       "category": "collaboration",
-      "tier": "pro",
+      "tier": "free",
       "kind": "pack",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "pack",
         "collaboration",
@@ -1639,8 +1639,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/collaboration-pack",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/collaboration-pack"
+      "url": "https://motionstack.dev/r/collaboration-pack.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/collaboration-pack.json"
     },
     {
       "name": "data-motion-pack",
@@ -1648,9 +1648,9 @@
       "title": "Data Motion Pack",
       "description": "The complete Data Motion Pack — installs the Live Operations Dashboard block and its four components (KPI Number Morph, Streaming Data Rows, Filter Result Transition, Data Refresh State) as editable source, deduping shared utilities.",
       "category": "data-motion",
-      "tier": "pro",
+      "tier": "free",
       "kind": "pack",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "pack",
         "dashboard",
@@ -1667,8 +1667,8 @@
         "@motionstack/utils",
         "@motionstack/primitives"
       ],
-      "url": "https://motionstack.dev/api/registry/data-motion-pack",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/data-motion-pack"
+      "url": "https://motionstack.dev/r/data-motion-pack.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/data-motion-pack.json"
     },
     {
       "name": "kinetic-emphasis",
@@ -1728,9 +1728,9 @@
       "title": "Spotlight Card",
       "description": "A surface with a radial glow that follows the pointer. CSS-only, no runtime deps beyond cn.",
       "category": "creative",
-      "tier": "premium",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "card",
         "spotlight",
@@ -1746,8 +1746,8 @@
       "registryDependencies": [
         "@motionstack/utils"
       ],
-      "url": "https://motionstack.dev/api/registry/spotlight-card",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/spotlight-card"
+      "url": "https://motionstack.dev/r/spotlight-card.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/spotlight-card.json"
     },
     {
       "name": "animated-dialog",
@@ -1883,9 +1883,9 @@
       "title": "Animated List",
       "description": "A semantic list whose items fade/slide in with a stagger and animate out cleanly on removal, with layout-based reordering. Requires stable keys. Reduced-motion safe.",
       "category": "creative",
-      "tier": "premium",
+      "tier": "free",
       "kind": "component",
-      "protected": true,
+      "protected": false,
       "keywords": [
         "list",
         "stagger",
@@ -1899,8 +1899,8 @@
       "registryDependencies": [
         "@motionstack/utils"
       ],
-      "url": "https://motionstack.dev/api/registry/animated-list",
-      "install": "npx shadcn@latest add https://motionstack.dev/api/registry/animated-list"
+      "url": "https://motionstack.dev/r/animated-list.json",
+      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-list.json"
     },
     {
       "name": "animated-grid",

@@ -13,3 +13,56 @@ fixtures/tarball-consumer/pnpm-lock.yaml
 
 # third-party skills (Taste Skill) — provenance recorded in docs, not vendored
 .agents/
+
+# ---------------------------------------------------------------------------
+# Local-only (kept on disk, never published): AI dev process + business docs.
+# The public repo ships the product + engineering docs; these stay private.
+# ---------------------------------------------------------------------------
+CLAUDE.md
+.claude/skills
+docs/archive
+docs/signature-components
+# Commercial / business strategy
+docs/00-executive-summary.md
+docs/01-product-strategy.md
+docs/02-market-analysis.md
+docs/16-commercial-packaging.md
+docs/22-risk-register.md
+docs/27-product-differentiation.md
+docs/29-go-live-checklist.md
+docs/31-competitive-product-review.md
+docs/35-react-bits-quality-study.md
+docs/36-premium-creative-component-strategy.md
+docs/40-commercial-packaging.md
+docs/41-commercial-decisions.md
+docs/42-pro-source-delivery-audit.md
+docs/43-private-registry-architecture.md
+docs/44-product-analytics-plan.md
+docs/45-paid-launch-decision-gate.md
+docs/46-commerce-provider-evaluation.md
+docs/47-private-preview-runbook.md
+docs/48-launch-monitoring-plan.md
+docs/49-commercial-threat-model.md
+docs/50-private-preview-learning-plan.md
+docs/commercial-delivery.md
+docs/adrs/0010-commercial-distribution.md
+docs/adrs/0013-product-moat.md
+# Internal work-logs / trackers / roadmaps
+docs/20-mvp-roadmap.md
+docs/23-open-questions.md
+docs/24-claude-code-workflow.md
+docs/26-current-ui-audit.md
+docs/28-visual-direction.md
+docs/30-showcase-visual-system.md
+docs/32-component-quality-tracker.md
+docs/33-independent-component-audit.md
+docs/34-signature-component-sprint.md
+docs/37-signature-component-roadmap.md
+docs/38-component-expansion-plan.md
+docs/39-catalog-production-board.md
+docs/55-catalog-preview-rehabilitation.md
+docs/56-product-ui-stabilization.md
+docs/57-grid-placement-and-mobile-fixes.md
+docs/57-library-production-cleanup.md
+docs/58-homepage-preview-alignment-and-height.md
+docs/59-homepage-art-direction-pass.md
