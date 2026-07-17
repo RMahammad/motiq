@@ -80,3 +80,17 @@ export function installCommand(itemName: string): string {
 export function namespacedInstall(itemName: string): string {
   return `npx shadcn@latest add ${product.registryNamespace}/${itemName}`;
 }
+
+/**
+ * The one-time `components.json` `registries` entry a consumer adds to enable the
+ * `@namespace/name` short install. shadcn substitutes `{name}` with the item name,
+ * so `@motiq/blur-text` resolves to `<base>/blur-text.json`. Config-driven — the
+ * namespace and base URL come from product.config.json.
+ */
+export function registriesConfig(): string {
+  return JSON.stringify(
+    { registries: { [product.registryNamespace]: `${product.registryBaseUrl}/{name}.json` } },
+    null,
+    2,
+  );
+}

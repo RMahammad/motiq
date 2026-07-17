@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { bySlug, catalog, itemInstall, itemsByCategory, categories, resolvePresentation } from "../../../lib/catalog";
-import { product } from "../../../lib/product";
+import { product, namespacedInstall, registriesConfig } from "../../../lib/product";
 import { pageMetadata, absoluteUrl } from "../../../lib/seo";
 import { whenToUse, faqFor } from "../../../lib/component-seo";
 import { proComponentCta } from "../../../lib/commerce";
@@ -188,7 +188,20 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
       {/* Installation */}
       <Section id="installation" title="Installation">
         <p className="mb-3 text-[14px] text-[var(--color-muted)]">Install the editable source with the shadcn CLI:</p>
-        <InstallCommand command={itemInstall(item)} />
+        <InstallCommand command={namespacedInstall(item.registryItem)} />
+        <details className="mt-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3.5 py-2.5 [&_summary]:cursor-pointer">
+          <summary className="text-[13px] text-[var(--color-fg)] marker:text-[var(--color-muted)]">
+            One-time setup for the <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">{product.registryNamespace}</code> namespace — or install without it
+          </summary>
+          <div className="mt-3 space-y-2.5">
+            <p className="text-[13px] text-[var(--color-muted)]">
+              Add {product.shortName} to your <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">components.json</code> once; the command above then works in any project:
+            </p>
+            <CodeBlock code={registriesConfig()} lang="json" />
+            <p className="text-[13px] text-[var(--color-muted)]">Prefer no setup? Install from the full registry URL instead:</p>
+            <InstallCommand command={itemInstall(item)} />
+          </div>
+        </details>
         {product.namespaceIsPreview ? (
           <p className="mt-2 text-[12px] text-[var(--color-muted)]">
             The registry namespace/URL are temporary preview values during development.
