@@ -30,13 +30,14 @@ import {
 } from "@/components/motiq/api-request-inspector";
 
 /**
- * DeploymentControlHero — an editable two-column hero for developer-tool and
- * infrastructure products. The left column carries the marketing outcome
- * (eyebrow + headline + copy + two CTAs); the right column is a *reduced*
- * deployment control surface that composes four released developer-tools
- * components — an EnvironmentSwitcher (the selected target), a DeploymentPipeline
- * (four clear stages), one short LiveLogStream, and one ApiRequestInspector
- * (the release request/result). It is a hero framing of a real workflow, not a
+ * DeploymentControlHero — an editable hero for developer-tool and infrastructure
+ * products. A wide copy band (eyebrow + headline + copy + two CTAs + live status)
+ * sits above a full-width release-console window that composes four released
+ * developer-tools components — an EnvironmentSwitcher (the selected target), a
+ * DeploymentPipeline (four clear stages), one short LiveLogStream, and one
+ * ApiRequestInspector (the release request/result). On wide screens the surface
+ * tiles into two columns (target + pipeline + logs · release response) so the
+ * hero holds a calm height. It is a hero framing of a real workflow, not a
  * crammed dashboard.
  *
  * IMPORTANT — DEMO ONLY. Nothing here talks to a real provider. The repo,
@@ -386,9 +387,10 @@ const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]";
 
 const primaryCtaCls = cn(
-  "inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-[var(--color-accent)]",
-  "bg-[var(--color-accent)] px-5 py-2.5 text-[14px] font-semibold text-[var(--color-accent-fg,white)] transition-colors",
-  "hover:bg-[color-mix(in_oklab,var(--color-accent)_88%,black)]",
+  "inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-[color-mix(in_oklab,var(--color-accent)_55%,black)]",
+  "bg-[linear-gradient(180deg,color-mix(in_oklab,var(--color-accent)_86%,white)_0%,var(--color-accent)_60%)] px-5 py-2.5 text-[14px] font-semibold text-[var(--color-accent-fg,white)]",
+  "shadow-[0_1px_0_0_color-mix(in_oklab,white_45%,transparent)_inset,0_8px_22px_-10px_color-mix(in_oklab,var(--color-accent)_80%,transparent)]",
+  "transition-[transform,box-shadow,filter] hover:brightness-[1.06] motion-safe:hover:-translate-y-px",
   focusRing,
 );
 
@@ -457,6 +459,74 @@ export interface DeploymentControlHeroProps
   /** Force reduced motion for this block's own decorative motion. */
   reducedMotion?: boolean;
   className?: string;
+}
+
+/** Decorative, static, token-based ambient field — soft accent glows + a fading
+ *  dot grid. Purely visual: aria-hidden, no motion, no browser globals. Renders
+ *  only when the consumer provides no `background` of their own. */
+function HeroBackdrop() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div
+        className="absolute -left-[12%] -top-[20%] h-[65%] w-[55%] rounded-full opacity-70 blur-[90px]"
+        style={{
+          background:
+            "radial-gradient(circle at center, color-mix(in oklab, var(--color-accent) 20%, transparent), transparent 68%)",
+        }}
+      />
+      <div
+        className="absolute -right-[8%] top-1/3 h-[60%] w-[45%] rounded-full opacity-50 blur-[100px]"
+        style={{
+          background:
+            "radial-gradient(circle at center, color-mix(in oklab, var(--color-accent) 12%, transparent), transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 opacity-50"
+        style={{
+          backgroundImage:
+            "radial-gradient(color-mix(in oklab, var(--color-border) 55%, transparent) 1px, transparent 1px)",
+          backgroundSize: "22px 22px",
+          WebkitMaskImage: "radial-gradient(115% 80% at 50% 0%, black, transparent 72%)",
+          maskImage: "radial-gradient(115% 80% at 50% 0%, black, transparent 72%)",
+        }}
+      />
+    </div>
+  );
+}
+
+const DEFAULT_PROOF: string[] = [
+  "Promote one build across every environment",
+  "Follow every stage from commit to live traffic",
+  "Read the real release response, not a spinner",
+];
+
+/** Three short capability lines that give the copy region substance beside the
+ *  live surface. Text-only; the check glyph is decorative. */
+function ProofStrip({ items }: { items: string[] }) {
+  return (
+    <ul className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-7 sm:gap-y-2">
+      {items.map((t) => (
+        <li key={t} className="flex items-center gap-2.5 text-[13.5px] text-[var(--color-fg)]">
+          <span
+            className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]"
+            aria-hidden
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path
+                d="M2.5 6.2 5 8.5l4.5-5"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+          {t}
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 /* -------------------------------------------------------------------------- */
@@ -567,48 +637,100 @@ export function DeploymentControlHero({
       )}
       {...rest}
     >
-      {/* Decorative slot — consumer-provided, purely visual. */}
+      {/* Decorative slot — consumer-provided, else the built-in ambient field. */}
       {background ? (
         <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
           {background}
         </div>
-      ) : null}
+      ) : (
+        <HeroBackdrop />
+      )}
 
-      <div className="grid items-center gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,34rem)] lg:gap-10 lg:p-12">
-        {/* Left: outcome copy + CTAs ------------------------------------- */}
-        <div className="flex max-w-xl flex-col gap-5">
-          {eyebrow ? (
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-[12.5px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
-              {eyebrow}
+      <div className="flex flex-col gap-8 p-6 sm:p-8 lg:gap-10 lg:p-12">
+        {/* Copy band — headline/copy on one side, CTAs + live status on the
+            other, so the marketing row reads wide instead of a thin column. */}
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-10">
+          <div className="flex min-w-0 flex-col gap-4">
+            {eyebrow ? (
+              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_80%,transparent)] px-3 py-1 text-[12.5px] font-semibold uppercase tracking-wide text-[var(--color-muted)] backdrop-blur-sm">
+                <span className="relative flex h-1.5 w-1.5" aria-hidden>
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent)] opacity-70 motion-safe:animate-ping" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+                </span>
+                {eyebrow}
+              </span>
+            ) : null}
+
+            <h2
+              id={headingId}
+              className="text-balance text-[clamp(2rem,4.6vw,3.25rem)] font-bold leading-[1.05] tracking-tight text-[var(--color-fg)]"
+            >
+              {headline}
+            </h2>
+
+            {copy ? (
+              <p className="max-w-[56ch] text-[15px] leading-relaxed text-[var(--color-muted)] sm:text-[16px]">
+                {copy}
+              </p>
+            ) : null}
+          </div>
+
+          <div className="flex shrink-0 flex-col items-start gap-4 lg:items-end">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              {renderCta(primaryCta, primaryCtaCls, true)}
+              {secondaryCta ? renderCta(secondaryCta, secondaryCtaCls, false) : null}
+            </div>
+            <span
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-[12.5px] font-medium text-[var(--color-fg)]"
+              role="status"
+              aria-live="polite"
+            >
+              <span className="relative grid h-2 w-2 place-items-center" aria-hidden>
+                <span className="h-1.5 w-1.5 rounded-full" style={{ background: pillColor }} />
+                {running && !reduce ? (
+                  <motion.span
+                    className="absolute inset-0 rounded-full"
+                    style={{ background: pillColor }}
+                    initial={{ opacity: 0.55, scale: 1 }}
+                    animate={{ opacity: 0, scale: 2.6 }}
+                    transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
+                  />
+                ) : null}
+              </span>
+              Live status: {view.label}
             </span>
-          ) : null}
-
-          <h2
-            id={headingId}
-            className="text-balance text-[clamp(1.9rem,4.4vw,3.1rem)] font-bold leading-[1.08] tracking-tight text-[var(--color-fg)]"
-          >
-            {headline}
-          </h2>
-
-          {copy ? (
-            <p className="max-w-prose text-[15px] leading-relaxed text-[var(--color-muted)] sm:text-[16px]">
-              {copy}
-            </p>
-          ) : null}
-
-          <div className="mt-1 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            {renderCta(primaryCta, primaryCtaCls, true)}
-            {secondaryCta ? renderCta(secondaryCta, secondaryCtaCls, false) : null}
           </div>
         </div>
 
-        {/* Right: the deployment control surface ------------------------- */}
-        <div className="min-w-0">
-          <div className="flex min-w-0 flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-3 shadow-[var(--shadow-sm)] sm:p-4">
-            {/* Surface header --------------------------------------------- */}
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-              <span className="flex items-center gap-2 text-[13px] font-semibold">
+        {/* Proof row — three capability lines that carry the copy region. */}
+        <div className="flex flex-col gap-4">
+          <div className="h-px w-full bg-[var(--color-border)]" />
+          <ProofStrip items={DEFAULT_PROOF} />
+        </div>
+
+        {/* Release console — a full-width app window. On wide screens the control
+            surface tiles into two columns (target + pipeline · logs + response)
+            so the hero holds a calm height. No overflow/max-height clip: the
+            composed children run Framer `layout` animations that collapse inside
+            a constrained scroll ancestor. */}
+        <div className="relative min-w-0">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] opacity-60 blur-3xl"
+            style={{
+              background:
+                "radial-gradient(55% 40% at 50% 0%, color-mix(in oklab, var(--color-accent) 18%, transparent), transparent)",
+            }}
+          />
+          <div className="relative flex min-w-0 flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] shadow-[var(--shadow-lg)]">
+            {/* Window header --------------------------------------------- */}
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_60%,var(--color-bg-secondary))] px-4 py-3 sm:px-5">
+              <span className="flex items-center gap-2.5 text-[13px] font-semibold">
+                <span className="flex items-center gap-1.5" aria-hidden>
+                  <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-error)_65%,transparent)]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-warning)_70%,transparent)]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-success)_65%,transparent)]" />
+                </span>
                 <span className="grid h-7 w-7 place-items-center rounded-lg bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]" aria-hidden>
                   <RocketGlyph />
                 </span>
@@ -620,77 +742,68 @@ export function DeploymentControlHero({
                 </span>
               </span>
 
-              <span
-                className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-0.5 text-[11.5px] font-medium text-[var(--color-muted)]"
-                role="status"
-                aria-live="polite"
-              >
-                <span className="relative grid h-2 w-2 place-items-center" aria-hidden>
-                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: pillColor }} />
-                  {running && !reduce ? (
-                    <motion.span
-                      className="absolute inset-0 rounded-full"
-                      style={{ background: pillColor }}
-                      initial={{ opacity: 0.55, scale: 1 }}
-                      animate={{ opacity: 0, scale: 2.6 }}
-                      transition={{ duration: 1.4, repeat: Infinity, ease: "easeOut" }}
-                    />
-                  ) : null}
-                </span>
-                {view.label}
+              <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--color-warning)] bg-[color-mix(in_oklab,var(--color-warning)_12%,transparent)] px-2 py-0.5 text-[11px] font-medium text-[var(--color-warning)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
+                Demo data
               </span>
             </div>
 
-            {/* Selected environment (compact) ----------------------------- */}
-            <EnvironmentSwitcher
-              environments={environments}
-              value={selectedEnvId}
-              onValueChange={onEnvChange}
-              requireProductionConfirmation
-              recentIds={["staging"]}
-              favoriteIds={["production"]}
-              now={BASE_TS}
-              label="Deploy target"
-              className="max-w-none"
-            />
-
-            {/* Pipeline — four clear stages ------------------------------- */}
-            <section aria-label="Deployment pipeline" className="min-w-0">
-              <DeploymentPipeline stages={stages} onRetry={retry} />
-            </section>
-
-            {/* One short log region --------------------------------------- */}
-            <section aria-label="Deployment output" className="min-w-0">
-              <LiveLogStream
-                entries={entries}
-                status={view.streamStatus}
-                errorMessage="Release rel_4Xa9 rejected: origin health check timed out after 30s."
-                onRetry={retry}
-                title="Deploy output"
-                label="Deployment output"
-                className="[--log-height:9.5rem]"
-              />
-            </section>
-
-            {/* One request/release result --------------------------------- */}
-            {request ? (
-              <section aria-label="Release request" className="min-w-0">
-                <ApiRequestInspector
-                  request={request}
-                  response={response}
-                  state={view.inspectorState}
-                  auth={AUTH}
-                  onRetry={retry}
-                  defaultSection="response-body"
-                  title="POST /v1/releases"
+            {/* Two tiled columns: target + pipeline · logs + response ---- */}
+            <div className="grid min-w-0 gap-4 p-4 sm:p-5 lg:grid-cols-2 lg:gap-5 lg:items-start">
+              <div className="flex min-w-0 flex-col gap-4">
+                <EnvironmentSwitcher
+                  environments={environments}
+                  value={selectedEnvId}
+                  onValueChange={onEnvChange}
+                  requireProductionConfirmation
+                  recentIds={["staging"]}
+                  favoriteIds={["production"]}
+                  now={BASE_TS}
+                  label="Deploy target"
+                  className="max-w-none"
                 />
-              </section>
-            ) : null}
 
-            <p className="inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
-              Demo data — fictional, no live provider
-            </p>
+                <section aria-label="Deployment pipeline" className="min-w-0">
+                  <DeploymentPipeline stages={stages} onRetry={retry} />
+                </section>
+
+                <section aria-label="Deployment output" className="min-w-0">
+                  <LiveLogStream
+                    entries={entries}
+                    status={view.streamStatus}
+                    errorMessage="Release rel_4Xa9 rejected: origin health check timed out after 30s."
+                    onRetry={retry}
+                    title="Deploy output"
+                    label="Deployment output"
+                    className="[--log-height:9.5rem]"
+                  />
+                </section>
+              </div>
+
+              <div className="flex min-w-0 flex-col gap-4">
+                {request ? (
+                  <section aria-label="Release request" className="min-w-0">
+                    <ApiRequestInspector
+                      request={request}
+                      response={response}
+                      state={view.inspectorState}
+                      auth={AUTH}
+                      onRetry={retry}
+                      defaultSection="response-body"
+                      title="POST /v1/releases"
+                    />
+                  </section>
+                ) : null}
+              </div>
+            </div>
+
+            {/* Honesty footer ------------------------------------------- */}
+            <div className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-2.5 sm:px-5">
+              <p className="inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
+                Demo data — fictional, no live provider.
+              </p>
+            </div>
           </div>
         </div>
       </div>

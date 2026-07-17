@@ -509,7 +509,7 @@ export const catalog: CatalogItem[] = [
     name: "Agent Operations Hero",
     slug: "agent-operations-hero",
     description:
-      "An editable hero block for AI/automation products: a real agent workflow (run timeline, prompt input, one active tool, one source) beside outcome copy + CTAs, across idle/running/tool-active/waiting/completed/failed. App-controlled — never simulates a model.",
+      "An editable hero block for AI/automation products: a real agent workflow (run timeline, prompt input, one active tool, one source) with outcome copy + CTAs, across idle/running/tool-active/waiting/completed/failed. App-controlled — never simulates a model.",
     category: "workflow-heroes",
     subcategory: "Workflow Heroes",
     status: "beta",
@@ -543,7 +543,7 @@ export const catalog: CatalogItem[] = [
     name: "Deployment Control Hero",
     slug: "deployment-control-hero",
     description:
-      "An editable hero block for developer-tool/infra products: a real deployment control surface (selected env, four pipeline stages, a short log, one request result) beside outcome copy + CTAs, across ready/deploying/validating/failed/retrying/completed. Provider-neutral demo data.",
+      "An editable hero block for developer-tool/infra products: a real deployment control surface (selected env, four pipeline stages, a short log, one request result) with outcome copy + CTAs, across ready/deploying/validating/failed/retrying/completed. Provider-neutral demo data.",
     category: "workflow-heroes",
     subcategory: "Workflow Heroes",
     status: "beta",
@@ -577,7 +577,7 @@ export const catalog: CatalogItem[] = [
     name: "Live Data Command Hero",
     slug: "live-data-command-hero",
     description:
-      "An editable hero block for operational-data products, centered on continuity and changing state: three morphing metrics, a refresh state, a small live-data subset, and one active filter — beside outcome copy + CTAs, across initial/live/filtering/refreshing/partial/stale/error/recovery.",
+      "An editable hero block for operational-data products, centered on continuity and changing state: three morphing metrics, a refresh state, a small live-data subset, and one active filter — with outcome copy + CTAs, across initial/live/filtering/refreshing/partial/stale/error/recovery.",
     category: "workflow-heroes",
     subcategory: "Workflow Heroes",
     status: "beta",
@@ -611,7 +611,7 @@ export const catalog: CatalogItem[] = [
     name: "Collaborative Launch Hero",
     slug: "collaborative-launch-hero",
     description:
-      "An editable hero block for collaboration/review products: people active, a review underway, and one pending decision (presence, typing, approval, comment, activity) beside outcome copy + CTAs, across review-open/commenting/changes-requested/approval-pending/approved/rejected/resolved.",
+      "An editable hero block for collaboration/review products: people active, a review underway, and one pending decision (presence, typing, approval, comment, activity) with outcome copy + CTAs, across review-open/commenting/changes-requested/approval-pending/approved/rejected/resolved.",
     category: "workflow-heroes",
     subcategory: "Workflow Heroes",
     status: "beta",

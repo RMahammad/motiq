@@ -34,14 +34,15 @@ import {
 
 /* --------------------------------------------------------------------------
  * CollaborativeLaunchHero — an editable hero block for collaboration / review
- * products. The left column is a normal marketing hero (eyebrow, outcome
- * headline, copy, two CTAs). The right column is a live collaboration surface
- * that composes five released components at *reduced* complexity to tell one
- * story: people are here (LivePresenceStack), someone is writing right now
- * (TypingAndPresence), a short review is underway (ActivityStream), there is one
- * change request in the thread (CommentThread), and one decision is pending
- * (ApprovalWorkflow). It is deliberately not a generic social feed — the surface
- * always resolves to a single approaching outcome.
+ * products. A wide copy band (eyebrow, outcome headline, copy, two CTAs, current
+ * phase) sits above a full-width collaboration window that composes five released
+ * components at *reduced* complexity to tell one story: people are here
+ * (LivePresenceStack), someone is writing right now (TypingAndPresence), a short
+ * review is underway (ActivityStream), there is one change request in the thread
+ * (CommentThread), and one decision is pending (ApprovalWorkflow). On wide
+ * screens the surface tiles into two columns (the decision · the discussion) so
+ * the hero holds a calm height. It is deliberately not a generic social feed —
+ * the surface always resolves to a single approaching outcome.
  *
  * The seven review phases are a controlled prop; the app owns the state. Acting
  * on the approval controls advances the phase so the hero also reads as
@@ -462,7 +463,7 @@ function CtaButton({ cta, variant }: { cta: CollabHeroCta; variant: "primary" | 
     "inline-flex min-h-[44px] items-center justify-center rounded-xl px-5 text-[14px] font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]";
   const look =
     variant === "primary"
-      ? "bg-[var(--color-accent)] text-[var(--color-accent-foreground,white)] hover:brightness-110"
+      ? "border border-[color-mix(in_oklab,var(--color-accent)_55%,black)] bg-[linear-gradient(180deg,color-mix(in_oklab,var(--color-accent)_86%,white)_0%,var(--color-accent)_60%)] text-[var(--color-accent-foreground,white)] shadow-[0_1px_0_0_color-mix(in_oklab,white_45%,transparent)_inset,0_8px_22px_-10px_color-mix(in_oklab,var(--color-accent)_80%,transparent)] transition-[transform,filter] hover:brightness-[1.06] motion-safe:hover:-translate-y-px"
       : "border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-fg)] hover:border-[var(--color-accent)]";
   if (cta.href) {
     return (
@@ -475,6 +476,76 @@ function CtaButton({ cta, variant }: { cta: CollabHeroCta; variant: "primary" | 
     <button type="button" onClick={cta.onClick} className={cn(base, look)}>
       {cta.label}
     </button>
+  );
+}
+
+/* -- shared shell: ambient backdrop + capability proof strip -------------- */
+
+/** Decorative, static, token-based ambient field — soft accent glows + a fading
+ *  dot grid. Purely visual: aria-hidden, no motion, no browser globals. Renders
+ *  only when the consumer provides no `background` of their own. */
+function HeroBackdrop() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div
+        className="absolute -left-[12%] -top-[20%] h-[65%] w-[55%] rounded-full opacity-70 blur-[90px]"
+        style={{
+          background:
+            "radial-gradient(circle at center, color-mix(in oklab, var(--color-accent) 20%, transparent), transparent 68%)",
+        }}
+      />
+      <div
+        className="absolute -right-[8%] top-1/3 h-[60%] w-[45%] rounded-full opacity-50 blur-[100px]"
+        style={{
+          background:
+            "radial-gradient(circle at center, color-mix(in oklab, var(--color-accent) 12%, transparent), transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 opacity-50"
+        style={{
+          backgroundImage:
+            "radial-gradient(color-mix(in oklab, var(--color-border) 55%, transparent) 1px, transparent 1px)",
+          backgroundSize: "22px 22px",
+          WebkitMaskImage: "radial-gradient(115% 80% at 50% 0%, black, transparent 72%)",
+          maskImage: "radial-gradient(115% 80% at 50% 0%, black, transparent 72%)",
+        }}
+      />
+    </div>
+  );
+}
+
+const DEFAULT_PROOF: string[] = [
+  "See who's in the room, live",
+  "One clear decision, never a lost thread",
+  "Every sign-off tracked in the open",
+];
+
+/** Three short capability lines that give the copy region substance beside the
+ *  live surface. Text-only; the check glyph is decorative. */
+function ProofStrip({ items }: { items: string[] }) {
+  return (
+    <ul className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-7 sm:gap-y-2">
+      {items.map((t) => (
+        <li key={t} className="flex items-center gap-2.5 text-[13.5px] text-[var(--color-fg)]">
+          <span
+            className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]"
+            aria-hidden
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path
+                d="M2.5 6.2 5 8.5l4.5-5"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+          {t}
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -565,7 +636,7 @@ export function CollaborativeLaunchHero({
     <section
       aria-label="Collaborative launch"
       className={cn(
-        "relative isolate w-full overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6 sm:p-8 lg:p-10",
+        "relative isolate w-full overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6 sm:p-8 lg:p-12",
         className,
       )}
       style={reduce ? undefined : { transition: "background 200ms ease" }}
@@ -575,72 +646,141 @@ export function CollaborativeLaunchHero({
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           {background}
         </div>
-      ) : null}
+      ) : (
+        <HeroBackdrop />
+      )}
 
-      <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-12">
-        {/* left: the editable marketing hero */}
-        <div className="flex max-w-xl flex-col gap-5">
-          {eyebrow ? (
-            <span className="inline-flex w-fit items-center gap-2 text-[12.5px] font-semibold uppercase tracking-wide text-[var(--color-accent)]">
-              <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              {eyebrow}
-            </span>
-          ) : null}
+      <div className="flex flex-col gap-8 lg:gap-10">
+        {/* Copy band — headline/copy on one side, CTAs + current phase on the
+            other, so the marketing row reads wide instead of a thin column. */}
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-10">
+          <div className="flex min-w-0 flex-col gap-4">
+            {eyebrow ? (
+              <span className="inline-flex w-fit items-center gap-2 text-[12.5px] font-semibold uppercase tracking-wide text-[var(--color-accent)]">
+                <span className="relative flex h-1.5 w-1.5" aria-hidden>
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent)] opacity-70 motion-safe:animate-ping" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+                </span>
+                {eyebrow}
+              </span>
+            ) : null}
 
-          <h1 className="text-balance text-[clamp(2rem,4.4vw,3.25rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-[var(--color-fg)]">
-            {headline}
-          </h1>
+            <h1 className="text-balance text-[clamp(2rem,4.4vw,3.25rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-[var(--color-fg)]">
+              {headline}
+            </h1>
 
-          {copy ? (
-            <p className="text-pretty text-[16px] leading-relaxed text-[var(--color-muted)]">{copy}</p>
-          ) : null}
+            {copy ? (
+              <p className="max-w-[56ch] text-pretty text-[16px] leading-relaxed text-[var(--color-muted)]">{copy}</p>
+            ) : null}
+          </div>
 
-          <div className="mt-1 flex flex-wrap items-center gap-3">
-            {primaryCta ? <CtaButton cta={primaryCta} variant="primary" /> : null}
-            {secondaryCta ? <CtaButton cta={secondaryCta} variant="secondary" /> : null}
+          <div className="flex shrink-0 flex-col items-start gap-4 lg:items-end">
+            <div className="flex flex-wrap items-center gap-3">
+              {primaryCta ? <CtaButton cta={primaryCta} variant="primary" /> : null}
+              {secondaryCta ? <CtaButton cta={secondaryCta} variant="secondary" /> : null}
+            </div>
+            <PhaseStatus meta={meta} />
           </div>
         </div>
 
-        {/* right: the reduced collaboration surface */}
-        <div className="flex min-w-0 flex-col gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-md)] sm:p-5">
-          {/* surface header: who's here + current phase */}
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            <div className="min-w-0 flex-1">
-              <PhaseStatus meta={meta} />
-              <p className="mt-1.5 text-[12.5px] text-[var(--color-muted)]">{meta.note}</p>
+        {/* Proof row — three capability lines that carry the copy region. */}
+        <div className="flex flex-col gap-4">
+          <div className="h-px w-full bg-[var(--color-border)]" />
+          <ProofStrip items={DEFAULT_PROOF} />
+        </div>
+
+        {/* Collaboration surface — a full-width app window. On wide screens the
+            pending decision and the discussion tile into two columns so the hero
+            holds a calm height. No overflow/max-height clip: the composed
+            children run Framer `layout` animations that collapse inside a
+            constrained scroll ancestor. */}
+        <div className="relative min-w-0">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] opacity-60 blur-3xl"
+            style={{
+              background:
+                "radial-gradient(55% 40% at 50% 0%, color-mix(in oklab, var(--color-accent) 18%, transparent), transparent)",
+            }}
+          />
+          <div className="relative flex min-w-0 flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)]">
+            {/* Window header: who's here + demo badge -------------------- */}
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-bg)_45%,var(--color-surface))] px-4 py-3 sm:px-5">
+              <span className="flex items-center gap-2.5 text-[13px] font-semibold">
+                <span className="flex items-center gap-1.5" aria-hidden>
+                  <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-error)_65%,transparent)]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-warning)_70%,transparent)]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-success)_65%,transparent)]" />
+                </span>
+                <span className="flex flex-col leading-tight">
+                  <span>Launch review</span>
+                  <span className="text-[11px] font-normal text-[var(--color-muted)]">{dataset.reviewTitle}</span>
+                </span>
+              </span>
+              <span className="flex items-center gap-2.5">
+                <LivePresenceStack users={presence} label={`${presence.length} people on this launch`} />
+                <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--color-warning)] bg-[color-mix(in_oklab,var(--color-warning)_12%,transparent)] px-2 py-0.5 text-[11px] font-medium text-[var(--color-warning)]">
+                  <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
+                  Demo data
+                </span>
+              </span>
             </div>
-            <LivePresenceStack users={presence} label={`${presence.length} people on this launch`} />
+
+            <div className="flex min-w-0 flex-col gap-4 p-4 sm:p-5">
+              {/* What's happening + who's writing — full-width status strip.
+                  The current phase pill lives once, up in the copy band. */}
+              <div className="flex flex-col gap-3 rounded-xl border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-bg)_45%,var(--color-surface))] p-3">
+                <p className="flex items-center gap-2 text-[12.5px] text-[var(--color-muted)]">
+                  <span
+                    className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]"
+                    data-tone={meta.tone}
+                    aria-hidden
+                  />
+                  {meta.note}
+                </p>
+                <TypingAndPresence
+                  participants={typers}
+                  mode="compact"
+                  context={dataset.reviewTitle}
+                  label="Live activity on the launch"
+                />
+              </div>
+
+              {/* Decision · discussion — two tiled columns */}
+              <div className="grid min-w-0 gap-4 lg:grid-cols-2 lg:gap-5 lg:items-start">
+                <div className="flex min-w-0 flex-col gap-4">
+                  <ApprovalWorkflow
+                    workflow={workflow}
+                    currentUserId={VIEWER_ID}
+                    confirmReject
+                    canAct={canAct}
+                    onApprove={onApprove}
+                    onReject={onReject}
+                    onRequestChanges={onRequestChanges}
+                    label="Launch sign-off"
+                  />
+                </div>
+
+                <div className="flex min-w-0 flex-col gap-4">
+                  <CommentThread
+                    comments={comments}
+                    currentUser={viewer}
+                    maxHeight={180}
+                    label="Launch discussion"
+                  />
+                  <ActivityStream events={events} maxHeight={180} label="Launch activity" />
+                </div>
+              </div>
+            </div>
+
+            {/* Honesty footer ------------------------------------------- */}
+            <div className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2.5 sm:px-5">
+              <p className="inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
+                Demo data — a fictional launch review driven from local state.
+              </p>
+            </div>
           </div>
-
-          <TypingAndPresence
-            participants={typers}
-            mode="compact"
-            context={dataset.reviewTitle}
-            label="Live activity on the launch"
-          />
-
-          {/* the one pending decision */}
-          <ApprovalWorkflow
-            workflow={workflow}
-            currentUserId={VIEWER_ID}
-            confirmReject
-            canAct={canAct}
-            onApprove={onApprove}
-            onReject={onReject}
-            onRequestChanges={onRequestChanges}
-            label="Launch sign-off"
-          />
-
-          {/* one change request / discussion */}
-          <CommentThread
-            comments={comments}
-            currentUser={viewer}
-            maxHeight={180}
-            label="Launch discussion"
-          />
-
-          {/* the review, as it happens */}
-          <ActivityStream events={events} maxHeight={180} label="Launch activity" />
         </div>
       </div>
     </section>

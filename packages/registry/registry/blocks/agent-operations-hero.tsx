@@ -32,11 +32,12 @@ import {
 } from "@/components/motiq/prompt-composer";
 
 /**
- * AgentOperationsHero — an editable two-column hero for AI / automation products.
- * The left column carries the outcome copy (eyebrow + a real headline + support
- * copy + two CTAs); the right column carries a *live, reduced* preview of a real
- * agent workflow, composed from released Motiq components at deliberately
- * trimmed complexity:
+ * AgentOperationsHero — an editable hero for AI / automation products. A wide
+ * copy band (eyebrow + a real headline + support copy + two CTAs + live status)
+ * sits above a full-width "app window" that renders a *live, reduced* preview of
+ * a real agent workflow; on wide screens the workflow tiles into two columns so
+ * the hero holds a calm height. Composed from released Motiq components at
+ * deliberately trimmed complexity:
  *   • PromptComposer     — ONE compact prompt input
  *   • AgentRunTimeline   — ONE workflow, three steps, with approval + retry
  *   • ToolCallActivity   — ONE active tool call
@@ -402,9 +403,9 @@ const DEFAULT_SECONDARY: AgentHeroCta = { label: "See the workflow", href: "#" }
 /* -------------------------------------------------------------------------- */
 
 const primaryBtn =
-  "inline-flex items-center justify-center gap-1.5 rounded-xl border border-transparent bg-[var(--color-accent)] px-4 py-2.5 text-[14px] font-semibold text-[var(--color-accent-fg)] outline-none transition-colors hover:bg-[var(--color-accent-hover)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]";
+  "inline-flex items-center justify-center gap-1.5 rounded-xl border border-[color-mix(in_oklab,var(--color-accent)_55%,black)] bg-[linear-gradient(180deg,color-mix(in_oklab,var(--color-accent)_86%,white)_0%,var(--color-accent)_60%)] px-5 py-2.5 text-[14px] font-semibold text-[var(--color-accent-fg)] shadow-[0_1px_0_0_color-mix(in_oklab,white_45%,transparent)_inset,0_8px_22px_-10px_color-mix(in_oklab,var(--color-accent)_80%,transparent)] outline-none transition-[transform,box-shadow,filter] hover:brightness-[1.06] hover:shadow-[0_1px_0_0_color-mix(in_oklab,white_45%,transparent)_inset,0_14px_30px_-10px_color-mix(in_oklab,var(--color-accent)_90%,transparent)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] motion-safe:hover:-translate-y-px";
 const secondaryBtn =
-  "inline-flex items-center justify-center gap-1.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2.5 text-[14px] font-semibold text-[var(--color-fg)] outline-none transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]";
+  "inline-flex items-center justify-center gap-1.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-[14px] font-semibold text-[var(--color-fg)] outline-none transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]";
 
 function isCtaSpec(value: AgentHeroCtaProp | undefined): value is AgentHeroCta {
   return (
@@ -530,6 +531,74 @@ function ResultOutcome({
   );
 }
 
+/** Decorative, static, token-based ambient field — soft accent glows + a fading
+ *  dot grid. Purely visual: aria-hidden, no motion, no browser globals. Renders
+ *  only when the consumer provides no `background` of their own. */
+function HeroBackdrop() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div
+        className="absolute -left-[12%] -top-[20%] h-[65%] w-[55%] rounded-full opacity-70 blur-[90px]"
+        style={{
+          background:
+            "radial-gradient(circle at center, color-mix(in oklab, var(--color-accent) 20%, transparent), transparent 68%)",
+        }}
+      />
+      <div
+        className="absolute -right-[8%] top-1/3 h-[60%] w-[45%] rounded-full opacity-50 blur-[100px]"
+        style={{
+          background:
+            "radial-gradient(circle at center, color-mix(in oklab, var(--color-accent) 12%, transparent), transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 opacity-50"
+        style={{
+          backgroundImage:
+            "radial-gradient(color-mix(in oklab, var(--color-border) 55%, transparent) 1px, transparent 1px)",
+          backgroundSize: "22px 22px",
+          WebkitMaskImage: "radial-gradient(115% 80% at 50% 0%, black, transparent 72%)",
+          maskImage: "radial-gradient(115% 80% at 50% 0%, black, transparent 72%)",
+        }}
+      />
+    </div>
+  );
+}
+
+const DEFAULT_PROOF: string[] = [
+  "Human approval before anything ships",
+  "Every claim traced to a cited source",
+  "Readable run state — never a black box",
+];
+
+/** Three short capability lines that give the copy column substance next to the
+ *  live surface. Text-only; the check glyph is decorative. */
+function ProofStrip({ items }: { items: string[] }) {
+  return (
+    <ul className="flex flex-col gap-2.5">
+      {items.map((t) => (
+        <li key={t} className="flex items-center gap-2.5 text-[13.5px] text-[var(--color-fg)]">
+          <span
+            className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]"
+            aria-hidden
+          >
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path
+                d="M2.5 6.2 5 8.5l4.5-5"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+          {t}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 /* -------------------------------------------------------------------------- */
 /* Component                                                                    */
 /* -------------------------------------------------------------------------- */
@@ -580,99 +649,144 @@ export function AgentOperationsHero({
         <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
           {background}
         </div>
-      ) : null}
+      ) : (
+        <HeroBackdrop />
+      )}
 
-      <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-10 lg:p-10">
-        {/* Left: outcome copy + CTAs -------------------------------------- */}
-        <div className="flex min-w-0 flex-col items-start gap-5">
-          {eyebrow != null ? (
-            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-[12px] font-medium uppercase tracking-wide text-[var(--color-muted)]">
-              {eyebrow}
-            </span>
-          ) : null}
+      <div className="flex flex-col gap-8 p-6 sm:p-8 lg:gap-10 lg:p-12">
+        {/* Copy band — headline/copy on one side, CTAs + live status on the
+            other, so the marketing row reads wide instead of a thin column. */}
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-10">
+          <div className="flex min-w-0 flex-col items-start gap-4">
+            {eyebrow != null ? (
+              <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_80%,transparent)] px-3 py-1 text-[12px] font-medium uppercase tracking-wide text-[var(--color-muted)] backdrop-blur-sm">
+                <span className="relative flex h-1.5 w-1.5" aria-hidden>
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent)] opacity-70 motion-safe:animate-ping" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+                </span>
+                {eyebrow}
+              </span>
+            ) : null}
 
-          <h1 className="text-balance text-[clamp(1.9rem,1.2rem+2.4vw,3rem)] font-semibold leading-[1.08] tracking-tight text-[var(--color-fg)]">
-            {headline}
-          </h1>
+            <h1 className="text-balance text-[clamp(2rem,1.1rem+2.8vw,3.25rem)] font-semibold leading-[1.05] tracking-tight text-[var(--color-fg)]">
+              {headline}
+            </h1>
 
-          {copy != null ? (
-            <p className="max-w-[52ch] text-[15px] leading-relaxed text-[var(--color-muted)]">
-              {copy}
-            </p>
-          ) : null}
-
-          <div className="flex flex-wrap items-center gap-3 pt-1">
-            <Cta cta={primaryCta} variant="primary" />
-            <Cta cta={secondaryCta} variant="secondary" />
+            {copy != null ? (
+              <p className="max-w-[56ch] text-[15px] leading-relaxed text-[var(--color-muted)] sm:text-[16px]">
+                {copy}
+              </p>
+            ) : null}
           </div>
 
-          <StatusBadge phase={phase} reducedMotion={reducedMotion} />
+          <div className="flex shrink-0 flex-col items-start gap-4 lg:items-end">
+            <div className="flex flex-wrap items-center gap-3">
+              <Cta cta={primaryCta} variant="primary" />
+              <Cta cta={secondaryCta} variant="secondary" />
+            </div>
+            <StatusBadge phase={phase} reducedMotion={reducedMotion} />
+          </div>
         </div>
 
-        {/* Right: live, reduced workflow surface -------------------------- */}
-        <div className="flex min-w-0 flex-col gap-3.5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-md)] sm:p-5">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-[13px] font-semibold text-[var(--color-fg)]">
-              Live workflow preview
-            </span>
-            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--color-warning)] bg-[color-mix(in_oklab,var(--color-warning)_12%,transparent)] px-2 py-0.5 text-[11px] font-medium text-[var(--color-warning)]">
-              <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
-              Demo data
-            </span>
-          </div>
+        {/* Proof row — three capability lines that carry the copy region. */}
+        <div className="flex flex-col gap-4">
+          <div className="h-px w-full bg-[var(--color-border)]" />
+          <ProofStrip items={DEFAULT_PROOF} />
+        </div>
 
-          <PromptComposer
-            defaultValue={dataset.prompt}
-            label="Agent prompt"
-            placeholder="Describe the task for the agent…"
-            submitLabel="Run agent"
-            minRows={2}
-            maxRows={4}
-            status={spec.composer}
-            onSubmit={goRunning}
-            onStop={goIdle}
-            onRetry={goRunning}
+        {/* Live workflow surface — a full-width app window. On wide screens the
+            composed children tile into two columns so the run and its result sit
+            side by side, keeping the hero at a calm height. No overflow/max-height
+            clip: the children run Framer `layout` animations that collapse inside
+            a constrained scroll ancestor. */}
+        <div className="relative min-w-0">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] opacity-60 blur-3xl"
+            style={{
+              background:
+                "radial-gradient(55% 40% at 50% 0%, color-mix(in oklab, var(--color-accent) 18%, transparent), transparent)",
+            }}
           />
-
-          <AgentRunTimeline
-            run={run}
-            followActive
-            compactCompleted
-            title={dataset.runTitle}
-            onApprove={goCompleted}
-            onReject={goFailed}
-            onRetryStep={goRunning}
-            onCancelRun={goIdle}
-            onResumeRun={goRunning}
-          />
-
-          <ToolCallActivity
-            calls={[call]}
-            title="Active tool call"
-            compactCompleted={false}
-            onApprove={goCompleted}
-            onReject={goFailed}
-            onRetry={goRunning}
-          />
-
-          <SourceCitationRail
-            sources={dataset.citationSources}
-            layout="list"
-            title="Cited sources"
-            showExcerpts
-          >
-            <div className="flex flex-col gap-3">
-              <ResultOutcome answer={spec.answer} dataset={dataset} phase={phase} />
-              {spec.claims ? <ClaimsBody claims={dataset.claims} /> : null}
+          <div className="relative flex min-w-0 flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)]">
+            {/* Window header ------------------------------------------- */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_92%,var(--color-bg))] px-4 py-3 sm:px-5">
+              <span className="flex items-center gap-2.5">
+                <span className="flex items-center gap-1.5" aria-hidden>
+                  <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-error)_65%,transparent)]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-warning)_70%,transparent)]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-success)_65%,transparent)]" />
+                </span>
+                <span className="text-[13px] font-semibold text-[var(--color-fg)]">
+                  Live workflow preview
+                </span>
+              </span>
+              <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--color-warning)] bg-[color-mix(in_oklab,var(--color-warning)_12%,transparent)] px-2 py-0.5 text-[11px] font-medium text-[var(--color-warning)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
+                Demo data
+              </span>
             </div>
-          </SourceCitationRail>
 
-          <p className="text-[11px] leading-relaxed text-[var(--color-muted)]">
-            Demo data — a clearly-fictional agent run driven from local state. No
-            model is involved and nothing is executed; the surface only renders the
-            phase it is given and reports submit / approve / reject / retry / cancel
-            / stop back to the application.
-          </p>
+            {/* Two tiled columns: the run (left) and its result (right). */}
+            <div className="grid min-w-0 gap-3.5 p-4 sm:p-5 lg:grid-cols-2 lg:gap-5 lg:items-start">
+              <div className="flex min-w-0 flex-col gap-3.5">
+                <PromptComposer
+                  defaultValue={dataset.prompt}
+                  label="Agent prompt"
+                  placeholder="Describe the task for the agent…"
+                  submitLabel="Run agent"
+                  minRows={2}
+                  maxRows={3}
+                  status={spec.composer}
+                  onSubmit={goRunning}
+                  onStop={goIdle}
+                  onRetry={goRunning}
+                />
+
+                <AgentRunTimeline
+                  run={run}
+                  followActive
+                  compactCompleted
+                  title={dataset.runTitle}
+                  onApprove={goCompleted}
+                  onReject={goFailed}
+                  onRetryStep={goRunning}
+                  onCancelRun={goIdle}
+                  onResumeRun={goRunning}
+                />
+              </div>
+
+              <div className="flex min-w-0 flex-col gap-3.5">
+                <ToolCallActivity
+                  calls={[call]}
+                  title="Active tool call"
+                  compactCompleted
+                  onApprove={goCompleted}
+                  onReject={goFailed}
+                  onRetry={goRunning}
+                />
+
+                <SourceCitationRail
+                  sources={dataset.citationSources}
+                  layout="list"
+                  title="Cited sources"
+                >
+                  <div className="flex flex-col gap-3">
+                    <ResultOutcome answer={spec.answer} dataset={dataset} phase={phase} />
+                    {spec.claims ? <ClaimsBody claims={dataset.claims} /> : null}
+                  </div>
+                </SourceCitationRail>
+              </div>
+            </div>
+
+            {/* Honesty footer ------------------------------------------ */}
+            <div className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2.5 sm:px-5">
+              <p className="text-[11px] leading-relaxed text-[var(--color-muted)]">
+                Demo data — a clearly-fictional agent run driven from local state. No
+                model is involved; the surface only renders the phase it is given.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
