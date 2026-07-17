@@ -77,7 +77,7 @@ export interface DataContourSurfaceProps
   interactive?: boolean;
   /** Pause drift + transitions when scrolled offscreen or the tab is hidden. */
   pauseWhenHidden?: boolean;
-  /** Deterministic seed reserved for future generated data (SSR-stable). */
+  /** Deterministic seed for the ambient mote scatter (SSR-stable). */
   seed?: number;
   /** Force the static, motion-free variant regardless of system preference. */
   reducedMotion?: boolean;
@@ -340,7 +340,6 @@ export function DataContourSurface({
   children,
   ...props
 }: DataContourSurfaceProps) {
-  void seed; // reserved for future generated datasets; kept for API stability
   const uid = React.useId().replace(/[^a-zA-Z0-9]/g, "");
   const cls = `mk-dcs-${uid}`;
 
@@ -453,9 +452,9 @@ export function DataContourSurface({
     let startTime = 0;
 
     // Deterministic ambient motes that fill the whole field so no corner reads as
-    // dead space (the composition falloff still quiets them behind the copy). Seed
-    // is a fixed constant — no Math.random/Date.now, so the scatter is SSR-stable.
-    const ambRng = makeRng(0x51ed7ac3);
+    // dead space (the composition falloff still quiets them behind the copy). Seeded
+    // from the `seed` prop — no Math.random/Date.now, so the scatter is SSR-stable.
+    const ambRng = makeRng((seed >>> 0) * 0x9e3779b1 + 0x51ed7ac3);
     const ambient = Array.from({ length: 62 }, () => ({
       x: ambRng(),
       y: ambRng(),

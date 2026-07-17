@@ -345,20 +345,18 @@ function buildModel(
   });
 
   const activePath = deriveActivePath(nodes, rawEdges);
-  const activeSet = new Set(activePath);
   activePath.forEach((id) => {
     const n = nodes.get(id);
     if (n) n.essential = true;
   });
   const activeEdge = new Set<string>();
   for (let i = 0; i < activePath.length - 1; i++) activeEdge.add(`${activePath[i]}|${activePath[i + 1]}`);
+  // Only healthy edges on the active path light up; failed/degraded keep their role.
   rawEdges.forEach((e) => {
     if (e.role === "healthy" && (activeEdge.has(`${e.fromId}|${e.toId}`) || activeEdge.has(`${e.toId}|${e.fromId}`))) {
       e.role = "active";
     }
   });
-  // Keep the failed/degraded routes drawn even if they touch an active node.
-  void activeSet;
 
   // Region columns — auto-fit horizontally to member nodes for the header + tint.
   const regionModels: RegionModel[] = [];
@@ -650,19 +648,13 @@ export function RuntimeSignalMap({
       warm: ambRng() > 0.72,
     }));
 
-    /* Where the topology sits inside the canvas (0–1). The graphic lives on the
-       side OPPOSITE the content; when the layout stacks (top/bottom, or a narrow
-       horizontal), it drops into a generous band below/above the copy that fills
-       the frame — no dead space. */
-    const mapBox = (placement: ContentPlacement, W: number) => {
-      void W;
-      // Only an explicit top/bottom placement stacks; left/right/center keep the
-      // same full-bleed landscape at EVERY width (the hero scales, never collapses
-      // to a band). Nodes over the copy render as soft glowing shapes behind the
-      // glass scrim; lighting + motes are always full-bleed.
+    /* Where the topology sits inside the canvas (0–1). Only an explicit top/bottom
+       placement stacks (phone hero: full-width copy at the top, graphic full-bleed
+       below); left/right/center keep the same full-bleed landscape at EVERY width
+       (the hero scales, never collapses to a band). Nodes over the copy render as
+       soft glowing shapes behind the glass scrim; lighting + motes are full-bleed. */
+    const mapBox = (placement: ContentPlacement) => {
       const stacked = placement === "top" || placement === "bottom";
-      // Phone hero: full-width copy at the top, the graphic full-bleed below +
-      // faintly behind it (glass scrim keeps the copy readable).
       if (stacked) return { x: 0.03, y: 0.42, w: 0.94, h: 0.55, stacked: true };
       return { x: 0.04, y: 0.09, w: 0.93, h: 0.82, stacked: false };
     };
@@ -679,7 +671,7 @@ export function RuntimeSignalMap({
       const W = width;
       const H = height;
       const glow = clamp(inten, 0, 1.4);
-      const box = mapBox(comp0.placement, W);
+      const box = mapBox(comp0.placement);
       // Cards + region headers + metric chips render at EVERY width (mobile too),
       // so tablet/phone read like the desktop hero — just scaled down.
       const chipMode = W >= 300;
@@ -1051,7 +1043,7 @@ export function RuntimeSignalMap({
           const gap = 9 * s;
           const w = padX * 2 + iconBox + gap + Math.max(labelW, statusW);
           const h = (showStatus && n.status ? 42 : 34) * s;
-          let bx = clamp(cx - w / 2, 6, W - 6 - w);
+          const bx = clamp(cx - w / 2, 6, W - 6 - w);
           const by = cy - h / 2;
 
           // Depth: soft under-glow tinted by health / activity — brighter so each
@@ -1122,7 +1114,6 @@ export function RuntimeSignalMap({
           ctx.arc(bx + w - 9 * s, by + 9 * s, 2.4 * s, 0, Math.PI * 2);
           ctx.fill();
           ctx.restore();
-          void bx;
         } else {
           // Compact node — a lit token with an icon + short label (mobile). Larger
           // and richer than a bare dot so the field reads as premium, not sparse.
