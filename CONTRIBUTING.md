@@ -8,8 +8,8 @@ repo running and the bar every change is held to.
 Requires **Node ≥ 20** and **pnpm**.
 
 ```bash
-git clone https://github.com/RMahammad/motion-kit.git
-cd motion-kit
+git clone https://github.com/RMahammad/motionstack.git
+cd motionstack
 pnpm install
 pnpm build
 pnpm --filter docs-site dev   # http://localhost:3000
@@ -60,7 +60,7 @@ node packages/registry/scripts/build-registry.mjs   # if you touched a component
 
 ## Reporting bugs & requesting features
 
-Use the [issue templates](https://github.com/RMahammad/motion-kit/issues/new/choose).
+Use the [issue templates](https://github.com/RMahammad/motionstack/issues/new/choose).
 For bugs, please include a minimal reproduction and your environment (React / Next.js /
 Tailwind versions).
 

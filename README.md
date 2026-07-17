@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
-[![CI](https://github.com/RMahammad/motion-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/RMahammad/motion-kit/actions/workflows/ci.yml)
+[![CI](https://github.com/RMahammad/motionstack/actions/workflows/ci.yml/badge.svg)](https://github.com/RMahammad/motionstack/actions/workflows/ci.yml)
 ![React](https://img.shields.io/badge/React-19-149ECA.svg?logo=react&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-black.svg?logo=next.js&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-38BDF8.svg?logo=tailwindcss&logoColor=white)
