@@ -10,7 +10,7 @@
 - **API sketch:** `safeArea?` (rect | rect[]), `focalPoint?`, `density?`, `intensity?`, `speed?`, `perspective?`, `depth?`, `highlightCells?`, `interactive?`, `pauseWhenHidden?`, `reducedMotion?`, `className`, `children?`.
 - **Accessibility:** decorative → `aria-hidden`; guarantees quiet region behind children; forced-colors fallback; no motion under reduced-motion.
 - **Performance:** CSS/SVG only; mask via gradients not JS; no per-frame state; pause offscreen; mobile simplified grid.
-- **Dependencies:** `@motionstack/utils` + `@motionstack/primitives`. No new deps.
+- **Dependencies:** `@motiq/utils` + `@motiq/primitives`. No new deps.
 - **Similarity concern:** low (content-aware attenuation is the differentiator vs any generic grid).
 - **Tier:** Free.
 - **Release criteria:** measurable quieting behind safe zones, multi-zone support, no hydration mismatch, no continuous rerender, reduced-motion static, mobile-simplified, clean-room.

@@ -12,7 +12,7 @@ import {
   statusVars,
   type OptimisticPhase,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /**
  * CartItemTransition — a single, app-controlled cart LINE ITEM that animates the

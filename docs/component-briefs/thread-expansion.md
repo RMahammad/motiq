@@ -10,7 +10,7 @@
 - **API sketch:** `nodes`, `rootId?`, `selectedId?`/`defaultSelectedId?`/`onSelect?`, `expandedIds?`/`defaultExpandedIds?`/`onExpandedChange?`, `defaultExpandDepth?`, `onLoadMore?`, `loadingId?`, `errorId?`/`errorMessage?`/`onRetryLoad?`, `onNavigateParent?`, `onNavigateUnread?`, `collapseResolved?`, `maxAutoDepth?`, `formatTimestamp?`, `label?`, `maxHeight?`.
 - **Accessibility:** `role="tree"` / `treeitem` with `aria-level`, `aria-expanded`, `aria-selected`, roving tabindex; parent/child conveyed by structure + ArrowLeft-to-parent; focus preserved across jumps and when a branch containing focus collapses; selected path rendered as text (breadcrumb); unread conveyed by **text** ("Unread" / "N unread in branch"), not colour alone; loading (`aria-busy`) + error rows labelled; polite live region announces navigation; reduced-motion.
 - **Mobile:** indentation capped so deep branches don't push off-screen; toolbar wraps; single column.
-- **Dependencies:** motion + `@motionstack/utils` (cn) + `@motionstack/primitives` (`useReducedMotion`, `formatTimestamp`). No new deps. Presentation only — app owns data, unread accounting, resolution, lazy loading.
+- **Dependencies:** motion + `@motiq/utils` (cn) + `@motiq/primitives` (`useReducedMotion`, `formatTimestamp`). No new deps. Presentation only — app owns data, unread accounting, resolution, lazy loading.
 - **Similarity concern:** tree/thread navigators are common; differentiate via unread-branch traversal + selected-path breadcrumb + focus preservation + safe-depth structural limit. Low–moderate.
 - **Tier:** Free.
 - **Release criteria:** rapid gate + expand/collapse, next-unread navigation, focus preservation, deleted placeholder, and loading/error branch states verified.

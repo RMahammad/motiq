@@ -10,7 +10,7 @@
 - **API sketch:** `headline?`, `copy?`, `primaryCta?`, `secondaryCta?`, `phase?`, `onPhaseChange?`, `dataset?`, `background?` (optional Data Contour Surface), `reducedMotion?`, `className`.
 - **Accessibility:** heading semantics; metric changes announced politely (live region), not per-frame; stale/error via text + glyph, never color alone; reduced-motion snaps values; no focus theft.
 - **Performance:** static initial; streaming pauses offscreen; fixed-epoch timestamps; number morph respects reduced motion; SSR-safe.
-- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives`; registryDependencies: kpi-number-morph, data-refresh-state, streaming-data-rows, filter-result-transition, data-quality-status. No new deps.
+- **Dependencies:** motion + `@motiq/utils` + `@motiq/primitives`; registryDependencies: kpi-number-morph, data-refresh-state, streaming-data-rows, filter-result-transition, data-quality-status. No new deps.
 - **Similarity concern:** low (own-component composition; not a dashboard template).
 - **Tier:** Pro. **Kind:** block.
 - **Release criteria:** all eight states, three metrics + live subset, editable block, mobile layout, reduced-motion, no hydration errors, clean-room.

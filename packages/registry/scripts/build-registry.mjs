@@ -39,7 +39,7 @@ const PROTECTED_OUT = process.env.REGISTRY_PROTECTED_OUT
   : join(pkgRoot, ".protected", "r");
 const BASE_URL = process.env.REGISTRY_BASE_URL || config.registryBaseUrl;
 const PROTECTED_BASE_URL = process.env.REGISTRY_PROTECTED_BASE_URL || `${config.documentationUrl.replace(/\/docs$/, "")}/api/registry`;
-const NAMESPACE = config.registryNamespace; // e.g. "@motionstack"
+const NAMESPACE = config.registryNamespace; // e.g. "@motiq"
 const ITEM_SCHEMA = "https://ui.shadcn.com/schema/registry-item.json";
 
 const manifest = JSON.parse(readFileSync(join(pkgRoot, "registry.json"), "utf8"));

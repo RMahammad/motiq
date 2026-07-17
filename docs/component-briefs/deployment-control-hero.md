@@ -10,7 +10,7 @@
 - **API sketch:** `headline?`, `copy?`, `primaryCta?`, `secondaryCta?`, `phase?`, `onPhaseChange?`, `dataset?`, `environments?`, `background?` (optional Runtime Signal Map), `reducedMotion?`, `className`.
 - **Accessibility:** heading semantics; env switcher keyboard-operable; stage status text + glyph, never color alone; log region has accessible name; reduced-motion; no focus theft.
 - **Performance:** static initial; log stream pauses offscreen; fixed-epoch timestamps; SSR-safe.
-- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives`; registryDependencies: environment-switcher, deployment-pipeline, live-log-stream, api-request-inspector. No new deps.
+- **Dependencies:** motion + `@motiq/utils` + `@motiq/primitives`; registryDependencies: environment-switcher, deployment-pipeline, live-log-stream, api-request-inspector. No new deps.
 - **Similarity concern:** low (own-component composition; original layout).
 - **Tier:** Pro. **Kind:** block.
 - **Release criteria:** all six states, four stages readable, editable block, laptop + mobile layouts, reduced-motion, no hydration errors, clean-room.

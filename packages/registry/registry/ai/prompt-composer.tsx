@@ -10,7 +10,7 @@ import {
   useReducedMotion,
   statusVars,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* --------------------------------------------------------------------------
  * PromptComposer — a production-oriented prompt-composition surface for an AI

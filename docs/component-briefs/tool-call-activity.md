@@ -8,7 +8,7 @@
 - **API sketch:** `calls: ToolCall[]` ({id,name,category?,status,startedAt?,durationMs?,input?,output?,error?,progress?,details?}), `activeCallId?`, `onToggle?`, `onApprove?`, `onReject?`, `onRetry?`, `defaultExpanded?`, `compactCompleted?`, `showDurations?`, `renderInput?`, `renderOutput?`.
 - **Accessibility:** status via icon+label (not color alone); keyboard-accessible expand + approval; live region on lifecycle only; error associated with failed call; reduced-motion final state; logical focus after approve/retry.
 - **Mobile:** stacks vertically; details wrap; controls reachable.
-- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives`. No new deps.
+- **Dependencies:** motion + `@motiq/utils` + `@motiq/primitives`. No new deps.
 - **Similarity concern:** avoid resembling any specific agent-UI product; original anatomy (compacting completed calls + inline approval). Low–moderate.
 - **Tier:** Pro.
 - **Release criteria:** renders, controls work, desktop+mobile, light+dark, reduced-motion, keyboard, typecheck, docs build, registry validate, clean-fixture, no console/hydration errors, clean-room.

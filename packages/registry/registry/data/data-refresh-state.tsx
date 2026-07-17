@@ -14,7 +14,7 @@ import {
   formatTimestamp as sharedFormatTimestamp,
   type StatusMeta,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* -------------------------------------------------------------------------- */
 /* Custom interval dropdown — a real library listbox popover (not a native

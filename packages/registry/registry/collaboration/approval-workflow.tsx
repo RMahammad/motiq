@@ -12,7 +12,7 @@ import {
   useDisclosure,
   streamItemVariants,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* --------------------------------------------------------------------------
  * ApprovalWorkflow — presentation + control for an app-owned approval/sign-off

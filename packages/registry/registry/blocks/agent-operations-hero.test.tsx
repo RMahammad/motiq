@@ -4,14 +4,14 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 /*
- * The composed children resolve through the `@/components/motionstack/*` tsconfig
+ * The composed children resolve through the `@/components/motiq/*` tsconfig
  * paths, which the registry's vitest config does not alias. They are exercised by
  * their own tests; here they are stubbed with faithful, minimal presentational
  * shims so this block test stays isolated and fast. The shims render the pieces
  * the block relies on (titles, children, and — for the timeline — the approval /
  * retry controls) so the composition still renders end to end.
  */
-vi.mock("@/components/motionstack/agent-run-timeline", () => ({
+vi.mock("@/components/motiq/agent-run-timeline", () => ({
   AgentRunTimeline: ({ run, onApprove, onReject, onRetryStep }: any) => (
     <section aria-label={`Run: ${run.title}`}>
       <h2>{run.title}</h2>
@@ -41,7 +41,7 @@ vi.mock("@/components/motionstack/agent-run-timeline", () => ({
   ),
 }));
 
-vi.mock("@/components/motionstack/tool-call-activity", () => ({
+vi.mock("@/components/motiq/tool-call-activity", () => ({
   ToolCallActivity: ({ calls, title }: any) => (
     <section aria-label={title}>
       {calls.map((c: any) => (
@@ -53,14 +53,14 @@ vi.mock("@/components/motionstack/tool-call-activity", () => ({
   ),
 }));
 
-vi.mock("@/components/motionstack/source-citation-rail", () => ({
+vi.mock("@/components/motiq/source-citation-rail", () => ({
   SourceCitationRail: ({ children, title }: any) => (
     <section aria-label={title}>{children}</section>
   ),
   CitationMarker: ({ source }: any) => <sup>[{source}]</sup>,
 }));
 
-vi.mock("@/components/motionstack/prompt-composer", () => ({
+vi.mock("@/components/motiq/prompt-composer", () => ({
   PromptComposer: ({ defaultValue, label, status }: any) => (
     <div aria-label={label} data-status={status}>
       {defaultValue}

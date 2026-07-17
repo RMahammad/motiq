@@ -1,6 +1,6 @@
-# Contributing to Motionstack
+# Contributing to Motiq
 
-Thanks for your interest in improving Motionstack! This guide covers how to get the
+Thanks for your interest in improving Motiq! This guide covers how to get the
 repo running and the bar every change is held to.
 
 ## Getting started
@@ -8,8 +8,8 @@ repo running and the bar every change is held to.
 Requires **Node ≥ 20** and **pnpm**.
 
 ```bash
-git clone https://github.com/RMahammad/motionstack.git
-cd motionstack
+git clone https://github.com/RMahammad/motiq.git
+cd motiq
 pnpm install
 pnpm build
 pnpm --filter docs-site dev   # http://localhost:3000
@@ -60,7 +60,7 @@ node packages/registry/scripts/build-registry.mjs   # if you touched a component
 
 ## Reporting bugs & requesting features
 
-Use the [issue templates](https://github.com/RMahammad/motionstack/issues/new/choose).
+Use the [issue templates](https://github.com/RMahammad/motiq/issues/new/choose).
 For bugs, please include a minimal reproduction and your environment (React / Next.js /
 Tailwind versions).
 

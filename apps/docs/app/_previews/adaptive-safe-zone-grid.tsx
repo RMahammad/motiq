@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { AdaptiveSafeZoneGrid } from "@/registry/backgrounds/adaptive-safe-zone-grid";
-import { type ContentPlacement } from "@/lib/motionstack";
+import { type ContentPlacement } from "@/lib/motiq";
 import { HeroContent, useHeroPlacement, type HeroCopy } from "../_components/hero-frame";
 import {
   ControlBar,

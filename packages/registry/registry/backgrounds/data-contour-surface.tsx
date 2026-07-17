@@ -12,7 +12,7 @@ import {
   labelHiddenAt,
   type ContentPlacement,
   type ResolvedComposition,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */

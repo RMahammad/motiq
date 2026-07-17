@@ -9,7 +9,7 @@
 - **API sketch:** `state`, `lastUpdated?`, `nextRefresh?`, `progress?`, `updatedCount?`, `totalCount?`, `source?`, `automatic?`, `interval?`, `onRefresh?`, `onCancel?`, `onRetry?`, `onPause?`, `onResume?`, `onIntervalChange?`, `mode?`, `formatTimestamp?`.
 - **Accessibility:** state in text; progress semantics when determinate (role=progressbar + aria-valuenow); indeterminate labeled; reduced-motion fallback; retry/cancel keyboard access; live-region that doesn't spam; offline + stale in text; status not color-only.
 - **Mobile:** compact/inline modes fit narrow; panel stacks.
-- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives` (useAsyncStatus optional, useAnimatedNumber for counts, formatTimestamp, getStatusMeta, statusVars, useReducedMotion). No new deps.
+- **Dependencies:** motion + `@motiq/utils` + `@motiq/primitives` (useAsyncStatus optional, useAnimatedNumber for counts, formatTimestamp, getStatusMeta, statusVars, useReducedMotion). No new deps.
 - **Similarity concern:** refresh indicators exist; differentiate via partial/stale/offline states + auto-mode controls + modes. Low.
 - **Tier:** Free.
 - **Release criteria:** rapid gate + manual/cancel/retry callbacks + determinate progress semantics + offline/stale labels + reduced-motion verified.

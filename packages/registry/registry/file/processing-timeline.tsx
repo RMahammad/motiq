@@ -11,7 +11,7 @@ import {
   scrollIntoViewWithin,
   formatTimestamp as defaultFormatTimestamp,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* --------------------------------------------------------------------------
  * ProcessingTimeline — a presentation-only view of ONE item (a file, upload,

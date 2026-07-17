@@ -27,7 +27,7 @@ Which component(s) are affected?
 
 ## Environment
 
-- Motionstack component / install command:
+- Motiq component / install command:
 - React version:
 - Next.js version (if applicable):
 - Tailwind CSS version:

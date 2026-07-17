@@ -9,7 +9,7 @@
 - **API sketch:** `request`, `response?`, `state`, `onRetry?`, `onCancel?`, `onCopy?`, `redact?`, `defaultSection?`, `wrap?`, `onWrapChange?`, `renderBody?`, `formatTimestamp?`.
 - **Accessibility:** status in text; keyboard-accessible sections; copy-success announcement; selectable payload; horizontal scroll for long lines; reduced-motion; redacted values clearly identified; no secrets in demo.
 - **Mobile:** method/endpoint/status stack; tabs become a scrollable segmented control; payloads scroll horizontally.
-- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives`. No new deps.
+- **Dependencies:** motion + `@motiq/utils` + `@motiq/primitives`. No new deps.
 - **Similarity concern:** must not imitate a specific commercial API client; differentiate via redaction + phases + compare. Low–moderate.
 - **Tier:** Pro.
 - **Release criteria:** rapid gate + redaction verified + no secret-like demo values.

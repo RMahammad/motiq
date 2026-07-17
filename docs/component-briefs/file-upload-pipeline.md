@@ -9,6 +9,6 @@
 - **API sketch:** `<FileUploadPipeline items onAddFiles onPause onResume onRetry onCancel onRemove onClearCompleted onReorder? />`; item = { id, fileName, fileType, fileSize, progress, status, speed?, remainingTime?, error?, retryCount?, processingStage?, thumbnail?, metadata? }.
 - **Accessibility:** real `<input type=file>` + keyboard drop-zone alternative; `role=progressbar`; status in text; error association; focus preserved after removal; announcements throttled to status changes (not every %); no colour-only state.
 - **Mobile:** stacked rows, large touch targets, drag-over works with file picker fallback.
-- **Dependencies:** motion + `@motionstack/{utils,primitives}`.
+- **Dependencies:** motion + `@motiq/{utils,primitives}`.
 - **Similarity concern:** generic uploader pattern; clean-room implementation, original API + composition (app-controlled, adapter-optional). Low.
 - **Release criteria:** 6 targeted tests (pause/resume, retry, cancel, progress semantics, focus-after-removal, error) + axe; rapid gate (desktop/mobile/light/dark/reduced/keyboard, typecheck, build, registry, clean-fixture, no forbidden imports, no console/hydration).

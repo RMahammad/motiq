@@ -3,7 +3,7 @@
 import * as React from "react";
 import { motion, AnimatePresence } from "motion/react";
 
-import { useReducedMotion, useDisclosure, useAnchoredPortal } from "@/lib/motionstack";
+import { useReducedMotion, useDisclosure, useAnchoredPortal } from "@/lib/motiq";
 
 /**
  * Shared form/toolbar Select — a real library listbox popover (not a native

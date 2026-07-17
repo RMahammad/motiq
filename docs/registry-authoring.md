@@ -8,14 +8,14 @@ The registry is the product's delivery mechanism: editable source installed thro
 
 - **Exact `files`** — only the component's own sources.
 - **Exact `dependencies`** — runtime npm deps actually imported.
-- **Exact `registryDependencies`** — other registry items it needs (e.g. `@motionstack/utils`, `@motionstack/primitives`).
+- **Exact `registryDependencies`** — other registry items it needs (e.g. `@motiq/utils`, `@motiq/primitives`).
 - **`tier`** (free/pro) and **release status**.
 - No docs imports, no preview data, no `@scope/*` internal imports, no `next/*` (unless the item is explicitly framework-specific), no `node:*`, no test helpers, no development adapters, no commercial secrets.
 - Installed source is self-contained and readable — a customer can edit it without the monorepo.
 
 ## Blocks and packs
 
-- A **block** composes released components. Its source imports them via the consumer convention `@/components/motionstack/<name>`; those specifiers are aliased to registry sources in the two tsconfig `paths` maps so the same source renders in docs and typechecks. A block lists every composed component + `@motionstack/utils` + `@motionstack/primitives` as `registryDependencies`.
+- A **block** composes released components. Its source imports them via the consumer convention `@/components/motiq/<name>`; those specifiers are aliased to registry sources in the two tsconfig `paths` maps so the same source renders in docs and typechecks. A block lists every composed component + `@motiq/utils` + `@motiq/primitives` as `registryDependencies`.
 - A **pack** installs its block (which pulls the components). Do not duplicate shared utility files.
 
 ## Free vs Pro routing

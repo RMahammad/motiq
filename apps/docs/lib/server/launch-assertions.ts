@@ -31,12 +31,12 @@ export function paidLaunchAssertions(): AssertionResult[] {
   out.push(res("pricing-finalized", product.pricingFinalized, true, "Prices are placeholders until pricingFinalized is approved."));
   out.push(res("audit-durable", s.audit.durable, true, "Registry audit storage must be durable (not in-memory)."));
   out.push(res("entitlement-mapping", map.ok, true, `Every Pro item needs an entitlement mapping. ${map.problems.join("; ") || "ok"}`));
-  out.push(res("webhook-secret", !!process.env.MOTIONSTACK_WEBHOOK_SECRET, true, "A webhook signing secret (MOTIONSTACK_WEBHOOK_SECRET) must be set."));
+  out.push(res("webhook-secret", !!process.env.MOTIQ_WEBHOOK_SECRET, true, "A webhook signing secret (MOTIQ_WEBHOOK_SECRET) must be set."));
   out.push(res("customer-portal", !!commerce.customerPortalUrl || true /* internal portal exists */, false, "A customer portal (internal or provider) must be available."));
   out.push(res("rate-limiting", commerce.launchMode !== "development", true, "Rate limiting must be enabled (not development mode)."));
   out.push(res("support-contact", !!commerce.supportEmail, true, "A support contact email must be configured."));
-  out.push(res("no-dev-tokens", process.env.MOTIONSTACK_ALLOW_DEV_TOKENS !== "1", true, "Development tokens must not be allowed in production."));
-  out.push(res("legal-approved", process.env.MOTIONSTACK_LEGAL_APPROVED === "1", true, "Required legal pages remain drafts until the owner approves them (MOTIONSTACK_LEGAL_APPROVED=1)."));
+  out.push(res("no-dev-tokens", process.env.MOTIQ_ALLOW_DEV_TOKENS !== "1", true, "Development tokens must not be allowed in production."));
+  out.push(res("legal-approved", process.env.MOTIQ_LEGAL_APPROVED === "1", true, "Required legal pages remain drafts until the owner approves them (MOTIQ_LEGAL_APPROVED=1)."));
   return out;
 }
 
@@ -48,7 +48,7 @@ export function privatePreviewAssertions(): AssertionResult[] {
   out.push(res("private-registry", commerce.privateRegistryEnabled, true, "The private registry must be enabled for gated preview delivery."));
   out.push(res("no-public-pro", true /* verified by scripts/audit-pro-exposure + build */, true, "No Pro source may be public (verified by the exposure audit + build)."));
   out.push(res("access-flow", commerce.waitlistEnabled, false, "An access-request/waitlist flow should be enabled for preview."));
-  out.push(res("preview-terms", process.env.MOTIONSTACK_PREVIEW_TERMS_APPROVED === "1", true, "Owner-approved preview terms are required before inviting a cohort (MOTIONSTACK_PREVIEW_TERMS_APPROVED=1)."));
+  out.push(res("preview-terms", process.env.MOTIQ_PREVIEW_TERMS_APPROVED === "1", true, "Owner-approved preview terms are required before inviting a cohort (MOTIQ_PREVIEW_TERMS_APPROVED=1)."));
   return out;
 }
 
@@ -67,7 +67,7 @@ export function assertProductionSafeAtStartup(): void {
   if (commerce.checkoutEnabled && commerce.checkoutProvider === "none") {
     problems.push("checkout enabled but provider is 'none' (dev)");
   }
-  if (process.env.MOTIONSTACK_ALLOW_DEV_TOKENS === "1") {
+  if (process.env.MOTIQ_ALLOW_DEV_TOKENS === "1") {
     problems.push("dev tokens allowed in a launched environment");
   }
   if (problems.length) {

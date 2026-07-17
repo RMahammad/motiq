@@ -9,7 +9,7 @@
 - **Accessibility:** semantic headers, `aria-sort` state, change indication not color-only (icon/▲▼ or text), SR-safe update summaries (rate-limited), reduced-motion, keyboard row actions, no focus loss on resort/update (stable keys + layout).
 - **Large data:** document this is for animated live subsets; integration guidance for virtualization; no data-table dep by default.
 - **Mobile:** `renderMobileRow` or a stacked compact card view.
-- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives`. No new deps.
+- **Dependencies:** motion + `@motiq/utils` + `@motiq/primitives`. No new deps.
 - **Similarity concern:** many tables exist; differentiate via live insert/update/sort continuity + change emphasis. Low–moderate.
 - **Tier:** Pro.
 - **Release criteria:** rapid gate + stable row identity + focus preservation verified.

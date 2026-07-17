@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion } from "@/lib/motionstack";
+import { useReducedMotion } from "@/lib/motiq";
 
 /**
  * AiResponseStream — renders a streaming assistant response supplied by the

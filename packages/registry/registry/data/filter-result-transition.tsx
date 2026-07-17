@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, useAnimatedNumber, formatNumber } from "@/lib/motionstack";
+import { useReducedMotion, useAnimatedNumber, formatNumber } from "@/lib/motiq";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                       */

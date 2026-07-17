@@ -15,127 +15,127 @@
       "@/lib/utils": [
         "../../packages/registry/registry/lib/utils.ts"
       ],
-      "@/lib/motionstack": [
+      "@/lib/motiq": [
         "../../packages/registry/registry/lib/motion.ts"
       ],
       "@/registry/*": [
         "../../packages/registry/registry/*"
       ],
-      "@/components/motionstack/ai-response-stream": [
+      "@/components/motiq/ai-response-stream": [
         "../../packages/registry/registry/ai/ai-response-stream.tsx"
       ],
-      "@/components/motionstack/deployment-pipeline": [
+      "@/components/motiq/deployment-pipeline": [
         "../../packages/registry/registry/developer-tools/deployment-pipeline.tsx"
       ],
-      "@/components/motionstack/live-presence-stack": [
+      "@/components/motiq/live-presence-stack": [
         "../../packages/registry/registry/collaboration/live-presence-stack.tsx"
       ],
-      "@/components/motionstack/kpi-number-morph": [
+      "@/components/motiq/kpi-number-morph": [
         "../../packages/registry/registry/data/kpi-number-morph.tsx"
       ],
-      "@/components/motionstack/tool-call-activity": [
+      "@/components/motiq/tool-call-activity": [
         "../../packages/registry/registry/ai/tool-call-activity.tsx"
       ],
-      "@/components/motionstack/live-log-stream": [
+      "@/components/motiq/live-log-stream": [
         "../../packages/registry/registry/developer-tools/live-log-stream.tsx"
       ],
-      "@/components/motionstack/activity-stream": [
+      "@/components/motiq/activity-stream": [
         "../../packages/registry/registry/collaboration/activity-stream.tsx"
       ],
-      "@/components/motionstack/streaming-data-rows": [
+      "@/components/motiq/streaming-data-rows": [
         "../../packages/registry/registry/data/streaming-data-rows.tsx"
       ],
-      "@/components/motionstack/luminous-topography": [
+      "@/components/motiq/luminous-topography": [
         "../../packages/registry/registry/backgrounds/luminous-topography.tsx"
       ],
-      "@/components/motionstack/workflow-topology-field": [
+      "@/components/motiq/workflow-topology-field": [
         "../../packages/registry/registry/backgrounds/workflow-topology-field.tsx"
       ],
-      "@/components/motionstack/queue-pulse-lanes": [
+      "@/components/motiq/queue-pulse-lanes": [
         "../../packages/registry/registry/backgrounds/queue-pulse-lanes.tsx"
       ],
-      "@/components/motionstack/adaptive-safe-zone-grid": [
+      "@/components/motiq/adaptive-safe-zone-grid": [
         "../../packages/registry/registry/backgrounds/adaptive-safe-zone-grid.tsx"
       ],
-      "@/components/motionstack/runtime-signal-map": [
+      "@/components/motiq/runtime-signal-map": [
         "../../packages/registry/registry/backgrounds/runtime-signal-map.tsx"
       ],
-      "@/components/motionstack/event-propagation-matrix": [
+      "@/components/motiq/event-propagation-matrix": [
         "../../packages/registry/registry/backgrounds/event-propagation-matrix.tsx"
       ],
-      "@/components/motionstack/data-contour-surface": [
+      "@/components/motiq/data-contour-surface": [
         "../../packages/registry/registry/backgrounds/data-contour-surface.tsx"
       ],
-      "@/components/motionstack/prompt-composer": [
+      "@/components/motiq/prompt-composer": [
         "../../packages/registry/registry/ai/prompt-composer.tsx"
       ],
-      "@/components/motionstack/typing-and-presence": [
+      "@/components/motiq/typing-and-presence": [
         "../../packages/registry/registry/communication/typing-and-presence.tsx"
       ],
-      "@/components/motionstack/data-quality-status": [
+      "@/components/motiq/data-quality-status": [
         "../../packages/registry/registry/data/data-quality-status.tsx"
       ],
-      "@/components/motionstack/source-citation-rail": [
+      "@/components/motiq/source-citation-rail": [
         "../../packages/registry/registry/ai/source-citation-rail.tsx"
       ],
-      "@/components/motionstack/api-request-inspector": [
+      "@/components/motiq/api-request-inspector": [
         "../../packages/registry/registry/developer-tools/api-request-inspector.tsx"
       ],
-      "@/components/motionstack/approval-workflow": [
+      "@/components/motiq/approval-workflow": [
         "../../packages/registry/registry/collaboration/approval-workflow.tsx"
       ],
-      "@/components/motionstack/filter-result-transition": [
+      "@/components/motiq/filter-result-transition": [
         "../../packages/registry/registry/data/filter-result-transition.tsx"
       ],
-      "@/components/motionstack/swipe-action-row": [
+      "@/components/motiq/swipe-action-row": [
         "../../packages/registry/registry/mobile/swipe-action-row.tsx"
       ],
-      "@/components/motionstack/agent-run-timeline": [
+      "@/components/motiq/agent-run-timeline": [
         "../../packages/registry/registry/ai/agent-run-timeline.tsx"
       ],
-      "@/components/motionstack/environment-switcher": [
+      "@/components/motiq/environment-switcher": [
         "../../packages/registry/registry/developer-tools/environment-switcher.tsx"
       ],
-      "@/components/motionstack/comment-thread": [
+      "@/components/motiq/comment-thread": [
         "../../packages/registry/registry/collaboration/comment-thread.tsx"
       ],
-      "@/components/motionstack/data-refresh-state": [
+      "@/components/motiq/data-refresh-state": [
         "../../packages/registry/registry/data/data-refresh-state.tsx"
       ],
-      "@/components/motionstack/mobile-filter-sheet": [
+      "@/components/motiq/mobile-filter-sheet": [
         "../../packages/registry/registry/mobile/mobile-filter-sheet.tsx"
       ],
-      "@/components/motionstack/kinetic-emphasis": [
+      "@/components/motiq/kinetic-emphasis": [
         "../../packages/registry/registry/text/kinetic-emphasis.tsx"
       ],
-      "@/components/motionstack/blur-text": [
+      "@/components/motiq/blur-text": [
         "../../packages/registry/registry/text/blur-text.tsx"
       ],
-      "@/components/motionstack/spotlight-card": [
+      "@/components/motiq/spotlight-card": [
         "../../packages/registry/registry/creative/spotlight-card.tsx"
       ],
-      "@/components/motionstack/animated-dialog": [
+      "@/components/motiq/animated-dialog": [
         "../../packages/registry/registry/animated-shadcn/animated-dialog.tsx"
       ],
-      "@/components/motionstack/animated-tabs": [
+      "@/components/motiq/animated-tabs": [
         "../../packages/registry/registry/animated-shadcn/animated-tabs.tsx"
       ],
-      "@/components/motionstack/animated-accordion": [
+      "@/components/motiq/animated-accordion": [
         "../../packages/registry/registry/animated-shadcn/animated-accordion.tsx"
       ],
-      "@/components/motionstack/animated-button": [
+      "@/components/motiq/animated-button": [
         "../../packages/registry/registry/animated-shadcn/animated-button.tsx"
       ],
-      "@/components/motionstack/rotating-text": [
+      "@/components/motiq/rotating-text": [
         "../../packages/registry/registry/text/rotating-text.tsx"
       ],
-      "@/components/motionstack/animated-list": [
+      "@/components/motiq/animated-list": [
         "../../packages/registry/registry/creative/animated-list.tsx"
       ],
-      "@/components/motionstack/animated-grid": [
+      "@/components/motiq/animated-grid": [
         "../../packages/registry/registry/backgrounds/animated-grid.tsx"
       ],
-      "@/components/motionstack/animated-icons": [
+      "@/components/motiq/animated-icons": [
         "../../packages/registry/registry/icons/animated-icons.tsx"
       ]
     },

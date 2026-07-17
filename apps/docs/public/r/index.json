@@ -1,12 +1,12 @@
 {
-  "name": "motionstack",
+  "name": "motiq",
   "count": 70,
   "items": [
     {
       "name": "utils",
       "type": "registry:lib",
       "title": "cn() utility",
-      "description": "Tailwind class-merge helper used by every Motionstack component.",
+      "description": "Tailwind class-merge helper used by every Motiq component.",
       "category": "lib",
       "tier": "free",
       "kind": "component",
@@ -17,8 +17,8 @@
         "tailwind-merge"
       ],
       "registryDependencies": [],
-      "url": "https://motionstack.dev/r/utils.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/utils.json"
+      "url": "https://motiq.dev/r/utils.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/utils.json"
     },
     {
       "name": "primitives",
@@ -32,8 +32,8 @@
       "keywords": [],
       "dependencies": [],
       "registryDependencies": [],
-      "url": "https://motionstack.dev/r/primitives.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/primitives.json"
+      "url": "https://motiq.dev/r/primitives.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/primitives.json"
     },
     {
       "name": "ai-response-stream",
@@ -58,11 +58,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/ai-response-stream.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/ai-response-stream.json"
+      "url": "https://motiq.dev/r/ai-response-stream.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/ai-response-stream.json"
     },
     {
       "name": "deployment-pipeline",
@@ -87,11 +87,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/deployment-pipeline.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/deployment-pipeline.json"
+      "url": "https://motiq.dev/r/deployment-pipeline.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/deployment-pipeline.json"
     },
     {
       "name": "live-presence-stack",
@@ -114,11 +114,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/live-presence-stack.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/live-presence-stack.json"
+      "url": "https://motiq.dev/r/live-presence-stack.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/live-presence-stack.json"
     },
     {
       "name": "kpi-number-morph",
@@ -139,11 +139,11 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/kpi-number-morph.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/kpi-number-morph.json"
+      "url": "https://motiq.dev/r/kpi-number-morph.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/kpi-number-morph.json"
     },
     {
       "name": "tool-call-activity",
@@ -168,11 +168,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/tool-call-activity.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/tool-call-activity.json"
+      "url": "https://motiq.dev/r/tool-call-activity.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/tool-call-activity.json"
     },
     {
       "name": "live-log-stream",
@@ -197,11 +197,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/live-log-stream.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/live-log-stream.json"
+      "url": "https://motiq.dev/r/live-log-stream.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/live-log-stream.json"
     },
     {
       "name": "activity-stream",
@@ -225,11 +225,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/activity-stream.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/activity-stream.json"
+      "url": "https://motiq.dev/r/activity-stream.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/activity-stream.json"
     },
     {
       "name": "streaming-data-rows",
@@ -253,11 +253,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/streaming-data-rows.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/streaming-data-rows.json"
+      "url": "https://motiq.dev/r/streaming-data-rows.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/streaming-data-rows.json"
     },
     {
       "name": "luminous-topography",
@@ -278,11 +278,11 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/luminous-topography.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/luminous-topography.json"
+      "url": "https://motiq.dev/r/luminous-topography.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/luminous-topography.json"
     },
     {
       "name": "workflow-topology-field",
@@ -304,11 +304,11 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/workflow-topology-field.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/workflow-topology-field.json"
+      "url": "https://motiq.dev/r/workflow-topology-field.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/workflow-topology-field.json"
     },
     {
       "name": "queue-pulse-lanes",
@@ -330,11 +330,11 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/queue-pulse-lanes.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/queue-pulse-lanes.json"
+      "url": "https://motiq.dev/r/queue-pulse-lanes.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/queue-pulse-lanes.json"
     },
     {
       "name": "adaptive-safe-zone-grid",
@@ -356,11 +356,11 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/adaptive-safe-zone-grid.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/adaptive-safe-zone-grid.json"
+      "url": "https://motiq.dev/r/adaptive-safe-zone-grid.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/adaptive-safe-zone-grid.json"
     },
     {
       "name": "runtime-signal-map",
@@ -382,11 +382,11 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/runtime-signal-map.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/runtime-signal-map.json"
+      "url": "https://motiq.dev/r/runtime-signal-map.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/runtime-signal-map.json"
     },
     {
       "name": "event-propagation-matrix",
@@ -408,11 +408,11 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/event-propagation-matrix.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/event-propagation-matrix.json"
+      "url": "https://motiq.dev/r/event-propagation-matrix.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/event-propagation-matrix.json"
     },
     {
       "name": "data-contour-surface",
@@ -434,11 +434,11 @@
       ],
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/data-contour-surface.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/data-contour-surface.json"
+      "url": "https://motiq.dev/r/data-contour-surface.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/data-contour-surface.json"
     },
     {
       "name": "agent-operations-hero",
@@ -461,15 +461,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/agent-run-timeline",
-        "@motionstack/prompt-composer",
-        "@motionstack/tool-call-activity",
-        "@motionstack/source-citation-rail",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/agent-run-timeline",
+        "@motiq/prompt-composer",
+        "@motiq/tool-call-activity",
+        "@motiq/source-citation-rail",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/agent-operations-hero.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/agent-operations-hero.json"
+      "url": "https://motiq.dev/r/agent-operations-hero.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/agent-operations-hero.json"
     },
     {
       "name": "deployment-control-hero",
@@ -492,15 +492,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/environment-switcher",
-        "@motionstack/deployment-pipeline",
-        "@motionstack/live-log-stream",
-        "@motionstack/api-request-inspector",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/environment-switcher",
+        "@motiq/deployment-pipeline",
+        "@motiq/live-log-stream",
+        "@motiq/api-request-inspector",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/deployment-control-hero.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/deployment-control-hero.json"
+      "url": "https://motiq.dev/r/deployment-control-hero.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/deployment-control-hero.json"
     },
     {
       "name": "live-data-command-hero",
@@ -523,15 +523,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/kpi-number-morph",
-        "@motionstack/data-refresh-state",
-        "@motionstack/streaming-data-rows",
-        "@motionstack/filter-result-transition",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/kpi-number-morph",
+        "@motiq/data-refresh-state",
+        "@motiq/streaming-data-rows",
+        "@motiq/filter-result-transition",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/live-data-command-hero.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/live-data-command-hero.json"
+      "url": "https://motiq.dev/r/live-data-command-hero.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/live-data-command-hero.json"
     },
     {
       "name": "collaborative-launch-hero",
@@ -554,16 +554,16 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/live-presence-stack",
-        "@motionstack/typing-and-presence",
-        "@motionstack/approval-workflow",
-        "@motionstack/comment-thread",
-        "@motionstack/activity-stream",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/live-presence-stack",
+        "@motiq/typing-and-presence",
+        "@motiq/approval-workflow",
+        "@motiq/comment-thread",
+        "@motiq/activity-stream",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/collaborative-launch-hero.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/collaborative-launch-hero.json"
+      "url": "https://motiq.dev/r/collaborative-launch-hero.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/collaborative-launch-hero.json"
     },
     {
       "name": "source-citation-rail",
@@ -588,11 +588,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/source-citation-rail.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/source-citation-rail.json"
+      "url": "https://motiq.dev/r/source-citation-rail.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/source-citation-rail.json"
     },
     {
       "name": "api-request-inspector",
@@ -618,11 +618,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/api-request-inspector.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/api-request-inspector.json"
+      "url": "https://motiq.dev/r/api-request-inspector.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/api-request-inspector.json"
     },
     {
       "name": "approval-workflow",
@@ -646,11 +646,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/approval-workflow.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/approval-workflow.json"
+      "url": "https://motiq.dev/r/approval-workflow.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/approval-workflow.json"
     },
     {
       "name": "filter-result-transition",
@@ -674,11 +674,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/filter-result-transition.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/filter-result-transition.json"
+      "url": "https://motiq.dev/r/filter-result-transition.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/filter-result-transition.json"
     },
     {
       "name": "swipe-action-row",
@@ -702,11 +702,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/swipe-action-row.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/swipe-action-row.json"
+      "url": "https://motiq.dev/r/swipe-action-row.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/swipe-action-row.json"
     },
     {
       "name": "agent-run-timeline",
@@ -732,11 +732,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/agent-run-timeline.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/agent-run-timeline.json"
+      "url": "https://motiq.dev/r/agent-run-timeline.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/agent-run-timeline.json"
     },
     {
       "name": "environment-switcher",
@@ -762,11 +762,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/environment-switcher.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/environment-switcher.json"
+      "url": "https://motiq.dev/r/environment-switcher.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/environment-switcher.json"
     },
     {
       "name": "comment-thread",
@@ -790,11 +790,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/comment-thread.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/comment-thread.json"
+      "url": "https://motiq.dev/r/comment-thread.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/comment-thread.json"
     },
     {
       "name": "data-refresh-state",
@@ -819,11 +819,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/data-refresh-state.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/data-refresh-state.json"
+      "url": "https://motiq.dev/r/data-refresh-state.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/data-refresh-state.json"
     },
     {
       "name": "mobile-filter-sheet",
@@ -849,11 +849,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/mobile-filter-sheet.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/mobile-filter-sheet.json"
+      "url": "https://motiq.dev/r/mobile-filter-sheet.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/mobile-filter-sheet.json"
     },
     {
       "name": "prompt-composer",
@@ -879,11 +879,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/prompt-composer.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/prompt-composer.json"
+      "url": "https://motiq.dev/r/prompt-composer.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/prompt-composer.json"
     },
     {
       "name": "webhook-event-stream",
@@ -909,11 +909,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/webhook-event-stream.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/webhook-event-stream.json"
+      "url": "https://motiq.dev/r/webhook-event-stream.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/webhook-event-stream.json"
     },
     {
       "name": "mention-suggestions",
@@ -938,11 +938,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/mention-suggestions.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/mention-suggestions.json"
+      "url": "https://motiq.dev/r/mention-suggestions.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/mention-suggestions.json"
     },
     {
       "name": "data-quality-status",
@@ -967,11 +967,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/data-quality-status.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/data-quality-status.json"
+      "url": "https://motiq.dev/r/data-quality-status.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/data-quality-status.json"
     },
     {
       "name": "keyboard-safe-form",
@@ -997,11 +997,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/keyboard-safe-form.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/keyboard-safe-form.json"
+      "url": "https://motiq.dev/r/keyboard-safe-form.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/keyboard-safe-form.json"
     },
     {
       "name": "file-upload-pipeline",
@@ -1026,11 +1026,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/file-upload-pipeline.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/file-upload-pipeline.json"
+      "url": "https://motiq.dev/r/file-upload-pipeline.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/file-upload-pipeline.json"
     },
     {
       "name": "product-variant-selector",
@@ -1055,11 +1055,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/product-variant-selector.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/product-variant-selector.json"
+      "url": "https://motiq.dev/r/product-variant-selector.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/product-variant-selector.json"
     },
     {
       "name": "passkey-setup-flow",
@@ -1084,11 +1084,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/passkey-setup-flow.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/passkey-setup-flow.json"
+      "url": "https://motiq.dev/r/passkey-setup-flow.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/passkey-setup-flow.json"
     },
     {
       "name": "message-delivery-states",
@@ -1113,11 +1113,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/message-delivery-states.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/message-delivery-states.json"
+      "url": "https://motiq.dev/r/message-delivery-states.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/message-delivery-states.json"
     },
     {
       "name": "kanban-card-movement",
@@ -1143,11 +1143,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/kanban-card-movement.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/kanban-card-movement.json"
+      "url": "https://motiq.dev/r/kanban-card-movement.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/kanban-card-movement.json"
     },
     {
       "name": "multi-file-queue",
@@ -1173,11 +1173,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/multi-file-queue.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/multi-file-queue.json"
+      "url": "https://motiq.dev/r/multi-file-queue.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/multi-file-queue.json"
     },
     {
       "name": "cart-item-transition",
@@ -1203,11 +1203,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/cart-item-transition.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/cart-item-transition.json"
+      "url": "https://motiq.dev/r/cart-item-transition.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/cart-item-transition.json"
     },
     {
       "name": "two-factor-setup-flow",
@@ -1232,11 +1232,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/two-factor-setup-flow.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/two-factor-setup-flow.json"
+      "url": "https://motiq.dev/r/two-factor-setup-flow.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/two-factor-setup-flow.json"
     },
     {
       "name": "typing-and-presence",
@@ -1261,11 +1261,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/typing-and-presence.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/typing-and-presence.json"
+      "url": "https://motiq.dev/r/typing-and-presence.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/typing-and-presence.json"
     },
     {
       "name": "task-dependency-map",
@@ -1291,11 +1291,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/task-dependency-map.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/task-dependency-map.json"
+      "url": "https://motiq.dev/r/task-dependency-map.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/task-dependency-map.json"
     },
     {
       "name": "processing-timeline",
@@ -1320,11 +1320,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/processing-timeline.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/processing-timeline.json"
+      "url": "https://motiq.dev/r/processing-timeline.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/processing-timeline.json"
     },
     {
       "name": "checkout-progress",
@@ -1349,11 +1349,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/checkout-progress.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/checkout-progress.json"
+      "url": "https://motiq.dev/r/checkout-progress.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/checkout-progress.json"
     },
     {
       "name": "session-security-center",
@@ -1378,11 +1378,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/session-security-center.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/session-security-center.json"
+      "url": "https://motiq.dev/r/session-security-center.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/session-security-center.json"
     },
     {
       "name": "thread-expansion",
@@ -1407,11 +1407,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/thread-expansion.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/thread-expansion.json"
+      "url": "https://motiq.dev/r/thread-expansion.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/thread-expansion.json"
     },
     {
       "name": "project-timeline",
@@ -1436,11 +1436,11 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/project-timeline.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/project-timeline.json"
+      "url": "https://motiq.dev/r/project-timeline.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/project-timeline.json"
     },
     {
       "name": "ai-agent-workspace",
@@ -1461,15 +1461,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/agent-run-timeline",
-        "@motionstack/tool-call-activity",
-        "@motionstack/ai-response-stream",
-        "@motionstack/source-citation-rail",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/agent-run-timeline",
+        "@motiq/tool-call-activity",
+        "@motiq/ai-response-stream",
+        "@motiq/source-citation-rail",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/ai-agent-workspace.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/ai-agent-workspace.json"
+      "url": "https://motiq.dev/r/ai-agent-workspace.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/ai-agent-workspace.json"
     },
     {
       "name": "deployment-command-center",
@@ -1490,15 +1490,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/environment-switcher",
-        "@motionstack/deployment-pipeline",
-        "@motionstack/live-log-stream",
-        "@motionstack/api-request-inspector",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/environment-switcher",
+        "@motiq/deployment-pipeline",
+        "@motiq/live-log-stream",
+        "@motiq/api-request-inspector",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/deployment-command-center.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/deployment-command-center.json"
+      "url": "https://motiq.dev/r/deployment-command-center.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/deployment-command-center.json"
     },
     {
       "name": "collaborative-review-workspace",
@@ -1519,15 +1519,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/live-presence-stack",
-        "@motionstack/approval-workflow",
-        "@motionstack/comment-thread",
-        "@motionstack/activity-stream",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/live-presence-stack",
+        "@motiq/approval-workflow",
+        "@motiq/comment-thread",
+        "@motiq/activity-stream",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/collaborative-review-workspace.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/collaborative-review-workspace.json"
+      "url": "https://motiq.dev/r/collaborative-review-workspace.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/collaborative-review-workspace.json"
     },
     {
       "name": "live-operations-dashboard",
@@ -1548,15 +1548,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/kpi-number-morph",
-        "@motionstack/data-refresh-state",
-        "@motionstack/filter-result-transition",
-        "@motionstack/streaming-data-rows",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/kpi-number-morph",
+        "@motiq/data-refresh-state",
+        "@motiq/filter-result-transition",
+        "@motiq/streaming-data-rows",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/live-operations-dashboard.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/live-operations-dashboard.json"
+      "url": "https://motiq.dev/r/live-operations-dashboard.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/live-operations-dashboard.json"
     },
     {
       "name": "ai-interface-pack",
@@ -1576,15 +1576,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/agent-run-timeline",
-        "@motionstack/tool-call-activity",
-        "@motionstack/ai-response-stream",
-        "@motionstack/source-citation-rail",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/agent-run-timeline",
+        "@motiq/tool-call-activity",
+        "@motiq/ai-response-stream",
+        "@motiq/source-citation-rail",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/ai-interface-pack.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/ai-interface-pack.json"
+      "url": "https://motiq.dev/r/ai-interface-pack.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/ai-interface-pack.json"
     },
     {
       "name": "developer-tools-pack",
@@ -1604,15 +1604,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/environment-switcher",
-        "@motionstack/deployment-pipeline",
-        "@motionstack/live-log-stream",
-        "@motionstack/api-request-inspector",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/environment-switcher",
+        "@motiq/deployment-pipeline",
+        "@motiq/live-log-stream",
+        "@motiq/api-request-inspector",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/developer-tools-pack.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/developer-tools-pack.json"
+      "url": "https://motiq.dev/r/developer-tools-pack.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/developer-tools-pack.json"
     },
     {
       "name": "collaboration-pack",
@@ -1632,15 +1632,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/live-presence-stack",
-        "@motionstack/approval-workflow",
-        "@motionstack/comment-thread",
-        "@motionstack/activity-stream",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/live-presence-stack",
+        "@motiq/approval-workflow",
+        "@motiq/comment-thread",
+        "@motiq/activity-stream",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/collaboration-pack.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/collaboration-pack.json"
+      "url": "https://motiq.dev/r/collaboration-pack.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/collaboration-pack.json"
     },
     {
       "name": "data-motion-pack",
@@ -1660,15 +1660,15 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/kpi-number-morph",
-        "@motionstack/data-refresh-state",
-        "@motionstack/filter-result-transition",
-        "@motionstack/streaming-data-rows",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/kpi-number-morph",
+        "@motiq/data-refresh-state",
+        "@motiq/filter-result-transition",
+        "@motiq/streaming-data-rows",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
-      "url": "https://motionstack.dev/r/data-motion-pack.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/data-motion-pack.json"
+      "url": "https://motiq.dev/r/data-motion-pack.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/data-motion-pack.json"
     },
     {
       "name": "kinetic-emphasis",
@@ -1692,10 +1692,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
-      "url": "https://motionstack.dev/r/kinetic-emphasis.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/kinetic-emphasis.json"
+      "url": "https://motiq.dev/r/kinetic-emphasis.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/kinetic-emphasis.json"
     },
     {
       "name": "blur-text",
@@ -1717,10 +1717,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
-      "url": "https://motionstack.dev/r/blur-text.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/blur-text.json"
+      "url": "https://motiq.dev/r/blur-text.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/blur-text.json"
     },
     {
       "name": "spotlight-card",
@@ -1744,10 +1744,10 @@
         "tailwind-merge"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
-      "url": "https://motionstack.dev/r/spotlight-card.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/spotlight-card.json"
+      "url": "https://motiq.dev/r/spotlight-card.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/spotlight-card.json"
     },
     {
       "name": "animated-dialog",
@@ -1770,10 +1770,10 @@
         "@radix-ui/react-dialog"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
-      "url": "https://motionstack.dev/r/animated-dialog.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-dialog.json"
+      "url": "https://motiq.dev/r/animated-dialog.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/animated-dialog.json"
     },
     {
       "name": "animated-tabs",
@@ -1796,10 +1796,10 @@
         "@radix-ui/react-tabs"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
-      "url": "https://motionstack.dev/r/animated-tabs.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-tabs.json"
+      "url": "https://motiq.dev/r/animated-tabs.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/animated-tabs.json"
     },
     {
       "name": "animated-accordion",
@@ -1822,10 +1822,10 @@
         "@radix-ui/react-accordion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
-      "url": "https://motionstack.dev/r/animated-accordion.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-accordion.json"
+      "url": "https://motiq.dev/r/animated-accordion.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/animated-accordion.json"
     },
     {
       "name": "animated-button",
@@ -1847,10 +1847,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
-      "url": "https://motionstack.dev/r/animated-button.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-button.json"
+      "url": "https://motiq.dev/r/animated-button.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/animated-button.json"
     },
     {
       "name": "rotating-text",
@@ -1872,10 +1872,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
-      "url": "https://motionstack.dev/r/rotating-text.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/rotating-text.json"
+      "url": "https://motiq.dev/r/rotating-text.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/rotating-text.json"
     },
     {
       "name": "animated-list",
@@ -1897,10 +1897,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
-      "url": "https://motionstack.dev/r/animated-list.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-list.json"
+      "url": "https://motiq.dev/r/animated-list.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/animated-list.json"
     },
     {
       "name": "animated-grid",
@@ -1923,10 +1923,10 @@
         "tailwind-merge"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
-      "url": "https://motionstack.dev/r/animated-grid.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-grid.json"
+      "url": "https://motiq.dev/r/animated-grid.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/animated-grid.json"
     },
     {
       "name": "animated-icons",
@@ -1948,10 +1948,10 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
-      "url": "https://motionstack.dev/r/animated-icons.json",
-      "install": "npx shadcn@latest add https://motionstack.dev/r/animated-icons.json"
+      "url": "https://motiq.dev/r/animated-icons.json",
+      "install": "npx shadcn@latest add https://motiq.dev/r/animated-icons.json"
     }
   ]
 }

@@ -11,7 +11,7 @@ import {
   getStatusMeta,
   statusVars,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                       */

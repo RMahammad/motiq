@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { formatNumber, useAnimatedNumber, useReducedMotion } from "@/lib/motionstack";
+import { formatNumber, useAnimatedNumber, useReducedMotion } from "@/lib/motiq";
 
 type KpiState = "idle" | "loading" | "error";
 

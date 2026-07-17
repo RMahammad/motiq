@@ -13,7 +13,7 @@ import {
   statusVars,
   streamItemVariants,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* --------------------------------------------------------------------------
  * CommentThread — a review/collaboration discussion that is more than stacked

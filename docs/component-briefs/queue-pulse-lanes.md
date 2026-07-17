@@ -10,7 +10,7 @@
 - **API sketch:** `lanes?`, `safeArea?`, `density?`, `intensity?`, `speed?`, `interactive?`, `pauseWhenHidden?`, `reducedMotion?`, `className`, `children?`.
 - **Accessibility:** decorative → `aria-hidden`; blocked/delayed via glyph + cap, not color; safe-area quiet; static reduced-motion snapshot conveys state.
 - **Performance:** CSS/WAAPI only, no per-frame React state; pulse count scales with throughput but capped; pause offscreen/tab-hidden; mobile fewer lanes.
-- **Dependencies:** `@motionstack/utils` + `@motionstack/primitives`. No new deps.
+- **Dependencies:** `@motiq/utils` + `@motiq/primitives`. No new deps.
 - **Similarity concern:** low (differentiator is queue semantics + congestion rhythm; must avoid neon-trail aesthetic).
 - **Tier:** Free.
 - **Release criteria:** congestion visibly changes rhythm, non-color blocked signal, reduced-motion snapshot, offscreen pause, light+dark, responsive, clean-room.

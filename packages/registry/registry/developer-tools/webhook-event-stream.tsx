@@ -15,7 +15,7 @@ import {
   formatNumber,
   formatTimestamp as defaultFormatTimestamp,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /**
  * WebhookEventStream — a presentation-only console for a stream of outbound

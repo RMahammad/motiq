@@ -10,7 +10,7 @@ import {
   formatTimestamp as defaultFormatTimestamp,
   statusVars,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* --------------------------------------------------------------------------
  * MessageDeliveryStates — a chat/message list whose differentiator is an honest,

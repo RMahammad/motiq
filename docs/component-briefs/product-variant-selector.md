@@ -9,6 +9,6 @@
 - **API sketch:** `<ProductVariantSelector groups value onChange onPriceChange onImageChange formatPrice loadingAvailability />`; option = { value, label, swatch?, image?, priceAdjustment?, availability, inventoryState, disabledReason?, recommended?, metadata? }.
 - **Accessibility:** `role=radiogroup/radio` where appropriate; text labels for swatches; unavailable reason via aria; keyboard arrows; focus-visible; price changes in text; reduced motion.
 - **Mobile:** compact stacked groups, wrap long labels, localization-safe price formatting.
-- **Dependencies:** motion + `@motionstack/{utils,primitives}`.
+- **Dependencies:** motion + `@motiq/{utils,primitives}`.
 - **Similarity concern:** common commerce pattern; clean-room, original API (app-supplied inventory, no fake scarcity/discounts). Low.
 - **Release criteria:** 6 tests (controlled selection, unavailable combo, disabled reason, price-change callback, keyboard selection, loading availability) + axe; rapid gate.

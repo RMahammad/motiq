@@ -10,7 +10,7 @@
 - **API sketch:** `nodes?`, `connections?`, `activeNodeIds?`, `activeConnectionIds?`, `safeArea?` ({x,y,w,h} 0–1), `density?`, `depth?`, `intensity?`, `speed?`, `interactive?` (pointer reveals local neighbors), `pauseWhenHidden?`, `reducedMotion?`, `className`, `children?`. Ships deterministic fictional default topology.
 - **Accessibility:** decorative → `aria-hidden`; failed state = glyph + ring, never color alone; foreground content readable over safe area; forced-colors fallback to CanvasText edges.
 - **Performance:** CSS/WAAPI only, no per-frame React state; pause offscreen + tab-hidden; mobile drops far depth layer + thins density.
-- **Dependencies:** `@motionstack/utils` + `@motionstack/primitives`. No new deps.
+- **Dependencies:** `@motiq/utils` + `@motiq/primitives`. No new deps.
 - **Similarity concern:** low–moderate (must not resemble any specific library's node-graph/beams effect; differentiator is workflow state + safe-area adaptation).
 - **Tier:** Free.
 - **Release criteria:** SSR-stable, reduced-motion static, non-color failure signal, no loop when paused, light+dark, foreground-readable, responsive, clean-room.

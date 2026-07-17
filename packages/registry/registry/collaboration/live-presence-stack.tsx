@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence, type Transition } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, useVisibilityPause } from "@/lib/motionstack";
+import { useReducedMotion, useVisibilityPause } from "@/lib/motiq";
 
 /* --------------------------------------------------------------------------
  * LivePresenceStack — a live avatar stack for collaborative workspaces.

@@ -3,16 +3,16 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { useControllableState, useReducedMotion, type StatusTone } from "@/lib/motionstack";
+import { useControllableState, useReducedMotion, type StatusTone } from "@/lib/motiq";
 
 import {
   LivePresenceStack,
   type PresenceUser,
-} from "@/components/motionstack/live-presence-stack";
+} from "@/components/motiq/live-presence-stack";
 import {
   TypingAndPresence,
   type Participant,
-} from "@/components/motionstack/typing-and-presence";
+} from "@/components/motiq/typing-and-presence";
 import {
   ApprovalWorkflow,
   type ApprovalWorkflowData,
@@ -21,16 +21,16 @@ import {
   type Reviewer,
   type WorkflowStage,
   type Decision,
-} from "@/components/motionstack/approval-workflow";
+} from "@/components/motiq/approval-workflow";
 import {
   CommentThread,
   type Comment,
   type CommentAuthor,
-} from "@/components/motionstack/comment-thread";
+} from "@/components/motiq/comment-thread";
 import {
   ActivityStream,
   type ActivityEvent,
-} from "@/components/motionstack/activity-stream";
+} from "@/components/motiq/activity-stream";
 
 /* --------------------------------------------------------------------------
  * CollaborativeLaunchHero — an editable hero block for collaboration / review

@@ -10,7 +10,7 @@
 - **API sketch:** `points?`, `thresholds?`, `activeRegion?`, `comparisonRegions?`, `safeArea?`, `density?` (grid resolution), `intensity?`, `speed?`, `interactive?`, `pauseWhenHidden?`, `reducedMotion?`, `className`, `children?`.
 - **Accessibility:** decorative → `aria-hidden`; threshold/active carried by band weight + label option, not color alone; safe area readable; reduced-motion = static field.
 - **Performance:** single canvas + rAF for drift + eased field transitions; grid resolution capped; DPR-capped; pause offscreen/tab-hidden; mobile coarser grid. No per-frame React state.
-- **Dependencies:** `@motionstack/utils` + `@motionstack/primitives`. Canvas native — no global WebGL dep.
+- **Dependencies:** `@motiq/utils` + `@motiq/primitives`. Canvas native — no global WebGL dep.
 - **Similarity concern:** moderate (must not resemble known topo-shader effects; differentiator is data-driven field + threshold semantics).
 - **Tier:** Pro.
 - **Release criteria:** contours provably respond to data, deterministic SSR, smooth data transitions, reduced-motion static, light+dark, mobile-stable, no shader-uniform API, clean-room.

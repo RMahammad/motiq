@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, useVisibilityPause } from "@/lib/motionstack";
+import { useReducedMotion, useVisibilityPause } from "@/lib/motiq";
 
 /**
  * DeploymentPipeline — an accessible, reduced-motion-safe visualization of a

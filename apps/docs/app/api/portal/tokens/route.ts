@@ -2,7 +2,7 @@
 //
 // There is NO real customer login yet. This route is therefore gated hard:
 //   - It only works in `development` / `private-preview` launch modes, AND only
-//     when MOTIONSTACK_ENABLE_DEV_ADMIN=1. In `public-beta`/`launched` it 404s so
+//     when MOTIQ_ENABLE_DEV_ADMIN=1. In `public-beta`/`launched` it 404s so
 //     it can never run in a paid production. With the flag off it 403s.
 //   - It requires an explicit `customerId` in the request body. This is a CLEAR
 //     PREVIEW LIMITATION: a production version resolves the customer from an
@@ -26,9 +26,9 @@ function forbidden(): NextResponse | null {
   if (commerce.launchMode === "launched" || commerce.launchMode === "public-beta") {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
-  if (process.env.MOTIONSTACK_ENABLE_DEV_ADMIN !== "1") {
+  if (process.env.MOTIQ_ENABLE_DEV_ADMIN !== "1") {
     return NextResponse.json(
-      { error: "dev-admin-disabled", hint: "set MOTIONSTACK_ENABLE_DEV_ADMIN=1" },
+      { error: "dev-admin-disabled", hint: "set MOTIQ_ENABLE_DEV_ADMIN=1" },
       { status: 403 },
     );
   }

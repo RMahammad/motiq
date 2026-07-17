@@ -21,8 +21,8 @@ function forbiddenInProd(): NextResponse | null {
   if (commerce.launchMode === "launched" || commerce.launchMode === "public-beta") {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
-  if (process.env.MOTIONSTACK_ENABLE_DEV_ADMIN !== "1") {
-    return NextResponse.json({ error: "dev-admin-disabled", hint: "set MOTIONSTACK_ENABLE_DEV_ADMIN=1" }, { status: 403 });
+  if (process.env.MOTIQ_ENABLE_DEV_ADMIN !== "1") {
+    return NextResponse.json({ error: "dev-admin-disabled", hint: "set MOTIQ_ENABLE_DEV_ADMIN=1" }, { status: 403 });
   }
   return null;
 }

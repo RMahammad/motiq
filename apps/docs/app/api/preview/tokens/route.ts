@@ -4,7 +4,7 @@
 // There is NO real customer login yet, so it is gated exactly like the portal
 // token route:
 //   - `launched` / `public-beta` → 404 (never runs in a paid production).
-//   - Otherwise requires MOTIONSTACK_ENABLE_DEV_ADMIN=1, else 403. This flag is the
+//   - Otherwise requires MOTIQ_ENABLE_DEV_ADMIN=1, else 403. This flag is the
 //     interim stand-in for "a valid activation authorizes the session". Once real
 //     auth exists, an activated customer's authenticated session authorizes this
 //     instead of the dev flag.
@@ -30,9 +30,9 @@ function forbidden(): NextResponse | null {
   if (commerce.launchMode === "launched" || commerce.launchMode === "public-beta") {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
-  if (process.env.MOTIONSTACK_ENABLE_DEV_ADMIN !== "1") {
+  if (process.env.MOTIQ_ENABLE_DEV_ADMIN !== "1") {
     return NextResponse.json(
-      { error: "preview-tokens-disabled", hint: "set MOTIONSTACK_ENABLE_DEV_ADMIN=1" },
+      { error: "preview-tokens-disabled", hint: "set MOTIQ_ENABLE_DEV_ADMIN=1" },
       { status: 403 },
     );
   }

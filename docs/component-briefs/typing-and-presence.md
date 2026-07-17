@@ -12,6 +12,6 @@
 - **API sketch:** `<TypingAndPresence participants typingParticipantIds context maxVisible mode compact onParticipantSelect renderParticipant formatActivity announceTyping />`; participant = { id, displayName, avatar?, presenceState, typingState?, activeContext?, lastActiveTime?, color?, role?, connectionState? }.
 - **Accessibility:** presence as shape + text; initials avatar fallback; **non-spamming** polite live region (debounced 500 ms, voices the settled typing summary + reconnection, never every keystroke); `announceTyping` opt-out; keyboard overflow list; touch-friendly detail panel; reduced motion; no colour-only presence.
 - **Mobile:** wraps to stacked rows; floating-panel is a full-width-capped card with touch-target rows.
-- **Dependencies:** motion + `@motionstack/{utils,primitives}` (useReducedMotion, useVisibilityPause, statusVars).
+- **Dependencies:** motion + `@motiq/{utils,primitives}` (useReducedMotion, useVisibilityPause, statusVars).
 - **Similarity concern:** typing indicators are ubiquitous; clean-room — original fused presence+typing API, restrained-a11y framing, and the pause-when-hidden low-energy motion. Low.
 - **Release criteria:** typecheck + rendered interaction across modes/themes/reduced-motion; 2 targeted tests (`typingSummary` grammar + render/axe). Rapid gate.

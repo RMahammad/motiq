@@ -69,16 +69,16 @@ if ((mode === "launched" || mode === "public-beta") && !commerce.checkoutEnabled
 } else if (mode === "launched" || mode === "public-beta") {
   add("checkout-provider", commerce.checkoutProvider && commerce.checkoutProvider !== "none", true, "Checkout provider must not be 'none'/dev.");
   add("pricing-finalized", cfg.pricingFinalized === true, true, "Prices are placeholders until pricingFinalized.");
-  add("webhook-secret", !!env.MOTIONSTACK_WEBHOOK_SECRET, true, "MOTIONSTACK_WEBHOOK_SECRET must be set.");
+  add("webhook-secret", !!env.MOTIQ_WEBHOOK_SECRET, true, "MOTIQ_WEBHOOK_SECRET must be set.");
   add("support-contact", !!commerce.supportEmail, true, "commerce.supportEmail must be set.");
-  add("no-dev-tokens", env.MOTIONSTACK_ALLOW_DEV_TOKENS !== "1", true, "Dev tokens must be disabled in production.");
-  add("durable-store", env.MOTIONSTACK_STORE !== "dev-mock", true, "Durable store required (MOTIONSTACK_STORE must not be dev-mock).");
-  add("legal-approved", env.MOTIONSTACK_LEGAL_APPROVED === "1" && !legalStillDraft(), true, "Legal pages remain drafts / not owner-approved.");
+  add("no-dev-tokens", env.MOTIQ_ALLOW_DEV_TOKENS !== "1", true, "Dev tokens must be disabled in production.");
+  add("durable-store", env.MOTIQ_STORE !== "dev-mock", true, "Durable store required (MOTIQ_STORE must not be dev-mock).");
+  add("legal-approved", env.MOTIQ_LEGAL_APPROVED === "1" && !legalStillDraft(), true, "Legal pages remain drafts / not owner-approved.");
   add("rate-limiting", true, true, "Rate limiting enabled (non-development mode).");
 } else if (mode === "private-preview") {
   add("private-registry", commerce.privateRegistryEnabled === true, true, "Private registry must be enabled for preview delivery.");
-  add("durable-store", env.MOTIONSTACK_STORE !== "dev-mock", true, "Durable store required for preview audit.");
-  add("preview-terms", env.MOTIONSTACK_PREVIEW_TERMS_APPROVED === "1", true, "Owner-approved preview terms required (MOTIONSTACK_PREVIEW_TERMS_APPROVED=1).");
+  add("durable-store", env.MOTIQ_STORE !== "dev-mock", true, "Durable store required for preview audit.");
+  add("preview-terms", env.MOTIQ_PREVIEW_TERMS_APPROVED === "1", true, "Owner-approved preview terms required (MOTIQ_PREVIEW_TERMS_APPROVED=1).");
   add("access-flow", commerce.waitlistEnabled === true, false, "Access-request/waitlist flow should be enabled.");
 } else {
   add("development", true, false, `launchMode=${mode}: only the no-public-Pro check is enforced.`);

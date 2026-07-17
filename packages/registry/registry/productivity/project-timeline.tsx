@@ -52,7 +52,7 @@ import {
   useOptimisticAction,
   statusVars,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */

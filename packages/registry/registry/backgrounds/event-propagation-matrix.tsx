@@ -11,7 +11,7 @@ import {
   contentFalloff,
   labelHiddenAt,
   type ContentPlacement,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */

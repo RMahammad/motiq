@@ -8,34 +8,34 @@ import {
   statusVars,
   useControllableState,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 import {
   AgentRunTimeline,
   type AgentRun,
   type RunStep,
   type RunStatus,
   type StepStatus,
-} from "@/components/motionstack/agent-run-timeline";
+} from "@/components/motiq/agent-run-timeline";
 import {
   ToolCallActivity,
   type ToolCall,
   type ToolCallStatus,
-} from "@/components/motionstack/tool-call-activity";
+} from "@/components/motiq/tool-call-activity";
 import {
   SourceCitationRail,
   CitationMarker,
   type CitationSource,
-} from "@/components/motionstack/source-citation-rail";
+} from "@/components/motiq/source-citation-rail";
 import {
   PromptComposer,
   type ComposerStatus,
-} from "@/components/motionstack/prompt-composer";
+} from "@/components/motiq/prompt-composer";
 
 /**
  * AgentOperationsHero — an editable two-column hero for AI / automation products.
  * The left column carries the outcome copy (eyebrow + a real headline + support
  * copy + two CTAs); the right column carries a *live, reduced* preview of a real
- * agent workflow, composed from released Motionstack components at deliberately
+ * agent workflow, composed from released Motiq components at deliberately
  * trimmed complexity:
  *   • PromptComposer     — ONE compact prompt input
  *   • AgentRunTimeline   — ONE workflow, three steps, with approval + retry

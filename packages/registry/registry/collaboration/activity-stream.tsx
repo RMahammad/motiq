@@ -14,7 +14,7 @@ import {
   scrollIntoViewWithin,
   streamItemVariants,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* --------------------------------------------------------------------------
  * ActivityStream — a collaboration activity feed that is more than a dotted

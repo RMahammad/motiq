@@ -3,12 +3,12 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { getStatusMeta, statusVars } from "@/lib/motionstack";
+import { getStatusMeta, statusVars } from "@/lib/motiq";
 
 import {
   LivePresenceStack,
   type PresenceUser,
-} from "@/components/motionstack/live-presence-stack";
+} from "@/components/motiq/live-presence-stack";
 import {
   ApprovalWorkflow,
   type ApprovalWorkflowData,
@@ -18,18 +18,18 @@ import {
   type Decision,
   type Reviewer,
   type WorkflowStage,
-} from "@/components/motionstack/approval-workflow";
+} from "@/components/motiq/approval-workflow";
 import {
   CommentThread,
   type Comment,
   type CommentAuthor,
   type CommentDraft,
-} from "@/components/motionstack/comment-thread";
+} from "@/components/motiq/comment-thread";
 import {
   ActivityStream,
   type ActivityEvent,
   type ActivityActor,
-} from "@/components/motionstack/activity-stream";
+} from "@/components/motiq/activity-stream";
 
 /* --------------------------------------------------------------------------
  * CollaborativeReviewWorkspace — a composed review surface that wires four

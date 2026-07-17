@@ -10,7 +10,7 @@
 - **API sketch:** `services?`, `regions?`, `connections?`, `activity?`, `safeArea?`, `density?`, `intensity?`, `speed?`, `interactive?`, `pauseWhenHidden?`, `reducedMotion?`, `className`, `children?`. No raw shader uniforms exposed.
 - **Accessibility:** decorative → `aria-hidden`; degraded/error carried by dash + glyph + label, not color; safe-area kept quiet; reduced-motion renders a static snapshot of current health/topology.
 - **Performance:** single canvas + rAF, DPR-capped, packet count scales with `density` and container size; pause offscreen/tab-hidden; mobile reduces packet budget. No per-frame React state.
-- **Dependencies:** `@motionstack/utils` + `@motionstack/primitives`. Canvas is native — **no global WebGL dep**, isolated to this item.
+- **Dependencies:** `@motiq/utils` + `@motiq/primitives`. Canvas is native — **no global WebGL dep**, isolated to this item.
 - **Similarity concern:** moderate (must avoid resembling known "world map beams" effects; differentiator is service-graph + health semantics).
 - **Tier:** Pro.
 - **Release criteria:** deterministic static fallback, reduced-motion snapshot, offscreen pause, DPR/resize correct, non-color health, light+dark, clean-room.

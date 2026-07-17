@@ -4,23 +4,23 @@ import * as React from "react";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useReducedMotion, statusVars, type StatusTone } from "@/lib/motionstack";
+import { useReducedMotion, statusVars, type StatusTone } from "@/lib/motiq";
 
-import { KpiNumberMorph } from "@/components/motionstack/kpi-number-morph";
+import { KpiNumberMorph } from "@/components/motiq/kpi-number-morph";
 import {
   DataRefreshState,
   type RefreshState,
-} from "@/components/motionstack/data-refresh-state";
+} from "@/components/motiq/data-refresh-state";
 import {
   FilterResultTransition,
   type ActiveFilter,
   type FilterResultState,
-} from "@/components/motionstack/filter-result-transition";
+} from "@/components/motiq/filter-result-transition";
 import {
   StreamingDataRows,
   type Column,
   type StreamingTableState,
-} from "@/components/motionstack/streaming-data-rows";
+} from "@/components/motiq/streaming-data-rows";
 
 /**
  * LiveOperationsDashboard — a composed, app-controlled operations dashboard that

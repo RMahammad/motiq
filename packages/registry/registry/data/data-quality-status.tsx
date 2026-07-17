@@ -11,7 +11,7 @@ import {
   statusVars,
   formatTimestamp as sharedFormatTimestamp,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                       */

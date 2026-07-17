@@ -8,7 +8,7 @@
 - **API sketch:** `run` ({title,status,startedAt?,endedAt?,currentStepId?,steps[],summary?}), `activeStepId?`, `onActiveStepChange?`, `onRetryStep?`, `onCancelRun?`, `onResumeRun?`, `onApprove?`, `onReject?`, `compactCompleted?`, `followActive?`, `renderStepDetails?`, `renderOutput?`, `formatTimestamp?`.
 - **Accessibility:** run + step status in text + icon; semantic ordered/structured list; keyboard step expansion + approval; reduced-motion; live-region discipline (announce lifecycle, not frames); focus preserved after retry/approval.
 - **Mobile:** steps stack; details wrap; actions reachable.
-- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives` (getStatusMeta, statusVars, useDisclosure, useCopy, formatTimestamp, useReducedMotion). No new deps.
+- **Dependencies:** motion + `@motiq/utils` + `@motiq/primitives` (getStatusMeta, statusVars, useDisclosure, useCopy, formatTimestamp, useReducedMotion). No new deps.
 - **Similarity concern:** distinct from Tool Call Activity (this is run-level orchestration with stages/approvals/outputs, not a flat call list). Low–moderate.
 - **Tier:** Pro.
 - **Release criteria:** rapid gate (render, interactions, responsive, themes, reduced-motion, keyboard, typecheck, build, registry validate, clean-fixture, no console/hydration errors, clean-room). Never claims a step succeeded without supplied state.

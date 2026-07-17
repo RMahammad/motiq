@@ -8,7 +8,7 @@ import {
   type ServiceData,
   type ConnectionData,
 } from "@/registry/backgrounds/runtime-signal-map";
-import { type ContentPlacement } from "@/lib/motionstack";
+import { type ContentPlacement } from "@/lib/motiq";
 import { HeroContent, useHeroPlacement, type HeroCopy } from "../_components/hero-frame";
 import {
   ControlBar,

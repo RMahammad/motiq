@@ -26,7 +26,7 @@ function fmtDate(ms: number | null): string {
 export function PreviewTokenWidget({
   customerId,
   tokens,
-  tokenEnvVar = "MOTIONSTACK_TOKEN",
+  tokenEnvVar = "MOTIQ_TOKEN",
 }: {
   customerId: string;
   tokens: TokenMeta[];

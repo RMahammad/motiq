@@ -1,24 +1,24 @@
 <div align="center">
 
-# Motionstack
+# Motiq
 
 **Beautiful, production-ready animated React & shadcn components — installed as editable source.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
-[![CI](https://github.com/RMahammad/motionstack/actions/workflows/ci.yml/badge.svg)](https://github.com/RMahammad/motionstack/actions/workflows/ci.yml)
+[![CI](https://github.com/RMahammad/motiq/actions/workflows/ci.yml/badge.svg)](https://github.com/RMahammad/motiq/actions/workflows/ci.yml)
 ![React](https://img.shields.io/badge/React-19-149ECA.svg?logo=react&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-black.svg?logo=next.js&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-38BDF8.svg?logo=tailwindcss&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6.svg?logo=typescript&logoColor=white)
 
-[Documentation](https://motionstack.dev) · [Browse the catalog](https://motionstack.dev/components) · [Contributing](./CONTRIBUTING.md)
+[Documentation](https://motiq.dev) · [Browse the catalog](https://motiq.dev/components) · [Contributing](./CONTRIBUTING.md)
 
 </div>
 
 ---
 
-Motionstack is a **free, open-source** collection of animated components for React and
+Motiq is a **free, open-source** collection of animated components for React and
 Next.js. You don't `npm install` a runtime package — you install the **real, editable
 source** straight into your project with the [shadcn](https://ui.shadcn.com/docs/cli)
 CLI, then own and adapt it however you like.
@@ -27,7 +27,7 @@ Every component is **accessible (WCAG 2.2 AA)**, **reduced-motion-safe**, **RSC-
 and themed through semantic design tokens — the parts that copy-paste snippet kits
 usually skip.
 
-## Why Motionstack
+## Why Motiq
 
 - **You own the code.** Components are copied into your repo as source — no black-box
   dependency, no runtime lock-in, no license checks.
@@ -45,18 +45,18 @@ usually skip.
 Install any component with the shadcn CLI:
 
 ```bash
-npx shadcn@latest add https://motionstack.dev/r/<component>.json
+npx shadcn@latest add https://motiq.dev/r/<component>.json
 ```
 
 For example:
 
 ```bash
-npx shadcn@latest add https://motionstack.dev/r/ai-response-stream.json
+npx shadcn@latest add https://motiq.dev/r/ai-response-stream.json
 ```
 
 The command copies the component's source (and any shared helpers it needs) into your
 project. Browse every component with a live preview and its install command at
-**[motionstack.dev](https://motionstack.dev)**.
+**[motiq.dev](https://motiq.dev)**.
 
 > **Requirements:** React 19, a Tailwind CSS v4 setup, and a shadcn-initialized project
 > (`npx shadcn@latest init`).
@@ -79,7 +79,7 @@ packs — across 17 categories:
 
 …plus Mobile interactions, File workflows, Security & accounts, Communication, and
 animated shadcn primitives. See the full, searchable catalog at
-[motionstack.dev/components](https://motionstack.dev/components).
+[motiq.dev/components](https://motiq.dev/components).
 
 ## Local development
 

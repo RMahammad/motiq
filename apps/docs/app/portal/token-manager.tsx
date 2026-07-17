@@ -23,7 +23,7 @@ function fmtDate(ms: number | null): string {
 export function TokenManager({
   customerId,
   tokens,
-  tokenEnvVar = "MOTIONSTACK_TOKEN",
+  tokenEnvVar = "MOTIQ_TOKEN",
 }: {
   customerId: string;
   tokens: TokenMeta[];

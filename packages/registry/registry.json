@@ -1,13 +1,13 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "motionstack",
-  "homepage": "https://motionstack.dev",
+  "name": "motiq",
+  "homepage": "https://motiq.dev",
   "items": [
     {
       "name": "utils",
       "type": "registry:lib",
       "title": "cn() utility",
-      "description": "Tailwind class-merge helper used by every Motionstack component.",
+      "description": "Tailwind class-merge helper used by every Motiq component.",
       "dependencies": [
         "clsx",
         "tailwind-merge"
@@ -34,7 +34,7 @@
         {
           "path": "registry/lib/motion.ts",
           "type": "registry:lib",
-          "target": "lib/motionstack.ts"
+          "target": "lib/motiq.ts"
         }
       ],
       "meta": {
@@ -51,14 +51,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/ai/ai-response-stream.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/ai-response-stream.tsx"
+          "target": "components/motiq/ai-response-stream.tsx"
         }
       ],
       "meta": {
@@ -86,14 +86,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/developer-tools/deployment-pipeline.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/deployment-pipeline.tsx"
+          "target": "components/motiq/deployment-pipeline.tsx"
         }
       ],
       "meta": {
@@ -121,14 +121,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/collaboration/live-presence-stack.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/live-presence-stack.tsx"
+          "target": "components/motiq/live-presence-stack.tsx"
         }
       ],
       "meta": {
@@ -152,14 +152,14 @@
       "description": "An accessible KPI stat that smoothly morphs between values with a direction-aware trend (arrow + sign, never color alone). Controlled value; locale, compact, and currency formatting; loading and error states. Reduced-motion snaps.",
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/data/kpi-number-morph.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/kpi-number-morph.tsx"
+          "target": "components/motiq/kpi-number-morph.tsx"
         }
       ],
       "meta": {
@@ -185,14 +185,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/ai/tool-call-activity.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/tool-call-activity.tsx"
+          "target": "components/motiq/tool-call-activity.tsx"
         }
       ],
       "meta": {
@@ -220,14 +220,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/developer-tools/live-log-stream.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/live-log-stream.tsx"
+          "target": "components/motiq/live-log-stream.tsx"
         }
       ],
       "meta": {
@@ -255,14 +255,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/collaboration/activity-stream.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/activity-stream.tsx"
+          "target": "components/motiq/activity-stream.tsx"
         }
       ],
       "meta": {
@@ -289,14 +289,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/data/streaming-data-rows.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/streaming-data-rows.tsx"
+          "target": "components/motiq/streaming-data-rows.tsx"
         }
       ],
       "meta": {
@@ -321,14 +321,14 @@
       "description": "A distinctive SVG background of layered topographic contours that flow around configurable focal regions, thinning near a foreground safe area so text stays readable. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. No canvas, no WebGL, no heavy deps.",
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/backgrounds/luminous-topography.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/luminous-topography.tsx"
+          "target": "components/motiq/luminous-topography.tsx"
         }
       ],
       "meta": {
@@ -352,14 +352,14 @@
       "description": "An atmospheric SVG background that renders an application-defined workflow as a topology: nodes with lifecycle status, directed connections, an animated active path, quietly-settled completed paths, and failed nodes marked with a ring + glyph (never color alone). Density thins over a readable safe area. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. No canvas, no WebGL, no heavy deps.",
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/backgrounds/workflow-topology-field.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/workflow-topology-field.tsx"
+          "target": "components/motiq/workflow-topology-field.tsx"
         }
       ],
       "meta": {
@@ -384,14 +384,14 @@
       "description": "A queue/throughput background that renders your lanes rather than decorative streaks: pulses flow through restrained lanes, congestion makes them denser and slower, completed work fades into a tail history band, and blocked/delayed lanes carry a non-color stop cap + glyph. Density thins over a readable safe area. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. SVG + CSS only.",
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/backgrounds/queue-pulse-lanes.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/queue-pulse-lanes.tsx"
+          "target": "components/motiq/queue-pulse-lanes.tsx"
         }
       ],
       "meta": {
@@ -416,14 +416,14 @@
       "description": "A content-aware structural grid for hero sections: the grid quiets inside one or many safe areas (via an SVG mask) so foreground copy stays readable, while detail collects toward the frame edges. Optional perspective skew, highlighted cells, and a restrained accent shimmer. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. SVG + CSS only.",
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/backgrounds/adaptive-safe-zone-grid.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/adaptive-safe-zone-grid.tsx"
+          "target": "components/motiq/adaptive-safe-zone-grid.tsx"
         }
       ],
       "meta": {
@@ -448,14 +448,14 @@
       "description": "An infrastructure-flavored background where signal packets move through an application-defined service topology with health + direction: requests enter at ingress nodes, flow along edges between services grouped into regions, and degraded/error paths are marked without color (dashed strokes + slower/stalled flow + a glyph). One canvas + one rAF loop (no per-frame React state, no WebGL). Deterministic first paint, light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. Clearly-fictional default data.",
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/backgrounds/runtime-signal-map.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/runtime-signal-map.tsx"
+          "target": "components/motiq/runtime-signal-map.tsx"
         }
       ],
       "meta": {
@@ -480,14 +480,14 @@
       "description": "A temporal background where application events propagate through a structured cell matrix (rows = regions/streams, cols = time/lanes) — origin cells light, then neighbors along the grid, so waves step cell-to-cell rather than as free-space circles. Overlaps are damped, failed propagation halts with a non-color glyph, acknowledged events dim, and old events settle into a quiet history layer. SVG + CSS only. Deterministic (SSR-safe), light/dark, reduced-motion shows current relationships statically, forced-colors-safe, offscreen-paused.",
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/backgrounds/event-propagation-matrix.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/event-propagation-matrix.tsx"
+          "target": "components/motiq/event-propagation-matrix.tsx"
         }
       ],
       "meta": {
@@ -512,14 +512,14 @@
       "description": "A data-driven contour background: contours are computed from application-supplied values (signed focal pressure points, thresholds, active/comparison regions) via canvas marching-squares — not a random topographic texture. Emphasized thresholds get heavier bands, the active region brightens, comparison regions ghost, and data changes ease smoothly. One canvas + one rAF loop (no per-frame React state, no WebGL). Deterministic first paint, intentional light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused.",
       "dependencies": [],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/backgrounds/data-contour-surface.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/data-contour-surface.tsx"
+          "target": "components/motiq/data-contour-surface.tsx"
         }
       ],
       "meta": {
@@ -546,18 +546,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/agent-run-timeline",
-        "@motionstack/prompt-composer",
-        "@motionstack/tool-call-activity",
-        "@motionstack/source-citation-rail",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/agent-run-timeline",
+        "@motiq/prompt-composer",
+        "@motiq/tool-call-activity",
+        "@motiq/source-citation-rail",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/agent-operations-hero.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/agent-operations-hero.tsx"
+          "target": "components/motiq/blocks/agent-operations-hero.tsx"
         }
       ],
       "meta": {
@@ -584,18 +584,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/environment-switcher",
-        "@motionstack/deployment-pipeline",
-        "@motionstack/live-log-stream",
-        "@motionstack/api-request-inspector",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/environment-switcher",
+        "@motiq/deployment-pipeline",
+        "@motiq/live-log-stream",
+        "@motiq/api-request-inspector",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/deployment-control-hero.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/deployment-control-hero.tsx"
+          "target": "components/motiq/blocks/deployment-control-hero.tsx"
         }
       ],
       "meta": {
@@ -622,18 +622,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/kpi-number-morph",
-        "@motionstack/data-refresh-state",
-        "@motionstack/streaming-data-rows",
-        "@motionstack/filter-result-transition",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/kpi-number-morph",
+        "@motiq/data-refresh-state",
+        "@motiq/streaming-data-rows",
+        "@motiq/filter-result-transition",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/live-data-command-hero.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/live-data-command-hero.tsx"
+          "target": "components/motiq/blocks/live-data-command-hero.tsx"
         }
       ],
       "meta": {
@@ -660,19 +660,19 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/live-presence-stack",
-        "@motionstack/typing-and-presence",
-        "@motionstack/approval-workflow",
-        "@motionstack/comment-thread",
-        "@motionstack/activity-stream",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/live-presence-stack",
+        "@motiq/typing-and-presence",
+        "@motiq/approval-workflow",
+        "@motiq/comment-thread",
+        "@motiq/activity-stream",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/collaborative-launch-hero.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/collaborative-launch-hero.tsx"
+          "target": "components/motiq/blocks/collaborative-launch-hero.tsx"
         }
       ],
       "meta": {
@@ -699,14 +699,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/ai/source-citation-rail.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/source-citation-rail.tsx"
+          "target": "components/motiq/source-citation-rail.tsx"
         }
       ],
       "meta": {
@@ -734,14 +734,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/developer-tools/api-request-inspector.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/api-request-inspector.tsx"
+          "target": "components/motiq/api-request-inspector.tsx"
         }
       ],
       "meta": {
@@ -770,14 +770,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/collaboration/approval-workflow.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/approval-workflow.tsx"
+          "target": "components/motiq/approval-workflow.tsx"
         }
       ],
       "meta": {
@@ -804,14 +804,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/data/filter-result-transition.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/filter-result-transition.tsx"
+          "target": "components/motiq/filter-result-transition.tsx"
         }
       ],
       "meta": {
@@ -838,14 +838,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/mobile/swipe-action-row.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/swipe-action-row.tsx"
+          "target": "components/motiq/swipe-action-row.tsx"
         }
       ],
       "meta": {
@@ -872,14 +872,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/ai/agent-run-timeline.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/agent-run-timeline.tsx"
+          "target": "components/motiq/agent-run-timeline.tsx"
         }
       ],
       "meta": {
@@ -908,14 +908,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/developer-tools/environment-switcher.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/environment-switcher.tsx"
+          "target": "components/motiq/environment-switcher.tsx"
         }
       ],
       "meta": {
@@ -944,14 +944,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/collaboration/comment-thread.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/comment-thread.tsx"
+          "target": "components/motiq/comment-thread.tsx"
         }
       ],
       "meta": {
@@ -978,14 +978,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/data/data-refresh-state.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/data-refresh-state.tsx"
+          "target": "components/motiq/data-refresh-state.tsx"
         }
       ],
       "meta": {
@@ -1013,14 +1013,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/mobile/mobile-filter-sheet.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/mobile-filter-sheet.tsx"
+          "target": "components/motiq/mobile-filter-sheet.tsx"
         }
       ],
       "meta": {
@@ -1049,14 +1049,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/ai/prompt-composer.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/prompt-composer.tsx"
+          "target": "components/motiq/prompt-composer.tsx"
         }
       ],
       "meta": {
@@ -1085,14 +1085,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/developer-tools/webhook-event-stream.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/webhook-event-stream.tsx"
+          "target": "components/motiq/webhook-event-stream.tsx"
         }
       ],
       "meta": {
@@ -1121,14 +1121,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/collaboration/mention-suggestions.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/mention-suggestions.tsx"
+          "target": "components/motiq/mention-suggestions.tsx"
         }
       ],
       "meta": {
@@ -1156,14 +1156,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/data/data-quality-status.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/data-quality-status.tsx"
+          "target": "components/motiq/data-quality-status.tsx"
         }
       ],
       "meta": {
@@ -1191,14 +1191,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/mobile/keyboard-safe-form.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/keyboard-safe-form.tsx"
+          "target": "components/motiq/keyboard-safe-form.tsx"
         }
       ],
       "meta": {
@@ -1227,14 +1227,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/file/file-upload-pipeline.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/file-upload-pipeline.tsx"
+          "target": "components/motiq/file-upload-pipeline.tsx"
         }
       ],
       "meta": {
@@ -1262,14 +1262,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/commerce/product-variant-selector.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/product-variant-selector.tsx"
+          "target": "components/motiq/product-variant-selector.tsx"
         }
       ],
       "meta": {
@@ -1297,14 +1297,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/security/passkey-setup-flow.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/passkey-setup-flow.tsx"
+          "target": "components/motiq/passkey-setup-flow.tsx"
         }
       ],
       "meta": {
@@ -1332,14 +1332,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/communication/message-delivery-states.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/message-delivery-states.tsx"
+          "target": "components/motiq/message-delivery-states.tsx"
         }
       ],
       "meta": {
@@ -1367,14 +1367,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/productivity/kanban-card-movement.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/kanban-card-movement.tsx"
+          "target": "components/motiq/kanban-card-movement.tsx"
         }
       ],
       "meta": {
@@ -1403,14 +1403,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/file/multi-file-queue.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/multi-file-queue.tsx"
+          "target": "components/motiq/multi-file-queue.tsx"
         }
       ],
       "meta": {
@@ -1439,14 +1439,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/commerce/cart-item-transition.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/cart-item-transition.tsx"
+          "target": "components/motiq/cart-item-transition.tsx"
         }
       ],
       "meta": {
@@ -1475,14 +1475,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/security/two-factor-setup-flow.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/two-factor-setup-flow.tsx"
+          "target": "components/motiq/two-factor-setup-flow.tsx"
         }
       ],
       "meta": {
@@ -1510,14 +1510,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/communication/typing-and-presence.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/typing-and-presence.tsx"
+          "target": "components/motiq/typing-and-presence.tsx"
         }
       ],
       "meta": {
@@ -1545,14 +1545,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/productivity/task-dependency-map.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/task-dependency-map.tsx"
+          "target": "components/motiq/task-dependency-map.tsx"
         }
       ],
       "meta": {
@@ -1581,14 +1581,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/file/processing-timeline.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/processing-timeline.tsx"
+          "target": "components/motiq/processing-timeline.tsx"
         }
       ],
       "meta": {
@@ -1616,14 +1616,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/commerce/checkout-progress.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/checkout-progress.tsx"
+          "target": "components/motiq/checkout-progress.tsx"
         }
       ],
       "meta": {
@@ -1651,14 +1651,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/security/session-security-center.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/session-security-center.tsx"
+          "target": "components/motiq/session-security-center.tsx"
         }
       ],
       "meta": {
@@ -1686,14 +1686,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/communication/thread-expansion.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/thread-expansion.tsx"
+          "target": "components/motiq/thread-expansion.tsx"
         }
       ],
       "meta": {
@@ -1721,14 +1721,14 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/productivity/project-timeline.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/project-timeline.tsx"
+          "target": "components/motiq/project-timeline.tsx"
         }
       ],
       "meta": {
@@ -1756,18 +1756,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/agent-run-timeline",
-        "@motionstack/tool-call-activity",
-        "@motionstack/ai-response-stream",
-        "@motionstack/source-citation-rail",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/agent-run-timeline",
+        "@motiq/tool-call-activity",
+        "@motiq/ai-response-stream",
+        "@motiq/source-citation-rail",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/ai-agent-workspace.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/ai-agent-workspace.tsx"
+          "target": "components/motiq/blocks/ai-agent-workspace.tsx"
         }
       ],
       "meta": {
@@ -1792,18 +1792,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/environment-switcher",
-        "@motionstack/deployment-pipeline",
-        "@motionstack/live-log-stream",
-        "@motionstack/api-request-inspector",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/environment-switcher",
+        "@motiq/deployment-pipeline",
+        "@motiq/live-log-stream",
+        "@motiq/api-request-inspector",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/deployment-command-center.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/deployment-command-center.tsx"
+          "target": "components/motiq/blocks/deployment-command-center.tsx"
         }
       ],
       "meta": {
@@ -1828,18 +1828,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/live-presence-stack",
-        "@motionstack/approval-workflow",
-        "@motionstack/comment-thread",
-        "@motionstack/activity-stream",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/live-presence-stack",
+        "@motiq/approval-workflow",
+        "@motiq/comment-thread",
+        "@motiq/activity-stream",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/collaborative-review-workspace.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/collaborative-review-workspace.tsx"
+          "target": "components/motiq/blocks/collaborative-review-workspace.tsx"
         }
       ],
       "meta": {
@@ -1864,18 +1864,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/kpi-number-morph",
-        "@motionstack/data-refresh-state",
-        "@motionstack/filter-result-transition",
-        "@motionstack/streaming-data-rows",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/kpi-number-morph",
+        "@motiq/data-refresh-state",
+        "@motiq/filter-result-transition",
+        "@motiq/streaming-data-rows",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/live-operations-dashboard.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/live-operations-dashboard.tsx"
+          "target": "components/motiq/blocks/live-operations-dashboard.tsx"
         }
       ],
       "meta": {
@@ -1900,18 +1900,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/agent-run-timeline",
-        "@motionstack/tool-call-activity",
-        "@motionstack/ai-response-stream",
-        "@motionstack/source-citation-rail",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/agent-run-timeline",
+        "@motiq/tool-call-activity",
+        "@motiq/ai-response-stream",
+        "@motiq/source-citation-rail",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/ai-agent-workspace.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/ai-agent-workspace.tsx"
+          "target": "components/motiq/blocks/ai-agent-workspace.tsx"
         }
       ],
       "meta": {
@@ -1935,18 +1935,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/environment-switcher",
-        "@motionstack/deployment-pipeline",
-        "@motionstack/live-log-stream",
-        "@motionstack/api-request-inspector",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/environment-switcher",
+        "@motiq/deployment-pipeline",
+        "@motiq/live-log-stream",
+        "@motiq/api-request-inspector",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/deployment-command-center.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/deployment-command-center.tsx"
+          "target": "components/motiq/blocks/deployment-command-center.tsx"
         }
       ],
       "meta": {
@@ -1970,18 +1970,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/live-presence-stack",
-        "@motionstack/approval-workflow",
-        "@motionstack/comment-thread",
-        "@motionstack/activity-stream",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/live-presence-stack",
+        "@motiq/approval-workflow",
+        "@motiq/comment-thread",
+        "@motiq/activity-stream",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/collaborative-review-workspace.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/collaborative-review-workspace.tsx"
+          "target": "components/motiq/blocks/collaborative-review-workspace.tsx"
         }
       ],
       "meta": {
@@ -2005,18 +2005,18 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/kpi-number-morph",
-        "@motionstack/data-refresh-state",
-        "@motionstack/filter-result-transition",
-        "@motionstack/streaming-data-rows",
-        "@motionstack/utils",
-        "@motionstack/primitives"
+        "@motiq/kpi-number-morph",
+        "@motiq/data-refresh-state",
+        "@motiq/filter-result-transition",
+        "@motiq/streaming-data-rows",
+        "@motiq/utils",
+        "@motiq/primitives"
       ],
       "files": [
         {
           "path": "registry/blocks/live-operations-dashboard.tsx",
           "type": "registry:block",
-          "target": "components/motionstack/blocks/live-operations-dashboard.tsx"
+          "target": "components/motiq/blocks/live-operations-dashboard.tsx"
         }
       ],
       "meta": {
@@ -2040,13 +2040,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
       "files": [
         {
           "path": "registry/text/kinetic-emphasis.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/kinetic-emphasis.tsx"
+          "target": "components/motiq/kinetic-emphasis.tsx"
         }
       ],
       "meta": {
@@ -2073,13 +2073,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
       "files": [
         {
           "path": "registry/text/blur-text.tsx",
           "type": "registry:component",
-          "target": "components/motionstack/blur-text.tsx"
+          "target": "components/motiq/blur-text.tsx"
         }
       ],
       "meta": {
@@ -2104,13 +2104,13 @@
         "tailwind-merge"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
       "files": [
         {
           "path": "registry/creative/spotlight-card.tsx",
           "type": "registry:ui",
-          "target": "components/motionstack/spotlight-card.tsx"
+          "target": "components/motiq/spotlight-card.tsx"
         }
       ],
       "meta": {
@@ -2136,13 +2136,13 @@
         "@radix-ui/react-dialog"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
       "files": [
         {
           "path": "registry/animated-shadcn/animated-dialog.tsx",
           "type": "registry:ui",
-          "target": "components/motionstack/animated-dialog.tsx"
+          "target": "components/motiq/animated-dialog.tsx"
         }
       ],
       "meta": {
@@ -2167,13 +2167,13 @@
         "@radix-ui/react-tabs"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
       "files": [
         {
           "path": "registry/animated-shadcn/animated-tabs.tsx",
           "type": "registry:ui",
-          "target": "components/motionstack/animated-tabs.tsx"
+          "target": "components/motiq/animated-tabs.tsx"
         }
       ],
       "meta": {
@@ -2198,13 +2198,13 @@
         "@radix-ui/react-accordion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
       "files": [
         {
           "path": "registry/animated-shadcn/animated-accordion.tsx",
           "type": "registry:ui",
-          "target": "components/motionstack/animated-accordion.tsx"
+          "target": "components/motiq/animated-accordion.tsx"
         }
       ],
       "meta": {
@@ -2228,13 +2228,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
       "files": [
         {
           "path": "registry/animated-shadcn/animated-button.tsx",
           "type": "registry:ui",
-          "target": "components/motionstack/animated-button.tsx"
+          "target": "components/motiq/animated-button.tsx"
         }
       ],
       "meta": {
@@ -2258,13 +2258,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
       "files": [
         {
           "path": "registry/text/rotating-text.tsx",
           "type": "registry:ui",
-          "target": "components/motionstack/rotating-text.tsx"
+          "target": "components/motiq/rotating-text.tsx"
         }
       ],
       "meta": {
@@ -2288,13 +2288,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
       "files": [
         {
           "path": "registry/creative/animated-list.tsx",
           "type": "registry:ui",
-          "target": "components/motionstack/animated-list.tsx"
+          "target": "components/motiq/animated-list.tsx"
         }
       ],
       "meta": {
@@ -2319,13 +2319,13 @@
         "tailwind-merge"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
       "files": [
         {
           "path": "registry/backgrounds/animated-grid.tsx",
           "type": "registry:ui",
-          "target": "components/motionstack/animated-grid.tsx"
+          "target": "components/motiq/animated-grid.tsx"
         }
       ],
       "meta": {
@@ -2349,13 +2349,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motionstack/utils"
+        "@motiq/utils"
       ],
       "files": [
         {
           "path": "registry/icons/animated-icons.tsx",
           "type": "registry:ui",
-          "target": "components/motionstack/animated-icons.tsx"
+          "target": "components/motiq/animated-icons.tsx"
         }
       ],
       "meta": {

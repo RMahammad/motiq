@@ -1,10 +1,10 @@
 "use client";
 
 /**
- * Motionstack shared primitives — small, dependency-free hooks/utilities reused
+ * Motiq shared primitives — small, dependency-free hooks/utilities reused
  * across workflow components so each one doesn't re-implement reduced-motion,
  * offscreen pausing, or locale number formatting. Installs as editable source
- * (`@motionstack/primitives`). No React import of `motion` here — this is engine-
+ * (`@motiq/primitives`). No React import of `motion` here — this is engine-
  * agnostic. Clean-room original.
  */
 import * as React from "react";

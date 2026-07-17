@@ -15,7 +15,7 @@ import {
   scrollIntoViewWithin,
   streamItemVariants,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
 /**
  * AgentRunTimeline — a run-level view of a multi-step agent / automation run.

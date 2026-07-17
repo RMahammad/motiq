@@ -10,7 +10,7 @@
 - **API sketch:** `events?`, `rows?`/`cols?` (matrix shape), `safeArea?`, `density?`, `intensity?`, `speed?`, `interactive?`, `pauseWhenHidden?`, `reducedMotion?`, `className`, `children?`.
 - **Accessibility:** decorative → `aria-hidden`; failed/ack via glyph + weight, not color; safe area quiet; reduced-motion static relationship view; forced-colors fallback.
 - **Performance:** CSS/WAAPI cell animations, no per-frame React state; active-event cap; pause offscreen/tab-hidden; mobile smaller matrix.
-- **Dependencies:** `@motionstack/utils` + `@motionstack/primitives`. No new deps.
+- **Dependencies:** `@motiq/utils` + `@motiq/primitives`. No new deps.
 - **Similarity concern:** low–moderate (structured matrix propagation is the differentiator vs generic ripples).
 - **Tier:** Pro.
 - **Release criteria:** structured (non-circle) propagation, overlap without chaos, non-color failed, history layer, reduced-motion static relationships, offscreen pause, light+dark, clean-room.

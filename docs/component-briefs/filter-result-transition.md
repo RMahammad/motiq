@@ -9,7 +9,7 @@
 - **API sketch:** `items`, `getItemId`, `renderItem`, `resultLabel?`, `loading?`, `error?`, `empty?`, `activeFilters?`, `onRemoveFilter?`, `onClearFilters?`, `focusedItemId?`, `onFocusFallback?`, `layout?`, `staggerLimit?`.
 - **Accessibility:** updated result-count announcement (polite); semantic result container; clear active filters + keyboard-accessible removal; focus fallback when focused item disappears; reduced-motion; loading/error/empty labels + empty-state guidance.
 - **Mobile:** single-column, filter chips wrap, tap-remove.
-- **Dependencies:** motion (AnimatePresence + layout) + `@motionstack/utils` + `@motionstack/primitives` (useAnimatedNumber, streamItemVariants, useReducedMotion). No new deps.
+- **Dependencies:** motion (AnimatePresence + layout) + `@motiq/utils` + `@motiq/primitives` (useAnimatedNumber, streamItemVariants, useReducedMotion). No new deps.
 - **Similarity concern:** generic; differentiate via focus-fallback contract + stagger cap + count morph. Low.
 - **Tier:** Free.
 - **Release criteria:** rapid gate + focus-fallback + stable item identity + count update verified.

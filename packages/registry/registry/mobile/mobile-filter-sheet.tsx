@@ -35,7 +35,7 @@ import {
 } from "motion/react";
 
 import { cn } from "@/lib/utils";
-import { useControllableState, useAnimatedNumber, useReducedMotion } from "@/lib/motionstack";
+import { useControllableState, useAnimatedNumber, useReducedMotion } from "@/lib/motiq";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                      */

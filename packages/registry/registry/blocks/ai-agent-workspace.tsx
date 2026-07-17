@@ -8,34 +8,34 @@ import {
   statusVars,
   useControllableState,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 import {
   AgentRunTimeline,
   type AgentRun,
   type RunStep,
   type RunStage,
   type StepStatus,
-} from "@/components/motionstack/agent-run-timeline";
+} from "@/components/motiq/agent-run-timeline";
 import {
   ToolCallActivity,
   type ToolCall,
   type ToolCallStatus,
-} from "@/components/motionstack/tool-call-activity";
+} from "@/components/motiq/tool-call-activity";
 import {
   AiResponseStream,
   type ResponseSegment,
   type StreamState,
   type StreamSource,
-} from "@/components/motionstack/ai-response-stream";
+} from "@/components/motiq/ai-response-stream";
 import {
   SourceCitationRail,
   CitationMarker,
   type CitationSource,
-} from "@/components/motionstack/source-citation-rail";
+} from "@/components/motiq/source-citation-rail";
 
 /**
  * AiAgentWorkspace — a composed, full-page AI agent workspace built from four
- * released Motionstack components:
+ * released Motiq components:
  *   • AgentRunTimeline    — the run, step-by-step, with approval + retry controls
  *   • ToolCallActivity    — the same run seen as a live tool-call inspector
  *   • AiResponseStream    — the streamed answer, with inline citations

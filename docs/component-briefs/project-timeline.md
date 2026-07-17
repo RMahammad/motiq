@@ -12,7 +12,7 @@
 - **API sketch:** `items`, `groups?`, `today?`, `scale?/defaultScale?/onScaleChange?`, `selectedItemId?/defaultSelectedItemId?/onSelectedItemChange?`, `mode?/defaultMode?/onModeChange?`, `compact?`, `onMove?`, `onResize?`, `nudgeUnits?`, `loading?`, `empty?`, `renderItem?`, `renderDetails?`, `label?`, `reducedMotion?`.
 - **Accessibility:** structured grouped **list fallback**; roving-tabindex keyboard item navigation (arrows across/between lanes, Enter/Space select); selected-item details with date ranges as text; status not colour-only; decorative aria-hidden connectors; reduced motion; focus preserved across scale change / move / rollback; 200% zoom; touch targets.
 - **Mobile:** list mode presents every item + action; ≥44px targets; detail panel stacks under the primary view.
-- **Dependencies:** motion + `@motionstack/utils` (cn) + `@motionstack/primitives` (`useReducedMotion`, `useControllableState`, `useOptimisticAction`, `statusVars`). No charting/Gantt/date library. No new deps.
+- **Dependencies:** motion + `@motiq/utils` (cn) + `@motiq/primitives` (`useReducedMotion`, `useControllableState`, `useOptimisticAction`, `statusVars`). No charting/Gantt/date library. No new deps.
 - **Similarity concern:** avoid a generic Gantt clone; differentiate via readable phase lanes, milestone inspection, delay/blocked surfacing, textual schedule authority, and a first-class list/mobile mode. Low.
 - **Tier:** Pro.
 - **Release criteria:** rapid gate + scale change (day/week/month) + item selection & details + status filter + keyboard navigation + list-fallback + jump-to-today + optimistic reschedule/rollback verified.

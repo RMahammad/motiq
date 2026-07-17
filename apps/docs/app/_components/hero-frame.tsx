@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { resolveComposition, type ContentPlacement } from "@/lib/motionstack";
+import { resolveComposition, type ContentPlacement } from "@/lib/motiq";
 
 /**
  * Side-by-side (copy-left / graphic-right) is kept on desktop AND tablet so they

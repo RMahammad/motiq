@@ -13,11 +13,11 @@ function deriveOrigin(): string {
   try {
     return new URL(product.registryBaseUrl).origin;
   } catch {
-    return "https://motionstack.dev";
+    return "https://motiq.dev";
   }
 }
 
-/** Absolute origin of the deployed site, no trailing slash (e.g. https://motionstack.dev). */
+/** Absolute origin of the deployed site, no trailing slash (e.g. https://motiq.dev). */
 export const siteUrl = deriveOrigin();
 
 /** Resolve a root-relative path to an absolute URL against the site origin. */

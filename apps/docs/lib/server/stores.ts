@@ -3,7 +3,7 @@
 // file-backed adapter WITHOUT touching callers. Access decisions FAIL CLOSED.
 //
 // The bundled durable adapter persists JSON under a git-ignored data dir
-// (MOTIONSTACK_DATA_DIR, default apps/docs/.data). This survives restarts — it is
+// (MOTIQ_DATA_DIR, default apps/docs/.data). This survives restarts — it is
 // "durable" for staging — but a production deployment should point the same
 // interface at a real DB (tracked open decision, docs/45). The in-memory dev
 // adapter is for tests/local only and MUST NOT run in a launched/beta prod.
@@ -24,7 +24,7 @@ import type {
 // Durable JSON collection (one file per collection; atomic write via rename).
 // ---------------------------------------------------------------------------
 function dataDir(): string {
-  return process.env.MOTIONSTACK_DATA_DIR ? resolve(process.env.MOTIONSTACK_DATA_DIR) : resolve(process.cwd(), ".data");
+  return process.env.MOTIQ_DATA_DIR ? resolve(process.env.MOTIQ_DATA_DIR) : resolve(process.cwd(), ".data");
 }
 
 class JsonCollection<T extends { id: string }> {
@@ -260,7 +260,7 @@ const fileStores: Stores = {
 /**
  * Active store bundle. The durable file-backed stores are the default so that
  * grant/rotate/revoke survive restarts (needed for the staging lifecycle).
- * Set MOTIONSTACK_STORE=dev-mock only for isolated unit tests.
+ * Set MOTIQ_STORE=dev-mock only for isolated unit tests.
  */
 export function stores(): Stores {
   return fileStores;

@@ -8,23 +8,23 @@ import {
   useControllableState,
   statusVars,
   type StatusTone,
-} from "@/lib/motionstack";
+} from "@/lib/motiq";
 
-import { KpiNumberMorph } from "@/components/motionstack/kpi-number-morph";
+import { KpiNumberMorph } from "@/components/motiq/kpi-number-morph";
 import {
   DataRefreshState,
   type RefreshState,
-} from "@/components/motionstack/data-refresh-state";
+} from "@/components/motiq/data-refresh-state";
 import {
   StreamingDataRows,
   type Column,
   type StreamingTableState,
-} from "@/components/motionstack/streaming-data-rows";
+} from "@/components/motiq/streaming-data-rows";
 import {
   FilterResultTransition,
   type ActiveFilter,
   type FilterResultState,
-} from "@/components/motionstack/filter-result-transition";
+} from "@/components/motiq/filter-result-transition";
 
 /**
  * LiveDataCommandHero — an editable hero block for operational-data products.

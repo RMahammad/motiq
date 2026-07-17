@@ -9,7 +9,7 @@
 - **API sketch:** `events: ActivityEvent[]`, `groupBy?`, `collapseThreshold?`, `filters?`, `onFiltersChange?`, `unreadAfter?`, `onEventAction?`, `renderMetadata?`, `formatTimestamp?`.
 - **Accessibility:** semantic list; meaningful event text; avatar alt; keyboard-accessible groups; unread/status not color-only; reduced-motion insertion.
 - **Mobile:** single column, wraps, avatars scale.
-- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives`. No new deps.
+- **Dependencies:** motion + `@motiq/utils` + `@motiq/primitives`. No new deps.
 - **Similarity concern:** timelines are generic; differentiate via grouping + unread + filtering. Low.
 - **Tier:** Free.
 - **Release criteria:** rapid gate.

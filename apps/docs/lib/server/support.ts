@@ -182,8 +182,8 @@ export function sanitizeSupportRequest(input: unknown): SupportRequest | null {
 // lib/server/stores.ts so a real DB can replace it behind the same interface.
 // ---------------------------------------------------------------------------
 function dataDir(): string {
-  return process.env.MOTIONSTACK_DATA_DIR
-    ? resolve(process.env.MOTIONSTACK_DATA_DIR)
+  return process.env.MOTIQ_DATA_DIR
+    ? resolve(process.env.MOTIQ_DATA_DIR)
     : resolve(process.cwd(), ".data");
 }
 

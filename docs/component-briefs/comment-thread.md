@@ -9,7 +9,7 @@
 - **API sketch:** `comments`, `currentUser`, `onAddComment`, `onReply`, `onEdit`, `onDelete`, `onResolve`, `onReopen`, `onReact`, `onRetry`, `permissions?`, `sort?`, `unreadAfter?`, `renderAttachment?`, `renderComposer?`, `formatTimestamp?`.
 - **Accessibility:** semantic article/list; author + timestamp + edited state; reply relationships; keyboard-accessible actions; mention suggestions accessible; focus preserved during optimistic updates; error association; reduced-motion; SR-safe reaction counts; resolved status in text.
 - **Mobile:** single column; composer sticky; replies indent modestly.
-- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives` (useDisclosure, useCopy, formatTimestamp, streamItemVariants, useReducedMotion). No new deps. Optimistic state handled internally.
+- **Dependencies:** motion + `@motiq/utils` + `@motiq/primitives` (useDisclosure, useCopy, formatTimestamp, streamItemVariants, useReducedMotion). No new deps. Optimistic state handled internally.
 - **Similarity concern:** comment UIs are common; differentiate via optimistic send/retry + resolve/reopen + mention + unread. Low–moderate.
 - **Tier:** Pro.
 - **Release criteria:** rapid gate + add/reply/optimistic-pending/failed-retry/resolve-reopen/reply-relationships/focus-preservation verified.

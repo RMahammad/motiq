@@ -8,7 +8,7 @@
 // honest limitations + support links.
 //
 // NO billing controls, NO fake invoices/prices/discounts/purchases. SECRET-SAFE:
-// every command/example uses the ${MOTIONSTACK_TOKEN} placeholder; the only place a
+// every command/example uses the ${MOTIQ_TOKEN} placeholder; the only place a
 // real token appears is the one-time reveal in the client token widget.
 import type { Metadata } from "next";
 import Link from "next/link";

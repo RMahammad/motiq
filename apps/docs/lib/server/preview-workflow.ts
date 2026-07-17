@@ -68,12 +68,12 @@ export interface PreviewRequestRecord {
 
 // ---------------------------------------------------------------------------
 // Durable JSON collection — mirrors lib/server/stores.ts's file-backed pattern
-// (atomic write via temp-file rename; same MOTIONSTACK_DATA_DIR). Kept local
+// (atomic write via temp-file rename; same MOTIQ_DATA_DIR). Kept local
 // because stores.ts's collection helper is not exported and shared files are
 // not edited here. A real DB replaces this behind the same access shape (docs/45).
 // ---------------------------------------------------------------------------
 function dataDir(): string {
-  return process.env.MOTIONSTACK_DATA_DIR ? resolve(process.env.MOTIONSTACK_DATA_DIR) : resolve(process.cwd(), ".data");
+  return process.env.MOTIQ_DATA_DIR ? resolve(process.env.MOTIQ_DATA_DIR) : resolve(process.cwd(), ".data");
 }
 
 class JsonCollection<T extends { id: string }> {

@@ -10,7 +10,7 @@
 - **API sketch:** `headline?`, `copy?`, `primaryCta?`, `secondaryCta?`, `phase?`, `onPhaseChange?`, `dataset?` (deterministic default), `background?` (optional Workflow Topology Field), `reducedMotion?`, `className`.
 - **Accessibility:** headline is the section heading (h1/h2); CTAs are real links/buttons; status text + glyph, never color alone; approval controls keyboard-reachable; reduced-motion inherited from children; no focus theft.
 - **Performance:** static initial state; children pause offscreen; no `Date.now`/`Math.random` at render (fixed epoch constants). SSR-safe.
-- **Dependencies:** motion + `@motionstack/utils` + `@motionstack/primitives`; registryDependencies: agent-run-timeline, prompt-composer, tool-call-activity, source-citation-rail (+ ai-response-stream). No new deps.
+- **Dependencies:** motion + `@motiq/utils` + `@motiq/primitives`; registryDependencies: agent-run-timeline, prompt-composer, tool-call-activity, source-citation-rail (+ ai-response-stream). No new deps.
 - **Similarity concern:** low (composition of own components; not a landing-page template clone).
 - **Tier:** Pro. **Kind:** block.
 - **Release criteria:** all six states render, editable block, no simulated model/CoT, mobile stacks, reduced-motion, keyboard approval, no hydration errors, clean-room.

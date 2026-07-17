@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { AiResponseStream, type ResponseSegment, type StreamState, type StreamSource } from "@/registry/ai/ai-response-stream";
-import { useVisibilityPause } from "@/lib/motionstack";
+import { useVisibilityPause } from "@/lib/motiq";
 
 /* -------------------------------------------------------------------------
  * DEMO ONLY. This preview fakes a stream from local, clearly-fictional data —

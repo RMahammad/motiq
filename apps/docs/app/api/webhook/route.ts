@@ -3,7 +3,7 @@
 //   POST /api/webhook
 //     Body: RAW text (a signed provider/staging event) — read UNPARSED so the
 //           signature is verified against the exact bytes.
-//     Header: x-motionstack-signature: <hex HMAC-SHA256 of the raw body>
+//     Header: x-motiq-signature: <hex HMAC-SHA256 of the raw body>
 //                                    (or "sha256=<hex>")
 //
 //   200 processed / duplicate / ignored (idempotent, non-retryable)
@@ -29,10 +29,10 @@ import {
 
 export const dynamic = "force-dynamic"; // a webhook must never be cached
 
-const SIGNATURE_HEADER = "x-motionstack-signature";
+const SIGNATURE_HEADER = "x-motiq-signature";
 
 export async function POST(req: Request) {
-  const secret = process.env.MOTIONSTACK_WEBHOOK_SECRET ?? null;
+  const secret = process.env.MOTIQ_WEBHOOK_SECRET ?? null;
 
   // Fail closed: with no signing secret we cannot verify anything, so reject.
   if (!secret) {
