@@ -57,11 +57,26 @@ function isProtectedItem(item) {
   return tier !== "free";
 }
 
-/** Rewrite any namespaced registry dep to the configured namespace. */
+/** Bare item name from an authoring dep like "@scope/utils" → "utils". */
+function bareName(dep) {
+  return dep.startsWith("@") && dep.includes("/") ? dep.split("/").slice(1).join("/") : dep;
+}
+
+/** Rewrite any namespaced registry dep to the configured namespace (display form). */
 function normalizeDeps(deps) {
-  return (deps || []).map((d) =>
-    d.startsWith("@") && d.includes("/") ? `${NAMESPACE}/${d.split("/").slice(1).join("/")}` : d,
-  );
+  return (deps || []).map((d) => (d.startsWith("@") && d.includes("/") ? `${NAMESPACE}/${bareName(d)}` : d));
+}
+
+/**
+ * Machine-consumed registryDependencies as absolute URLs. This lets a stranger run
+ * `npx shadcn add <item-url>` and have every transitive item resolve with ZERO
+ * consumer config — no `registries` entry in their components.json. (A bare
+ * `@motiq/utils` would only resolve if they first registered the namespace.)
+ * The whole catalog is free, so every dep points at the public base URL.
+ * Non-namespaced deps (shadcn built-ins like "button") pass through untouched.
+ */
+function depsToUrls(deps) {
+  return (deps || []).map((d) => (d.startsWith("@") && d.includes("/") ? `${BASE_URL}/${bareName(d)}.json` : d));
 }
 
 /** Build one installable registry-item document with file contents inlined. */
@@ -73,7 +88,8 @@ function buildItem(item) {
   return {
     $schema: ITEM_SCHEMA,
     ...item,
-    registryDependencies: normalizeDeps(item.registryDependencies),
+    // URLs so `npx shadcn add <this item's url>` resolves every dep zero-config.
+    registryDependencies: depsToUrls(item.registryDependencies),
     files,
   };
 }
@@ -122,7 +138,7 @@ writeFileSync(
       $schema: manifest.$schema,
       name: config.shortName.toLowerCase(),
       homepage: config.documentationUrl,
-      items: manifest.items.map((it) => ({ ...it, registryDependencies: normalizeDeps(it.registryDependencies) })),
+      items: manifest.items.map((it) => ({ ...it, registryDependencies: depsToUrls(it.registryDependencies) })),
     },
     null,
     2,

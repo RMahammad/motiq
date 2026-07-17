@@ -9,7 +9,7 @@
     "@radix-ui/react-accordion"
   ],
   "registryDependencies": [
-    "@motiq/utils"
+    "https://motiq.dev/r/utils.json"
   ],
   "files": [
     {

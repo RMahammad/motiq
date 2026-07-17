@@ -6,8 +6,8 @@
   "description": "An atmospheric SVG background that renders an application-defined workflow as a topology: nodes with lifecycle status, directed connections, an animated active path, quietly-settled completed paths, and failed nodes marked with a ring + glyph (never color alone). Density thins over a readable safe area. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. No canvas, no WebGL, no heavy deps.",
   "dependencies": [],
   "registryDependencies": [
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {

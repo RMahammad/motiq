@@ -8,12 +8,12 @@
     "motion"
   ],
   "registryDependencies": [
-    "@motiq/environment-switcher",
-    "@motiq/deployment-pipeline",
-    "@motiq/live-log-stream",
-    "@motiq/api-request-inspector",
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/environment-switcher.json",
+    "https://motiq.dev/r/deployment-pipeline.json",
+    "https://motiq.dev/r/live-log-stream.json",
+    "https://motiq.dev/r/api-request-inspector.json",
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {

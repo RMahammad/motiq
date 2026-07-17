@@ -8,12 +8,12 @@
     "motion"
   ],
   "registryDependencies": [
-    "@motiq/live-presence-stack",
-    "@motiq/approval-workflow",
-    "@motiq/comment-thread",
-    "@motiq/activity-stream",
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/live-presence-stack.json",
+    "https://motiq.dev/r/approval-workflow.json",
+    "https://motiq.dev/r/comment-thread.json",
+    "https://motiq.dev/r/activity-stream.json",
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {

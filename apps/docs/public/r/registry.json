@@ -53,8 +53,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -88,8 +88,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -123,8 +123,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -154,8 +154,8 @@
       "description": "An accessible KPI stat that smoothly morphs between values with a direction-aware trend (arrow + sign, never color alone). Controlled value; locale, compact, and currency formatting; loading and error states. Reduced-motion snaps.",
       "dependencies": [],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -187,8 +187,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -222,8 +222,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -257,8 +257,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -291,8 +291,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -323,8 +323,8 @@
       "description": "A distinctive SVG background of layered topographic contours that flow around configurable focal regions, thinning near a foreground safe area so text stays readable. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. No canvas, no WebGL, no heavy deps.",
       "dependencies": [],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -354,8 +354,8 @@
       "description": "An atmospheric SVG background that renders an application-defined workflow as a topology: nodes with lifecycle status, directed connections, an animated active path, quietly-settled completed paths, and failed nodes marked with a ring + glyph (never color alone). Density thins over a readable safe area. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. No canvas, no WebGL, no heavy deps.",
       "dependencies": [],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -386,8 +386,8 @@
       "description": "A queue/throughput background that renders your lanes rather than decorative streaks: pulses flow through restrained lanes, congestion makes them denser and slower, completed work fades into a tail history band, and blocked/delayed lanes carry a non-color stop cap + glyph. Density thins over a readable safe area. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. SVG + CSS only.",
       "dependencies": [],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -418,8 +418,8 @@
       "description": "A content-aware structural grid for hero sections: the grid quiets inside one or many safe areas (via an SVG mask) so foreground copy stays readable, while detail collects toward the frame edges. Optional perspective skew, highlighted cells, and a restrained accent shimmer. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. SVG + CSS only.",
       "dependencies": [],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -450,8 +450,8 @@
       "description": "An infrastructure-flavored background where signal packets move through an application-defined service topology with health + direction: requests enter at ingress nodes, flow along edges between services grouped into regions, and degraded/error paths are marked without color (dashed strokes + slower/stalled flow + a glyph). One canvas + one rAF loop (no per-frame React state, no WebGL). Deterministic first paint, light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. Clearly-fictional default data.",
       "dependencies": [],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -482,8 +482,8 @@
       "description": "A temporal background where application events propagate through a structured cell matrix (rows = regions/streams, cols = time/lanes) — origin cells light, then neighbors along the grid, so waves step cell-to-cell rather than as free-space circles. Overlaps are damped, failed propagation halts with a non-color glyph, acknowledged events dim, and old events settle into a quiet history layer. SVG + CSS only. Deterministic (SSR-safe), light/dark, reduced-motion shows current relationships statically, forced-colors-safe, offscreen-paused.",
       "dependencies": [],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -514,8 +514,8 @@
       "description": "A data-driven contour background: contours are computed from application-supplied values (signed focal pressure points, thresholds, active/comparison regions) via canvas marching-squares — not a random topographic texture. Emphasized thresholds get heavier bands, the active region brightens, comparison regions ghost, and data changes ease smoothly. One canvas + one rAF loop (no per-frame React state, no WebGL). Deterministic first paint, intentional light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused.",
       "dependencies": [],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -548,12 +548,12 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/agent-run-timeline",
-        "@motiq/prompt-composer",
-        "@motiq/tool-call-activity",
-        "@motiq/source-citation-rail",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/agent-run-timeline.json",
+        "https://motiq.dev/r/prompt-composer.json",
+        "https://motiq.dev/r/tool-call-activity.json",
+        "https://motiq.dev/r/source-citation-rail.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -586,12 +586,12 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/environment-switcher",
-        "@motiq/deployment-pipeline",
-        "@motiq/live-log-stream",
-        "@motiq/api-request-inspector",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/environment-switcher.json",
+        "https://motiq.dev/r/deployment-pipeline.json",
+        "https://motiq.dev/r/live-log-stream.json",
+        "https://motiq.dev/r/api-request-inspector.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -624,12 +624,12 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/kpi-number-morph",
-        "@motiq/data-refresh-state",
-        "@motiq/streaming-data-rows",
-        "@motiq/filter-result-transition",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/kpi-number-morph.json",
+        "https://motiq.dev/r/data-refresh-state.json",
+        "https://motiq.dev/r/streaming-data-rows.json",
+        "https://motiq.dev/r/filter-result-transition.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -662,13 +662,13 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/live-presence-stack",
-        "@motiq/typing-and-presence",
-        "@motiq/approval-workflow",
-        "@motiq/comment-thread",
-        "@motiq/activity-stream",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/live-presence-stack.json",
+        "https://motiq.dev/r/typing-and-presence.json",
+        "https://motiq.dev/r/approval-workflow.json",
+        "https://motiq.dev/r/comment-thread.json",
+        "https://motiq.dev/r/activity-stream.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -701,8 +701,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -736,8 +736,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -772,8 +772,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -806,8 +806,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -840,8 +840,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -874,8 +874,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -910,8 +910,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -946,8 +946,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -980,8 +980,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1015,8 +1015,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1051,8 +1051,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1087,8 +1087,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1123,8 +1123,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1158,8 +1158,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1193,8 +1193,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1229,8 +1229,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1264,8 +1264,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1299,8 +1299,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1334,8 +1334,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1369,8 +1369,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1405,8 +1405,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1441,8 +1441,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1477,8 +1477,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1512,8 +1512,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1547,8 +1547,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1583,8 +1583,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1618,8 +1618,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1653,8 +1653,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1688,8 +1688,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1723,8 +1723,8 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1758,12 +1758,12 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/agent-run-timeline",
-        "@motiq/tool-call-activity",
-        "@motiq/ai-response-stream",
-        "@motiq/source-citation-rail",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/agent-run-timeline.json",
+        "https://motiq.dev/r/tool-call-activity.json",
+        "https://motiq.dev/r/ai-response-stream.json",
+        "https://motiq.dev/r/source-citation-rail.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1794,12 +1794,12 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/environment-switcher",
-        "@motiq/deployment-pipeline",
-        "@motiq/live-log-stream",
-        "@motiq/api-request-inspector",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/environment-switcher.json",
+        "https://motiq.dev/r/deployment-pipeline.json",
+        "https://motiq.dev/r/live-log-stream.json",
+        "https://motiq.dev/r/api-request-inspector.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1830,12 +1830,12 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/live-presence-stack",
-        "@motiq/approval-workflow",
-        "@motiq/comment-thread",
-        "@motiq/activity-stream",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/live-presence-stack.json",
+        "https://motiq.dev/r/approval-workflow.json",
+        "https://motiq.dev/r/comment-thread.json",
+        "https://motiq.dev/r/activity-stream.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1866,12 +1866,12 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/kpi-number-morph",
-        "@motiq/data-refresh-state",
-        "@motiq/filter-result-transition",
-        "@motiq/streaming-data-rows",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/kpi-number-morph.json",
+        "https://motiq.dev/r/data-refresh-state.json",
+        "https://motiq.dev/r/filter-result-transition.json",
+        "https://motiq.dev/r/streaming-data-rows.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1902,12 +1902,12 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/agent-run-timeline",
-        "@motiq/tool-call-activity",
-        "@motiq/ai-response-stream",
-        "@motiq/source-citation-rail",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/agent-run-timeline.json",
+        "https://motiq.dev/r/tool-call-activity.json",
+        "https://motiq.dev/r/ai-response-stream.json",
+        "https://motiq.dev/r/source-citation-rail.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1937,12 +1937,12 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/environment-switcher",
-        "@motiq/deployment-pipeline",
-        "@motiq/live-log-stream",
-        "@motiq/api-request-inspector",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/environment-switcher.json",
+        "https://motiq.dev/r/deployment-pipeline.json",
+        "https://motiq.dev/r/live-log-stream.json",
+        "https://motiq.dev/r/api-request-inspector.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -1972,12 +1972,12 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/live-presence-stack",
-        "@motiq/approval-workflow",
-        "@motiq/comment-thread",
-        "@motiq/activity-stream",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/live-presence-stack.json",
+        "https://motiq.dev/r/approval-workflow.json",
+        "https://motiq.dev/r/comment-thread.json",
+        "https://motiq.dev/r/activity-stream.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -2007,12 +2007,12 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/kpi-number-morph",
-        "@motiq/data-refresh-state",
-        "@motiq/filter-result-transition",
-        "@motiq/streaming-data-rows",
-        "@motiq/utils",
-        "@motiq/primitives"
+        "https://motiq.dev/r/kpi-number-morph.json",
+        "https://motiq.dev/r/data-refresh-state.json",
+        "https://motiq.dev/r/filter-result-transition.json",
+        "https://motiq.dev/r/streaming-data-rows.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
       ],
       "files": [
         {
@@ -2042,7 +2042,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils"
+        "https://motiq.dev/r/utils.json"
       ],
       "files": [
         {
@@ -2075,7 +2075,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils"
+        "https://motiq.dev/r/utils.json"
       ],
       "files": [
         {
@@ -2106,7 +2106,7 @@
         "tailwind-merge"
       ],
       "registryDependencies": [
-        "@motiq/utils"
+        "https://motiq.dev/r/utils.json"
       ],
       "files": [
         {
@@ -2138,7 +2138,7 @@
         "@radix-ui/react-dialog"
       ],
       "registryDependencies": [
-        "@motiq/utils"
+        "https://motiq.dev/r/utils.json"
       ],
       "files": [
         {
@@ -2169,7 +2169,7 @@
         "@radix-ui/react-tabs"
       ],
       "registryDependencies": [
-        "@motiq/utils"
+        "https://motiq.dev/r/utils.json"
       ],
       "files": [
         {
@@ -2200,7 +2200,7 @@
         "@radix-ui/react-accordion"
       ],
       "registryDependencies": [
-        "@motiq/utils"
+        "https://motiq.dev/r/utils.json"
       ],
       "files": [
         {
@@ -2230,7 +2230,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils"
+        "https://motiq.dev/r/utils.json"
       ],
       "files": [
         {
@@ -2260,7 +2260,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils"
+        "https://motiq.dev/r/utils.json"
       ],
       "files": [
         {
@@ -2290,7 +2290,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils"
+        "https://motiq.dev/r/utils.json"
       ],
       "files": [
         {
@@ -2321,7 +2321,7 @@
         "tailwind-merge"
       ],
       "registryDependencies": [
-        "@motiq/utils"
+        "https://motiq.dev/r/utils.json"
       ],
       "files": [
         {
@@ -2351,7 +2351,7 @@
         "motion"
       ],
       "registryDependencies": [
-        "@motiq/utils"
+        "https://motiq.dev/r/utils.json"
       ],
       "files": [
         {

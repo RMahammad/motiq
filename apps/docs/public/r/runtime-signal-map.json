@@ -6,8 +6,8 @@
   "description": "An infrastructure-flavored background where signal packets move through an application-defined service topology with health + direction: requests enter at ingress nodes, flow along edges between services grouped into regions, and degraded/error paths are marked without color (dashed strokes + slower/stalled flow + a glyph). One canvas + one rAF loop (no per-frame React state, no WebGL). Deterministic first paint, light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. Clearly-fictional default data.",
   "dependencies": [],
   "registryDependencies": [
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {

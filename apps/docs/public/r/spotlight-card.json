@@ -9,7 +9,7 @@
     "tailwind-merge"
   ],
   "registryDependencies": [
-    "@motiq/utils"
+    "https://motiq.dev/r/utils.json"
   ],
   "files": [
     {

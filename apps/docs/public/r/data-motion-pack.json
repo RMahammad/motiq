@@ -8,12 +8,12 @@
     "motion"
   ],
   "registryDependencies": [
-    "@motiq/kpi-number-morph",
-    "@motiq/data-refresh-state",
-    "@motiq/filter-result-transition",
-    "@motiq/streaming-data-rows",
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/kpi-number-morph.json",
+    "https://motiq.dev/r/data-refresh-state.json",
+    "https://motiq.dev/r/filter-result-transition.json",
+    "https://motiq.dev/r/streaming-data-rows.json",
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {

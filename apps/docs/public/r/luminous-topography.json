@@ -6,8 +6,8 @@
   "description": "A distinctive SVG background of layered topographic contours that flow around configurable focal regions, thinning near a foreground safe area so text stays readable. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. No canvas, no WebGL, no heavy deps.",
   "dependencies": [],
   "registryDependencies": [
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {

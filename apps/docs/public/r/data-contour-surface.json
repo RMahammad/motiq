@@ -6,8 +6,8 @@
   "description": "A data-driven contour background: contours are computed from application-supplied values (signed focal pressure points, thresholds, active/comparison regions) via canvas marching-squares — not a random topographic texture. Emphasized thresholds get heavier bands, the active region brightens, comparison regions ghost, and data changes ease smoothly. One canvas + one rAF loop (no per-frame React state, no WebGL). Deterministic first paint, intentional light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused.",
   "dependencies": [],
   "registryDependencies": [
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {

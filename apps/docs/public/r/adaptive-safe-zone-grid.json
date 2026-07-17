@@ -6,8 +6,8 @@
   "description": "A content-aware structural grid for hero sections: the grid quiets inside one or many safe areas (via an SVG mask) so foreground copy stays readable, while detail collects toward the frame edges. Optional perspective skew, highlighted cells, and a restrained accent shimmer. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. SVG + CSS only.",
   "dependencies": [],
   "registryDependencies": [
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {

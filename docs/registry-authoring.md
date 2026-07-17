@@ -8,7 +8,7 @@ The registry is the product's delivery mechanism: editable source installed thro
 
 - **Exact `files`** — only the component's own sources.
 - **Exact `dependencies`** — runtime npm deps actually imported.
-- **Exact `registryDependencies`** — other registry items it needs (e.g. `@motiq/utils`, `@motiq/primitives`).
+- **Exact `registryDependencies`** — other registry items it needs. Author them in `registry.json` as namespaced names (`@scope/utils`, `@scope/primitives`); the generator rewrites them to **absolute URLs** (`https://motiq.dev/r/utils.json`) in the emitted payloads so a stranger's `npx shadcn add <url>` resolves every transitive item with zero `components.json` config. The docs UI shows the friendly `@motiq/<name>` form.
 - **`tier`** (free/pro) and **release status**.
 - No docs imports, no preview data, no `@scope/*` internal imports, no `next/*` (unless the item is explicitly framework-specific), no `node:*`, no test helpers, no development adapters, no commercial secrets.
 - Installed source is self-contained and readable — a customer can edit it without the monorepo.

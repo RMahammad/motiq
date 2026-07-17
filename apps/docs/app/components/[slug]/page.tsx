@@ -31,6 +31,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   });
 }
 
+/**
+ * Registry deps ship in the payload as absolute URLs so `npx shadcn add` resolves
+ * them zero-config; show the friendly `@namespace/name` form instead of the URL.
+ */
+function depLabel(dep: string): string {
+  if (!/^https?:\/\//.test(dep)) return dep;
+  const base = dep.split("/").pop()?.replace(/\.json$/, "") ?? dep;
+  return `${product.registryNamespace}/${base}`;
+}
+
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
     <section id={id} className="scroll-mt-20 break-words border-t border-[var(--color-border)] py-8">
@@ -266,7 +276,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           ))}
           {preview.registryDependencies.map((d) => (
             <span key={d} className="rounded-md border border-[var(--color-border)] bg-[var(--color-code-bg)] px-2 py-1 font-mono text-[12.5px] text-[var(--color-code-fg)]">
-              {d}
+              {depLabel(d)}
             </span>
           ))}
         </div>

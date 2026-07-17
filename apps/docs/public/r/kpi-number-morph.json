@@ -6,8 +6,8 @@
   "description": "An accessible KPI stat that smoothly morphs between values with a direction-aware trend (arrow + sign, never color alone). Controlled value; locale, compact, and currency formatting; loading and error states. Reduced-motion snaps.",
   "dependencies": [],
   "registryDependencies": [
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {

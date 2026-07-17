@@ -8,12 +8,12 @@
     "motion"
   ],
   "registryDependencies": [
-    "@motiq/agent-run-timeline",
-    "@motiq/tool-call-activity",
-    "@motiq/ai-response-stream",
-    "@motiq/source-citation-rail",
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/agent-run-timeline.json",
+    "https://motiq.dev/r/tool-call-activity.json",
+    "https://motiq.dev/r/ai-response-stream.json",
+    "https://motiq.dev/r/source-citation-rail.json",
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {

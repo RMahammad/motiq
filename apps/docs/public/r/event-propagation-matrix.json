@@ -6,8 +6,8 @@
   "description": "A temporal background where application events propagate through a structured cell matrix (rows = regions/streams, cols = time/lanes) — origin cells light, then neighbors along the grid, so waves step cell-to-cell rather than as free-space circles. Overlaps are damped, failed propagation halts with a non-color glyph, acknowledged events dim, and old events settle into a quiet history layer. SVG + CSS only. Deterministic (SSR-safe), light/dark, reduced-motion shows current relationships statically, forced-colors-safe, offscreen-paused.",
   "dependencies": [],
   "registryDependencies": [
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {

@@ -6,8 +6,8 @@
   "description": "A queue/throughput background that renders your lanes rather than decorative streaks: pulses flow through restrained lanes, congestion makes them denser and slower, completed work fades into a tail history band, and blocked/delayed lanes carry a non-color stop cap + glyph. Density thins over a readable safe area. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. SVG + CSS only.",
   "dependencies": [],
   "registryDependencies": [
-    "@motiq/utils",
-    "@motiq/primitives"
+    "https://motiq.dev/r/utils.json",
+    "https://motiq.dev/r/primitives.json"
   ],
   "files": [
     {
