@@ -28,6 +28,16 @@ import { LiveLogStreamCatalogPreview } from "./catalog/live-log-stream";
 import { LiveOperationsDashboardCatalogPreview } from "./catalog/live-operations-dashboard";
 import { LivePresenceStackCatalogPreview } from "./catalog/live-presence-stack";
 import { LuminousTopographyCatalogPreview } from "./catalog/luminous-topography";
+import { WorkflowTopologyFieldCatalogPreview } from "./catalog/workflow-topology-field";
+import { QueuePulseLanesCatalogPreview } from "./catalog/queue-pulse-lanes";
+import { AdaptiveSafeZoneGridCatalogPreview } from "./catalog/adaptive-safe-zone-grid";
+import { RuntimeSignalMapCatalogPreview } from "./catalog/runtime-signal-map";
+import { EventPropagationMatrixCatalogPreview } from "./catalog/event-propagation-matrix";
+import { DataContourSurfaceCatalogPreview } from "./catalog/data-contour-surface";
+import { AgentOperationsHeroCatalogPreview } from "./catalog/agent-operations-hero";
+import { DeploymentControlHeroCatalogPreview } from "./catalog/deployment-control-hero";
+import { LiveDataCommandHeroCatalogPreview } from "./catalog/live-data-command-hero";
+import { CollaborativeLaunchHeroCatalogPreview } from "./catalog/collaborative-launch-hero";
 import { MentionSuggestionsCatalogPreview } from "./catalog/mention-suggestions";
 import { MessageDeliveryStatesCatalogPreview } from "./catalog/message-delivery-states";
 import { MobileFilterSheetCatalogPreview } from "./catalog/mobile-filter-sheet";
@@ -85,6 +95,16 @@ export const catalogPreviewMap: Record<string, React.ComponentType> = {
   "live-operations-dashboard": LiveOperationsDashboardCatalogPreview,
   "live-presence-stack": LivePresenceStackCatalogPreview,
   "luminous-topography": LuminousTopographyCatalogPreview,
+  "workflow-topology-field": WorkflowTopologyFieldCatalogPreview,
+  "queue-pulse-lanes": QueuePulseLanesCatalogPreview,
+  "adaptive-safe-zone-grid": AdaptiveSafeZoneGridCatalogPreview,
+  "runtime-signal-map": RuntimeSignalMapCatalogPreview,
+  "event-propagation-matrix": EventPropagationMatrixCatalogPreview,
+  "data-contour-surface": DataContourSurfaceCatalogPreview,
+  "agent-operations-hero": AgentOperationsHeroCatalogPreview,
+  "deployment-control-hero": DeploymentControlHeroCatalogPreview,
+  "live-data-command-hero": LiveDataCommandHeroCatalogPreview,
+  "collaborative-launch-hero": CollaborativeLaunchHeroCatalogPreview,
   "mention-suggestions": MentionSuggestionsCatalogPreview,
   "message-delivery-states": MessageDeliveryStatesCatalogPreview,
   "mobile-filter-sheet": MobileFilterSheetCatalogPreview,

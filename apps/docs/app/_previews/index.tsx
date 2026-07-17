@@ -14,6 +14,16 @@ import { LiveLogStreamPreview } from "./live-log-stream";
 import { ActivityStreamPreview } from "./activity-stream";
 import { StreamingDataRowsPreview } from "./streaming-data-rows";
 import { LuminousTopographyPreview } from "./luminous-topography";
+import { WorkflowTopologyFieldPreview } from "./workflow-topology-field";
+import { QueuePulseLanesPreview } from "./queue-pulse-lanes";
+import { AdaptiveSafeZoneGridPreview } from "./adaptive-safe-zone-grid";
+import { RuntimeSignalMapPreview } from "./runtime-signal-map";
+import { EventPropagationMatrixPreview } from "./event-propagation-matrix";
+import { DataContourSurfacePreview } from "./data-contour-surface";
+import { AgentOperationsHeroPreview } from "./agent-operations-hero";
+import { DeploymentControlHeroPreview } from "./deployment-control-hero";
+import { LiveDataCommandHeroPreview } from "./live-data-command-hero";
+import { CollaborativeLaunchHeroPreview } from "./collaborative-launch-hero";
 import { SourceCitationRailPreview } from "./source-citation-rail";
 import { ApiRequestInspectorPreview } from "./api-request-inspector";
 import { ApprovalWorkflowPreview } from "./approval-workflow";
@@ -641,6 +651,16 @@ export const previewMap: Record<string, React.ComponentType> = {
   "activity-stream": ActivityStreamPreview,
   "streaming-data-rows": StreamingDataRowsPreview,
   "luminous-topography": LuminousTopographyPreview,
+  "workflow-topology-field": WorkflowTopologyFieldPreview,
+  "queue-pulse-lanes": QueuePulseLanesPreview,
+  "adaptive-safe-zone-grid": AdaptiveSafeZoneGridPreview,
+  "runtime-signal-map": RuntimeSignalMapPreview,
+  "event-propagation-matrix": EventPropagationMatrixPreview,
+  "data-contour-surface": DataContourSurfacePreview,
+  "agent-operations-hero": AgentOperationsHeroPreview,
+  "deployment-control-hero": DeploymentControlHeroPreview,
+  "live-data-command-hero": LiveDataCommandHeroPreview,
+  "collaborative-launch-hero": CollaborativeLaunchHeroPreview,
   "source-citation-rail": SourceCitationRailPreview,
   "api-request-inspector": ApiRequestInspectorPreview,
   "approval-workflow": ApprovalWorkflowPreview,

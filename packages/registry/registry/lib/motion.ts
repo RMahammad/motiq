@@ -632,3 +632,214 @@ export function useOptimisticAction<T>(committed: T) {
 
   return { value: state.value, optimistic: state.active, phase, error, commit, reset };
 }
+
+/* -------------------------------------------------------------------------- */
+/* Background composition — keep animated backgrounds readable behind content. */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Where the foreground content sits. Picks a default protected region and
+ * concentrates background activity on the opposite side, so nodes/lanes/labels/
+ * pulses/contours route *around* the copy instead of through it. "none" =
+ * decorative background with no reserved region (the raw field).
+ */
+export type ContentPlacement = "left" | "right" | "center" | "top" | "bottom" | "none";
+
+/** A rectangle in 0–1 field coordinates. */
+export interface CompositionRect {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+export interface CompositionOptions {
+  /** Preset region for the readable content (also drives focal + scrim direction). */
+  contentPlacement?: ContentPlacement;
+  /** Explicit safe rect (0–1) — overrides the placement's default rect. */
+  safeArea?: CompositionRect;
+  /** Ramp width (0–1 fraction of the field) over which activity fades back in. Default 0.16. */
+  safeAreaPadding?: number;
+  /** How strongly activity is suppressed at the safe-area core (0–1). Default 0.92. */
+  safeAreaStrength?: number;
+}
+
+export interface ResolvedComposition {
+  placement: ContentPlacement;
+  /** Core protected rect (0–1). {0,0,0,0} when placement is "none". */
+  safe: CompositionRect;
+  pad: number;
+  strength: number;
+  /** Where activity concentrates — opposite the content. */
+  focal: { x: number; y: number };
+  /** Scrim gradient direction (unit-ish, content side → open side). */
+  scrim: { x1: number; y1: number; x2: number; y2: number; radial: boolean };
+  hasSafe: boolean;
+}
+
+/** Protected rects — a true half on the content side so the graphic fills the other half. */
+const PLACEMENT_RECT: Record<Exclude<ContentPlacement, "none">, CompositionRect> = {
+  left: { x: 0, y: 0, w: 0.5, h: 1 },
+  right: { x: 0.5, y: 0, w: 0.5, h: 1 },
+  center: { x: 0.2, y: 0.14, w: 0.6, h: 0.72 },
+  top: { x: 0, y: 0, w: 1, h: 0.5 },
+  bottom: { x: 0, y: 0.5, w: 1, h: 0.5 },
+};
+const PLACEMENT_FOCAL: Record<Exclude<ContentPlacement, "none">, { x: number; y: number }> = {
+  left: { x: 0.82, y: 0.5 },
+  right: { x: 0.18, y: 0.5 },
+  center: { x: 0.5, y: 0.5 },
+  top: { x: 0.5, y: 0.82 },
+  bottom: { x: 0.5, y: 0.18 },
+};
+const PLACEMENT_SCRIM: Record<Exclude<ContentPlacement, "none">, ResolvedComposition["scrim"]> = {
+  left: { x1: 0, y1: 0.5, x2: 1, y2: 0.5, radial: false },
+  right: { x1: 1, y1: 0.5, x2: 0, y2: 0.5, radial: false },
+  center: { x1: 0.5, y1: 0.5, x2: 1, y2: 0.5, radial: true },
+  top: { x1: 0.5, y1: 0, x2: 0.5, y2: 1, radial: false },
+  bottom: { x1: 0.5, y1: 1, x2: 0.5, y2: 0, radial: false },
+};
+
+/**
+ * Resolve a content-placement preset (or explicit safeArea) into the geometry a
+ * background needs: the protected rect, a fade-in ramp, the focal point where
+ * activity concentrates, and the scrim direction. One prop (`contentPlacement`)
+ * gives a readable hero; power users can still override the rect/padding/strength.
+ */
+export function resolveComposition(o: CompositionOptions = {}): ResolvedComposition {
+  const placement = o.contentPlacement ?? "none";
+  const pad = Math.max(0.02, Math.min(0.5, o.safeAreaPadding ?? 0.12));
+  const strength = Math.max(0, Math.min(1, o.safeAreaStrength ?? 0.92));
+  if (placement === "none" && !o.safeArea) {
+    return {
+      placement, safe: { x: 0, y: 0, w: 0, h: 0 }, pad, strength,
+      focal: { x: 0.5, y: 0.5 },
+      scrim: { x1: 0, y1: 0.5, x2: 1, y2: 0.5, radial: false },
+      hasSafe: false,
+    };
+  }
+  const key = (placement === "none" ? "left" : placement) as Exclude<ContentPlacement, "none">;
+  const safe = o.safeArea ?? PLACEMENT_RECT[key];
+  return {
+    placement, safe, pad, strength,
+    focal: PLACEMENT_FOCAL[key],
+    scrim: PLACEMENT_SCRIM[key],
+    hasSafe: true,
+  };
+}
+
+const smoothstep = (t: number) => {
+  const c = t < 0 ? 0 : t > 1 ? 1 : t;
+  return c * c * (3 - 2 * c);
+};
+
+/**
+ * Returns an activity multiplier in [1-strength, 1] for a point in 0–1 field
+ * coords: ~0 directly behind the content, ramping smoothly to full detail past
+ * the safe-area boundary. Multiply element opacity by it AND drop elements whose
+ * multiplier is below a small threshold so node/line/pulse *count* thins behind
+ * text (not just opacity). No-op (returns 1) when there is no safe area.
+ */
+export function contentFalloff(c: ResolvedComposition): (x: number, y: number) => number {
+  if (!c.hasSafe) return () => 1;
+  const { safe, pad, strength } = c;
+  const rx = safe.x + safe.w;
+  const by = safe.y + safe.h;
+  const base = 1 - strength;
+  return (x, y) => {
+    const dx = Math.max(safe.x - x, x - rx, 0);
+    const dy = Math.max(safe.y - y, y - by, 0);
+    const d = Math.hypot(dx, dy);
+    return base + strength * smoothstep(d / pad);
+  };
+}
+
+/**
+ * Whether a text label at (x,y) (0–1) should be hidden for readability — i.e. it
+ * falls inside the protected region or its near ramp. Labels are the noisiest
+ * thing behind copy, so they clear a wider margin than other marks.
+ */
+export function labelHiddenAt(c: ResolvedComposition, x: number, y: number): boolean {
+  if (!c.hasSafe) return false;
+  return contentFalloff(c)(x, y) < 0.66;
+}
+
+/**
+ * A CSS mask-image gradient that fades the whole background layer on the content
+ * side — the content-protection "edge fade". Alpha follows the density-falloff
+ * curve: ~6% behind the copy, ~34% near the boundary, 100% toward the outer
+ * edges (mask alpha = element visibility, so nothing important stays visible
+ * behind text). Apply to both `maskImage` and `WebkitMaskImage`. Works on an SVG
+ * container *and* a <canvas> element. Returns undefined when there is no safe
+ * area. Because it reveals the container background, the copy sits on a clean
+ * surface with no opaque panel.
+ */
+export function compositionMaskCss(c: ResolvedComposition): string | undefined {
+  if (!c.hasSafe) return undefined;
+  const { safe, pad, placement } = c;
+  const A = 0.05; // activity directly behind the content
+  const B = 0.45; // activity near the content boundary — fills in quickly, no dead band
+  const pct = (n: number) => `${(Math.max(0, Math.min(1, n)) * 100).toFixed(1)}%`;
+  const blk = (a: number) => `rgba(0,0,0,${a})`;
+  const ramp = Math.max(0.04, pad);
+  switch (placement) {
+    case "left": {
+      const b = safe.x + safe.w;
+      return `linear-gradient(to right, ${blk(A)} 0%, ${blk(A)} ${pct(b - 0.02)}, ${blk(B)} ${pct(b + ramp * 0.4)}, black ${pct(b + ramp)}, black 100%)`;
+    }
+    case "right": {
+      const b = safe.x;
+      return `linear-gradient(to right, black 0%, black ${pct(b - ramp)}, ${blk(B)} ${pct(b - ramp * 0.4)}, ${blk(A)} ${pct(b + 0.02)}, ${blk(A)} 100%)`;
+    }
+    case "top": {
+      const b = safe.y + safe.h;
+      return `linear-gradient(to bottom, ${blk(A)} 0%, ${blk(A)} ${pct(b - 0.02)}, ${blk(B)} ${pct(b + ramp * 0.4)}, black ${pct(b + ramp)}, black 100%)`;
+    }
+    case "bottom": {
+      const b = safe.y;
+      return `linear-gradient(to bottom, black 0%, black ${pct(b - ramp)}, ${blk(B)} ${pct(b - ramp * 0.4)}, ${blk(A)} ${pct(b + 0.02)}, ${blk(A)} 100%)`;
+    }
+    default: {
+      // center / explicit rect → radial: faint over the rect, full at the edges.
+      const cx = safe.x + safe.w / 2;
+      const cy = safe.y + safe.h / 2;
+      const rx = safe.w / 2 + ramp;
+      const ry = safe.h / 2 + ramp;
+      const inner = safe.w / 2 / rx;
+      return `radial-gradient(ellipse ${pct(rx)} ${pct(ry)} at ${pct(cx)} ${pct(cy)}, ${blk(A)} 0%, ${blk(A)} ${pct(inner * 0.7)}, ${blk(B)} ${pct(inner)}, black 100%)`;
+    }
+  }
+}
+
+/**
+ * A "glass scrim" style for the layer that sits *behind the foreground copy* (in
+ * front of a full-bleed animated background). Instead of masking the background
+ * away — which cuts it off with a hard edge and empties the content side — the
+ * background runs edge-to-edge and this scrim keeps the copy readable: a soft
+ * radial wash toward the copy plus a feathered backdrop blur, both faded out by a
+ * radial mask so there is NO visible seam. The animation stays visible everywhere
+ * (including center placement) and simply softens under the text. Returns
+ * undefined for "none". Render it as an absolutely-positioned, aria-hidden,
+ * pointer-events-none element directly behind the copy.
+ */
+export function compositionScrimStyle(c: ResolvedComposition): React.CSSProperties | undefined {
+  if (!c.hasSafe) return undefined;
+  const { safe, placement } = c;
+  const midX = (safe.x + safe.w / 2) * 100;
+  const midY = (safe.y + safe.h / 2) * 100;
+  const fx = placement === "left" ? 24 : placement === "right" ? 76 : midX;
+  const fy = placement === "top" ? 30 : placement === "bottom" ? 70 : midY;
+  const at = `${fx.toFixed(1)}% ${fy.toFixed(1)}%`;
+  // Frosted glass sized to the COPY only — a tight feathered ellipse so the panel
+  // blurs behind the text while the field on the open side stays crisp. Readability
+  // comes from blur (not darkening); a light wash only lifts contrast.
+  const wash = `radial-gradient(ellipse 40% 86% at ${at}, color-mix(in oklab, var(--color-bg) 46%, transparent) 0%, color-mix(in oklab, var(--color-bg) 24%, transparent) 52%, transparent 78%)`;
+  const feather = `radial-gradient(ellipse 44% 96% at ${at}, #000 52%, rgba(0,0,0,0.66) 70%, transparent 84%)`;
+  return {
+    background: wash,
+    backdropFilter: "blur(13px) saturate(1.2)",
+    WebkitBackdropFilter: "blur(13px) saturate(1.2)",
+    maskImage: feather,
+    WebkitMaskImage: feather,
+  };
+}

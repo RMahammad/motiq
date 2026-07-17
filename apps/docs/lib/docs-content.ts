@@ -1251,6 +1251,298 @@ const columns: Column<Order>[] = [
       "Pauses drift + light offscreen and when the tab is hidden (useVisibilityPause); mobile drops the deepest layer for reduced density.",
     ],
   },
+  "workflow-topology-field": {
+    usage: `import { WorkflowTopologyField } from "@/components/motionstack/workflow-topology-field";
+
+// Your app owns the topology + status; this component only renders it.
+<WorkflowTopologyField
+  nodes={nodes}
+  connections={connections}
+  activeNodeIds={activeNodeIds}
+  activeConnectionIds={activeConnectionIds}
+  safeArea={{ x: 0.04, y: 0.14, w: 0.5, h: 0.72 }}
+  className="min-h-[440px]"
+>
+  <YourHeroContent />
+</WorkflowTopologyField>`,
+    api: [
+      { prop: "nodes / connections", type: "TopologyNode[] / TopologyConnection[]", def: "deterministic default", desc: "Application-defined workflow graph. Nodes carry x,y (0–1), status, group, label." },
+      { prop: "activeNodeIds / activeConnectionIds", type: "string[]", def: "—", desc: "The live path — active connections animate a directional flow." },
+      { prop: "safeArea", type: "{x,y,w,h}", def: "left column", desc: "Region (0–1) where lattice + topology thin so foreground text stays readable." },
+      { prop: "density / depth / intensity / speed", type: "number", def: "1 / 2 / 1 / 1", desc: "Lattice density, parallax layers (0–3), luminance (0–1.4), flow speed (0 stops flow)." },
+      { prop: "interactive / pauseWhenHidden / reducedMotion", type: "boolean", def: "false / true / —", desc: "Optional pointer highlight, offscreen pause, force-static." },
+      { prop: "seed", type: "number", def: "1", desc: "Deterministic seed for the lattice + default topology (SSR-stable)." },
+    ],
+    accessibility: [
+      "The topology field is decorative (aria-hidden); children render in a separate non-hidden layer that stays readable over the safe area.",
+      "Node status is carried by shape + glyph (check / cross / filled / hollow) and a ring, never color alone — failures stay understandable in monochrome.",
+      "prefers-reduced-motion removes flow, pulse, and drift; markup does not vary by preference, so there is no hydration mismatch.",
+      "forced-colors: active falls back to CanvasText strokes so structure + status stay legible; the pointer highlight is additive and never required.",
+    ],
+    performance: [
+      "SVG paths + circles only; the active path animates stroke-dashoffset and the active-node ring pulses via CSS keyframes — no canvas, no WebGL, no JS animation loop, no per-frame React state.",
+      "Topology + lattice geometry is memoised and deterministically seeded, identical on server and client.",
+      "Pauses flow + drift offscreen and when the tab is hidden (useVisibilityPause); mobile drops the deepest lattice layer and node labels.",
+    ],
+  },
+  "queue-pulse-lanes": {
+    usage: `import { QueuePulseLanes } from "@/components/motionstack/queue-pulse-lanes";
+
+// Your app owns the lane data; this component only renders it.
+<QueuePulseLanes
+  lanes={lanes}
+  safeArea={{ x: 0.04, y: 0.12, w: 0.5, h: 0.76 }}
+  className="min-h-[440px]"
+>
+  <YourHeroContent />
+</QueuePulseLanes>`,
+    api: [
+      { prop: "lanes", type: "LaneData[]", def: "deterministic default", desc: "Each lane: id, label?, queued, active, completed, delayed?, blocked?, throughput?, capacity?, status?." },
+      { prop: "safeArea", type: "{x,y,w,h}", def: "left column", desc: "Region (0–1) where lanes quiet so foreground text stays readable." },
+      { prop: "density / intensity / speed", type: "number", def: "1 / 1 / 1", desc: "Pulse-count multiplier, luminance (0–1.4), flow speed (0 freezes)." },
+      { prop: "interactive / pauseWhenHidden / reducedMotion", type: "boolean", def: "false / true / —", desc: "Optional pointer highlight, offscreen pause, force-static snapshot." },
+      { prop: "seed", type: "number", def: "1", desc: "Deterministic seed for pulse phase/jitter (SSR-stable)." },
+    ],
+    accessibility: [
+      "The lanes are decorative (aria-hidden); children render in a separate non-hidden layer that stays readable over the safe area.",
+      "Blocked lanes stop at a bar cap + square glyph and delayed lanes carry a clock-tick glyph + dashed rail — status is legible in monochrome, never color alone.",
+      "prefers-reduced-motion (and the reducedMotion prop) hide the flowing pulses and keep a meaningful static snapshot (occupancy fill bars + status markers); markup does not vary by preference, so no hydration mismatch.",
+      "forced-colors: active falls back to CanvasText rails + Canvas glyphs so lane structure + status stay legible.",
+    ],
+    performance: [
+      "SVG rects animated by a single translateX keyframe (per-pulse CSS vars) — no canvas, no WebGL, no JS animation loop, no per-frame React state.",
+      "Lane geometry is memoised and deterministically seeded, identical on server and client; congestion raises pulse count and duration.",
+      "Pauses the pulses offscreen and when the tab is hidden (useVisibilityPause); mobile collapses lanes past the first few.",
+    ],
+  },
+  "adaptive-safe-zone-grid": {
+    usage: `import { AdaptiveSafeZoneGrid } from "@/components/motionstack/adaptive-safe-zone-grid";
+
+<AdaptiveSafeZoneGrid
+  safeArea={[{ x: 0.06, y: 0.16, w: 0.5, h: 0.66 }]}
+  focalPoint={{ x: 0.32, y: 0.5 }}
+  className="min-h-[440px]"
+>
+  <YourHeroContent />
+</AdaptiveSafeZoneGrid>`,
+    api: [
+      { prop: "safeArea", type: "{x,y,w,h} | […]", def: "left column", desc: "One or many regions (0–1) the grid quiets so foreground copy stays readable." },
+      { prop: "focalPoint", type: "{x,y}", def: "{0.32,0.5}", desc: "Where structure concentrates; the perspective skew leans toward it." },
+      { prop: "density / intensity / speed", type: "number", def: "1 / 1 / 1", desc: "Grid line-count multiplier, luminance (0–1.4), shimmer speed (0 stops)." },
+      { prop: "perspective / depth / highlightCells", type: "misc", def: "false / 1 / —", desc: "Optional subtle skew toward the focal point and accent-tinted cells." },
+      { prop: "interactive / pauseWhenHidden / reducedMotion / seed", type: "misc", def: "false / true / — / 1", desc: "Pointer glow, offscreen pause, force-static, deterministic seed." },
+    ],
+    accessibility: [
+      "The grid is decorative (aria-hidden); children render in a separate non-hidden layer that stays readable over the quieted safe areas.",
+      "prefers-reduced-motion (and the reducedMotion prop) stop the shimmer; the static grid remains fully designed. Markup does not vary by preference — no hydration mismatch.",
+      "forced-colors: active falls back to plain CanvasText grid lines so structure stays legible; the pointer glow is additive and never required.",
+    ],
+    performance: [
+      "SVG lines + an SVG mask only; the shimmer is a single CSS translate behind a grid-shaped mask — no canvas, no WebGL, no JS animation loop, no per-frame React state.",
+      "The safe-area attenuation is a composed radial-fade mask (multiple zones compose without seams); geometry is memoised and deterministically seeded.",
+      "Pauses the shimmer offscreen and when the tab is hidden (useVisibilityPause); mobile drops the fine detail layer + shimmer.",
+    ],
+  },
+  "runtime-signal-map": {
+    usage: `import { RuntimeSignalMap } from "@/components/motionstack/runtime-signal-map";
+
+// Your app owns the topology + health; this component only renders it.
+<RuntimeSignalMap
+  services={services}
+  regions={regions}
+  connections={connections}
+  safeArea={{ x: 0.02, y: 0.12, w: 0.52, h: 0.76 }}
+  className="min-h-[440px]"
+>
+  <YourHeroContent />
+</RuntimeSignalMap>`,
+    api: [
+      { prop: "services / regions / connections", type: "ServiceData[] / RegionData[] / ConnectionData[]", def: "fictional default", desc: "The service topology: services carry x,y (0–1), health, region; connections carry direction, latencyBand, activity." },
+      { prop: "activity / density / intensity / speed", type: "number", def: "1 / 1 / 1 / 1", desc: "Global request rate, packet density, luminance (0–1.4), flow speed (0 stalls)." },
+      { prop: "safeArea", type: "{x,y,w,h}", def: "left column", desc: "Region (0–1) where signals thin so foreground text stays readable." },
+      { prop: "interactive / pauseWhenHidden / reducedMotion / seed", type: "misc", def: "false / true / — / 1", desc: "Pointer highlight, offscreen pause, force-static snapshot, deterministic seed." },
+    ],
+    accessibility: [
+      "The map is decorative (aria-hidden); children render in a separate non-hidden layer that stays readable over the safe area.",
+      "Health is carried by three non-color cues — dashed vs solid strokes, a per-node/edge glyph (× error, ~ degraded, dot healthy), and slowed/stalled flow — never color alone.",
+      "prefers-reduced-motion (and the reducedMotion prop) draw a single static frame (topology + signals at rest); the loop never starts, so there is no motion and no wasted work.",
+      "forced-colors: active hides the canvas and shows a plain CanvasText-bordered box behind the foreground copy so text stays legible.",
+    ],
+    performance: [
+      "A single <canvas> + one requestAnimationFrame loop — no per-frame React state, no WebGL, no global heavy dep (canvas is native and isolated to this item).",
+      "DPR is capped at 2; a ResizeObserver re-measures on resize; packet budget scales with container width (mobile floor) and density; tokens are re-read only every ~30 frames.",
+      "The loop is gated on visibility + reduced motion: it stops entirely offscreen / when the tab is hidden and draws one static frame instead. No Math.random/Date.now at render → deterministic first paint.",
+    ],
+  },
+  "event-propagation-matrix": {
+    usage: `import { EventPropagationMatrix } from "@/components/motionstack/event-propagation-matrix";
+
+// Your app owns the events; this component only renders their propagation.
+<EventPropagationMatrix
+  events={events}
+  rows={6}
+  cols={10}
+  safeArea={{ x: 0.04, y: 0.12, w: 0.5, h: 0.76 }}
+  className="min-h-[440px]"
+>
+  <YourHeroContent />
+</EventPropagationMatrix>`,
+    api: [
+      { prop: "events", type: "EventData[]", def: "deterministic default", desc: "Each event: id, origin cell, category, severity, direction, affectedRegions?, acknowledged?, failed?." },
+      { prop: "rows / cols", type: "number", def: "matrix shape", desc: "The structured matrix dimensions events propagate through." },
+      { prop: "safeArea / density / intensity / speed", type: "misc", def: "left / 1 / 1 / 1", desc: "Readable region (0–1), cell density, luminance (0–1.4), propagation speed." },
+      { prop: "interactive / pauseWhenHidden / reducedMotion / seed", type: "misc", def: "false / true / — / 1", desc: "Pointer highlight, offscreen pause, force-static, deterministic seed." },
+    ],
+    accessibility: [
+      "The matrix is decorative (aria-hidden); children render in a separate non-hidden layer that stays readable over the safe area.",
+      "Failed propagation halts with a × glyph and acknowledged events dim with a check glyph — relationships stay legible in monochrome, never color alone.",
+      "prefers-reduced-motion (and the reducedMotion prop) keep origin + propagated cells lit statically (a current-relationships view) with no movement; markup does not vary by preference, so no hydration mismatch.",
+      "forced-colors: active falls back to CanvasText cells/links so the matrix structure stays legible.",
+    ],
+    performance: [
+      "SVG cells animated by staggered per-cell CSS keyframes (animation-delay in reach order) — no canvas, no WebGL, no JS animation loop, no per-frame React state.",
+      "Propagation follows the grid (each lit cell links to a parent one orthogonal step closer to the origin); live events are capped and per-cell intensity is damped so overlaps never turn to noise.",
+      "Pauses offscreen and when the tab is hidden (useVisibilityPause); mobile renders a smaller matrix. Geometry is memoised and deterministically seeded.",
+    ],
+  },
+  "data-contour-surface": {
+    usage: `import { DataContourSurface } from "@/components/motionstack/data-contour-surface";
+
+// Your app owns the data; contours are computed from it.
+<DataContourSurface
+  points={[{ x: 0.7, y: 0.4, value: 1 }, { x: 0.4, y: 0.7, value: -0.6 }]}
+  thresholds={[0.3, 0.6]}
+  activeRegion={{ x: 0.6, y: 0.3, w: 0.3, h: 0.3 }}
+  safeArea={{ x: 0.04, y: 0.12, w: 0.5, h: 0.76 }}
+  className="min-h-[440px]"
+>
+  <YourHeroContent />
+</DataContourSurface>`,
+    api: [
+      { prop: "points", type: "{x,y,value,radius?}[]", def: "fictional default", desc: "Signed pressure points (0–1). Positive raises the field, negative lowers it — contours are computed from this." },
+      { prop: "thresholds", type: "number[]", def: "auto", desc: "Levels to emphasize with heavier bands (a non-color weight cue)." },
+      { prop: "activeRegion / comparisonRegions", type: "{x,y,w,h} / […]", def: "—", desc: "Active region brightens with corner ticks; comparison regions render ghosted (dashed, muted)." },
+      { prop: "safeArea / density / intensity / speed", type: "misc", def: "left / 1 / 1 / 1", desc: "Readable region, grid resolution, luminance (0–1.4), drift speed (0 idles)." },
+      { prop: "pauseWhenHidden / reducedMotion / seed", type: "misc", def: "true / — / 1", desc: "Offscreen pause, force-static, deterministic seed." },
+    ],
+    accessibility: [
+      "The surface is decorative (aria-hidden); children render in a separate non-hidden layer that stays readable over the safe area (only emphasized thresholds survive there, faintly).",
+      "Threshold emphasis and the active region are carried by stroke weight + corner ticks, not color alone; light and dark are each intentionally tinted from semantic tokens.",
+      "prefers-reduced-motion (and the reducedMotion prop) draw a single deterministic frame from the data with no drift and snap on data changes; there is no hydration mismatch.",
+      "forced-colors: active hides the canvas and shows a plain CanvasText-bordered box behind the foreground copy so text stays legible.",
+    ],
+    performance: [
+      "A single <canvas> + one requestAnimationFrame loop running marching-squares over a coarse scalar grid — no per-frame React state, no WebGL, no global heavy dep (isolated to this item).",
+      "Grid resolution is capped (mobile coarsens automatically); DPR capped at 2; a ResizeObserver re-measures; the loop idles when there is nothing to animate.",
+      "Data changes ease via a 600ms grid interpolation; drift is exactly 0 at t=0 so the first frame is a pure function of the data → deterministic first paint (no Math.random/Date.now at render).",
+    ],
+  },
+  "agent-operations-hero": {
+    usage: `import { AgentOperationsHero } from "@/components/motionstack/blocks/agent-operations-hero";
+
+// Your app owns the phase + data; the hero only renders it.
+<AgentOperationsHero
+  headline="Ship agents that show their work"
+  copy="Watch a run move from prompt to approval to answer — grounded in your sources."
+  primaryCta={{ label: "Start building", href: "/signup" }}
+  secondaryCta={{ label: "See a live run", href: "/demo" }}
+  defaultPhase="running"
+/>`,
+    api: [
+      { prop: "headline / copy", type: "ReactNode", def: "demo copy", desc: "Outcome headline (renders as the section heading) and supporting copy." },
+      { prop: "primaryCta / secondaryCta", type: "{label,href?,onClick?} | ReactNode", def: "demo CTAs", desc: "Real link/button CTAs." },
+      { prop: "phase / defaultPhase / onPhaseChange", type: "AgentHeroPhase", def: "idle", desc: "idle · running · tool-active · waiting · completed · failed. App-controlled; child callbacks advance it." },
+      { prop: "dataset / background", type: "misc", def: "fictional / —", desc: "Overridable deterministic demo data; optional decorative background slot." },
+    ],
+    accessibility: [
+      "The headline is a real section heading and the CTAs are real links/buttons; the live status is announced as text, never color alone.",
+      "Approval controls come from the composed Agent Run Timeline and are keyboard-operable; reduced motion is inherited from the children.",
+      "Never renders private chain-of-thought and never executes or simulates a model — it only renders the supplied phase + data.",
+    ],
+    performance: [
+      "A presentation composition: Agent Run Timeline (trimmed), Prompt Composer (compact), Tool Call Activity (one active tool), and Source Citation Rail (one result) at reduced complexity.",
+      "All timestamps are fixed epoch constants — no Date.now/Math.random/new Date at render → identical server/client markup (no hydration mismatch).",
+      "Children pause their own continuous work offscreen; the initial state is static.",
+    ],
+  },
+  "deployment-control-hero": {
+    usage: `import { DeploymentControlHero } from "@/components/motionstack/blocks/deployment-control-hero";
+
+<DeploymentControlHero
+  headline="Ship to production with confidence"
+  primaryCta={{ label: "Deploy now", href: "/new" }}
+  secondaryCta={{ label: "Read the docs", href: "/docs" }}
+  defaultPhase="deploying"
+/>`,
+    api: [
+      { prop: "headline / copy", type: "ReactNode", def: "demo copy", desc: "Outcome headline (section heading) and supporting copy." },
+      { prop: "primaryCta / secondaryCta", type: "{label,href?,onClick?} | ReactNode", def: "demo CTAs", desc: "Real link/button CTAs; a primary without href advances the demo phase." },
+      { prop: "phase / defaultPhase / onPhaseChange", type: "DeployHeroPhase", def: "ready", desc: "ready · deploying · validating · failed · retrying · completed. App-controlled." },
+      { prop: "dataset / environments / background", type: "misc", def: "provider-neutral / — / —", desc: "Overridable demo data, environment list, optional decorative slot." },
+    ],
+    accessibility: [
+      "The headline is a real heading bound to the section; the environment switcher is keyboard-operable; the log region has an accessible name.",
+      "Stage status is carried by the Deployment Pipeline as text + glyph, never color alone; reduced motion is inherited from the children.",
+      "Provider-neutral, clearly-fictional demo data — nothing is really deployed.",
+    ],
+    performance: [
+      "A presentation composition: Environment Switcher (compact), Deployment Pipeline (four stages), a short Live Log Stream, and one API Request Inspector result.",
+      "Fixed epoch timestamps; the surface is a pure function of phase → identical server/client markup.",
+      "The log stream pauses offscreen; the initial state is static; readable on laptop and mobile (stacks).",
+    ],
+  },
+  "live-data-command-hero": {
+    usage: `import { LiveDataCommandHero } from "@/components/motionstack/blocks/live-data-command-hero";
+
+<LiveDataCommandHero
+  headline="Operational data you can trust in the moment"
+  primaryCta={{ label: "Get started", href: "/signup" }}
+  secondaryCta={{ label: "Watch it live", href: "/demo" }}
+  defaultPhase="live"
+/>`,
+    api: [
+      { prop: "headline / copy", type: "ReactNode", def: "demo copy", desc: "Outcome headline (section heading) and supporting copy." },
+      { prop: "primaryCta / secondaryCta", type: "{label,href?,onClick?} | ReactNode", def: "demo CTAs", desc: "Real link/button CTAs." },
+      { prop: "phase / defaultPhase / onPhaseChange", type: "DataHeroPhase", def: "initial", desc: "initial · live · filtering · refreshing · partial-update · stale · error · recovery." },
+      { prop: "dataset / background", type: "misc", def: "fictional / —", desc: "Overridable deterministic demo data; optional decorative slot." },
+    ],
+    accessibility: [
+      "The headline is a real heading; metric changes are announced politely via the children's live regions, not per-frame.",
+      "Stale/error are carried by text + glyph, never color alone; reduced motion snaps the number morphs (inherited from the children).",
+      "Clearly-fictional demo data — not real telemetry.",
+    ],
+    performance: [
+      "A presentation composition: KPI Number Morph (three metrics), Data Refresh State, a small Streaming Data Rows subset, and Filter Result Transition.",
+      "Fixed epoch timestamps; the only motion-over-time is a live-phase interval started in an effect and paused offscreen — no Date.now/Math.random at render.",
+      "The streaming subset pauses offscreen; the initial state is static; stacks on mobile.",
+    ],
+  },
+  "collaborative-launch-hero": {
+    usage: `import { CollaborativeLaunchHero } from "@/components/motionstack/blocks/collaborative-launch-hero";
+
+<CollaborativeLaunchHero
+  headline="Reviews that reach a decision"
+  primaryCta={{ label: "Start a review", href: "/new" }}
+  secondaryCta={{ label: "Take the tour", href: "/tour" }}
+  defaultPhase="approval-pending"
+/>`,
+    api: [
+      { prop: "headline / copy", type: "ReactNode", def: "demo copy", desc: "Outcome headline (section heading) and supporting copy." },
+      { prop: "primaryCta / secondaryCta", type: "{label,href?,onClick?} | ReactNode", def: "demo CTAs", desc: "Real link/button CTAs." },
+      { prop: "phase / defaultPhase / onPhaseChange", type: "CollabHeroPhase", def: "review-open", desc: "review-open · commenting · changes-requested · approval-pending · approved · rejected · resolved." },
+      { prop: "dataset / background", type: "misc", def: "fictional / —", desc: "Overridable deterministic cast; optional decorative slot." },
+    ],
+    accessibility: [
+      "The headline is a real heading; approval controls (from Approval Workflow) are keyboard-operable and advance the phase.",
+      "Status is carried by text + a non-color glyph; presence and typing announce politely via the composed components; reduced motion is inherited.",
+      "Clearly-fictional cast and content — not real users.",
+    ],
+    performance: [
+      "A presentation composition: Live Presence Stack, Typing and Presence, Approval Workflow (one pending decision), Comment Thread (compact), and Activity Stream.",
+      "Fixed epoch demo data; a mount effect re-anchors relative timestamps to the current minute (post-hydration), so server/client markup match.",
+      "Streams/typing pause offscreen; the initial state is static; stacks on mobile.",
+    ],
+  },
   "ai-response-stream": {
     usage: `import { AiResponseStream } from "@/components/motionstack/ai-response-stream";
 

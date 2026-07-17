@@ -7,6 +7,7 @@ import { featuredItems, categoryCount, bySlug, packSpans, SPAN_CLASS, accessLabe
 import { packs, type Pack } from "../lib/packs";
 import { completeCatalogCta, statusLabel } from "../lib/commerce";
 import { CatalogPreview } from "./_previews";
+import { RuntimeSignalMapHeroPreview } from "./_previews/catalog/runtime-signal-map-hero";
 import { CatalogStage } from "./_components/catalog-stage";
 import { LazyPreview } from "./_components/lazy-preview";
 import { HeroShowcase } from "./_components/hero-showcase";
@@ -290,6 +291,15 @@ export default function HomePage() {
 
   const componentTotal = componentItems().length;
 
+  // Product environments showcase — a controlled selection (not all ten): one
+  // lead animated background, one hero block, and two more backgrounds. Each
+  // renders through LazyPreview (mounts on scroll) + the components' own
+  // offscreen pause + reduced-motion, so nothing autoplays off-screen.
+  const productEnvLead = bySlug.get("runtime-signal-map");
+  const productEnvCards = ["agent-operations-hero", "workflow-topology-field", "queue-pulse-lanes"]
+    .map((s) => bySlug.get(s))
+    .filter(Boolean) as CatalogItem[];
+
   return (
     <>
       <PageView event="homepage_viewed" />
@@ -519,6 +529,51 @@ export default function HomePage() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* ===== 3.5 · Product environments — animated backgrounds driven by app
+              state + one editable workflow hero. A controlled selection (four of
+              ten), each lazy-mounted and offscreen-paused so nothing autoplays
+              off-screen. ===== */}
+      <section className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <div className="max-w-xl">
+            <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">Product environments</p>
+            <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Backgrounds that carry product state</h2>
+            <p className="mt-2.5 max-w-xl text-[15px] leading-relaxed text-[var(--color-muted)]">
+              Animated backgrounds driven by your application state, and editable hero blocks that demonstrate a real
+              workflow — foreground-safe, reduced-motion-safe, and never just decoration.
+            </p>
+          </div>
+          <Link href="/components?category=product-backgrounds" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
+            All environments →
+          </Link>
+        </div>
+        {productEnvLead ? (
+          <div className="group relative mb-5 overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] transition-all duration-300 hover:border-[color-mix(in_oklab,var(--color-accent)_35%,var(--color-border))] hover:shadow-[var(--shadow-md)]">
+            <LazyPreview label={`${productEnvLead.name} preview`} minHeightClass="min-h-[420px]">
+              <div className="relative w-full bg-[var(--color-bg)]">
+                <RuntimeSignalMapHeroPreview />
+              </div>
+            </LazyPreview>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-[var(--color-border)] px-6 py-4">
+              <h3 className="text-[17px] font-semibold tracking-tight text-[var(--color-fg)]">
+                <Link href={productEnvLead.documentationPath} className="outline-none after:absolute after:inset-0 hover:text-[var(--color-accent-text)]">
+                  {productEnvLead.name}
+                </Link>
+              </h3>
+              <AccessPill access={productEnvLead.access} />
+              <span className="ml-auto inline-flex items-center gap-1 text-[13.5px] font-medium text-[var(--color-accent-text)]">
+                Open component →
+              </span>
+            </div>
+          </div>
+        ) : null}
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {productEnvCards.map((item) => (
+            <FeaturedCard key={item.id} item={item} />
+          ))}
         </div>
       </section>
 

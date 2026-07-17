@@ -23,6 +23,7 @@ type Sort = "default" | "recent";
 
 /** Sidebar groups — compact, scannable discovery (docs/56 §8). */
 const NAV_GROUPS: { label: string; ids: CategoryId[] }[] = [
+  { label: "Product environments", ids: ["product-backgrounds", "workflow-heroes"] },
   {
     label: "Product workflows",
     ids: [

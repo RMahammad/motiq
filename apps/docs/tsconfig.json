@@ -48,6 +48,33 @@
       "@/components/motionstack/luminous-topography": [
         "../../packages/registry/registry/backgrounds/luminous-topography.tsx"
       ],
+      "@/components/motionstack/workflow-topology-field": [
+        "../../packages/registry/registry/backgrounds/workflow-topology-field.tsx"
+      ],
+      "@/components/motionstack/queue-pulse-lanes": [
+        "../../packages/registry/registry/backgrounds/queue-pulse-lanes.tsx"
+      ],
+      "@/components/motionstack/adaptive-safe-zone-grid": [
+        "../../packages/registry/registry/backgrounds/adaptive-safe-zone-grid.tsx"
+      ],
+      "@/components/motionstack/runtime-signal-map": [
+        "../../packages/registry/registry/backgrounds/runtime-signal-map.tsx"
+      ],
+      "@/components/motionstack/event-propagation-matrix": [
+        "../../packages/registry/registry/backgrounds/event-propagation-matrix.tsx"
+      ],
+      "@/components/motionstack/data-contour-surface": [
+        "../../packages/registry/registry/backgrounds/data-contour-surface.tsx"
+      ],
+      "@/components/motionstack/prompt-composer": [
+        "../../packages/registry/registry/ai/prompt-composer.tsx"
+      ],
+      "@/components/motionstack/typing-and-presence": [
+        "../../packages/registry/registry/communication/typing-and-presence.tsx"
+      ],
+      "@/components/motionstack/data-quality-status": [
+        "../../packages/registry/registry/data/data-quality-status.tsx"
+      ],
       "@/components/motionstack/source-citation-rail": [
         "../../packages/registry/registry/ai/source-citation-rail.tsx"
       ],

@@ -38,6 +38,16 @@
 | Deployment Command Center | block (dev) | Pro | — | composes 4 components | Developer Tools Pack | **Released** (block) | 2026-07-14 |
 | Collaborative Review Workspace | block (collab) | Pro | — | composes 4 components | Collaboration Pack | **Released** (block) | 2026-07-14 |
 | Live Operations Dashboard | block (data) | Pro | — | composes 4 components | Data Motion Pack | **Released** (block) | 2026-07-14 |
+| Workflow Topology Field | product-backgrounds | Free | medium | primitives (SVG/CSS, no motion) | — | **Released** (batch 6 — product environments) | 2026-07-16 |
+| Queue Pulse Lanes | product-backgrounds | Free | medium | primitives (SVG/CSS, no motion) | — | **Released** (batch 6 — product environments) | 2026-07-16 |
+| Adaptive Safe-Zone Grid | product-backgrounds | Free | medium | primitives (SVG/CSS, no motion) | — | **Released** (batch 6 — product environments) | 2026-07-16 |
+| Runtime Signal Map | product-backgrounds | Pro | complex | primitives (Canvas 2D, no motion) | — | **Released** (batch 6 — product environments) | 2026-07-16 |
+| Event Propagation Matrix | product-backgrounds | Pro | complex | primitives (SVG/CSS, no motion) | — | **Released** (batch 6 — product environments) | 2026-07-16 |
+| Data Contour Surface | product-backgrounds | Pro | complex | primitives (Canvas 2D, no motion) | — | **Released** (batch 6 — product environments) | 2026-07-16 |
+| Agent Operations Hero | block (workflow-heroes) | Pro | — | composes 4 components | — | **Released** (batch 6 — workflow hero) | 2026-07-16 |
+| Deployment Control Hero | block (workflow-heroes) | Pro | — | composes 4 components | — | **Released** (batch 6 — workflow hero) | 2026-07-16 |
+| Live Data Command Hero | block (workflow-heroes) | Pro | — | composes 4 components | — | **Released** (batch 6 — workflow hero) | 2026-07-16 |
+| Collaborative Launch Hero | block (workflow-heroes) | Pro | — | composes 5 components | — | **Released** (batch 6 — workflow hero) | 2026-07-16 |
 
 ## Blocks & packs (after batch 4) — all four workflow packs now 4/4
 
