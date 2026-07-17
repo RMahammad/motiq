@@ -2,12 +2,15 @@ packages:
   - packages/*
   - apps/*
 
-allowBuilds:
-  sharp: set this to true or false
-
 # Native postinstall scripts, explicitly allow-listed (supply-chain hygiene).
-# Both are decided so pnpm's verify-deps-before-run check stays green when Turbo
-# shells out to `pnpm run`. esbuild -> Vite; sharp -> Next image (unused but present).
+# pnpm 11 requires an explicit build-approval decision per dependency, or a
+# fresh install fails with ERR_PNPM_IGNORED_BUILDS (e.g. on CI / Vercel).
+# esbuild -> Vite; sharp -> Next image. onlyBuiltDependencies is kept for the
+# verify-deps check; allowBuilds is what pnpm 11 actually gates the install on.
+allowBuilds:
+  esbuild: true
+  sharp: true
+
 onlyBuiltDependencies:
   - esbuild
   - sharp
