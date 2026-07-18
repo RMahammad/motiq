@@ -2,133 +2,152 @@
 
 # Motiq
 
-**Beautiful, production-ready animated React & shadcn components — installed as editable source.**
+### Animated React components for product interfaces that feel alive.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](./CONTRIBUTING.md)
-[![CI](https://github.com/RMahammad/motiq/actions/workflows/ci.yml/badge.svg)](https://github.com/RMahammad/motiq/actions/workflows/ci.yml)
-![React](https://img.shields.io/badge/React-19-149ECA.svg?logo=react&logoColor=white)
-![Next.js](https://img.shields.io/badge/Next.js-black.svg?logo=next.js&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-38BDF8.svg?logo=tailwindcss&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6.svg?logo=typescript&logoColor=white)
+**60+ free, open-source components, workflow blocks, and packs.**<br />
+Install the source with shadcn. Own the code. Ship it your way.
 
-[Documentation](https://motiq.dev) · [Browse the catalog](https://motiq.dev/components) · [Contributing](./CONTRIBUTING.md)
+[![GitHub stars](https://img.shields.io/github/stars/RMahammad/motiq?style=for-the-badge&logo=github&label=Stars&color=6C63FF)](https://github.com/RMahammad/motiq/stargazers)
+[![MIT License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](./LICENSE)
+[![CI](https://img.shields.io/github/actions/workflow/status/RMahammad/motiq/ci.yml?branch=main&style=for-the-badge&label=CI)](https://github.com/RMahammad/motiq/actions/workflows/ci.yml)
+
+[Explore components](https://motiq.dev/components) ·
+[Get started](https://motiq.dev/getting-started) ·
+[Browse workflow packs](https://motiq.dev/packs) ·
+[Contribute](./CONTRIBUTING.md)
 
 </div>
 
----
+<p align="center">
+  <a href="https://motiq.dev">
+    <img src="./.github/assets/motiq-showcase.jpg" alt="Motiq homepage showing animated React components and a live AI response interface" width="1280" />
+  </a>
+</p>
 
-Motiq is a **free, open-source** collection of animated components for React and
-Next.js. You don't `npm install` a runtime package — you install the **real, editable
-source** straight into your project with the [shadcn](https://ui.shadcn.com/docs/cli)
-CLI, then own and adapt it however you like.
+## Why Motiq?
 
-Every component is **accessible (WCAG 2.2 AA)**, **reduced-motion-safe**, **RSC-safe**,
-and themed through semantic design tokens — the parts that copy-paste snippet kits
-usually skip.
+Most animation libraries stop at the effect. Motiq focuses on the product
+interface around it: real states, real interactions, and the details that make a
+component safe to ship.
 
-## Why Motiq
+- **Built for product UI** — AI responses, deployment pipelines, live data,
+  collaboration, security, commerce, files, and other application workflows.
+- **Editable source** — shadcn installs the TypeScript and Tailwind source directly
+  into your project. There is no black-box runtime package or vendor lock-in.
+- **Accessible by default** — keyboard behavior, focus management, screen-reader
+  semantics, and color-independent states are part of the component contract.
+- **Reduced-motion safe** — every animation has a deliberate
+  `prefers-reduced-motion` behavior; continuous effects pause when offscreen.
+- **React Server Component safe** — client boundaries are explicit and tested for
+  modern Next.js applications.
+- **Designed as a system** — shared semantic tokens and motion primitives keep the
+  catalog coherent when several components appear on the same screen.
 
-- **You own the code.** Components are copied into your repo as source — no black-box
-  dependency, no runtime lock-in, no license checks.
-- **Accessible by default.** Keyboard support, focus management, screen-reader
-  semantics, and `prefers-reduced-motion` handling are built in, not bolted on.
-- **Server-Component safe.** `"use client"` boundaries are placed deliberately so
-  components drop into the Next.js App Router without hydration surprises.
-- **A coherent system.** Shared design tokens and motion primitives mean components
-  look and move like they belong together — not four unrelated snippets.
-- **Motion where it matters.** Built on [Motion for React](https://motion.dev); simple
-  effects use CSS, heavier engines stay component-local and lazy.
+> **AI interfaces** · **Developer tools** · **Collaboration** · **Data motion** ·
+> **Commerce** · **Security** · **Productivity** · **Workflow environments**
 
-## Quick start
+## Install a component
 
-Install any component with the shadcn CLI:
-
-```bash
-npx shadcn@latest add https://motiq.dev/r/<component>.json
-```
-
-For example:
+Motiq uses a [shadcn-compatible registry](https://ui.shadcn.com/docs/registry).
+Install any item by URL—no Motiq account or package subscription required:
 
 ```bash
 npx shadcn@latest add https://motiq.dev/r/ai-response-stream.json
 ```
 
-The command copies the component's source (and any shared helpers it needs) into your
-project. Browse every component with a live preview and its install command at
-**[motiq.dev](https://motiq.dev)**.
+The command copies the component and its registry dependencies into your project.
+Every component page has its exact copy-ready command.
 
-> **Requirements:** React 19, a Tailwind CSS v4 setup, and a shadcn-initialized project
-> (`npx shadcn@latest init`).
+**Requirements:** React 18.3+ or 19, Tailwind CSS v4, and a
+[shadcn-initialized project](https://ui.shadcn.com/docs/installation).
 
-## What's in the catalog
+[Read the installation guide →](https://motiq.dev/getting-started)
 
-**70 installable items** — animated components, composed blocks, and multi-component
-packs — across 17 categories:
+## Explore the catalog
 
-| | |
+Motiq includes **56 components**, **8 composed workflow blocks**, and **4
+one-command packs** across 17 categories.
+
+| Build | Start with |
 | --- | --- |
-| **AI interfaces** | response streams, tool-call activity, agent workspaces |
-| **Developer tools** | deploy pipelines, log streams, request inspectors |
-| **Collaboration** | presence stacks, comment threads, review workspaces |
-| **Data motion** | KPI morphs, animated lists, live charts |
-| **Commerce** | checkout progress, cart transitions, variant selectors |
-| **Productivity** | kanban boards, timelines, approval workflows |
-| **Text & creative UI** | reveal effects, gradient text, animated icons |
-| **Backgrounds** | animated and state-driven product backgrounds |
+| AI products | [AI Response Stream](https://motiq.dev/components/ai-response-stream), [Agent Run Timeline](https://motiq.dev/components/agent-run-timeline), [Tool Call Activity](https://motiq.dev/components/tool-call-activity) |
+| Developer platforms | [Deployment Pipeline](https://motiq.dev/components/deployment-pipeline), [Live Log Stream](https://motiq.dev/components/live-log-stream), [API Request Inspector](https://motiq.dev/components/api-request-inspector) |
+| Collaborative apps | [Live Presence Stack](https://motiq.dev/components/live-presence-stack), [Comment Thread](https://motiq.dev/components/comment-thread), [Approval Workflow](https://motiq.dev/components/approval-workflow) |
+| Data products | [KPI Number Morph](https://motiq.dev/components/kpi-number-morph), [Streaming Data Rows](https://motiq.dev/components/streaming-data-rows), [Data Refresh State](https://motiq.dev/components/data-refresh-state) |
+| Complete workflows | [AI Interface Pack](https://motiq.dev/packs/ai-interface), [Developer Tools Pack](https://motiq.dev/packs/developer-tools), [Collaboration Pack](https://motiq.dev/packs/collaboration), [Data Motion Pack](https://motiq.dev/packs/data-motion) |
 
-…plus Mobile interactions, File workflows, Security & accounts, Communication, and
-animated shadcn primitives. See the full, searchable catalog at
-[motiq.dev/components](https://motiq.dev/components).
+[Browse every component with a live preview →](https://motiq.dev/components)
+
+## Production readiness is the feature
+
+A polished preview is only the beginning. Components are held to the same baseline:
+
+| Guarantee | What it means |
+| --- | --- |
+| Accessibility | WCAG 2.2 AA target, keyboard operation, visible focus, and screen-reader semantics |
+| Motion safety | Tested reduced-motion behavior and offscreen pause for continuous animation |
+| App compatibility | Strict TypeScript, intentional `"use client"` boundaries, SSR and RSC checks |
+| Source quality | Semantic tokens, bounded dependencies, cleanup for listeners and animation loops |
+| Consumer confidence | Unit, interaction, accessibility, and clean-project fixture coverage |
+
+The catalog favors a smaller, coherent collection of useful product interfaces over
+an endless gallery of disconnected effects.
 
 ## Local development
 
-Requires **Node ≥ 20** and **pnpm**.
+Motiq is a pnpm monorepo and requires Node.js 20 or newer.
 
 ```bash
-pnpm install           # install workspace dependencies
-pnpm build             # build the packages
-pnpm --filter docs-site dev   # run the docs site locally
-```
-
-Regenerate the registry after editing a component:
-
-```bash
-node packages/registry/scripts/build-registry.mjs
+git clone https://github.com/RMahammad/motiq.git
+cd motiq
+pnpm install
+pnpm build
+pnpm --filter docs-site dev
 ```
 
 Useful checks:
 
 ```bash
-pnpm lint          # import-boundary + lint rules
-pnpm typecheck     # strict TypeScript
-pnpm test          # unit + SSR + reduced-motion + axe
-pnpm docs:check    # documentation consistency
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm docs:check
 ```
 
-## Project structure
+The main workspace lives in:
 
-```
+```text
 packages/
-  tokens/      Design + motion tokens (CSS variables, TS constants)
-  motion/      Shared motion primitives (reduced-motion, offscreen pause, …)
-  react/       The component library
+  tokens/      Semantic design and motion tokens
+  motion/      Shared motion primitives
+  react/       React components
   sections/    Composed sections and blocks
-  registry/    shadcn registry manifest + build script
+  registry/    shadcn registry source and generator
 apps/
-  docs/        Documentation site (also hosts the registry at /r)
+  docs/        Documentation, live previews, and registry host
   storybook/   Component stories
-docs/          Engineering docs, standards, and ADRs
 ```
 
-## Contributing
+## Help Motiq grow
 
-Contributions are welcome — see [CONTRIBUTING.md](./CONTRIBUTING.md) for how to set up
-the repo, the standards every component must meet (accessibility, reduced motion,
-tests, docs), and how to open a pull request. Please also read our
-[Code of Conduct](./CODE_OF_CONDUCT.md).
+Motiq is independently built and maintained. If it saves you time:
+
+- [Star the repository](https://github.com/RMahammad/motiq) so more React
+  developers can find it.
+- Share a component or workflow you shipped with Motiq.
+- [Report a bug or suggest an improvement](https://github.com/RMahammad/motiq/issues/new/choose).
+- Pick up a focused issue and read the [contribution guide](./CONTRIBUTING.md).
+
+Sponsorships will open after the project has an established community. Until then,
+stars, thoughtful feedback, and real-world examples are the most valuable support.
+
+## Contributors
+
+<a href="https://github.com/RMahammad/motiq/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=RMahammad/motiq" alt="Motiq contributors" />
+</a>
 
 ## License
 
-[MIT](./LICENSE) © Mahammad Rustamov. Use, modify, and ship these components in
-personal and commercial projects.
+[MIT](./LICENSE) © Mahammad Rustamov. Use, modify, and ship Motiq in personal and
+commercial projects.
