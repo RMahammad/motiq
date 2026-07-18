@@ -95,7 +95,7 @@ an endless gallery of disconnected effects.
 
 ## Local development
 
-Motiq is a pnpm monorepo and requires Node.js 20 or newer.
+Motiq is a pnpm monorepo and requires Node.js 22.13 or newer.
 
 ```bash
 git clone https://github.com/RMahammad/motiq.git
@@ -140,27 +140,20 @@ Motiq is independently built and maintained. If it saves you time:
 
 ## Sponsors
 
-Motiq is looking for founding sponsors who want to support accessible, open-source
-React tooling. Sponsorship helps fund documentation, accessibility reviews,
-cross-browser testing, registry hosting, and long-term maintenance.
+The entire catalog is free and always will be. Motiq is built and maintained
+independently — sponsorship funds the unglamorous work that keeps it shippable:
+accessibility reviews, cross-browser testing, registry hosting, and documentation.
 
 <div align="center">
 
-### Become a founding sponsor
+[![Become a founding sponsor](https://img.shields.io/badge/Become_a_founding_sponsor-6C63FF?style=for-the-badge&logo=githubsponsors&logoColor=white)](https://github.com/RMahammad/motiq/issues/new?template=sponsorship.md)
 
-Support the project early and help keep the complete component catalog free for
-the React community.
-
-[![Become a sponsor](https://img.shields.io/badge/Become_a_sponsor-6C63FF?style=for-the-badge&logo=githubsponsors&logoColor=white)](https://github.com/RMahammad/motiq/issues/new?template=sponsorship.md)
-
-**Founding sponsors will be recognized here and on the Motiq website.**
-
-_Your logo could be the first one here._
+**Founding sponsors are recognized here and on [motiq.dev](https://motiq.dev) — your logo could be the first.**
 
 </div>
 
-Sponsorship tiers and benefits will be agreed transparently before payment. Motiq
-does not publish invented audience or reach numbers.
+Tiers and benefits are agreed transparently before any payment, and Motiq never
+publishes invented audience or reach numbers.
 
 ## Contributors
 

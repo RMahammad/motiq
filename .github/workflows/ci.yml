@@ -1,9 +1,24 @@
 name: CI
 
+# paths-ignore skips runs for files no CI check consumes (root docs, license, image
+# assets). docs/** and CLAUDE.md are NOT listed — the doc-consistency checks scan them.
 on:
   push:
     branches: [main]
+    paths-ignore: &docs-only
+      - README.md
+      - CONTRIBUTING.md
+      - AGENTS.md
+      - LICENSE
+      - .github/assets/**
   pull_request:
+    paths-ignore: *docs-only
+
+# Auto-cancel a superseded run when new commits land on the same branch/PR, so rapid
+# pushes don't queue up full builds behind each other.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 # pnpm 11's verify-deps-before-run pre-check can fail when a native dep (sharp) has an
 # un-built script; disable it in CI (native builds are allow-listed in pnpm-workspace.yaml).
