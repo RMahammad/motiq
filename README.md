@@ -48,31 +48,15 @@ component safe to ship.
 
 ## Install a component
 
-Motiq uses a [shadcn-compatible registry](https://ui.shadcn.com/docs/registry). Register the
-`@motiq` namespace once, then add any component with a single command — no account or package
-subscription required:
+Motiq uses a [shadcn-compatible registry](https://ui.shadcn.com/docs/registry). Add any
+component with a single command — no account, no config, nothing to register:
 
 ```bash
-npx shadcn@latest add @motiq/ai-response-stream
+npx shadcn@latest add https://motiq.dev/r/ai-response-stream
 ```
 
 The command copies the component and its registry dependencies into your project.
 Every component page has its exact copy-ready command.
-
-<details>
-<summary>One-time setup — register the <code>@motiq</code> namespace</summary>
-
-Add this to your `components.json` once; every `@motiq/…` command then works in any project:
-
-```json
-{
-  "registries": {
-    "@motiq": "https://motiq.dev/r/{name}.json"
-  }
-}
-```
-
-</details>
 
 **Requirements:** React 18.3+ or 19, Tailwind CSS v4, and a
 [shadcn-initialized project](https://ui.shadcn.com/docs/installation).

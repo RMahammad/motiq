@@ -71,9 +71,13 @@ export interface CommerceConfig {
 export const product = raw as ProductConfig;
 export const commerce = product.commerce;
 
-/** User-facing shadcn install command for a registry item, from config. */
+/**
+ * User-facing shadcn install command for a registry item, from config. Uses the
+ * extensionless registry URL (no `.json`) so the command is clean and needs no namespace
+ * setup — the docs app rewrites `/r/<name>` to the generated `/r/<name>.json`.
+ */
 export function installCommand(itemName: string): string {
-  return `npx shadcn@latest add ${product.registryBaseUrl}/${itemName}.json`;
+  return `npx shadcn@latest add ${product.registryBaseUrl}/${itemName}`;
 }
 
 /** Namespaced short install form (once the namespace is registered). */

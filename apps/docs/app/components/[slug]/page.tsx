@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { bySlug, catalog, itemInstall, itemsByCategory, categories, resolvePresentation } from "../../../lib/catalog";
-import { product, namespacedInstall } from "../../../lib/product";
+import { product } from "../../../lib/product";
 import { pageMetadata, absoluteUrl } from "../../../lib/seo";
 import { whenToUse, faqFor } from "../../../lib/component-seo";
 import { readAnyRegistry, sourcePreview } from "../../../lib/registry-source";
@@ -32,12 +32,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 /**
  * Registry deps ship in the payload as absolute URLs so `npx shadcn add` resolves
- * them zero-config; show the friendly `@namespace/name` form instead of the URL.
+ * them zero-config; show just the item name instead of the full URL.
  */
 function depLabel(dep: string): string {
   if (!/^https?:\/\//.test(dep)) return dep;
-  const base = dep.split("/").pop()?.replace(/\.json$/, "") ?? dep;
-  return `${product.registryNamespace}/${base}`;
+  return dep.split("/").pop()?.replace(/\.json$/, "") ?? dep;
 }
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
@@ -213,13 +212,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
       {/* Installation */}
       <Section id="installation" title="Installation">
-        <p className="mb-3 text-[14px] text-[var(--color-muted)]">Install the editable source with the shadcn CLI:</p>
-        <InstallCommand command={namespacedInstall(item.registryItem)} />
-        <p className="mt-3 text-[13px] text-[var(--color-muted)]">
-          First time? Add the <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">{product.registryNamespace}</code> namespace to your{" "}
-          <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">components.json</code> once — see the{" "}
-          <Link href="/getting-started" className="text-[var(--color-accent)] underline underline-offset-2">setup guide</Link>. After that, this command works in every project.
-        </p>
+        <p className="mb-3 text-[14px] text-[var(--color-muted)]">Install the editable source with the shadcn CLI — no account, no config:</p>
+        <InstallCommand command={itemInstall(item)} />
         {product.namespaceIsPreview ? (
           <p className="mt-2 text-[12px] text-[var(--color-muted)]">
             The registry namespace/URL are temporary preview values during development.
@@ -269,7 +263,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
             </span>
           ))}
           {preview.registryDependencies.map((d) => (
-            <span key={d} className="rounded-md border border-[var(--color-border)] bg-[var(--color-code-bg)] px-2 py-1 font-mono text-[12.5px] text-[var(--color-code-fg)]">
+            <span key={depLabel(d)} className="rounded-md border border-[var(--color-border)] bg-[var(--color-code-bg)] px-2 py-1 font-mono text-[12.5px] text-[var(--color-code-fg)]">
               {depLabel(d)}
             </span>
           ))}
