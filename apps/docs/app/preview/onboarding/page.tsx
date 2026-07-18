@@ -28,7 +28,7 @@ import { PreviewTokenWidget } from "../token-widget";
 export const dynamic = "force-dynamic"; // per-customer, reads mutable stores
 
 export const metadata: Metadata = {
-  title: `Preview onboarding — ${product.productName}`,
+  title: `Preview onboarding - ${product.productName}`,
   description: "Get set up with your private-preview access: tokens, install configuration, and what the preview includes.",
 };
 
@@ -63,7 +63,7 @@ function previewTermsApproved(): boolean {
 }
 
 function fmtDate(ms: number | null): string {
-  if (ms == null) return "—";
+  if (ms == null) return "-";
   return new Date(ms).toLocaleDateString();
 }
 
@@ -92,7 +92,7 @@ function NoCustomer() {
       </h1>
       <p className="mt-4 text-[15px] leading-relaxed text-[var(--color-muted)]">
         Onboarding is personalized to your activated preview account. In production you will reach this page through an
-        authenticated login — your access, tokens, and install configuration are resolved from your session, never from a
+        authenticated login - your access, tokens, and install configuration are resolved from your session, never from a
         link you can share or edit.
       </p>
       <p className="mt-3 text-[14px] leading-relaxed text-[var(--color-muted)]">
@@ -263,7 +263,7 @@ export default async function PreviewOnboardingPage({
         <h2 className="text-lg font-semibold tracking-tight text-[var(--color-fg)]">What’s unfinished (stated plainly)</h2>
         <ul className="mt-3 flex flex-col gap-2 text-[13px] leading-relaxed text-[var(--color-muted)]">
           <li>• <span className="font-medium text-[var(--color-fg)]">Dev-mock entitlement provider.</span> Tokens are preview fixtures; there is no real billing or identity system behind them yet.</li>
-          <li>• <span className="font-medium text-[var(--color-fg)]">File-backed store.</span> Access + audit state uses a file store, not a production database — fine for a small cohort, not a scale or HA guarantee.</li>
+          <li>• <span className="font-medium text-[var(--color-fg)]">File-backed store.</span> Access + audit state uses a file store, not a production database - fine for a small cohort, not a scale or HA guarantee.</li>
           <li>• <span className="font-medium text-[var(--color-fg)]">No checkout.</span> No payment is taken and no purchase flow runs. Participation is not a sale.</li>
           <li>• <span className="font-medium text-[var(--color-fg)]">Draft legal terms.</span> License, Terms, Privacy, Refund, Update, and Support pages are drafts pending review.</li>
           <li>• <span className="font-medium text-[var(--color-fg)]">Preview builds may change</span> without paid-launch update/versioning guarantees.</li>
@@ -275,7 +275,7 @@ export default async function PreviewOnboardingPage({
       <Step n={1} title="Create a registry token">
         <p className="mb-4 max-w-2xl text-[13.5px] leading-relaxed text-[var(--color-muted)]">
           Your token authenticates the shadcn CLI to your entitled Pro source. It is shown in full{" "}
-          <span className="font-medium text-[var(--color-fg)]">exactly once</span>, at creation or rotation — copy it
+          <span className="font-medium text-[var(--color-fg)]">exactly once</span>, at creation or rotation - copy it
           immediately. Afterwards only a short prefix is listed.
         </p>
         <PreviewTokenWidget customerId={customer.id} tokens={tokens} tokenEnvVar={TOKEN_ENV} />
@@ -285,7 +285,7 @@ export default async function PreviewOnboardingPage({
       <Step n={2} title="Configure components.json">
         <p className="mb-3 max-w-2xl text-[13.5px] leading-relaxed text-[var(--color-muted)]">
           Add your registry to <code className="font-mono">components.json</code>. The token is referenced through an
-          environment placeholder — <span className="font-medium text-[var(--color-fg)]">never paste the real token here</span>.
+          environment placeholder - <span className="font-medium text-[var(--color-fg)]">never paste the real token here</span>.
         </p>
         <CodeBlock code={componentsJsonSnippet()} lang="jsonc" />
         <div className="mt-3 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-code-bg)] px-3 py-2">
@@ -362,7 +362,7 @@ export default async function PreviewOnboardingPage({
           </Link>
           <Link href="/preview/feedback" className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 transition-colors hover:border-[var(--color-accent)]">
             <p className="text-[13px] font-medium text-[var(--color-fg)]">Report a bug →</p>
-            <p className="mt-1 text-[12.5px] text-[var(--color-muted)]">Tell us what broke — install issues, states, motion, a11y.</p>
+            <p className="mt-1 text-[12.5px] text-[var(--color-muted)]">Tell us what broke - install issues, states, motion, a11y.</p>
           </Link>
           <Link href="/preview/feedback" className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 transition-colors hover:border-[var(--color-accent)]">
             <p className="text-[13px] font-medium text-[var(--color-fg)]">Request a component →</p>

@@ -138,7 +138,7 @@ function stringify(value: unknown): string {
 }
 
 function callToText(call: ToolCall): string {
-  const lines: string[] = [`${call.name} — ${getStatusMeta(call.status).label}`];
+  const lines: string[] = [`${call.name} - ${getStatusMeta(call.status).label}`];
   if (call.category) lines.push(`Category: ${call.category}`);
   if (call.input !== undefined) lines.push(`Input:\n${stringify(call.input)}`);
   if (call.output !== undefined) lines.push(`Output:\n${stringify(call.output)}`);

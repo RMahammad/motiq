@@ -48,7 +48,7 @@ const SEEDS: Seed[] = [
     description: "Scan the source against the malware signature database.",
     duration: 2_100,
     output: { engine: "clamav 1.2", signatures: 8_641_203, verdict: "clean" },
-    logs: ["loaded 8,641,203 signatures", "scan complete — no threats found"],
+    logs: ["loaded 8,641,203 signatures", "scan complete - no threats found"],
   },
   {
     id: "transcode",
@@ -357,7 +357,7 @@ export function ProcessingTimelinePreview() {
       />
 
       <p className="text-center text-[11.5px] text-[var(--color-muted)]">
-        Demo data — a clearly-fictional media pipeline driven from local state. No file is uploaded or processed; the
+        Demo data - a clearly-fictional media pipeline driven from local state. No file is uploaded or processed; the
         component only renders the stages it is given.
       </p>
     </div>

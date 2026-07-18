@@ -4,7 +4,7 @@ import { commerce, product } from "../../../lib/product";
 import { DraftBody, type DraftSection } from "../_draft";
 
 export const metadata: Metadata = {
-  title: `Privacy Policy — ${product.productName}`,
+  title: `Privacy Policy - ${product.productName}`,
 };
 
 const contact = commerce.supportEmail || "to be provided";
@@ -15,7 +15,7 @@ const sections: DraftSection[] = [
   {
     heading: "What data is collected",
     intro:
-      "The current analytics posture is provider-neutral and backed by a dev-logger adapter — no third-party SDK is loaded and no data leaves the app (docs/44).",
+      "The current analytics posture is provider-neutral and backed by a dev-logger adapter - no third-party SDK is loaded and no data leaves the app (docs/44).",
     clauses: [
       {
         text: "Product analytics captures only a whitelisted set of product events (e.g. page views, catalog searches, preview opens) with small, non-sensitive props such as component slugs, categories, and coarse counts.",
@@ -121,8 +121,8 @@ export default function PrivacyPage() {
         <>
           This is a structured <strong className="text-[var(--color-fg)]">draft</strong> of
           the {product.productName} Privacy Policy. It reflects the product&apos;s real
-          privacy stance — analytics captures only whitelisted product events and never
-          source, secrets, or personal data beyond an approved policy (see docs/44) — but the
+          privacy stance - analytics captures only whitelisted product events and never
+          source, secrets, or personal data beyond an approved policy (see docs/44) - but the
           enforceable policy text, retention windows, and consent model are not finalized.
           Unresolved items are tagged inline (
           <code className="text-[var(--color-fg)]">[REQUIRES LEGAL REVIEW]</code>,{" "}

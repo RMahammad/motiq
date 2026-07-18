@@ -44,7 +44,7 @@ const TRIGGER = /(?:^|\s)@([\w.-]*)$/;
 
 export function MentionSuggestionsPreview() {
   const inputRef = React.useRef<HTMLTextAreaElement | null>(null);
-  const [value, setValue] = React.useState("Nice work on the launch review — ");
+  const [value, setValue] = React.useState("Nice work on the launch review - ");
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [loading, setLoading] = React.useState(false);
@@ -94,7 +94,7 @@ export function MentionSuggestionsPreview() {
   };
 
   const reset = () => {
-    setValue("Nice work on the launch review — ");
+    setValue("Nice work on the launch review - ");
     setOpen(false);
     setQuery("");
     inputRef.current?.focus();
@@ -118,7 +118,7 @@ export function MentionSuggestionsPreview() {
           {/* The relative container anchors the popup; the app owns the field. */}
           <div className="relative">
             <label htmlFor="mention-composer" className="sr-only">
-              Write a comment — type @ to mention someone
+              Write a comment - type @ to mention someone
             </label>
             <textarea
               id="mention-composer"

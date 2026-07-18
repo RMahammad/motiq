@@ -38,10 +38,10 @@ function Section({ title, sub, children }: { title: string; sub?: string; childr
 
 // What a pack saves a team from building (concrete, not vague).
 const SAVES = [
-  ["State handling", "Every interaction state modelled — loading, live, empty, partial, stale, error, recovery — not just the happy path."],
+  ["State handling", "Every interaction state modelled - loading, live, empty, partial, stale, error, recovery - not just the happy path."],
   ["Interaction design", "Keyboard, focus, pointer, and touch behaviour designed once and shared across the workflow."],
   ["Accessibility", "Roles, labels, and status-by-icon-and-text (never colour alone); reduced-motion behaviour on every animation."],
-  ["Animation", "Meaningful motion tied to state change — continuity, not decoration — with the reduced-motion fallback built in."],
+  ["Animation", "Meaningful motion tied to state change - continuity, not decoration - with the reduced-motion fallback built in."],
   ["Responsive behaviour", "Desktop, tablet, and mobile layouts for a multi-component workflow, not a single card."],
   ["Registry integration", "Installs as editable source through the shadcn CLI with dependencies resolved for you."],
 ];
@@ -65,17 +65,17 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
   const complete = completeCatalogCta();
 
   const faq: { q: string; a: string }[] = [
-    { q: "Is this a package or source code?", a: "Editable source. The shadcn CLI writes the component and block files into your repo — you own and can change them. There is no runtime dependency on us." },
-    { q: "Can I edit the components?", a: "Yes. Everything installs as TypeScript source with Tailwind classes and Motion — edit freely." },
+    { q: "Is this a package or source code?", a: "Editable source. The shadcn CLI writes the component and block files into your repo - you own and can change them. There is no runtime dependency on us." },
+    { q: "Can I edit the components?", a: "Yes. Everything installs as TypeScript source with Tailwind classes and Motion - edit freely." },
     { q: "Does it work with Next.js?", a: "Yes. Components are RSC-aware and ship the client boundary where needed." },
     { q: "Does it work with Vite?", a: "Yes. The components are framework-agnostic React; they do not import next/*." },
     { q: "Does it require shadcn?", a: "It uses the shadcn-compatible registry to install. The components themselves are plain React + Tailwind + Motion." },
     { q: "Does it require Motion?", a: "Most components use Motion for React for meaningful animation; a few are CSS-only. Dependencies are listed per component." },
     { q: "Is it accessible?", a: "Components target WCAG 2.2 AA patterns: keyboard operable, labelled, status conveyed by icon and text, with reduced-motion behaviour. Verify against your own product context." },
     { q: "Can I use it for client projects?", a: "License terms are being finalized (docs/41). See the draft license before relying on specific rights." },
-    { q: "How do updates work?", a: "Since you install source, you own your copy. Update delivery and duration are to be finalized — we do not claim lifetime updates." },
-    { q: "Can I buy the complete catalog?", a: "The complete catalog is planned as an access tier. Access and pricing are being finalized — join the list to be notified." },
-    { q: "Is pricing finalized?", a: canShowPrice() ? "See the access section for current pricing." : "No — pricing is to be finalized. Nothing is charged during preview." },
+    { q: "How do updates work?", a: "Since you install source, you own your copy. Update delivery and duration are to be finalized - we do not claim lifetime updates." },
+    { q: "Can I buy the complete catalog?", a: "The complete catalog is planned as an access tier. Access and pricing are being finalized - join the list to be notified." },
+    { q: "Is pricing finalized?", a: canShowPrice() ? "See the access section for current pricing." : "No - pricing is to be finalized. Nothing is charged during preview." },
   ];
 
   return (
@@ -119,7 +119,7 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
 
       {/* LARGE BLOCK PREVIEW (lazy-mounted) */}
       {block ? (
-        <LazyPreview label={`${pack.blockName} — live preview`}>
+        <LazyPreview label={`${pack.blockName} - live preview`}>
           <PreviewStage stage="interactive">
             <Preview id={pack.blockSlug} />
           </PreviewStage>
@@ -151,7 +151,7 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
       {/* FULL WORKFLOW PREVIEW / STATES */}
       <Section
         title="The complete workflow"
-        sub="The block cycles through the real states below — it exposes application-controlled state and never simulates a backend or model."
+        sub="The block cycles through the real states below - it exposes application-controlled state and never simulates a backend or model."
       >
         <ul className="flex flex-wrap gap-2">
           {pack.states.map((s) => (
@@ -207,9 +207,9 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
       </Section>
 
       {/* INSTALLATION */}
-      <Section title="Installation" sub={`Installs ${filesInstalled} source files into your repo — you own them after install.`}>
+      <Section title="Installation" sub={`Installs ${filesInstalled} source files into your repo - you own them after install.`}>
         <p className="mb-3 text-[13px] text-[var(--color-muted)]">
-          Install with the shadcn CLI — no account, no config. Every command below works as-is.
+          Install with the shadcn CLI - no account, no config. Every command below works as-is.
         </p>
         <p className="mb-2 text-[14px] text-[var(--color-muted)]">Whole pack (block + every component):</p>
         <InstallCommand command={packInstall(pack)} />
@@ -241,7 +241,7 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
       </Section>
 
       {/* COMPARISON */}
-      <Section title="Build it, or install it" sub="A factual comparison — no invented time or cost savings.">
+      <Section title="Build it, or install it" sub="A factual comparison - no invented time or cost savings.">
         <div className="overflow-x-auto rounded-xl border border-[var(--color-border)]">
           <table className="w-full text-left text-[13.5px]">
             <thead className="bg-[var(--color-bg-secondary)] text-[var(--color-muted)]">

@@ -42,7 +42,7 @@ const MODELS: PromptModel[] = [
   { id: "swift", name: "Nimbus Swift", caption: "Fast · demo model" },
   { id: "atlas", name: "Nimbus Atlas", caption: "Balanced · demo model" },
   { id: "sage", name: "Nimbus Sage", caption: "Deep reasoning · demo model" },
-  { id: "legacy", name: "Nimbus v1", caption: "Deprecated", disabled: true, disabledReason: "Retired — no longer available." },
+  { id: "legacy", name: "Nimbus v1", caption: "Deprecated", disabled: true, disabledReason: "Retired - no longer available." },
 ];
 
 const VARIABLES: PromptVariable[] = [
@@ -196,7 +196,7 @@ export function PromptComposerPreview() {
         <AnimatedDialogContent className="sm:max-w-md">
           <AnimatedDialogHeader>
             <AnimatedDialogTitle>Attach from…</AnimatedDialogTitle>
-            <AnimatedDialogDescription>Pick a source. Demo only — nothing is uploaded or sent.</AnimatedDialogDescription>
+            <AnimatedDialogDescription>Pick a source. Demo only - nothing is uploaded or sent.</AnimatedDialogDescription>
           </AnimatedDialogHeader>
           <AnimatedDialogBody className="grid gap-2 sm:grid-cols-2">
             {ATTACH_SOURCES.map((s) => (

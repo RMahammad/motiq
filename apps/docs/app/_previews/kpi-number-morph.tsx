@@ -114,7 +114,7 @@ export function KpiNumberMorphPreview() {
           ))}
         </div>
       </div>
-      <p className="text-[12px] text-[var(--color-muted)]">Demo data — values are illustrative.</p>
+      <p className="text-[12px] text-[var(--color-muted)]">Demo data - values are illustrative.</p>
     </div>
   );
 }

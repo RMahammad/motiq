@@ -402,7 +402,7 @@ function SourceRow({
                     ? "border-[color-mix(in_oklab,var(--color-success)_40%,var(--color-border))] bg-[color-mix(in_oklab,var(--color-success)_12%,transparent)] text-[var(--color-success)]"
                     : "border-[var(--color-border)] bg-[var(--color-bg-secondary)] text-[var(--color-muted)]",
                 )}
-                title="Verification state provided by the application — not determined by this component."
+                title="Verification state provided by the application - not determined by this component."
               >
                 {source.verified ? <CheckIcon /> : null}
                 {source.verified ? "Verified" : "Unverified"}

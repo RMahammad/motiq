@@ -48,7 +48,7 @@ function seed(): ThreadNode[] {
             {
               id: "n1-1-1",
               author: P.ravi,
-              body: "That works technically — the canvas transform is decoupled from the rail. One ask: keyboard +/- should mirror it.",
+              body: "That works technically - the canvas transform is decoupled from the rail. One ask: keyboard +/- should mirror it.",
               timestamp: T0 - 4 * HOUR,
               replyCount: 1,
               unreadCount: 1,
@@ -56,7 +56,7 @@ function seed(): ThreadNode[] {
                 {
                   id: "n1-1-1-1",
                   author: P.jun,
-                  body: "Usability sessions back this up — 4 of 6 participants reached for the keyboard first on dense boards.",
+                  body: "Usability sessions back this up - 4 of 6 participants reached for the keyboard first on dense boards.",
                   timestamp: T0 - 25 * MIN,
                   unread: true,
                   unreadCount: 1,
@@ -66,7 +66,7 @@ function seed(): ThreadNode[] {
             {
               id: "n1-1-2",
               author: P.theo,
-              body: "Pill is fine. Let's not add a percentage readout yet — scope creep for v1.",
+              body: "Pill is fine. Let's not add a percentage readout yet - scope creep for v1.",
               timestamp: T0 - 3 * HOUR - 40 * MIN,
               resolved: true,
             },
@@ -77,7 +77,7 @@ function seed(): ThreadNode[] {
           author: P.jun,
           // replyCount (4) exceeds the loaded children (0) → a "Load more" row
           // appears when this branch is expanded; the control below loads them.
-          body: "Grouping affordance has the most research history — I pulled the older explorations into this branch.",
+          body: "Grouping affordance has the most research history - I pulled the older explorations into this branch.",
           timestamp: T0 - 3 * HOUR,
           replyCount: 4,
         },
@@ -117,7 +117,7 @@ function lazyReplies(): ThreadNode[] {
     { id: "n1-2-a", parentId: "n1-2", author: P.lena, body: "Explored a marquee-select + right-click group.", timestamp: T0 - 2 * HOUR - 50 * MIN },
     { id: "n1-2-b", parentId: "n1-2", author: P.amara, body: "And a persistent 'frames' primitive like the whiteboard tools use.", timestamp: T0 - 2 * HOUR - 40 * MIN },
     { id: "n1-2-c", parentId: "n1-2", author: P.jun, body: "Frames tested better for recall a week later.", timestamp: T0 - 2 * HOUR - 20 * MIN, unread: true, unreadCount: 1 },
-    { id: "n1-2-d", parentId: "n1-2", author: P.ravi, body: "Frames are also cheaper to render — they're just a container node.", timestamp: T0 - 2 * HOUR },
+    { id: "n1-2-d", parentId: "n1-2", author: P.ravi, body: "Frames are also cheaper to render - they're just a container node.", timestamp: T0 - 2 * HOUR },
   ];
 }
 
@@ -189,7 +189,7 @@ export function ThreadExpansionPreview() {
     const id = "n1-1-1-x";
     setNodes((prev) =>
       addChildren(prev, "n1-1-1", [
-        { id, parentId: "n1-1-1", author: P.you, body: "Agreed — I'll spec the keyboard zoom mapping alongside the pill.", timestamp: T0, unread: true, unreadCount: 1 },
+        { id, parentId: "n1-1-1", author: P.you, body: "Agreed - I'll spec the keyboard zoom mapping alongside the pill.", timestamp: T0, unread: true, unreadCount: 1 },
       ]),
     );
     setNodes((prev) => mapTree(prev, (n) => (n.id === "n1-1-1" ? { ...n, replyCount: (n.replyCount ?? 0) + 1 } : n)));

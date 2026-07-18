@@ -223,11 +223,11 @@ function stepHasDetails(step: RunStep): boolean {
 
 function runToText(run: AgentRun): string {
   const lines: string[] = [
-    `Run: ${run.title} — ${getStatusMeta(run.status).label}`,
+    `Run: ${run.title} - ${getStatusMeta(run.status).label}`,
   ];
   run.steps.forEach((step, i) => {
     lines.push("");
-    lines.push(`${i + 1}. ${step.title} — ${getStatusMeta(step.status).label}`);
+    lines.push(`${i + 1}. ${step.title} - ${getStatusMeta(step.status).label}`);
     if (step.description) lines.push(`   ${step.description}`);
     if (step.toolCall) {
       lines.push(`   Tool: ${step.toolCall.name}`);

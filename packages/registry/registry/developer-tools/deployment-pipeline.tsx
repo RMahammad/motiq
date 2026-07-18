@@ -394,8 +394,8 @@ function summarize(stages: Stage[]): string {
   const running = stages.find((s) => s.status === "running");
   const failed = stages.find((s) => s.status === "failed" || s.status === "cancelled");
   if (failed) return `Pipeline halted at ${failed.name}: ${STATUS[failed.status].label.toLowerCase()}.`;
-  if (running) return `Running ${running.name} — ${done} of ${total} stages complete.`;
-  if (done === total) return `Pipeline complete — all ${total} stages passed.`;
+  if (running) return `Running ${running.name} - ${done} of ${total} stages complete.`;
+  if (done === total) return `Pipeline complete - all ${total} stages passed.`;
   return `${done} of ${total} stages complete.`;
 }
 

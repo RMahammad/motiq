@@ -30,7 +30,7 @@ export function LuminousTopographyCatalogPreview() {
           Depth that reads like a map, not noise.
         </h2>
         <p className="mt-2.5 max-w-[38ch] text-[13.5px] leading-relaxed text-[var(--color-muted)]">
-          Layered contours flow around your focal points and thin over a readable safe area — so headline, copy, and CTA stay crisp on top.
+          Layered contours flow around your focal points and thin over a readable safe area - so headline, copy, and CTA stay crisp on top.
         </p>
         <div className="mt-4 flex flex-wrap items-center gap-2.5">
           <span className="rounded-lg bg-[var(--color-accent)] px-3.5 py-2 text-[13px] font-medium text-[var(--color-accent-fg,#fff)] shadow-[var(--shadow-sm)]">

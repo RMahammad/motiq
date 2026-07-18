@@ -160,7 +160,7 @@ export function TypingAndPresencePreview() {
           Mode: {mode}
         </button>
         <button type="button" className={control} onClick={reset}>Reset</button>
-        <span className="ml-auto text-[12px] text-[var(--color-muted)]">The app owns presence — the component presents it</span>
+        <span className="ml-auto text-[12px] text-[var(--color-muted)]">The app owns presence - the component presents it</span>
       </div>
     </div>
   );

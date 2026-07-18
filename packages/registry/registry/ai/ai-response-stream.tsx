@@ -454,7 +454,7 @@ export function AiResponseStream({
               <li
                 key={id}
                 id={railId("cmp", id)}
-                className="flex items-start gap-2 rounded-lg px-1 py-0.5 text-[13px] target:bg-[color-mix(in_oklab,var(--color-accent)_10%,transparent)]"
+                className="flex items-start gap-2 rounded-lg px-2.5 py-1.5 text-[13px] target:bg-[color-mix(in_oklab,var(--color-accent)_10%,transparent)]"
               >
                 <span className="mt-[1px] grid h-[18px] min-w-[18px] place-items-center rounded-[5px] border border-[var(--color-border)] bg-[var(--color-surface)] px-1 text-[11px] font-semibold text-[var(--color-accent)]">
                   {index}

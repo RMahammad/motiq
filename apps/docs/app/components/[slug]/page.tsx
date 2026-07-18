@@ -212,7 +212,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
       {/* Installation */}
       <Section id="installation" title="Installation">
-        <p className="mb-3 text-[14px] text-[var(--color-muted)]">Install the editable source with the shadcn CLI — no account, no config:</p>
+        <p className="mb-3 text-[14px] text-[var(--color-muted)]">Install the editable source with the shadcn CLI - no account, no config:</p>
         <InstallCommand command={itemInstall(item)} />
         {product.namespaceIsPreview ? (
           <p className="mt-2 text-[12px] text-[var(--color-muted)]">

@@ -292,7 +292,7 @@ export function SwipeActionRow({
   const commit = React.useCallback(
     (action: SwipeAction, side: SwipeSide) => {
       onAction?.(action.id, side);
-      setAnnouncement(`${action.label} — done`);
+      setAnnouncement(`${action.label} - done`);
       setConfirming(null);
       setOpen(null);
     },

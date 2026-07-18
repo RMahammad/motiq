@@ -16,7 +16,7 @@ import { SelectControl } from "../_components/select-control";
 type Environment = "test" | "live";
 
 function fmtDate(ms: number | null): string {
-  if (ms == null) return "—";
+  if (ms == null) return "-";
   return new Date(ms).toLocaleString();
 }
 
@@ -96,7 +96,7 @@ export function TokenManager({
           role="alert"
           className="rounded-xl border border-[var(--color-accent)] bg-[var(--color-bg-secondary)] p-4"
         >
-          <p className="text-[13px] font-medium text-[var(--color-fg)]">Your new token — copy it now</p>
+          <p className="text-[13px] font-medium text-[var(--color-fg)]">Your new token - copy it now</p>
           <p className="mt-1 text-[12.5px] leading-relaxed text-[var(--color-muted)]">
             This is the only time this token is shown. It is not stored and cannot be retrieved again. Store it in your
             environment as <code className="font-mono text-[var(--color-fg)]">{tokenEnvVar}</code>.
@@ -112,7 +112,7 @@ export function TokenManager({
             onClick={() => setFreshToken(null)}
             className="mt-3 inline-flex items-center rounded-md border border-[var(--color-border)] px-2.5 py-1 text-[12px] text-[var(--color-fg)] transition-colors hover:bg-[var(--color-bg-secondary)]"
           >
-            I’ve saved it — dismiss
+            I’ve saved it - dismiss
           </button>
         </div>
       ) : null}

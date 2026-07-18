@@ -4,7 +4,7 @@ import { commerce, product } from "../../../lib/product";
 import { DraftBody, type DraftSection } from "../_draft";
 
 export const metadata: Metadata = {
-  title: `Update Policy — ${product.productName}`,
+  title: `Update Policy - ${product.productName}`,
 };
 
 const salesContact = commerce.salesEmail || "to be provided";

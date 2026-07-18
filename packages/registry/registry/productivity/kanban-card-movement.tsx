@@ -421,7 +421,7 @@ export function KanbanCardMovement({
       // Moving across columns re-parents the card in the DOM (a new node), which
       // drops focus — restore it so the next keystroke still reaches the card.
       focusCard(cardId);
-      announce(`${card.title} — ${columnTitle(dest.col)}, position ${dest.index + 1} of ${next[dest.col!].length}.`);
+      announce(`${card.title} - ${columnTitle(dest.col)}, position ${dest.index + 1} of ${next[dest.col!].length}.`);
     },
     [announce, columnTitle, finalizeMove, focusCard],
   );

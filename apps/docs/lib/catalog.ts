@@ -120,7 +120,7 @@ export const categories: Category[] = [
   { id: "text", label: "Text animations", blurb: "Headline-grade text reveals and loops." },
   { id: "creative", label: "Creative UI", blurb: "Cards, lists, and interactive surfaces." },
   { id: "backgrounds", label: "Backgrounds", blurb: "Ambient, performance-safe backdrops." },
-  { id: "product-backgrounds", label: "Product Backgrounds", blurb: "Animated backgrounds driven by application state — workflows, signals, queues, grids, contours, and events." },
+  { id: "product-backgrounds", label: "Product Backgrounds", blurb: "Animated backgrounds driven by application state - workflows, signals, queues, grids, contours, and events." },
   { id: "workflow-heroes", label: "Workflow Heroes", blurb: "Editable hero blocks that demonstrate a real product workflow." },
   { id: "animated-shadcn", label: "Animated shadcn", blurb: "Accessible Radix components with meaningful motion." },
   { id: "icons", label: "Animated icons", blurb: "Tiny motion for buttons and actions." },
@@ -159,7 +159,7 @@ export const catalog: CatalogItem[] = [
     name: "Deployment Pipeline",
     slug: "deployment-pipeline",
     description:
-      "Visualize a CI/CD run — stage status, running-stage emphasis, durations, expandable logs, and Retry on failed stages. Data is controlled by your app.",
+      "Visualize a CI/CD run - stage status, running-stage emphasis, durations, expandable logs, and Retry on failed stages. Data is controlled by your app.",
     category: "developer-tools",
     subcategory: "Developer tools",
     status: "beta",
@@ -184,7 +184,7 @@ export const catalog: CatalogItem[] = [
     name: "Live Presence Stack",
     slug: "live-presence-stack",
     description:
-      "A live avatar stack for collaborative apps — animated join/leave, per-user active/idle/editing/viewing status, overflow count, and a keyboard-accessible detail list.",
+      "A live avatar stack for collaborative apps - animated join/leave, per-user active/idle/editing/viewing status, overflow count, and a keyboard-accessible detail list.",
     category: "collaboration",
     subcategory: "Collaboration",
     status: "beta",
@@ -259,7 +259,7 @@ export const catalog: CatalogItem[] = [
     name: "Live Log Stream",
     slug: "live-log-stream",
     description:
-      "A live log console — auto-follow that never fights your scroll, a \"N new lines\" resume indicator, pause/resume, search, per-level filtering, copy, and bounded history. Data is controlled by your app.",
+      "A live log console - auto-follow that never fights your scroll, a \"N new lines\" resume indicator, pause/resume, search, per-level filtering, copy, and bounded history. Data is controlled by your app.",
     category: "developer-tools",
     subcategory: "Developer tools",
     status: "beta",
@@ -284,7 +284,7 @@ export const catalog: CatalogItem[] = [
     name: "Activity Stream",
     slug: "activity-stream",
     description:
-      "A collaboration activity feed that goes beyond a dotted timeline — groups repeated actions, date separators, an unread divider, live-arriving items, and filtering by event type. Your app owns the events.",
+      "A collaboration activity feed that goes beyond a dotted timeline - groups repeated actions, date separators, an unread divider, live-arriving items, and filtering by event type. Your app owns the events.",
     category: "collaboration",
     subcategory: "Collaboration",
     status: "beta",
@@ -309,7 +309,7 @@ export const catalog: CatalogItem[] = [
     name: "Streaming Data Rows",
     slug: "streaming-data-rows",
     description:
-      "A live operational table your app drives — animated row insert, update, resort with continuity, per-cell change emphasis (▲▼, never color alone), numeric morphs, and status transitions. Not a data-grid.",
+      "A live operational table your app drives - animated row insert, update, resort with continuity, per-cell change emphasis (▲▼, never color alone), numeric morphs, and status transitions. Not a data-grid.",
     category: "data-motion",
     subcategory: "Data motion",
     status: "beta",
@@ -459,7 +459,7 @@ export const catalog: CatalogItem[] = [
     name: "Event Propagation Matrix",
     slug: "event-propagation-matrix",
     description:
-      "A temporal background where events propagate through a structured cell matrix — origin cells light, then neighbors along the grid, so waves step cell-to-cell (not free-space circles). Overlaps damp, failed propagation halts with a non-color glyph, and old events settle into a quiet history layer. Deterministic SVG + CSS.",
+      "A temporal background where events propagate through a structured cell matrix - origin cells light, then neighbors along the grid, so waves step cell-to-cell (not free-space circles). Overlaps damp, failed propagation halts with a non-color glyph, and old events settle into a quiet history layer. Deterministic SVG + CSS.",
     category: "product-backgrounds",
     subcategory: "Product Backgrounds",
     status: "beta",
@@ -484,7 +484,7 @@ export const catalog: CatalogItem[] = [
     name: "Data Contour Surface",
     slug: "data-contour-surface",
     description:
-      "A data-driven contour background: contours are computed from your values (signed pressure points, thresholds, active/comparison regions) via canvas marching-squares — not a random texture. Emphasized thresholds get heavier bands, the active region brightens, comparisons ghost, and data changes ease smoothly. Deterministic, offscreen-paused.",
+      "A data-driven contour background: contours are computed from your values (signed pressure points, thresholds, active/comparison regions) via canvas marching-squares - not a random texture. Emphasized thresholds get heavier bands, the active region brightens, comparisons ghost, and data changes ease smoothly. Deterministic, offscreen-paused.",
     category: "product-backgrounds",
     subcategory: "Product Backgrounds",
     status: "beta",
@@ -509,7 +509,7 @@ export const catalog: CatalogItem[] = [
     name: "Agent Operations Hero",
     slug: "agent-operations-hero",
     description:
-      "An editable hero block for AI/automation products: a real agent workflow (run timeline, prompt input, one active tool, one source) with outcome copy + CTAs, across idle/running/tool-active/waiting/completed/failed. App-controlled — never simulates a model.",
+      "An editable hero block for AI/automation products: a real agent workflow (run timeline, prompt input, one active tool, one source) with outcome copy + CTAs, across idle/running/tool-active/waiting/completed/failed. App-controlled - never simulates a model.",
     category: "workflow-heroes",
     subcategory: "Workflow Heroes",
     status: "beta",
@@ -577,7 +577,7 @@ export const catalog: CatalogItem[] = [
     name: "Live Data Command Hero",
     slug: "live-data-command-hero",
     description:
-      "An editable hero block for operational-data products, centered on continuity and changing state: three morphing metrics, a refresh state, a small live-data subset, and one active filter — with outcome copy + CTAs, across initial/live/filtering/refreshing/partial/stale/error/recovery.",
+      "An editable hero block for operational-data products, centered on continuity and changing state: three morphing metrics, a refresh state, a small live-data subset, and one active filter - with outcome copy + CTAs, across initial/live/filtering/refreshing/partial/stale/error/recovery.",
     category: "workflow-heroes",
     subcategory: "Workflow Heroes",
     status: "beta",
@@ -671,7 +671,7 @@ export const catalog: CatalogItem[] = [
     name: "API Request Inspector",
     slug: "api-request-inspector",
     description:
-      "A presentation-only inspector for one HTTP exchange — method/url/status/duration, headers/query/body, timing phases, error, retryCount, auth summary. Secrets are redacted by default and never leak into the DOM, search, or copies. It never sends anything.",
+      "A presentation-only inspector for one HTTP exchange - method/url/status/duration, headers/query/body, timing phases, error, retryCount, auth summary. Secrets are redacted by default and never leak into the DOM, search, or copies. It never sends anything.",
     category: "developer-tools",
     subcategory: "Developer tools",
     status: "beta",
@@ -696,7 +696,7 @@ export const catalog: CatalogItem[] = [
     name: "Approval Workflow",
     slug: "approval-workflow",
     description:
-      "Present and control an app-owned approval process — sequential + parallel (any-one / quorum) stages, minimum approvals, required vs optional reviewers, current-user action state, and decision history. Your app owns authorization; the component surfaces the disabled reason.",
+      "Present and control an app-owned approval process - sequential + parallel (any-one / quorum) stages, minimum approvals, required vs optional reviewers, current-user action state, and decision history. Your app owns authorization; the component surfaces the disabled reason.",
     category: "collaboration",
     subcategory: "Collaboration",
     status: "beta",
@@ -721,7 +721,7 @@ export const catalog: CatalogItem[] = [
     name: "Filter Result Transition",
     slug: "filter-result-transition",
     description:
-      "A transition layer for filtered/searched collections — cards enter, leave, and reorder with continuity, the result count morphs, and empty/loading/error states cross-fade. Keeps keyboard focus sane via a focus-fallback contract. Not a data table.",
+      "A transition layer for filtered/searched collections - cards enter, leave, and reorder with continuity, the result count morphs, and empty/loading/error states cross-fade. Keeps keyboard focus sane via a focus-fallback contract. Not a data table.",
     category: "data-motion",
     subcategory: "Data motion",
     status: "beta",
@@ -746,7 +746,7 @@ export const catalog: CatalogItem[] = [
     name: "Swipe Action Row",
     slug: "swipe-action-row",
     description:
-      "A mobile-first swipe-to-reveal action row that is never touch-only — actions are reachable by drag, Tab-to-focus reveal, and an overflow menu. Destructive actions require a confirm, full-swipe is opt-in, and grouped rows keep only one open.",
+      "A mobile-first swipe-to-reveal action row that is never touch-only - actions are reachable by drag, Tab-to-focus reveal, and an overflow menu. Destructive actions require a confirm, full-swipe is opt-in, and grouped rows keep only one open.",
     category: "mobile",
     subcategory: "Mobile interactions",
     status: "beta",
@@ -771,7 +771,7 @@ export const catalog: CatalogItem[] = [
     name: "Agent Run Timeline",
     slug: "agent-run-timeline",
     description:
-      "Presentation-only timeline for a multi-step agent run — ordered steps with tool calls, outputs, retries, nested stages, approvals, and run controls. The app owns the run.",
+      "Presentation-only timeline for a multi-step agent run - ordered steps with tool calls, outputs, retries, nested stages, approvals, and run controls. The app owns the run.",
     category: "ai",
     subcategory: "AI interfaces",
     status: "beta",
@@ -796,7 +796,7 @@ export const catalog: CatalogItem[] = [
     name: "Environment Switcher",
     slug: "environment-switcher",
     description:
-      "Choose the environment an app targets — dev / staging / production, regions, preview branches — from a searchable, keyboard-navigable listbox with status/health, disabled reasons, recents + favorites. Production switches are labelled and can require confirmation. It never touches a real backend.",
+      "Choose the environment an app targets - dev / staging / production, regions, preview branches - from a searchable, keyboard-navigable listbox with status/health, disabled reasons, recents + favorites. Production switches are labelled and can require confirmation. It never touches a real backend.",
     category: "developer-tools",
     subcategory: "Developer tools",
     status: "beta",
@@ -821,7 +821,7 @@ export const catalog: CatalogItem[] = [
     name: "Comment Thread",
     slug: "comment-thread",
     description:
-      "A production comment thread — nested replies, mentions, reactions, edit, resolve/reopen, and optimistic send (pending → sent, failed → retry, focus preserved). Your app owns persistence + permissions.",
+      "A production comment thread - nested replies, mentions, reactions, edit, resolve/reopen, and optimistic send (pending → sent, failed → retry, focus preserved). Your app owns persistence + permissions.",
     category: "collaboration",
     subcategory: "Collaboration",
     status: "beta",
@@ -846,7 +846,7 @@ export const catalog: CatalogItem[] = [
     name: "Data Refresh State",
     slug: "data-refresh-state",
     description:
-      "A rich refresh indicator your app drives — idle, checking, refreshing (determinate or honestly-indeterminate), partially updated, success, stale, offline, error, paused, cancelled — with manual refresh, cancel, retry, pause/resume, and interval controls. Never spins on idle; never fakes progress.",
+      "A rich refresh indicator your app drives - idle, checking, refreshing (determinate or honestly-indeterminate), partially updated, success, stale, offline, error, paused, cancelled - with manual refresh, cancel, retry, pause/resume, and interval controls. Never spins on idle; never fakes progress.",
     category: "data-motion",
     subcategory: "Data motion",
     status: "beta",
@@ -871,7 +871,7 @@ export const catalog: CatalogItem[] = [
     name: "Mobile Filter Sheet",
     slug: "mobile-filter-sheet",
     description:
-      "A real mobile filter workflow — app-defined groups (checkbox, radio, range, date, search, hierarchical, custom), a draft-vs-applied model with Apply/Cancel/Reset/Clear, a live announced result count, chips, and a bottom-sheet / fullscreen / desktop-panel surface. Focus-trapped, 200%-zoom-safe, never gesture-only.",
+      "A real mobile filter workflow - app-defined groups (checkbox, radio, range, date, search, hierarchical, custom), a draft-vs-applied model with Apply/Cancel/Reset/Clear, a live announced result count, chips, and a bottom-sheet / fullscreen / desktop-panel surface. Focus-trapped, 200%-zoom-safe, never gesture-only.",
     category: "mobile",
     subcategory: "Mobile interactions",
     status: "beta",
@@ -896,7 +896,7 @@ export const catalog: CatalogItem[] = [
     name: "Prompt Composer",
     slug: "prompt-composer",
     description:
-      "A production prompt-composition surface — multiline draft, {{variable}} insertion, app-supplied attachments/templates/models, an honest app-owned token budget, and Send/Stop/Retry across idle/loading/streaming/error. Never calls a model or sends anything.",
+      "A production prompt-composition surface - multiline draft, {{variable}} insertion, app-supplied attachments/templates/models, an honest app-owned token budget, and Send/Stop/Retry across idle/loading/streaming/error. Never calls a model or sends anything.",
     category: "ai",
     subcategory: "AI interfaces",
     status: "beta",
@@ -921,7 +921,7 @@ export const catalog: CatalogItem[] = [
     name: "Webhook Event Stream",
     slug: "webhook-event-stream",
     description:
-      "A console for an app-owned stream of outbound webhook deliveries — animated arrival, per-delivery status (icon+text), retry counts, response codes, expandable redacted payload/header inspection, filter, search, retry/replay callbacks, and non-fighting pause & follow. Secrets are redacted and never enter the DOM, search, or copies.",
+      "A console for an app-owned stream of outbound webhook deliveries - animated arrival, per-delivery status (icon+text), retry counts, response codes, expandable redacted payload/header inspection, filter, search, retry/replay callbacks, and non-fighting pause & follow. Secrets are redacted and never enter the DOM, search, or copies.",
     category: "developer-tools",
     subcategory: "Developer tools",
     status: "beta",
@@ -946,7 +946,7 @@ export const catalog: CatalogItem[] = [
     name: "Mention Suggestions",
     slug: "mention-suggestions",
     description:
-      "A fully-controlled @-mention suggestion popup — the app owns the editable field and text insertion; the component renders an accessible, keyboard-navigable listbox of people/teams and drives selection, keeping DOM focus in the app's input via the ARIA combobox + aria-activedescendant pattern.",
+      "A fully-controlled @-mention suggestion popup - the app owns the editable field and text insertion; the component renders an accessible, keyboard-navigable listbox of people/teams and drives selection, keeping DOM focus in the app's input via the ARIA combobox + aria-activedescendant pattern.",
     category: "collaboration",
     subcategory: "Collaboration",
     status: "beta",
@@ -1021,7 +1021,7 @@ export const catalog: CatalogItem[] = [
     name: "File Upload Pipeline",
     slug: "file-upload-pipeline",
     description:
-      "An application-controlled file upload workflow — app-supplied items with progress, pause/resume/retry/cancel/remove, processing stages, and empty/drag-over/partial-failure/offline states. Never uploads bytes itself unless given an adapter; status by icon+text; progress announcements throttled.",
+      "An application-controlled file upload workflow - app-supplied items with progress, pause/resume/retry/cancel/remove, processing stages, and empty/drag-over/partial-failure/offline states. Never uploads bytes itself unless given an adapter; status by icon+text; progress announcements throttled.",
     category: "file",
     subcategory: "File workflows",
     status: "beta",
@@ -1046,7 +1046,7 @@ export const catalog: CatalogItem[] = [
     name: "Product Variant Selector",
     slug: "product-variant-selector",
     description:
-      "A production variant selector (color/size/material/plan/bundle/custom) — controlled selection, dependent options, app-supplied availability + inventory + unavailable combinations, animated-but-text-backed price adjustments, and a mobile compact layout. No fabricated scarcity or discounts.",
+      "A production variant selector (color/size/material/plan/bundle/custom) - controlled selection, dependent options, app-supplied availability + inventory + unavailable combinations, animated-but-text-backed price adjustments, and a mobile compact layout. No fabricated scarcity or discounts.",
     category: "commerce",
     subcategory: "Commerce",
     status: "beta",
@@ -1071,7 +1071,7 @@ export const catalog: CatalogItem[] = [
     name: "Passkey Setup Flow",
     slug: "passkey-setup-flow",
     description:
-      "A presentation + orchestration layer for passkey (WebAuthn) setup — the app supplies WebAuthn operations and results; the component renders intro/capability/naming/system-prompt/success/failure/existing-credential/unsupported states, always keeps an alternative sign-in path, and never implements crypto, collects key material, or fakes success.",
+      "A presentation + orchestration layer for passkey (WebAuthn) setup - the app supplies WebAuthn operations and results; the component renders intro/capability/naming/system-prompt/success/failure/existing-credential/unsupported states, always keeps an alternative sign-in path, and never implements crypto, collects key material, or fakes success.",
     category: "security",
     subcategory: "Security & accounts",
     status: "beta",
@@ -1096,7 +1096,7 @@ export const catalog: CatalogItem[] = [
     name: "Message Delivery States",
     slug: "message-delivery-states",
     description:
-      "A message list with an honest delivery-receipt layer for chat/support/collaboration — draft/sending/sent/delivered/read/failed/retrying/scheduled/cancelled/edited as icon+text, read receipts, associated errors, retry/cancel/edit/copy. The app owns delivery; no network simulation and no constant idle animation.",
+      "A message list with an honest delivery-receipt layer for chat/support/collaboration - draft/sending/sent/delivered/read/failed/retrying/scheduled/cancelled/edited as icon+text, read receipts, associated errors, retry/cancel/edit/copy. The app owns delivery; no network simulation and no constant idle animation.",
     category: "communication",
     subcategory: "Communication",
     status: "beta",
@@ -1121,7 +1121,7 @@ export const catalog: CatalogItem[] = [
     name: "Kanban Card Movement",
     slug: "kanban-card-movement",
     description:
-      "An application-controlled Kanban interaction layer — pointer + touch + keyboard/menu card movement, drop validation, optimistic move with failure rollback, drop indicators, and empty columns. Dragging is never required. Clean-room (no external drag library); transform-based movement that doesn't re-render every card.",
+      "An application-controlled Kanban interaction layer - pointer + touch + keyboard/menu card movement, drop validation, optimistic move with failure rollback, drop indicators, and empty columns. Dragging is never required. Clean-room (no external drag library); transform-based movement that doesn't re-render every card.",
     category: "productivity",
     subcategory: "Productivity",
     status: "beta",
@@ -1146,7 +1146,7 @@ export const catalog: CatalogItem[] = [
     name: "Multi-file Queue",
     slug: "multi-file-queue",
     description:
-      "A queue MANAGER for a collection of files/jobs — priority lanes, concurrency-slot occupancy, blocked-item explanation, queue-level progress, per-item reorder + priority, and pause-all/resume-all/retry-failed/clear-completed. Distinct from File Upload Pipeline; never uploads internally.",
+      "A queue MANAGER for a collection of files/jobs - priority lanes, concurrency-slot occupancy, blocked-item explanation, queue-level progress, per-item reorder + priority, and pause-all/resume-all/retry-failed/clear-completed. Distinct from File Upload Pipeline; never uploads internally.",
     category: "file",
     subcategory: "File workflows",
     status: "beta",
@@ -1171,7 +1171,7 @@ export const catalog: CatalogItem[] = [
     name: "Cart Item Transition",
     slug: "cart-item-transition",
     description:
-      "An app-controlled animated cart line item — arrival, quantity/total morph, variant crossfade, price-change, limited/unavailable, removal → Undo → restore, with optimistic mutation + automatic rollback and honest failed/Retry. Price/inventory are app-owned; no manipulative urgency.",
+      "An app-controlled animated cart line item - arrival, quantity/total morph, variant crossfade, price-change, limited/unavailable, removal → Undo → restore, with optimistic mutation + automatic rollback and honest failed/Retry. Price/inventory are app-owned; no manipulative urgency.",
     category: "commerce",
     subcategory: "Commerce",
     status: "beta",
@@ -1221,7 +1221,7 @@ export const catalog: CatalogItem[] = [
     name: "Typing and Presence",
     slug: "typing-and-presence",
     description:
-      "A combined real-time typing + participant-presence strip — presence (online/active/idle/away/offline/reconnecting) + typing by shape+text, avatar initials, an overflow summary (\"Three people are typing\"), and compact/inline/floating modes. App supplies all data; a debounced live region avoids keystroke spam; ambient motion pauses when hidden.",
+      "A combined real-time typing + participant-presence strip - presence (online/active/idle/away/offline/reconnecting) + typing by shape+text, avatar initials, an overflow summary (\"Three people are typing\"), and compact/inline/floating modes. App supplies all data; a debounced live region avoids keystroke spam; ambient motion pauses when hidden.",
     category: "communication",
     subcategory: "Communication",
     status: "beta",
@@ -1246,7 +1246,7 @@ export const catalog: CatalogItem[] = [
     name: "Task Dependency Map",
     slug: "task-dependency-map",
     description:
-      "An app-controlled task dependency visualization (not a graph editor) — deterministic dependency-depth layout with static SVG lines, blocked/blocking relationships, prerequisite + dependent inspection, highlighted active path, app-supplied cycle error, status filter, and a compact list/mobile fallback. Keyboard-first (dragging never required); optimistic move with rollback.",
+      "An app-controlled task dependency visualization (not a graph editor) - deterministic dependency-depth layout with static SVG lines, blocked/blocking relationships, prerequisite + dependent inspection, highlighted active path, app-supplied cycle error, status filter, and a compact list/mobile fallback. Keyboard-first (dragging never required); optimistic move with rollback.",
     category: "productivity",
     subcategory: "Productivity",
     status: "beta",
@@ -1271,7 +1271,7 @@ export const catalog: CatalogItem[] = [
     name: "Processing Timeline",
     slug: "processing-timeline",
     description:
-      "A timeline for ONE ingested item moving through multiple app-owned processing stages (scan → transcode → thumbnail → caption → publish) — per-stage status/progress/output/logs/warnings/errors, current-stage focus, expansion, retry/skip/cancel/restart, duration summary, and vertical/horizontal layouts. Distinct from Upload Pipeline + Multi-file Queue; never fakes progress.",
+      "A timeline for ONE ingested item moving through multiple app-owned processing stages (scan → transcode → thumbnail → caption → publish) - per-stage status/progress/output/logs/warnings/errors, current-stage focus, expansion, retry/skip/cancel/restart, duration summary, and vertical/horizontal layouts. Distinct from Upload Pipeline + Multi-file Queue; never fakes progress.",
     category: "file",
     subcategory: "File workflows",
     status: "beta",
@@ -1296,7 +1296,7 @@ export const catalog: CatalogItem[] = [
     name: "Checkout Progress",
     slug: "checkout-progress",
     description:
-      "An app-controlled multi-step checkout progress/orchestration surface (not a payment processor) — current + completed + editable steps, per-step validation + blocked reasons, async step save, return-to-previous, error/progress summaries, a sticky order-summary slot, and optional guest/account modes. Never collects or processes payment; no fake processing progress.",
+      "An app-controlled multi-step checkout progress/orchestration surface (not a payment processor) - current + completed + editable steps, per-step validation + blocked reasons, async step save, return-to-previous, error/progress summaries, a sticky order-summary slot, and optional guest/account modes. Never collects or processes payment; no fake processing progress.",
     category: "commerce",
     subcategory: "Commerce",
     status: "beta",
@@ -1321,7 +1321,7 @@ export const catalog: CatalogItem[] = [
     name: "Session Security Center",
     slug: "session-security-center",
     description:
-      "A presentation + control surface for reviewing and revoking active account sessions — device/browser/OS, app-supplied approximate location + IP summary + trust/risk labels, current-session identification, single + bulk revocation with confirmation (current session preserved), rename/trust, filter/sort, and honest failed-revocation + retry. The app owns revocation; never labels a session compromised without app data.",
+      "A presentation + control surface for reviewing and revoking active account sessions - device/browser/OS, app-supplied approximate location + IP summary + trust/risk labels, current-session identification, single + bulk revocation with confirmation (current session preserved), rename/trust, filter/sort, and honest failed-revocation + retry. The app owns revocation; never labels a session compromised without app data.",
     category: "security",
     subcategory: "Security & accounts",
     status: "beta",
@@ -1346,7 +1346,7 @@ export const catalog: CatalogItem[] = [
     name: "Thread Expansion",
     slug: "thread-expansion",
     description:
-      "A navigation + expansion surface for deeply nested discussions — expand/collapse branches, jump to next unread branch, go-to-parent, selected-path breadcrumb, collapse-resolved, deleted-reply placeholder, and lazy reply loading (loading/error/retry/load-more). An accessible tree, depth-capped so pathological threads never render unbounded. Distinct from Comment Thread.",
+      "A navigation + expansion surface for deeply nested discussions - expand/collapse branches, jump to next unread branch, go-to-parent, selected-path breadcrumb, collapse-resolved, deleted-reply placeholder, and lazy reply loading (loading/error/retry/load-more). An accessible tree, depth-capped so pathological threads never render unbounded. Distinct from Comment Thread.",
     category: "communication",
     subcategory: "Communication",
     status: "beta",
@@ -1371,7 +1371,7 @@ export const catalog: CatalogItem[] = [
     name: "Project Timeline",
     slug: "project-timeline",
     description:
-      "An app-controlled, time-scaled project timeline (not a Gantt/charting library) — milestones/phases/tasks/releases/events on a day/week/month axis, a current-date marker (from a today prop), horizontal nav + jump-to-today, phase collapse, item selection with textual date ranges, dependency indication, status filtering, a structured list/mobile fallback, and a non-drag keyboard reschedule (optimistic + rollback). No scheduling algorithms; the app owns dates.",
+      "An app-controlled, time-scaled project timeline (not a Gantt/charting library) - milestones/phases/tasks/releases/events on a day/week/month axis, a current-date marker (from a today prop), horizontal nav + jump-to-today, phase collapse, item selection with textual date ranges, dependency indication, status filtering, a structured list/mobile fallback, and a non-drag keyboard reschedule (optimistic + rollback). No scheduling algorithms; the app owns dates.",
     category: "productivity",
     subcategory: "Productivity",
     status: "beta",
@@ -1396,7 +1396,7 @@ export const catalog: CatalogItem[] = [
     name: "AI Agent Workspace",
     slug: "ai-agent-workspace",
     description:
-      "A composed AI agent workspace block: run timeline, tool-call activity, a streamed answer, and interactive source citations — app-controlled, never simulates a model.",
+      "A composed AI agent workspace block: run timeline, tool-call activity, a streamed answer, and interactive source citations - app-controlled, never simulates a model.",
     category: "ai",
     subcategory: "AI interfaces",
     status: "beta",
@@ -1430,7 +1430,7 @@ export const catalog: CatalogItem[] = [
     name: "Deployment Command Center",
     slug: "deployment-command-center",
     description:
-      "A composed deploy console block — Environment Switcher, Deployment Pipeline, Live Log Stream, and API Request Inspector wired to one app-owned demo state machine across deploying, following logs, failure, retry, and completion. Provider-neutral demo data.",
+      "A composed deploy console block - Environment Switcher, Deployment Pipeline, Live Log Stream, and API Request Inspector wired to one app-owned demo state machine across deploying, following logs, failure, retry, and completion. Provider-neutral demo data.",
     category: "developer-tools",
     subcategory: "Developer tools",
     status: "beta",
@@ -1464,7 +1464,7 @@ export const catalog: CatalogItem[] = [
     name: "Collaborative Review Workspace",
     slug: "collaborative-review-workspace",
     description:
-      "A composed review screen — live presence, an app-owned approval workflow, the discussion thread, and an activity rail wired into one demo state machine. Approving advances the workflow and records activity; new comments appear in the thread and the feed.",
+      "A composed review screen - live presence, an app-owned approval workflow, the discussion thread, and an activity rail wired into one demo state machine. Approving advances the workflow and records activity; new comments appear in the thread and the feed.",
     category: "collaboration",
     subcategory: "Collaboration",
     status: "beta",
@@ -1498,7 +1498,7 @@ export const catalog: CatalogItem[] = [
     name: "Live Operations Dashboard",
     slug: "live-operations-dashboard",
     description:
-      "A composed ops dashboard block — morphing KPI stats with a refresh-state control, a filterable service grid, and a live streaming table, wired to one demo state machine across loading, live, filtered, refreshing, partial, stale, error, and recovery.",
+      "A composed ops dashboard block - morphing KPI stats with a refresh-state control, a filterable service grid, and a live streaming table, wired to one demo state machine across loading, live, filtered, refreshing, partial, stale, error, and recovery.",
     category: "data-motion",
     subcategory: "Data motion",
     status: "beta",
@@ -1531,7 +1531,7 @@ export const catalog: CatalogItem[] = [
     id: "animated-dialog",
     name: "Animated Dialog",
     slug: "animated-dialog",
-    description: "A Radix dialog with animated overlay, scale/slide content, and clean exit — focus trap and Esc preserved.",
+    description: "A Radix dialog with animated overlay, scale/slide content, and clean exit - focus trap and Esc preserved.",
     category: "animated-shadcn",
     status: "stable",
     access: "free",
@@ -1573,7 +1573,7 @@ export const catalog: CatalogItem[] = [
     id: "animated-accordion",
     name: "Animated Accordion",
     slug: "animated-accordion",
-    description: "Radix accordion animating height, opacity, and chevron — single/multiple modes and keyboard preserved.",
+    description: "Radix accordion animating height, opacity, and chevron - single/multiple modes and keyboard preserved.",
     category: "animated-shadcn",
     status: "stable",
     access: "free",
@@ -1594,7 +1594,7 @@ export const catalog: CatalogItem[] = [
     id: "animated-button",
     name: "Animated Button",
     slug: "animated-button",
-    description: "A real button with press feedback, accessible loading and success states — focus-visible and forms preserved.",
+    description: "A real button with press feedback, accessible loading and success states - focus-visible and forms preserved.",
     category: "animated-shadcn",
     status: "stable",
     access: "free",
@@ -1616,7 +1616,7 @@ export const catalog: CatalogItem[] = [
     name: "Kinetic Emphasis",
     slug: "kinetic-emphasis",
     description:
-      "Reading emphasis that travels through the copy — a sweep activates each word and marked <em> phrases ignite into persistent designed typography. Final state renders on the server.",
+      "Reading emphasis that travels through the copy - a sweep activates each word and marked <em> phrases ignite into persistent designed typography. Final state renders on the server.",
     category: "text",
     subcategory: "signature",
     status: "beta",

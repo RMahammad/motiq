@@ -71,7 +71,7 @@ function initialSteps(): DemoStep[] {
       editable: true,
       panel: panelText(
         <>
-          {line("Method", "Depot pickup — Riverside")}
+          {line("Method", "Depot pickup - Riverside")}
           {line("Window", "Fri, 09:00–11:00")}
         </>,
       ),
@@ -87,7 +87,7 @@ function initialSteps(): DemoStep[] {
     {
       id: "payment",
       label: "Payment method",
-      description: "Your card field lives here — this component never sees it.",
+      description: "Your card field lives here - this component never sees it.",
       state: "incomplete",
       editable: true,
       panel: panelText(
@@ -185,7 +185,7 @@ export function CheckoutProgressPreview() {
   const blockDelivery = () =>
     setStepState("delivery", {
       state: "blocked",
-      blockedReason: "No depot slots are available for these dates — choose different hire dates.",
+      blockedReason: "No depot slots are available for these dates - choose different hire dates.",
     });
 
   const reset = () => {
@@ -206,7 +206,7 @@ export function CheckoutProgressPreview() {
         {line("Due today", `${CURRENCY}164.00`)}
       </div>
       <p className="text-[11.5px] leading-relaxed text-[var(--color-muted)]">
-        Fictional figures. This slot is app-owned — CheckoutProgress never prices or charges anything.
+        Fictional figures. This slot is app-owned - CheckoutProgress never prices or charges anything.
       </p>
     </div>
   );

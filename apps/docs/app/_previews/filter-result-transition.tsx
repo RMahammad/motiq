@@ -244,7 +244,7 @@ export function FilterResultTransitionPreview() {
       />
 
       <p className="text-[12px] text-[var(--color-muted)]">
-        Demo data — fictional assets, illustrative values. Focus a card, then filter it out: focus returns to the search box.
+        Demo data - fictional assets, illustrative values. Focus a card, then filter it out: focus returns to the search box.
       </p>
     </div>
   );

@@ -4,7 +4,7 @@ import { product } from "../lib/product";
 
 // Site-wide social share card (Open Graph + Twitter). Applied automatically by
 // Next's file convention to every route that doesn't define its own image.
-export const alt = `${product.productName} — ${product.tagline}`;
+export const alt = `${product.productName} - ${product.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

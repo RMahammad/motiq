@@ -11,8 +11,8 @@ import { SiteNav } from "./_components/site-nav";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${product.productName} — ${product.tagline}`,
-    template: `%s — ${product.productName}`,
+    default: `${product.productName} - ${product.tagline}`,
+    template: `%s - ${product.productName}`,
   },
   description: product.description,
   applicationName: product.productName,
@@ -41,13 +41,13 @@ export const metadata: Metadata = {
     type: "website",
     url: siteUrl,
     siteName: product.productName,
-    title: `${product.productName} — ${product.tagline}`,
+    title: `${product.productName} - ${product.tagline}`,
     description: product.description,
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${product.productName} — ${product.tagline}`,
+    title: `${product.productName} - ${product.tagline}`,
     description: product.description,
   },
   robots: {

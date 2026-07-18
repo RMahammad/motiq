@@ -47,7 +47,7 @@ const EXTRA_REVIEWERS: Reviewer[] = [
 function seed(): ApprovalWorkflowData {
   return {
     id: "wf-launch-2401",
-    title: "Launch approval — Aurora 2.0 public release",
+    title: "Launch approval - Aurora 2.0 public release",
     description: "Sign-off required from product, security, and marketing before Aurora 2.0 ships to general availability.",
     requester: { id: "req-mira", name: "Mira Delacroix", role: "Product manager" },
     status: "in_review",
@@ -95,7 +95,7 @@ function seed(): ApprovalWorkflowData {
       {
         id: "stage-release",
         name: "Final release",
-        description: "Ship button — requires all prior stages cleared.",
+        description: "Ship button - requires all prior stages cleared.",
         status: "pending",
         mode: "all",
         reviewers: [
@@ -360,7 +360,7 @@ export function ApprovalWorkflowPreview() {
         <AnimatedDialogContent className="sm:max-w-md">
           <AnimatedDialogHeader>
             <AnimatedDialogTitle>Attach from…</AnimatedDialogTitle>
-            <AnimatedDialogDescription>Pick a source. Demo only — nothing is uploaded.</AnimatedDialogDescription>
+            <AnimatedDialogDescription>Pick a source. Demo only - nothing is uploaded.</AnimatedDialogDescription>
           </AnimatedDialogHeader>
           <AnimatedDialogBody className="grid gap-2 sm:grid-cols-2">
             {ATTACH_SOURCES.map((s) => (

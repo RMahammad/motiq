@@ -44,7 +44,7 @@ const NODES: ThreadNode[] = [
           {
             id: "n1-1-1",
             author: P.ravi,
-            body: "Works technically — the canvas transform is decoupled from the rail. Keyboard +/- should mirror it.",
+            body: "Works technically - the canvas transform is decoupled from the rail. Keyboard +/- should mirror it.",
             timestamp: T0 - 25 * MIN,
             unread: true,
             unreadCount: 1,
@@ -54,7 +54,7 @@ const NODES: ThreadNode[] = [
       {
         id: "n1-2",
         author: P.theo,
-        body: "Pill is fine. Let's not add a percentage readout yet — scope creep for v1.",
+        body: "Pill is fine. Let's not add a percentage readout yet - scope creep for v1.",
         timestamp: T0 - 3 * HOUR - 40 * MIN,
         resolved: true,
       },

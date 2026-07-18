@@ -6,7 +6,7 @@ import { product } from "../lib/product";
 // and start URL. Icons are supplied by the app/icon.tsx file convention.
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${product.productName} — ${product.tagline}`,
+    name: `${product.productName} - ${product.tagline}`,
     short_name: product.shortName,
     description: product.description,
     start_url: "/",

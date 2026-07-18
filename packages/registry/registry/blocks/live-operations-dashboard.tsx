@@ -646,7 +646,7 @@ export function LiveOperationsDashboard({
           activeFilters={activeFilters}
           onRemoveFilter={removeFilter}
           onClearFilters={clearFilters}
-          error="Couldn't load services — the metrics endpoint is unavailable."
+          error="Couldn't load services - the metrics endpoint is unavailable."
           onRetry={handleRecover}
           resultLabel={(n) => (
             <>
@@ -720,7 +720,7 @@ export function LiveOperationsDashboard({
           caption="Live operational metrics per service"
           onRetry={handleRecover}
           emptyContent="No services match these filters."
-          errorContent="Live feed unavailable — the metrics endpoint timed out."
+          errorContent="Live feed unavailable - the metrics endpoint timed out."
           renderMobileRow={(r) => (
             <div className="flex flex-col gap-2">
               <div className="flex items-start justify-between gap-2">
@@ -776,7 +776,7 @@ export function LiveOperationsDashboard({
         </div>
         <span className="ml-auto inline-flex items-center gap-1.5 text-[11.5px] text-[var(--color-muted)]">
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
-          Demo data — fictional services, no live backend
+          Demo data - fictional services, no live backend
         </span>
       </div>
     </div>

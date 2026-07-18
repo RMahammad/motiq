@@ -109,7 +109,7 @@ export function TaskDependencyMapPreview() {
           if (failRef.current) {
             failRef.current = false;
             setFailNext(false);
-            reject(new Error("Simulated save failure — task returned to its group."));
+            reject(new Error("Simulated save failure - task returned to its group."));
             return;
           }
           setTasks((prev) => prev.map((t) => (t.id === taskId ? { ...t, group: toGroup } : t)));
@@ -126,7 +126,7 @@ export function TaskDependencyMapPreview() {
   }, []);
 
   const demoSelect = React.useCallback(() => {
-    setNote("Selected “Launch docs” — its prerequisites and dependents light up on the map.");
+    setNote("Selected “Launch docs” - its prerequisites and dependents light up on the map.");
     clickNode("docs");
   }, [clickNode]);
 
@@ -164,7 +164,7 @@ export function TaskDependencyMapPreview() {
 
   const demoCycle = React.useCallback(async () => {
     setSelectedTaskId("brief");
-    setNote("Tried to make “Product brief” depend on “Public launch” — the app rejects the loop.");
+    setNote("Tried to make “Product brief” depend on “Public launch” - the app rejects the loop.");
     await raf();
     const trigger = rootRef.current?.querySelector<HTMLButtonElement>('button[aria-haspopup="menu"]');
     trigger?.click();
@@ -199,7 +199,7 @@ export function TaskDependencyMapPreview() {
     setFailNext(true);
     failRef.current = true;
     setSelectedTaskId("docs");
-    setNote("Armed a save failure, then moved “Launch docs” — watch it snap back on rejection.");
+    setNote("Armed a save failure, then moved “Launch docs” - watch it snap back on rejection.");
     await raf();
     const trigger = Array.from(rootRef.current?.querySelectorAll<HTMLButtonElement>('button[aria-haspopup="menu"]') ?? []).find((b) =>
       b.textContent?.includes("Move to group"),

@@ -43,7 +43,7 @@ export default function LegalLayout({ children }: { children: ReactNode }) {
         className="mb-8 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4"
       >
         <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-fg)]">
-          Draft — requires legal review
+          Draft - requires legal review
         </p>
         <p className="mt-1 text-[13.5px] leading-relaxed text-[var(--color-muted)]">
           Terms are not finalized. Do not rely on this draft. Every item below is a

@@ -40,7 +40,7 @@ interface Mail {
 }
 
 const MAIL: Mail[] = [
-  { id: "m1", from: "Ada Lovelace", subject: "Q3 launch plan — final review", preview: "Pushed the deck, need your sign-off before Friday.", time: "9:24", unread: true, hue: 255 },
+  { id: "m1", from: "Ada Lovelace", subject: "Q3 launch plan - final review", preview: "Pushed the deck, need your sign-off before Friday.", time: "9:24", unread: true, hue: 255 },
   { id: "m2", from: "Deploys", subject: "Production deploy succeeded", preview: "web-app · 42s · 3 services updated.", time: "8:51", unread: true, hue: 150 },
   { id: "m3", from: "Kit Marlowe", subject: "Re: onboarding copy", preview: "Two tiny tweaks and I think we ship it.", time: "8:07", unread: false, hue: 320 },
   { id: "m4", from: "Iris Wren", subject: "Design sync moved to 3pm", preview: "Grabbed the corner room so we can sketch.", time: "7:42", unread: false, hue: 24 },

@@ -127,7 +127,7 @@ export function SupportForm() {
         <h2 className="text-[18px] font-semibold text-[var(--color-fg)]">Ticket recorded</h2>
         <p className="mt-2 text-[14px] leading-relaxed text-[var(--color-muted)]">
           Your support ticket was recorded locally in development. This preview does not send data to any external
-          system — no email or third-party helpdesk was contacted.
+          system - no email or third-party helpdesk was contacted.
         </p>
       </div>
     );
@@ -297,7 +297,7 @@ export function SupportForm() {
       </div>
 
       <p className={hintClass}>
-        Recorded locally in development — this preview does not store data in an external system. Token-like values
+        Recorded locally in development - this preview does not store data in an external system. Token-like values
         are redacted server-side as a safety net.
       </p>
     </form>

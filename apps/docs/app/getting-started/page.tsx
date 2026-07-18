@@ -7,7 +7,7 @@ import { InstallCommand } from "../_components/code-block";
 
 export const metadata = pageMetadata({
   title: "Get started",
-  description: `Install ${product.productName} components as editable source with the shadcn CLI — one command, no account, no config, nothing to register.`,
+  description: `Install ${product.productName} components as editable source with the shadcn CLI - one command, no account, no config, nothing to register.`,
   path: "/getting-started",
 });
 
@@ -41,7 +41,7 @@ export default function GettingStartedPage() {
         </h1>
         <p className="mt-3 max-w-[62ch] text-[15px] leading-relaxed text-[var(--color-muted)]">
           {product.productName} components install as editable source through a shadcn-compatible
-          registry. One command per component — no account, no config, nothing to register. The
+          registry. One command per component - no account, no config, nothing to register. The
           source lands in your project and you own it.
         </p>
       </header>
@@ -65,7 +65,7 @@ export default function GettingStartedPage() {
 
       <Step n={2} title="Add any component">
         <p className="mb-3 text-[14px] leading-relaxed text-[var(--color-muted)]">
-          Install anything in the catalog with one command — no account, no config, nothing to
+          Install anything in the catalog with one command - no account, no config, nothing to
           register. Dependencies (utilities, primitives, and any composed components) are pulled in
           automatically:
         </p>
@@ -75,14 +75,14 @@ export default function GettingStartedPage() {
           <Link href="/components" className="text-[var(--color-accent)] underline underline-offset-2">
             components
           </Link>{" "}
-          page — each page lists its exact install command.
+          page - each page lists its exact install command.
         </p>
       </Step>
 
       <section className="border-t border-[var(--color-border)] py-8">
         <h2 className="mb-3 text-xl font-semibold tracking-tight text-[var(--color-fg)]">What you get</h2>
         <ul className="space-y-2 text-[14px] leading-relaxed text-[var(--color-muted)]">
-          <li>· Real, editable source in your repo — no black-box package to wrap.</li>
+          <li>· Real, editable source in your repo - no black-box package to wrap.</li>
           <li>· Accessible and reduced-motion-safe by default, with dark mode built in.</li>
           <li>· Free and open: the whole catalog is public and installable.</li>
         </ul>

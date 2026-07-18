@@ -24,7 +24,7 @@ export const packs: Pack[] = [
   {
     slug: "ai-interface",
     name: "AI Interface Pack",
-    tagline: "Ship a complete agent workspace — run timeline, tools, streamed answer, and citations.",
+    tagline: "Ship a complete agent workspace - run timeline, tools, streamed answer, and citations.",
     problem:
       "AI products need more than a chat box: teams rebuild run timelines, tool-activity panels, streamed responses, and source attribution from scratch every time. This pack delivers them as one composable, accessible workspace your app drives.",
     blockSlug: "ai-agent-workspace",
@@ -37,7 +37,7 @@ export const packs: Pack[] = [
   {
     slug: "developer-tools",
     name: "Developer Tools Pack",
-    tagline: "A deployment command center — environments, pipeline, live logs, and request inspection.",
+    tagline: "A deployment command center - environments, pipeline, live logs, and request inspection.",
     problem:
       "Dev platforms stitch together environment pickers, pipelines, log tails, and request inspectors from disparate parts. This pack composes them into one provider-neutral command center you feed with your own data.",
     blockSlug: "deployment-command-center",
@@ -50,7 +50,7 @@ export const packs: Pack[] = [
   {
     slug: "collaboration",
     name: "Collaboration Pack",
-    tagline: "A collaborative review workspace — presence, approvals, comments, and activity.",
+    tagline: "A collaborative review workspace - presence, approvals, comments, and activity.",
     problem:
       "Review and sign-off UIs need presence, an approval workflow, threaded comments, and an activity feed working together. This pack delivers a complete multiplayer review surface with your users and permissions.",
     blockSlug: "collaborative-review-workspace",
@@ -63,9 +63,9 @@ export const packs: Pack[] = [
   {
     slug: "data-motion",
     name: "Data Motion Pack",
-    tagline: "A live operations dashboard — KPIs, refresh state, filtered results, and streaming rows.",
+    tagline: "A live operations dashboard - KPIs, refresh state, filtered results, and streaming rows.",
     problem:
-      "Operational dashboards re-implement KPI counters, refresh indicators, filter transitions, and live tables every build. This pack composes them into one live dashboard shell that animates real state your app owns — without a charting library.",
+      "Operational dashboards re-implement KPI counters, refresh indicators, filter transitions, and live tables every build. This pack composes them into one live dashboard shell that animates real state your app owns - without a charting library.",
     blockSlug: "live-operations-dashboard",
     blockName: "Live Operations Dashboard",
     components: ["kpi-number-morph", "data-refresh-state", "filter-result-transition", "streaming-data-rows"],

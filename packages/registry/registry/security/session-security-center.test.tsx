@@ -64,7 +64,7 @@ describe("SessionSecurityCenter", () => {
 
     // The current session cannot be revoked from its row.
     expect(screen.queryByRole("button", { name: /revoke session on MacBook/i })).toBeNull();
-    expect(screen.getByText(/current session — kept active/i)).toBeTruthy();
+    expect(screen.getByText(/current session - kept active/i)).toBeTruthy();
 
     await noViolations(container);
 

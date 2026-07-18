@@ -359,7 +359,7 @@ function ReactionBar({
             <span aria-hidden className="tabular-nums">{r.count}</span>
             <span className="sr-only">
               {r.count} {name} {r.count === 1 ? "reaction" : "reactions"}
-              {r.reactedByMe ? ", including you — activate to remove yours" : " — activate to add yours"}
+              {r.reactedByMe ? ", including you - activate to remove yours" : " - activate to add yours"}
             </span>
           </button>
         );
@@ -1311,7 +1311,7 @@ export function CommentThread({
                   {i === firstUnreadRootIndex && unreadCount > 0 ? (
                     <li
                       key="unread-divider"
-                      aria-label={`New — ${unreadCount} unread ${unreadCount === 1 ? "comment" : "comments"} below`}
+                      aria-label={`New - ${unreadCount} unread ${unreadCount === 1 ? "comment" : "comments"} below`}
                       className="flex items-center gap-2 px-2 py-1"
                     >
                       <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-accent)]" aria-hidden>

@@ -98,7 +98,7 @@ const ENVIRONMENTS: Environment[] = [
     version: "v2.8.4",
     lastDeploy: BASE_TS - 6 * 60 * MIN,
     disabled: true,
-    disabledReason: "Requires the EU-operator role — request access in the console.",
+    disabledReason: "Requires the EU-operator role - request access in the console.",
     group: "shared",
   },
 ];
@@ -141,7 +141,7 @@ export function EnvironmentSwitcherPreview() {
         setSwitching(false);
         if (failMode) {
           const env = ENVIRONMENTS.find((e) => e.id === id);
-          setError(`Switch to ${env?.name ?? "environment"} failed — origin unreachable (ECONNRESET).`);
+          setError(`Switch to ${env?.name ?? "environment"} failed - origin unreachable (ECONNRESET).`);
         } else {
           setValue(id);
         }
@@ -186,7 +186,7 @@ export function EnvironmentSwitcherPreview() {
           </span>
           <span className="text-[11.5px] text-[var(--color-muted)]">Demo data · no live backend</span>
           <span className="ml-auto text-[11.5px] tabular-nums text-[var(--color-muted)]">
-            deploy <span className="font-mono text-[var(--color-fg)]">{current?.version ?? "—"}</span>
+            deploy <span className="font-mono text-[var(--color-fg)]">{current?.version ?? "-"}</span>
           </span>
         </div>
 
@@ -210,7 +210,7 @@ export function EnvironmentSwitcherPreview() {
               className="max-w-none"
             />
             <p className="mt-2 text-[12px] leading-relaxed text-[var(--color-muted)]">
-              Open the switcher to search, arrow-key through environments, and try switching to Production —
+              Open the switcher to search, arrow-key through environments, and try switching to Production -
               the confirmation guard is {requireConfirm ? "on" : "off"}.
             </p>
           </div>

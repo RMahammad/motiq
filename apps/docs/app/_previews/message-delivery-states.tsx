@@ -32,7 +32,7 @@ function seed(): DeliveryMessage[] {
   return [
     {
       id: "d1",
-      body: "Release notes are drafted — pushing the changelog to staging now.",
+      body: "Release notes are drafted - pushing the changelog to staging now.",
       author: MIRA,
       timestamp: T0 - 12 * MIN,
       deliveryState: "read",
@@ -64,7 +64,7 @@ function seed(): DeliveryMessage[] {
     },
     {
       id: "d5",
-      body: "Ship announcement — scheduled for the launch window.",
+      body: "Ship announcement - scheduled for the launch window.",
       author: ME,
       timestamp: T0,
       deliveryState: "scheduled",
@@ -106,7 +106,7 @@ export function MessageDeliveryStatesPreview() {
     const id = `new-${idRef.current}`;
     const msg: DeliveryMessage = {
       id,
-      body: "Confirmed — the mobile toggle fix is live on staging. 🚀",
+      body: "Confirmed - the mobile toggle fix is live on staging. 🚀",
       author: ME,
       timestamp: T0 + idRef.current * MIN,
       deliveryState: "sending",
@@ -130,7 +130,7 @@ export function MessageDeliveryStatesPreview() {
   };
   const fail = () => {
     const id = newestOwnId();
-    if (id) setState(id, "failed", { error: "Connection lost — tap Retry to resend." });
+    if (id) setState(id, "failed", { error: "Connection lost - tap Retry to resend." });
   };
   const retry = () => {
     const id = messages.find((m) => m.deliveryState === "failed")?.id;
@@ -140,7 +140,7 @@ export function MessageDeliveryStatesPreview() {
   };
   const edit = () => {
     const id = newestOwnId();
-    if (id) patch(id, { body: "Confirmed — mobile toggle fix is live (edited for clarity).", edited: true, editedAt: T0 + 40 * MIN });
+    if (id) patch(id, { body: "Confirmed - mobile toggle fix is live (edited for clarity).", edited: true, editedAt: T0 + 40 * MIN });
   };
   const cancelScheduled = () => {
     const id = messages.find((m) => m.deliveryState === "scheduled")?.id;
@@ -212,7 +212,7 @@ export function MessageDeliveryStatesPreview() {
         <button type="button" className={control} onClick={reset}>
           Reset
         </button>
-        <span className="ml-auto text-[12px] text-[var(--color-muted)]">The app owns delivery — the component presents it</span>
+        <span className="ml-auto text-[12px] text-[var(--color-muted)]">The app owns delivery - the component presents it</span>
       </div>
     </div>
   );

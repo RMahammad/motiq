@@ -105,7 +105,7 @@ export interface CollabHeroDataset {
 /* -- fictional, deterministic default dataset ---------------------------- */
 
 const DEFAULT_DATASET: CollabHeroDataset = {
-  reviewTitle: "Autumn launch — pricing page refresh",
+  reviewTitle: "Autumn launch - pricing page refresh",
   people: [
     { id: VIEWER_ID, name: "You", role: "Frontend" },
     { id: "priya", name: "Priya Nandakumar", role: "Product lead" },
@@ -128,8 +128,8 @@ const PHASE_META: Record<CollabHeroPhase, PhaseMeta> = {
   "review-open": { label: "Review open", glyph: "○", tone: "active", note: "The team is reviewing the launch now." },
   commenting: { label: "In discussion", glyph: "…", tone: "info", note: "An open comment thread is in progress." },
   "changes-requested": { label: "Changes requested", glyph: "!", tone: "warning", note: "One change was requested before sign-off." },
-  "approval-pending": { label: "Awaiting your decision", glyph: "◆", tone: "active", note: "Design approved — the launch is waiting on you." },
-  approved: { label: "Approved to ship", glyph: "✓", tone: "success", note: "Every reviewer signed off — clear to launch." },
+  "approval-pending": { label: "Awaiting your decision", glyph: "◆", tone: "active", note: "Design approved - the launch is waiting on you." },
+  approved: { label: "Approved to ship", glyph: "✓", tone: "success", note: "Every reviewer signed off - clear to launch." },
   rejected: { label: "Sent back", glyph: "✕", tone: "error", note: "The launch was sent back for another pass." },
   resolved: { label: "Resolved", glyph: "✓", tone: "success", note: "Discussion resolved and the launch is approved." },
 };
@@ -207,7 +207,7 @@ function buildWorkflow(
         role: you.role,
         decision: d.you,
         decidedAt: d.you !== "pending" ? anchor - 4 * MIN : undefined,
-        note: phase === "rejected" ? "Holding — the hero image regresses LCP." : undefined,
+        note: phase === "rejected" ? "Holding - the hero image regresses LCP." : undefined,
       },
     ],
   };
@@ -256,7 +256,7 @@ function buildWorkflow(
       actorName: "You",
       stageId: stage.id,
       stageName: stage.name,
-      comment: "Holding — the hero image regresses LCP.",
+      comment: "Holding - the hero image regresses LCP.",
       timestamp: anchor - 4 * MIN,
     });
   }
@@ -319,7 +319,7 @@ function buildComments(
   const base: Comment = {
     id: "c-open",
     author: author(lead),
-    body: "Opened the pricing refresh for a final look. The new plan grid is in — flag anything before we ship.",
+    body: "Opened the pricing refresh for a final look. The new plan grid is in - flag anything before we ship.",
     createdAt: anchor - 26 * MIN,
     reactions: [{ emoji: "👍", count: 2, label: "thumbs up" }],
   };
@@ -341,7 +341,7 @@ function buildComments(
       {
         id: "c-reply",
         author: author(design),
-        body: "Plan grid reads well. One question on the annual toggle — is the savings badge final?",
+        body: "Plan grid reads well. One question on the annual toggle - is the savings badge final?",
         createdAt: anchor - 3 * MIN,
         parentId: "c-open",
       },
@@ -353,7 +353,7 @@ function buildComments(
       {
         id: "c-reject",
         author: { id: you.id, name: "You", role: you.role },
-        body: "Sending this back — the hero image pushed LCP to 3.1s. Let's optimize it and re-open.",
+        body: "Sending this back - the hero image pushed LCP to 3.1s. Let's optimize it and re-open.",
         createdAt: anchor - 4 * MIN,
       },
     ];
@@ -578,7 +578,7 @@ export interface CollaborativeLaunchHeroProps
 export function CollaborativeLaunchHero({
   eyebrow = "Collaborative launch",
   headline = "Ship the launch everyone already signed off on.",
-  copy = "See who's in the room, the review as it happens, and the one decision still open — so the next release never stalls in a thread.",
+  copy = "See who's in the room, the review as it happens, and the one decision still open - so the next release never stalls in a thread.",
   primaryCta = { label: "Start a review", href: "#" },
   secondaryCta = { label: "See how it works", href: "#" },
   phase: phaseProp,
@@ -777,7 +777,7 @@ export function CollaborativeLaunchHero({
             <div className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2.5 sm:px-5">
               <p className="inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
-                Demo data — a fictional launch review driven from local state.
+                Demo data - a fictional launch review driven from local state.
               </p>
             </div>
           </div>

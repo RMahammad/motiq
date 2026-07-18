@@ -110,7 +110,7 @@ export interface WorkspaceData {
 
 type WorkflowLevel = "open" | "changes" | "eng" | "approved" | "rejected";
 
-const WORKFLOW_TITLE = "Homepage redesign — Q3 hero refresh";
+const WORKFLOW_TITLE = "Homepage redesign - Q3 hero refresh";
 
 function reviewer(
   id: keyof typeof PEOPLE,
@@ -280,7 +280,7 @@ function buildHistory(anchor: number, level: WorkflowLevel): Decision[] {
       actorName: "You",
       stageId: "stage-eng",
       stageName: "Engineering review",
-      comment: "LCP regressed to 3.1s — needs another pass.",
+      comment: "LCP regressed to 3.1s - needs another pass.",
       timestamp: anchor - 25 * MIN,
     });
   }
@@ -336,7 +336,7 @@ function baseComments(anchor: number): Comment[] {
     {
       id: "c-1",
       author: author("mira", "Product design"),
-      body: "Opened the hero refresh for review. Flagged the CTA contrast and the headline length — @Devon can you take the engineering pass once design clears?",
+      body: "Opened the hero refresh for review. Flagged the CTA contrast and the headline length - @Devon can you take the engineering pass once design clears?",
       createdAt: anchor - 40 * MIN,
       mentions: ["devon"],
       reactions: [{ emoji: "👍", count: 2, label: "thumbs up" }],
@@ -344,7 +344,7 @@ function baseComments(anchor: number): Comment[] {
     {
       id: "c-2",
       author: author("devon", "Eng lead"),
-      body: "Contrast is fixed in the latest build. Headline still wraps to two lines under 380px — not blocking, just noting.",
+      body: "Contrast is fixed in the latest build. Headline still wraps to two lines under 380px - not blocking, just noting.",
       createdAt: anchor - 25 * MIN,
       parentId: "c-1",
     },
@@ -441,7 +441,7 @@ function baseEvents(anchor: number, level: WorkflowLevel): ActivityEvent[] {
       type: "rejected",
       actor: actor("you"),
       target: "Engineering review",
-      preview: "LCP regressed to 3.1s — needs another pass.",
+      preview: "LCP regressed to 3.1s - needs another pass.",
       timestamp: anchor - 25 * MIN,
     });
   }
@@ -470,7 +470,7 @@ function buildScenario(phase: ReviewPhase, anchor: number): WorkspaceData {
         comments: baseComments(anchor),
         events: baseEvents(anchor, "open"),
         presence: basePresence(true),
-        statusNote: "Design review is open — awaiting the first sign-off.",
+        statusNote: "Design review is open - awaiting the first sign-off.",
       };
     case "commenting":
       return {
@@ -480,7 +480,7 @@ function buildScenario(phase: ReviewPhase, anchor: number): WorkspaceData {
           {
             id: "c-4",
             author: author("kai", "Brand"),
-            body: "@You one thing before eng — can the hero image be a real asset, not a placeholder?",
+            body: "@You one thing before eng - can the hero image be a real asset, not a placeholder?",
             createdAt: anchor - 3 * MIN,
             mentions: ["you"],
           },
@@ -498,7 +498,7 @@ function buildScenario(phase: ReviewPhase, anchor: number): WorkspaceData {
         ],
         presence: basePresence(true),
         unreadAfter: anchor - 6 * MIN,
-        statusNote: "An open discussion is in progress — you have unread comments.",
+        statusNote: "An open discussion is in progress - you have unread comments.",
       };
     case "changes":
       return {
@@ -508,13 +508,13 @@ function buildScenario(phase: ReviewPhase, anchor: number): WorkspaceData {
           {
             id: "c-changes",
             author: author("rosa", "Content"),
-            body: "Requested changes on design — the CTA copy overflows on small screens. Once that's tightened I'm happy to re-approve.",
+            body: "Requested changes on design - the CTA copy overflows on small screens. Once that's tightened I'm happy to re-approve.",
             createdAt: anchor - 30 * MIN,
           },
         ],
         events: baseEvents(anchor, "changes"),
         presence: basePresence(true),
-        statusNote: "Changes were requested — the request is back with the author.",
+        statusNote: "Changes were requested - the request is back with the author.",
       };
     case "pending":
       return {
@@ -530,7 +530,7 @@ function buildScenario(phase: ReviewPhase, anchor: number): WorkspaceData {
         comments: baseComments(anchor),
         events: baseEvents(anchor, "approved"),
         presence: basePresence(false),
-        statusNote: "All stages cleared — the redesign is approved to ship.",
+        statusNote: "All stages cleared - the redesign is approved to ship.",
       };
     case "rejected":
       return {
@@ -540,13 +540,13 @@ function buildScenario(phase: ReviewPhase, anchor: number): WorkspaceData {
           {
             id: "c-reject",
             author: author("you", "Frontend"),
-            body: "Rejecting the engineering pass — LCP regressed to 3.1s on the hero image. Let's revisit once it's optimized.",
+            body: "Rejecting the engineering pass - LCP regressed to 3.1s on the hero image. Let's revisit once it's optimized.",
             createdAt: anchor - 25 * MIN,
           },
         ],
         events: baseEvents(anchor, "rejected"),
         presence: basePresence(false),
-        statusNote: "The request was rejected — it returns to the requester.",
+        statusNote: "The request was rejected - it returns to the requester.",
       };
     case "resolved":
       return {
@@ -958,7 +958,7 @@ export function CollaborativeReviewWorkspace({
             })}
             <span className="ml-auto inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)]">
               <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
-              Demo data — fictional users
+              Demo data - fictional users
             </span>
           </div>
         ) : null}

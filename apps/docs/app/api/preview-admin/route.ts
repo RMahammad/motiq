@@ -425,7 +425,7 @@ export async function GET(req: Request) {
     notes: {
       tokensCreated: "Counted across preview-cohort customers only (customers referenced by a preview request).",
       feedbackSubmitted: "No server-readable feedback store; the intake route buffers in memory (docs/47). Reported as 0.",
-      zeroStates: "All counts default to 0 and reflect only real recorded data — nothing is invented.",
+      zeroStates: "All counts default to 0 and reflect only real recorded data - nothing is invented.",
     },
   });
 }

@@ -71,7 +71,7 @@ export function validateEntitlementMap(): MapValidation {
     if (row.grantedBy.length === 0) problems.push(`${row.item}: Pro item has NO granting entitlement`);
     if (!row.inCompleteCatalog) problems.push(`${row.item}: Pro item not covered by the complete catalog`);
     if (row.kind === "component" && row.packs.length === 0) {
-      warnings.push(`${row.item}: Pro component is in no pack — reachable only via complete-catalog or individual purchase`);
+      warnings.push(`${row.item}: Pro component is in no pack - reachable only via complete-catalog or individual purchase`);
     }
   }
   return { ok: problems.length === 0, problems, warnings };

@@ -83,7 +83,7 @@ const SUCCESS_SCRIPT: ScriptLine[] = [
   { stage: "deploy", level: "info", message: "POST /v1/deployments → dpl_7Kq2 (queued)" },
   { stage: "deploy", level: "success", message: "Deployment dpl_7Kq2 is live at ledger-web-7kq2.acme.app" },
   { stage: "promote", level: "info", message: "Shifting production traffic to dpl_7Kq2…" },
-  { stage: "promote", level: "success", message: "Promotion complete — 100% of traffic on dpl_7Kq2" },
+  { stage: "promote", level: "success", message: "Promotion complete - 100% of traffic on dpl_7Kq2" },
 ];
 
 // The failure path: build + test pass, the deploy stage fails a health check.
@@ -306,7 +306,7 @@ const DEFAULT_ENVIRONMENTS: Environment[] = [
     branch: "main",
     version: "v2.3.9",
     health: 98,
-    warning: "Live customer data — deploys shift real traffic.",
+    warning: "Live customer data - deploys shift real traffic.",
     lastDeploy: BASE_TS - 1000 * 60 * 60 * 5,
   },
 ];
@@ -589,7 +589,7 @@ export function DeploymentCommandCenter({
                   style={{ background: following ? "var(--color-success)" : "var(--color-muted)" }}
                   aria-hidden
                 />
-                {following ? "Following latest" : "Paused — scroll to resume"}
+                {following ? "Following latest" : "Paused - scroll to resume"}
               </span>
             </div>
             <LiveLogStream
@@ -648,7 +648,7 @@ export function DeploymentCommandCenter({
         </div>
         <span className="ml-auto inline-flex items-center gap-1.5 text-[11.5px] text-[var(--color-muted)]">
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
-          Demo data — fictional, no live provider
+          Demo data - fictional, no live provider
         </span>
       </div>
     </div>

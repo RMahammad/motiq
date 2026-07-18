@@ -74,7 +74,7 @@ export function LazyPreview({
         <button
           type="button"
           onClick={() => setActive(true)}
-          aria-label={`${label} — load preview`}
+          aria-label={`${label} - load preview`}
           aria-hidden={decorative || undefined}
           tabIndex={decorative ? -1 : undefined}
           className={`flex w-full flex-col items-center justify-center gap-3 overflow-hidden bg-[var(--color-surface)] ${minHeightClass}`}

@@ -218,7 +218,7 @@ export function StreamingDataRowsPreview() {
         <Ctrl onClick={() => setPaused((p) => !p)} pressed={paused}>{paused ? "Resume" : "Pause"}</Ctrl>
         <Ctrl onClick={reset}>Reset</Ctrl>
         <div className="ml-auto flex items-center gap-3">
-          <p className="hidden text-[12px] text-[var(--color-muted)] sm:block">Demo data — fictional orders.</p>
+          <p className="hidden text-[12px] text-[var(--color-muted)] sm:block">Demo data - fictional orders.</p>
           <div className="flex overflow-hidden rounded-md border border-[var(--color-border)] text-[12px]">
             {(["idle", "loading", "error"] as const).map((st) => (
               <button

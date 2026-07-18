@@ -4,9 +4,9 @@ import { product } from "../../../lib/product";
 import { PreviewFeedbackForm } from "./feedback-form";
 
 export const metadata: Metadata = {
-  title: `Private-preview feedback — ${product.productName}`,
+  title: `Private-preview feedback - ${product.productName}`,
   description:
-    "Share structured feedback on the private preview. Recorded locally in development — nothing is sent to an external system.",
+    "Share structured feedback on the private preview. Recorded locally in development - nothing is sent to an external system.",
 };
 
 export default async function PreviewFeedbackPage({
@@ -26,7 +26,7 @@ export default async function PreviewFeedbackPage({
           Preview feedback
         </h1>
         <p className="mt-4 text-[15px] leading-relaxed text-[var(--color-muted)]">
-          Tell us how the components work for your real projects — usefulness, quality, gaps, and whether you would
+          Tell us how the components work for your real projects - usefulness, quality, gaps, and whether you would
           reach for them in production. Rate what you can; skip what you can&rsquo;t.
         </p>
         <p className="mt-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5 text-[13px] leading-relaxed text-[var(--color-muted)]">

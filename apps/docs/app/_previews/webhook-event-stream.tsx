@@ -58,7 +58,7 @@ const SCRIPT: ScriptItem[] = [
     statusCode: 429,
     retryCount: 1,
     durationMs: 88,
-    error: "Endpoint rate-limited (429) — backing off before the next attempt.",
+    error: "Endpoint rate-limited (429) - backing off before the next attempt.",
     payload: { id: "sub_7ab", plan: "team", seats: 12 },
   },
   {
@@ -76,7 +76,7 @@ const SCRIPT: ScriptItem[] = [
     statusCode: 500,
     retryCount: 3,
     durationMs: 30000,
-    error: "Origin returned 500 on all 3 attempts — delivery parked in the dead-letter queue.",
+    error: "Origin returned 500 on all 3 attempts - delivery parked in the dead-letter queue.",
     payload: { id: "dlv_204", reason: "origin_error" },
   },
   {

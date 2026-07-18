@@ -113,7 +113,7 @@ export function SessionSecurityCenterPreview() {
     if (failNext) {
       setFailNext(false);
       lastFailed.current = { kind: "one", session };
-      setError(`Couldn't revoke the session on ${session.device}. It is still signed in — please try again.`);
+      setError(`Couldn't revoke the session on ${session.device}. It is still signed in - please try again.`);
       return;
     }
     setError(null);
@@ -125,7 +125,7 @@ export function SessionSecurityCenterPreview() {
     if (failNext) {
       setFailNext(false);
       lastFailed.current = { kind: "others", others };
-      setError("Couldn't revoke the other sessions. They are still signed in — please try again.");
+      setError("Couldn't revoke the other sessions. They are still signed in - please try again.");
       return;
     }
     setError(null);
@@ -229,7 +229,7 @@ export function SessionSecurityCenterPreview() {
             sessions={sessions}
             now={T0}
             label="Where you're signed in"
-            description="Review the devices with access to your account. Revoke anything you don't recognise — your current session stays signed in."
+            description="Review the devices with access to your account. Revoke anything you don't recognise - your current session stays signed in."
             error={error}
             refreshing={refreshing}
             onRevoke={revoke}

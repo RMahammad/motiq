@@ -15,7 +15,7 @@ import {
 const COPY: HeroCopy = {
   eyebrow: "Event stream",
   title: "Every webhook, propagated and audited.",
-  copy: "Events spread lane-by-lane across the matrix; failures halt with a glyph — readable without color.",
+  copy: "Events spread lane-by-lane across the matrix; failures halt with a glyph - readable without color.",
   primary: "View event log",
   secondary: "Configure webhooks",
 };

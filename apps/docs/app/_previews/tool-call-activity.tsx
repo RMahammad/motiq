@@ -205,7 +205,7 @@ export function ToolCallActivityPreview() {
       />
 
       <p className="text-center text-[11.5px] text-[var(--color-muted)]">
-        Demo data — clearly-fictional agent activity from local state. No live model is involved.
+        Demo data - clearly-fictional agent activity from local state. No live model is involved.
       </p>
     </div>
   );

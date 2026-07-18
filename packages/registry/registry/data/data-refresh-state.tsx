@@ -817,7 +817,7 @@ export function DataRefreshState({
         <p className="text-[13px] font-medium text-[var(--color-fg)]">
           <CountReadout updated={updatedCount as number} total={totalCount} disabled={reduce} />
           {state === "partially_updated" ? (
-            <span className="ml-1.5 text-[12px] font-normal text-[var(--color-warning)]">— some records pending</span>
+            <span className="ml-1.5 text-[12px] font-normal text-[var(--color-warning)]">- some records pending</span>
           ) : null}
         </p>
       ) : null}

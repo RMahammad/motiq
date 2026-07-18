@@ -133,7 +133,7 @@ export function purchaseProvider(): PurchaseProvider {
     case "lemon-squeezy":
     case "paddle":
       throw new Error(
-        `Checkout provider "${commerce.checkoutProvider}" is selected but not configured — see docs/41. ` +
+        `Checkout provider "${commerce.checkoutProvider}" is selected but not configured - see docs/41. ` +
           `No live provider is implemented yet; keep checkoutProvider "none" until approved.`,
       );
     default:

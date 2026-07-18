@@ -538,7 +538,7 @@ export function TwoFactorSetupFlow({
                     {setupData?.setupKey ? (
                       <div>
                         <p className="mb-1 text-[12px] font-medium text-[var(--color-fg)]">
-                          Setup key <span className="font-normal text-[var(--color-muted)]">— sensitive, enter it only in your authenticator app</span>
+                          Setup key <span className="font-normal text-[var(--color-muted)]">- sensitive, enter it only in your authenticator app</span>
                         </p>
                         <div className="flex items-center gap-2 rounded-lg bg-[var(--color-bg-secondary)] px-3 py-2 [border:1px_solid_var(--color-border)]">
                           <code className="min-w-0 flex-1 select-all break-all font-mono text-[12.5px] text-[var(--color-fg)]">
@@ -632,7 +632,7 @@ export function TwoFactorSetupFlow({
                       </p>
                       <p className="mt-1 text-[var(--color-fg)]">
                         Each code works once if you lose access to your second factor. Store them somewhere safe and private
-                        — they won&apos;t be shown in full again.
+                        - they won&apos;t be shown in full again.
                       </p>
                     </div>
                     {recoveryCodes && recoveryCodes.length > 0 ? (
@@ -669,7 +669,7 @@ export function TwoFactorSetupFlow({
                     </li>
                     <li className="flex items-start gap-1.5">
                       <span className="mt-0.5 shrink-0 text-[var(--color-muted)]"><ToneIcon tone="info" size={12} /></span>
-                      It lowers risk — no method removes it entirely. Keep a recovery option too.
+                      It lowers risk - no method removes it entirely. Keep a recovery option too.
                     </li>
                   </ul>
                 ) : null}
@@ -720,7 +720,7 @@ export function TwoFactorSetupFlow({
 
             {state === "secret-or-QR-ready" ? (
               <PrimaryButton onClick={() => onBegin?.()} busy={busy}>
-                I&apos;ve added it — enter a code
+                I&apos;ve added it - enter a code
               </PrimaryButton>
             ) : null}
 
@@ -768,14 +768,14 @@ export function TwoFactorSetupFlow({
         {/* honest, non-absolute completion note — never "your account is secure" */}
         {state === "success" || state === "complete" ? (
           <p className="text-[12px] leading-relaxed text-[var(--color-muted)]">
-            Two-factor is on for this account. It reduces risk but doesn&apos;t make the account impossible to breach —
+            Two-factor is on for this account. It reduces risk but doesn&apos;t make the account impossible to breach -
             keep your recovery codes and password safe.
           </p>
         ) : null}
 
         {state === "method-unavailable" ? (
           <p className="text-[12px] leading-relaxed text-[var(--color-muted)]">
-            This method isn&apos;t available right now, but your account isn&apos;t blocked — pick another method above.
+            This method isn&apos;t available right now, but your account isn&apos;t blocked - pick another method above.
           </p>
         ) : null}
       </div>
@@ -826,7 +826,7 @@ function stateCopy(
     case "method-selection":
       return {
         title: "Choose how you'll confirm",
-        body: "Pick the method that fits you. Each has different tradeoffs — you can change or add more later.",
+        body: "Pick the method that fits you. Each has different tradeoffs - you can change or add more later.",
         announce: "Choose a second factor to set up.",
         tone: "active",
       };
@@ -849,7 +849,7 @@ function stateCopy(
     case "waiting-for-code":
       return {
         title: "Enter a code to confirm",
-        body: "Type the current code from your method. There's no rush — enter it whenever you're ready.",
+        body: "Type the current code from your method. There's no rush - enter it whenever you're ready.",
         announce: "Enter a verification code to confirm your second factor.",
         tone: "active",
       };
@@ -863,7 +863,7 @@ function stateCopy(
     case "success":
       return {
         title: "Second factor added",
-        body: `${site} will now ask for this step when you sign in. It lowers risk — it doesn't make the account impossible to breach.`,
+        body: `${site} will now ask for this step when you sign in. It lowers risk - it doesn't make the account impossible to breach.`,
         announce: "Your second factor was added successfully.",
         tone: "success",
       };
@@ -884,7 +884,7 @@ function stateCopy(
     case "method-unavailable":
       return {
         title: "This method isn't available",
-        body: "We couldn't set up this method right now. You can choose another — your account isn't blocked.",
+        body: "We couldn't set up this method right now. You can choose another - your account isn't blocked.",
         announce: "This method is unavailable. Choose another method.",
         tone: "warning",
       };

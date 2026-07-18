@@ -157,7 +157,7 @@ export function DeveloperToolsCompact() {
         <p className="flex items-center gap-1.5 font-mono text-[11px] text-[var(--color-code-fg)]">
           <span className="text-[var(--color-success)]">✓</span>
           <span className="text-[var(--color-muted)]">12:04:31</span>
-          deploying build a1f9c — <span className="text-[var(--color-fg)]">image pushed</span>
+          deploying build a1f9c - <span className="text-[var(--color-fg)]">image pushed</span>
           <span className="ml-0.5 inline-block h-3 w-[2px] bg-[var(--color-accent)] motion-safe:animate-pulse" />
         </p>
       </div>
@@ -203,7 +203,7 @@ export function CollaborationCompact() {
       {/* two comments */}
       <div className="flex flex-1 flex-col gap-1.5">
         {[
-          { a: "SA", who: "Sana", t: "Ship it — spacing looks right now." },
+          { a: "SA", who: "Sana", t: "Ship it - spacing looks right now." },
           { a: "MP", who: "Milo", t: "Left one note on the empty state." },
         ].map((c) => (
           <div key={c.a} className="flex items-start gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1.5">

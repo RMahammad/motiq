@@ -39,7 +39,7 @@ const SEED: ActivityEvent[] = [
     type: "commented",
     actor: { id: "jamie", name: "Jamie Fields" },
     target: "the onboarding guide",
-    preview: "Second the callout box — makes the setup step much clearer.",
+    preview: "Second the callout box - makes the setup step much clearer.",
     timestamp: T0 - 24 * MIN,
   },
   // A run of edits by the same actor on the same target → collapses into a group.
@@ -75,7 +75,7 @@ const SEED: ActivityEvent[] = [
 ];
 
 const LIVE: Omit<ActivityEvent, "id" | "timestamp">[] = [
-  { type: "commented", actor: { id: "noor", name: "Noor Haddad" }, target: "the Q3 launch review", preview: "Dates look right to me — shipping." },
+  { type: "commented", actor: { id: "noor", name: "Noor Haddad" }, target: "the Q3 launch review", preview: "Dates look right to me - shipping." },
   { type: "created", actor: { id: "riley", name: "Riley Okafor" }, target: "a follow-up task" },
   { type: "approved", actor: { id: "morgan", name: "Morgan Vale" }, target: "the press kit" },
   { type: "edited", actor: { id: "taylor", name: "Taylor Reyes" }, target: "the changelog" },

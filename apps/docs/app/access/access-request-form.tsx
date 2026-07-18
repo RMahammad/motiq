@@ -132,7 +132,7 @@ export function AccessRequestForm({
       >
         <h2 className="text-[18px] font-semibold text-[var(--color-fg)]">Request recorded</h2>
         <p className="mt-2 text-[14px] leading-relaxed text-[var(--color-muted)]">
-          Thanks — your access request was recorded locally in development. This preview does not send data to any
+          Thanks - your access request was recorded locally in development. This preview does not send data to any
           external system, so nothing was emailed or stored in a third-party service.
         </p>
       </div>
@@ -326,7 +326,7 @@ export function AccessRequestForm({
       </div>
 
       <p className={hintClass}>
-        Recorded locally in development — this preview does not store data in an external system.
+        Recorded locally in development - this preview does not store data in an external system.
       </p>
     </form>
   );

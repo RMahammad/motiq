@@ -28,7 +28,7 @@ const READERS = [
 const MESSAGES: DeliveryMessage[] = [
   {
     id: "d1",
-    body: "Release notes are drafted — pushing the changelog to staging now.",
+    body: "Release notes are drafted - pushing the changelog to staging now.",
     author: MIRA,
     timestamp: T0 - 12 * MIN,
     deliveryState: "read",

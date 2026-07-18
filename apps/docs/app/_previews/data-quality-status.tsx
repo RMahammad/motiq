@@ -131,7 +131,7 @@ export function DataQualityStatusPreview() {
         <Ctrl onClick={runValidation}>Re-run validation</Ctrl>
       </div>
       <p className="text-[12px] text-[var(--color-muted)]">
-        Fictional demo data — the surrounding app supplies every metric and verdict; the component only presents them and
+        Fictional demo data - the surrounding app supplies every metric and verdict; the component only presents them and
         shows &ldquo;Unknown&rdquo; for anything not measured.
       </p>
     </div>

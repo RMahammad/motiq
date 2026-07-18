@@ -103,7 +103,7 @@ const DEPLOY_ERR: ScriptLine = {
 };
 const VERIFY_LINES: ScriptLine[] = [
   { stage: "verify", level: "info", message: "Draining the previous release, shifting traffic" },
-  { stage: "verify", level: "success", message: "Traffic at 100% on rel_4Xa9 — 0 error budget spent" },
+  { stage: "verify", level: "success", message: "Traffic at 100% on rel_4Xa9 - 0 error budget spent" },
 ];
 
 function toEntries(lines: ScriptLine[]): LogEntry[] {
@@ -374,7 +374,7 @@ const DEFAULT_ENVIRONMENTS: Environment[] = [
     branch: "main",
     version: "v3.1.7",
     health: 98,
-    warning: "Live customer data — deploys shift real traffic.",
+    warning: "Live customer data - deploys shift real traffic.",
     lastDeploy: BASE_TS - 1000 * 60 * 60 * 4,
   },
 ];
@@ -536,7 +536,7 @@ function ProofStrip({ items }: { items: string[] }) {
 export function DeploymentControlHero({
   eyebrow = "Ship with confidence",
   headline = "Every deploy, watched from commit to live traffic.",
-  copy = "Promote a build across environments, follow the pipeline stage by stage, and read the release response — without leaving the page.",
+  copy = "Promote a build across environments, follow the pipeline stage by stage, and read the release response - without leaving the page.",
   primaryCta = { label: "Start deploying" },
   secondaryCta = { label: "Read the docs" },
   phase,
@@ -801,7 +801,7 @@ export function DeploymentControlHero({
             <div className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-2.5 sm:px-5">
               <p className="inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
-                Demo data — fictional, no live provider.
+                Demo data - fictional, no live provider.
               </p>
             </div>
           </div>

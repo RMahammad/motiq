@@ -38,7 +38,7 @@ const EVENTS: ActivityEvent[] = [
     type: "commented",
     actor: { id: "jamie", name: "Jamie Fields" },
     target: "the onboarding guide",
-    preview: "Second the callout box — makes the setup step much clearer.",
+    preview: "Second the callout box - makes the setup step much clearer.",
     timestamp: NOW - 24 * MIN,
   },
   {

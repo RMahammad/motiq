@@ -463,7 +463,7 @@ export function ActivityStream({
                     <li
                       key={row.key}
                       ref={dividerRef}
-                      aria-label={`New — ${row.count} unread ${row.count === 1 ? "item" : "items"} above`}
+                      aria-label={`New - ${row.count} unread ${row.count === 1 ? "item" : "items"} above`}
                       className="flex items-center gap-2 px-2 py-2"
                     >
                       <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" aria-hidden />

@@ -13,7 +13,7 @@ import { FeaturedShowcase, type FeaturedPack } from "./_featured-showcase";
 export const metadata: Metadata = pageMetadata({
   title: "Workflow packs",
   description:
-    "Complete, installable workflow blocks — AI interface, developer tools, collaboration, and data motion. Editable source, shadcn-compatible.",
+    "Complete, installable workflow blocks - AI interface, developer tools, collaboration, and data motion. Editable source, shadcn-compatible.",
   path: "/packs",
 });
 
@@ -86,7 +86,7 @@ export default function PacksIndex() {
         </h1>
         <p className="mt-5 max-w-2xl text-[clamp(1.05rem,2.2vw,1.2rem)] leading-relaxed text-[var(--color-muted)]">
           Each pack composes four accessible, animated components into one editable block you install and drive with
-          your own data — for AI products, developer tools, collaboration, and live data interfaces.
+          your own data - for AI products, developer tools, collaboration, and live data interfaces.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -176,7 +176,7 @@ export default function PacksIndex() {
           </h2>
           <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">
             Every pack ships as one full, editable workflow block. Switch packs to preview each one rendering a real
-            state — the same source you install.
+            state - the same source you install.
           </p>
         </div>
         <FeaturedShowcase packs={featured} />
@@ -261,7 +261,7 @@ export default function PacksIndex() {
           <h2 className="text-[clamp(1.6rem,3.4vw,2.1rem)] font-semibold tracking-tight text-[var(--color-fg)]">
             Upcoming packs
           </h2>
-          <p className="text-[13px] text-[var(--color-muted)]">Planned — not yet available and not purchasable.</p>
+          <p className="text-[13px] text-[var(--color-muted)]">Planned - not yet available and not purchasable.</p>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {UPCOMING.map((u) => (
@@ -289,7 +289,7 @@ export default function PacksIndex() {
             Get every pack as editable source
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-[var(--color-muted)]">
-            The complete catalog includes all four workflow packs and every component — installed through a
+            The complete catalog includes all four workflow packs and every component - installed through a
             shadcn-compatible registry and yours to edit. Access and pricing are being finalized.
           </p>
           <div className="mt-6 flex flex-wrap items-start gap-4">

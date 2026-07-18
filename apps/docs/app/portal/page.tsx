@@ -23,7 +23,7 @@ import { TokenManager } from "./token-manager";
 export const dynamic = "force-dynamic"; // per-customer, reads mutable stores
 
 export const metadata: Metadata = {
-  title: `Customer portal — ${product.productName}`,
+  title: `Customer portal - ${product.productName}`,
   description: "Manage your access, registry tokens, and installation configuration.",
 };
 
@@ -94,7 +94,7 @@ function Section({ title, sub, children }: { title: string; sub?: string; childr
 }
 
 function fmtDate(ms: number | null): string {
-  if (ms == null) return "—";
+  if (ms == null) return "-";
   return new Date(ms).toLocaleDateString();
 }
 
@@ -118,11 +118,11 @@ function NoCustomer() {
       </h1>
       <p className="mt-4 text-[15px] leading-relaxed text-[var(--color-muted)]">
         The production portal will require an authenticated login. Your entitlements, registry tokens, and install
-        configuration are resolved from your session — never from a link you can share or edit.
+        configuration are resolved from your session - never from a link you can share or edit.
       </p>
       <p className="mt-3 text-[14px] leading-relaxed text-[var(--color-muted)]">
         Authenticated accounts are not enabled during {statusLabel().toLowerCase()}. This portal is not yet a way to sign
-        in — it is a preview of what you will see once accounts are live.
+        in - it is a preview of what you will see once accounts are live.
       </p>
       <div className="mt-8 flex flex-wrap gap-3">
         <Link
@@ -224,7 +224,7 @@ export default async function PortalPage({
       {/* ENTITLEMENTS */}
       <Section
         title="Active entitlements"
-        sub="Access resolved server-side and fail-closed — only active, unexpired grants appear."
+        sub="Access resolved server-side and fail-closed - only active, unexpired grants appear."
       >
         {activeIds.length === 0 ? (
           <p className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4 text-[13.5px] text-[var(--color-muted)]">
@@ -259,7 +259,7 @@ export default async function PortalPage({
         )}
         <div className="mt-4 flex flex-wrap gap-3 text-[13px] text-[var(--color-muted)]">
           <span className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2.5 py-1">
-            License: {licenseTypes.length ? licenseTypes.join(", ") : "—"}
+            License: {licenseTypes.length ? licenseTypes.join(", ") : "-"}
           </span>
           <span className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2.5 py-1">
             Updates included until: {updateUntil != null ? fmtDate(updateUntil) : "to be finalized (docs/45)"}
@@ -267,7 +267,7 @@ export default async function PortalPage({
         </div>
         {updateUntil == null ? (
           <p className="mt-2 text-[12px] text-[var(--color-muted)]">
-            You install editable source and keep it. An update-window policy is not yet finalized — we don’t claim
+            You install editable source and keep it. An update-window policy is not yet finalized - we don’t claim
             lifetime updates.
           </p>
         ) : null}
@@ -276,7 +276,7 @@ export default async function PortalPage({
       {/* INSTALL CONFIGURATION */}
       <Section
         title="Install configuration"
-        sub="Add this to your project’s components.json, then set your token as an environment variable. The token is read from your environment — never committed, never placed in a URL."
+        sub="Add this to your project’s components.json, then set your token as an environment variable. The token is read from your environment - never committed, never placed in a URL."
       >
         <CodeBlock code={componentsJsonSnippet()} lang="jsonc" />
         <div className="mt-3 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-code-bg)] px-3 py-2">
@@ -285,7 +285,7 @@ export default async function PortalPage({
           </code>
         </div>
         <p className="mt-2 text-[12px] text-[var(--color-muted)]">
-          The token above is shown as the <code className="font-mono">{`\${${TOKEN_ENV}}`}</code> placeholder — your real
+          The token above is shown as the <code className="font-mono">{`\${${TOKEN_ENV}}`}</code> placeholder - your real
           token is only ever displayed once, at the moment you create or rotate it below.
         </p>
       </Section>
@@ -362,7 +362,7 @@ export default async function PortalPage({
       {/* REGISTRY TOKENS */}
       <Section
         title="Registry tokens"
-        sub="Tokens authenticate the shadcn CLI to your entitled Pro source. Only a short prefix is ever listed — the full token is shown once, at creation or rotation."
+        sub="Tokens authenticate the shadcn CLI to your entitled Pro source. Only a short prefix is ever listed - the full token is shown once, at creation or rotation."
       >
         <TokenManager customerId={customer.id} tokens={tokens} tokenEnvVar={TOKEN_ENV} />
       </Section>

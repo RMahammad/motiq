@@ -197,7 +197,7 @@ export async function approveRequest(input: ApproveInput): Promise<ApproveResult
     return { status: "error", message: "A valid email is required to approve preview access." };
   }
   if (typeof input.expiresAt !== "number" || !Number.isFinite(input.expiresAt) || input.expiresAt <= Date.now()) {
-    return { status: "error", message: "A future expiresAt (epoch ms) is required — preview access is time-boxed." };
+    return { status: "error", message: "A future expiresAt (epoch ms) is required - preview access is time-boxed." };
   }
 
   const existing = byEmail(email);

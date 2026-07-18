@@ -410,19 +410,19 @@ const DEFAULT_PARTIAL_ANSWER: ResponseSegment[] = [
 const DEFAULT_STREAM_SOURCES: StreamSource[] = [
   {
     id: "1",
-    title: "Refund Policy v3 — Q3 2026",
+    title: "Refund Policy v3 - Q3 2026",
     url: "https://docs.acme.internal/policy/refunds",
     snippet: "docs.acme.internal · §2.1 Refund window",
   },
   {
     id: "2",
-    title: "Payments changelog — Q3 release",
+    title: "Payments changelog - Q3 release",
     url: "https://changelog.acme.internal/q3",
     snippet: "changelog.acme.internal · Downgrades",
   },
   {
     id: "3",
-    title: "Support macro — refund requests",
+    title: "Support macro - refund requests",
     url: "https://help.acme.internal/macros/refunds",
     snippet: "help.acme.internal · Add-ons",
   },
@@ -432,7 +432,7 @@ const DEFAULT_CITATION_SOURCES: CitationSource[] = [
   {
     id: "1",
     index: 1,
-    title: "Refund Policy v3 — Q3 2026",
+    title: "Refund Policy v3 - Q3 2026",
     domain: "docs.acme.internal",
     url: "https://docs.acme.internal/policy/refunds",
     type: "docs",
@@ -448,7 +448,7 @@ const DEFAULT_CITATION_SOURCES: CitationSource[] = [
   {
     id: "2",
     index: 2,
-    title: "Payments changelog — Q3 release",
+    title: "Payments changelog - Q3 release",
     domain: "changelog.acme.internal",
     url: "https://changelog.acme.internal/q3",
     type: "article",
@@ -464,7 +464,7 @@ const DEFAULT_CITATION_SOURCES: CitationSource[] = [
   {
     id: "3",
     index: 3,
-    title: "Support macro — refund requests",
+    title: "Support macro - refund requests",
     domain: "help.acme.internal",
     url: "https://help.acme.internal/macros/refunds",
     type: "web",
@@ -496,7 +496,7 @@ export const DEFAULT_WORKSPACE_DATASET: WorkspaceDataset = {
   runSummary:
     "Draft approved by Compliance and published to the help center. 6 steps completed, 3 sources cited, 1 add-on clause flagged for follow-up.",
   errorMessage:
-    "The run stopped while comparing policy versions — the answer was drafted only up to the point the agent reached.",
+    "The run stopped while comparing policy versions - the answer was drafted only up to the point the agent reached.",
 };
 
 const DEFAULT_PROMPT =
@@ -741,7 +741,7 @@ export function AiAgentWorkspace({
       {/* Footer note -------------------------------------------------------- */}
       <footer className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-3 sm:px-5">
         <p className="text-[11.5px] leading-relaxed text-[var(--color-muted)]">
-          Demo data — a clearly-fictional agent run driven from local state. No model is involved and nothing is
+          Demo data - a clearly-fictional agent run driven from local state. No model is involved and nothing is
           executed; the workspace only renders the phase and data it is given, and reports approve / reject / retry /
           cancel / stop back to the application.
         </p>

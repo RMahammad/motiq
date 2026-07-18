@@ -12,7 +12,7 @@ import { useVisibilityPause } from "@/lib/motiq";
  * ---------------------------------------------------------------------- */
 
 const SOURCES: StreamSource[] = [
-  { id: "1", title: "Vaultwind Engineering Handbook — Caching", url: "https://example.com/handbook/caching", snippet: "Internal guide · updated last quarter" },
+  { id: "1", title: "Vaultwind Engineering Handbook - Caching", url: "https://example.com/handbook/caching", snippet: "Internal guide · updated last quarter" },
   { id: "2", title: "RFC 9111: HTTP Caching", url: "https://example.com/rfc/9111", snippet: "Stale-while-revalidate semantics" },
 ];
 
@@ -20,7 +20,7 @@ const SOURCES: StreamSource[] = [
 const PIECES: ResponseSegment[] = [
   {
     type: "text",
-    text: "Yes — you can serve stale data instantly while refreshing it in the background. The pattern is called stale-while-revalidate, and it keeps the UI responsive without ever blocking on the network",
+    text: "Yes - you can serve stale data instantly while refreshing it in the background. The pattern is called stale-while-revalidate, and it keeps the UI responsive without ever blocking on the network",
   },
   { type: "citation", sourceId: "1" },
   { type: "text", text: ".\n\nHere's a minimal wrapper you can drop into a data layer:" },
@@ -170,7 +170,7 @@ export function AiResponseStreamPreview() {
       />
 
       <p className="text-center text-[11.5px] text-[var(--color-muted)]">
-        Demo stream from local sample data — no live model is involved.
+        Demo stream from local sample data - no live model is involved.
       </p>
     </div>
   );

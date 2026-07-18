@@ -1302,7 +1302,7 @@ function TaskDetail({
           {/* what blocks this */}
           <RelationList
             title="What blocks this"
-            emptyLabel="Nothing — all prerequisites are done."
+            emptyLabel="Nothing - all prerequisites are done."
             tasks={ctx.prerequisites}
             highlight={(t) => t.status !== "completed" && t.status !== "cancelled"}
             onNavigate={onNavigate}

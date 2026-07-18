@@ -194,7 +194,7 @@ export function FileUploadPipelinePreview() {
       if (!target) return prev;
       return prev.map((it) =>
         it.id === target.id
-          ? { ...it, status: "failed", error: "Simulated network error — connection reset.", speed: undefined, remainingTime: undefined }
+          ? { ...it, status: "failed", error: "Simulated network error - connection reset.", speed: undefined, remainingTime: undefined }
           : it,
       );
     });

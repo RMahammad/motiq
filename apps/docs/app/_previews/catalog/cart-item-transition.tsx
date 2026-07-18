@@ -53,7 +53,7 @@ const ITEM_B: CartLineItem = {
   quantity: 1,
   total: 39,
   availability: "limited",
-  inventoryMessage: "Limited stock — ships from one warehouse.",
+  inventoryMessage: "Limited stock - ships from one warehouse.",
 };
 
 export function CartItemTransitionCatalogPreview() {

@@ -324,8 +324,8 @@ const UploadRow = React.memo(function UploadRow({
   const hasMeta = !!item.metadata && Object.keys(item.metadata).length > 0;
 
   const valueText = item.processingStage && item.status === "processing"
-    ? `${meta.label}: ${item.processingStage} — ${progress}%`
-    : `${meta.label} — ${progress}%`;
+    ? `${meta.label}: ${item.processingStage} - ${progress}%`
+    : `${meta.label} - ${progress}%`;
 
   return (
     <motion.li

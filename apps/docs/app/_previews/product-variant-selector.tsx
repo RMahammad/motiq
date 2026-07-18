@@ -25,12 +25,12 @@ const GROUPS: OptionGroup[] = [
     id: "color",
     type: "color",
     label: "Colour",
-    hint: "Swatches are labelled — colour is never the only cue.",
+    hint: "Swatches are labelled - colour is never the only cue.",
     values: [
       { value: "graphite", label: "Graphite", swatch: "#33373d", inventoryState: "in_stock", recommended: true },
       { value: "clay", label: "Clay", swatch: "#b06a4f", inventoryState: "in_stock" },
       { value: "moss", label: "Moss", swatch: "#5c6b48", inventoryState: "low_stock" },
-      { value: "bone", label: "Bone", swatch: "#e7e0d2", inventoryState: "out_of_stock", disabledReason: "Bone is out of stock — restock expected next month." },
+      { value: "bone", label: "Bone", swatch: "#e7e0d2", inventoryState: "out_of_stock", disabledReason: "Bone is out of stock - restock expected next month." },
     ],
   },
   {
@@ -121,7 +121,7 @@ function productImage(colorId: string): string {
 // *combination* the app declares (not a per-value stock fact).
 function getVariantState({ group, value, selection }: { group: OptionGroup; value: { value: string }; selection: VariantSelection }): VariantState | undefined {
   if (group.id === "capacity" && value.value === "32l" && selection.fabric === "waxed") {
-    return { disabled: true, reason: "32 L isn’t offered in waxed canvas — pick 18 L or 24 L, or switch fabric." };
+    return { disabled: true, reason: "32 L isn’t offered in waxed canvas - pick 18 L or 24 L, or switch fabric." };
   }
   if (group.id === "fabric" && value.value === "waxed" && selection.capacity === "32l") {
     return { disabled: true, reason: "Waxed canvas tops out at 24 L." };
@@ -191,7 +191,7 @@ export function ProductVariantSelectorPreview() {
         {/* Title + rating row (static, honest — no fabricated review counts) */}
         <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-1 px-4 pt-4">
           <div>
-            <h2 className="text-[18px] font-semibold tracking-tight text-[var(--color-fg)]">Range 24 — modular daypack</h2>
+            <h2 className="text-[18px] font-semibold tracking-tight text-[var(--color-fg)]">Range 24 - modular daypack</h2>
             <p className="mt-0.5 text-[12.5px] text-[var(--color-muted)]">
               Build yours in {current?.label ?? "your colour"}. Pricing and stock update as you configure.
             </p>

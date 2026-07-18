@@ -267,7 +267,7 @@ export function DataRefreshStatePreview() {
         <ControlButton onClick={reset}>Reset</ControlButton>
       </ControlBar>
       <p className="text-[12px] text-[var(--color-muted)]">
-        Demo data — the surrounding app simulates the fetch and reports progress; the component only presents state.
+        Demo data - the surrounding app simulates the fetch and reports progress; the component only presents state.
       </p>
     </div>
   );

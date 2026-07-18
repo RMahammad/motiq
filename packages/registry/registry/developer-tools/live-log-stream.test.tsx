@@ -36,7 +36,7 @@ describe("LiveLogStream", () => {
 
     // The app appends a line while paused: it is retained but not auto-followed.
     rerender(<LiveLogStream entries={[...BASE, mk("4", "error", "deploy failed")]} onPausedChange={onPausedChange} />);
-    const jump = await screen.findByRole("button", { name: /1 new line — jump to latest/i });
+    const jump = await screen.findByRole("button", { name: /1 new line - jump to latest/i });
     expect(jump).toBeTruthy();
     // The new line is present in the log (scrolling is never disabled).
     expect(screen.getByText("deploy failed")).toBeTruthy();

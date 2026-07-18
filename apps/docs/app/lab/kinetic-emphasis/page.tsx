@@ -220,7 +220,7 @@ function ConceptC() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.4 }}
       >
-        The editor’s pass — reveal, then mark what matters.
+        The editor’s pass - reveal, then mark what matters.
       </motion.p>
     </div>
   );
@@ -233,14 +233,14 @@ export default function Page() {
   return (
     <main className="mx-auto flex max-w-[960px] flex-col gap-8 px-6 py-14">
       <header>
-        <h1 className="text-xl font-semibold text-[var(--color-fg)]">Kinetic Emphasis — concept lab</h1>
+        <h1 className="text-xl font-semibold text-[var(--color-fg)]">Kinetic Emphasis - concept lab</h1>
         <p className="mt-1 text-[13px] text-[var(--color-muted)]">
           Three-concepts rule: compare composition, motion, sequencing, and surface treatment before implementation.
         </p>
       </header>
       <Stage
         label="A"
-        blurb="Reading current — reading-order activation, decaying trace, emphasis ignites a persistent underline."
+        blurb="Reading current - reading-order activation, decaying trace, emphasis ignites a persistent underline."
         onReplay={() => setA((n) => n + 1)}
       >
         <div key={a}>
@@ -249,7 +249,7 @@ export default function Page() {
       </Stage>
       <Stage
         label="B"
-        blurb="Depth settle — emphasis converges to the front plane first; the sentence settles in behind it."
+        blurb="Depth settle - emphasis converges to the front plane first; the sentence settles in behind it."
         onReplay={() => setB((n) => n + 1)}
       >
         <div key={b}>
@@ -258,7 +258,7 @@ export default function Page() {
       </Stage>
       <Stage
         label="C"
-        blurb="Editorial markup — masked baseline rise, then a highlighter marks the phrase and a rule draws."
+        blurb="Editorial markup - masked baseline rise, then a highlighter marks the phrase and a rule draws."
         onReplay={() => setC((n) => n + 1)}
       >
         <div key={c}>

@@ -4,7 +4,7 @@ import { product } from "../../../lib/product";
 import { SupportForm } from "./support-form";
 
 export const metadata: Metadata = {
-  title: `Preview support — ${product.productName}`,
+  title: `Preview support - ${product.productName}`,
   description:
     "Report an installation, registry, component, or documentation problem during the private preview. Recorded locally in development.",
 };

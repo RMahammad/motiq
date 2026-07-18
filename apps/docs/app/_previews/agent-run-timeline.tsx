@@ -426,7 +426,7 @@ export function AgentRunTimelinePreview() {
       />
 
       <p className="text-center text-[11.5px] text-[var(--color-muted)]">
-        Demo data — a clearly-fictional migration run driven from local state. No live model is involved; the component
+        Demo data - a clearly-fictional migration run driven from local state. No live model is involved; the component
         only renders the run it is given.
       </p>
     </div>

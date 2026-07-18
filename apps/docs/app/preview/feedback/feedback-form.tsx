@@ -232,7 +232,7 @@ export function PreviewFeedbackForm({ presetComponent }: { presetComponent?: str
         <h2 className="text-[18px] font-semibold text-[var(--color-fg)]">Thanks for the feedback</h2>
         <p className="mt-2 text-[14px] leading-relaxed text-[var(--color-muted)]">
           Your feedback was recorded locally in development. This preview does not send data to any external
-          system — nothing was emailed or stored in a third-party service.
+          system - nothing was emailed or stored in a third-party service.
         </p>
       </div>
     );
@@ -309,14 +309,14 @@ export function PreviewFeedbackForm({ presetComponent }: { presetComponent?: str
           aria-invalid={messageInvalid || undefined}
           aria-describedby={messageInvalid ? ids.messageErr : undefined}
           className={`${fieldClass} resize-y`}
-          placeholder="In your own words — what worked, what didn't."
+          placeholder="In your own words - what worked, what didn't."
         />
         {messageInvalid ? (
           <p id={ids.messageErr} role="alert" className="mt-1 text-[12px] text-[var(--color-accent)]">
             Please add a short message.
           </p>
         ) : (
-          <p className={hintClass}>Your words only — never paste code, tokens, or API payloads.</p>
+          <p className={hintClass}>Your words only - never paste code, tokens, or API payloads.</p>
         )}
       </div>
 
@@ -531,7 +531,7 @@ export function PreviewFeedbackForm({ presetComponent }: { presetComponent?: str
       </div>
 
       <p className={hintClass}>
-        Recorded locally in development — this preview does not store data in an external system.
+        Recorded locally in development - this preview does not store data in an external system.
       </p>
     </form>
   );

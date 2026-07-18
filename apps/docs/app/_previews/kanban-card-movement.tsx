@@ -138,14 +138,14 @@ export function KanbanCardMovementPreview() {
   }, [clickMenuMove]);
 
   const demoInvalid = React.useCallback(async () => {
-    setNote("Tried to move into In review (WIP limit 2, full) — the drop is rejected.");
+    setNote("Tried to move into In review (WIP limit 2, full) - the drop is rejected.");
     await clickMenuMove("Billing webhook retries", "In review");
   }, [clickMenuMove]);
 
   const demoFailure = React.useCallback(async () => {
     setFailNext(true);
     failRef.current = true;
-    setNote("Armed a save failure, then moved a card — watch it snap back on rejection.");
+    setNote("Armed a save failure, then moved a card - watch it snap back on rejection.");
     await raf();
     await clickMenuMove("Keyboard shortcut overlay", "In progress");
   }, [clickMenuMove]);
@@ -266,12 +266,12 @@ export function KanbanCardMovementPreview() {
                   <span className="text-[var(--color-muted)]">Column</span>
                   <span className="text-[var(--color-fg)]">{detailsColumn?.title ?? detailsCard.columnId}</span>
                   <span className="text-[var(--color-muted)]">Details</span>
-                  <span className="text-[var(--color-fg)]">{detailsCard.meta ?? "—"}</span>
+                  <span className="text-[var(--color-fg)]">{detailsCard.meta ?? "-"}</span>
                   <span className="text-[var(--color-muted)]">Card ID</span>
                   <span className="font-mono text-[12.5px] text-[var(--color-fg)]">{detailsCard.id}</span>
                 </div>
                 <p className="rounded-lg bg-[var(--color-bg-secondary)] px-3 py-2 text-[12.5px] leading-relaxed text-[var(--color-muted)]">
-                  Demo card — your app owns the real fields. Drag the card, use the Move menu, or keyboard to move it between columns.
+                  Demo card - your app owns the real fields. Drag the card, use the Move menu, or keyboard to move it between columns.
                 </p>
               </AnimatedDialogBody>
               <AnimatedDialogFooter>

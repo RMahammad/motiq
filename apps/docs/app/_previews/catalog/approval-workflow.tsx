@@ -22,7 +22,7 @@ const T0 = 1_800_000_000_000; // fixed reference instant
 /* Clearly fictional demo — a launch approval for an imaginary product. */
 const WORKFLOW: ApprovalWorkflowData = {
   id: "wf-launch-2401",
-  title: "Launch approval — Aurora 2.0 public release",
+  title: "Launch approval - Aurora 2.0 public release",
   description: "Sign-off required from product, security, and marketing before Aurora 2.0 ships to general availability.",
   requester: { id: "req-mira", name: "Mira Delacroix", role: "Product manager" },
   status: "in_review",

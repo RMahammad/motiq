@@ -4,7 +4,7 @@ import { commerce, product } from "../../../lib/product";
 import { DraftBody, type DraftSection } from "../_draft";
 
 export const metadata: Metadata = {
-  title: `Refund Policy — ${product.productName}`,
+  title: `Refund Policy - ${product.productName}`,
 };
 
 const salesContact = commerce.salesEmail || "to be provided";
@@ -96,8 +96,8 @@ export default function RefundPolicyPage() {
       intro={
         <>
           This is a structured <strong className="text-[var(--color-fg)]">draft</strong> of
-          the {product.productName} Refund Policy. The entire policy — eligibility, windows,
-          conditions, and process — is to be finalized; unresolved items are tagged inline (
+          the {product.productName} Refund Policy. The entire policy - eligibility, windows,
+          conditions, and process - is to be finalized; unresolved items are tagged inline (
           <code className="text-[var(--color-fg)]">[REQUIRES LEGAL REVIEW]</code>,{" "}
           <code className="text-[var(--color-fg)]">[COMMERCIAL DECISION REQUIRED]</code>,{" "}
           <code className="text-[var(--color-fg)]">[PROVIDER-SPECIFIC]</code>). No refund

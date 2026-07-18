@@ -24,11 +24,11 @@ const PHASES: { value: AgentHeroPhase; label: string }[] = [
 ];
 
 const HINT: Record<AgentHeroPhase, string> = {
-  idle: "Queued — the agent has not started.",
+  idle: "Queued - the agent has not started.",
   running: "The agent is drafting a grounded answer.",
   "tool-active": "A tool call is executing right now.",
   waiting: "Paused for a human approval before publishing.",
-  completed: "Approved and published — run complete.",
+  completed: "Approved and published - run complete.",
   failed: "A step failed; retry is available.",
 };
 

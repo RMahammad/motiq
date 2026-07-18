@@ -365,7 +365,7 @@ function ProofStrip({ items }: { items: string[] }) {
 
 export function LiveDataCommandHero({
   headline = "See your data change the moment it does",
-  copy = "A command surface for operational data — live metrics, refresh state, and streaming signals that morph in place, so your team reads change instead of chasing it.",
+  copy = "A command surface for operational data - live metrics, refresh state, and streaming signals that morph in place, so your team reads change instead of chasing it.",
   eyebrow = "Operational data platform",
   primaryCta = { label: "Start monitoring" },
   secondaryCta = { label: "Book a walkthrough" },
@@ -659,7 +659,7 @@ export function LiveDataCommandHero({
                     regionLabel="Watched signals"
                     activeFilters={activeFilters}
                     loadingCount={3}
-                    error="Couldn't load signals — the endpoint is unavailable."
+                    error="Couldn't load signals - the endpoint is unavailable."
                     resultLabel={(n) => (
                       <>
                         <span className="tabular-nums [font-variant-numeric:tabular-nums]">{n}</span>{" "}
@@ -688,7 +688,7 @@ export function LiveDataCommandHero({
                     loadingRows={3}
                     caption="Live per-signal operational metrics"
                     emptyContent="No signals match this view."
-                    errorContent="Live feed unavailable — the endpoint timed out."
+                    errorContent="Live feed unavailable - the endpoint timed out."
                     renderMobileRow={(r) => (
                       <div className="flex flex-col gap-2">
                         <div className="flex items-start justify-between gap-2">
@@ -719,7 +719,7 @@ export function LiveDataCommandHero({
             <div className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-2.5 sm:px-5">
               <p className="inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
-                Demo data — fictional signals, no live backend.
+                Demo data - fictional signals, no live backend.
               </p>
             </div>
           </div>

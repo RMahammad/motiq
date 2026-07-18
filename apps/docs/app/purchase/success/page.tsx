@@ -20,7 +20,7 @@ import { RefreshButton } from "./refresh-button";
 export const dynamic = "force-dynamic"; // verification reads mutable stores
 
 export const metadata: Metadata = {
-  title: `Order status — ${product.productName}`,
+  title: `Order status - ${product.productName}`,
   description: "We verify your access server-side before granting anything.",
   robots: { index: false }, // not a public/indexable page
 };
@@ -160,10 +160,10 @@ export default async function PurchaseSuccessPage({
           <ol className="mt-2 flex list-decimal flex-col gap-1.5 pl-5 text-[13.5px] leading-relaxed text-[var(--color-muted)]">
             <li>Open your portal and create a registry token (shown once).</li>
             <li>Add the registry to your <code className="font-mono">components.json</code> and set the token in your environment.</li>
-            <li>Install any entitled item with the shadcn CLI — it authenticates with your token.</li>
+            <li>Install any entitled item with the shadcn CLI - it authenticates with your token.</li>
           </ol>
           <p className="mt-2 text-[12px] text-[var(--color-muted)]">
-            For your security, tokens and Pro source are never shown on this page — only in your authenticated portal.
+            For your security, tokens and Pro source are never shown on this page - only in your authenticated portal.
           </p>
         </div>
 
@@ -189,7 +189,7 @@ export default async function PurchaseSuccessPage({
           {session ? <span className="font-mono">Ref: {session}</span> : null}
         </p>
         <p className="mt-2 text-[12px] text-[var(--color-muted)]">
-          Preview note: {statusLabel()} access is driven by the internal admin/webhook flow — no live charge is processed.
+          Preview note: {statusLabel()} access is driven by the internal admin/webhook flow - no live charge is processed.
         </p>
       </Shell>
     );
@@ -208,7 +208,7 @@ export default async function PurchaseSuccessPage({
       },
       failed: {
         h: "We couldn’t verify access",
-        p: "This account has no active entitlement. If you just completed setup, processing may still be underway — check again shortly or contact support.",
+        p: "This account has no active entitlement. If you just completed setup, processing may still be underway - check again shortly or contact support.",
       },
     };
     const c = copy[status];
@@ -243,10 +243,10 @@ export default async function PurchaseSuccessPage({
         </h1>
         <p className="mt-4 text-[15px] leading-relaxed text-[var(--color-muted)]">
           Your order reference was received, but the entitlement isn’t active yet. Access is granted by our webhook
-          processing after the order is confirmed — this can take a moment and may not be complete right now.
+          processing after the order is confirmed - this can take a moment and may not be complete right now.
         </p>
         <p className="mt-3 text-[14px] leading-relaxed text-[var(--color-muted)]">
-          Nothing is unlocked until verification completes — we never grant access from the link alone. No tokens or
+          Nothing is unlocked until verification completes - we never grant access from the link alone. No tokens or
           source are shown until then.
         </p>
         <div className="mt-7 flex flex-wrap items-center gap-3">

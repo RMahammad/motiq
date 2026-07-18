@@ -24,7 +24,7 @@ const SCRIPT: Array<{ level: LogLevel; message: string; source?: string }> = [
   { level: "warning", message: "Deprecated API used in lib/auth.ts:42", source: "lint" },
   { level: "info", message: "Uploading build to edge network (6 regions)", source: "deploy" },
   { level: "debug", message: "worker pid 4821 spawned · region iad1", source: "deploy" },
-  { level: "error", message: "Health check failed on cdg1 (503) — retrying", source: "deploy" },
+  { level: "error", message: "Health check failed on cdg1 (503) - retrying", source: "deploy" },
   { level: "success", message: "All regions healthy · deployed to production", source: "deploy" },
 ];
 

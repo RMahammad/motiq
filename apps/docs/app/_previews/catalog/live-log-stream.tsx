@@ -20,7 +20,7 @@ const LINES: Array<Omit<LogEntry, "id" | "timestamp">> = [
   { level: "warning", message: "Large chunk: vendor.js is 612 KB (gzip 188 KB)", source: "build" },
   { level: "success", message: "Type check passed · 0 errors", source: "build" },
   { level: "info", message: "Uploading build to edge network (6 regions)", source: "deploy" },
-  { level: "error", message: "Health check failed on cdg1 (503) — retrying", source: "deploy" },
+  { level: "error", message: "Health check failed on cdg1 (503) - retrying", source: "deploy" },
   { level: "success", message: "All regions healthy · deployed to production", source: "deploy" },
 ];
 

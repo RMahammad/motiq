@@ -18,7 +18,7 @@ import {
 const COPY: HeroCopy = {
   eyebrow: "Live workflow",
   title: "Your orchestration, drawn as it runs.",
-  copy: "The active path flows and a failed node keeps its glyph — readable without color.",
+  copy: "The active path flows and a failed node keeps its glyph - readable without color.",
   primary: "Open builder",
   secondary: "View runs",
 };

@@ -29,7 +29,7 @@ const COMMENTS: Comment[] = [
   {
     id: "c-root",
     author: PEOPLE[1],
-    body: "Launch review for Aurora 2.0 is open. Flagging the hero banner and the pricing table — @Devon can you take the visuals?",
+    body: "Launch review for Aurora 2.0 is open. Flagging the hero banner and the pricing table - @Devon can you take the visuals?",
     createdAt: T0 - 3 * HOUR,
     mentions: ["devon"],
     reactions: [

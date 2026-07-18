@@ -56,7 +56,7 @@ function PropIcon({ path }: { path: string }) {
 }
 
 const DIFFERENTIATORS = [
-  { t: "You drive the state", d: "Every component and workflow block is application-controlled — no backend lock-in.", icon: "M12 3v18M5 8l7-5 7 5" },
+  { t: "You drive the state", d: "Every component and workflow block is application-controlled - no backend lock-in.", icon: "M12 3v18M5 8l7-5 7 5" },
   { t: "Editable source", d: "Installs through the shadcn CLI as TypeScript + Tailwind you own and edit.", icon: "M8 6l-5 6 5 6M16 6l5 6-5 6" },
   { t: "Accessible by default", d: "Keyboard-safe, reduced-motion behavior and honest states in every item.", icon: "M12 3a4 4 0 100 8 4 4 0 000-8zM5 21v-1a7 7 0 0114 0v1" },
   { t: "Composed blocks", d: "Four components compose into one installable, app-owned workflow block.", icon: "M4 4h7v7H4zM13 13h7v7h-7zM13 4h7v7h-7z" },
@@ -90,7 +90,7 @@ function FeaturedCard({ item, wide }: { item: CatalogItem; wide?: boolean }) {
         <FeaturedPill featured={item.featured} />
       </div>
       <p className={`text-[var(--color-muted)] ${wide ? "max-w-md text-[15px] leading-relaxed" : "line-clamp-2 text-[13.5px] leading-relaxed"}`}>
-        {item.description.split(" — ")[0].split(". ")[0]}.
+        {item.description.split(" - ")[0].split(". ")[0]}.
       </p>
       <span className="mt-1 inline-flex items-center gap-1 text-[13.5px] font-medium text-[var(--color-accent-text)]">
         Open component →
@@ -302,7 +302,7 @@ export default function HomePage() {
   const catalogJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: `${product.productName} — component catalog`,
+    name: `${product.productName} - component catalog`,
     description: product.description,
     url: absoluteUrl("/"),
     isPartOf: { "@id": `${absoluteUrl("/")}#website` },
@@ -500,7 +500,7 @@ export default function HomePage() {
           <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px" style={{ background: "linear-gradient(to right, transparent, var(--color-border-strong), transparent)" }} />
           <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">Why this library</p>
           <h2 className="mt-2 max-w-2xl text-[clamp(1.5rem,3vw,2.1rem)] font-semibold tracking-tight text-[var(--color-fg)]">
-            A motion system for real products — not a pile of effects.
+            A motion system for real products - not a pile of effects.
           </h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {DIFFERENTIATORS.map((d, i) => {
@@ -533,7 +533,7 @@ export default function HomePage() {
           <div className="max-w-xl">
             <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">The catalog</p>
             <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Featured components</h2>
-            <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Six of the catalog’s strongest — each preview is the real component in one representative state.</p>
+            <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Six of the catalog’s strongest - each preview is the real component in one representative state.</p>
           </div>
           <Link href="/components" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
             All components →
@@ -562,7 +562,7 @@ export default function HomePage() {
             <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Backgrounds that carry product state</h2>
             <p className="mt-2.5 max-w-xl text-[15px] leading-relaxed text-[var(--color-muted)]">
               Animated backgrounds driven by your application state, and editable hero blocks that demonstrate a real
-              workflow — foreground-safe, reduced-motion-safe, and never just decoration.
+              workflow - foreground-safe, reduced-motion-safe, and never just decoration.
             </p>
           </div>
           <Link href="/components?category=product-backgrounds" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
@@ -604,7 +604,7 @@ export default function HomePage() {
             <div className="max-w-xl">
               <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">By workflow</p>
               <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Built for real workflows</h2>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Eight product families — each with its own accent — pick a surface, preview it live, install what you need.</p>
+              <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Eight product families - each with its own accent - pick a surface, preview it live, install what you need.</p>
             </div>
             <Link href="/components" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
               All categories →
@@ -633,7 +633,7 @@ export default function HomePage() {
                 Ship faster
               </p>
               <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Complete workflow packs</h2>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Finished product outcomes — four components composed into one installable, app-controlled block.</p>
+              <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Finished product outcomes - four components composed into one installable, app-controlled block.</p>
             </div>
             <Link href="/packs" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
               All packs →
@@ -654,7 +654,7 @@ export default function HomePage() {
             <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">Editable source</p>
             <h3 className="mt-2 text-[26px] font-semibold tracking-tight text-[var(--color-fg)]">Components you own</h3>
             <p className="mt-3 max-w-md text-[14.5px] leading-relaxed text-[var(--color-muted)]">
-              Every component installs as real source into your repo via the shadcn CLI — animated shadcn primitives, text effects, icons, and workflow surfaces. Edit anything; your app owns the state, with full accessibility and reduced motion built in.
+              Every component installs as real source into your repo via the shadcn CLI - animated shadcn primitives, text effects, icons, and workflow surfaces. Edit anything; your app owns the state, with full accessibility and reduced motion built in.
             </p>
             <div className="mt-6 flex-1" />
             <Link
@@ -670,7 +670,7 @@ export default function HomePage() {
               <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">Complete workflows</p>
               <h3 className="mt-2 text-[26px] font-semibold tracking-tight text-[var(--color-fg)]">Full blocks &amp; packs</h3>
               <p className="mt-3 max-w-md text-[14.5px] leading-relaxed text-[var(--color-muted)]">
-                Composed workflow blocks and packs install in a single command — dashboards, AI interfaces, and more, assembled from the same accessible components. Free and open, every one.
+                Composed workflow blocks and packs install in a single command - dashboards, AI interfaces, and more, assembled from the same accessible components. Free and open, every one.
               </p>
               <div className="mt-6 flex-1" />
               <Link

@@ -70,7 +70,7 @@ export function KeyboardSafeFormPreview() {
   const handleSubmit = () =>
     new Promise<void>((resolve, reject) => {
       window.setTimeout(() => {
-        if (failNext) reject(new Error("Couldn’t reach the demo service. Nothing was sent — try again."));
+        if (failNext) reject(new Error("Couldn’t reach the demo service. Nothing was sent - try again."));
         else resolve();
       }, 1100);
     });
@@ -202,7 +202,7 @@ export function KeyboardSafeFormPreview() {
         </label>
         <p className="max-w-[42ch] text-[12px] leading-relaxed text-[var(--color-muted)]">
           The action bar rides above the virtual keyboard using the VisualViewport API where it exists, and falls back to a
-          plain sticky footer where it doesn’t. Submitting is a local timer —{" "}
+          plain sticky footer where it doesn’t. Submitting is a local timer -{" "}
           <strong className="font-medium text-[var(--color-fg)]">nothing is sent anywhere</strong>. Editing after an error
           clears just that field; cancelling with unsaved edits asks first.
         </p>

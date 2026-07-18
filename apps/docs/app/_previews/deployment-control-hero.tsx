@@ -27,9 +27,9 @@ const PHASES: ReadonlyArray<{ value: DeployHeroPhase; label: string }> = [
 ];
 
 const HINTS: Record<DeployHeroPhase, string> = {
-  ready: "Build queued — nothing has shipped yet.",
+  ready: "Build queued - nothing has shipped yet.",
   deploying: "Build and test passed; the release is uploading.",
-  validating: "Release accepted — traffic is being shifted and checked.",
+  validating: "Release accepted - traffic is being shifted and checked.",
   failed: "Deploy stage failed a health check; verify was cancelled.",
   retrying: "A fresh attempt is in flight after the failure.",
   completed: "All four stages passed and traffic is at 100%.",

@@ -1281,7 +1281,7 @@ export function WebhookEventStream({
                 )}
               >
                 <ArrowDownGlyph />
-                {formatNumber(newCount)} new {newCount === 1 ? "event" : "events"} — jump to latest
+                {formatNumber(newCount)} new {newCount === 1 ? "event" : "events"} - jump to latest
               </button>
             </motion.div>
           ) : null}

@@ -19,7 +19,7 @@ import { SelectControl } from "../_components/select-control";
 type Environment = "test" | "live";
 
 function fmtDate(ms: number | null): string {
-  if (ms == null) return "—";
+  if (ms == null) return "-";
   return new Date(ms).toLocaleString();
 }
 
@@ -96,10 +96,10 @@ export function PreviewTokenWidget({
       {/* One-time freshly-issued token — copy now, never shown again. */}
       {freshToken ? (
         <div role="alert" className="rounded-xl border border-[var(--color-accent)] bg-[var(--color-bg-secondary)] p-4">
-          <p className="text-[13px] font-medium text-[var(--color-fg)]">Your new token — copy it now</p>
+          <p className="text-[13px] font-medium text-[var(--color-fg)]">Your new token - copy it now</p>
           <p className="mt-1 text-[12.5px] leading-relaxed text-[var(--color-muted)]">
             This is the only time this token is shown. It is not stored and cannot be retrieved again. Store it in your
-            environment as <code className="font-mono text-[var(--color-fg)]">{tokenEnvVar}</code> — never commit it and
+            environment as <code className="font-mono text-[var(--color-fg)]">{tokenEnvVar}</code> - never commit it and
             never place it in a URL.
           </p>
           <div className="mt-3 flex items-center justify-between gap-3 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-code-bg)] px-3 py-2">
@@ -113,7 +113,7 @@ export function PreviewTokenWidget({
             onClick={() => setFreshToken(null)}
             className="mt-3 inline-flex items-center rounded-md border border-[var(--color-border)] px-2.5 py-1 text-[12px] text-[var(--color-fg)] transition-colors hover:bg-[var(--color-bg-secondary)]"
           >
-            I’ve saved it — dismiss
+            I’ve saved it - dismiss
           </button>
         </div>
       ) : null}
@@ -230,7 +230,7 @@ export function PreviewTokenWidget({
       )}
       <p className="text-[12px] text-[var(--color-muted)]">
         Rotating issues a fresh token and immediately revokes the previous one. Revoked tokens stop working on the next
-        registry request. Tokens are shown in full only at the moment of creation or rotation — afterwards use the{" "}
+        registry request. Tokens are shown in full only at the moment of creation or rotation - afterwards use the{" "}
         <code className="font-mono">{`\${${tokenEnvVar}}`}</code> placeholder.
       </p>
     </div>

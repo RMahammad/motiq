@@ -28,7 +28,7 @@ import { PreviewTokenWidget } from "../token-widget";
 export const dynamic = "force-dynamic"; // per-customer, reads mutable stores
 
 export const metadata: Metadata = {
-  title: `Preview dashboard — ${product.productName}`,
+  title: `Preview dashboard - ${product.productName}`,
   description: "Your private-preview access, registry tokens, and install commands.",
 };
 
@@ -55,7 +55,7 @@ function componentsJsonSnippet(): string {
 }
 
 function fmtDate(ms: number | null): string {
-  if (ms == null) return "—";
+  if (ms == null) return "-";
   return new Date(ms).toLocaleDateString();
 }
 
@@ -90,7 +90,7 @@ function NoCustomer() {
       </h1>
       <p className="mt-4 text-[15px] leading-relaxed text-[var(--color-muted)]">
         The production dashboard will require an authenticated login. Your access, registry tokens, and install
-        configuration are resolved from your session — never from a link you can share or edit.
+        configuration are resolved from your session - never from a link you can share or edit.
       </p>
       <p className="mt-3 text-[14px] leading-relaxed text-[var(--color-muted)]">
         Accounts are not live during {statusLabel().toLowerCase()}. Your activation link includes your customer id until
@@ -195,7 +195,7 @@ export default async function PreviewDashboardPage({
       </p>
 
       {/* Preview status */}
-      <Section title="Preview status" sub="Access is resolved server-side and fails closed — only active, unexpired grants count.">
+      <Section title="Preview status" sub="Access is resolved server-side and fails closed - only active, unexpired grants count.">
         <div className="grid gap-3 sm:grid-cols-3">
           <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
             <p className="text-[12.5px] text-[var(--color-muted)]">Preview access</p>
@@ -256,7 +256,7 @@ export default async function PreviewDashboardPage({
       <Section title="Included components & blocks" sub="Everything your preview entitlement makes installable as editable source.">
         {includedComponents.length === 0 && includedBlocks.length === 0 ? (
           <p className="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-4 text-[13px] text-[var(--color-muted)]">
-            Your preview doesn’t include Pro items yet. Free components across the catalog are always installable — browse
+            Your preview doesn’t include Pro items yet. Free components across the catalog are always installable - browse
             them on the{" "}
             <Link href="/components" className="text-[var(--color-accent)] hover:underline">components page</Link>.
           </p>
@@ -303,12 +303,12 @@ export default async function PreviewDashboardPage({
       </Section>
 
       {/* Registry tokens */}
-      <Section title="Registry tokens" sub="Tokens authenticate the shadcn CLI to your entitled Pro source. Only a short prefix is ever listed — the full token is shown once, at creation or rotation.">
+      <Section title="Registry tokens" sub="Tokens authenticate the shadcn CLI to your entitled Pro source. Only a short prefix is ever listed - the full token is shown once, at creation or rotation.">
         <PreviewTokenWidget customerId={customer.id} tokens={tokens} tokenEnvVar={TOKEN_ENV} />
       </Section>
 
       {/* Install configuration */}
-      <Section title="Install configuration" sub="Add this to components.json, then set your token as an environment variable. The token is read from your environment — never committed, never placed in a URL.">
+      <Section title="Install configuration" sub="Add this to components.json, then set your token as an environment variable. The token is read from your environment - never committed, never placed in a URL.">
         <CodeBlock code={componentsJsonSnippet()} lang="jsonc" />
         <div className="mt-3 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-code-bg)] px-3 py-2">
           <code className="font-mono text-[12.5px] text-[var(--color-code-fg)]">export {TOKEN_ENV}=&lt;your token&gt;</code>
@@ -320,9 +320,9 @@ export default async function PreviewDashboardPage({
       {/* Known limitations */}
       <Section title="Known limitations" sub="Stated plainly (private-preview runbook, docs/47).">
         <ul className="flex flex-col gap-2 text-[13px] leading-relaxed text-[var(--color-muted)]">
-          <li>• Dev-mock entitlement provider — tokens are preview fixtures, no real billing/identity behind them.</li>
-          <li>• File-backed store — not a production database; a small-cohort convenience, not a scale/HA guarantee.</li>
-          <li>• No checkout — no payment, no purchase flow; participation is not a sale.</li>
+          <li>• Dev-mock entitlement provider - tokens are preview fixtures, no real billing/identity behind them.</li>
+          <li>• File-backed store - not a production database; a small-cohort convenience, not a scale/HA guarantee.</li>
+          <li>• No checkout - no payment, no purchase flow; participation is not a sale.</li>
           <li>• Draft legal terms; preview builds may change without paid-launch update guarantees.</li>
           <li>• No guarantee of final pricing or permanent access.</li>
         </ul>

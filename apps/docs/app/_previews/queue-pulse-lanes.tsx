@@ -25,7 +25,7 @@ const LANES: LaneData[] = [
 const COPY: HeroCopy = {
   eyebrow: "Queue throughput",
   title: "Every queue, moving at its own pace.",
-  copy: "Congested lanes pack tighter; blocked work stops at a marked cap — readable without color.",
+  copy: "Congested lanes pack tighter; blocked work stops at a marked cap - readable without color.",
   primary: "Open queues",
   secondary: "View workers",
 };

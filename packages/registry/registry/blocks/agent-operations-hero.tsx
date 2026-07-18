@@ -337,7 +337,7 @@ const DEFAULT_CITATION_SOURCES: CitationSource[] = [
   {
     id: "1",
     index: 1,
-    title: "Refund Policy v3 — Q3 2026",
+    title: "Refund Policy v3 - Q3 2026",
     domain: "docs.acme.internal",
     url: "https://docs.acme.internal/policy/refunds",
     type: "docs",
@@ -353,7 +353,7 @@ const DEFAULT_CITATION_SOURCES: CitationSource[] = [
   {
     id: "2",
     index: 2,
-    title: "Payments changelog — Q3 release",
+    title: "Payments changelog - Q3 release",
     domain: "changelog.acme.internal",
     url: "https://changelog.acme.internal/q3",
     type: "article",
@@ -384,17 +384,17 @@ export const DEFAULT_AGENT_HERO_DATASET: AgentHeroDataset = {
   runSummary:
     "Draft approved and published. 3 steps completed, 2 sources cited, ready for the help center.",
   outcomePartial:
-    "The agent is drafting a grounded answer — the summary and its citations will resolve here.",
+    "The agent is drafting a grounded answer - the summary and its citations will resolve here.",
   outcomeFull:
-    "Annual refunds now run 30 days and mid-cycle downgrades are refunded automatically — each claim traced to its source.",
+    "Annual refunds now run 30 days and mid-cycle downgrades are refunded automatically - each claim traced to its source.",
   errorMessage:
-    "The run stopped while drafting — a required citation could not be resolved to a retrieved source.",
+    "The run stopped while drafting - a required citation could not be resolved to a retrieved source.",
 };
 
 const DEFAULT_EYEBROW = "Agent operations";
 const DEFAULT_HEADLINE = "Ship agents your team can actually approve";
 const DEFAULT_COPY =
-  "Give every automated run a workflow your operators can read, pause, and sign off on — grounded in real sources, never a black box.";
+  "Give every automated run a workflow your operators can read, pause, and sign off on - grounded in real sources, never a black box.";
 const DEFAULT_PRIMARY: AgentHeroCta = { label: "Start free trial", href: "#" };
 const DEFAULT_SECONDARY: AgentHeroCta = { label: "See the workflow", href: "#" };
 
@@ -568,7 +568,7 @@ function HeroBackdrop() {
 const DEFAULT_PROOF: string[] = [
   "Human approval before anything ships",
   "Every claim traced to a cited source",
-  "Readable run state — never a black box",
+  "Readable run state - never a black box",
 ];
 
 /** Three short capability lines that give the copy column substance next to the
@@ -782,7 +782,7 @@ export function AgentOperationsHero({
             {/* Honesty footer ------------------------------------------ */}
             <div className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2.5 sm:px-5">
               <p className="text-[11px] leading-relaxed text-[var(--color-muted)]">
-                Demo data — a clearly-fictional agent run driven from local state. No
+                Demo data - a clearly-fictional agent run driven from local state. No
                 model is involved; the surface only renders the phase it is given.
               </p>
             </div>

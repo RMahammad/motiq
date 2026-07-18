@@ -38,12 +38,12 @@ export function MentionSuggestionsCatalogPreview() {
           fixed overlay) so it never floats over the site nav or flickers on scroll. */}
       <div ref={containerRef} className="relative min-h-[360px]">
         <label htmlFor="catalog-mention-composer" className="sr-only">
-          Write a comment — type @ to mention someone
+          Write a comment - type @ to mention someone
         </label>
         <textarea
           id="catalog-mention-composer"
           ref={inputRef}
-          defaultValue="Nice work on the launch review — @"
+          defaultValue="Nice work on the launch review - @"
           rows={3}
           readOnly
           spellCheck={false}

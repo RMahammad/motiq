@@ -33,14 +33,14 @@ const PHASE_OPTIONS: ReadonlyArray<{ value: DataHeroPhase; label: string }> = [
 ];
 
 const HINT: Record<DataHeroPhase, string> = {
-  initial: "First load — metrics, watchlist, and feed resolve from skeletons.",
-  live: "Settled and streaming — KPIs and rows morph on each ambient tick.",
+  initial: "First load - metrics, watchlist, and feed resolve from skeletons.",
+  live: "Settled and streaming - KPIs and rows morph on each ambient tick.",
   filtering: "One active filter (Tier-1) narrows the watchlist; the count morphs.",
-  refreshing: "A refresh is in flight — the refresh state shows working.",
-  "partial-update": "Only some signals updated this cycle — partial refresh state.",
+  refreshing: "A refresh is in flight - the refresh state shows working.",
+  "partial-update": "Only some signals updated this cycle - partial refresh state.",
   stale: "Data is behind live; morphs freeze so nothing implies movement.",
-  error: "The upstream endpoint failed — every surface shows an honest error.",
-  recovery: "Refresh succeeded after a failure — the surface catches back up.",
+  error: "The upstream endpoint failed - every surface shows an honest error.",
+  recovery: "Refresh succeeded after a failure - the surface catches back up.",
 };
 
 export function LiveDataCommandHeroPreview() {

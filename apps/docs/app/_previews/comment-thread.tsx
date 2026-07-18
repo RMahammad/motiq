@@ -33,7 +33,7 @@ function seed(): Comment[] {
     {
       id: "c-root",
       author: PEOPLE[1],
-      body: "Launch review for Aurora 2.0 is open. Flagging the hero banner and the pricing table — @Devon can you take the visuals?",
+      body: "Launch review for Aurora 2.0 is open. Flagging the hero banner and the pricing table - @Devon can you take the visuals?",
       createdAt: T0 - 3 * HOUR,
       mentions: ["devon"],
       reactions: [
@@ -62,7 +62,7 @@ function seed(): Comment[] {
         {
           id: "c-r3-pending",
           author: ME,
-          body: "Pulling it up now — will confirm the CTA fix and pricing rows.",
+          body: "Pulling it up now - will confirm the CTA fix and pricing rows.",
           createdAt: T0 - 4 * MIN,
           parentId: "c-root",
           status: "pending",
@@ -72,7 +72,7 @@ function seed(): Comment[] {
     {
       id: "c-fail",
       author: ME,
-      body: "Left an annotation on row 3 of the pricing table — the annual toggle label is truncating on mobile.",
+      body: "Left an annotation on row 3 of the pricing table - the annual toggle label is truncating on mobile.",
       createdAt: T0 - 2 * MIN,
       status: "failed",
     },
@@ -137,7 +137,7 @@ export function CommentThreadPreview() {
 
   // Demo-only control shims (drive the same paths the real UI does).
   const addSample = () => {
-    void persist({ tempId: `t-${nextId()}`, body: "Approved from my side — ready to ship. 🚀", mentions: [] });
+    void persist({ tempId: `t-${nextId()}`, body: "Approved from my side - ready to ship. 🚀", mentions: [] });
   };
   const addSampleReply = () => {
     void persist({ tempId: `t-${nextId()}`, body: "Confirmed the CTA fix looks good on desktop and mobile.", parentId: "c-root", mentions: [] });

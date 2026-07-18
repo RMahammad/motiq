@@ -128,7 +128,7 @@ export function TwoFactorSetupFlowPreview() {
             <div>
               <p className="text-[13px] font-semibold text-[var(--color-fg)]">Two-factor authentication</p>
               <p className="mt-0.5 text-[12.5px] leading-relaxed text-[var(--color-muted)]">
-                Require a second confirmation after your password. It lowers risk — it doesn&apos;t make the account
+                Require a second confirmation after your password. It lowers risk - it doesn&apos;t make the account
                 impossible to breach.
               </p>
             </div>

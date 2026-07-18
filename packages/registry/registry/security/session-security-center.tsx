@@ -784,7 +784,7 @@ function SessionRow({
                     className="ml-auto inline-flex items-center gap-1 rounded-full border border-[color-mix(in_oklab,var(--color-accent)_28%,var(--color-border))] bg-[color-mix(in_oklab,var(--color-accent)_9%,transparent)] px-2 py-[3px] text-[11px] font-medium text-[var(--color-accent)]"
                   >
                     <ShieldCheckGlyph />
-                    Current session — kept active
+                    Current session - kept active
                   </span>
                 ) : null}
               </div>

@@ -549,7 +549,7 @@ export function PromptComposer({
                 )}
                 <span aria-hidden>{`{{${v.key}}}`}</span>
                 <span className="sr-only">
-                  {v.label ?? v.key} — {inUse ? "in use, insert again" : "insert into prompt"}
+                  {v.label ?? v.key} - {inUse ? "in use, insert again" : "insert into prompt"}
                 </span>
               </button>
             );

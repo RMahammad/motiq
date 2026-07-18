@@ -594,7 +594,7 @@ export function LiveLogStream({
                 )}
               >
                 <ArrowDownGlyph />
-                {formatNumber(newCount)} new {newCount === 1 ? "line" : "lines"} — jump to latest
+                {formatNumber(newCount)} new {newCount === 1 ? "line" : "lines"} - jump to latest
               </button>
             </motion.div>
           ) : null}

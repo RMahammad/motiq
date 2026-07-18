@@ -103,7 +103,7 @@ export function CartItemTransitionPreview() {
         setTimeout(() => {
           if (failNext) {
             setFailNext(false);
-            reject(new Error("Update failed — the store couldn’t confirm this change."));
+            reject(new Error("Update failed - the store couldn’t confirm this change."));
           } else {
             setItem(next);
             resolve();
@@ -162,13 +162,13 @@ export function CartItemTransitionPreview() {
     setItem((it) =>
       it.availability === "unavailable"
         ? { ...it, availability: "available", inventoryMessage: undefined }
-        : { ...it, availability: "unavailable", inventoryMessage: "Sold out in this colour — try another." },
+        : { ...it, availability: "unavailable", inventoryMessage: "Sold out in this colour - try another." },
     );
     setLog("Availability updated by the store.");
   };
 
   const markLimited = () => {
-    setItem((it) => ({ ...it, availability: "limited", inventoryMessage: "Limited stock — ships from one warehouse." }));
+    setItem((it) => ({ ...it, availability: "limited", inventoryMessage: "Limited stock - ships from one warehouse." }));
     setLog("Marked limited availability.");
   };
 

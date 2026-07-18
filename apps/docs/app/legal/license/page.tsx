@@ -4,7 +4,7 @@ import { commerce, product } from "../../../lib/product";
 import { DraftBody, type DraftSection } from "../_draft";
 
 export const metadata: Metadata = {
-  title: `License — ${product.productName}`,
+  title: `License - ${product.productName}`,
 };
 
 const salesContact = commerce.salesEmail || "to be provided";
@@ -21,7 +21,7 @@ const sections: DraftSection[] = [
         text: `An entitlement grants a customer the ability to install ${product.productName} component source via the standard shadcn CLI, authenticated by a per-customer access token, and to edit that source in their own project.`,
       },
       {
-        text: "Free-tier source is publicly installable; Pro/block/pack source is delivered only to an entitled token through the private registry route — this is access control, not DRM.",
+        text: "Free-tier source is publicly installable; Pro/block/pack source is delivered only to an entitled token through the private registry route - this is access control, not DRM.",
       },
       {
         text: "The precise bundle of rights attached to installed source (the license grant itself) is to be drafted.",
@@ -50,7 +50,7 @@ const sections: DraftSection[] = [
     heading: "Seats & scope",
     clauses: [
       {
-        text: "The licensing unit — per-seat (per developer), per-project, per-organization, or a hybrid — is undecided.",
+        text: "The licensing unit - per-seat (per developer), per-project, per-organization, or a hybrid - is undecided.",
         markers: ["[COMMERCIAL DECISION REQUIRED]"],
       },
       {
@@ -152,8 +152,8 @@ export default function LicensePage() {
       intro={
         <>
           This is a structured <strong className="text-[var(--color-fg)]">draft</strong> of
-          the {product.productName} License. The delivery mechanism — an entitlement grants
-          access to editable component source installed via the shadcn CLI (see docs/43) — is
+          the {product.productName} License. The delivery mechanism - an entitlement grants
+          access to editable component source installed via the shadcn CLI (see docs/43) - is
           implemented, but the exact granted rights, scope, and restrictions are all to be
           finalized. Unresolved items are tagged inline (
           <code className="text-[var(--color-fg)]">[REQUIRES LEGAL REVIEW]</code>,{" "}

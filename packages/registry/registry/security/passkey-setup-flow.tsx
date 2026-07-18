@@ -440,7 +440,7 @@ export function PasskeySetupFlow({
                   <ul className="mt-3 flex flex-col gap-1.5 text-[12.5px] text-[var(--color-muted)]">
                     <li className="flex items-start gap-1.5">
                       <span className="mt-0.5 shrink-0 text-[var(--color-success)]"><ToneIcon tone="success" size={12} /></span>
-                      Uses your device unlock (fingerprint, face, or PIN) — nothing to type.
+                      Uses your device unlock (fingerprint, face, or PIN) - nothing to type.
                     </li>
                     <li className="flex items-start gap-1.5">
                       <span className="mt-0.5 shrink-0 text-[var(--color-success)]"><ToneIcon tone="success" size={12} /></span>
@@ -513,7 +513,7 @@ export function PasskeySetupFlow({
         {/* unsupported browsers must never be a dead end */}
         {state === "unsupported" ? (
           <p className="text-[12px] leading-relaxed text-[var(--color-muted)]">
-            Passkeys aren&apos;t available here, but your account is not blocked — continue with another sign-in method
+            Passkeys aren&apos;t available here, but your account is not blocked - continue with another sign-in method
             above and try passkeys later on a supported device.
           </p>
         ) : null}
@@ -549,7 +549,7 @@ function stateCopy(state: PasskeyState, site: string, capability?: PasskeyCapabi
         title: capability?.platformAuthenticator ? "Your device can create a passkey" : "Checking what this device supports",
         body: capability?.platformAuthenticator
           ? "This device has a built-in authenticator, so you can finish setup right here."
-          : "We'll use whatever secure method your device offers — a built-in sensor, a phone, or a security key.",
+          : "We'll use whatever secure method your device offers - a built-in sensor, a phone, or a security key.",
         announce: "Device capability checked. Continue to create your passkey.",
         tone: "info",
       };
@@ -570,7 +570,7 @@ function stateCopy(state: PasskeyState, site: string, capability?: PasskeyCapabi
     case "system-prompt-waiting":
       return {
         title: "Confirm on your device",
-        body: "Use your fingerprint, face, or device PIN in the prompt your browser opened. There's no time limit — do it whenever you're ready.",
+        body: "Use your fingerprint, face, or device PIN in the prompt your browser opened. There's no time limit - do it whenever you're ready.",
         announce: "Waiting for you to confirm the passkey on your device. No time limit.",
         tone: "active",
       };
@@ -584,7 +584,7 @@ function stateCopy(state: PasskeyState, site: string, capability?: PasskeyCapabi
     case "failure":
       return {
         title: "Setup didn't finish",
-        body: "The passkey wasn't created. The details below explain what happened — you can try again or use another method.",
+        body: "The passkey wasn't created. The details below explain what happened - you can try again or use another method.",
         announce: "Passkey setup failed. See the details and try again.",
         tone: "error",
       };

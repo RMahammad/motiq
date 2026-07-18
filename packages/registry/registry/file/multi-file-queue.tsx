@@ -371,7 +371,7 @@ const QueueRow = React.memo(function QueueRow({
     .filter(Boolean)
     .join(" ") || undefined;
 
-  const valueText = `${meta.label} — ${progress}%`;
+  const valueText = `${meta.label} - ${progress}%`;
 
   return (
     <motion.li
@@ -757,7 +757,7 @@ export function MultiFileQueue({
               aria-valuenow={summary.overall}
               aria-valuemin={0}
               aria-valuemax={100}
-              aria-valuetext={`Queue ${summary.overall}% complete — ${summary.completed} of ${summary.total} done`}
+              aria-valuetext={`Queue ${summary.overall}% complete - ${summary.completed} of ${summary.total} done`}
               aria-label="Overall queue progress"
               className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-[var(--color-surface)]"
             >

@@ -122,7 +122,7 @@ function BlurTextPreview() {
         className="text-[clamp(1.9rem,4.4vw,3.1rem)] font-semibold leading-[1.08] tracking-tight text-[var(--color-fg)]"
       />
       <p className="mt-4 max-w-[46ch] text-[15px] leading-relaxed text-[var(--color-muted)]">
-        A production-grade text reveal for hero sections — accessible, reduced-motion-safe, and tuned for real
+        A production-grade text reveal for hero sections - accessible, reduced-motion-safe, and tuned for real
         marketing copy.
       </p>
     </div>
@@ -392,7 +392,7 @@ function AnimatedTabsPreview() {
 
 function AnimatedAccordionPreview() {
   const faqs = [
-    { v: "a", q: "Is the source editable after install?", a: "Yes. The shadcn CLI copies TypeScript + Tailwind source directly into your project — edit it like your own code." },
+    { v: "a", q: "Is the source editable after install?", a: "Yes. The shadcn CLI copies TypeScript + Tailwind source directly into your project - edit it like your own code." },
     { v: "b", q: "Does it respect reduced motion?", a: "Every component honors prefers-reduced-motion: content opens instantly and stays fully reachable." },
     { v: "c", q: "Is accessibility preserved?", a: "Radix owns keyboard, focus, and semantics; the animation layer never removes them." },
   ];
@@ -579,7 +579,7 @@ function KineticEmphasisPreview() {
           Motion that <em>understands emphasis</em>, not just easing.
         </KineticEmphasis>
         <p className="mt-4 max-w-[52ch] text-[15px] leading-relaxed text-[var(--color-muted)]">
-          Mark the phrase that matters with a real <code className="font-mono text-[13px]">&lt;em&gt;</code> — the
+          Mark the phrase that matters with a real <code className="font-mono text-[13px]">&lt;em&gt;</code> - the
           sweep carries attention to it and leaves designed typography behind.
         </p>
       </div>
@@ -595,7 +595,7 @@ function KineticEmphasisPreview() {
           reducedMotion={stageReduced || undefined}
           className="text-[17px] leading-relaxed text-[var(--color-fg)]"
         >
-          Every reveal on this market treats words equally. <em>Reading has an order</em> — motion should know it.
+          Every reveal on this market treats words equally. <em>Reading has an order</em> - motion should know it.
         </KineticEmphasis>
         <figcaption className="mt-2 text-[12.5px] text-[var(--color-muted)]">Works at paragraph scale, too.</figcaption>
       </figure>

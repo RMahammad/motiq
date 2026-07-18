@@ -11,13 +11,13 @@ import { AiResponseStream, type ResponseSegment, type StreamSource } from "@/reg
  */
 
 const SOURCES: StreamSource[] = [
-  { id: "1", title: "Engineering Handbook — Caching", url: "https://example.com/handbook", snippet: "Internal guide" },
+  { id: "1", title: "Engineering Handbook - Caching", url: "https://example.com/handbook", snippet: "Internal guide" },
 ];
 
 const SEGMENTS: ResponseSegment[] = [
   {
     type: "text",
-    text: "Yes — you can serve stale data instantly while refreshing it in the background. The pattern is called stale-while-revalidate",
+    text: "Yes - you can serve stale data instantly while refreshing it in the background. The pattern is called stale-while-revalidate",
   },
   { type: "citation", sourceId: "1" },
   { type: "text", text: ". A minimal wrapper:" },

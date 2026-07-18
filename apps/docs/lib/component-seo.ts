@@ -84,23 +84,23 @@ const TAG_PHRASE: Record<string, string> = {
 // that targets head terms (e.g. "animated AI interface components"). Falls back
 // to the category blurb if a category has no authored intro.
 const CATEGORY_INTRO: Record<string, string> = {
-  ai: "Animated AI interface components for React and Next.js — streaming assistant responses, agent run timelines, tool-call activity, and prompt composers. Each installs as editable source through the shadcn CLI, so your app owns the state while the component handles the motion, loading, and error states of a modern AI product surface.",
-  "developer-tools": "Animated developer-tool components for React — deployment pipelines, live log streams, request inspectors, environment switchers, and CI/CD dashboards. Copy-paste, editable source built for consoles and internal tooling, with accessible status states and reduced-motion support out of the box.",
-  collaboration: "Real-time collaboration components for React and Next.js — presence stacks, comment threads, @mention suggestions, approval workflows, and activity feeds. Editable, shadcn-compatible source for multiplayer product UI, with keyboard and screen-reader support baked in.",
-  "data-motion": "Animated data and dashboard components for React — KPI number morphs, streaming data rows, refresh states, and filter transitions. Production-ready, editable source that makes dashboards feel live without faking data, and stays smooth with reduced motion enabled.",
-  mobile: "Mobile and touch-first interaction components for React — swipe action rows, filter sheets, and gesture-driven patterns. Accessible, reduced-motion-safe editable source that works across touch and keyboard.",
-  file: "File-workflow components for React — upload pipelines, multi-file queues, and processing timelines. Editable, shadcn-compatible source that shows real upload, queue, and export progress with accessible status states.",
-  commerce: "E-commerce interface components for React and Next.js — product variant selectors, cart transitions, and checkout progress. Editable source for storefronts and checkout flows, accessible and reduced-motion-safe.",
-  security: "Security and account-flow components for React — passkey setup, two-factor enrollment, session security centers, and sign-in flows. Accessible, editable source for the highest-trust parts of your product.",
-  communication: "Communication and messaging components for React — message delivery states, typing and presence, and thread expansion. Editable, shadcn-compatible source for inbox, chat, and notification UIs.",
-  productivity: "Productivity components for React — kanban card movement, project timelines, task dependency maps, and bulk actions. Editable source for boards, planners, and roadmaps, with keyboard-first accessibility.",
-  text: "Animated text components for React and Next.js — headline reveals, rotating text, and blur-in effects. Lightweight, editable source for landing pages and hero sections, reduced-motion-safe by default.",
-  creative: "Creative UI components for React — animated cards, lists, and interactive surfaces. Editable, shadcn-compatible source that adds meaningful motion to product interfaces.",
-  backgrounds: "Ambient animated background components for React — performance-safe backdrops that pause offscreen and respect reduced motion. Editable source for landing pages and hero sections.",
-  "product-backgrounds": "Animated product-background components for React — backdrops driven by real application state like workflows, signals, queues, and events. Editable, performance-safe source for dashboards and product heroes.",
-  "workflow-heroes": "Animated hero-block components for React and Next.js — editable landing-page heroes that demonstrate a real product workflow. Copy-paste source, accessible and reduced-motion-safe.",
-  "animated-shadcn": "Animated shadcn components for React — accessible Radix primitives (accordion, dialog, tabs, and more) with meaningful motion. Editable source that drops into any shadcn/ui project.",
-  icons: "Animated icon components for React — tiny, tasteful motion for buttons and actions. Lightweight, editable source that respects reduced-motion preferences.",
+  ai: "Animated AI interface components for React and Next.js - streaming assistant responses, agent run timelines, tool-call activity, and prompt composers. Each installs as editable source through the shadcn CLI, so your app owns the state while the component handles the motion, loading, and error states of a modern AI product surface.",
+  "developer-tools": "Animated developer-tool components for React - deployment pipelines, live log streams, request inspectors, environment switchers, and CI/CD dashboards. Copy-paste, editable source built for consoles and internal tooling, with accessible status states and reduced-motion support out of the box.",
+  collaboration: "Real-time collaboration components for React and Next.js - presence stacks, comment threads, @mention suggestions, approval workflows, and activity feeds. Editable, shadcn-compatible source for multiplayer product UI, with keyboard and screen-reader support baked in.",
+  "data-motion": "Animated data and dashboard components for React - KPI number morphs, streaming data rows, refresh states, and filter transitions. Production-ready, editable source that makes dashboards feel live without faking data, and stays smooth with reduced motion enabled.",
+  mobile: "Mobile and touch-first interaction components for React - swipe action rows, filter sheets, and gesture-driven patterns. Accessible, reduced-motion-safe editable source that works across touch and keyboard.",
+  file: "File-workflow components for React - upload pipelines, multi-file queues, and processing timelines. Editable, shadcn-compatible source that shows real upload, queue, and export progress with accessible status states.",
+  commerce: "E-commerce interface components for React and Next.js - product variant selectors, cart transitions, and checkout progress. Editable source for storefronts and checkout flows, accessible and reduced-motion-safe.",
+  security: "Security and account-flow components for React - passkey setup, two-factor enrollment, session security centers, and sign-in flows. Accessible, editable source for the highest-trust parts of your product.",
+  communication: "Communication and messaging components for React - message delivery states, typing and presence, and thread expansion. Editable, shadcn-compatible source for inbox, chat, and notification UIs.",
+  productivity: "Productivity components for React - kanban card movement, project timelines, task dependency maps, and bulk actions. Editable source for boards, planners, and roadmaps, with keyboard-first accessibility.",
+  text: "Animated text components for React and Next.js - headline reveals, rotating text, and blur-in effects. Lightweight, editable source for landing pages and hero sections, reduced-motion-safe by default.",
+  creative: "Creative UI components for React - animated cards, lists, and interactive surfaces. Editable, shadcn-compatible source that adds meaningful motion to product interfaces.",
+  backgrounds: "Ambient animated background components for React - performance-safe backdrops that pause offscreen and respect reduced motion. Editable source for landing pages and hero sections.",
+  "product-backgrounds": "Animated product-background components for React - backdrops driven by real application state like workflows, signals, queues, and events. Editable, performance-safe source for dashboards and product heroes.",
+  "workflow-heroes": "Animated hero-block components for React and Next.js - editable landing-page heroes that demonstrate a real product workflow. Copy-paste source, accessible and reduced-motion-safe.",
+  "animated-shadcn": "Animated shadcn components for React - accessible Radix primitives (accordion, dialog, tabs, and more) with meaningful motion. Editable source that drops into any shadcn/ui project.",
+  icons: "Animated icon components for React - tiny, tasteful motion for buttons and actions. Lightweight, editable source that respects reduced-motion preferences.",
 };
 
 /** Landing-page intro copy for a category. */
@@ -132,7 +132,7 @@ export function whenToUse(item: CatalogItem): { intro: string; bestFor: string[]
   const intro =
     `${item.name} is ${/^[aeiou]/i.test(complexity) ? "an" : "a"} ${complexity} ${label} ` +
     `component for React and Next.js. ${item.description} It installs as editable source with the ` +
-    `shadcn CLI — ${clientNote}, dark-mode ready, and reduced-motion-safe by default, so it drops ` +
+    `shadcn CLI - ${clientNote}, dark-mode ready, and reduced-motion-safe by default, so it drops ` +
     `into production interfaces without extra accessibility work.`;
 
   // Use cases from this item's own tags (unique per component), led by the
@@ -179,7 +179,7 @@ export function faqFor(item: CatalogItem): Faq[] {
   return [
     {
       q: `How do I install ${item.name}?`,
-      a: `Run \`${itemInstall(item)}\`. The shadcn CLI copies the editable source straight into your project — you own and can modify the code, with no package to keep in sync.`,
+      a: `Run \`${itemInstall(item)}\`. The shadcn CLI copies the editable source straight into your project - you own and can modify the code, with no package to keep in sync.`,
     },
     {
       q: `Does ${item.name} work with Next.js and the App Router?`,
@@ -191,7 +191,7 @@ export function faqFor(item: CatalogItem): Faq[] {
     },
     {
       q: `Does ${item.name} support dark mode?`,
-      a: `Yes. ${item.name} is themed with design tokens and adapts to light and dark automatically — no per-component overrides needed.`,
+      a: `Yes. ${item.name} is themed with design tokens and adapts to light and dark automatically - no per-component overrides needed.`,
     },
     {
       q: `Can I customize ${item.name}?`,

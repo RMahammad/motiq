@@ -460,7 +460,7 @@ function StageProgress({ stage, reduce }: { stage: ProcessingStage; reduce: bool
         aria-valuenow={value}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-valuetext={`${meta.label} — ${value}%`}
+        aria-valuetext={`${meta.label} - ${value}%`}
         aria-label={`${stage.label} progress`}
         className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-[var(--color-bg-secondary)]"
       >

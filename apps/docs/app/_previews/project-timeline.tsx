@@ -73,7 +73,7 @@ export function ProjectTimelinePreview() {
           if (failRef.current) {
             failRef.current = false;
             setFailNext(false);
-            reject(new Error("Simulated save failure — dates reverted."));
+            reject(new Error("Simulated save failure - dates reverted."));
             return;
           }
           setItems((prev) => prev.map((t) => (t.id === id ? { ...t, startDate: startMs, endDate: endMs } : t)));
@@ -92,7 +92,7 @@ export function ProjectTimelinePreview() {
   const demoScale = React.useCallback(() => {
     setScale((s) => {
       const next: TimelineScale = s === "week" ? "day" : s === "day" ? "month" : "week";
-      setNote(`Changed scale to “${next}”. The whole axis re-projects — the selected item stays in view.`);
+      setNote(`Changed scale to “${next}”. The whole axis re-projects - the selected item stays in view.`);
       return next;
     });
   }, []);
@@ -106,12 +106,12 @@ export function ProjectTimelinePreview() {
   }, []);
 
   const demoSelect = React.useCallback(() => {
-    setNote("Selected “App build” — its dependencies (Design system, Platform API) connect into it.");
+    setNote("Selected “App build” - its dependencies (Design system, Platform API) connect into it.");
     clickBar("app");
   }, [clickBar]);
 
   const demoMilestone = React.useCallback(() => {
-    setNote("Inspected the “General availability” milestone — its date and prerequisites are shown as text.");
+    setNote("Inspected the “General availability” milestone - its date and prerequisites are shown as text.");
     clickBar("ga");
   }, [clickBar]);
 
@@ -122,7 +122,7 @@ export function ProjectTimelinePreview() {
 
   const demoDelay = React.useCallback(() => {
     setSelectedItemId("api");
-    setNote("Marked “Platform API” delayed with a reason — downstream work inherits the risk.");
+    setNote("Marked “Platform API” delayed with a reason - downstream work inherits the risk.");
     setItems((prev) => prev.map((t) => (t.id === "api" ? { ...t, status: "delayed", metadata: { note: "Vendor integration pushed a sprint." } } : t)));
   }, []);
 
@@ -144,12 +144,12 @@ export function ProjectTimelinePreview() {
 
   const demoMode = React.useCallback(() => {
     setMode((m) => (m === "timeline" ? "list" : "timeline"));
-    setNote((_n) => (mode === "timeline" ? "Switched to the compact list view (also the mobile mode) — full dates as text." : "Switched back to the timeline."));
+    setNote((_n) => (mode === "timeline" ? "Switched to the compact list view (also the mobile mode) - full dates as text." : "Switched back to the timeline."));
   }, [mode]);
 
   const demoMove = React.useCallback(async () => {
     setSelectedItemId("marketing");
-    setNote("Moved “Marketing site” one week later from the detail panel — an accessible, non-drag reschedule.");
+    setNote("Moved “Marketing site” one week later from the detail panel - an accessible, non-drag reschedule.");
     await raf();
     const btn = Array.from(rootRef.current?.querySelectorAll<HTMLButtonElement>("button") ?? []).find((b) => b.textContent?.includes("Move later"));
     btn?.click();
@@ -159,7 +159,7 @@ export function ProjectTimelinePreview() {
     setFailNext(true);
     failRef.current = true;
     setSelectedItemId("app");
-    setNote("Armed a save failure, then extended “App build” — watch the optimistic bar snap back on rejection.");
+    setNote("Armed a save failure, then extended “App build” - watch the optimistic bar snap back on rejection.");
     await raf();
     const btn = Array.from(rootRef.current?.querySelectorAll<HTMLButtonElement>("button") ?? []).find((b) => b.textContent?.includes("Extend"));
     btn?.click();

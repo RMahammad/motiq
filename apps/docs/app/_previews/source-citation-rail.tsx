@@ -93,7 +93,7 @@ const EXTRA_SOURCES: CitationSource[] = [
   {
     id: "s5",
     index: 5,
-    title: "Chunked transfer encoding — living standard",
+    title: "Chunked transfer encoding - living standard",
     domain: "spec.web-fabric.org",
     url: "https://example.com/spec/chunked",
     type: "web",
@@ -234,9 +234,9 @@ export function SourceCitationRailPreview() {
             </p>
             <p>
               On the reference workload, switching to token-level flushing cut median time-to-first-token
-              from 840ms to 210ms <CitationMarker source="s3" />. Keep the citation rail accessible —
+              from 840ms to 210ms <CitationMarker source="s3" />. Keep the citation rail accessible -
               selection should never rely on colour alone
-              {sources.some((s) => s.id === "s4") ? <CitationMarker source="s4" /> : null} — and match the
+              {sources.some((s) => s.id === "s4") ? <CitationMarker source="s4" /> : null} - and match the
               chunked-transfer contract your transport already speaks
               {sources.some((s) => s.id === "s5") ? <CitationMarker source="s5" /> : null}.
             </p>
@@ -244,7 +244,7 @@ export function SourceCitationRailPreview() {
 
           <p className="mt-4 border-t border-[var(--color-border)] pt-3 text-[11.5px] text-[var(--color-muted)]">
             Demo content and sources are fictional. This component only displays the citations the app passes
-            it — it does not retrieve, verify, or score anything. “Verified” reflects a flag set by this demo.
+            it - it does not retrieve, verify, or score anything. “Verified” reflects a flag set by this demo.
           </p>
         </article>
       </SourceCitationRail>

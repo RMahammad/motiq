@@ -15,7 +15,7 @@ import {
 const COPY: HeroCopy = {
   eyebrow: "Content-aware grid",
   title: "A grid that yields to your words.",
-  copy: "Set one placement prop — the grid quiets behind the copy and collects toward the frame.",
+  copy: "Set one placement prop - the grid quiets behind the copy and collects toward the frame.",
   primary: "Start building",
   secondary: "See examples",
 };
