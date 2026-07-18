@@ -213,19 +213,18 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
       {/* Installation */}
       <Section id="installation" title="Installation">
-        <p className="mb-3 text-[14px] text-[var(--color-muted)]">Install the editable source with the shadcn CLI:</p>
-        <InstallCommand command={namespacedInstall(item.registryItem)} />
+        <p className="mb-3 text-[14px] text-[var(--color-muted)]">Install the editable source with the shadcn CLI — no setup, no account, works in any shadcn project:</p>
+        <InstallCommand command={itemInstall(item)} />
         <details className="mt-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3.5 py-2.5 [&_summary]:cursor-pointer">
           <summary className="text-[13px] text-[var(--color-fg)] marker:text-[var(--color-muted)]">
-            One-time setup for the <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">{product.registryNamespace}</code> namespace — or install without it
+            Prefer a shorter command? Use the <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">{product.registryNamespace}</code> namespace shortcut
           </summary>
           <div className="mt-3 space-y-2.5">
             <p className="text-[13px] text-[var(--color-muted)]">
-              Add {product.shortName} to your <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">components.json</code> once; the command above then works in any project:
+              Add {product.shortName} to your <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">components.json</code> once (a one-time convenience — the command above always works without it), then install any component with the short form:
             </p>
             <CodeBlock code={registriesConfig()} lang="json" />
-            <p className="text-[13px] text-[var(--color-muted)]">Prefer no setup? Install from the full registry URL instead:</p>
-            <InstallCommand command={itemInstall(item)} />
+            <InstallCommand command={namespacedInstall(item.registryItem)} />
           </div>
         </details>
         {product.namespaceIsPreview ? (
