@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { packs, packInstall } from "../../lib/packs";
+import { packs, packInstallShort } from "../../lib/packs";
 import { bySlug } from "../../lib/catalog";
 import { product } from "../../lib/product";
 import { completeCatalogCta, statusLabel } from "../../lib/commerce";
@@ -66,7 +66,7 @@ export default function PacksIndex() {
     blockSlug: pack.blockSlug,
     blockName: pack.blockName,
     tagline: pack.tagline,
-    install: packInstall(pack),
+    install: packInstallShort(pack),
     detailHref: `/packs/${pack.slug}`,
     components: comps,
     states: pack.states.slice(0, 6),

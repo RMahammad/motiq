@@ -1,7 +1,8 @@
 import Link from "next/link";
 
 import type { CatalogItem } from "../../lib/catalog";
-import { itemInstall, kindOf, resolvePresentation } from "../../lib/catalog";
+import { kindOf, resolvePresentation } from "../../lib/catalog";
+import { namespacedInstall } from "../../lib/product";
 import { CatalogStage } from "./catalog-stage";
 import { CatalogPreview } from "../_previews";
 import { LazyPreview } from "./lazy-preview";
@@ -79,7 +80,7 @@ export function CatalogCard({ item }: { item: CatalogItem }) {
           <span className="text-[12px] text-[var(--color-muted)]">{categoryLabel(item.category)}</span>
           <div className="flex items-center gap-2">
             <CopyButton
-              text={itemInstall(item)}
+              text={namespacedInstall(item.registryItem)}
               label="Install"
               trackEvent="free_install_copied"
               trackProps={{ item: item.id }}

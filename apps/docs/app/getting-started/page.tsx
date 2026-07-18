@@ -1,13 +1,13 @@
 import Link from "next/link";
 
 import { catalog } from "../../lib/catalog";
-import { product, installCommand, namespacedInstall, registriesConfig } from "../../lib/product";
+import { product, namespacedInstall, registriesConfig } from "../../lib/product";
 import { pageMetadata } from "../../lib/seo";
 import { CodeBlock, InstallCommand } from "../_components/code-block";
 
 export const metadata = pageMetadata({
   title: "Get started",
-  description: `Install ${product.productName} components as editable source with the shadcn CLI — one command, zero config, no account or registry setup.`,
+  description: `Install ${product.productName} components as editable source with the shadcn CLI — register the ${product.registryNamespace} namespace once, then add any component with a single command.`,
   path: "/getting-started",
 });
 
@@ -41,8 +41,8 @@ export default function GettingStartedPage() {
         </h1>
         <p className="mt-3 max-w-[62ch] text-[15px] leading-relaxed text-[var(--color-muted)]">
           {product.productName} components install as editable source through a shadcn-compatible
-          registry. One command per component — no account, no config, nothing to register. The
-          source lands in your project and you own it.
+          registry. Register the {product.registryNamespace} namespace once, then add any component
+          with a single command — the source lands in your project and you own it.
         </p>
       </header>
 
@@ -63,13 +63,23 @@ export default function GettingStartedPage() {
         </p>
       </Step>
 
-      <Step n={2} title="Add any component">
+      <Step n={2} title="Register the namespace (one time)">
         <p className="mb-3 text-[14px] leading-relaxed text-[var(--color-muted)]">
-          Install any component from its registry URL. This resolves with zero configuration — no
-          account, nothing to register — and dependencies (utilities, primitives, and any composed
-          components) are pulled in automatically:
+          Add {product.productName} to the <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">registries</code>{" "}
+          field of your <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">components.json</code>. The CLI
+          substitutes <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">{"{name}"}</code> with the component
+          name, so <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">{product.registryNamespace}/{example.registryItem}</code>{" "}
+          resolves to its source. You only do this once per project.
         </p>
-        <InstallCommand command={installCommand(example.registryItem)} />
+        <CodeBlock code={registriesConfig()} lang="json" />
+      </Step>
+
+      <Step n={3} title="Add any component">
+        <p className="mb-3 text-[14px] leading-relaxed text-[var(--color-muted)]">
+          Install anything in the catalog with one command — dependencies (utilities, primitives,
+          and any composed components) are pulled in automatically:
+        </p>
+        <InstallCommand command={namespacedInstall(example.registryItem)} />
         <p className="mt-3 text-[13px] text-[var(--color-muted)]">
           Browse the full catalog on the{" "}
           <Link href="/components" className="text-[var(--color-accent)] underline underline-offset-2">
@@ -77,20 +87,6 @@ export default function GettingStartedPage() {
           </Link>{" "}
           page — each page lists its exact install command.
         </p>
-      </Step>
-
-      <Step n={3} title="Optional: shorter commands with a namespace">
-        <p className="mb-3 text-[14px] leading-relaxed text-[var(--color-muted)]">
-          Installing a lot of components? Register the{" "}
-          <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">{product.registryNamespace}</code>{" "}
-          namespace in your <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">components.json</code> once, then
-          use the short form below. This is purely a convenience — the URL command in Step 2 always
-          works without it.
-        </p>
-        <CodeBlock code={registriesConfig()} lang="json" />
-        <div className="mt-3">
-          <InstallCommand command={namespacedInstall(example.registryItem)} />
-        </div>
       </Step>
 
       <section className="border-t border-[var(--color-border)] py-8">

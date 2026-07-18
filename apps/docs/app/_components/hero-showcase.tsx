@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 
 import { bySlug } from "../../lib/catalog";
-import { installCommand } from "../../lib/product";
+import { namespacedInstall } from "../../lib/product";
 import { InstallCommand } from "./code-block";
 import { Preview } from "../_previews";
 
@@ -225,7 +225,7 @@ export function HeroShowcase() {
             ) : null}
           </div>
           <div className="min-w-0 sm:ml-auto sm:max-w-[440px] sm:flex-1">
-            <InstallCommand command={installCommand(item.registryItem)} trackEvent="free_install_copied" trackProps={{ item: item.slug }} />
+            <InstallCommand command={namespacedInstall(item.registryItem)} trackEvent="free_install_copied" trackProps={{ item: item.slug }} />
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { bySlug, catalog, itemInstall, itemsByCategory, categories, resolvePresentation } from "../../../lib/catalog";
-import { product, namespacedInstall, registriesConfig } from "../../../lib/product";
+import { product, namespacedInstall } from "../../../lib/product";
 import { pageMetadata, absoluteUrl } from "../../../lib/seo";
 import { whenToUse, faqFor } from "../../../lib/component-seo";
 import { readAnyRegistry, sourcePreview } from "../../../lib/registry-source";
@@ -213,20 +213,13 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
       {/* Installation */}
       <Section id="installation" title="Installation">
-        <p className="mb-3 text-[14px] text-[var(--color-muted)]">Install the editable source with the shadcn CLI — no setup, no account, works in any shadcn project:</p>
-        <InstallCommand command={itemInstall(item)} />
-        <details className="mt-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3.5 py-2.5 [&_summary]:cursor-pointer">
-          <summary className="text-[13px] text-[var(--color-fg)] marker:text-[var(--color-muted)]">
-            Prefer a shorter command? Use the <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">{product.registryNamespace}</code> namespace shortcut
-          </summary>
-          <div className="mt-3 space-y-2.5">
-            <p className="text-[13px] text-[var(--color-muted)]">
-              Add {product.shortName} to your <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">components.json</code> once (a one-time convenience — the command above always works without it), then install any component with the short form:
-            </p>
-            <CodeBlock code={registriesConfig()} lang="json" />
-            <InstallCommand command={namespacedInstall(item.registryItem)} />
-          </div>
-        </details>
+        <p className="mb-3 text-[14px] text-[var(--color-muted)]">Install the editable source with the shadcn CLI:</p>
+        <InstallCommand command={namespacedInstall(item.registryItem)} />
+        <p className="mt-3 text-[13px] text-[var(--color-muted)]">
+          First time? Add the <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">{product.registryNamespace}</code> namespace to your{" "}
+          <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">components.json</code> once — see the{" "}
+          <Link href="/getting-started" className="text-[var(--color-accent)] underline underline-offset-2">setup guide</Link>. After that, this command works in every project.
+        </p>
         {product.namespaceIsPreview ? (
           <p className="mt-2 text-[12px] text-[var(--color-muted)]">
             The registry namespace/URL are temporary preview values during development.
