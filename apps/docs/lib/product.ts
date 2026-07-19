@@ -17,6 +17,8 @@ export interface ProductConfig {
   documentationUrl: string;
   githubUrl: string;
   supportUrl: string;
+  /** External funding page (Ko-fi). Shown as the "Sponsor" CTA in docs. */
+  sponsorUrl: string;
   defaultTheme: "light" | "dark";
   freeTierLabel: string;
   premiumTierLabel: string;

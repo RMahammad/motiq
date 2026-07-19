@@ -10,6 +10,7 @@ Install the source with shadcn. Own the code. Ship it your way.
 [![GitHub stars](https://img.shields.io/github/stars/RMahammad/motiq?style=for-the-badge&logo=github&label=Stars&color=6C63FF)](https://github.com/RMahammad/motiq/stargazers)
 [![MIT License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](./LICENSE)
 [![CI](https://img.shields.io/github/actions/workflow/status/RMahammad/motiq/ci.yml?branch=main&style=for-the-badge&label=CI)](https://github.com/RMahammad/motiq/actions/workflows/ci.yml)
+[![Support Motiq on Ko-fi](https://img.shields.io/badge/Support-Ko--fi-4f7cff?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/motiq)
 
 [Explore components](https://motiq.dev/components) ·
 [Get started](https://motiq.dev/getting-started) ·
@@ -172,11 +173,20 @@ accessibility reviews, cross-browser testing, registry hosting, and documentatio
 
 <div align="center">
 
-[![Become a founding sponsor](https://img.shields.io/badge/Become_a_founding_sponsor-6C63FF?style=for-the-badge&logo=githubsponsors&logoColor=white)](https://github.com/RMahammad/motiq/issues/new?template=sponsorship.md)
+[![Support Motiq on Ko-fi](https://img.shields.io/badge/Support_Motiq-4f7cff?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/motiq)
 
-**Founding sponsors are recognized here and on [motiq.dev](https://motiq.dev) — your logo could be the first.**
+**Sponsors are recognized here and on [motiq.dev](https://motiq.dev) — your logo could be the first.**
 
 </div>
+
+Support once with a coffee, or back Motiq monthly:
+
+| Tier | Monthly | You get |
+| --- | --- | --- |
+| ☕ **Supporter** | $5 | Name in [`SPONSORS.md`](./SPONSORS.md) _(+ Discord supporter role — server coming soon)_ |
+| 💙 **Backer** | $10 | Above + priority issue triage + a vote on the roadmap |
+| ⭐ **Sponsor** | $25 | Above + your logo in this README and on the docs sponsors page |
+| 🏢 **Gold Sponsor** | $100 | Above + prominent placement on the [motiq.dev](https://motiq.dev) homepage |
 
 Tiers and benefits are agreed transparently before any payment, and Motiq never
 publishes invented audience or reach numbers.

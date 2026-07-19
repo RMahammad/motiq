@@ -145,6 +145,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {commerce.waitlistEnabled ? <Link href="/access" className="hover:text-[var(--color-fg)]">Request access</Link> : null}
               <Link href="/updates" className="hover:text-[var(--color-fg)]">Updates</Link>
               <Link href="/portal" className="hover:text-[var(--color-fg)]">Account portal</Link>
+              <a href={product.sponsorUrl} target="_blank" rel="noreferrer" className="hover:text-[var(--color-fg)]">Sponsor</a>
             </nav>
             <nav aria-label="Legal" className="flex flex-col gap-1.5">
               <span className="text-[12px] font-medium uppercase tracking-wide text-[var(--color-fg)]">Legal (draft)</span>
