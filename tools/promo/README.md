@@ -53,6 +53,6 @@ Category GIF tile labels must stay in sync with real component names in `apps/do
 | `motiq-vertical` | `motiq-vertical.mp4` | 9:16 1080×1920, 12s for Shorts/Reels/TikTok |
 | `motiq-card` | `motiq-card.png` | 1200×675 static for X image posts / link cards |
 
-Channel mapping + paste-ready captions: [`assets/promo/README.md`](../../assets/promo/README.md). Claim discipline: quantities must match the fact sheet in `LAUNCH.md` ("60+ components & blocks", never invented stats).
+Channel mapping + paste-ready captions: [`assets/README.md`](../../assets/README.md). Claim discipline: quantities must match the fact sheet in `LAUNCH.md` ("60+ components & blocks", never invented stats).
 
 Brand colors/copy are mirrored from `packages/tokens/styles.css` (dark theme) and `product.config.json` into [`src/theme.ts`](src/theme.ts) — update there if the brand changes. All animation is deterministic (`useCurrentFrame()`-derived; seeded PRNG for particles), enforced by `npm run test:determinism`.
