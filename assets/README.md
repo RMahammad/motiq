@@ -1,29 +1,40 @@
 # Motiq marketing assets
 
-Everything for promoting Motiq lives here. Two kits, one place:
+Everything for promoting Motiq lives here:
 
-- **[`promo/`](promo/)** — Remotion-rendered promo & social kit (this is the primary set). Source: [`tools/promo/`](../tools/promo/README.md).
+- **[`campaign/`](campaign/)** — the primary set: README hero (2K MP4 / GIF / poster), pack spotlights, vertical cut, reduced-motion demo. Source: [`apps/promo/`](../apps/promo/README.md) (`pnpm render`), built from the real registry components.
+- **[`showcase/`](showcase/)** — README mosaic + per-pack showcase cards. Source: `apps/promo` showcase compositions.
+- **[`promo/`](promo/)** — **archive.** Final renders from the retired `tools/promo` (removed 2026-07-19): the ~32 s launch trailer and 11 per-category drip GIFs. No render source remains — treat these files as final; rebuild any category loop in `apps/promo` when it's next needed.
 - **[`launch/`](launch/)** — Playwright-captured launch clips + social preview image, recorded from the live docs previews. Source: [`launch/tools/`](launch/tools/).
 
-The rendered media (`*.gif`, `*.mp4`, `*.png`, `*.jpg`) is **gitignored** — it's regenerable from the tools and would bloat git history. This README, the captions, and the re-record tool source stay tracked. Distribute the rendered files via a GitHub Release or upload them natively when posting.
+The rendered media (`*.gif`, `*.mp4`, `*.png`, `*.jpg`) is **gitignored** — regenerable from `apps/promo` — *except* the files the root README embeds (`campaign/motiq-readme-hero.gif`, `showcase/*.gif`, `showcase/motiq-showcase.png`), which must be committed so GitHub can render them. Distribute everything else via a GitHub Release or upload natively when posting.
 
 Channel rules, timing, and the full launch sequence live in [`LAUNCH.md`](../LAUNCH.md); this file maps assets to channels and gives paste-ready captions. **All claims match LAUNCH.md's fact sheet** (56 components + 8 blocks → "60+ components & blocks"; free & open source; shadcn-registry install). Never add user counts or download numbers to a caption.
 
 ---
 
-## `promo/` — Remotion promo & social kit
+## `campaign/` — primary promo kit (from `apps/promo`, real components)
 
-Rendered by [`tools/promo/`](../tools/promo/README.md): `npm run render` (GIFs) and `npm run render:social` (trailer/square/vertical/card).
+Rendered by [`apps/promo/`](../apps/promo/README.md): `pnpm render` (everything) or per-target (`pnpm render:readme`, `render:social`, `render:poster`).
 
 | Asset | Format | Built for | Notes |
 | --- | --- | --- | --- |
-| `motiq-trailer.mp4` | 16:9 · 1280×720 · ~32s | **X launch post**, LinkedIn, YouTube, docs page | Upload natively (never link). Designed for muted autoplay: text carries the story, product moves from frame 0, no logo cold-open. |
-| `motiq-card.png` | 1200×675 static | X image posts, link-preview style shares, blog headers | Pair with a short text post when video feels too heavy. |
-| `motiq-square.mp4` / `.gif` | 1:1 · 1080×1080 · 12s loop | X follow-ups, LinkedIn feed, Instagram, Threads | Loops seamlessly; good for drip posts. |
-| `motiq-vertical.mp4` | 9:16 · 1080×1920 · 12s | YouTube Shorts, Reels, TikTok | Short-form discovery channel; re-post monthly. |
-| `motiq-intro/-install/-showcase/-pillars/-free.gif` | 16:9 GIFs | GitHub README, dev.to posts, Reddit inline | README hero = intro or install. |
-| `motiq-cat-*.gif` (11) | 16:9 GIFs | Drip engine: one category per post; docs pages; Reddit niche subs | Match the sub: `motiq-cat-ai` → AI-adjacent subs, `motiq-cat-developer-tools` → r/devtools etc. |
-| `tools/promo/out/*.mp4` | source MP4s of every GIF | Anywhere video beats GIF | X re-encodes GIFs to video anyway — prefer the MP4. |
+| `motiq-readme-hero.gif` | 1440×810 · 15 fps · ~22.7s loop | **GitHub README hero** (committed) | Full product story: agent run → pipeline retry-to-green → data refresh → approval → install. |
+| `motiq-readme-hero-2k.mp4` | 16:9 · 2560×1440 · 30 fps | X/LinkedIn native upload, docs page | H.264 CRF 18; prefer this over the GIF anywhere video is allowed. |
+| `motiq-readme-poster.png` | 2560×1440 static | Link cards, blog headers, video poster frame | Hero hold frame. |
+| `deployment-pipeline-spotlight.mp4` | 16:9 · 1920×1080 · 8s | Dev-tools pack posts | Fail → logs → focused retry → green. |
+| `agent-workflow-spotlight.mp4` | 1:1 · 1080×1080 · 9.5s | AI pack posts, LinkedIn feed | Composer → run/tools/approval → cited stream. |
+| `live-data-spotlight.mp4` | 1:1 · 1080×1080 · 7s | Data pack posts | Refresh → morph → reorder → settle. |
+| `motiq-social-vertical.mp4` | 9:16 · 1080×1920 · 10s | Shorts, Reels, TikTok | Component on screen from frame 0. |
+| `motiq-reduced-motion.mp4` | 16:9 · 1200×674 · 7s | Accessibility posts, docs | The components' real reduced-motion path. |
+| `motiq-poster.png` | 2400×1350 static | X image posts | Claims + install command + green pipeline. |
+
+## `promo/` — archived first-generation kit (render source removed)
+
+| Asset | Format | Built for | Notes |
+| --- | --- | --- | --- |
+| `motiq-trailer.mp4` | 16:9 · 1280×720 · ~32s | **X launch post**, LinkedIn, YouTube | Final render, no source. Upload natively (never link). |
+| `motiq-cat-*.gif` (11) | 16:9 GIFs | Drip engine: one category per post; Reddit niche subs | Final renders, no source — rebuild in `apps/promo` when a category needs a refresh. |
 
 ## `launch/` — Playwright launch capture kit
 

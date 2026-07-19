@@ -66,15 +66,22 @@ docs/57-grid-placement-and-mobile-fixes.md
 docs/57-library-production-cleanup.md
 docs/58-homepage-preview-alignment-and-height.md
 docs/59-homepage-art-direction-pass.md
-# Remotion render intermediates (internal promo tool)
-tools/promo/out/
+# Remotion render intermediates (internal promo app)
+apps/promo/out/
 
-# Rendered marketing media under assets/ — regenerable via tools/promo
-# (npm run render / render:social) and assets/launch/tools. Kept out of git
-# history to avoid binary bloat; the combined channel doc (assets/README.md)
-# and the re-record tool source stay tracked. Distribute the rendered files
-# via a GitHub Release or upload them natively when posting.
+# Rendered marketing media under assets/ — regenerable via apps/promo
+# (pnpm render) and assets/launch/tools. Kept out of git history to avoid
+# binary bloat; the combined channel doc (assets/README.md) and the re-record
+# tool source stay tracked. Distribute the rendered files via a GitHub
+# Release or upload them natively when posting.
 assets/**/*.gif
 assets/**/*.mp4
 assets/**/*.png
 assets/**/*.jpg
+# …except the exact files README.md embeds — GitHub renders these straight from
+# the repo, so they must be committed. Keep this list in sync with the README.
+!assets/campaign/readme.png
+!assets/showcase/showcase-ai-interface.gif
+!assets/showcase/showcase-developer-tools.gif
+!assets/showcase/showcase-data-motion.gif
+!assets/showcase/showcase-collaboration.gif

@@ -1,0 +1,61 @@
+/* Tailwind v4 + the real Motiq design tokens. The registry source is scanned so
+   the components' utility classes are generated exactly as on the docs site. */
+@import "tailwindcss";
+@import "../../../packages/tokens/styles.css";
+
+@source "./";
+@source "../../../packages/registry/registry";
+
+/* Determinism hammer: promo renders must derive 100% of their motion from the
+   Remotion frame. Components already take their real reduced-motion paths (the
+   matchMedia shim in src/index.ts), and this kills any remaining CSS-clock
+   animation (skeleton pulses, pings) so parallel render workers can never
+   disagree about a frame. */
+.motiq-promo *,
+.motiq-promo *::before,
+.motiq-promo *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+.motiq-promo {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Promo-only token lift: panels a touch brighter, borders and secondary text a
+   touch stronger, so components stay legible after GIF palette compression at
+   README sizes. Deliberately subtle — the Deep Ink theme must not wash out. */
+.motiq-promo[data-theme="dark"],
+.motiq-promo [data-theme="dark"],
+.motiq-promo.dark {
+  --color-surface: #141d2f;
+  --color-surface-2: #1c2740;
+  --color-bg-secondary: #0f1727;
+  --color-border: #2e3f5a;
+  --color-border-strong: #3f5474;
+  --color-muted: #a7b3c6;
+  --color-subtle: #8391a7;
+  --color-code-bg: #0f1725;
+}
+
+/* Match the docs site's focus treatment so the "keyboard focus on Retry"
+   moment shows the library's real ring. */
+.motiq-promo a:focus-visible,
+.motiq-promo button:focus-visible,
+.motiq-promo input:focus-visible,
+.motiq-promo [tabindex]:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--radius-sm);
+}
+
+/* An unfocused (headless render) page never matches CSS :focus/:focus-visible,
+   so the scripted "keyboard focus on Retry" moment paints the same ring token
+   via an attribute set alongside the real element.focus() call. */
+.motiq-promo .promo-focus-ring button:focus,
+.motiq-promo [data-promo-focus] {
+  outline: none;
+  box-shadow: var(--ring) !important;
+  border-radius: var(--radius-sm);
+}

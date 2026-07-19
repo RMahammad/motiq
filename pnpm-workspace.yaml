@@ -11,6 +11,33 @@ allowBuilds:
   esbuild: true
   sharp: true
 
+minimumReleaseAgeExclude:
+  - '@remotion/bundler@4.0.491'
+  - '@remotion/canvas-capture@4.0.491'
+  - '@remotion/cli@4.0.491'
+  - '@remotion/compositor-darwin-arm64@4.0.491'
+  - '@remotion/compositor-darwin-x64@4.0.491'
+  - '@remotion/compositor-linux-arm64-gnu@4.0.491'
+  - '@remotion/compositor-linux-arm64-musl@4.0.491'
+  - '@remotion/compositor-linux-x64-gnu@4.0.491'
+  - '@remotion/compositor-linux-x64-musl@4.0.491'
+  - '@remotion/compositor-win32-x64-msvc@4.0.491'
+  - '@remotion/google-fonts@4.0.491'
+  - '@remotion/licensing@4.0.491'
+  - '@remotion/media-parser@4.0.491'
+  - '@remotion/media-utils@4.0.491'
+  - '@remotion/player@4.0.491'
+  - '@remotion/renderer@4.0.491'
+  - '@remotion/streaming@4.0.491'
+  - '@remotion/studio-server@4.0.491'
+  - '@remotion/studio-shared@4.0.491'
+  - '@remotion/studio@4.0.491'
+  - '@remotion/tailwind-v4@4.0.491'
+  - '@remotion/timeline-utils@4.0.491'
+  - '@remotion/web-renderer@4.0.491'
+  - '@remotion/zod-types@4.0.491'
+  - remotion@4.0.491
+
 onlyBuiltDependencies:
   - esbuild
   - sharp

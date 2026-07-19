@@ -4,7 +4,7 @@
 > **Related:** [`08-remotion-license-analysis.md`](08-remotion-license-analysis.md) (⚠️ read first) · [ADR-0003](adrs/0003-remotion-boundary.md) · [`03-architecture.md`](03-architecture.md) · [`remotion-composition-authoring` skill](../.claude/skills/remotion-composition-authoring/SKILL.md)
 > ⚠️ **Do not build any of this until the license questions in [`08`](08-remotion-license-analysis.md) are answered in writing.** This is the Phase-4 gate.
 >
-> **Internal marketing use (2026-07-18):** [`tools/promo/`](../tools/promo/README.md) uses Remotion to render our own promo GIFs (`assets/promo/`). This is local rendering by an individual under Remotion's free tier — it does not redistribute the Player, render for customers, or ship Remotion code, so it does not trip the Phase-4 gate. It lives outside the workspace and is not part of this product line.
+> **Internal marketing use (2026-07-18, tool consolidated 2026-07-19):** [`apps/promo/`](../apps/promo/README.md) uses Remotion to render our own marketing videos (`assets/campaign/`, `assets/showcase/`; it replaced the earlier isolated `tools/promo`, whose final renders are archived in `assets/promo/`). This is local rendering by an individual under Remotion's free tier — it does not redistribute the Player, render for customers, or ship Remotion code to buyers, so it does not trip the Phase-4 gate. It is a private workspace app, not part of this product line.
 
 ## Product boundaries
 

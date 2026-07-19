@@ -1,0 +1,33 @@
+{
+  "name": "motiq-promo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Internal marketing workspace: renders the Motiq campaign videos (README hero, pack spotlights, social cuts) with Remotion, directly from the real registry component source. Not a product package.",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "render": "node scripts/render-campaign.mjs",
+    "render:readme": "node scripts/render-campaign.mjs readme",
+    "render:social": "node scripts/render-campaign.mjs landscape square-agent square-data vertical",
+    "render:poster": "node scripts/render-campaign.mjs poster"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.491",
+    "@remotion/google-fonts": "4.0.491",
+    "@remotion/tailwind-v4": "4.0.491",
+    "clsx": "^2.1.1",
+    "motion": "^12.42.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "remotion": "4.0.491",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.2",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^5.7.3"
+  }
+}

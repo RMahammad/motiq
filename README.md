@@ -20,7 +20,7 @@ Install the source with shadcn. Own the code. Ship it your way.
 
 <p align="center">
   <a href="https://motiq.dev">
-    <img src="./.github/assets/motiq-showcase.jpg" alt="Motiq homepage showing animated React components and a live AI response interface" width="1280" />
+    <img src="./assets/campaign/readme.png" alt="Motiq: 56+ animated React components for real product workflows — an AI agent run with a cited streaming answer, a deployment pipeline recovered to green, live KPI and region data, and an approved release workflow" width="1280" />
   </a>
 </p>
 
@@ -45,6 +45,32 @@ component safe to ship.
 
 > **AI interfaces** · **Developer tools** · **Collaboration** · **Data motion** ·
 > **Commerce** · **Security** · **Productivity** · **Workflow environments**
+
+## Complete workflows, in motion
+
+Every preview below is rendered from unmodified registry source — the same
+components the install command copies into your project. Each loop plays a full
+workflow to its finished state: the failure is inspected and retried, the answer
+streams to its citations, the refresh settles, the approval completes.
+
+<table>
+  <tr>
+    <td width="50%">
+      <img src="./assets/showcase/showcase-ai-interface.gif" alt="AI Interface pack: a prompt is submitted, the agent runs tools with a human approval step, and the response streams in with source citations" />
+    </td>
+    <td width="50%">
+      <img src="./assets/showcase/showcase-developer-tools.gif" alt="Deployment Pipeline: install and build pass, tests fail, logs expand, retry is focused and run, and the deploy finishes green" />
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="./assets/showcase/showcase-data-motion.gif" alt="Data Motion pack: a refresh begins, KPI numbers morph, table rows reorder, and the updated state settles" />
+    </td>
+    <td width="50%">
+      <img src="./assets/showcase/showcase-collaboration.gif" alt="Collaboration pack: a collaborator joins the presence stack, a comment lands in the release thread, and the approval completes" />
+    </td>
+  </tr>
+</table>
 
 ## Install a component
 
