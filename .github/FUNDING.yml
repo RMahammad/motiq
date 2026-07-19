@@ -3,12 +3,12 @@
 # One fake/broken link looks worse than none — only enable what actually works.
 
 # github: RMahammad            # native GitHub "Sponsor ♥" button + checkout — requires joining GitHub Sponsors first
-# ko_fi: <handle>              # ko-fi.com/<handle>
+ko_fi: rmahammad              # ko-fi.com/rmahammad
 # buy_me_a_coffee: <handle>   # buymeacoffee.com/<handle>
 # patreon: <handle>
 # open_collective: <slug>
 # polar: <handle>
 
-# Works right now, no approval needed — points at your existing sponsorship issue.
-# Swap for a motiq.dev/sponsors page whenever you build one.
-custom: ['https://github.com/RMahammad/motiq/issues/new?template=sponsorship.md']
+# Ko-fi is the active button while on the GitHub Sponsors waitlist. When the
+# "you're in" email lands, uncomment `github: RMahammad` above to show both.
+# custom: ['https://github.com/RMahammad/motiq/issues/new?template=sponsorship.md']
