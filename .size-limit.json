@@ -1,0 +1,163 @@
+[
+  {
+    "name": "@scope/motion Reveal (brotli, excl. peers + tokens/clsx/twMerge)",
+    "path": "packages/motion/dist/reveal.js",
+    "import": "{ Reveal }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/motion InView (brotli)",
+    "path": "packages/motion/dist/in-view.js",
+    "import": "{ InView }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1 kB"
+  },
+  {
+    "name": "@scope/motion Stagger (brotli)",
+    "path": "packages/motion/dist/stagger.js",
+    "import": "{ Stagger, StaggerItem }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/motion index — all primitives (brotli)",
+    "path": "packages/motion/dist/index.js",
+    "import": "*",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "4 kB"
+  },
+  {
+    "name": "@scope/motion GradientText (brotli)",
+    "path": "packages/motion/dist/gradient-text.js",
+    "import": "{ GradientText }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1 kB"
+  },
+  {
+    "name": "@scope/motion BlurReveal (brotli)",
+    "path": "packages/motion/dist/blur-reveal.js",
+    "import": "{ BlurReveal }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/motion Marquee (brotli)",
+    "path": "packages/motion/dist/marquee.js",
+    "import": "{ Marquee }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1 kB"
+  },
+  {
+    "name": "@scope/react Skeleton (brotli)",
+    "path": "packages/react/dist/skeleton.js",
+    "import": "{ Skeleton }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1 kB"
+  },
+  {
+    "name": "@scope/react SpotlightCard (brotli)",
+    "path": "packages/react/dist/spotlight-card.js",
+    "import": "{ SpotlightCard }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/react BentoGrid + Item (brotli)",
+    "path": "packages/react/dist/bento-grid.js",
+    "import": "{ BentoGrid, BentoGridItem }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/react PricingCard (brotli, excl. peers + workspace deps)",
+    "path": "packages/react/dist/pricing-card.js",
+    "import": "{ PricingCard }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "2 kB"
+  },
+  {
+    "name": "@scope/react AnimatedDialog wrapper (brotli, excl. peers + radix + workspace)",
+    "path": "packages/react/dist/dialog.js",
+    "import": "{ AnimatedDialog }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@radix-ui/react-dialog", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/react Sheet wrapper (brotli, excl. radix + workspace)",
+    "path": "packages/react/dist/sheet.js",
+    "import": "{ Sheet }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@radix-ui/react-dialog", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/react Tooltip wrapper (brotli, excl. radix + workspace)",
+    "path": "packages/react/dist/tooltip.js",
+    "import": "{ Tooltip }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@radix-ui/react-tooltip", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/react Popover wrapper (brotli, excl. radix + workspace)",
+    "path": "packages/react/dist/popover.js",
+    "import": "{ Popover }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@radix-ui/react-popover", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/sections HeroSection (brotli, excl. peers + workspace)",
+    "path": "packages/sections/dist/hero-section.js",
+    "import": "{ HeroSection }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/motion TextReveal (brotli)",
+    "path": "packages/motion/dist/text-reveal.js",
+    "import": "{ TextReveal }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/motion Counter (brotli)",
+    "path": "packages/motion/dist/counter.js",
+    "import": "{ Counter }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/motion RotatingWords (brotli)",
+    "path": "packages/motion/dist/rotating-words.js",
+    "import": "{ RotatingWords }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/motion MotionScene + MotionStep (brotli)",
+    "path": "packages/motion/dist/motion-scene.js",
+    "import": "{ MotionScene, MotionStep }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/sections FeatureGrid (brotli, excl. peers + workspace)",
+    "path": "packages/sections/dist/feature-grid.js",
+    "import": "{ FeatureGrid }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/react", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/sections CTASection (brotli, excl. peers + workspace)",
+    "path": "packages/sections/dist/cta-section.js",
+    "import": "{ CTASection }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  },
+  {
+    "name": "@scope/recipes ProductIntroduction (brotli, excl. peers + workspace)",
+    "path": "packages/recipes/dist/product-introduction.js",
+    "import": "{ ProductIntroduction }",
+    "ignore": ["react", "react-dom", "react/jsx-runtime", "@scope/motion", "@scope/tokens", "@scope/tokens/cn", "clsx", "tailwind-merge"],
+    "limit": "1.5 kB"
+  }
+]

@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 640px; overflow: hidden; }
+  body {
+    font-family: -apple-system, "SF Pro Display", "Inter", system-ui, sans-serif;
+    background: #080c14;
+    color: #f8fafc;
+    position: relative;
+  }
+  /* ambient glow */
+  .glow-a { position: absolute; width: 900px; height: 900px; left: -300px; top: -450px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,92,255,.16) 0%, transparent 62%); }
+  .glow-b { position: absolute; width: 800px; height: 800px; right: -220px; bottom: -420px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(79,124,255,.14) 0%, transparent 62%); }
+  .grid-lines { position: absolute; inset: 0; opacity: .35;
+    background-image: linear-gradient(rgba(38,52,73,.35) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(38,52,73,.35) 1px, transparent 1px);
+    background-size: 64px 64px; }
+  .vignette { position: absolute; inset: 0; background: radial-gradient(120% 120% at 30% 40%, transparent 55%, rgba(8,12,20,.7) 100%); }
+
+  .left { position: absolute; left: 64px; top: 0; bottom: 0; width: 560px; display: flex; flex-direction: column; justify-content: center; gap: 28px; z-index: 3; }
+  .brand { display: flex; align-items: center; gap: 18px; }
+  .mark { width: 72px; height: 72px; border-radius: 18px; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #7c5cff 0%, #4f7cff 100%); font-size: 46px; font-weight: 700; color: #fff;
+    box-shadow: 0 12px 40px rgba(92,108,255,.45); }
+  .word { font-size: 58px; font-weight: 700; letter-spacing: -1.5px; }
+  h1 { font-size: 33px; line-height: 1.28; font-weight: 600; letter-spacing: -0.4px; }
+  h1 .dim { color: #9caabd; font-weight: 500; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { border: 1px solid #263449; background: rgba(17,24,39,.85); border-radius: 999px; padding: 8px 16px;
+    font-size: 16.5px; font-weight: 500; color: #cdd7e5; }
+  .chip b { color: #f8fafc; font-weight: 650; }
+  .chip.acc { border-color: rgba(79,124,255,.55); color: #9db7ff; background: rgba(79,124,255,.10); }
+  .install { display: inline-flex; align-items: center; gap: 10px; border: 1px solid #263449; background: #0b1220;
+    border-radius: 12px; padding: 14px 16px; font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: 15px; color: #cdd7e5; white-space: nowrap; }
+  .install .p { color: #56637a; }
+  .install .c { color: #8fb0ff; }
+
+  .shots { position: absolute; right: -80px; top: 0; bottom: 0; width: 660px; z-index: 2; }
+  .shot { position: absolute; border-radius: 14px; overflow: hidden; border: 1px solid #2a3950;
+    box-shadow: 0 24px 70px rgba(0,0,0,.55); background: #111827; }
+  .shot img { display: block; width: 100%; }
+  .s-ai   { width: 430px; right: 210px; top: 36px; }
+  .s-kpi  { width: 470px; right: -30px; top: 350px; z-index: 5; }
+  .s-pres { width: 350px; right: 330px; bottom: -50px; z-index: 4; }
+  .fade { position: absolute; inset: 0; z-index: 3; pointer-events: none;
+    background: linear-gradient(90deg, #080c14 0%, rgba(8,12,20,.88) 42%, rgba(8,12,20,.18) 62%, transparent 78%); }
+</style>
+</head>
+<body>
+  <div class="glow-a"></div><div class="glow-b"></div>
+  <div class="grid-lines"></div>
+
+  <div class="shots">
+    <div class="shot s-ai"><img src="frames/ai-response-stream-4.png" /></div>
+    <div class="shot s-kpi"><img src="frames/kpi-number-morph-4.png" /></div>
+    <div class="shot s-pres"><img src="frames/live-presence-stack-2.png" /></div>
+  </div>
+  <div class="fade"></div>
+  <div class="vignette"></div>
+
+  <div class="left">
+    <div class="brand"><div class="mark">M</div><div class="word">Motiq</div></div>
+    <h1>Animated React &amp; shadcn components<br /><span class="dim">you install as editable source.</span></h1>
+    <div class="chips">
+      <div class="chip"><b>60+</b>&nbsp;components</div>
+      <div class="chip"><b>MIT</b>&nbsp;&amp; free</div>
+      <div class="chip acc">Reduced-motion safe</div>
+      <div class="chip acc">WCAG 2.2 AA</div>
+      <div class="chip acc">RSC-safe</div>
+    </div>
+    <div class="install"><span class="p">$</span>&nbsp;npx shadcn add <span class="c">https://motiq.dev/r/ai-response-stream</span></div>
+  </div>
+</body>
+</html>

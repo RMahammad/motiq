@@ -1,0 +1,89 @@
+{
+  "name": "@scope/motion",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./reveal": {
+      "types": "./dist/reveal.d.ts",
+      "import": "./dist/reveal.js"
+    },
+    "./in-view": {
+      "types": "./dist/in-view.d.ts",
+      "import": "./dist/in-view.js"
+    },
+    "./stagger": {
+      "types": "./dist/stagger.d.ts",
+      "import": "./dist/stagger.js"
+    },
+    "./blur-reveal": {
+      "types": "./dist/blur-reveal.d.ts",
+      "import": "./dist/blur-reveal.js"
+    },
+    "./gradient-text": {
+      "types": "./dist/gradient-text.d.ts",
+      "import": "./dist/gradient-text.js"
+    },
+    "./marquee": {
+      "types": "./dist/marquee.d.ts",
+      "import": "./dist/marquee.js"
+    },
+    "./text-reveal": {
+      "types": "./dist/text-reveal.d.ts",
+      "import": "./dist/text-reveal.js"
+    },
+    "./counter": {
+      "types": "./dist/counter.d.ts",
+      "import": "./dist/counter.js"
+    },
+    "./rotating-words": {
+      "types": "./dist/rotating-words.d.ts",
+      "import": "./dist/rotating-words.js"
+    },
+    "./motion-scene": {
+      "types": "./dist/motion-scene.d.ts",
+      "import": "./dist/motion-scene.js"
+    },
+    "./use-in-view": {
+      "types": "./dist/use-in-view.d.ts",
+      "import": "./dist/use-in-view.js"
+    },
+    "./styles.css": "./styles.css"
+  },
+  "files": [
+    "dist",
+    "styles.css"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@scope/tokens": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=18.3 <20",
+    "react-dom": ">=18.3 <20"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.1.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "axe-core": "^4.10.2",
+    "jsdom": "^25.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsdown": "^0.15.0",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.0"
+  }
+}

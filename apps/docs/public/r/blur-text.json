@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "blur-text",
+  "type": "registry:component",
+  "title": "Blur Text",
+  "description": "Reveals text segment-by-segment with a de-blur and drift. Reduced-motion safe.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://motiq.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/text/blur-text.tsx",
+      "type": "registry:component",
+      "target": "components/motiq/blur-text.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { motion, useReducedMotion, type Transition } from \"motion/react\";\n\nimport { cn } from \"@/lib/utils\";\n\ntype AnimateBy = \"words\" | \"chars\";\ntype Direction = \"top\" | \"bottom\";\n\nexport interface BlurTextProps {\n  /** The text to reveal. */\n  text: string;\n  className?: string;\n  /** Milliseconds of stagger between each segment. */\n  delay?: number;\n  /** Reveal word-by-word or character-by-character. */\n  animateBy?: AnimateBy;\n  /** Which side each segment drifts in from. */\n  direction?: Direction;\n  /** Animate only the first time it enters the viewport. */\n  once?: boolean;\n  /** Element tag to render (e.g. \"h1\", \"p\"). */\n  as?: React.ElementType;\n}\n\nconst EASE: Transition[\"ease\"] = [0.2, 0, 0, 1];\n\n/**\n * BlurText — reveals text segment-by-segment with a de-blur + drift.\n *\n * Accessibility: the full string is exposed once via `aria-label`; the animated\n * segments are `aria-hidden`. Under `prefers-reduced-motion` the text renders in\n * its final state with no animation. Clean-room original.\n */\nexport function BlurText({\n  text,\n  className,\n  delay = 60,\n  animateBy = \"words\",\n  direction = \"top\",\n  once = true,\n  as: Tag = \"span\",\n}: BlurTextProps) {\n  const reduce = useReducedMotion();\n  const segments = React.useMemo(\n    () => (animateBy === \"words\" ? text.split(\" \") : Array.from(text)),\n    [text, animateBy],\n  );\n  const y = direction === \"top\" ? -14 : 14;\n\n  return (\n    <Tag className={cn(\"inline-flex flex-wrap\", className)} aria-label={text}>\n      {segments.map((seg, i) => (\n        <motion.span\n          key={`${seg}-${i}`}\n          aria-hidden=\"true\"\n          className=\"inline-block whitespace-pre [will-change:transform,filter]\"\n          initial={reduce ? false : { opacity: 0, y, filter: \"blur(8px)\" }}\n          whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: \"blur(0px)\" }}\n          viewport={{ once, margin: \"-10% 0px\" }}\n          transition={{ duration: 0.5, ease: EASE, delay: (i * delay) / 1000 }}\n        >\n          {seg}\n          {animateBy === \"words\" && i < segments.length - 1 ? \" \" : null}\n        </motion.span>\n      ))}\n    </Tag>\n  );\n}\n\nexport default BlurText;\n"
+    }
+  ],
+  "meta": {
+    "tier": "free",
+    "category": "text",
+    "keywords": [
+      "text",
+      "reveal",
+      "blur",
+      "hero",
+      "headline"
+    ]
+  }
+}

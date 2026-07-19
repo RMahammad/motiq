@@ -1,0 +1,437 @@
+/* Structural CSS for @scope/react components. Non-Tailwind consumers import this;
+   requires @scope/tokens/styles.css for the variables. Import via `@scope/react/styles.css`. */
+
+.scope-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  border-radius: var(--radius-md, 10px);
+  border: var(--border-width, 1px) solid var(--color-border, #e4e4e7);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  font: inherit;
+  cursor: pointer;
+  transition: background var(--motion-duration-fast, 120ms) var(--motion-ease-standard, ease);
+}
+.scope-btn:hover {
+  background: var(--color-surface-raised, #f4f4f5);
+}
+
+/* ---- PricingCard ---- */
+.scope-pricing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  padding: var(--space-5, 24px);
+  border-radius: var(--radius-lg, 16px);
+  border: var(--border-width, 1px) solid var(--color-border, #e4e4e7);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.06));
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+.scope-pricing-card[data-featured] {
+  border-color: var(--color-accent, #4f46e5);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.1));
+}
+.scope-pricing-card__badge {
+  position: absolute;
+  top: calc(-1 * var(--space-3, 12px));
+  right: var(--space-4, 16px);
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  border-radius: var(--radius-sm, 6px);
+  background: var(--color-accent, #4f46e5);
+  color: var(--color-accent-fg, #fff);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.scope-pricing-card__plan {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.scope-pricing-card__price {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1, 4px);
+}
+.scope-pricing-card__amount {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.scope-pricing-card__period {
+  color: var(--color-muted, #71717a);
+  font-size: 0.95rem;
+}
+.scope-pricing-card__desc {
+  margin: 0;
+  color: var(--color-muted, #71717a);
+}
+.scope-pricing-card__features {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+.scope-pricing-card__feature {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2, 8px);
+}
+.scope-pricing-card__feature::before {
+  content: "✓";
+  color: var(--color-accent, #4f46e5);
+  font-weight: 700;
+}
+.scope-pricing-card__cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3, 12px) var(--space-4, 16px);
+  border-radius: var(--radius-md, 10px);
+  border: 0;
+  background: var(--color-accent, #4f46e5);
+  color: var(--color-accent-fg, #fff);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity var(--motion-duration-fast, 120ms) var(--motion-ease-standard, ease);
+}
+.scope-pricing-card__cta:hover {
+  opacity: 0.92;
+}
+
+/* ---- AnimatedDialog (Radix + CSS keyframes; Radix waits for exit animation) ---- */
+@keyframes scope-dialog-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scope-dialog-overlay-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes scope-dialog-content-in {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes scope-dialog-content-out {
+  from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  to { opacity: 0; transform: translate(-50%, -48%) scale(0.98); }
+}
+.scope-dialog__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+.scope-dialog__overlay[data-state="open"] {
+  animation: scope-dialog-overlay-in 160ms var(--motion-ease-standard, ease);
+}
+.scope-dialog__overlay[data-state="closed"] {
+  animation: scope-dialog-overlay-out 140ms var(--motion-ease-standard, ease);
+}
+.scope-dialog__content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 480px);
+  max-height: 85vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  padding: var(--space-5, 24px);
+  border-radius: var(--radius-lg, 16px);
+  border: var(--border-width, 1px) solid var(--color-border, #e4e4e7);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.1));
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+.scope-dialog__content[data-state="open"] {
+  animation: scope-dialog-content-in 180ms var(--motion-ease-emphasized, ease);
+}
+.scope-dialog__content[data-state="closed"] {
+  animation: scope-dialog-content-out 140ms var(--motion-ease-standard, ease);
+}
+.scope-dialog__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.scope-dialog__desc {
+  margin: 0;
+  color: var(--color-muted, #71717a);
+}
+.scope-dialog__close {
+  position: absolute;
+  top: var(--space-3, 12px);
+  right: var(--space-3, 12px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm, 6px);
+  border: 0;
+  background: transparent;
+  color: var(--color-muted, #71717a);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.scope-dialog__close:hover {
+  background: var(--color-surface-raised, #f4f4f5);
+  color: var(--color-fg, #18181b);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-dialog__overlay,
+  .scope-dialog__content {
+    animation: none !important;
+  }
+}
+
+/* ---- Tooltip ---- */
+@keyframes scope-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.scope-tooltip {
+  max-width: 260px;
+  padding: var(--space-1, 4px) var(--space-2, 8px);
+  border-radius: var(--radius-sm, 6px);
+  background: var(--color-fg, #18181b);
+  color: var(--color-bg, #fff);
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.1));
+}
+.scope-tooltip[data-state="delayed-open"],
+.scope-tooltip[data-state="instant-open"] {
+  animation: scope-fade-in 120ms var(--motion-ease-standard, ease);
+}
+.scope-tooltip__arrow {
+  fill: var(--color-fg, #18181b);
+}
+
+/* ---- Popover ---- */
+.scope-popover {
+  position: relative;
+  width: min(92vw, 320px);
+  padding: var(--space-4, 16px);
+  border-radius: var(--radius-md, 10px);
+  border: var(--border-width, 1px) solid var(--color-border, #e4e4e7);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.1));
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+.scope-popover[data-state="open"] {
+  animation: scope-fade-in 140ms var(--motion-ease-standard, ease);
+}
+.scope-popover__arrow {
+  fill: var(--color-surface, #fff);
+}
+.scope-popover__close {
+  position: absolute;
+  top: var(--space-2, 8px);
+  right: var(--space-2, 8px);
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: var(--radius-sm, 6px);
+  background: transparent;
+  color: var(--color-muted, #71717a);
+  cursor: pointer;
+}
+.scope-popover__close:hover {
+  background: var(--color-surface-raised, #f4f4f5);
+}
+
+/* ---- Sheet / Drawer ---- */
+@keyframes scope-sheet-x-in { from { transform: translateX(var(--sheet-from)); } to { transform: translateX(0); } }
+@keyframes scope-sheet-x-out { from { transform: translateX(0); } to { transform: translateX(var(--sheet-from)); } }
+@keyframes scope-sheet-y-in { from { transform: translateY(var(--sheet-from)); } to { transform: translateY(0); } }
+@keyframes scope-sheet-y-out { from { transform: translateY(0); } to { transform: translateY(var(--sheet-from)); } }
+.scope-sheet__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+.scope-sheet__overlay[data-state="open"] { animation: scope-dialog-overlay-in 160ms var(--motion-ease-standard, ease); }
+.scope-sheet__overlay[data-state="closed"] { animation: scope-dialog-overlay-out 140ms var(--motion-ease-standard, ease); }
+.scope-sheet__content {
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  padding: var(--space-5, 24px);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.1));
+  font-family: var(--font-sans, system-ui, sans-serif);
+  overflow: auto;
+}
+.scope-sheet__content[data-side="right"] { top: 0; right: 0; height: 100dvh; width: min(92vw, 400px); --sheet-from: 100%; }
+.scope-sheet__content[data-side="left"] { top: 0; left: 0; height: 100dvh; width: min(92vw, 400px); --sheet-from: -100%; }
+.scope-sheet__content[data-side="top"] { top: 0; left: 0; width: 100vw; max-height: 85dvh; --sheet-from: -100%; }
+.scope-sheet__content[data-side="bottom"] { bottom: 0; left: 0; width: 100vw; max-height: 85dvh; --sheet-from: 100%; }
+.scope-sheet__content[data-side="right"][data-state="open"],
+.scope-sheet__content[data-side="left"][data-state="open"] { animation: scope-sheet-x-in 220ms var(--motion-ease-emphasized, ease); }
+.scope-sheet__content[data-side="right"][data-state="closed"],
+.scope-sheet__content[data-side="left"][data-state="closed"] { animation: scope-sheet-x-out 180ms var(--motion-ease-standard, ease); }
+.scope-sheet__content[data-side="top"][data-state="open"],
+.scope-sheet__content[data-side="bottom"][data-state="open"] { animation: scope-sheet-y-in 220ms var(--motion-ease-emphasized, ease); }
+.scope-sheet__content[data-side="top"][data-state="closed"],
+.scope-sheet__content[data-side="bottom"][data-state="closed"] { animation: scope-sheet-y-out 180ms var(--motion-ease-standard, ease); }
+.scope-sheet__title { margin: 0; font-size: 1.125rem; font-weight: 600; }
+.scope-sheet__desc { margin: 0; color: var(--color-muted, #71717a); }
+.scope-sheet__close {
+  position: absolute;
+  top: var(--space-3, 12px);
+  right: var(--space-3, 12px);
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-sm, 6px);
+  background: transparent;
+  color: var(--color-muted, #71717a);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-tooltip,
+  .scope-popover,
+  .scope-sheet__overlay,
+  .scope-sheet__content {
+    animation: none !important;
+  }
+}
+
+/* ---- Skeleton ---- */
+.scope-skeleton {
+  display: block;
+  background: var(--color-border, #e4e4e7);
+  border-radius: var(--radius-md, 10px);
+  background-image: linear-gradient(
+    90deg,
+    var(--color-border, #e4e4e7) 0%,
+    var(--color-surface-raised, #f4f4f5) 50%,
+    var(--color-border, #e4e4e7) 100%
+  );
+  background-size: 200% 100%;
+  animation: scope-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+.scope-skeleton[data-variant="text"] {
+  height: 1em;
+  border-radius: var(--radius-sm, 6px);
+}
+.scope-skeleton[data-variant="circle"] {
+  border-radius: 9999px;
+}
+@keyframes scope-skeleton-shimmer {
+  to { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-skeleton {
+    animation: none;
+    background-image: none;
+  }
+}
+
+/* ---- SpotlightCard ---- */
+.scope-spotlight-card {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-5, 24px);
+  border-radius: var(--radius-lg, 16px);
+  border: var(--border-width, 1px) solid var(--color-border, #e4e4e7);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+.scope-spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--motion-duration-normal, 220ms) var(--motion-ease-standard, ease);
+  background: radial-gradient(
+    var(--spotlight-radius, 200px) circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+    var(--spotlight-color, color-mix(in srgb, var(--color-accent, #4f46e5) 22%, transparent)),
+    transparent 70%
+  );
+}
+.scope-spotlight-card:hover::before,
+.scope-spotlight-card:focus-within::before {
+  opacity: 1;
+}
+.scope-spotlight-card > * {
+  position: relative;
+}
+@media (hover: none) {
+  .scope-spotlight-card::before { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-spotlight-card::before { transition: none; }
+}
+
+/* ---- BentoGrid / BentoGridItem ---- */
+.scope-bento {
+  display: grid;
+  gap: var(--space-4, 16px);
+  grid-template-columns: repeat(var(--bento-cols, 3), minmax(0, 1fr));
+  grid-auto-rows: minmax(140px, auto);
+}
+@media (max-width: 640px) {
+  .scope-bento { grid-template-columns: 1fr; }
+}
+.scope-bento-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+  padding: var(--space-5, 24px);
+  border-radius: var(--radius-lg, 16px);
+  border: var(--border-width, 1px) solid var(--color-border, #e4e4e7);
+  background: var(--color-surface, #fff);
+  color: var(--color-fg, #18181b);
+  font-family: var(--font-sans, system-ui, sans-serif);
+}
+@media (min-width: 641px) {
+  .scope-bento-item[data-col-span="2"] { grid-column: span 2; }
+  .scope-bento-item[data-col-span="3"] { grid-column: span 3; }
+  .scope-bento-item[data-row-span="2"] { grid-row: span 2; }
+}
+.scope-bento-item__icon {
+  display: inline-flex;
+  color: var(--color-accent, #4f46e5);
+}
+.scope-bento-item__title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+.scope-bento-item__desc {
+  margin: 0;
+  color: var(--color-muted, #71717a);
+}
+.scope-bento-item__media {
+  margin-top: auto;
+}
+.scope-bento-item__media :where(img, video, svg) {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md, 10px);
+}

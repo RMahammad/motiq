@@ -1,0 +1,32 @@
+{
+  "name": "@scope/registry",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "shadcn-compatible registry: authoring manifest + generator that emits public/r/*.json.",
+  "scripts": {
+    "build": "node scripts/build-registry.mjs",
+    "registry:build": "node scripts/build-registry.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@radix-ui/react-accordion": "^1.2.0",
+    "@radix-ui/react-dialog": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.0",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "axe-core": "^4.12.1",
+    "clsx": "^2.1.1",
+    "jsdom": "^25.0.1",
+    "motion": "^12.42.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.0",
+    "typescript": "^5.7.3",
+    "vitest": "^3.2.7"
+  }
+}

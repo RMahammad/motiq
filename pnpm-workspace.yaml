@@ -1,0 +1,16 @@
+packages:
+  - packages/*
+  - apps/*
+
+# Native postinstall scripts, explicitly allow-listed (supply-chain hygiene).
+# pnpm 11 requires an explicit build-approval decision per dependency, or a
+# fresh install fails with ERR_PNPM_IGNORED_BUILDS (e.g. on CI / Vercel).
+# esbuild -> Vite; sharp -> Next image. onlyBuiltDependencies is kept for the
+# verify-deps check; allowBuilds is what pnpm 11 actually gates the install on.
+allowBuilds:
+  esbuild: true
+  sharp: true
+
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

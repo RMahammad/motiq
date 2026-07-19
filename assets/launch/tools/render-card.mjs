@@ -1,0 +1,11 @@
+import { createRequire } from "module";
+const require = createRequire("/Users/mahammadrustamov/Desktop/remotion-library/package.json");
+const { chromium } = require("playwright");
+const b = await chromium.launch();
+const p = await (await b.newContext({ viewport: { width: 1280, height: 640 }, deviceScaleFactor: 2 })).newPage();
+await p.goto("file://" + process.cwd() + "/social-card.html");
+await p.evaluate(() => document.fonts.ready);
+await new Promise((r) => setTimeout(r, 400));
+await p.screenshot({ path: "/Users/mahammadrustamov/Desktop/remotion-library/assets/launch/social-preview.jpg", type: "jpeg", quality: 92 });
+await b.close();
+console.log("rendered");

@@ -1,0 +1,79 @@
+name: CI
+
+# paths-ignore skips runs for files no CI check consumes (root docs, license, image
+# assets). docs/** and CLAUDE.md are NOT listed — the doc-consistency checks scan them.
+on:
+  push:
+    branches: [main]
+    paths-ignore: &docs-only
+      - README.md
+      - CONTRIBUTING.md
+      - AGENTS.md
+      - LICENSE
+      - .github/assets/**
+  pull_request:
+    paths-ignore: *docs-only
+
+# Auto-cancel a superseded run when new commits land on the same branch/PR, so rapid
+# pushes don't queue up full builds behind each other.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# pnpm 11's verify-deps-before-run pre-check can fail when a native dep (sharp) has an
+# un-built script; disable it in CI (native builds are allow-listed in pnpm-workspace.yaml).
+env:
+  npm_config_verify_deps_before_run: "false"
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # Documentation consistency (deterministic; see docs/tooling/README.md)
+      - run: node docs/tooling/check-links.mjs
+      - run: node docs/tooling/check-adr-index.mjs
+      - run: node docs/tooling/check-duplicate-titles.mjs
+      - run: node docs/tooling/check-stale-dates.mjs
+      - run: node docs/tooling/check-inventory.mjs
+
+      # Code gates
+      - run: pnpm lint            # import-boundary firewall (docs/03)
+      - run: pnpm typecheck       # strict TS
+      - run: pnpm build           # tsdown; preserves "use client"
+      - run: pnpm test            # vitest (unit + SSR + reduced-motion + axe)
+      - run: pnpm check:exports   # publint (export-map correctness)
+      - run: pnpm size            # size-limit budgets (docs/13)
+
+  fixtures:
+    # Proves the built library is consumable in real apps (App Router RSC + Vite).
+    runs-on: ubuntu-latest
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm --filter playground-next build
+      - run: pnpm --filter playground-vite build
+      # Docs site (dogfoods the library; renders live component pages; docs/15).
+      - run: pnpm --filter docs-site build
+      # Static Storybook build (catalog previews; docs/15).
+      - run: pnpm --filter storybook-app build-storybook
+      # Packed-artifact consumer: install the tarballs (not source), verify resolution +
+      # "use client" + SSR across packages. Registry-free (docs/14).
+      - run: bash fixtures/tarball-consumer/verify.sh
+
+# Planned (Phase 1+): size-limit budgets, publint/attw export validation, Storybook +
+# Playwright visual/mobile, changesets release job. See docs/14 and docs/18.

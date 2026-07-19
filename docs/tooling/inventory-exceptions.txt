@@ -1,0 +1,6 @@
+# Component source files intentionally NOT in docs/21-component-inventory.md.
+# One basename (without .tsx) per line. Keep this list short and justified.
+
+# Spike demo used only to exercise the @scope/react -> @scope/motion boundary
+# and "use client" preservation in the fixtures. Not a catalog/sellable component.
+animated-button

@@ -1,0 +1,3 @@
+
+# Durable commercial store data (customers, entitlements, tokens, audit) — never committed
+.data/

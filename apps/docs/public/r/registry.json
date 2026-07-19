@@ -1,0 +1,2376 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "motiq",
+  "homepage": "https://motiq.dev/docs",
+  "items": [
+    {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "cn() utility",
+      "description": "Tailwind class-merge helper used by every Motiq component.",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "files": [
+        {
+          "path": "registry/lib/utils.ts",
+          "type": "registry:lib",
+          "target": "lib/utils.ts"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "lib"
+      },
+      "registryDependencies": []
+    },
+    {
+      "name": "primitives",
+      "type": "registry:lib",
+      "title": "Motion primitives",
+      "description": "Shared, dependency-free hooks used across workflow components: useReducedMotion, useVisibilityPause (offscreen pause), formatNumber (locale), useAnimatedNumber.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/lib/motion.ts",
+          "type": "registry:lib",
+          "target": "lib/motiq.ts"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "lib"
+      },
+      "registryDependencies": []
+    },
+    {
+      "name": "ai-response-stream",
+      "type": "registry:component",
+      "title": "AI Response Stream",
+      "description": "Renders a streaming assistant response supplied by your app — text, fenced code with copy, inline [n] citations to a sources rail, and streaming/stopped/complete/error states with Stop, Retry, and Copy. Presentation only: it never calls a model. Reduced-motion shows text instantly; a polite live region announces completion, not tokens.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ai/ai-response-stream.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/ai-response-stream.tsx"
+        }
+      ],
+      "meta": {
+        "category": "ai",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "ai",
+          "assistant",
+          "streaming",
+          "chat",
+          "llm",
+          "citations",
+          "code",
+          "response"
+        ]
+      }
+    },
+    {
+      "name": "deployment-pipeline",
+      "type": "registry:component",
+      "title": "Deployment Pipeline",
+      "description": "Visualize a CI/CD deployment run: ordered stages with queued/running/passed/failed/cancelled/skipped status, running-stage emphasis, per-stage durations, expandable logs, and a Retry control. Display-only — the host app supplies the pipeline data.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/developer-tools/deployment-pipeline.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/deployment-pipeline.tsx"
+        }
+      ],
+      "meta": {
+        "category": "developer-tools",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "ci",
+          "cd",
+          "pipeline",
+          "deploy",
+          "stages",
+          "logs",
+          "status",
+          "devtools"
+        ]
+      }
+    },
+    {
+      "name": "live-presence-stack",
+      "type": "registry:component",
+      "title": "Live Presence Stack",
+      "description": "A live avatar stack for collaborative workspaces: animated join/leave without row reflow, per-user active/idle/editing/viewing status (dot + label, never color alone), an overflow +N count, and a keyboard-accessible participant detail popover. Controlled presence data.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/collaboration/live-presence-stack.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/live-presence-stack.tsx"
+        }
+      ],
+      "meta": {
+        "category": "collaboration",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "presence",
+          "avatars",
+          "collaboration",
+          "realtime",
+          "multiplayer",
+          "status"
+        ]
+      }
+    },
+    {
+      "name": "kpi-number-morph",
+      "type": "registry:component",
+      "title": "KPI Number Morph",
+      "description": "An accessible KPI stat that smoothly morphs between values with a direction-aware trend (arrow + sign, never color alone). Controlled value; locale, compact, and currency formatting; loading and error states. Reduced-motion snaps.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/data/kpi-number-morph.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/kpi-number-morph.tsx"
+        }
+      ],
+      "meta": {
+        "category": "data-motion",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "kpi",
+          "metric",
+          "number",
+          "counter",
+          "dashboard",
+          "stat"
+        ]
+      }
+    },
+    {
+      "name": "tool-call-activity",
+      "type": "registry:component",
+      "title": "Tool Call Activity",
+      "description": "A presentation-only live inspector for an AI agent's tool calls — concurrent calls, expand/collapse details, inline approve/reject, retry on failure, and compressed completed calls. The app owns the data; the component never runs tools or invents results.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ai/tool-call-activity.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/tool-call-activity.tsx"
+        }
+      ],
+      "meta": {
+        "category": "ai",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "ai",
+          "agent",
+          "tool calls",
+          "activity",
+          "approval",
+          "status",
+          "retry",
+          "steps"
+        ]
+      }
+    },
+    {
+      "name": "live-log-stream",
+      "type": "registry:component",
+      "title": "Live Log Stream",
+      "description": "A live log viewer for developer surfaces (deploy/build output, jobs, server events): auto-follow that never fights the user's scroll, a \"N new lines\" resume indicator, pause/resume, search, per-level filtering, copy, clear, and bounded history. Levels are shown by icon + label + prefix, never colour alone. Display-only — the host app supplies the entries.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/developer-tools/live-log-stream.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/live-log-stream.tsx"
+        }
+      ],
+      "meta": {
+        "category": "developer-tools",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "logs",
+          "log",
+          "terminal",
+          "console",
+          "streaming",
+          "follow",
+          "tail",
+          "devtools"
+        ]
+      }
+    },
+    {
+      "name": "activity-stream",
+      "type": "registry:component",
+      "title": "Activity Stream",
+      "description": "A collaboration/product activity feed that goes beyond a timeline: groups repeated actions, date separators, an unread divider, live arrival insertion, and event-type/actor filtering. Presentation-only — the app supplies events.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/collaboration/activity-stream.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/activity-stream.tsx"
+        }
+      ],
+      "meta": {
+        "category": "collaboration",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "activity",
+          "feed",
+          "collaboration",
+          "timeline",
+          "history",
+          "audit",
+          "unread"
+        ]
+      }
+    },
+    {
+      "name": "streaming-data-rows",
+      "type": "registry:component",
+      "title": "Streaming Data Rows",
+      "description": "A live operational table your app drives: animated row insertion, update, resort with continuity, per-cell change emphasis (arrow glyph, never color alone), numeric morphs, and status transitions. Loading, empty, and error states; sortable headers with aria-sort; rate-limited screen-reader summaries; reduced-motion instant swaps. Not a data-grid — for live subsets.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/data/streaming-data-rows.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/streaming-data-rows.tsx"
+        }
+      ],
+      "meta": {
+        "category": "data-motion",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "table",
+          "streaming",
+          "live data",
+          "rows",
+          "dashboard",
+          "sort",
+          "realtime"
+        ]
+      }
+    },
+    {
+      "name": "luminous-topography",
+      "type": "registry:component",
+      "title": "Luminous Topography",
+      "description": "A distinctive SVG background of layered topographic contours that flow around configurable focal regions, thinning near a foreground safe area so text stays readable. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. No canvas, no WebGL, no heavy deps.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/luminous-topography.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/luminous-topography.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "topography",
+          "contours",
+          "hero",
+          "svg",
+          "ambient"
+        ]
+      }
+    },
+    {
+      "name": "workflow-topology-field",
+      "type": "registry:component",
+      "title": "Workflow Topology Field",
+      "description": "An atmospheric SVG background that renders an application-defined workflow as a topology: nodes with lifecycle status, directed connections, an animated active path, quietly-settled completed paths, and failed nodes marked with a ring + glyph (never color alone). Density thins over a readable safe area. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. No canvas, no WebGL, no heavy deps.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/workflow-topology-field.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/workflow-topology-field.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "workflow",
+          "topology",
+          "orchestration",
+          "pipeline",
+          "svg",
+          "safe area"
+        ]
+      }
+    },
+    {
+      "name": "queue-pulse-lanes",
+      "type": "registry:component",
+      "title": "Queue Pulse Lanes",
+      "description": "A queue/throughput background that renders your lanes rather than decorative streaks: pulses flow through restrained lanes, congestion makes them denser and slower, completed work fades into a tail history band, and blocked/delayed lanes carry a non-color stop cap + glyph. Density thins over a readable safe area. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. SVG + CSS only.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/queue-pulse-lanes.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/queue-pulse-lanes.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "queue",
+          "throughput",
+          "jobs",
+          "pipeline",
+          "workers",
+          "svg"
+        ]
+      }
+    },
+    {
+      "name": "adaptive-safe-zone-grid",
+      "type": "registry:component",
+      "title": "Adaptive Safe-Zone Grid",
+      "description": "A content-aware structural grid for hero sections: the grid quiets inside one or many safe areas (via an SVG mask) so foreground copy stays readable, while detail collects toward the frame edges. Optional perspective skew, highlighted cells, and a restrained accent shimmer. Deterministic (SSR-safe), light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. SVG + CSS only.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/adaptive-safe-zone-grid.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/adaptive-safe-zone-grid.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "grid",
+          "safe area",
+          "hero",
+          "content-aware",
+          "perspective",
+          "svg"
+        ]
+      }
+    },
+    {
+      "name": "runtime-signal-map",
+      "type": "registry:component",
+      "title": "Runtime Signal Map",
+      "description": "An infrastructure-flavored background where signal packets move through an application-defined service topology with health + direction: requests enter at ingress nodes, flow along edges between services grouped into regions, and degraded/error paths are marked without color (dashed strokes + slower/stalled flow + a glyph). One canvas + one rAF loop (no per-frame React state, no WebGL). Deterministic first paint, light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused. Clearly-fictional default data.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/runtime-signal-map.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/runtime-signal-map.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "infrastructure",
+          "signals",
+          "observability",
+          "services",
+          "canvas",
+          "topology"
+        ]
+      }
+    },
+    {
+      "name": "event-propagation-matrix",
+      "type": "registry:component",
+      "title": "Event Propagation Matrix",
+      "description": "A temporal background where application events propagate through a structured cell matrix (rows = regions/streams, cols = time/lanes) — origin cells light, then neighbors along the grid, so waves step cell-to-cell rather than as free-space circles. Overlaps are damped, failed propagation halts with a non-color glyph, acknowledged events dim, and old events settle into a quiet history layer. SVG + CSS only. Deterministic (SSR-safe), light/dark, reduced-motion shows current relationships statically, forced-colors-safe, offscreen-paused.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/event-propagation-matrix.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/event-propagation-matrix.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "events",
+          "propagation",
+          "webhooks",
+          "audit",
+          "matrix",
+          "svg"
+        ]
+      }
+    },
+    {
+      "name": "data-contour-surface",
+      "type": "registry:component",
+      "title": "Data Contour Surface",
+      "description": "A data-driven contour background: contours are computed from application-supplied values (signed focal pressure points, thresholds, active/comparison regions) via canvas marching-squares — not a random topographic texture. Emphasized thresholds get heavier bands, the active region brightens, comparison regions ghost, and data changes ease smoothly. One canvas + one rAF loop (no per-frame React state, no WebGL). Deterministic first paint, intentional light/dark, reduced-motion-static, forced-colors-safe, offscreen-paused.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/data-contour-surface.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/data-contour-surface.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "contours",
+          "data",
+          "analytics",
+          "metrics",
+          "canvas",
+          "thresholds"
+        ]
+      }
+    },
+    {
+      "name": "agent-operations-hero",
+      "type": "registry:block",
+      "title": "Agent Operations Hero",
+      "description": "An editable hero block for AI/automation products that shows a real agent workflow with outcome copy + CTAs. Composes Agent Run Timeline (trimmed), Prompt Composer (compact), Tool Call Activity (one active tool), and Source Citation Rail (one result) at reduced complexity across idle/running/tool-active/waiting-for-approval/completed/failed. App-controlled — never simulates a model or shows chain-of-thought. SSR-safe, reduced-motion-safe. Clearly-fictional demo data.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/agent-run-timeline.json",
+        "https://motiq.dev/r/prompt-composer.json",
+        "https://motiq.dev/r/tool-call-activity.json",
+        "https://motiq.dev/r/source-citation-rail.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/agent-operations-hero.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/agent-operations-hero.tsx"
+        }
+      ],
+      "meta": {
+        "category": "ai",
+        "tier": "free",
+        "kind": "block",
+        "signature": false,
+        "keywords": [
+          "block",
+          "hero",
+          "ai",
+          "agent",
+          "orchestration",
+          "workflow"
+        ]
+      }
+    },
+    {
+      "name": "deployment-control-hero",
+      "type": "registry:block",
+      "title": "Deployment Control Hero",
+      "description": "An editable hero block for developer-tool/infra products showing a real deployment control surface with outcome copy + CTAs. Composes Environment Switcher (selected env), Deployment Pipeline (four stages), a short Live Log Stream, and one API Request Inspector result across ready/deploying/validating/failed/retrying/completed. App-controlled, provider-neutral demo data. SSR-safe, reduced-motion-safe, readable on laptop and mobile.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/environment-switcher.json",
+        "https://motiq.dev/r/deployment-pipeline.json",
+        "https://motiq.dev/r/live-log-stream.json",
+        "https://motiq.dev/r/api-request-inspector.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/deployment-control-hero.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/deployment-control-hero.tsx"
+        }
+      ],
+      "meta": {
+        "category": "developer-tools",
+        "tier": "free",
+        "kind": "block",
+        "signature": false,
+        "keywords": [
+          "block",
+          "hero",
+          "deployment",
+          "devtools",
+          "ci",
+          "infrastructure"
+        ]
+      }
+    },
+    {
+      "name": "live-data-command-hero",
+      "type": "registry:block",
+      "title": "Live Data Command Hero",
+      "description": "An editable hero block for operational-data products centered on continuity and changing state. Composes KPI Number Morph (three metrics), Data Refresh State, a small Streaming Data Rows subset, and Filter Result Transition across initial/live/filtering/refreshing/partial-update/stale/error/recovery. App-controlled, clearly-fictional demo data. SSR-safe, reduced-motion-safe.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/kpi-number-morph.json",
+        "https://motiq.dev/r/data-refresh-state.json",
+        "https://motiq.dev/r/streaming-data-rows.json",
+        "https://motiq.dev/r/filter-result-transition.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/live-data-command-hero.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/live-data-command-hero.tsx"
+        }
+      ],
+      "meta": {
+        "category": "data",
+        "tier": "free",
+        "kind": "block",
+        "signature": false,
+        "keywords": [
+          "block",
+          "hero",
+          "live data",
+          "metrics",
+          "operational",
+          "streaming"
+        ]
+      }
+    },
+    {
+      "name": "collaborative-launch-hero",
+      "type": "registry:block",
+      "title": "Collaborative Launch Hero",
+      "description": "An editable hero block for collaboration/review products showing people active, a review underway, and one pending decision with outcome copy + CTAs. Composes Live Presence Stack, Typing and Presence, Approval Workflow (one pending decision), Comment Thread, and Activity Stream across review-open/commenting/changes-requested/approval-pending/approved/rejected/resolved. App-controlled, clearly-fictional demo data. SSR-safe, reduced-motion-safe.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/live-presence-stack.json",
+        "https://motiq.dev/r/typing-and-presence.json",
+        "https://motiq.dev/r/approval-workflow.json",
+        "https://motiq.dev/r/comment-thread.json",
+        "https://motiq.dev/r/activity-stream.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/collaborative-launch-hero.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/collaborative-launch-hero.tsx"
+        }
+      ],
+      "meta": {
+        "category": "collaboration",
+        "tier": "free",
+        "kind": "block",
+        "signature": false,
+        "keywords": [
+          "block",
+          "hero",
+          "collaboration",
+          "review",
+          "approval",
+          "presence"
+        ]
+      }
+    },
+    {
+      "name": "source-citation-rail",
+      "type": "registry:component",
+      "title": "Source Citation Rail",
+      "description": "Presentation-only citation rail that keeps inline [n] markers and a side source list in sync — active-source highlight, expandable excerpts, copy link, open-source callback, keyboard nav, and rail / list / cards layouts. The app owns every source; the component never retrieves, verifies, or scores anything.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ai/source-citation-rail.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/source-citation-rail.tsx"
+        }
+      ],
+      "meta": {
+        "category": "ai",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "ai",
+          "citations",
+          "sources",
+          "research",
+          "references",
+          "attribution",
+          "rail",
+          "excerpt"
+        ]
+      }
+    },
+    {
+      "name": "api-request-inspector",
+      "type": "registry:component",
+      "title": "API Request Inspector",
+      "description": "A presentation-only inspection surface for a single HTTP request/response your app already has — method/url/status/duration/timing phases, headers/query/body, error, requestId, environment, retryCount, and an auth summary. Credential headers and fields are redacted by default and can never be revealed from inside the component. Expandable sections, in-payload search, formatted/raw + wrapped/scrolling views, and copy of url/request/response. It never sends anything.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/developer-tools/api-request-inspector.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/api-request-inspector.tsx"
+        }
+      ],
+      "meta": {
+        "category": "developer-tools",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "api",
+          "requests",
+          "http",
+          "webhooks",
+          "inspector",
+          "headers",
+          "redaction",
+          "devtools",
+          "observability"
+        ]
+      }
+    },
+    {
+      "name": "approval-workflow",
+      "type": "registry:component",
+      "title": "Approval Workflow",
+      "description": "Display and control an app-owned approval process — sequential or parallel stages, required/optional reviewers, minimum approvals, current-user actions (approve / reject / request changes / comment / cancel / resubmit), decision history, and collapsing completed stages. The app owns authorization; the component surfaces app-provided disabled reasons. Status is icon + label; reduced-motion safe.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/collaboration/approval-workflow.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/approval-workflow.tsx"
+        }
+      ],
+      "meta": {
+        "category": "collaboration",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "approval",
+          "review",
+          "workflow",
+          "sign-off",
+          "collaboration",
+          "stages",
+          "reviewers"
+        ]
+      }
+    },
+    {
+      "name": "filter-result-transition",
+      "type": "registry:component",
+      "title": "Filter Result Transition",
+      "description": "A transition layer for filtered/searched collections your app drives: cards enter, leave, and reorder with layout continuity, the result count morphs, and empty/loading/error states cross-fade. If the focused item is filtered out, onFocusFallback fires so focus never drops to the page root. Capped entrance stagger; results are never delayed for animation; reduced motion is an instant swap. Not a data table or a search library.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/data/filter-result-transition.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/filter-result-transition.tsx"
+        }
+      ],
+      "meta": {
+        "category": "data-motion",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "filter",
+          "search",
+          "results",
+          "transition",
+          "faceted",
+          "empty state",
+          "collection"
+        ]
+      }
+    },
+    {
+      "name": "swipe-action-row",
+      "type": "registry:component",
+      "title": "Swipe Action Row",
+      "description": "A mobile-first swipe action row that also works with pointer and keyboard: left/right actions with threshold + snap, opt-in full-swipe, only-one-open groups, a visible overflow menu and focus-revealed action buttons, destructive-action safeguards (confirmation / undo, full-swipe off by default), and reduced-motion fallbacks. Never touch-only.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/mobile/swipe-action-row.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/swipe-action-row.tsx"
+        }
+      ],
+      "meta": {
+        "category": "mobile",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "swipe",
+          "mobile",
+          "gestures",
+          "actions",
+          "list",
+          "touch",
+          "row"
+        ]
+      }
+    },
+    {
+      "name": "agent-run-timeline",
+      "type": "registry:component",
+      "title": "Agent Run Timeline",
+      "description": "A presentation-only timeline for a multi-step agent / automation run: an ordered rail of steps with tool calls, outputs, errors, retry attempts, optional nested sub-stages, human approval checkpoints, and run-level lifecycle controls (cancel / resume). The app owns the run and every status; the component never executes an agent, generates reasoning, invents confidence, or claims a step succeeded on its own.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ai/agent-run-timeline.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/agent-run-timeline.tsx"
+        }
+      ],
+      "meta": {
+        "category": "ai",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "ai",
+          "agent",
+          "timeline",
+          "run",
+          "steps",
+          "approval",
+          "orchestration",
+          "status",
+          "retry"
+        ]
+      }
+    },
+    {
+      "name": "environment-switcher",
+      "type": "registry:component",
+      "title": "Environment Switcher",
+      "description": "A presentation + control surface for choosing the environment an app targets (dev / staging / production, regions, preview branches). Current-environment trigger opens a searchable, fully keyboard-navigable listbox with per-environment status/health, region/branch/version/last-deploy, disabled reasons, recents + favorites, and optional groups. Production switches are icon + label marked (never color alone) and can be gated behind a confirmation dialog. Controlled value/onValueChange with app-owned switching + error/retry. It never mutates a backend.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/developer-tools/environment-switcher.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/environment-switcher.tsx"
+        }
+      ],
+      "meta": {
+        "category": "developer-tools",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "environment",
+          "staging",
+          "production",
+          "region",
+          "devtools",
+          "deploy",
+          "switcher",
+          "branch",
+          "preview"
+        ]
+      }
+    },
+    {
+      "name": "comment-thread",
+      "type": "registry:component",
+      "title": "Comment Thread",
+      "description": "A production comment thread your app persists: root comments + nested replies, mentions, reactions, edit, resolve/reopen, delete, and optimistic send (pending → sent, failed → retry, temp-id replacement, focus preserved). Unread divider and sort. The app owns persistence + permissions.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/collaboration/comment-thread.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/comment-thread.tsx"
+        }
+      ],
+      "meta": {
+        "category": "collaboration",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "comments",
+          "thread",
+          "review",
+          "replies",
+          "mentions",
+          "reactions",
+          "collaboration"
+        ]
+      }
+    },
+    {
+      "name": "data-refresh-state",
+      "type": "registry:component",
+      "title": "Data Refresh State",
+      "description": "A rich, accessible refresh indicator your app drives: idle, checking, refreshing (determinate or honestly-indeterminate), partially updated, success, stale, offline, error, paused, and cancelled — with manual refresh, cancel, retry, pause/resume, and interval controls in compact, inline, and panel modes. Never spins on idle, never fakes progress, and never signals status by color alone. Presentation-only: the host owns the fetch and progress.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/data/data-refresh-state.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/data-refresh-state.tsx"
+        }
+      ],
+      "meta": {
+        "category": "data-motion",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "refresh",
+          "sync",
+          "stale",
+          "offline",
+          "polling",
+          "data",
+          "dashboard",
+          "revalidate"
+        ]
+      }
+    },
+    {
+      "name": "mobile-filter-sheet",
+      "type": "registry:component",
+      "title": "Mobile Filter Sheet",
+      "description": "A mobile-first filter workflow, not a sheet of checkboxes: app-defined groups (checkbox, radio, range, date, search-within-options, hierarchical, custom) with disabled reasons and option counts, a draft-vs-applied model (Apply commits, Cancel restores, Reset, Clear-group/Clear-all), a live announced result count, removable chips, collapsible groups, and an unsaved-change confirm. Ships as a bottom sheet, fullscreen, or desktop side panel with focus trap + restoration, 200%-zoom-safe sticky footer, safe-area insets, and swipe-to-close that is never gesture-only.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/mobile/mobile-filter-sheet.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/mobile-filter-sheet.tsx"
+        }
+      ],
+      "meta": {
+        "category": "mobile",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "filter",
+          "sheet",
+          "mobile",
+          "bottom sheet",
+          "facets",
+          "search",
+          "drawer",
+          "checkbox",
+          "range"
+        ]
+      }
+    },
+    {
+      "name": "prompt-composer",
+      "type": "registry:component",
+      "title": "Prompt Composer",
+      "description": "A presentation-only, production-oriented prompt-composition surface: multiline draft, caret-aware {{variable}} insertion, app-supplied attachments/templates/models, an honest app-owned token budget, and idle/loading/streaming/error states with Send/Stop/Retry. It never calls a model or sends anything.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/ai/prompt-composer.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/prompt-composer.tsx"
+        }
+      ],
+      "meta": {
+        "category": "ai",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "ai",
+          "prompt",
+          "composer",
+          "llm",
+          "input",
+          "attachments",
+          "variables",
+          "template",
+          "tokens"
+        ]
+      }
+    },
+    {
+      "name": "webhook-event-stream",
+      "type": "registry:component",
+      "title": "Webhook Event Stream",
+      "description": "A presentation-only console for an app-owned stream of outbound webhook deliveries: animated arrival, per-delivery status (icon+text), retry counts, response codes, expandable redacted payload/header inspection, status/event-type filtering, search, retry/replay callbacks, and non-fighting pause & auto-follow. Secrets are redacted and never enter the DOM, search, or copies.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/developer-tools/webhook-event-stream.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/webhook-event-stream.tsx"
+        }
+      ],
+      "meta": {
+        "category": "developer-tools",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "webhooks",
+          "events",
+          "delivery",
+          "devtools",
+          "retry",
+          "replay",
+          "redaction",
+          "stream",
+          "observability"
+        ]
+      }
+    },
+    {
+      "name": "mention-suggestions",
+      "type": "registry:component",
+      "title": "Mention Suggestions",
+      "description": "A presentation-only, fully-controlled @-mention suggestion popup: the app owns the editable field and text insertion while the component renders an accessible, keyboard-navigable listbox of people/teams and drives selection, keeping DOM focus in the app's input via the ARIA combobox + aria-activedescendant pattern.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/collaboration/mention-suggestions.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/mention-suggestions.tsx"
+        }
+      ],
+      "meta": {
+        "category": "collaboration",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "mentions",
+          "suggestions",
+          "collaboration",
+          "autocomplete",
+          "combobox",
+          "people",
+          "typeahead",
+          "at-mention"
+        ]
+      }
+    },
+    {
+      "name": "data-quality-status",
+      "type": "registry:component",
+      "title": "Data Quality Status",
+      "description": "A presentation-only data-quality panel that displays app-supplied freshness/completeness/accuracy metrics (rendering \"Unknown\" when unmeasured), a filterable list of validation checks with keyboard-expandable per-check issue lists, affected-record counts, last-checked time, and a retry-validation control. Status is icon + text, never colour alone. It never claims accuracy without supplied evidence.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/data/data-quality-status.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/data-quality-status.tsx"
+        }
+      ],
+      "meta": {
+        "category": "data-motion",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "data quality",
+          "validation",
+          "freshness",
+          "completeness",
+          "accuracy",
+          "checks",
+          "monitoring",
+          "data"
+        ]
+      }
+    },
+    {
+      "name": "keyboard-safe-form",
+      "type": "registry:component",
+      "title": "Keyboard-safe Form",
+      "description": "A presentation-only mobile form whose sticky Submit/Cancel bar rides above the virtual keyboard via the VisualViewport API (degrading gracefully to a plain sticky footer where unavailable), with an aria-linked validation summary, cancellable async submission, and an unsaved-changes discard guard. The app owns the fields and submission.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/mobile/keyboard-safe-form.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/keyboard-safe-form.tsx"
+        }
+      ],
+      "meta": {
+        "category": "mobile",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "form",
+          "mobile",
+          "keyboard",
+          "virtual keyboard",
+          "safe area",
+          "validation",
+          "async",
+          "sticky",
+          "viewport"
+        ]
+      }
+    },
+    {
+      "name": "file-upload-pipeline",
+      "type": "registry:component",
+      "title": "File Upload Pipeline",
+      "description": "An application-controlled file upload workflow: presents app-supplied upload items with progress, pause/resume/retry/cancel/remove, processing stages, and empty/drag-over/partial-failure/offline states. It never uploads bytes itself unless given an adapter. Status by icon+text; progress announcements throttled.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/file/file-upload-pipeline.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/file-upload-pipeline.tsx"
+        }
+      ],
+      "meta": {
+        "category": "file",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "file",
+          "upload",
+          "dropzone",
+          "progress",
+          "queue",
+          "retry",
+          "resumable",
+          "files"
+        ]
+      }
+    },
+    {
+      "name": "product-variant-selector",
+      "type": "registry:component",
+      "title": "Product Variant Selector",
+      "description": "A production variant selector for product options (color/size/material/plan/bundle/custom): controlled selection, dependent options, app-supplied availability + inventory + unavailable combinations, animated-but-text-backed price adjustments, and a mobile compact layout. No fabricated scarcity or discounts.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/commerce/product-variant-selector.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/product-variant-selector.tsx"
+        }
+      ],
+      "meta": {
+        "category": "commerce",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "commerce",
+          "variant",
+          "product",
+          "options",
+          "swatch",
+          "price",
+          "inventory",
+          "radiogroup"
+        ]
+      }
+    },
+    {
+      "name": "passkey-setup-flow",
+      "type": "registry:component",
+      "title": "Passkey Setup Flow",
+      "description": "A presentation + orchestration layer for passkey (WebAuthn) setup. The app supplies WebAuthn operations and results; the component renders intro/capability/naming/starting/system-prompt/success/failure/existing-credential/unsupported states, always keeps an alternative sign-in path, and never implements crypto, collects key material, or fakes success.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/security/passkey-setup-flow.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/passkey-setup-flow.tsx"
+        }
+      ],
+      "meta": {
+        "category": "security",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "security",
+          "passkey",
+          "webauthn",
+          "2fa",
+          "authentication",
+          "account",
+          "login",
+          "mfa"
+        ]
+      }
+    },
+    {
+      "name": "message-delivery-states",
+      "type": "registry:component",
+      "title": "Message Delivery States",
+      "description": "A message list with an honest delivery-receipt layer for chat/support/collaboration: draft/sending/sent/delivered/read/failed/retrying/scheduled/cancelled/edited as icon+text, read receipts, associated errors, retry/cancel/edit/copy. The app owns delivery; no network simulation and no constant idle animation.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/communication/message-delivery-states.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/message-delivery-states.tsx"
+        }
+      ],
+      "meta": {
+        "category": "communication",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "communication",
+          "chat",
+          "message",
+          "delivery",
+          "read receipt",
+          "retry",
+          "status",
+          "messaging"
+        ]
+      }
+    },
+    {
+      "name": "kanban-card-movement",
+      "type": "registry:component",
+      "title": "Kanban Card Movement",
+      "description": "An application-controlled Kanban interaction layer: pointer + touch + keyboard/menu card movement, drop validation, optimistic move with failure rollback, drop indicators, and empty columns. Dragging is never required. Clean-room (no external drag library); transform-based movement that doesn't re-render every card.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/productivity/kanban-card-movement.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/kanban-card-movement.tsx"
+        }
+      ],
+      "meta": {
+        "category": "productivity",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "productivity",
+          "kanban",
+          "board",
+          "drag",
+          "dnd",
+          "cards",
+          "columns",
+          "keyboard",
+          "optimistic"
+        ]
+      }
+    },
+    {
+      "name": "multi-file-queue",
+      "type": "registry:component",
+      "title": "Multi-file Queue",
+      "description": "A presentation-only queue MANAGER for a collection of files/jobs — priority lanes, concurrency-slot occupancy, blocked-item explanation, queue-level progress, per-item reorder + priority, and pause-all/resume-all/retry-failed/clear-completed. Distinct from File Upload Pipeline; never uploads internally.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/file/multi-file-queue.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/multi-file-queue.tsx"
+        }
+      ],
+      "meta": {
+        "category": "file",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "queue",
+          "batch",
+          "upload",
+          "processing",
+          "files",
+          "priority",
+          "concurrency",
+          "media",
+          "jobs"
+        ]
+      }
+    },
+    {
+      "name": "cart-item-transition",
+      "type": "registry:component",
+      "title": "Cart Item Transition",
+      "description": "An app-controlled animated cart LINE ITEM (not a full cart) — arrival, quantity/total morph, variant crossfade, price-change, limited/unavailable, removal→Undo→restore, with optimistic mutation + automatic rollback and honest failed/Retry. Never touches a backend or payment; price/inventory are app-owned. No manipulative urgency.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/commerce/cart-item-transition.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/cart-item-transition.tsx"
+        }
+      ],
+      "meta": {
+        "category": "commerce",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "cart",
+          "quantity",
+          "checkout",
+          "purchase",
+          "product",
+          "variant",
+          "price",
+          "order",
+          "commerce"
+        ]
+      }
+    },
+    {
+      "name": "two-factor-setup-flow",
+      "type": "registry:component",
+      "title": "Two-Factor Setup Flow",
+      "description": "Orchestration + presentation for adding a second auth factor (authenticator/security-key/SMS/email/recovery-codes/custom). The app supplies all operations + state; the component never implements crypto, shows real secrets, stores codes, or claims the account is secure because setup finished. Recovery codes are treated as sensitive; an alternative method is always offered.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/security/two-factor-setup-flow.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/two-factor-setup-flow.tsx"
+        }
+      ],
+      "meta": {
+        "category": "security",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "two-factor",
+          "2fa",
+          "authenticator",
+          "security",
+          "mfa",
+          "recovery-codes",
+          "account",
+          "setup"
+        ]
+      }
+    },
+    {
+      "name": "typing-and-presence",
+      "type": "registry:component",
+      "title": "Typing and Presence",
+      "description": "A combined real-time typing + participant-presence strip for messaging/collaboration — presence (online/active/idle/away/offline/reconnecting) + typing (typing/recording/uploading/editing) by shape+text, avatar initials, overflow summary (\"Three people are typing\"), compact/inline/floating modes. App supplies all data; a debounced polite live region avoids keystroke spam; ambient motion pauses when hidden.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/communication/typing-and-presence.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/typing-and-presence.tsx"
+        }
+      ],
+      "meta": {
+        "category": "communication",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "typing",
+          "presence",
+          "thread",
+          "messaging",
+          "conversation",
+          "collaboration",
+          "status",
+          "avatars"
+        ]
+      }
+    },
+    {
+      "name": "task-dependency-map",
+      "type": "registry:component",
+      "title": "Task Dependency Map",
+      "description": "An app-controlled task DEPENDENCY visualization (not a graph editor / not pan-zoom-only). Deterministic dependency-depth layout with static SVG lines, blocked/blocking relationships, prerequisite + dependent inspection, highlighted active path, app-supplied cycle error, status filter, and a compact list/mobile fallback. Keyboard-first (dragging never required); optimistic move with rollback.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/productivity/task-dependency-map.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/task-dependency-map.tsx"
+        }
+      ],
+      "meta": {
+        "category": "productivity",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "dependency",
+          "blocked",
+          "project",
+          "planning",
+          "tasks",
+          "graph",
+          "milestone",
+          "roadmap",
+          "productivity"
+        ]
+      }
+    },
+    {
+      "name": "processing-timeline",
+      "type": "registry:component",
+      "title": "Processing Timeline",
+      "description": "A presentation-only timeline for ONE ingested item moving through multiple app-owned processing stages (scan → transcode → thumbnail → caption → publish) — per-stage status/progress/output/logs/warnings/errors, current-stage focus, stage expansion, retry/skip/cancel/restart, duration summary, and vertical/horizontal layouts. Distinct from File Upload Pipeline + Multi-file Queue; never fakes progress.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/file/processing-timeline.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/processing-timeline.tsx"
+        }
+      ],
+      "meta": {
+        "category": "file",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "processing",
+          "pipeline",
+          "stages",
+          "encoding",
+          "transcode",
+          "files",
+          "media",
+          "job"
+        ]
+      }
+    },
+    {
+      "name": "checkout-progress",
+      "type": "registry:component",
+      "title": "Checkout Progress",
+      "description": "An app-controlled multi-step checkout progress/orchestration surface (not a payment processor) — current + completed + editable steps, per-step validation + blocked reasons, async step save, return-to-previous, error/progress summaries, sticky order-summary slot, and optional guest/account modes. Never collects or processes payment; no fake processing progress.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/commerce/checkout-progress.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/checkout-progress.tsx"
+        }
+      ],
+      "meta": {
+        "category": "commerce",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "checkout",
+          "steps",
+          "commerce",
+          "purchase",
+          "booking",
+          "subscription",
+          "wizard",
+          "order"
+        ]
+      }
+    },
+    {
+      "name": "session-security-center",
+      "type": "registry:component",
+      "title": "Session Security Center",
+      "description": "A presentation + control surface for reviewing and revoking active account sessions — device/browser/os, app-supplied approximate location + IP summary + trust/risk labels, current-session identification, single + bulk revocation with confirmation (current session preserved), rename/trust, filter/sort, and honest failed-revocation + retry. The app owns revocation; never labels a session compromised without app data.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/security/session-security-center.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/session-security-center.tsx"
+        }
+      ],
+      "meta": {
+        "category": "security",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "session",
+          "security",
+          "account",
+          "device",
+          "revoke",
+          "trust",
+          "login",
+          "sessions"
+        ]
+      }
+    },
+    {
+      "name": "thread-expansion",
+      "type": "registry:component",
+      "title": "Thread Expansion",
+      "description": "A presentation-only navigation + expansion surface for deeply nested discussions — expand/collapse branches, jump to next unread branch, go-to-parent, selected-path breadcrumb, collapse-resolved, deleted-reply placeholder, and lazy reply loading (loading/error/retry/load-more). Rendered as an accessible tree; depth-capped so pathological threads never render unbounded. Distinct from Comment Thread.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/communication/thread-expansion.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/thread-expansion.tsx"
+        }
+      ],
+      "meta": {
+        "category": "communication",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "thread",
+          "replies",
+          "unread",
+          "conversation",
+          "messaging",
+          "nested",
+          "tree",
+          "navigation"
+        ]
+      }
+    },
+    {
+      "name": "project-timeline",
+      "type": "registry:component",
+      "title": "Project Timeline",
+      "description": "An app-controlled, time-scaled project timeline (not a Gantt/charting library) — milestones/phases/tasks/releases/events on a day/week/month axis, current-date marker (from a today prop), horizontal nav + jump-to-today, phase collapse, item selection with textual date ranges, dependency indication, status filtering, delayed/blocked surfacing, a structured list/mobile fallback, and a non-drag keyboard reschedule (optimistic + rollback). No scheduling algorithms; the app owns dates.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/productivity/project-timeline.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/project-timeline.tsx"
+        }
+      ],
+      "meta": {
+        "category": "productivity",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "timeline",
+          "roadmap",
+          "project",
+          "milestone",
+          "planning",
+          "gantt",
+          "schedule",
+          "productivity"
+        ]
+      }
+    },
+    {
+      "name": "ai-agent-workspace",
+      "type": "registry:block",
+      "title": "AI Agent Workspace",
+      "description": "A composed, app-controlled AI agent workspace that composes Agent Run Timeline + Tool Call Activity + AI Response Stream + Source Citation Rail into one realistic full page; the app owns every state and it never simulates a model.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/agent-run-timeline.json",
+        "https://motiq.dev/r/tool-call-activity.json",
+        "https://motiq.dev/r/ai-response-stream.json",
+        "https://motiq.dev/r/source-citation-rail.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/ai-agent-workspace.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/ai-agent-workspace.tsx"
+        }
+      ],
+      "meta": {
+        "category": "ai",
+        "tier": "free",
+        "kind": "block",
+        "signature": false,
+        "keywords": [
+          "block",
+          "ai",
+          "agent",
+          "workspace"
+        ]
+      }
+    },
+    {
+      "name": "deployment-command-center",
+      "type": "registry:block",
+      "title": "Deployment Command Center",
+      "description": "A composed, app-controlled deploy console block: an Environment Switcher in the top bar, a Deployment Pipeline as the main column, a Live Log Stream beneath it, and an API Request Inspector in the side panel — wired behind one demo state machine (env selection, deploying, following logs, request inspection, failure, retry, completion). Provider-neutral fictional data; it never talks to a real deployment provider.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/environment-switcher.json",
+        "https://motiq.dev/r/deployment-pipeline.json",
+        "https://motiq.dev/r/live-log-stream.json",
+        "https://motiq.dev/r/api-request-inspector.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/deployment-command-center.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/deployment-command-center.tsx"
+        }
+      ],
+      "meta": {
+        "category": "developer-tools",
+        "tier": "free",
+        "kind": "block",
+        "signature": false,
+        "keywords": [
+          "block",
+          "deployment",
+          "devtools",
+          "console"
+        ]
+      }
+    },
+    {
+      "name": "collaborative-review-workspace",
+      "type": "registry:block",
+      "title": "Collaborative Review Workspace",
+      "description": "A composed review screen: Live Presence Stack, an app-owned Approval Workflow, the Comment Thread, and an Activity Stream wired into one demo state machine — approving advances the workflow and records activity; new comments appear in the thread and the feed. Clearly fictional users; the app owns persistence + authorization.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/live-presence-stack.json",
+        "https://motiq.dev/r/approval-workflow.json",
+        "https://motiq.dev/r/comment-thread.json",
+        "https://motiq.dev/r/activity-stream.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/collaborative-review-workspace.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/collaborative-review-workspace.tsx"
+        }
+      ],
+      "meta": {
+        "category": "collaboration",
+        "tier": "free",
+        "kind": "block",
+        "signature": false,
+        "keywords": [
+          "block",
+          "collaboration",
+          "review",
+          "approval"
+        ]
+      }
+    },
+    {
+      "name": "live-operations-dashboard",
+      "type": "registry:block",
+      "title": "Live Operations Dashboard",
+      "description": "A composed, app-controlled ops dashboard: KPI Number Morph stats with a Data Refresh State control, a Filter Result Transition section, and a Streaming Data Rows live feed — wired to one demo state machine across loading, live, filtered, refreshing, partial update, stale, error, and recovery. Not a charting library; fictional demo data.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/kpi-number-morph.json",
+        "https://motiq.dev/r/data-refresh-state.json",
+        "https://motiq.dev/r/filter-result-transition.json",
+        "https://motiq.dev/r/streaming-data-rows.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/live-operations-dashboard.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/live-operations-dashboard.tsx"
+        }
+      ],
+      "meta": {
+        "category": "data-motion",
+        "tier": "free",
+        "kind": "block",
+        "signature": false,
+        "keywords": [
+          "block",
+          "dashboard",
+          "data",
+          "operations"
+        ]
+      }
+    },
+    {
+      "name": "ai-interface-pack",
+      "type": "registry:block",
+      "title": "AI Interface Pack",
+      "description": "The complete AI Interface Pack — installs the AI Agent Workspace block and its four components (AI Response Stream, Tool Call Activity, Source Citation Rail, Agent Run Timeline) as editable source, deduping shared utilities.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/agent-run-timeline.json",
+        "https://motiq.dev/r/tool-call-activity.json",
+        "https://motiq.dev/r/ai-response-stream.json",
+        "https://motiq.dev/r/source-citation-rail.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/ai-agent-workspace.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/ai-agent-workspace.tsx"
+        }
+      ],
+      "meta": {
+        "category": "ai",
+        "tier": "free",
+        "kind": "pack",
+        "signature": false,
+        "keywords": [
+          "pack",
+          "ai",
+          "agent"
+        ]
+      }
+    },
+    {
+      "name": "developer-tools-pack",
+      "type": "registry:block",
+      "title": "Developer Tools Pack",
+      "description": "The complete Developer Tools Pack — installs the Deployment Command Center block and its four components (Deployment Pipeline, Live Log Stream, API Request Inspector, Environment Switcher) as editable source, deduping shared utilities.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/environment-switcher.json",
+        "https://motiq.dev/r/deployment-pipeline.json",
+        "https://motiq.dev/r/live-log-stream.json",
+        "https://motiq.dev/r/api-request-inspector.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/deployment-command-center.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/deployment-command-center.tsx"
+        }
+      ],
+      "meta": {
+        "category": "developer-tools",
+        "tier": "free",
+        "kind": "pack",
+        "signature": false,
+        "keywords": [
+          "pack",
+          "deployment",
+          "devtools"
+        ]
+      }
+    },
+    {
+      "name": "collaboration-pack",
+      "type": "registry:block",
+      "title": "Collaboration Pack",
+      "description": "The complete Collaboration Pack — installs the Collaborative Review Workspace block and its four components (Live Presence Stack, Activity Stream, Approval Workflow, Comment Thread) as editable source, deduping shared utilities.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/live-presence-stack.json",
+        "https://motiq.dev/r/approval-workflow.json",
+        "https://motiq.dev/r/comment-thread.json",
+        "https://motiq.dev/r/activity-stream.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/collaborative-review-workspace.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/collaborative-review-workspace.tsx"
+        }
+      ],
+      "meta": {
+        "category": "collaboration",
+        "tier": "free",
+        "kind": "pack",
+        "signature": false,
+        "keywords": [
+          "pack",
+          "collaboration",
+          "review"
+        ]
+      }
+    },
+    {
+      "name": "data-motion-pack",
+      "type": "registry:block",
+      "title": "Data Motion Pack",
+      "description": "The complete Data Motion Pack — installs the Live Operations Dashboard block and its four components (KPI Number Morph, Streaming Data Rows, Filter Result Transition, Data Refresh State) as editable source, deduping shared utilities.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/kpi-number-morph.json",
+        "https://motiq.dev/r/data-refresh-state.json",
+        "https://motiq.dev/r/filter-result-transition.json",
+        "https://motiq.dev/r/streaming-data-rows.json",
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/blocks/live-operations-dashboard.tsx",
+          "type": "registry:block",
+          "target": "components/motiq/blocks/live-operations-dashboard.tsx"
+        }
+      ],
+      "meta": {
+        "category": "data-motion",
+        "tier": "free",
+        "kind": "pack",
+        "signature": false,
+        "keywords": [
+          "pack",
+          "dashboard",
+          "data"
+        ]
+      }
+    },
+    {
+      "name": "kinetic-emphasis",
+      "type": "registry:component",
+      "title": "Kinetic Emphasis",
+      "description": "A headline where reading emphasis physically travels through the copy: an activation front sweeps in reading order and author-marked <em> phrases ignite into a persistent designed underline treatment. SSR/no-JS/reduced-motion render the final designed state.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/text/kinetic-emphasis.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/kinetic-emphasis.tsx"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "text",
+        "signature": true,
+        "keywords": [
+          "text",
+          "emphasis",
+          "headline",
+          "hero",
+          "kinetic",
+          "typography",
+          "semantic"
+        ]
+      }
+    },
+    {
+      "name": "blur-text",
+      "type": "registry:component",
+      "title": "Blur Text",
+      "description": "Reveals text segment-by-segment with a de-blur and drift. Reduced-motion safe.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/text/blur-text.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/blur-text.tsx"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "text",
+        "keywords": [
+          "text",
+          "reveal",
+          "blur",
+          "hero",
+          "headline"
+        ]
+      }
+    },
+    {
+      "name": "spotlight-card",
+      "type": "registry:ui",
+      "title": "Spotlight Card",
+      "description": "A surface with a radial glow that follows the pointer. CSS-only, no runtime deps beyond cn.",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/creative/spotlight-card.tsx",
+          "type": "registry:ui",
+          "target": "components/motiq/spotlight-card.tsx"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "creative",
+        "keywords": [
+          "card",
+          "spotlight",
+          "glow",
+          "pointer",
+          "pricing",
+          "feature"
+        ]
+      }
+    },
+    {
+      "name": "animated-dialog",
+      "type": "registry:ui",
+      "title": "Animated Dialog",
+      "description": "Radix Dialog with Motion enter/exit choreography (scale, slide-up, fade). Preserves portal, focus trap, Esc, and overlay. Reduced-motion safe.",
+      "dependencies": [
+        "motion",
+        "@radix-ui/react-dialog"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/animated-shadcn/animated-dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/motiq/animated-dialog.tsx"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "animated-shadcn",
+        "keywords": [
+          "dialog",
+          "modal",
+          "overlay",
+          "radix",
+          "popup"
+        ]
+      }
+    },
+    {
+      "name": "animated-tabs",
+      "type": "registry:ui",
+      "title": "Animated Tabs",
+      "description": "Radix Tabs with a Motion layoutId sliding active indicator and cross-faded, direction-aware content. Keyboard and roles preserved. Reduced-motion safe.",
+      "dependencies": [
+        "motion",
+        "@radix-ui/react-tabs"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/animated-shadcn/animated-tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/motiq/animated-tabs.tsx"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "animated-shadcn",
+        "keywords": [
+          "tabs",
+          "indicator",
+          "layout",
+          "radix",
+          "segmented"
+        ]
+      }
+    },
+    {
+      "name": "animated-accordion",
+      "type": "registry:ui",
+      "title": "Animated Accordion",
+      "description": "Radix Accordion with Motion height/opacity reveal and a rotating chevron. Single/multiple modes, keyboard, and disabled state preserved. Reduced-motion safe.",
+      "dependencies": [
+        "motion",
+        "@radix-ui/react-accordion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/animated-shadcn/animated-accordion.tsx",
+          "type": "registry:ui",
+          "target": "components/motiq/animated-accordion.tsx"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "animated-shadcn",
+        "keywords": [
+          "accordion",
+          "collapse",
+          "expand",
+          "faq",
+          "radix"
+        ]
+      }
+    },
+    {
+      "name": "animated-button",
+      "type": "registry:ui",
+      "title": "Animated Button",
+      "description": "A real button with press-scale feedback and accessible loading (aria-busy + polite spinner) and success states. Solid, outline, and ghost variants. Reduced-motion safe.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/animated-shadcn/animated-button.tsx",
+          "type": "registry:ui",
+          "target": "components/motiq/animated-button.tsx"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "animated-shadcn",
+        "keywords": [
+          "button",
+          "loading",
+          "spinner",
+          "success",
+          "press"
+        ]
+      }
+    },
+    {
+      "name": "rotating-text",
+      "type": "registry:ui",
+      "title": "Rotating Text",
+      "description": "Cycles through phrases in place with slide or fade motion. Polite aria-live announces the current word, pauses on hover/focus, and keeps a stable layout. Reduced-motion safe.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/text/rotating-text.tsx",
+          "type": "registry:ui",
+          "target": "components/motiq/rotating-text.tsx"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "text",
+        "keywords": [
+          "text",
+          "rotating",
+          "words",
+          "hero",
+          "headline"
+        ]
+      }
+    },
+    {
+      "name": "animated-list",
+      "type": "registry:ui",
+      "title": "Animated List",
+      "description": "A semantic list whose items fade/slide in with a stagger and animate out cleanly on removal, with layout-based reordering. Requires stable keys. Reduced-motion safe.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/creative/animated-list.tsx",
+          "type": "registry:ui",
+          "target": "components/motiq/animated-list.tsx"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "creative",
+        "keywords": [
+          "list",
+          "stagger",
+          "enter",
+          "exit",
+          "reorder"
+        ]
+      }
+    },
+    {
+      "name": "animated-grid",
+      "type": "registry:ui",
+      "title": "Animated Grid",
+      "description": "A CSS-only animated grid background layer with a slow drift, optional radial fade mask, and a prefers-reduced-motion stop. No canvas, no JS loop. Decorative.",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/animated-grid.tsx",
+          "type": "registry:ui",
+          "target": "components/motiq/animated-grid.tsx"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "backgrounds",
+        "keywords": [
+          "background",
+          "grid",
+          "pattern",
+          "hero",
+          "css"
+        ]
+      }
+    },
+    {
+      "name": "animated-icons",
+      "type": "registry:ui",
+      "title": "Animated Icons",
+      "description": "Two inline-SVG animated icons — AnimatedArrow (nudge) and AnimatedCopy (copy-to-check swap) — triggered on hover, tap, focus, or mount. Decorative and inherit their label from a parent control. Reduced-motion safe.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json"
+      ],
+      "files": [
+        {
+          "path": "registry/icons/animated-icons.tsx",
+          "type": "registry:ui",
+          "target": "components/motiq/animated-icons.tsx"
+        }
+      ],
+      "meta": {
+        "tier": "free",
+        "category": "icons",
+        "keywords": [
+          "icon",
+          "arrow",
+          "copy",
+          "svg",
+          "micro-interaction"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/lib/utils": [
+        "../../packages/registry/registry/lib/utils.ts"
+      ],
+      "@/lib/motiq": [
+        "../../packages/registry/registry/lib/motion.ts"
+      ],
+      "@/registry/*": [
+        "../../packages/registry/registry/*"
+      ],
+      "@/components/motiq/ai-response-stream": [
+        "../../packages/registry/registry/ai/ai-response-stream.tsx"
+      ],
+      "@/components/motiq/deployment-pipeline": [
+        "../../packages/registry/registry/developer-tools/deployment-pipeline.tsx"
+      ],
+      "@/components/motiq/live-presence-stack": [
+        "../../packages/registry/registry/collaboration/live-presence-stack.tsx"
+      ],
+      "@/components/motiq/kpi-number-morph": [
+        "../../packages/registry/registry/data/kpi-number-morph.tsx"
+      ],
+      "@/components/motiq/tool-call-activity": [
+        "../../packages/registry/registry/ai/tool-call-activity.tsx"
+      ],
+      "@/components/motiq/live-log-stream": [
+        "../../packages/registry/registry/developer-tools/live-log-stream.tsx"
+      ],
+      "@/components/motiq/activity-stream": [
+        "../../packages/registry/registry/collaboration/activity-stream.tsx"
+      ],
+      "@/components/motiq/streaming-data-rows": [
+        "../../packages/registry/registry/data/streaming-data-rows.tsx"
+      ],
+      "@/components/motiq/luminous-topography": [
+        "../../packages/registry/registry/backgrounds/luminous-topography.tsx"
+      ],
+      "@/components/motiq/workflow-topology-field": [
+        "../../packages/registry/registry/backgrounds/workflow-topology-field.tsx"
+      ],
+      "@/components/motiq/queue-pulse-lanes": [
+        "../../packages/registry/registry/backgrounds/queue-pulse-lanes.tsx"
+      ],
+      "@/components/motiq/adaptive-safe-zone-grid": [
+        "../../packages/registry/registry/backgrounds/adaptive-safe-zone-grid.tsx"
+      ],
+      "@/components/motiq/runtime-signal-map": [
+        "../../packages/registry/registry/backgrounds/runtime-signal-map.tsx"
+      ],
+      "@/components/motiq/event-propagation-matrix": [
+        "../../packages/registry/registry/backgrounds/event-propagation-matrix.tsx"
+      ],
+      "@/components/motiq/data-contour-surface": [
+        "../../packages/registry/registry/backgrounds/data-contour-surface.tsx"
+      ],
+      "@/components/motiq/prompt-composer": [
+        "../../packages/registry/registry/ai/prompt-composer.tsx"
+      ],
+      "@/components/motiq/typing-and-presence": [
+        "../../packages/registry/registry/communication/typing-and-presence.tsx"
+      ],
+      "@/components/motiq/data-quality-status": [
+        "../../packages/registry/registry/data/data-quality-status.tsx"
+      ],
+      "@/components/motiq/source-citation-rail": [
+        "../../packages/registry/registry/ai/source-citation-rail.tsx"
+      ],
+      "@/components/motiq/api-request-inspector": [
+        "../../packages/registry/registry/developer-tools/api-request-inspector.tsx"
+      ],
+      "@/components/motiq/approval-workflow": [
+        "../../packages/registry/registry/collaboration/approval-workflow.tsx"
+      ],
+      "@/components/motiq/filter-result-transition": [
+        "../../packages/registry/registry/data/filter-result-transition.tsx"
+      ],
+      "@/components/motiq/swipe-action-row": [
+        "../../packages/registry/registry/mobile/swipe-action-row.tsx"
+      ],
+      "@/components/motiq/agent-run-timeline": [
+        "../../packages/registry/registry/ai/agent-run-timeline.tsx"
+      ],
+      "@/components/motiq/environment-switcher": [
+        "../../packages/registry/registry/developer-tools/environment-switcher.tsx"
+      ],
+      "@/components/motiq/comment-thread": [
+        "../../packages/registry/registry/collaboration/comment-thread.tsx"
+      ],
+      "@/components/motiq/data-refresh-state": [
+        "../../packages/registry/registry/data/data-refresh-state.tsx"
+      ],
+      "@/components/motiq/mobile-filter-sheet": [
+        "../../packages/registry/registry/mobile/mobile-filter-sheet.tsx"
+      ],
+      "@/components/motiq/kinetic-emphasis": [
+        "../../packages/registry/registry/text/kinetic-emphasis.tsx"
+      ],
+      "@/components/motiq/blur-text": [
+        "../../packages/registry/registry/text/blur-text.tsx"
+      ],
+      "@/components/motiq/spotlight-card": [
+        "../../packages/registry/registry/creative/spotlight-card.tsx"
+      ],
+      "@/components/motiq/animated-dialog": [
+        "../../packages/registry/registry/animated-shadcn/animated-dialog.tsx"
+      ],
+      "@/components/motiq/animated-tabs": [
+        "../../packages/registry/registry/animated-shadcn/animated-tabs.tsx"
+      ],
+      "@/components/motiq/animated-accordion": [
+        "../../packages/registry/registry/animated-shadcn/animated-accordion.tsx"
+      ],
+      "@/components/motiq/animated-button": [
+        "../../packages/registry/registry/animated-shadcn/animated-button.tsx"
+      ],
+      "@/components/motiq/rotating-text": [
+        "../../packages/registry/registry/text/rotating-text.tsx"
+      ],
+      "@/components/motiq/animated-list": [
+        "../../packages/registry/registry/creative/animated-list.tsx"
+      ],
+      "@/components/motiq/animated-grid": [
+        "../../packages/registry/registry/backgrounds/animated-grid.tsx"
+      ],
+      "@/components/motiq/animated-icons": [
+        "../../packages/registry/registry/icons/animated-icons.tsx"
+      ]
+    },
+    "noEmit": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

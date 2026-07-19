@@ -1,0 +1,25 @@
+{
+  "slug": "kinetic-emphasis",
+  "capturedAt": "2026-07-14T15:18:50.953Z",
+  "desktop": {
+    "frames": 312,
+    "avgFrameMs": 8.36,
+    "approxFps": 119.6,
+    "worstFrameMs": 16.6,
+    "framesOver26ms": 0,
+    "longTasksMs": [
+      70
+    ]
+  },
+  "cpuThrottled4x": {
+    "frames": 311,
+    "avgFrameMs": 8.37,
+    "approxFps": 119.5,
+    "worstFrameMs": 18.4,
+    "framesOver26ms": 0,
+    "longTasksMs": [
+      108,
+      225
+    ]
+  }
+}

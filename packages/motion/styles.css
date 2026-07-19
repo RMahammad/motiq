@@ -1,0 +1,235 @@
+/* Companion CSS for @scope/motion primitives. Reduced motion neutralizes transform/opacity.
+   Import via `@scope/motion/styles.css`. Requires @scope/tokens/styles.css for the vars. */
+
+/* ---- Reveal ---- */
+.scope-reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-offset, 0), 0);
+  transition:
+    opacity var(--reveal-duration, 220ms) var(--motion-ease-standard, ease) var(--reveal-delay, 0ms),
+    transform var(--reveal-duration, 220ms) var(--motion-ease-emphasized, ease) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.scope-reveal[data-motion="shown"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-reveal:not([data-reduced-motion="allow"]) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+.scope-reveal[data-reduced-motion="force-reduce"] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* ---- Stagger ---- */
+.scope-stagger-item {
+  opacity: 0;
+  transform: translate3d(0, var(--motion-distance-md, 16px), 0);
+  transition:
+    opacity var(--motion-duration-normal, 220ms) var(--motion-ease-standard, ease),
+    transform var(--motion-duration-normal, 220ms) var(--motion-ease-emphasized, ease);
+  transition-delay: calc(var(--stagger-gap, var(--motion-stagger-md, 80ms)) * var(--stagger-index, 0));
+  will-change: opacity, transform;
+}
+.scope-stagger[data-motion="shown"] .scope-stagger-item {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-stagger:not([data-reduced-motion="allow"]) .scope-stagger-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+.scope-stagger[data-reduced-motion="force-reduce"] .scope-stagger-item {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* ---- GradientText ---- */
+.scope-gradient-text {
+  background-image: var(--gradient, linear-gradient(90deg, var(--color-accent, #4f46e5), #ec4899));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.scope-gradient-text[data-animate] {
+  animation: scope-gradient-move 4s linear infinite;
+}
+@keyframes scope-gradient-move {
+  to { background-position: 200% center; }
+}
+@media (forced-colors: active) {
+  .scope-gradient-text {
+    background: none;
+    -webkit-text-fill-color: CanvasText;
+    color: CanvasText;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-gradient-text[data-animate] { animation: none; }
+}
+
+/* ---- BlurReveal ---- */
+.scope-blur-reveal {
+  opacity: 0;
+  filter: blur(var(--blur-amount, 8px));
+  transition:
+    opacity var(--blur-duration, 220ms) var(--motion-ease-standard, ease),
+    filter var(--blur-duration, 220ms) var(--motion-ease-standard, ease);
+  will-change: opacity, filter;
+}
+.scope-blur-reveal[data-motion="shown"] {
+  opacity: 1;
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-blur-reveal:not([data-reduced-motion="allow"]) {
+    opacity: 1;
+    filter: none;
+    transition: none;
+  }
+}
+.scope-blur-reveal[data-reduced-motion="force-reduce"] {
+  opacity: 1;
+  filter: none;
+  transition: none;
+}
+
+/* ---- Marquee ---- */
+.scope-marquee {
+  overflow: hidden;
+  width: 100%;
+}
+.scope-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: scope-marquee-scroll var(--marquee-duration, 20s) linear infinite;
+}
+.scope-marquee[data-reverse] .scope-marquee__track {
+  animation-direction: reverse;
+}
+.scope-marquee[data-pause-hover]:hover .scope-marquee__track,
+.scope-marquee[data-pause-hover]:focus-within .scope-marquee__track {
+  animation-play-state: paused;
+}
+.scope-marquee__group {
+  display: flex;
+  gap: var(--space-5, 24px);
+  padding-inline: var(--space-3, 12px);
+  flex-shrink: 0;
+}
+@keyframes scope-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-marquee__track { animation: none; }
+}
+
+/* ---- TextReveal ---- */
+.scope-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.scope-text-reveal__unit {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0;
+  transform: translateY(var(--motion-distance-sm, 8px));
+  transition:
+    opacity var(--motion-duration-normal, 220ms) var(--motion-ease-standard, ease),
+    transform var(--motion-duration-normal, 220ms) var(--motion-ease-emphasized, ease);
+  transition-delay: calc(var(--stagger-gap, var(--motion-stagger-sm, 40ms)) * var(--stagger-index, 0));
+  will-change: opacity, transform;
+}
+.scope-text-reveal[data-motion="shown"] .scope-text-reveal__unit {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-text-reveal:not([data-reduced-motion="allow"]) .scope-text-reveal__unit {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+.scope-text-reveal[data-reduced-motion="force-reduce"] .scope-text-reveal__unit {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* ---- RotatingWords ---- */
+.scope-rotating-words {
+  display: inline-block;
+}
+.scope-rotating-words__word {
+  display: inline-block;
+  animation: scope-rotate-in 320ms var(--motion-ease-emphasized, ease);
+}
+@keyframes scope-rotate-in {
+  from { opacity: 0; transform: translateY(0.35em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-rotating-words__word { animation: none; }
+}
+
+/* ---- MotionScene / MotionStep (semantic choreography) ---- */
+.scope-motion-step {
+  opacity: 0;
+  transform: translate3d(var(--step-x, 0), var(--step-y, var(--motion-distance-md, 16px)), 0)
+    scale(var(--step-scale, 1));
+  transition:
+    opacity var(--scene-duration, 320ms) var(--motion-ease-standard, ease),
+    transform var(--scene-duration, 320ms) var(--motion-ease-emphasized, ease);
+  transition-delay: calc(var(--scene-gap, 90ms) * var(--scene-index, 0));
+  will-change: opacity, transform;
+}
+.scope-motion-scene[data-motion="shown"] .scope-motion-step {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+/* intent → movement character */
+.scope-motion-step[data-intent="emphasize"] { --step-y: 6px; --step-scale: 0.96; }
+.scope-motion-step[data-intent="focus"],
+.scope-motion-step[data-intent="confirm"] { --step-y: 0; --step-scale: 0.98; }
+.scope-motion-step[data-intent="notify"] { --step-y: -12px; }
+.scope-motion-step[data-intent="deemphasize"] { --step-y: 0; --step-scale: 1.02; }
+/* intensity → distance/scale amplitude */
+.scope-motion-scene[data-intensity="expressive"] .scope-motion-step { --step-y: var(--motion-distance-lg, 32px); }
+.scope-motion-scene[data-intensity="reduced"] .scope-motion-step { --step-y: var(--motion-distance-sm, 8px); }
+.scope-motion-scene[data-intensity="none"] .scope-motion-step {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scope-motion-scene:not([data-reduced-motion="allow"]) .scope-motion-step {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+.scope-motion-scene[data-reduced-motion="force-reduce"] .scope-motion-step {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}

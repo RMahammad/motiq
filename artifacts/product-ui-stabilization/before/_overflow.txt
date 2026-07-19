@@ -1,0 +1,5 @@
+# horizontal overflow report (before, dark)
+OVERFLOW home @430: scrollWidth 655 > 430
+OVERFLOW home @390: scrollWidth 655 > 390
+OVERFLOW home @375: scrollWidth 655 > 375
+OVERFLOW home @320: scrollWidth 655 > 320

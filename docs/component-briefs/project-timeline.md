@@ -1,0 +1,18 @@
+# Brief — Project Timeline
+
+- **Problem:** roadmap/PM/scheduling apps need to show *when* work happens — phases, milestones, releases, and tasks along a real time axis, with the current date, delays, and blocked work legible at a glance — without shipping a full Gantt/charting library or a PM app. The app owns dates, scheduling, dependency validation, and persistence.
+- **Use case:** product/launch roadmaps, project schedules, release calendars, campaign/content timelines, sprint plans, delivery tracking.
+- **Distinct from siblings:** organised by **time**, not by board column (KanbanCardMovement) or dependency depth (TaskDependencyMap). Bars are projected onto a linear day/week/month axis; dependencies are only *indicated* (connectors for the selected item + textual list), not laid out as a graph.
+- **Item data:** `id, title, type, startDate, endDate, status, progress?, group?, milestone?, dependencyIds?, assignee?, priority?, metadata?`. Types `phase | task | milestone | release | event`. Dates are string/number/Date constants (parsed UTC → deterministic). Milestones/releases render as point diamonds.
+- **Statuses:** `planned | active | blocked | completed | delayed | cancelled` — icon + text, never colour alone (blocked=error tone, delayed=warning tone).
+- **Current date:** from a `today` prop (never `Date.now()`); draws a "Today" marker and powers jump-to-today.
+- **Main interaction:** day/week/month scale (segmented control, `onScaleChange` = zoom); horizontal scroll nav + jump-to-today; phase (group) collapse; select an item → detail panel with date range + duration as **text**, dependencies/dependents as navigable buttons; status filtering; loading + empty states; compact **list** mode (also mobile).
+- **Editing (optional):** `onMove` / `onResize` enable an accessible **non-drag** reschedule from the detail panel ("Move earlier/later", "Extend/Shorten", one scale-unit each), applied optimistically via `useOptimisticAction` with rollback on rejection. No pointer-drag, no scheduling algorithms — the app owns date calc/validation/persistence.
+- **Animation purpose:** bar re-projection on scale/reschedule, selection ring, group collapse chevron. No continuous ambient timeline motion.
+- **API sketch:** `items`, `groups?`, `today?`, `scale?/defaultScale?/onScaleChange?`, `selectedItemId?/defaultSelectedItemId?/onSelectedItemChange?`, `mode?/defaultMode?/onModeChange?`, `compact?`, `onMove?`, `onResize?`, `nudgeUnits?`, `loading?`, `empty?`, `renderItem?`, `renderDetails?`, `label?`, `reducedMotion?`.
+- **Accessibility:** structured grouped **list fallback**; roving-tabindex keyboard item navigation (arrows across/between lanes, Enter/Space select); selected-item details with date ranges as text; status not colour-only; decorative aria-hidden connectors; reduced motion; focus preserved across scale change / move / rollback; 200% zoom; touch targets.
+- **Mobile:** list mode presents every item + action; ≥44px targets; detail panel stacks under the primary view.
+- **Dependencies:** motion + `@motiq/utils` (cn) + `@motiq/primitives` (`useReducedMotion`, `useControllableState`, `useOptimisticAction`, `statusVars`). No charting/Gantt/date library. No new deps.
+- **Similarity concern:** avoid a generic Gantt clone; differentiate via readable phase lanes, milestone inspection, delay/blocked surfacing, textual schedule authority, and a first-class list/mobile mode. Low.
+- **Tier:** Pro.
+- **Release criteria:** rapid gate + scale change (day/week/month) + item selection & details + status filter + keyboard navigation + list-fallback + jump-to-today + optimistic reschedule/rollback verified.

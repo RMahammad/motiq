@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+/* Scan the canonical registry source (outside this app) so preview components'
+   Tailwind classes are generated. */
+@source "../../../packages/registry/registry";
+
+/* Design tokens (--color-*, --radius-*, etc.) come from @scope/tokens/styles.css,
+   imported before this file in layout.tsx. Direction A "Violet studio". */
+
+:root {
+  color-scheme: light dark;
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 28%, transparent);
+}
+
+/* Accessible focus ring for all interactive chrome. Opt out with [data-noring]
+   (e.g. the command-palette search field + trigger, which are unmistakably the
+   focus and read cleaner bare). Components that opt out also set inline
+   box-shadow:none so the ring never shows even if this file's HMR lags. */
+a:focus-visible:not([data-noring]),
+button:focus-visible:not([data-noring]),
+input:focus-visible:not([data-noring]),
+[tabindex]:focus-visible:not([data-noring]) {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--radius-sm);
+}
+
+/* Brand gradient text helper (used sparingly in the hero). */
+.text-gradient {
+  background: linear-gradient(120deg, var(--color-fg), var(--color-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hero showcase (docs/60) — active-preview swap + supporting-card shift.
+   CSS keyframes (not motion) so the enter animation reliably replays on every
+   keyed remount; the global reduced-motion rule below collapses them to the
+   final static state. */
+@keyframes hero-swap-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-swap-in {
+  animation: hero-swap-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Restrained hero headline underline — grows in from the left once on load.
+   The global reduced-motion rule collapses it to the final (full) state. */
+@keyframes hero-underline {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.hero-underline {
+  animation: hero-underline 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+/* ------------------------------------------------------------------ *
+ * Hero showcase toolbar tabs (homepage). A horizontally-scrollable tablist
+ * that stays swipeable on narrow viewports while hiding its scrollbar chrome.
+ * ------------------------------------------------------------------ */
+.hero-tabs {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+}
+.hero-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom scrollbars are defined as a raw <style> in layout.tsx <head> so the
+   universal `*::-webkit-scrollbar` rules aren't pruned by the Tailwind v4
+   (Lightning CSS) pipeline. */
+
+/* Checkerboard used by preview stages to read on any surface. */
+.stage-grid {
+  background-color: var(--color-stage-bg);
+  background-image:
+    radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-fg) 8%, transparent) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "spotlight-card",
+  "type": "registry:ui",
+  "title": "Spotlight Card",
+  "description": "A surface with a radial glow that follows the pointer. CSS-only, no runtime deps beyond cn.",
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [
+    "https://motiq.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/creative/spotlight-card.tsx",
+      "type": "registry:ui",
+      "target": "components/motiq/spotlight-card.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  /** Radius of the pointer-following glow, in px. */\n  radius?: number;\n  /** Accent color of the glow (any CSS color). */\n  color?: string;\n}\n\n/**\n * SpotlightCard — a surface with a radial glow that follows the pointer.\n *\n * Performance: updates two CSS custom properties on pointer move (no React\n * re-render, no layout). The glow is a compositor-only opacity fade. Pointer\n * tracking is skipped for coarse/hover-less pointers and adds no essential\n * information, so it degrades gracefully. Clean-room original.\n */\nexport function SpotlightCard({\n  radius = 320,\n  color = \"rgb(var(--spotlight-color, 105 92 255) / 0.35)\",\n  className,\n  children,\n  onPointerMove,\n  ...props\n}: SpotlightCardProps) {\n  const ref = React.useRef<HTMLDivElement>(null);\n\n  const handlePointerMove = React.useCallback(\n    (e: React.PointerEvent<HTMLDivElement>) => {\n      const el = ref.current;\n      if (el) {\n        const rect = el.getBoundingClientRect();\n        el.style.setProperty(\"--spot-x\", `${e.clientX - rect.left}px`);\n        el.style.setProperty(\"--spot-y\", `${e.clientY - rect.top}px`);\n        el.style.setProperty(\"--spot-opacity\", \"1\");\n      }\n      onPointerMove?.(e);\n    },\n    [onPointerMove],\n  );\n\n  const handleLeave = React.useCallback((e: React.PointerEvent<HTMLDivElement>) => {\n    ref.current?.style.setProperty(\"--spot-opacity\", \"0\");\n    props.onPointerLeave?.(e);\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n  }, []);\n\n  return (\n    <div\n      ref={ref}\n      onPointerMove={handlePointerMove}\n      onPointerLeave={handleLeave}\n      className={cn(\n        \"group relative overflow-hidden rounded-2xl border border-[var(--color-border,#e4e7ec)]\",\n        \"bg-[var(--color-surface,#fff)] p-6 transition-colors\",\n        className,\n      )}\n      style={\n        {\n          \"--spot-size\": `${radius}px`,\n          \"--spot-color\": color,\n        } as React.CSSProperties\n      }\n      {...props}\n    >\n      <div\n        aria-hidden=\"true\"\n        className=\"pointer-events-none absolute inset-0 opacity-[var(--spot-opacity,0)] transition-opacity duration-300\"\n        style={{\n          background:\n            \"radial-gradient(var(--spot-size) circle at var(--spot-x, 50%) var(--spot-y, 50%), var(--spot-color), transparent 70%)\",\n        }}\n      />\n      <div className=\"relative\">{children}</div>\n    </div>\n  );\n}\n\nexport default SpotlightCard;\n"
+    }
+  ],
+  "meta": {
+    "tier": "free",
+    "category": "creative",
+    "keywords": [
+      "card",
+      "spotlight",
+      "glow",
+      "pointer",
+      "pricing",
+      "feature"
+    ]
+  }
+}

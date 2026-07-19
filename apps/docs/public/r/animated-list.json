@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "animated-list",
+  "type": "registry:ui",
+  "title": "Animated List",
+  "description": "A semantic list whose items fade/slide in with a stagger and animate out cleanly on removal, with layout-based reordering. Requires stable keys. Reduced-motion safe.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://motiq.dev/r/utils.json"
+  ],
+  "files": [
+    {
+      "path": "registry/creative/animated-list.tsx",
+      "type": "registry:ui",
+      "target": "components/motiq/animated-list.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { AnimatePresence, motion, useReducedMotion } from \"motion/react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface AnimatedListProps\n  extends React.HTMLAttributes<HTMLUListElement> {\n  /** Milliseconds of stagger applied to entering items, by DOM order. */\n  stagger?: number;\n}\n\n/**\n * AnimatedList — a semantic `<ul>` whose `<li>` children fade/slide in with a\n * stagger and animate out cleanly when removed.\n *\n * Usage: pass keyed children (each `AnimatedListItem` needs a stable `key`) so\n * AnimatePresence can track add/remove. `layout` handles reordering.\n *\n * Accessibility: it stays a real list (`<ul>`/`<li>`), so list semantics and\n * keyboard focus are preserved; exit animation does not steal focus. Under\n * `prefers-reduced-motion` items appear/leave instantly. Clean-room original.\n */\nexport function AnimatedList({\n  stagger = 60,\n  className,\n  children,\n  ...props\n}: AnimatedListProps) {\n  // Provide the stagger to items via context so index-based delay works even\n  // when consumers wrap items.\n  return (\n    <StaggerContext.Provider value={stagger}>\n      <ul className={cn(\"flex flex-col gap-2\", className)} {...props}>\n        <AnimatePresence initial={false}>{children}</AnimatePresence>\n      </ul>\n    </StaggerContext.Provider>\n  );\n}\n\nconst StaggerContext = React.createContext<number>(60);\n\nexport interface AnimatedListItemProps\n  extends React.LiHTMLAttributes<HTMLLIElement> {\n  /** Position in the list, used to stagger the entrance. */\n  index?: number;\n}\n\nexport const AnimatedListItem = React.forwardRef<\n  HTMLLIElement,\n  AnimatedListItemProps\n>(({ index = 0, className, children, ...props }, ref) => {\n  const reduce = useReducedMotion();\n  const stagger = React.useContext(StaggerContext);\n  const delay = reduce ? 0 : (index * stagger) / 1000;\n\n  return (\n    <motion.li\n      ref={ref}\n      layout={reduce ? false : \"position\"}\n      initial={reduce ? false : { opacity: 0, y: 10 }}\n      animate={{ opacity: 1, y: 0 }}\n      exit={reduce ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.98 }}\n      transition={{ duration: reduce ? 0 : 0.26, ease: [0.2, 0, 0, 1], delay }}\n      className={cn(\n        \"rounded-xl border border-[var(--color-border,#e4e7ec)]\",\n        \"bg-[var(--color-surface,#fff)] px-4 py-3 text-sm text-[var(--color-fg,#111318)]\",\n        \"[will-change:transform,opacity]\",\n        className,\n      )}\n      {...(props as React.ComponentProps<typeof motion.li>)}\n    >\n      {children}\n    </motion.li>\n  );\n});\nAnimatedListItem.displayName = \"AnimatedListItem\";\n\nexport default AnimatedList;\n"
+    }
+  ],
+  "meta": {
+    "tier": "free",
+    "category": "creative",
+    "keywords": [
+      "list",
+      "stagger",
+      "enter",
+      "exit",
+      "reorder"
+    ]
+  }
+}
