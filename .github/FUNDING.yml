@@ -1,0 +1,14 @@
+# Populates the "Sponsor this project" section in the repo's right sidebar.
+# Uncomment a platform and add your handle for each funding option you offer.
+# One fake/broken link looks worse than none — only enable what actually works.
+
+# github: RMahammad            # native GitHub "Sponsor ♥" button + checkout — requires joining GitHub Sponsors first
+# ko_fi: <handle>              # ko-fi.com/<handle>
+# buy_me_a_coffee: <handle>   # buymeacoffee.com/<handle>
+# patreon: <handle>
+# open_collective: <slug>
+# polar: <handle>
+
+# Works right now, no approval needed — points at your existing sponsorship issue.
+# Swap for a motiq.dev/sponsors page whenever you build one.
+custom: ['https://github.com/RMahammad/motiq/issues/new?template=sponsorship.md']
