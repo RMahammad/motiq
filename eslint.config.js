@@ -13,6 +13,8 @@ export default [
       "**/*.stories.tsx",
       "**/vitest.setup.ts",
       "docs/**",
+      // Internal marketing render tool (own toolchain, not product code).
+      "tools/promo/**",
     ],
   },
   ...boundaries,

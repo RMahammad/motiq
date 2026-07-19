@@ -66,3 +66,13 @@ docs/57-grid-placement-and-mobile-fixes.md
 docs/57-library-production-cleanup.md
 docs/58-homepage-preview-alignment-and-height.md
 docs/59-homepage-art-direction-pass.md
+# Remotion render intermediates (internal promo tool)
+tools/promo/out/
+
+# Rendered promo media — regenerable via tools/promo (npm run render / render:social).
+# Kept out of git history to avoid binary bloat; the channel doc + captions
+# (assets/promo/README.md) and the tool source stay tracked. Distribute the
+# rendered files via a GitHub Release or upload them natively when posting.
+assets/promo/*.gif
+assets/promo/*.mp4
+assets/promo/*.png
