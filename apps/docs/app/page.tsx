@@ -7,9 +7,11 @@ import { AiResponseStream, type ResponseSegment } from "@/registry/ai/ai-respons
 import { featuredItems, categoryCount, bySlug, packSpans, SPAN_CLASS, resolvePresentation, componentItems, type CatalogItem } from "../lib/catalog";
 import { packs, type Pack } from "../lib/packs";
 import { statusLabel } from "../lib/commerce";
+import { fundingConfig } from "../lib/funding";
 import { CatalogPreview } from "./_previews";
 import { RuntimeSignalMapHeroPreview } from "./_previews/catalog/runtime-signal-map-hero";
 import { CatalogStage } from "./_components/catalog-stage";
+import { FundingPipeline } from "./_components/funding-pipeline";
 import { LazyPreview } from "./_components/lazy-preview";
 import { HeroShowcase } from "./_components/hero-showcase";
 import { PageView } from "./_components/page-view";
@@ -384,7 +386,10 @@ export default function HomePage() {
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
                 </span>
                 {statusLabel()}
-                <span className="text-[var(--color-muted)]">· Free &amp; open source</span>
+                <span className="text-[var(--color-muted)]">· Free &amp; open source ·</span>
+                <Link href="/sponsor" className="text-[var(--color-muted)] underline-offset-2 hover:text-[var(--color-fg)] hover:underline">
+                  Community supported
+                </Link>
               </span>
 
               <h1 className="mt-5 text-[clamp(2.2rem,4.4vw,3.9rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-[var(--color-fg)]">
@@ -523,6 +528,51 @@ export default function HomePage() {
               </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 2.5 · Sponsorship — a wide two-column band: the ask on the left,
+              a compact funding workflow (real component, communicates support
+              moving toward a release) on the right. Full tier pricing lives on
+              /sponsor only. ===== */}
+      <section className="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8" aria-label="Sponsorship">
+        <div className="relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
+          <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(60% 80% at 100% 0%, var(--color-card-glow), transparent 62%)" }} />
+          <div className="relative grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:p-10">
+            <div className="max-w-xl">
+              <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">Open source</p>
+              <h2 className="mt-2 text-[clamp(1.6rem,3vw,2.2rem)] font-semibold tracking-tight text-[var(--color-fg)]">
+                Help keep {product.shortName} moving.
+              </h2>
+              <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--color-muted)]">
+                Every component here is free and open source. Sponsorship funds new components, documentation,
+                accessibility testing, and the long-term maintenance that keeps the catalog production-ready.
+              </p>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/sponsor"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[var(--color-accent)] px-6 text-[15px] font-semibold text-[var(--color-accent-fg)] shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
+                >
+                  Become a sponsor
+                </Link>
+                <a
+                  href={fundingConfig.koFiUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-6 text-[15px] font-semibold text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
+                >
+                  Support on Ko-fi
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </div>
+            </div>
+            <div className="min-w-0">
+              <p className="mb-2.5 text-[12px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">
+                How support becomes a release
+              </p>
+              <FundingPipeline compact />
+            </div>
           </div>
         </div>
       </section>
@@ -680,61 +730,6 @@ export default function HomePage() {
                 Explore packs →
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== Sponsors — the catalog is free; supporters fund the upkeep.
-              Logo slots stay as "your logo here" invites until real sponsors
-              land, so the section is honest when empty. ===== */}
-      <section className="mx-auto max-w-[1440px] px-4 py-8 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-sm)] sm:p-10">
-          <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(60% 80% at 100% 0%, var(--color-card-glow), transparent 62%)" }} />
-          <div className="relative flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-            <div className="max-w-xl">
-              <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">Sponsors</p>
-              <h2 className="mt-2 text-[clamp(1.6rem,3vw,2.2rem)] font-semibold tracking-tight text-[var(--color-fg)]">
-                Free forever — kept alive by sponsors
-              </h2>
-              <p className="mt-3 text-[14.5px] leading-relaxed text-[var(--color-muted)]">
-                The entire catalog is free and open source. Sponsorship funds the unglamorous work that keeps it shippable — accessibility reviews, cross-browser testing, registry hosting, and docs. Support once, or back {product.shortName} monthly.
-              </p>
-              <div className="mt-6 flex flex-wrap items-center gap-3">
-                <a
-                  href={product.sponsorUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--color-accent)] px-5 py-3 text-[15px] font-semibold text-[var(--color-accent-fg)] shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
-                >
-                  Sponsor {product.shortName} →
-                </a>
-                <a
-                  href={`${product.githubUrl}/blob/main/SPONSORS.md`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-5 py-3 text-[15px] font-semibold text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)]"
-                >
-                  See sponsors
-                </a>
-              </div>
-            </div>
-            <ul className="grid w-full shrink-0 grid-cols-2 gap-3 md:w-[320px]" aria-label="Sponsor tiers">
-              {[
-                { name: "Gold Sponsor", price: "$100/mo" },
-                { name: "Sponsor", price: "$25/mo" },
-                { name: "Backer", price: "$10/mo" },
-                { name: "Supporter", price: "$5/mo" },
-              ].map((t) => (
-                <li
-                  key={t.name}
-                  className="flex flex-col rounded-2xl border border-dashed border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-4 text-center"
-                >
-                  <span className="text-[13.5px] font-semibold text-[var(--color-fg)]">{t.name}</span>
-                  <span className="mt-0.5 text-[12.5px] text-[var(--color-muted)]">{t.price}</span>
-                  <span className="mt-2 text-[11.5px] text-[var(--color-muted)]">Your logo here</span>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </section>

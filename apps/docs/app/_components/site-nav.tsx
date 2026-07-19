@@ -245,6 +245,9 @@ export function SiteNav({ productName, waitlistEnabled, ctaHref, ctaLabel }: Nav
           </div>
           {primaryLink("/packs", "Packs")}
           {waitlistEnabled ? primaryLink("/access", "Access") : null}
+          {/* Sponsor stays visually secondary — same muted link treatment as the
+              rest of the primary nav; "Get started" keeps the only accent CTA. */}
+          {primaryLink("/sponsor", "Sponsor")}
         </nav>
 
         <div className="ml-auto flex items-center gap-1.5">
@@ -308,6 +311,7 @@ export function SiteNav({ productName, waitlistEnabled, ctaHref, ctaLabel }: Nav
                   ["/components?kind=block", "Blocks"],
                   ["/packs", "Packs"],
                   ...(waitlistEnabled ? [["/access", "Request access"]] : []),
+                  ["/sponsor", "Sponsor"],
                   ["/updates", "Updates"],
                 ].map(([href, label]) => (
                   <Link key={href} href={href} className="rounded-md px-2.5 py-2 text-[15px] font-medium text-[var(--color-fg)] hover:bg-[var(--color-bg-secondary)]">

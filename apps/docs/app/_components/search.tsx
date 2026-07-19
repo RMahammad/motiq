@@ -24,7 +24,17 @@ function Highlight({ text, query }: { text: string; query: string }) {
   );
 }
 
-export function SearchTrigger() {
+export function SearchTrigger({
+  hotkey = true,
+  block = false,
+}: {
+  /** Register the global ⌘K listener. Only ONE mounted instance may keep this
+   *  on (the site header's) — secondary triggers (docs sidebar) opt out so the
+   *  shortcut doesn't open stacked palettes. */
+  hotkey?: boolean;
+  /** Full-width trigger variant for sidebar placement. */
+  block?: boolean;
+} = {}) {
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -53,8 +63,9 @@ export function SearchTrigger() {
     setActiveIndex(0);
   }, [query]);
 
-  // Global ⌘K / Ctrl-K toggles the palette.
+  // Global ⌘K / Ctrl-K toggles the palette (primary instance only).
   React.useEffect(() => {
+    if (!hotkey) return;
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
@@ -63,7 +74,7 @@ export function SearchTrigger() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [hotkey]);
 
   // While open: focus the input, lock body scroll, and restore focus on close.
   React.useEffect(() => {
@@ -153,7 +164,9 @@ export function SearchTrigger() {
         // ring and use a calm border change so the search chrome never lights up.
         data-noring
         style={{ boxShadow: "none" }}
-        className="flex items-center gap-2 rounded-md border border-[var(--color-border)] px-2.5 py-1.5 text-[13px] text-[var(--color-muted)] transition-colors hover:border-[color-mix(in_oklab,var(--color-fg)_22%,var(--color-border))] hover:text-[var(--color-fg)] focus-visible:border-[color-mix(in_oklab,var(--color-fg)_38%,var(--color-border))] focus-visible:text-[var(--color-fg)] focus-visible:outline-none"
+        className={`flex items-center gap-2 rounded-md border border-[var(--color-border)] px-2.5 py-1.5 text-[13px] text-[var(--color-muted)] transition-colors hover:border-[color-mix(in_oklab,var(--color-fg)_22%,var(--color-border))] hover:text-[var(--color-fg)] focus-visible:border-[color-mix(in_oklab,var(--color-fg)_38%,var(--color-border))] focus-visible:text-[var(--color-fg)] focus-visible:outline-none ${
+          block ? "w-full" : ""
+        }`}
         aria-label="Search components"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
