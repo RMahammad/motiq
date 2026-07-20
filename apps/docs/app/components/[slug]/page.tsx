@@ -16,6 +16,7 @@ import { FeaturedBadge } from "../../_components/catalog-card";
 import { DocsSidebar, DocsMobileControls, type TocItem } from "../../_components/docs-sidebar";
 import { DocsToc } from "../../_components/docs-toc";
 import { SponsorCta } from "../../_components/sponsor-cta";
+import { GoldSponsors } from "../../_components/gold-sponsors";
 
 export function generateStaticParams() {
   return catalog.map((c) => ({ slug: c.slug }));
@@ -463,6 +464,9 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
               </dl>
             </div>
             <SponsorCta />
+            {/* Gold Sponsors — always visible: real logos when present, otherwise
+                an honest "be the first" invite that solicits Gold Sponsors. */}
+            <GoldSponsors variant="rail" />
           </div>
         </aside>
       </div>

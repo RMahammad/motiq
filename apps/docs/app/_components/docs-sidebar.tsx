@@ -8,15 +8,14 @@ import { usePathname } from "next/navigation";
 import { categories, categoryCount, itemsByCategory, bySlug, type CategoryId } from "../../lib/catalog";
 import { packs } from "../../lib/packs";
 import { SearchTrigger } from "./search";
-import { SponsorCta } from "./sponsor-cta";
-import { GoldSponsors } from "./gold-sponsors";
 
 /**
  * Documentation navigation for component pages (docs shell, left rail).
  *
  * - `DocsSidebar` — the ~260px desktop rail: search, getting-started links,
  *   components grouped by workflow with collapsible categories, environments,
- *   packs, and a small sponsor CTA. The active route carries
+ *   and packs. Pure navigation — sponsorship (CTA + Gold Sponsors) lives on the
+ *   right rail so it isn't duplicated. The active route carries
  *   `aria-current="page"`, its category opens automatically, and the link is
  *   scrolled into view inside the rail.
  * - `DocsMobileControls` — the sub-header bar for smaller viewports: a
@@ -180,11 +179,6 @@ function DocsNavTree({ activeSlug }: { activeSlug?: string }) {
         </ul>
       </div>
 
-      {/* Gold Sponsor logos — empty-safe (renders nothing until a real one exists). */}
-      <div className="mt-6 space-y-3">
-        <GoldSponsors variant="rail" />
-        <SponsorCta />
-      </div>
     </nav>
   );
 }
