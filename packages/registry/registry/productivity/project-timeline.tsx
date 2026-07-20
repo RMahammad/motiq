@@ -974,9 +974,9 @@ interface TimelineViewProps {
 }
 
 function TimelineView({
-  layout, byId, posOf, cfg, selected, rovingId, matchesFilter, reduced,
+  layout, byId, cfg, selected, rovingId, matchesFilter, reduced,
   renderItem, renderCtx, onNodeKeyDown, onNodeClick, onNodeFocus, onToggleGroup,
-  groupName, markerX, scrollRef, registerNode,
+  markerX, scrollRef, registerNode,
 }: TimelineViewProps) {
   const { nodes, nodeById, lanes, width, height, ticks, domainStart } = layout;
   const x = (ms: number) => PAD_X + (ms - domainStart) * cfg.pxPerMs;

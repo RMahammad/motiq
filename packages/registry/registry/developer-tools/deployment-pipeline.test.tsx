@@ -44,6 +44,11 @@ describe("DeploymentPipeline", () => {
     expect(await screen.findByText("Done in 8.4s")).toBeTruthy();
   });
 
+  it("exposes the `label` prop as the accessible name of the pipeline group", () => {
+    render(<DeploymentPipeline stages={STAGES} label="Release pipeline" />);
+    expect(screen.getByRole("group", { name: "Release pipeline" })).toBeTruthy();
+  });
+
   it("calls onRetry with the stage id from a failed stage's Retry control", async () => {
     const user = userEvent.setup();
     const onRetry = vi.fn();

@@ -426,6 +426,8 @@ export function DeploymentPipeline({
   return (
     <div
       ref={rootRef}
+      role="group"
+      aria-label={label}
       className={cn(
         "w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-md)] sm:p-5",
         className,

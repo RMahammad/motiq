@@ -8,6 +8,7 @@
     "build": "node scripts/build-registry.mjs",
     "registry:build": "node scripts/build-registry.mjs",
     "typecheck": "tsc --noEmit",
+    "typecheck:consumer-strict": "tsc --noEmit -p tsconfig.consumer-strict.json",
     "test": "vitest run"
   },
   "devDependencies": {

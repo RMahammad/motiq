@@ -8,7 +8,6 @@ import {
   useReducedMotion,
   useVisibilityPause,
   formatTimestamp as defaultFormatTimestamp,
-  getStatusMeta,
   statusVars,
   formatNumber,
   scrollIntoViewWithin,

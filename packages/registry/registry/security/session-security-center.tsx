@@ -907,10 +907,10 @@ function ConfirmDialog({
   return (
     <motion.div
       className="absolute inset-0 z-30 grid place-items-center bg-[color-mix(in_oklab,var(--color-fg)_20%,transparent)] p-4"
-      initial={{ opacity: 0 }}
+      initial={reduce ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.14, ease: EASE }}
+      transition={{ duration: reduce ? 0 : 0.14, ease: EASE }}
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onCancel();
       }}
