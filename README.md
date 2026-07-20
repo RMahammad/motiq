@@ -183,7 +183,7 @@ Support once with a coffee, or back Motiq monthly:
 
 | Tier | Monthly | You get |
 | --- | --- | --- |
-| ☕ **Supporter** | $5 | Name in [`SPONSORS.md`](./SPONSORS.md) _(+ Discord supporter role — server coming soon)_ |
+| ☕ **Supporter** | $3 | Name in [`SPONSORS.md`](./SPONSORS.md) _(+ Discord supporter role — server coming soon)_ |
 | 💙 **Backer** | $10 | Above + priority issue triage + a vote on the roadmap |
 | ⭐ **Sponsor** | $25 | Above + your logo in this README and on the docs sponsors page |
 | 🏢 **Gold Sponsor** | $100 | Above + prominent placement on the [motiq.dev](https://motiq.dev) homepage |

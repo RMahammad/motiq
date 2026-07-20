@@ -37,12 +37,12 @@ export const individualTiers: SponsorTier[] = [
   {
     id: "supporter",
     name: "Supporter",
-    priceUsd: 5,
+    priceUsd: 3,
     blurb: "Keep the lights on and follow along.",
     benefits: [
       "Your name in SPONSORS.md",
+      "Discord Supporter role",
       "Supporter recognition on the sponsor wall",
-      "Development updates",
     ],
   },
   {
@@ -110,7 +110,7 @@ export const fundingGoals: FundingGoal[] = [
   {
     amountUsd: 1500,
     title: "Sustainable recurring development",
-    detail: "Dedicated maintenance time every month — accessibility testing, bug triage, and long-term upkeep.",
+    detail: "Dedicated maintenance time every month - accessibility testing, bug triage, and long-term upkeep.",
   },
 ];
 
@@ -138,7 +138,7 @@ export const fundingAreas: FundingArea[] = [
   },
   {
     title: "Accessibility & testing",
-    detail: "Keyboard, screen-reader, reduced-motion, and cross-browser testing on every release — the release-blocking kind.",
+    detail: "Keyboard, screen-reader, reduced-motion, and cross-browser testing on every release - the release-blocking kind.",
     icon: "M12 3a4 4 0 100 8 4 4 0 000-8zM5 21v-1a7 7 0 0114 0v1",
   },
   {
@@ -160,11 +160,11 @@ export const fundingFaq: FundingFaq[] = [
   },
   {
     q: "Does sponsorship purchase commercial rights?",
-    a: "No — and it doesn't need to. Motiq's license already lets you use every component in commercial projects, sponsor or not. Sponsorship is support and recognition, not a license.",
+    a: "No - and it doesn't need to. Motiq's license already lets you use every component in commercial projects, sponsor or not. Sponsorship is support and recognition, not a license.",
   },
   {
     q: "Can companies sponsor Motiq?",
-    a: "Yes. The Sponsor and Gold Sponsor tiers are built for companies, with logo placement on the sponsor page and, at Gold, on the motiq.dev homepage. Invoicing details are agreed directly — open an issue or reach out via GitHub.",
+    a: "Yes. The Sponsor and Gold Sponsor tiers are built for companies, with logo placement on the sponsor page and, at Gold, on the motiq.dev homepage. Invoicing details are agreed directly - open an issue or reach out via GitHub.",
   },
   {
     q: "Can sponsors request components?",
@@ -172,11 +172,11 @@ export const fundingFaq: FundingFaq[] = [
   },
   {
     q: "Can people make a one-time contribution?",
-    a: "Yes. Ko-fi supports one-time contributions of any amount alongside monthly memberships — every contribution helps, recurring or not.",
+    a: "Yes. Ko-fi supports one-time contributions of any amount alongside monthly memberships - every contribution helps, recurring or not.",
   },
   {
     q: "What happens when GitHub Sponsors is approved?",
-    a: "GitHub Sponsors becomes an equal (and eventually primary) payment destination, with the same tiers. Existing Ko-fi supporters keep their recognition — nothing resets and nobody pays twice.",
+    a: "GitHub Sponsors becomes an equal (and eventually primary) payment destination, with the same tiers. Existing Ko-fi supporters keep their recognition - nothing resets and nobody pays twice.",
   },
 ];
 

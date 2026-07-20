@@ -74,7 +74,7 @@ function GithubSponsorsButton() {
       title="GitHub Sponsors is awaiting approval — Ko-fi is the active destination."
       className="inline-flex h-11 cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-dashed border-[var(--color-border)] px-6 text-[15px] font-medium text-[var(--color-muted)]"
     >
-      GitHub Sponsors — pending approval
+      GitHub Sponsors - pending approval
     </span>
   );
 }
@@ -303,7 +303,7 @@ export default function SponsorPage() {
           <SectionHeading
             eyebrow="Individual sponsorship"
             title="Monthly tiers"
-            lead="Pick what fits — every tier funds the same open catalog. Benefits are recognition and early access, never roadmap control."
+            lead="Pick what fits - every tier funds the same open catalog. Benefits are recognition and early access, never roadmap control."
           />
           <div className="grid gap-5 pt-3 md:grid-cols-3">
             {individualTiers.map((tier) => (
@@ -347,7 +347,7 @@ export default function SponsorPage() {
               </div>
               <p className="mt-5 max-w-xl text-[12.5px] leading-relaxed text-[var(--color-muted)]">
                 Gold sponsorship supports the project and earns recognition. It does not guarantee a requested
-                feature, a roadmap decision, or delivery timelines — the catalog stays independently maintained.
+                feature, a roadmap decision, or delivery timelines - the catalog stays independently maintained.
               </p>
             </div>
             <ul className="grid content-center gap-2.5">
@@ -374,15 +374,15 @@ export default function SponsorPage() {
         <div className="flex flex-col gap-6 rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-8 shadow-[var(--shadow-sm)] md:flex-row md:items-center md:justify-between">
           <div className="max-w-xl">
             <h2 className="text-[20px] font-semibold tracking-tight text-[var(--color-fg)]">
-              Prefer a one-time contribution?
+              Prefer a one-time tip?
             </h2>
             <p className="mt-2 text-[14px] leading-relaxed text-[var(--color-muted)]">
-              No commitment needed — Ko-fi accepts one-time contributions of any amount alongside monthly
-              memberships. Every contribution funds the same work.
+              No membership needed - buy Motiq a coffee with a one-time tip of any amount (from $5). Every
+              contribution funds the same work as a monthly sponsorship.
             </p>
           </div>
           <div className="shrink-0">
-            <KoFiButton offset="surface">Support once on Ko-fi</KoFiButton>
+            <KoFiButton offset="surface">Buy Motiq a coffee</KoFiButton>
           </div>
         </div>
       </section>
@@ -394,7 +394,7 @@ export default function SponsorPage() {
           title="What each level of support unlocks"
           lead={
             verifiedMonthlyFundingUsd === null
-              ? "Goals are listed without a progress amount until there is a verified monthly figure to show — no invented numbers."
+              ? "Goals are listed without a progress amount until there is a verified monthly figure to show - no invented numbers."
               : undefined
           }
         />
@@ -444,7 +444,7 @@ export default function SponsorPage() {
           <SectionHeading
             eyebrow="Sponsor wall"
             title="The people and companies keeping Motiq open"
-            lead="Every sponsor is also listed in SPONSORS.md in the repository. Listing is optional — sponsor privately if you prefer."
+            lead="Every sponsor is also listed in SPONSORS.md in the repository. Listing is optional - sponsor privately if you prefer."
           />
 
           <h3 className="text-[15px] font-semibold text-[var(--color-fg)]">Company sponsors</h3>
@@ -573,7 +573,7 @@ export default function SponsorPage() {
               Keep product motion open.
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-[15px] leading-relaxed text-[var(--color-muted)]">
-              Sponsorship keeps every component free, accessible, documented, and maintained — for everyone.
+              Sponsorship keeps every component free, accessible, documented, and maintained - for everyone.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <KoFiButton>Support on Ko-fi</KoFiButton>
