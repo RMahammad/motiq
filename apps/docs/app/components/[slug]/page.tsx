@@ -434,7 +434,9 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
         {/* Right rail: scrollspy TOC + compact metadata + sponsor nudge */}
         <aside className="hidden xl:block" aria-label="Page tools">
-          <div className="sticky top-14 max-h-[calc(100dvh-3.5rem)] space-y-6 overflow-y-auto py-8 pl-1">
+          {/* pr-3 keeps the (custom, themed) scrollbar in a gutter to the right of
+              the cards instead of overlapping them — mirrors the left rail. */}
+          <div className="sticky top-14 max-h-[calc(100dvh-3.5rem)] space-y-6 overflow-y-auto py-8 pl-1 pr-3">
             <DocsToc items={toc} />
             <div className="rounded-xl border border-[var(--color-border)] p-3.5 text-[12.5px]">
               <p className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">
