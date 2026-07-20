@@ -863,7 +863,6 @@ function MapView({
   onNodeFocus,
   onToggleGroup,
   collapsed,
-  groupName,
   registerNode,
 }: MapViewProps) {
   const { nodes, nodeById, lanes, width, height } = layoutData;
@@ -1166,7 +1165,6 @@ function ListRow({
   onSelect: (id: string) => void;
   registerRow: (id: string, el: HTMLButtonElement | null) => void;
 }) {
-  const meta = STATUS_META[task.status];
   return (
     <li className="rounded-lg [border:1px_solid_var(--color-border)]">
       <button
@@ -1251,8 +1249,6 @@ function TaskDetail({
   const existing = new Set(task.dependencyIds);
   const eligible = allTasks.filter((t) => t.id !== task.id && !existing.has(t.id));
   const otherGroups = laneOrder.filter((l) => l.id !== groupOf(task.id));
-  const meta = STATUS_META[task.status];
-
   return (
     <motion.div
       layout={!reduced}

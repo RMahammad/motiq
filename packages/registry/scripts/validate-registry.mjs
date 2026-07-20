@@ -9,10 +9,10 @@ const repoRoot = resolve(pkgRoot, "..", "..");
 const OUT = join(repoRoot, "apps", "docs", "public", "r");
 const PROTECTED_OUT = join(pkgRoot, ".protected", "r");
 
-// Free items land in public/r; Pro/block/pack items land in the protected dir
-// (docs/42). Validate each against the correct store.
-const isProtectedItem = (item) =>
-  (item.meta?.tier ?? "free") !== "free" || ["block", "pack"].includes(item.meta?.kind);
+// Protected = anything not Free. The catalog is fully free/open, so blocks and
+// packs are public too; only a non-free tier routes an item to the protected
+// store. This MUST match build-registry.mjs's isProtectedItem (docs/42).
+const isProtectedItem = (item) => (item.meta?.tier ?? "free") !== "free";
 
 const VALID_TYPES = new Set([
   "registry:block", "registry:component", "registry:ui", "registry:hook",

@@ -399,7 +399,7 @@ export function FilterResultTransition<T>({
   }
 
   return (
-    <div className={cn("flex w-full flex-col gap-3", className)}>
+    <div role="region" aria-label={regionLabel} className={cn("flex w-full flex-col gap-3", className)}>
       {/* Rate-limited, polite result-count announcement. */}
       <div aria-live="polite" role="status" className="sr-only">
         {announcement}

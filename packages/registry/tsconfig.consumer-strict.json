@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["registry/**/*.tsx", "registry/**/*.ts"],
+  "exclude": ["registry/**/*.test.tsx", "registry/**/*.test.ts", "registry/__tests__/**"]
+}

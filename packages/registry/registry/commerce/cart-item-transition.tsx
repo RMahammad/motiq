@@ -278,7 +278,6 @@ export function CartItemTransition({
   className,
 }: CartItemTransitionProps) {
   const reduce = useReducedMotion();
-  const baseId = React.useId();
   const compact = layout === "compact";
 
   const fmt = React.useMemo(

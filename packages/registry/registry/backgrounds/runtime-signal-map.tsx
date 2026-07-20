@@ -415,9 +415,6 @@ function resolvePalette(el: Element): Palette {
   };
 }
 
-const roleColor = (p: Palette, role: EdgeRole) =>
-  role === "active" ? p.accent : role === "failed" ? p.error : role === "degraded" ? p.warning : p.cyan;
-
 const healthColor = (p: Palette, h: ServiceHealth) =>
   h === "error" ? p.error : h === "degraded" ? p.warning : p.success;
 

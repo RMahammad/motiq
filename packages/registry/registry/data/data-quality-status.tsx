@@ -433,7 +433,6 @@ export function DataQualityStatus({
 
   const overall = React.useMemo(() => deriveOverallState(checks), [checks]);
   const overallMeta = OVERALL_META[overall];
-  const overallVars = statusVars(overallMeta.tone);
 
   const fmt = React.useCallback(
     (value: TimeValue) => (formatTimestamp ? formatTimestamp(value) : defaultFormat(value, now)),
