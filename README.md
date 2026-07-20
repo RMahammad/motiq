@@ -25,6 +25,14 @@ Install the source with shadcn. Own the code. Ship it your way.
   </a>
 </p>
 
+<p align="center">
+  <sub><b>GOLD SPONSORS</b></sub>
+  <br />
+  <!-- GOLD_SPONSORS:START — replace this line with <a href="URL"><img src="LOGO" height="36" alt="NAME" /></a> per Gold Sponsor -->
+  <sub><em>Be the first — <a href="https://ko-fi.com/motiq">sponsor Motiq</a> and your logo appears here and on <a href="https://motiq.dev">motiq.dev</a>.</em></sub>
+  <!-- GOLD_SPONSORS:END -->
+</p>
+
 ## Why Motiq?
 
 Most animation libraries stop at the effect. Motiq focuses on the product

@@ -12,6 +12,7 @@ import { CatalogPreview } from "./_previews";
 import { RuntimeSignalMapHeroPreview } from "./_previews/catalog/runtime-signal-map-hero";
 import { CatalogStage } from "./_components/catalog-stage";
 import { FundingPipeline } from "./_components/funding-pipeline";
+import { GoldSponsors } from "./_components/gold-sponsors";
 import { LazyPreview } from "./_components/lazy-preview";
 import { HeroShowcase } from "./_components/hero-showcase";
 import { PageView } from "./_components/page-view";
@@ -574,6 +575,10 @@ export default function HomePage() {
               <FundingPipeline compact />
             </div>
           </div>
+
+          {/* Gold Sponsor logos — Ko-fi Gold tier promises prominent homepage
+              placement. Empty-safe: renders nothing until a real Gold Sponsor exists. */}
+          <GoldSponsors variant="strip" />
         </div>
       </section>
 

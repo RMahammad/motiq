@@ -9,6 +9,7 @@ import { categories, categoryCount, itemsByCategory, bySlug, type CategoryId } f
 import { packs } from "../../lib/packs";
 import { SearchTrigger } from "./search";
 import { SponsorCta } from "./sponsor-cta";
+import { GoldSponsors } from "./gold-sponsors";
 
 /**
  * Documentation navigation for component pages (docs shell, left rail).
@@ -179,7 +180,9 @@ function DocsNavTree({ activeSlug }: { activeSlug?: string }) {
         </ul>
       </div>
 
-      <div className="mt-6">
+      {/* Gold Sponsor logos — empty-safe (renders nothing until a real one exists). */}
+      <div className="mt-6 space-y-3">
+        <GoldSponsors variant="rail" />
         <SponsorCta />
       </div>
     </nav>
