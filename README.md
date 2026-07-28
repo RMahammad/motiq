@@ -4,7 +4,7 @@
 
 ### Animated React components for product interfaces that feel alive.
 
-**60+ free, open-source components, workflow blocks, and packs.**<br />
+**86 components, 8 workflow blocks, and 4 packs — all free and open source.**<br />
 Install the source with shadcn. Own the code. Ship it your way.
 
 [![GitHub stars](https://img.shields.io/github/stars/RMahammad/motiq?style=for-the-badge&logo=github&label=Stars&color=6C63FF)](https://github.com/RMahammad/motiq/stargazers)
@@ -18,11 +18,13 @@ Install the source with shadcn. Own the code. Ship it your way.
 [Browse workflow packs](https://motiq.dev/packs) ·
 [Contribute](./CONTRIBUTING.md)
 
+**⭐ If Motiq is useful to you, [star the repo](https://github.com/RMahammad/motiq) — it is free, takes a second, and is how other developers find it.**
+
 </div>
 
 <p align="center">
   <a href="https://motiq.dev">
-    <img src="./assets/campaign/readme.png" alt="Motiq: 56+ animated React components for real product workflows — an AI agent run with a cited streaming answer, a deployment pipeline recovered to green, live KPI and region data, and an approved release workflow" width="1280" />
+    <img src="./assets/campaign/readme.png" alt="Motiq: 86 animated React components for real product workflows — an AI agent run with a cited streaming answer, a deployment pipeline recovered to green, live KPI and region data, and an approved release workflow" width="1280" />
   </a>
 </p>
 
@@ -54,7 +56,9 @@ component safe to ship.
   catalog coherent when several components appear on the same screen.
 
 > **AI interfaces** · **Developer tools** · **Collaboration** · **Data motion** ·
-> **Commerce** · **Security** · **Productivity** · **Workflow environments**
+> **Commerce** · **Security** · **Communication** · **Productivity** · **Files** ·
+> **Mobile** · **Text** · **Creative UI** · **Backgrounds** · **Workflow environments** ·
+> **Cursor, scroll & media showpieces** · **Animated shadcn** · **Animated icons**
 
 ## Complete workflows, in motion
 
@@ -101,8 +105,9 @@ Every component page has its exact copy-ready command.
 
 ## Explore the catalog
 
-Motiq includes **56 components**, **8 composed workflow blocks**, and **4
-one-command packs** across 17 categories.
+Motiq includes **86 components**, **8 composed workflow blocks**, and **4
+one-command packs** across **20 categories** — 94 catalog items in all, published
+as a 100-item shadcn registry (components, blocks, primitives, and utilities).
 
 | Build | Start with |
 | --- | --- |
@@ -110,6 +115,8 @@ one-command packs** across 17 categories.
 | Developer platforms | [Deployment Pipeline](https://motiq.dev/components/deployment-pipeline), [Live Log Stream](https://motiq.dev/components/live-log-stream), [API Request Inspector](https://motiq.dev/components/api-request-inspector) |
 | Collaborative apps | [Live Presence Stack](https://motiq.dev/components/live-presence-stack), [Comment Thread](https://motiq.dev/components/comment-thread), [Approval Workflow](https://motiq.dev/components/approval-workflow) |
 | Data products | [KPI Number Morph](https://motiq.dev/components/kpi-number-morph), [Streaming Data Rows](https://motiq.dev/components/streaming-data-rows), [Data Refresh State](https://motiq.dev/components/data-refresh-state) |
+| Marketing pages | [Kinetic Emphasis](https://motiq.dev/components/kinetic-emphasis), [Sticky Zoom Hero](https://motiq.dev/components/sticky-zoom-hero), [Aurora Panel](https://motiq.dev/components/aurora-panel) |
+| Showpiece motion | [Cursor Comet](https://motiq.dev/components/cursor-comet), [Depth Parallax Scene](https://motiq.dev/components/depth-parallax-scene), [Compare Reveal](https://motiq.dev/components/compare-reveal) |
 | Complete workflows | [AI Interface Pack](https://motiq.dev/packs/ai-interface), [Developer Tools Pack](https://motiq.dev/packs/developer-tools), [Collaboration Pack](https://motiq.dev/packs/collaboration), [Data Motion Pack](https://motiq.dev/packs/data-motion) |
 
 [Browse every component with a live preview →](https://motiq.dev/components)
@@ -154,14 +161,20 @@ The main workspace lives in:
 
 ```text
 packages/
-  tokens/      Semantic design and motion tokens
-  motion/      Shared motion primitives
-  react/       React components
-  sections/    Composed sections and blocks
-  registry/    shadcn registry source and generator
+  tokens/           Semantic design and motion tokens
+  motion/           Shared motion primitives
+  react/            React components
+  sections/         Composed sections and blocks
+  recipes/          Multi-component composed recipes
+  registry/         shadcn registry source and generator
+  remotion/         Video-only compositions (isolated from the React packages)
+  eslint-config/    Shared lint rules and boundary enforcement
 apps/
-  docs/        Documentation, live previews, and registry host
-  storybook/   Component stories
+  docs/             Documentation, live previews, and registry host
+  storybook/        Component stories
+  promo/            Remotion renderer for campaign and showcase assets
+  playground-next/  Clean-project install fixture (Next.js)
+  playground-vite/  Clean-project install fixture (Vite)
 ```
 
 ## Help Motiq grow
@@ -219,8 +232,8 @@ It is part of the day-to-day workflow here:
 - **Accessibility and motion passes** — sweeping the catalog for keyboard traps,
   focus handling, color-independent states, and missing `prefers-reduced-motion`
   behavior, which is exactly the tedious work a solo maintainer skips.
-- **Consistency at scale** — applying a convention change across 60+ components
-  and their tests, docs pages, and registry entries in one coherent pass.
+- **Consistency at scale** — applying a convention change across all 94 catalog
+  items and their tests, docs pages, and registry entries in one coherent pass.
 - **Docs and registry plumbing** — keeping component pages, install commands, and
   registry metadata in sync with the source.
 
