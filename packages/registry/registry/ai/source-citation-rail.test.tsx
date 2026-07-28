@@ -126,3 +126,46 @@ describe("SourceCitationRail", () => {
     }
   });
 });
+
+/*
+ * Responsive contract — the dense `list` variant is what a narrow column uses,
+ * so its titles must wrap rather than ellipsise away, and its footer controls
+ * must still be a real touch target. Every reflow is container-driven
+ * (`@container/citations`), so a rail dropped into a 700px docs column stacks
+ * instead of carving two unreadable columns out of it.
+ */
+describe("SourceCitationRail — responsive contract", () => {
+  it("declares its own named container context so it sizes on its own width", () => {
+    const { container } = render(<Fixture layout="list" />);
+    const root = container.firstElementChild;
+    expect(root).toBeTruthy();
+    expect(root!.className).toContain("@container/citations");
+  });
+
+  it("splits into a side rail on its own width, not the viewport", () => {
+    const { container } = render(<Fixture layout="rail" />);
+    const root = container.firstElementChild;
+    expect(root!.className).toContain("@3xl/citations:grid-cols-[minmax(0,1fr)_clamp(240px,32%,330px)]");
+    expect(root!.className).not.toContain("md:grid-cols-");
+  });
+
+  it("wraps dense (list) source titles instead of truncating them", () => {
+    const { container } = render(<Fixture layout="list" />);
+    const titles = Array.from(container.querySelectorAll("[data-source-title]"));
+    expect(titles.length).toBe(SOURCES.length);
+    for (const t of titles) {
+      expect(t.className).toContain("line-clamp-2");
+      expect(t.className).not.toContain("truncate");
+    }
+  });
+
+  it("gives source footer controls a 44px touch target while the rail is narrow", () => {
+    render(<Fixture defaultActiveSourceId="s1" showExcerpts />);
+    expect(screen.getAllByRole("button", { name: /show excerpt/i })[0].className).toContain(
+      "min-h-[44px]",
+    );
+    expect(
+      screen.getByRole("link", { name: /open streaming responses guide in a new tab/i }).className,
+    ).toContain("min-h-[44px]");
+  });
+});

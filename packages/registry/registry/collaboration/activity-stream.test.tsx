@@ -86,3 +86,54 @@ describe("ActivityStream", () => {
     await noViolations(container);
   });
 });
+
+/* -- responsive contract ------------------------------------------------- */
+
+describe("ActivityStream — responsive contract", () => {
+  it("reacts to its own width, not the viewport", () => {
+    const { container } = render(<ActivityStream events={GROUPED} />);
+    const root = container.firstElementChild as HTMLElement;
+    // The card declares the size container every rule inside it queries.
+    expect(String(root.className)).toMatch(/@container\/stream/);
+    // …and it never queries itself (an element is not its own container).
+    expect(String(root.className)).not.toMatch(/@\[400px\]\/stream:/);
+    // No viewport breakpoint survives anywhere in the card.
+    container.querySelectorAll("*").forEach((el) => {
+      expect(String(el.className)).not.toMatch(/(^|\s)(sm|md|lg|xl|2xl):/);
+    });
+  });
+
+  it("keeps the type filters on one scrollable line in a narrow card instead of wrapping into a block", () => {
+    const { container } = render(<ActivityStream events={GROUPED} />);
+    const bar = container.querySelector<HTMLElement>('[aria-label="Filter activity by type"]');
+    expect(bar).not.toBeNull();
+    const cls = String(bar?.className);
+    expect(cls).toMatch(/flex-nowrap/);
+    expect(cls).toMatch(/overflow-x-auto/);
+    expect(cls).toMatch(/overscroll-x-contain/);
+    // …and the original wrapping row returns once the CARD is wide enough.
+    expect(cls).toMatch(/@\[400px\]\/stream:flex-wrap/);
+    // Chips keep their intrinsic width inside the scroller.
+    const chip = within(bar as HTMLElement).getByRole("button", { name: "All" });
+    expect(String(chip.className)).toMatch(/shrink-0/);
+  });
+
+  it("renders the unread cue inside the wrapping meta row in a narrow card, not as a fixed side column", () => {
+    const { container } = render(<ActivityStream events={GROUPED} unreadAfter={base - 2 * MIN} />);
+    const cues = [...container.querySelectorAll<HTMLElement>("span")].filter(
+      (s) => s.textContent?.trim() === "Unread",
+    );
+    expect(cues.length).toBeGreaterThan(0);
+    // Every unread cue is scoped to exactly one container band, so exactly one
+    // of the two variants is ever displayed.
+    cues.forEach((c) =>
+      expect(String(c.className)).toMatch(
+        /@\[400px\]\/stream:hidden|@\[400px\]\/stream:inline-flex/,
+      ),
+    );
+    expect(cues.some((c) => /@\[400px\]\/stream:hidden/.test(String(c.className)))).toBe(true);
+    expect(
+      cues.some((c) => /hidden .*@\[400px\]\/stream:inline-flex/.test(String(c.className))),
+    ).toBe(true);
+  });
+});

@@ -35,9 +35,12 @@ import {
  * AgentOperationsHero — an editable hero for AI / automation products. A wide
  * copy band (eyebrow + a real headline + support copy + two CTAs + live status)
  * sits above a full-width "app window" that renders a *live, reduced* preview of
- * a real agent workflow; on wide screens the workflow tiles into two columns so
- * the hero holds a calm height. Composed from released Motiq components at
- * deliberately trimmed complexity:
+ * a real agent workflow; when the surface is wide enough the workflow tiles into
+ * two columns so the hero holds a calm height. It is authored mobile-first: in a
+ * narrow container the CTAs are full-width 44px bars, the surface leads with the
+ * prompt + the run, and the tool call plus cited sources sit behind a real
+ * disclosure (`defaultDetailsOpen` opens it). Composed from released Motiq
+ * components at deliberately trimmed complexity:
  *   • PromptComposer     — ONE compact prompt input
  *   • AgentRunTimeline   — ONE workflow, three steps, with approval + retry
  *   • ToolCallActivity   — ONE active tool call
@@ -49,6 +52,21 @@ import {
  * block simply renders whatever `phase` + `dataset` it is given and reports user
  * intent (submit / approve / reject / retry / cancel / stop) back by moving the
  * phase. It ships clearly-fictional inline demo data so it renders standalone.
+ *
+ * EVERY layout decision is a *container* query, not a viewport query. The block
+ * is routinely dropped into a documentation column or a dashboard panel that is
+ * far narrower than the window, where `lg:` would claim room the component does
+ * not have and split an 800px panel into two 320px columns. Two named contexts
+ * drive the whole composition:
+ *   • `@container/hero`    — the block root. Drives its own padding, type scale
+ *     (the headline is sized in `cqi`, not `vw`) and the copy-band split, which
+ *     only engages at `@5xl` (1024px) where the CTA column (~360px) and a
+ *     two-line headline (~500px) both actually fit.
+ *   • `@container/surface` — the app-window shell. Drives the workflow tiling,
+ *     which only engages at `@4xl` (896px) — the point where two tiles clear
+ *     ~418px each, the width the run timeline needs for its dense row form.
+ * Each composed child carries its own container too, so a timeline inside a
+ * 320px tile renders exactly as it does on a 320px phone.
  *
  * The demo state machine has six required states — Idle · Running · Tool running
  * · Waiting for approval · Completed · Failed — each of which fully determines
@@ -143,6 +161,14 @@ export interface AgentOperationsHeroProps
   dataset?: AgentHeroDataset;
   /** Optional decorative node rendered behind the hero (a background field, etc.). */
   background?: React.ReactNode;
+  /**
+   * While the app-window surface is narrower than `@4xl` (896px) it leads with
+   * the prompt + the run, and the tool call plus the cited sources sit behind a
+   * disclosure so the hero stays a hero in a narrow container. Set `true` to
+   * render that panel open from the start. Ignored once the surface is wide
+   * enough to tile, where both columns are always visible.
+   */
+  defaultDetailsOpen?: boolean;
   /** Force the block's own status dot to hold still (children read the OS setting). */
   reducedMotion?: boolean;
   className?: string;
@@ -402,10 +428,17 @@ const DEFAULT_SECONDARY: AgentHeroCta = { label: "See the workflow", href: "#" }
 /* Small presentational pieces                                                 */
 /* -------------------------------------------------------------------------- */
 
+/* Both CTAs are full-bleed, equal-width, 44px-tall bars in a narrow container
+   (ragged intrinsic widths read unfinished) and revert to intrinsic width once
+   the HERO — not the window — is wide enough to seat them side by side. */
+const ctaBase =
+  "inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-xl px-5 py-2.5 text-[14px] font-semibold outline-none @2xl/hero:w-auto";
 const primaryBtn =
-  "inline-flex items-center justify-center gap-1.5 rounded-xl border border-[color-mix(in_oklab,var(--color-accent)_55%,black)] bg-[linear-gradient(180deg,color-mix(in_oklab,var(--color-accent)_86%,white)_0%,var(--color-accent)_60%)] px-5 py-2.5 text-[14px] font-semibold text-[var(--color-accent-fg)] shadow-[0_1px_0_0_color-mix(in_oklab,white_45%,transparent)_inset,0_8px_22px_-10px_color-mix(in_oklab,var(--color-accent)_80%,transparent)] outline-none transition-[transform,box-shadow,filter] hover:brightness-[1.06] hover:shadow-[0_1px_0_0_color-mix(in_oklab,white_45%,transparent)_inset,0_14px_30px_-10px_color-mix(in_oklab,var(--color-accent)_90%,transparent)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] motion-safe:hover:-translate-y-px";
+  ctaBase +
+  " border border-[color-mix(in_oklab,var(--color-accent)_55%,black)] bg-[linear-gradient(180deg,color-mix(in_oklab,var(--color-accent)_86%,white)_0%,var(--color-accent)_60%)] text-[var(--color-accent-fg)] shadow-[0_1px_0_0_color-mix(in_oklab,white_45%,transparent)_inset,0_8px_22px_-10px_color-mix(in_oklab,var(--color-accent)_80%,transparent)] transition-[transform,box-shadow,filter] hover:brightness-[1.06] hover:shadow-[0_1px_0_0_color-mix(in_oklab,white_45%,transparent)_inset,0_14px_30px_-10px_color-mix(in_oklab,var(--color-accent)_90%,transparent)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] motion-safe:hover:-translate-y-px";
 const secondaryBtn =
-  "inline-flex items-center justify-center gap-1.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2.5 text-[14px] font-semibold text-[var(--color-fg)] outline-none transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]";
+  ctaBase +
+  " border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]";
 
 function isCtaSpec(value: AgentHeroCtaProp | undefined): value is AgentHeroCta {
   return (
@@ -459,12 +492,12 @@ function StatusBadge({
   const live = phase === "running" || phase === "tool-active";
   return (
     <span
-      className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[12.5px] font-medium"
+      className="inline-flex max-w-full items-center gap-2 rounded-full border px-3 py-1 text-[12.5px] font-medium"
       style={{ color: vars.color, borderColor: vars.border, background: vars.bg }}
     >
       <span
         className={cn(
-          "h-1.5 w-1.5 rounded-full bg-current",
+          "h-1.5 w-1.5 shrink-0 rounded-full bg-current",
           live && !reducedMotion ? "motion-safe:animate-pulse" : "",
         )}
         aria-hidden
@@ -575,11 +608,14 @@ const DEFAULT_PROOF: string[] = [
  *  live surface. Text-only; the check glyph is decorative. */
 function ProofStrip({ items }: { items: string[] }) {
   return (
-    <ul className="flex flex-col gap-2.5">
+    <ul className="flex flex-col gap-2 @2xl/hero:gap-2.5">
       {items.map((t) => (
-        <li key={t} className="flex items-center gap-2.5 text-[13.5px] text-[var(--color-fg)]">
+        <li
+          key={t}
+          className="flex items-start gap-2.5 text-[13px] leading-snug text-[var(--color-fg)] @2xl/hero:items-center @2xl/hero:text-[13.5px]"
+        >
           <span
-            className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]"
+            className="mt-px grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)] @2xl/hero:mt-0"
             aria-hidden
           >
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -614,6 +650,7 @@ export function AgentOperationsHero({
   onPhaseChange,
   dataset = DEFAULT_AGENT_HERO_DATASET,
   background,
+  defaultDetailsOpen = false,
   reducedMotion,
   className,
   ...rest
@@ -623,6 +660,12 @@ export function AgentOperationsHero({
     defaultValue: defaultPhase,
     onChange: onPhaseChange,
   });
+
+  /* Small-screen disclosure for the result column. The panel is always in the
+     DOM and always visible at `lg` (CSS, not JS) so there is no media-query
+     branch to hydrate and the desktop composition is untouched. */
+  const detailsId = React.useId();
+  const [detailsOpen, setDetailsOpen] = React.useState(defaultDetailsOpen);
 
   const spec = PHASE_META[phase];
   const run = React.useMemo(() => buildRun(spec, dataset), [spec, dataset]);
@@ -640,7 +683,12 @@ export function AgentOperationsHero({
       data-phase={phase}
       aria-label="Agent operations"
       className={cn(
-        "relative isolate w-full overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg)] shadow-[var(--shadow-lg)]",
+        /* `@container/hero` — every size decision below reads THIS element's
+           width, never the window's. The element is already `relative isolate`,
+           so the containing block / stacking context that `container-type`
+           implies is not a change: `HeroBackdrop`'s `absolute inset-0 -z-10`
+           already resolved against this section. */
+        "@container/hero relative isolate w-full overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg)] shadow-[var(--shadow-lg)]",
         className,
       )}
       {...rest}
@@ -653,14 +701,18 @@ export function AgentOperationsHero({
         <HeroBackdrop />
       )}
 
-      <div className="flex flex-col gap-8 p-6 sm:p-8 lg:gap-10 lg:p-12">
+      <div className="flex flex-col gap-6 p-5 @2xl/hero:gap-8 @2xl/hero:p-8 @5xl/hero:gap-10 @5xl/hero:p-12">
         {/* Copy band — headline/copy on one side, CTAs + live status on the
-            other, so the marketing row reads wide instead of a thin column. */}
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-10">
-          <div className="flex min-w-0 flex-col items-start gap-4">
+            other, so the marketing row reads wide instead of a thin column.
+            The split waits for `@5xl` (1024px of HERO): the action column is a
+            fixed ~360px (two CTAs + the status pill), so anything narrower
+            leaves the headline under ~500px and folds it to four lines. Below
+            that the band stacks — full-width headline, actions underneath. */}
+        <div className="grid gap-5 @2xl/hero:gap-6 @5xl/hero:grid-cols-[minmax(0,1fr)_auto] @5xl/hero:items-end @5xl/hero:gap-10">
+          <div className="flex min-w-0 flex-col items-start gap-3.5 @2xl/hero:gap-4">
             {eyebrow != null ? (
-              <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_80%,transparent)] px-3 py-1 text-[12px] font-medium uppercase tracking-wide text-[var(--color-muted)] backdrop-blur-sm">
-                <span className="relative flex h-1.5 w-1.5" aria-hidden>
+              <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_80%,transparent)] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--color-muted)] backdrop-blur-sm @2xl/hero:text-[12px] @2xl/hero:tracking-wide">
+                <span className="relative flex h-1.5 w-1.5 shrink-0" aria-hidden>
                   <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent)] opacity-70 motion-safe:animate-ping" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
                 </span>
@@ -668,19 +720,26 @@ export function AgentOperationsHero({
               </span>
             ) : null}
 
-            <h1 className="text-balance text-[clamp(2rem,1.1rem+2.8vw,3.25rem)] font-semibold leading-[1.05] tracking-tight text-[var(--color-fg)]">
+            {/* `cqi`, not `vw` — this is the single biggest reason the hero read
+                badly in a narrow container: a viewport-sized headline hit its
+                3.25rem ceiling on a 1440px screen while sitting in a 400px
+                column, and folded to four lines. Sized against the hero the
+                curve is identical when the block is full-bleed (1cqi == 1vw
+                there) and honest everywhere else. The 28px floor and the
+                3.25rem desktop ceiling are unchanged. */}
+            <h1 className="text-balance text-[clamp(1.75rem,1.1rem+2.8cqi,3.25rem)] font-semibold leading-[1.08] tracking-tight text-[var(--color-fg)] @2xl/hero:leading-[1.05]">
               {headline}
             </h1>
 
             {copy != null ? (
-              <p className="max-w-[56ch] text-[15px] leading-relaxed text-[var(--color-muted)] sm:text-[16px]">
+              <p className="max-w-[56ch] text-[15px] leading-relaxed text-[var(--color-muted)] @2xl/hero:text-[16px]">
                 {copy}
               </p>
             ) : null}
           </div>
 
-          <div className="flex shrink-0 flex-col items-start gap-4 lg:items-end">
-            <div className="flex flex-wrap items-center gap-3">
+          <div className="flex w-full shrink-0 flex-col items-start gap-3.5 @2xl/hero:gap-4 @5xl/hero:w-auto @5xl/hero:items-end">
+            <div className="flex w-full flex-col gap-2.5 @2xl/hero:w-auto @2xl/hero:flex-row @2xl/hero:flex-wrap @2xl/hero:items-center @2xl/hero:gap-3">
               <Cta cta={primaryCta} variant="primary" />
               <Cta cta={secondaryCta} variant="secondary" />
             </div>
@@ -689,16 +748,16 @@ export function AgentOperationsHero({
         </div>
 
         {/* Proof row — three capability lines that carry the copy region. */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3.5 @2xl/hero:gap-4">
           <div className="h-px w-full bg-[var(--color-border)]" />
           <ProofStrip items={DEFAULT_PROOF} />
         </div>
 
-        {/* Live workflow surface — a full-width app window. On wide screens the
-            composed children tile into two columns so the run and its result sit
-            side by side, keeping the hero at a calm height. No overflow/max-height
-            clip: the children run Framer `layout` animations that collapse inside
-            a constrained scroll ancestor. */}
+        {/* Live workflow surface — a full-width app window. Once the WINDOW is
+            wide enough the composed children tile into two columns so the run
+            and its result sit side by side, keeping the hero at a calm height.
+            No overflow/max-height clip: the children run Framer `layout`
+            animations that collapse inside a constrained scroll ancestor. */}
         <div className="relative min-w-0">
           <div
             aria-hidden
@@ -708,9 +767,14 @@ export function AgentOperationsHero({
                 "radial-gradient(55% 40% at 50% 0%, color-mix(in oklab, var(--color-accent) 18%, transparent), transparent)",
             }}
           />
-          <div className="relative flex min-w-0 flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)]">
+          {/* `@container/surface` lives on the window itself, NOT on the glow
+              wrapper above: the `-inset-6 -z-10` bloom is a sibling of this box,
+              so the stacking context that `container-type` implies cannot pull
+              it forward. The window is already `relative overflow-hidden`, so
+              nothing inside it was escaping either. */}
+          <div className="@container/surface relative flex min-w-0 flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)]">
             {/* Window header ------------------------------------------- */}
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_92%,var(--color-bg))] px-4 py-3 sm:px-5">
+            <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1.5 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_92%,var(--color-bg))] px-3.5 py-2.5 @2xl/surface:px-5 @2xl/surface:py-3">
               <span className="flex items-center gap-2.5">
                 <span className="flex items-center gap-1.5" aria-hidden>
                   <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-error)_65%,transparent)]" />
@@ -727,9 +791,15 @@ export function AgentOperationsHero({
               </span>
             </div>
 
-            {/* Two tiled columns: the run (left) and its result (right). */}
-            <div className="grid min-w-0 gap-3.5 p-4 sm:p-5 lg:grid-cols-2 lg:gap-5 lg:items-start">
-              <div className="flex min-w-0 flex-col gap-3.5">
+            {/* Two tiled columns: the run (left) and its result (right). The
+                2-up only engages at `@4xl` of the SURFACE (896px), where each
+                tile clears ~418px — the width the run timeline needs before its
+                status chip and actions can sit as a right-hand column. Below it
+                the tiles stack and the result column is disclosed on demand, so
+                a narrow container gets one focal story (prompt → run) instead of
+                four squeezed panels. */}
+            <div className="grid min-w-0 gap-3 p-3 @2xl/surface:gap-3.5 @2xl/surface:p-5 @4xl/surface:grid-cols-2 @4xl/surface:gap-5 @4xl/surface:items-start">
+              <div className="flex min-w-0 flex-col gap-3 @2xl/surface:gap-3.5">
                 <PromptComposer
                   defaultValue={dataset.prompt}
                   label="Agent prompt"
@@ -754,9 +824,52 @@ export function AgentOperationsHero({
                   onCancelRun={goIdle}
                   onResumeRun={goRunning}
                 />
+
+                {/* Disclosure for the result column while the surface is too
+                    narrow to tile. Hidden once it tiles, where that column is
+                    always shown. */}
+                <button
+                  type="button"
+                  aria-expanded={detailsOpen}
+                  aria-controls={detailsId}
+                  onClick={() => setDetailsOpen((open) => !open)}
+                  className="flex min-h-[44px] w-full items-center justify-between gap-3 rounded-2xl border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_92%,var(--color-bg))] px-3.5 py-2.5 text-left outline-none transition-colors hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] @4xl/surface:hidden"
+                >
+                  <span className="min-w-0">
+                    <span className="block text-[13px] font-semibold text-[var(--color-fg)]">
+                      {detailsOpen ? "Hide tool call and sources" : "Show tool call and sources"}
+                    </span>
+                    <span className="mt-0.5 block text-[11.5px] leading-snug text-[var(--color-muted)]">
+                      Active tool call · {dataset.citationSources.length} cited sources
+                    </span>
+                  </span>
+                  <span
+                    className={cn(
+                      "grid h-7 w-7 shrink-0 place-items-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-muted)] transition-transform",
+                      detailsOpen ? "rotate-180" : "",
+                    )}
+                    aria-hidden
+                  >
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="m6 9 6 6 6-6"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </button>
               </div>
 
-              <div className="flex min-w-0 flex-col gap-3.5">
+              <div
+                id={detailsId}
+                className={cn(
+                  "min-w-0 flex-col gap-3 @2xl/surface:gap-3.5 @4xl/surface:flex",
+                  detailsOpen ? "flex" : "hidden",
+                )}
+              >
                 <ToolCallActivity
                   calls={[call]}
                   title="Active tool call"
@@ -780,7 +893,7 @@ export function AgentOperationsHero({
             </div>
 
             {/* Honesty footer ------------------------------------------ */}
-            <div className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2.5 sm:px-5">
+            <div className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-3.5 py-2.5 @2xl/surface:px-5">
               <p className="text-[11px] leading-relaxed text-[var(--color-muted)]">
                 Demo data - a clearly-fictional agent run driven from local state. No
                 model is involved; the surface only renders the phase it is given.

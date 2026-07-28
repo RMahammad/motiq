@@ -349,7 +349,7 @@ function ReactionBar({
             disabled={!canReact}
             onClick={() => onReact?.(comment, r.emoji, !r.reactedByMe)}
             className={cn(
-              "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[12px] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:opacity-60",
+              "inline-flex min-h-[32px] items-center gap-1 rounded-full px-2.5 py-0.5 text-[12px] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:opacity-60 @[400px]/thread:min-h-[24px] @[400px]/thread:px-2",
               r.reactedByMe
                 ? "[border:1px_solid_var(--color-accent)] bg-[color-mix(in_oklab,var(--color-accent)_14%,transparent)] text-[var(--color-fg)]"
                 : "[border:1px_solid_var(--color-border)] bg-[var(--color-surface)] text-[var(--color-fg)] hover:border-[var(--color-accent)]",
@@ -371,7 +371,7 @@ function ReactionBar({
             type="button"
             {...picker.triggerProps}
             ref={anchor.triggerRef as React.RefObject<HTMLButtonElement>}
-            className="grid h-6 w-6 place-items-center rounded-full text-[var(--color-muted)] outline-none [border:1px_solid_var(--color-border)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-fg)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            className="grid h-11 w-11 place-items-center rounded-full text-[var(--color-muted)] outline-none [border:1px_solid_var(--color-border)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-fg)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/thread:h-6 @[400px]/thread:w-6"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
               <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.8" />
@@ -623,7 +623,7 @@ function Composer({
           <button
             type="submit"
             disabled={!value.trim()}
-            className="rounded-lg bg-[var(--color-accent)] px-3 py-1.5 text-[13px] font-semibold text-[var(--color-accent-foreground,white)] outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-45"
+            className="inline-flex min-h-[44px] items-center rounded-lg bg-[var(--color-accent)] px-3 py-1.5 text-[13px] font-semibold text-[var(--color-accent-foreground,white)] outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-45 @[400px]/thread:min-h-0"
           >
             {submitLabel}
           </button>
@@ -631,12 +631,12 @@ function Composer({
             <button
               type="button"
               onClick={onCancel}
-              className="rounded-lg px-3 py-1.5 text-[13px] font-medium text-[var(--color-muted)] outline-none transition-colors hover:text-[var(--color-fg)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+              className="inline-flex min-h-[44px] items-center rounded-lg px-3 py-1.5 text-[13px] font-medium text-[var(--color-muted)] outline-none transition-colors hover:text-[var(--color-fg)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/thread:min-h-0"
             >
               Cancel
             </button>
           ) : null}
-          <span className="ml-auto hidden text-[11px] text-[var(--color-muted)] sm:inline">
+          <span className="ml-auto hidden text-[11px] text-[var(--color-muted)] @[400px]/thread:inline">
             <kbd className="rounded bg-[var(--color-bg-secondary)] px-1">↵</kbd> to send · <kbd className="rounded bg-[var(--color-bg-secondary)] px-1">@</kbd> to mention
           </span>
         </div>
@@ -661,7 +661,9 @@ const Action = React.forwardRef<
       type="button"
       onClick={onClick}
       className={cn(
-        "inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[12px] font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:opacity-45",
+        // Comfortable touch target in a narrow card; the original compact chip from `@[400px]/thread`
+        // (still ≥24px, so it meets the WCAG 2.2 AA target-size minimum there).
+        "inline-flex min-h-[44px] items-center gap-1 rounded-md px-2 py-0.5 text-[12px] font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:opacity-45 @[400px]/thread:min-h-[24px] @[400px]/thread:px-1.5",
         tone === "danger"
           ? "text-[var(--color-error)] hover:bg-[color-mix(in_oklab,var(--color-error)_12%,transparent)]"
           : "text-[var(--color-muted)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-fg)]",
@@ -814,7 +816,7 @@ function CommentNode({ comment, depth, ctx }: { comment: Comment; depth: number;
                 <button
                   type="button"
                   onClick={doCopy}
-                  className="ml-auto grid h-6 w-6 place-items-center rounded-md text-[var(--color-muted)] outline-none transition-colors hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-fg)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+                  className="ml-auto grid h-11 w-11 place-items-center rounded-md text-[var(--color-muted)] outline-none transition-colors hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-fg)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/thread:h-6 @[400px]/thread:w-6"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
                     <path d="M9 9h9v11H9zM6 15H4V4h11v2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -972,12 +974,21 @@ function CommentNode({ comment, depth, ctx }: { comment: Comment; depth: number;
 
       {/* replies — one quiet thread guide rail per depth (no nested cards) */}
       {children.length > 0 ? (
-        <div className="ml-5 mt-0.5 border-l border-[var(--color-border)] pl-2.5 sm:ml-6 sm:pl-3.5">
+        // Threaded replies keep a guide rail at every depth, but below `@[400px]/thread` only
+        // the FIRST level is indented — deeper levels add just the rail's own
+        // padding. Per-level indent eats a phone's width in three replies and the
+        // bodies collapse to two words per line. Desktop indent is unchanged.
+        <div
+          className={cn(
+            "mt-0.5 border-l border-[var(--color-border)] pl-2.5 @[400px]/thread:ml-6 @[400px]/thread:pl-3.5",
+            depth === 0 ? "ml-3" : "ml-0",
+          )}
+        >
           {autoCollapse ? (
             <button
               type="button"
               {...replyDisclosure.triggerProps}
-              className="mb-1 inline-flex items-center gap-1.5 rounded-md px-1.5 py-0.5 text-[12px] font-medium text-[var(--color-accent)] outline-none transition-colors hover:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+              className="mb-1 inline-flex min-h-[44px] items-center gap-1.5 rounded-md px-1.5 py-0.5 text-[12px] font-medium text-[var(--color-accent)] outline-none transition-colors hover:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/thread:min-h-[24px]"
             >
               <motion.span
                 aria-hidden
@@ -1281,12 +1292,20 @@ export function CommentThread({
     <section
       aria-label={label}
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-2xl bg-[var(--color-surface)] shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]",
+        // A named size container: every layout rule inside the thread queries
+        // `@…/thread` — the width THIS card actually has, never the viewport. A
+        // thread dropped into a 300px sidebar on a 1440px screen gets the narrow
+        // treatment it needs; the same thread at 900px does not. `@[400px]/thread` =
+        // 400px of card. Measured, not guessed: the widest phone rendering of
+        // this card is ~382px (a 440px device) and the narrowest one the hero can
+        // produce on a desktop is ~418px, so 400 clears both ends by ~18px and
+        // both keep exactly the density they had before.
+        "@container/thread flex w-full flex-col overflow-hidden rounded-2xl bg-[var(--color-surface)] shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]",
         className,
       )}
     >
       {/* header */}
-      <div className="flex items-center gap-2 border-b border-[var(--color-border)] px-4 py-3">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-[var(--color-border)] px-4 py-3">
         <h3 className="text-[14px] font-semibold text-[var(--color-fg)]">{label}</h3>
         <span className="rounded-full bg-[var(--color-bg-secondary)] px-2 py-0.5 text-[12px] font-medium text-[var(--color-muted)] tabular-nums">
           {totalCount}

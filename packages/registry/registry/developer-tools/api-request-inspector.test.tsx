@@ -94,4 +94,71 @@ describe("ApiRequestInspector", () => {
     expect(code!.closest('[aria-hidden="true"]')).toBeNull();
     expect(code!.className).toContain("select-text");
   });
+
+  /* Responsive contract — see docs/responsive-standard.md. */
+  describe("responsive contract", () => {
+    it("gives the URL a full-width wrapping row when narrow instead of a sliver of scroller", () => {
+      const { container } = render(
+        <ApiRequestInspector request={REQUEST} response={RESPONSE} state="success" />,
+      );
+      const url = container.querySelector<HTMLElement>('[data-slot="request-url"]');
+      expect(url).toBeTruthy();
+      // Own line, wrapping, below `@md/inspector`; the original single-line
+      // scroller from `@md/inspector` up.
+      expect(url!.className).toContain("w-full");
+      expect(url!.className).toContain("order-last");
+      expect(url!.className).toContain("@md/inspector:order-none");
+      expect(url!.className).toContain("@md/inspector:overflow-x-auto");
+      const code = url!.querySelector("code");
+      expect(code!.className).toContain("break-all");
+      expect(code!.className).toContain("@md/inspector:whitespace-nowrap");
+      expect(code!.textContent).toBe(REQUEST.url);
+    });
+
+    it("stacks key/value rows when narrow and restores the two-column grid from @md/inspector up", () => {
+      const { container } = render(
+        <ApiRequestInspector request={REQUEST} response={RESPONSE} state="success" defaultSection="request-headers" />,
+      );
+      const dl = container.querySelector<HTMLElement>('[data-slot="kv-rows"]');
+      expect(dl).toBeTruthy();
+      expect(dl!.className).toContain("flex-col");
+      expect(dl!.className).toContain("@md/inspector:grid-cols-[minmax(6rem,auto)_1fr]");
+      // Each pair is wrapped so it stacks when narrow, and `@md/inspector:contents` hands the
+      // dt/dd straight back to the grid in a wider inspector.
+      const pair = dl!.querySelector<HTMLElement>("div");
+      expect(pair!.className).toContain("@md/inspector:contents");
+      expect(pair!.querySelector("dt")).toBeTruthy();
+      expect(pair!.querySelector("dd")).toBeTruthy();
+    });
+
+    it("groups the status chip with the environment chip in the header", () => {
+      const { container } = render(
+        <ApiRequestInspector request={REQUEST} response={RESPONSE} state="success" />,
+      );
+      const meta = container.querySelector<HTMLElement>('[data-slot="inspector-meta"]');
+      expect(meta!.className).toContain("flex-wrap");
+      expect(meta!.textContent).toContain("Success");
+      expect(meta!.textContent).toContain("production");
+    });
+
+    it("exposes the payload block as a named, keyboard-reachable scroll region", () => {
+      render(
+        <ApiRequestInspector request={REQUEST} response={RESPONSE} state="success" defaultSection="response-body" />,
+      );
+      const region = screen.getByRole("group", { name: "Response body" });
+      expect(region.getAttribute("tabindex")).toBe("0");
+      expect(region.className).toContain("max-h-[16rem]");
+      expect(region.className).toContain("@md/inspector:max-h-[22rem]");
+    });
+
+    it("names every toolbar control at narrow width and gives it a 44px target", () => {
+      render(<ApiRequestInspector request={REQUEST} response={RESPONSE} state="success" />);
+      for (const name of [/^url$/i, /^request$/i, /^response$/i]) {
+        const btn = screen.getByRole("button", { name });
+        expect(btn.className).toContain("min-h-[44px]");
+        expect(btn.className).toContain("@md/inspector:min-h-0");
+        expect(btn.querySelector("span.sr-only")?.className).toContain("@md/inspector:not-sr-only");
+      }
+    });
+  });
 });

@@ -93,7 +93,7 @@ export interface SourceCitationRailProps {
   showExcerpts?: boolean;
   /** Rail heading. */
   title?: string;
-  /** On small screens, `stacked` keeps the rail in flow; `bottom` pins it as a bottom panel. */
+  /** While the component is too narrow to split, `stacked` keeps the rail in flow; `bottom` pins it as a bottom panel. */
   mobileBehavior?: CitationMobileBehavior;
   /** Format a source date. Defaults to a locale short date. */
   formatDate?: (d: Date) => string;
@@ -262,8 +262,12 @@ export function CitationMarker({ source, children, className }: CitationMarkerPr
 const chip =
   "inline-flex items-center gap-1 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-1.5 py-px text-[10.5px] font-medium text-[var(--color-muted)]";
 
+/* Touch-first: 44px tall while the rail is narrow, back to the dense form once
+   THIS rail is wide enough — a 320px rail on a 27" monitor is still 320px, so
+   this reads `@md/citations`, never `sm:`. The dense form still measures ~28px,
+   clear of the 24px WCAG 2.2 AA target minimum. */
 const footBtn =
-  "inline-flex items-center gap-1.5 rounded-md px-1.5 py-1 text-[12px] font-medium text-[var(--color-muted)] outline-none transition-colors hover:text-[var(--color-fg)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]";
+  "inline-flex min-h-[44px] items-center gap-1.5 rounded-md px-1.5 py-1 text-[12px] font-medium text-[var(--color-muted)] outline-none transition-colors hover:text-[var(--color-fg)] focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] @md/citations:min-h-0";
 
 interface SourceRowProps {
   source: CitationSource;
@@ -371,10 +375,13 @@ function SourceRow({
 
         <span className="min-w-0 flex-1">
           <span className="flex items-start gap-1.5">
+            {/* Even the dense (list) variant wraps to two lines rather than
+                ellipsising a source title away on a narrow screen. */}
             <span
+              data-source-title
               className={cn(
-                "min-w-0 flex-1 font-medium text-[var(--color-fg)]",
-                dense ? "truncate text-[13px]" : "text-[13.5px] leading-snug",
+                "min-w-0 flex-1 font-medium leading-snug text-[var(--color-fg)] [overflow-wrap:anywhere]",
+                dense ? "text-[13px] line-clamp-2" : "text-[13.5px]",
               )}
             >
               {source.title}
@@ -653,7 +660,9 @@ export function SourceCitationRail({
       <ol
         className={cn(
           "gap-2 p-2",
-          layout === "cards" ? "grid sm:grid-cols-2" : "flex flex-col",
+          // Two source cards need ~260px each; `@xl/citations` (576px) is the
+          // first width where that is true, whatever the viewport says.
+          layout === "cards" ? "grid @xl/citations:grid-cols-2" : "flex flex-col",
         )}
       >
         <AnimatePresence initial={false} mode="popLayout">
@@ -693,9 +702,12 @@ export function SourceCitationRail({
       aria-label={title}
       className={cn(
         "flex min-w-0 flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]",
-        layout === "rail" ? "md:sticky md:top-4 md:max-h-[calc(100vh-2rem)]" : "",
+        // The rail only sticks once it IS a side rail — same container
+        // threshold as the split below. The `vh` caps stay viewport-relative:
+        // sticky resolves against the scroll container, not the container query.
+        layout === "rail" ? "@3xl/citations:sticky @3xl/citations:top-4 @3xl/citations:max-h-[calc(100vh-2rem)]" : "",
         mobileBehavior === "bottom"
-          ? "max-md:sticky max-md:bottom-0 max-md:z-10 max-md:max-h-[46vh] max-md:rounded-b-none max-md:border-b-0 max-md:shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.35)]"
+          ? "@max-3xl/citations:sticky @max-3xl/citations:bottom-0 @max-3xl/citations:z-10 @max-3xl/citations:max-h-[46vh] @max-3xl/citations:rounded-b-none @max-3xl/citations:border-b-0 @max-3xl/citations:shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.35)]"
           : "",
       )}
     >
@@ -710,7 +722,7 @@ export function SourceCitationRail({
           {sources.length}
         </span>
       </div>
-      <div className={cn(layout === "rail" ? "md:overflow-y-auto" : "", mobileBehavior === "bottom" ? "max-md:overflow-y-auto" : "")}>
+      <div className={cn(layout === "rail" ? "@3xl/citations:overflow-y-auto" : "", mobileBehavior === "bottom" ? "@max-3xl/citations:overflow-y-auto" : "")}>
         {railBody}
       </div>
     </nav>
@@ -720,9 +732,17 @@ export function SourceCitationRail({
     <RailContext.Provider value={ctx}>
       <div
         className={cn(
-          "w-full",
+          /* `@container/citations` — the rail splits on ITS OWN width, so a
+             citation rail inside a 700px docs column stacks instead of carving
+             two unreadable columns out of it. Inline-axis containment only: the
+             sticky rail still resolves against the page scroller, and the only
+             absolute children (the active accent bar, the relevance meter fill)
+             live inside their own `relative` boxes. */
+          "@container/citations w-full",
+          // The side-by-side split needs ~470px of prose plus a 240-330px rail:
+          // `@3xl/citations` (768px) is the first honest width for that.
           layout === "rail"
-            ? "grid gap-5 md:grid-cols-[minmax(0,1fr)_clamp(240px,32%,330px)] md:items-start"
+            ? "grid gap-5 @3xl/citations:grid-cols-[minmax(0,1fr)_clamp(240px,32%,330px)] @3xl/citations:items-start"
             : "flex flex-col gap-5",
           className,
         )}

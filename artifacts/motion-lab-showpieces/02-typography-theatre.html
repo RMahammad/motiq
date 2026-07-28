@@ -1,0 +1,1707 @@
+<title>Motiq Motion Lab — Typography Theatre</title>
+
+<style>
+  /* ============ Tokens ============ */
+  :root {
+    --bg: #f7f9fc;
+    --bg-el: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #eef2f8;
+    --border: #dce4ef;
+    --border-strong: #c3cfe0;
+    --fg: #101828;
+    --fg-2: #344054;
+    --muted: #667085;
+    --accent: #315fea;
+    --accent-text: #244fd1;
+    --cyan: #009fb3;
+    --coral: #e9564a;
+    --success: #177a48;
+    --warning: #9a6a12;
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+    --d-fast: 120ms;
+    --d-norm: 220ms;
+    --d-slow: 360ms;
+    --r-s: 6px;
+    --r-m: 10px;
+    --r-l: 16px;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #080c14;
+      --bg-el: #0d1420;
+      --surface: #111827;
+      --surface-2: #192337;
+      --border: #263449;
+      --border-strong: #354863;
+      --fg: #f8fafc;
+      --fg-2: #cbd5e1;
+      --muted: #9caabd;
+      --accent: #4f7cff;
+      --accent-text: #7f9fff;
+      --cyan: #22c7d9;
+      --coral: #ff6b5e;
+      --success: #32d583;
+      --warning: #f6b94a;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #080c14;
+    --bg-el: #0d1420;
+    --surface: #111827;
+    --surface-2: #192337;
+    --border: #263449;
+    --border-strong: #354863;
+    --fg: #f8fafc;
+    --fg-2: #cbd5e1;
+    --muted: #9caabd;
+    --accent: #4f7cff;
+    --accent-text: #7f9fff;
+    --cyan: #22c7d9;
+    --coral: #ff6b5e;
+    --success: #32d583;
+    --warning: #f6b94a;
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --bg: #f7f9fc;
+    --bg-el: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #eef2f8;
+    --border: #dce4ef;
+    --border-strong: #c3cfe0;
+    --fg: #101828;
+    --fg-2: #344054;
+    --muted: #667085;
+    --accent: #315fea;
+    --accent-text: #244fd1;
+    --cyan: #009fb3;
+    --coral: #e9564a;
+    --success: #177a48;
+    --warning: #9a6a12;
+    color-scheme: light;
+  }
+
+  /* ============ Base ============ */
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  * { box-sizing: border-box; }
+  .lab {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  a { color: var(--accent-text); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* ============ Header ============ */
+  .lab-header { margin-bottom: 40px; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--accent-text);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 14px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 22px; height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .lab-title {
+    font-size: clamp(2.3rem, 5vw, 3.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    margin: 0 0 14px;
+  }
+  .lab-thesis {
+    font-size: 1.06rem;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0 0 26px;
+  }
+  .lab-thesis strong { color: var(--fg-2); font-weight: 600; }
+  .lab-index {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+  }
+  .lab-index a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--fg-2);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 14px 7px 10px;
+    transition: border-color var(--d-fast) var(--ease), color var(--d-fast) var(--ease), transform var(--d-fast) var(--ease);
+  }
+  .lab-index a:hover {
+    border-color: var(--accent);
+    color: var(--accent-text);
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+  .lab-index .idx { color: var(--accent-text); font-weight: 700; }
+
+  /* ============ Section shell ============ */
+  .demo-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-l);
+    padding: 22px 22px 26px;
+    margin-bottom: 34px;
+    scroll-margin-top: 24px;
+  }
+  .demo-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .demo-name {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .demo-name .num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent-text);
+    letter-spacing: 0.1em;
+  }
+  .demo-name code {
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+  }
+  .demo-tag {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .stage {
+    position: relative;
+    min-height: 380px;
+    display: grid;
+    place-items: center;
+    padding: 48px 28px;
+    background:
+      radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 62%),
+      var(--bg-el);
+    border: 1px solid var(--border);
+    border-radius: var(--r-m);
+    overflow: hidden;
+  }
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(color-mix(in srgb, var(--fg) 7%, transparent) 1px, transparent 1px);
+    background-size: 26px 26px;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .stage > * { position: relative; }
+  .stage-controls {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-2);
+    background: color-mix(in srgb, var(--surface) 82%, transparent);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r-s);
+    padding: 6px 12px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: border-color var(--d-fast) var(--ease), color var(--d-fast) var(--ease), background var(--d-fast) var(--ease);
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent-text); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .stage-hint {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* ============ Spec rail ============ */
+  .spec-rail {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+  }
+  @media (max-width: 980px) { .spec-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .spec-rail { grid-template-columns: 1fr; } }
+  .spec-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r-m);
+    padding: 14px 16px;
+    font-size: 13.5px;
+    color: var(--fg-2);
+    min-width: 0;
+  }
+  .spec-card h4 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  .spec-card p { margin: 0 0 8px; }
+  .spec-card p:last-child { margin-bottom: 0; }
+  .spec-card ul {
+    margin: 0;
+    padding-left: 16px;
+  }
+  .spec-card li { margin-bottom: 6px; }
+  .spec-card li:last-child { margin-bottom: 0; }
+  .spec-card .k {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg);
+    background: color-mix(in srgb, var(--fg) 7%, transparent);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+  .spec-card pre {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    line-height: 1.65;
+    color: var(--fg-2);
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .spec-card pre .t { color: var(--cyan); }
+  .spec-card pre .p { color: var(--accent-text); }
+  .spec-card pre .c { color: var(--muted); }
+
+  /* ============ 01 decrypt-text ============ */
+  .dt-block { text-align: center; max-width: 100%; }
+  .dt-line {
+    font-size: clamp(1.9rem, 5.2vw, 3.3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0 0 30px;
+    min-height: 1.2em;
+  }
+  .dt-word { display: inline-block; white-space: pre; }
+  .dt-char { color: var(--muted); }
+  .dt-char.dt-locked {
+    color: var(--fg);
+    animation: dt-flash 420ms var(--ease);
+  }
+  @keyframes dt-flash {
+    0% {
+      color: var(--accent-text);
+      text-shadow: 0 0 24px color-mix(in srgb, var(--accent) 70%, transparent);
+    }
+    100% { text-shadow: 0 0 0 transparent; }
+  }
+  .dt-terminal {
+    display: inline-block;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: clamp(0.82rem, 1.9vw, 1.02rem);
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--r-m);
+    padding: 12px 18px 13px;
+    box-shadow: 0 12px 32px color-mix(in srgb, var(--bg) 55%, transparent);
+  }
+  .dt-terminal .prompt { color: var(--success); }
+  .dt-terminal .dt-char { color: color-mix(in srgb, var(--muted) 80%, var(--cyan)); }
+  .dt-terminal .dt-char.dt-locked { color: var(--fg-2); }
+  .dt-caret {
+    display: inline-block;
+    width: 0.55em; height: 1.05em;
+    vertical-align: text-bottom;
+    background: var(--success);
+    margin-left: 2px;
+    animation: dt-caret 1.1s steps(1) infinite;
+  }
+  @keyframes dt-caret { 50% { opacity: 0; } }
+
+  /* ============ 02 proximity-type ============ */
+  .px-block { text-align: center; touch-action: none; }
+  .px-line {
+    font-size: clamp(2.2rem, 6.5vw, 4.4rem);
+    font-weight: 430;
+    letter-spacing: 0.005em;
+    line-height: 1.12;
+    margin: 0;
+    cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .px-word { display: inline-block; white-space: pre; }
+  .px-sub {
+    margin: 26px 0 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============ 03 split-flap ============ */
+  .sf-wrap { width: 100%; max-width: 780px; }
+  .sf-caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 2px 12px;
+  }
+  .sf-caption .live {
+    color: var(--success);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sf-caption .live::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: sf-pulse 2.2s var(--ease) infinite;
+  }
+  @keyframes sf-pulse { 50% { opacity: 0.3; } }
+  .sf-board {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 16px 14px;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--fg) 4%, transparent), transparent 30%),
+      var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r-m);
+    font-size: clamp(10px, 2.55vw, 20px);
+  }
+  .sf-row {
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+  }
+  .sf-cell {
+    position: relative;
+    width: 1.18em;
+    height: 1.62em;
+    perspective: 320px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    flex: 0 0 auto;
+  }
+  .sf-cell::after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 0.5px);
+    left: 0; right: 0;
+    height: 1px;
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    z-index: 6;
+    pointer-events: none;
+  }
+  .sf-half {
+    position: absolute;
+    left: 0; right: 0;
+    height: 50%;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--surface-2), color-mix(in srgb, var(--surface-2) 68%, var(--bg)));
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .sf-t { top: 0; border-radius: 3px 3px 0 0; transform-origin: 50% 100%; }
+  .sf-b {
+    bottom: 0;
+    border-radius: 0 0 3px 3px;
+    transform-origin: 50% 0%;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 78%, var(--bg)), var(--surface-2) 60%);
+  }
+  .sf-half span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg);
+  }
+  .sf-t span { top: 0; }
+  .sf-b span { top: -100%; }
+  .sf-flap { z-index: 4; visibility: hidden; will-change: transform; }
+  .sf-flap.sf-t { box-shadow: 0 1px 3px color-mix(in srgb, var(--bg) 60%, transparent); }
+  .sf-cell.sf-fast .sf-flap span { filter: blur(0.7px); }
+  .sf-cell.sf-fast .sf-flap { opacity: 0.92; }
+
+  /* ============ 04 liquid-fill ============ */
+  .lq-block { text-align: center; cursor: pointer; }
+  .lq-stack {
+    position: relative;
+    display: inline-block;
+    font-size: clamp(2.7rem, 8.5vw, 5.6rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    white-space: nowrap;
+  }
+  .lq-layer {
+    display: block;
+    font: inherit;
+    letter-spacing: inherit;
+    white-space: inherit;
+  }
+  .lq-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px color-mix(in srgb, var(--fg) 24%, var(--border-strong));
+    paint-order: stroke;
+  }
+  .lq-abs { position: absolute; inset: 0; }
+  .lq-fill,
+  .lq-back,
+  .lq-shine {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    will-change: clip-path;
+  }
+  .lq-back {
+    background-image: linear-gradient(180deg,
+      color-mix(in srgb, var(--cyan) 65%, var(--accent)),
+      color-mix(in srgb, var(--accent) 72%, var(--bg)) 80%);
+    opacity: 0.55;
+  }
+  .lq-fill {
+    background-image: linear-gradient(180deg,
+      var(--cyan),
+      var(--accent) 46%,
+      var(--accent-text) 100%);
+  }
+  .lq-shine {
+    background-image: linear-gradient(112deg,
+      transparent 34%,
+      color-mix(in srgb, var(--coral) 55%, #ffffff) 48%,
+      #ffffff 50%,
+      color-mix(in srgb, var(--coral) 55%, #ffffff) 52%,
+      transparent 66%);
+    background-size: 240% 100%;
+    background-repeat: no-repeat;
+    opacity: 0;
+    will-change: opacity, background-position;
+  }
+  .lq-sub {
+    margin: 26px 0 0;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============ 05 word-cascade ============ */
+  .cw-block { max-width: 620px; text-align: left; }
+  .cw-heading {
+    font-size: clamp(1.7rem, 4.4vw, 2.7rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.14;
+    margin: 0 0 18px;
+  }
+  .cw-para {
+    font-size: clamp(1rem, 2.1vw, 1.14rem);
+    color: var(--fg-2);
+    line-height: 1.7;
+    margin: 0;
+    max-width: 54ch;
+  }
+  .cw-para .lead-in { color: var(--accent-text); font-weight: 600; }
+  .cw { display: inline-block; will-change: transform, opacity, filter; }
+
+  /* ============ Footer ============ */
+  .lab-footer {
+    margin-top: 10px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dt-caret, .sf-caption .live::before { animation: none; }
+    .dt-char.dt-locked { animation: none; }
+  }
+</style>
+
+<div class="lab">
+
+  <!-- ================= Header ================= -->
+  <header class="lab-header">
+    <p class="eyebrow">Motiq Motion Lab — Batch 07</p>
+    <h1 class="lab-title">Typography Theatre</h1>
+    <p class="lab-thesis">
+      Text is the cheapest pixel on a landing page and the most watched. These five prototypes treat the
+      headline as a stage — <strong>glyphs with physics, mechanics and liquid</strong> — each one specced
+      for a direct port into the Motiq registry.
+    </p>
+    <ol class="lab-index">
+      <li><a href="#decrypt-text"><span class="idx">01</span> decrypt-text</a></li>
+      <li><a href="#proximity-type"><span class="idx">02</span> proximity-type</a></li>
+      <li><a href="#split-flap"><span class="idx">03</span> split-flap</a></li>
+      <li><a href="#liquid-fill-headline"><span class="idx">04</span> liquid-fill-headline</a></li>
+      <li><a href="#word-cascade"><span class="idx">05</span> word-cascade</a></li>
+    </ol>
+  </header>
+
+  <!-- ================= 01 decrypt-text ================= -->
+  <section class="demo-section" id="decrypt-text">
+    <div class="demo-head">
+      <h2 class="demo-name"><span class="num">01</span> <code>decrypt-text</code></h2>
+      <span class="demo-tag">scramble · staggered lock-in · terminal variant</span>
+    </div>
+
+    <div class="stage" id="dt-stage">
+      <div class="stage-controls">
+        <button class="btn" id="dt-replay" type="button" aria-label="Replay decrypt animation">replay ↻</button>
+      </div>
+      <p class="sr-only">Ship interfaces that feel alive. Terminal: motiq add decrypt-text — resolved in 84 ms.</p>
+      <div class="dt-block" aria-hidden="true">
+        <p class="dt-line" id="dt-main" data-text="Ship interfaces that feel alive."></p>
+        <div class="dt-terminal"><span class="prompt">$&nbsp;</span><span id="dt-term" data-text="motiq add decrypt-text — resolved in 84ms"></span><span class="dt-caret"></span></div>
+      </div>
+      <span class="stage-hint">hover the stage to re-encrypt</span>
+    </div>
+
+    <div class="spec-rail">
+      <div class="spec-card">
+        <h4>Niche</h4>
+        <p>The reveal every dev-tool and security product wants: copy arrives like it is being decoded,
+        which reads as "engineering happened here". Used on hero headlines, changelog titles and
+        empty-state easter eggs.</p>
+        <p>The terminal variant doubles as a CLI onboarding flourish — perfect for install commands.</p>
+      </div>
+      <div class="spec-card">
+        <h4>Choreography</h4>
+        <ul>
+          <li><span class="k">t=0</span> every glyph is already scrambling — the line boils from the first frame.</li>
+          <li>Each unlocked char cycles a random pool glyph every <span class="k">45–80ms</span> (per-char jitter, never in sync).</li>
+          <li>Char <em>i</em> locks at <span class="k">350 + i·55ms ± 120ms</span> — a ragged left-to-right resolve, not a metronome.</li>
+          <li>Lock-in: real glyph snaps in with a <span class="k">420ms</span> accent flash + glow decay, ease <span class="k">(.2,0,0,1)</span>.</li>
+          <li>Auto re-runs every <span class="k">7s</span> while on screen; hover re-triggers with a 1.5s cooldown.</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Props API</h4>
+        <pre><span class="t">interface</span> DecryptTextProps {
+  text: <span class="t">string</span>;
+  <span class="p">glyphs</span>?: <span class="t">string</span>;   <span class="c">// scramble pool</span>
+  <span class="p">speed</span>?: <span class="t">number</span>;    <span class="c">// cycle ms · 45</span>
+  <span class="p">stagger</span>?: <span class="t">number</span>;  <span class="c">// lock ms · 55</span>
+  <span class="p">trigger</span>?: <span class="c">"mount" | "hover"
+          | "inview"</span>;
+  <span class="p">variant</span>?: <span class="c">"display" | "terminal"</span>;
+  <span class="p">loop</span>?: <span class="t">number</span> | <span class="t">false</span>;
+  <span class="p">onDecrypted</span>?: () =&gt; <span class="t">void</span>;
+}</pre>
+      </div>
+      <div class="spec-card">
+        <h4>A11y &amp; perf</h4>
+        <ul>
+          <li>Animated glyphs live in an <span class="k">aria-hidden</span> layer; the real string sits in a visually-hidden sibling, so screen readers never hear the scramble.</li>
+          <li><span class="k">prefers-reduced-motion</span>: text renders resolved, replay becomes a no-op.</li>
+          <li>Only <span class="k">textContent</span> + color change per glyph — zero layout writes; single rAF loop, paused by IntersectionObserver offscreen.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 proximity-type ================= -->
+  <section class="demo-section" id="proximity-type">
+    <div class="demo-head">
+      <h2 class="demo-name"><span class="num">02</span> <code>proximity-type</code></h2>
+      <span class="demo-tag">variable weight · pointer gravity · idle breathing</span>
+    </div>
+
+    <div class="stage" id="px-stage">
+      <p class="sr-only">Gravity has a typeface.</p>
+      <div class="px-block" aria-hidden="true">
+        <p class="px-line" id="px-line" data-text="Gravity has a typeface."></p>
+        <p class="px-sub">move the pointer — or a finger — through the line</p>
+      </div>
+    </div>
+
+    <div class="spec-rail">
+      <div class="spec-card">
+        <h4>Niche</h4>
+        <p>The "touch the product" moment for type-led brands: the headline physically leans toward the
+        cursor, so the first thing a visitor plays with is your copy. Ideal for portfolio heroes,
+        font-adjacent tools and 404 pages people screenshot.</p>
+        <p>Rides the variable axes already shipped in SF Pro and Segoe UI — no font download.</p>
+      </div>
+      <div class="spec-card">
+        <h4>Choreography</h4>
+        <ul>
+          <li>Per char: distance to pointer → falloff <span class="k">t = smoothstep(1 − d/180px)</span>.</li>
+          <li>Targets: <span class="k">font-weight 340 → 900</span>, <span class="k">letter-spacing 0 → .06em</span>, glow alpha <span class="k">0 → .5</span>, color lerped fg → accent.</li>
+          <li>Weights chase targets with exponential smoothing <span class="k">1 − e^(−14·dt)</span> — the lag is the gravity.</li>
+          <li>Idle (2s without pointer): a weight wave <span class="k">430 ± 170</span> travels the line at <span class="k">~0.5 char/frame</span>, phase offset <span class="k">0.5rad/char</span> — the type breathes.</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Props API</h4>
+        <pre><span class="t">interface</span> ProximityTypeProps {
+  text: <span class="t">string</span>;
+  <span class="p">radius</span>?: <span class="t">number</span>;      <span class="c">// px · 180</span>
+  <span class="p">weightRange</span>?: [<span class="t">number</span>, <span class="t">number</span>];
+  <span class="p">spacing</span>?: <span class="t">string</span>;     <span class="c">// max · ".06em"</span>
+  <span class="p">glow</span>?: <span class="t">boolean</span>;
+  <span class="p">idleWave</span>?: <span class="t">boolean</span>;
+  <span class="p">falloff</span>?: <span class="c">"smooth" | "linear"</span>;
+  <span class="p">as</span>?: <span class="c">"h1" | "h2" | "p"</span>;
+}</pre>
+      </div>
+      <div class="spec-card">
+        <h4>A11y &amp; perf</h4>
+        <ul>
+          <li>Real string in a visually-hidden node; the per-char layer is <span class="k">aria-hidden</span> and unselectable.</li>
+          <li>Reduced motion: static weight 430, listeners never attach.</li>
+          <li>font-weight is layout-affecting by design — cost is bounded to one short line; char centers are cached and refreshed on resize/scroll, never read mid-frame.</li>
+          <li>Pointer Events cover mouse + touch; loop pauses offscreen.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 03 split-flap ================= -->
+  <section class="demo-section" id="split-flap">
+    <div class="demo-head">
+      <h2 class="demo-name"><span class="num">03</span> <code>split-flap</code></h2>
+      <span class="demo-tag">mechanical flips · column stagger · auto-rotating pages</span>
+    </div>
+
+    <div class="stage" id="sf-stage">
+      <div class="stage-controls">
+        <button class="btn" id="sf-next" type="button" aria-label="Flip to next departures page">next page ⇥</button>
+      </div>
+      <p class="sr-only" id="sf-live" aria-live="polite"></p>
+      <div class="sf-wrap" aria-hidden="true">
+        <p class="sf-caption"><span>Motiq terminal — departures</span><span class="live">live</span></p>
+        <div class="sf-board" id="sf-board"></div>
+      </div>
+      <span class="stage-hint">pages rotate every 6s</span>
+    </div>
+
+    <div class="spec-rail">
+      <div class="spec-card">
+        <h4>Niche</h4>
+        <p>Physical-media nostalgia that modern dashboards keep reaching for: status walls, ticker
+        strips, conference agendas, "now shipping" marquees. The mechanical flutter makes plain data
+        feel like an arrivals hall.</p>
+        <p>Reads equally well at ticker size (one row) or as a full board.</p>
+      </div>
+      <div class="spec-card">
+        <h4>Choreography</h4>
+        <ul>
+          <li>Each cell steps <em>through the charset in order</em> to its target — like real drums, max 14 steps via shortest forward distance.</li>
+          <li>One flip = <span class="k">80ms</span>: top flap <span class="k">rotateX 0 → −90°</span>, then bottom flap <span class="k">90° → 0</span>, 320px perspective.</li>
+          <li>Final flip runs <span class="k">150ms</span> with a back-ease overshoot — the flap slaps past flat and settles.</li>
+          <li>Page stagger: <span class="k">col·38 + row·110 ± 90ms</span> — a wave that sweeps the board.</li>
+          <li>Fast runs get <span class="k">0.7px blur</span> on the moving flap only; idle cells twitch randomly every ~1.4s.</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Props API</h4>
+        <pre><span class="t">interface</span> SplitFlapProps {
+  pages: <span class="t">string</span>[][];  <span class="c">// rows per page</span>
+  <span class="p">cols</span>?: <span class="t">number</span>;
+  <span class="p">interval</span>?: <span class="t">number</span>;   <span class="c">// ms · 6000</span>
+  <span class="p">flipMs</span>?: <span class="t">number</span>;     <span class="c">// · 80</span>
+  <span class="p">stagger</span>?: { col: <span class="t">number</span>;
+    row: <span class="t">number</span>; jitter: <span class="t">number</span> };
+  <span class="p">charset</span>?: <span class="t">string</span>;
+  <span class="p">flutter</span>?: <span class="t">boolean</span>;
+  <span class="p">onPage</span>?: (i: <span class="t">number</span>) =&gt; <span class="t">void</span>;
+}</pre>
+      </div>
+      <div class="spec-card">
+        <h4>A11y &amp; perf</h4>
+        <ul>
+          <li>The board is <span class="k">aria-hidden</span>; a polite <span class="k">aria-live</span> region announces each settled page as one sentence.</li>
+          <li>Reduced motion: pages swap as instant text — content still rotates, nothing flips.</li>
+          <li>Flaps animate <span class="k">transform</span> only (GPU-composited); glyph text is written at flip boundaries, never per frame. One rAF drives all 88 cells; offscreen = fully parked.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 04 liquid-fill-headline ================= -->
+  <section class="demo-section" id="liquid-fill-headline">
+    <div class="demo-head">
+      <h2 class="demo-name"><span class="num">04</span> <code>liquid-fill-headline</code></h2>
+      <span class="demo-tag">rising fill · sloshing meniscus · shimmer sweep</span>
+    </div>
+
+    <div class="stage" id="lq-stage">
+      <p class="sr-only">Set it in motion.</p>
+      <div class="lq-block" id="lq-block" aria-hidden="true">
+        <span class="lq-stack">
+          <span class="lq-layer lq-outline">Set it in motion</span>
+          <span class="lq-layer lq-abs lq-back" id="lq-back">Set it in motion</span>
+          <span class="lq-layer lq-abs lq-fill" id="lq-fill">Set it in motion</span>
+          <span class="lq-layer lq-abs lq-shine" id="lq-shine">Set it in motion</span>
+        </span>
+        <p class="lq-sub">tap the headline to re-pour</p>
+      </div>
+    </div>
+
+    <div class="spec-rail">
+      <div class="spec-card">
+        <h4>Niche</h4>
+        <p>The progress-as-theatre headline: product launches, waitlist pages, funding meters, loading
+        states that deserve a hero. An outlined wordmark filling with liquid is an instant focal point
+        without a single image asset.</p>
+        <p>Motiq angle: it is pure CSS-clipped text — recolors itself with the theme for free.</p>
+      </div>
+      <div class="spec-card">
+        <h4>Choreography</h4>
+        <ul>
+          <li>Two gradient text layers behind an outline; each is clipped by a 24-point <span class="k">clip-path</span> polygon rebuilt per frame — the polygon <em>is</em> the wave.</li>
+          <li>Rise: level <span class="k">108% → −6%</span> over <span class="k">3s</span> ease-in-out; two sines (<span class="k">f, 1.7f</span>) at phase speeds <span class="k">3.1 / −4.3 rad/s</span> make the slosh non-repeating.</li>
+          <li>Back layer runs 3.5% higher, phase-shifted — depth between the two surfaces.</li>
+          <li>Settle <span class="k">0.8s</span>: amplitude decays to 0. Then a <span class="k">1s</span> coral-white shimmer sweeps 120% → −20% — the page's one coral moment.</li>
+          <li>Hold 1.4s, drain 1s ease-in, loop. Tap restarts.</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Props API</h4>
+        <pre><span class="t">interface</span> LiquidFillProps {
+  text: <span class="t">string</span>;
+  <span class="p">fillMs</span>?: <span class="t">number</span>;    <span class="c">// · 3000</span>
+  <span class="p">holdMs</span>?: <span class="t">number</span>;
+  <span class="p">amplitude</span>?: <span class="t">number</span>; <span class="c">// % · 4.5</span>
+  <span class="p">gradient</span>?: <span class="t">string</span>[];
+  <span class="p">shimmer</span>?: <span class="t">boolean</span>;
+  <span class="p">loop</span>?: <span class="t">boolean</span>;
+  <span class="p">level</span>?: <span class="t">number</span>;     <span class="c">// controlled 0–1</span>
+  <span class="p">trigger</span>?: <span class="c">"inview" | "manual"</span>;
+}</pre>
+      </div>
+      <div class="spec-card">
+        <h4>A11y &amp; perf</h4>
+        <ul>
+          <li>All four text layers sit under one <span class="k">aria-hidden</span> stack; the real string is visually-hidden beside it.</li>
+          <li>Reduced motion: renders fully filled, no loop — still a handsome gradient headline.</li>
+          <li>Uses <span class="k">clip-path</span> alpha clipping, <em>not</em> SVG luminance masks (gradient luminance masks silently no-op in Chromium).</li>
+          <li>Two clip-path writes + one background-position write per frame; pauses offscreen.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 word-cascade ================= -->
+  <section class="demo-section" id="word-cascade">
+    <div class="demo-head">
+      <h2 class="demo-name"><span class="num">05</span> <code>word-cascade</code></h2>
+      <span class="demo-tag">per-word springs · line orchestration · viewport trigger</span>
+    </div>
+
+    <div class="stage" id="cw-stage">
+      <div class="stage-controls">
+        <button class="btn" id="cw-replay" type="button" aria-label="Replay word cascade entrance">replay ↻</button>
+      </div>
+      <p class="sr-only">Every launch deserves an entrance. Motiq's cascade drops each word into place with
+      its own weight — a beat of blur, a breath of overshoot — until the line settles like it rehearsed.
+      Wire it to the viewport and your hero copy directs itself.</p>
+      <div class="cw-block" aria-hidden="true">
+        <h3 class="cw-heading" id="cw-heading">Every launch deserves an entrance.</h3>
+        <p class="cw-para" id="cw-para">Motiq's cascade drops each word into place with its own weight — a beat
+        of blur, a breath of overshoot — until the line settles like it rehearsed. Wire it to the viewport
+        and your hero copy directs itself.</p>
+      </div>
+    </div>
+
+    <div class="spec-rail">
+      <div class="spec-card">
+        <h4>Niche</h4>
+        <p>The premium hero-copy entrance every SaaS landing ships: heading first, body copy following in
+        directed waves. It upgrades the ubiquitous "fade up on scroll" into something with weight and
+        rhythm — the words feel cast, not printed.</p>
+        <p>Works on any block of markup: headings, paragraphs, list items.</p>
+      </div>
+      <div class="spec-card">
+        <h4>Choreography</h4>
+        <ul>
+          <li>Words are measured into visual lines after layout; delay = <span class="k">line·150 + wordInLine·40ms</span>.</li>
+          <li>Each word runs its own spring (<span class="k">k=180, c=16</span>, dt-integrated) on progress <span class="k">s: 0 → 1</span> — underdamped, ~6% overshoot.</li>
+          <li>Mapped: <span class="k">y = −44px·(1−s)</span> (falls past rest, bounces back), rotation <span class="k">±7° · (1−s)</span> random per word, blur <span class="k">8px → 0</span>, opacity keyed to first 40%.</li>
+          <li>Trigger: IntersectionObserver at 40% visible; re-arms after the block fully leaves; manual replay resets springs and re-measures.</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Props API</h4>
+        <pre><span class="t">interface</span> WordCascadeProps {
+  children: <span class="t">ReactNode</span>;
+  <span class="p">lineStagger</span>?: <span class="t">number</span>; <span class="c">// · 150</span>
+  <span class="p">wordStagger</span>?: <span class="t">number</span>; <span class="c">// · 40</span>
+  <span class="p">stiffness</span>?: <span class="t">number</span>;   <span class="c">// · 180</span>
+  <span class="p">damping</span>?: <span class="t">number</span>;     <span class="c">// · 16</span>
+  <span class="p">fromY</span>?: <span class="t">number</span>;  <span class="p">blur</span>?: <span class="t">number</span>;
+  <span class="p">rotate</span>?: <span class="t">number</span>;     <span class="c">// max deg</span>
+  <span class="p">replayOnReenter</span>?: <span class="t">boolean</span>;
+  <span class="p">onSettled</span>?: () =&gt; <span class="t">void</span>;
+}</pre>
+      </div>
+      <div class="spec-card">
+        <h4>A11y &amp; perf</h4>
+        <ul>
+          <li>Animated copy is <span class="k">aria-hidden</span>; the full passage lives in a visually-hidden block, so reading order and selection stay intact for AT.</li>
+          <li>Reduced motion: words render in place instantly, replay is inert.</li>
+          <li>Springs write <span class="k">transform / opacity / filter</span> only; blur is dropped the moment s ≥ 1 and <span class="k">will-change</span> is cleared after settle. Line measurement happens once per (re)play, never per frame.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="lab-footer">
+    <span>Motiq Motion Lab · Batch 07 — Typography Theatre</span>
+    <span>5 prototypes · vanilla DOM · zero dependencies</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  function boot() {
+    var root = document.documentElement;
+
+    /* ============ environment: theme + reduced motion + visibility ============ */
+
+    var themeSubs = [];
+    var rmSubs = [];
+    var mqDark = window.matchMedia("(prefers-color-scheme: dark)");
+    var mqRM = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var reducedMotion = mqRM.matches;
+
+    function cssColor(name) {
+      var v = getComputedStyle(root).getPropertyValue(name).trim();
+      if (v.charAt(0) === "#") {
+        var h = v.slice(1);
+        if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+        var n = parseInt(h, 16);
+        return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+      }
+      var m = v.match(/[\d.]+/g);
+      return m ? [+m[0], +m[1], +m[2]] : [128, 128, 128];
+    }
+
+    function notifyTheme() {
+      for (var i = 0; i < themeSubs.length; i++) themeSubs[i]();
+    }
+    if (mqDark.addEventListener) mqDark.addEventListener("change", notifyTheme);
+    new MutationObserver(notifyTheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+
+    if (mqRM.addEventListener) {
+      mqRM.addEventListener("change", function () {
+        reducedMotion = mqRM.matches;
+        for (var i = 0; i < rmSubs.length; i++) rmSubs[i](reducedMotion);
+      });
+    }
+
+    var visMap = new Map();
+    var ioEverFired = false;
+    var io = new IntersectionObserver(function (entries) {
+      ioEverFired = true;
+      for (var i = 0; i < entries.length; i++) {
+        var h = visMap.get(entries[i].target);
+        if (!h) continue;
+        if (entries[i].isIntersecting) { h.visible = true; h.show(); }
+        else { h.visible = false; h.hide(); }
+      }
+    }, { threshold: 0.12 });
+    function onVisible(el, show, hide) {
+      var h = { show: show, hide: hide, visible: false };
+      visMap.set(el, h);
+      io.observe(el);
+      return h;
+    }
+    /* Some embedded renderers never deliver IO callbacks (a normal browser always
+       delivers the initial batch). If nothing arrives, treat every stage as visible. */
+    setTimeout(function () {
+      if (ioEverFired) return;
+      visMap.forEach(function (h) {
+        if (!h.visible) { h.visible = true; h.show(); }
+      });
+    }, 1200);
+
+    function makeLoop(fn) {
+      var running = false, id = 0, last = 0, elapsed = 0;
+      function frame(now) {
+        if (!running) return;
+        var dt = Math.min(0.1, (now - last) / 1000);
+        last = now;
+        elapsed += dt;
+        fn(dt, elapsed);
+        id = requestAnimationFrame(frame);
+      }
+      return {
+        start: function () {
+          if (running) return;
+          running = true;
+          last = performance.now();
+          id = requestAnimationFrame(frame);
+        },
+        stop: function () { running = false; cancelAnimationFrame(id); },
+        isRunning: function () { return running; }
+      };
+    }
+
+    function rand(a, b) { return a + Math.random() * (b - a); }
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    /* build word/char spans from a data-text attribute */
+    function buildChars(el, wordCls, charCls) {
+      var text = el.getAttribute("data-text") || "";
+      var words = text.split(" ");
+      var chars = [];
+      el.textContent = "";
+      for (var w = 0; w < words.length; w++) {
+        var word = document.createElement("span");
+        word.className = wordCls;
+        for (var c = 0; c < words[w].length; c++) {
+          var s = document.createElement("span");
+          s.className = charCls;
+          s.textContent = words[w].charAt(c);
+          word.appendChild(s);
+          chars.push({ span: s, real: words[w].charAt(c) });
+        }
+        el.appendChild(word);
+        if (w < words.length - 1) el.appendChild(document.createTextNode(" "));
+      }
+      return chars;
+    }
+
+    /* ==================== 01 decrypt-text ==================== */
+    (function initDecrypt() {
+      var stage = document.getElementById("dt-stage");
+      var mainEl = document.getElementById("dt-main");
+      var termEl = document.getElementById("dt-term");
+      if (!stage || !mainEl || !termEl) return;
+
+      var POOL_MAIN = "#%&@$?!*+=/{}[]<>~^";
+      var POOL_TERM = "abcdef0123456789$#%&*+=/|_~";
+      var items = [];
+
+      buildChars(mainEl, "dt-word", "dt-char").forEach(function (c, i) {
+        items.push({ span: c.span, real: c.real, pool: POOL_MAIN, base: 350 + i * 55 });
+      });
+      buildChars(termEl, "dt-word", "dt-char").forEach(function (c, i) {
+        items.push({ span: c.span, real: c.real, pool: POOL_TERM, base: 900 + i * 32 });
+      });
+
+      var t0 = 0, remaining = 0, lastStart = -1e9, autoTimer = 0, played = false;
+
+      function glyph(pool) { return pool.charAt((Math.random() * pool.length) | 0); }
+
+      function finish() {
+        for (var i = 0; i < items.length; i++) {
+          items[i].span.textContent = items[i].real;
+          items[i].span.classList.add("dt-locked");
+          items[i].locked = true;
+        }
+        remaining = 0;
+      }
+
+      var loop = makeLoop(function () {
+        var now = performance.now() - t0;
+        for (var i = 0; i < items.length; i++) {
+          var it = items[i];
+          if (it.locked) continue;
+          if (now >= it.lockAt) {
+            it.span.textContent = it.real;
+            it.span.classList.add("dt-locked");
+            it.locked = true;
+            remaining--;
+          } else if (now >= it.nextAt) {
+            it.span.textContent = glyph(it.pool);
+            it.nextAt = now + rand(45, 80);
+          }
+        }
+        if (remaining <= 0) {
+          loop.stop();
+          scheduleAuto(7000);
+        }
+      });
+
+      function scheduleAuto(ms) {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(function () {
+          if (vis.visible && !loop.isRunning()) play();
+        }, ms);
+      }
+
+      function play() {
+        if (reducedMotion) { finish(); return; }
+        lastStart = performance.now();
+        played = true;
+        remaining = items.length;
+        for (var i = 0; i < items.length; i++) {
+          var it = items[i];
+          it.locked = false;
+          it.span.classList.remove("dt-locked");
+          it.lockAt = it.base + rand(-120, 120);
+          it.nextAt = 0;
+          it.span.textContent = glyph(it.pool);
+        }
+        t0 = performance.now();
+        loop.start();
+      }
+
+      var vis = onVisible(stage, function () {
+        if (reducedMotion) { finish(); return; }
+        if (!played) play();
+        else if (!loop.isRunning()) scheduleAuto(3000);
+      }, function () {
+        loop.stop();
+        clearTimeout(autoTimer);
+      });
+
+      stage.addEventListener("pointerenter", function () {
+        if (!reducedMotion && !loop.isRunning() && performance.now() - lastStart > 1500) play();
+      });
+      document.getElementById("dt-replay").addEventListener("click", function () {
+        if (!reducedMotion) play();
+      });
+
+      rmSubs.push(function (reduced) {
+        if (reduced) { loop.stop(); clearTimeout(autoTimer); finish(); }
+        else if (vis.visible) play();
+      });
+      if (reducedMotion) finish();
+    })();
+
+    /* ==================== 02 proximity-type ==================== */
+    (function initProximity() {
+      var stage = document.getElementById("px-stage");
+      var lineEl = document.getElementById("px-line");
+      if (!stage || !lineEl) return;
+
+      var chars = buildChars(lineEl, "px-word", "px-char").map(function (c, i) {
+        return { span: c.span, i: i, w: 430, lastW: 430, g: 0, hot: false, cx: 0, cy: 0 };
+      });
+
+      var fgRGB = cssColor("--fg"), accRGB = cssColor("--accent-text"), glowRGB = cssColor("--accent");
+      themeSubs.push(function () {
+        fgRGB = cssColor("--fg");
+        accRGB = cssColor("--accent-text");
+        glowRGB = cssColor("--accent");
+      });
+
+      var px = -1e5, py = -1e5, lastPointerT = -1e9, recalcClock = 0;
+      var RADIUS = 180;
+
+      function recalc() {
+        for (var i = 0; i < chars.length; i++) {
+          var r = chars[i].span.getBoundingClientRect();
+          chars[i].cx = r.left + r.width / 2;
+          chars[i].cy = r.top + r.height / 2;
+        }
+      }
+
+      var loop = makeLoop(function (dt, t) {
+        var active = performance.now() - lastPointerT < 2000;
+        recalcClock += dt;
+        if (recalcClock > 0.7) { recalcClock = 0; if (active) recalc(); }
+        var k = 1 - Math.exp(-14 * dt);
+        for (var i = 0; i < chars.length; i++) {
+          var s = chars[i], target, gt = 0;
+          if (active) {
+            var dx = px - s.cx, dy = py - s.cy;
+            var d = Math.sqrt(dx * dx + dy * dy);
+            var f = d < RADIUS ? 1 - d / RADIUS : 0;
+            f = f * f * (3 - 2 * f);
+            target = 340 + 560 * f;
+            gt = f;
+          } else {
+            target = 430 + 170 * Math.sin(t * 1.9 - s.i * 0.5);
+          }
+          s.w += (target - s.w) * k;
+          s.g += (gt - s.g) * k;
+          var wr = Math.round(s.w);
+          if (wr !== s.lastW) { s.span.style.fontWeight = wr; s.lastW = wr; }
+          if (s.g > 0.015) {
+            var g = s.g;
+            s.span.style.color = "rgb(" +
+              Math.round(lerp(fgRGB[0], accRGB[0], g)) + "," +
+              Math.round(lerp(fgRGB[1], accRGB[1], g)) + "," +
+              Math.round(lerp(fgRGB[2], accRGB[2], g)) + ")";
+            s.span.style.textShadow = "0 0 " + Math.round(22 * g) + "px rgba(" +
+              glowRGB[0] + "," + glowRGB[1] + "," + glowRGB[2] + "," + (0.5 * g).toFixed(3) + ")";
+            s.span.style.letterSpacing = (0.06 * g).toFixed(3) + "em";
+            s.hot = true;
+          } else if (s.hot) {
+            s.span.style.color = "";
+            s.span.style.textShadow = "";
+            s.span.style.letterSpacing = "";
+            s.hot = false;
+          }
+        }
+      });
+
+      function onMove(e) {
+        px = e.clientX; py = e.clientY;
+        lastPointerT = performance.now();
+      }
+      stage.addEventListener("pointermove", onMove);
+      stage.addEventListener("pointerdown", onMove);
+      stage.addEventListener("pointerleave", function () { lastPointerT = -1e9; });
+
+      var scrollPending = false;
+      function requestRecalc() {
+        if (scrollPending) return;
+        scrollPending = true;
+        requestAnimationFrame(function () { scrollPending = false; recalc(); });
+      }
+      window.addEventListener("resize", requestRecalc);
+      window.addEventListener("scroll", requestRecalc, { passive: true });
+
+      function resetStatic() {
+        for (var i = 0; i < chars.length; i++) {
+          var s = chars[i];
+          s.span.style.fontWeight = "";
+          s.span.style.color = "";
+          s.span.style.textShadow = "";
+          s.span.style.letterSpacing = "";
+          s.w = 430; s.lastW = -1; s.g = 0; s.hot = false;
+        }
+      }
+
+      var vis = onVisible(stage, function () {
+        if (reducedMotion) return;
+        recalc();
+        loop.start();
+      }, function () { loop.stop(); });
+
+      rmSubs.push(function (reduced) {
+        if (reduced) { loop.stop(); resetStatic(); }
+        else if (vis.visible) { recalc(); loop.start(); }
+      });
+    })();
+
+    /* ==================== 03 split-flap ==================== */
+    (function initSplitFlap() {
+      var stage = document.getElementById("sf-stage");
+      var board = document.getElementById("sf-board");
+      var liveEl = document.getElementById("sf-live");
+      if (!stage || !board) return;
+
+      var CHARSET = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·—-:/";
+      var COLS = 22, ROWS = 4;
+      var PAGES = [
+        ["SHIP MOTION    ON TIME",
+         "BLUR-TEXT      GATE 04",
+         "SPLIT-FLAP    BOARDING",
+         "HERO ENTRANCE  ON TIME"],
+        ["OPEN SOURCE    ALL DAY",
+         "MIT LICENSED   ON TIME",
+         "ZERO LOCK-IN   ON TIME",
+         "SIXTY FPS     BOARDING"],
+        ["COPY · PASTE   SHIPPED",
+         "NO API KEYS    ON TIME",
+         "DARK MODE      GATE 22",
+         "SHIP TONIGHT  BOARDING"]
+      ];
+
+      function idxOf(ch) {
+        var i = CHARSET.indexOf(ch);
+        return i < 0 ? 0 : i;
+      }
+
+      function makeHalf(cls) {
+        var d = document.createElement("div");
+        d.className = "sf-half " + cls;
+        var s = document.createElement("span");
+        d.appendChild(s);
+        return { el: d, span: s };
+      }
+
+      var cells = [];
+      for (var r = 0; r < ROWS; r++) {
+        var rowEl = document.createElement("div");
+        rowEl.className = "sf-row";
+        for (var c = 0; c < COLS; c++) {
+          var cellEl = document.createElement("div");
+          cellEl.className = "sf-cell";
+          var tS = makeHalf("sf-t"), bS = makeHalf("sf-b");
+          var tF = makeHalf("sf-t sf-flap"), bF = makeHalf("sf-b sf-flap");
+          cellEl.appendChild(tS.el); cellEl.appendChild(bS.el);
+          cellEl.appendChild(tF.el); cellEl.appendChild(bF.el);
+          rowEl.appendChild(cellEl);
+          cells.push({
+            el: cellEl, r: r, c: c,
+            tS: tS, bS: bS, tF: tF, bF: bF,
+            cur: 0, target: 0, next: 0,
+            phase: "idle", startAt: 0, prog: 0, dur: 0.08, stepsLeft: 0
+          });
+          tS.span.textContent = " ";
+          bS.span.textContent = " ";
+        }
+        board.appendChild(rowEl);
+      }
+
+      function easeOutBack(x) {
+        var c1 = 1.70158, c3 = c1 + 1;
+        var y = x - 1;
+        return 1 + c3 * y * y * y + c1 * y * y;
+      }
+
+      function beginStep(cell) {
+        cell.next = (cell.cur + 1) % CHARSET.length;
+        cell.tS.span.textContent = CHARSET.charAt(cell.next);
+        cell.tF.span.textContent = CHARSET.charAt(cell.cur);
+        cell.bF.span.textContent = CHARSET.charAt(cell.next);
+        cell.prog = 0;
+        cell.dur = cell.stepsLeft <= 1 ? 0.15 : 0.08;
+        cell.phase = "flip";
+        if (cell.stepsLeft > 2) cell.el.classList.add("sf-fast");
+        else cell.el.classList.remove("sf-fast");
+      }
+
+      function settle(cell) {
+        cell.phase = "idle";
+        cell.tF.el.style.visibility = "hidden";
+        cell.bF.el.style.visibility = "hidden";
+        cell.el.classList.remove("sf-fast");
+      }
+
+      function renderFlip(cell) {
+        var p = cell.prog / cell.dur;
+        if (p >= 1) {
+          cell.cur = cell.next;
+          cell.bS.span.textContent = CHARSET.charAt(cell.cur);
+          cell.stepsLeft--;
+          if (cell.stepsLeft > 0) beginStep(cell);
+          else settle(cell);
+          return;
+        }
+        var isFinal = cell.stepsLeft <= 1;
+        if (p < 0.5) {
+          var a = p * 2 * 90;
+          cell.tF.el.style.visibility = "visible";
+          cell.bF.el.style.visibility = "hidden";
+          cell.tF.el.style.transform = "rotateX(" + (-a).toFixed(1) + "deg)";
+        } else {
+          var q = (p - 0.5) * 2;
+          if (isFinal) q = easeOutBack(q);
+          cell.tF.el.style.visibility = "hidden";
+          cell.bF.el.style.visibility = "visible";
+          cell.bF.el.style.transform = "rotateX(" + (90 * (1 - q)).toFixed(1) + "deg)";
+        }
+      }
+
+      var pageIdx = -1, pageClock = 0, flutterClock = 0, INTERVAL = 6;
+
+      function announce(page) {
+        if (!liveEl) return;
+        liveEl.textContent = "Departures board: " +
+          page.map(function (rw) { return rw.replace(/\s+/g, " ").trim(); }).join("; ") + ".";
+      }
+
+      function pad(str) {
+        str = str.slice(0, COLS);
+        while (str.length < COLS) str += " ";
+        return str;
+      }
+
+      function setPage(idx, instant) {
+        pageIdx = idx;
+        var page = PAGES[idx];
+        var now = performance.now();
+        for (var i = 0; i < cells.length; i++) {
+          var cell = cells[i];
+          var ch = pad(page[cell.r]).charAt(cell.c);
+          cell.target = idxOf(ch);
+          if (cell.phase !== "idle") settle(cell);
+          if (instant) {
+            cell.cur = cell.target;
+            cell.stepsLeft = 0;
+            cell.tS.span.textContent = ch;
+            cell.bS.span.textContent = ch;
+            settle(cell);
+            continue;
+          }
+          var steps = (cell.target - cell.cur + CHARSET.length) % CHARSET.length;
+          if (steps === 0) continue;
+          if (steps > 14) {
+            cell.cur = (cell.target - 8 - ((Math.random() * 4) | 0) + CHARSET.length) % CHARSET.length;
+            steps = (cell.target - cell.cur + CHARSET.length) % CHARSET.length;
+          }
+          cell.stepsLeft = steps;
+          cell.startAt = now + cell.c * 38 + cell.r * 110 + rand(0, 90);
+          cell.phase = "wait";
+        }
+        announce(page);
+      }
+
+      var loop = makeLoop(function (dt) {
+        var now = performance.now();
+        pageClock += dt;
+        if (pageClock >= INTERVAL) {
+          pageClock = 0;
+          setPage((pageIdx + 1) % PAGES.length, false);
+        }
+        flutterClock += dt;
+        if (flutterClock > 1.4) {
+          flutterClock = 0;
+          var cell = cells[(Math.random() * cells.length) | 0];
+          if (cell.phase === "idle") {
+            cell.phase = "twitch";
+            cell.prog = 0;
+            cell.tF.span.textContent = CHARSET.charAt(cell.cur);
+            cell.tS.span.textContent = CHARSET.charAt(cell.cur);
+          }
+        }
+        for (var i = 0; i < cells.length; i++) {
+          var c = cells[i];
+          if (c.phase === "wait") {
+            if (now >= c.startAt) beginStep(c);
+          } else if (c.phase === "flip") {
+            c.prog += dt;
+            renderFlip(c);
+          } else if (c.phase === "twitch") {
+            c.prog += dt;
+            var p = c.prog / 0.16;
+            if (p >= 1) {
+              settle(c);
+            } else {
+              c.tF.el.style.visibility = "visible";
+              c.tF.el.style.transform = "rotateX(" + (-14 * Math.sin(Math.PI * p)).toFixed(1) + "deg)";
+            }
+          }
+        }
+      });
+
+      var rmTimer = 0;
+      function startRMRotation() {
+        clearInterval(rmTimer);
+        rmTimer = setInterval(function () {
+          setPage((pageIdx + 1) % PAGES.length, true);
+        }, INTERVAL * 1000);
+      }
+
+      var vis = onVisible(stage, function () {
+        if (reducedMotion) {
+          setPage(pageIdx < 0 ? 0 : pageIdx, true);
+          startRMRotation();
+          return;
+        }
+        if (pageIdx < 0) setPage(0, false);
+        loop.start();
+      }, function () {
+        loop.stop();
+        clearInterval(rmTimer);
+      });
+
+      document.getElementById("sf-next").addEventListener("click", function () {
+        pageClock = 0;
+        setPage((pageIdx + 1) % PAGES.length, reducedMotion);
+      });
+
+      rmSubs.push(function (reduced) {
+        if (reduced) {
+          loop.stop();
+          setPage(pageIdx < 0 ? 0 : pageIdx, true);
+          if (vis.visible) startRMRotation();
+        } else {
+          clearInterval(rmTimer);
+          if (vis.visible) loop.start();
+        }
+      });
+    })();
+
+    /* ==================== 04 liquid-fill-headline ==================== */
+    (function initLiquid() {
+      var stage = document.getElementById("lq-stage");
+      var block = document.getElementById("lq-block");
+      var back = document.getElementById("lq-back");
+      var fill = document.getElementById("lq-fill");
+      var shine = document.getElementById("lq-shine");
+      if (!stage || !fill) return;
+
+      var N = 24;
+      var D_RISE = 3.0, D_SETTLE = 0.8, D_SHIM = 1.0, D_HOLD = 1.4, D_DRAIN = 1.0, D_GAP = 0.8;
+      var TOTAL = D_RISE + D_SETTLE + D_SHIM + D_HOLD + D_DRAIN + D_GAP;
+      var tl = 0, wave = 0, fullFlushed = false;
+
+      function easeInOutCubic(x) { return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+      function easeInCubic(x) { return x * x * x; }
+
+      function clip(level, amp, off) {
+        var pts = "";
+        for (var i = 0; i < N; i++) {
+          var x = i * (100 / (N - 1));
+          var y = level +
+            amp * Math.sin(x * 0.11 + wave * 3.1 + off) +
+            amp * 0.6 * Math.sin(x * 0.183 - wave * 4.3 + off * 1.7);
+          pts += x.toFixed(1) + "% " + y.toFixed(1) + "%, ";
+        }
+        return "polygon(0% 120%, " + pts + "100% 120%)";
+      }
+
+      function apply(level, amp) {
+        fill.style.clipPath = clip(level, amp, 0);
+        back.style.clipPath = clip(level - 3.5, amp * 1.15, 1.4);
+      }
+
+      var loop = makeLoop(function (dt) {
+        tl += dt;
+        wave += dt;
+        if (tl >= TOTAL) tl -= TOTAL;
+        var t = tl;
+        if (t < D_RISE) {
+          var e = easeInOutCubic(t / D_RISE);
+          apply(108 - 114 * e, 4.5);
+          shine.style.opacity = "0";
+          fullFlushed = false;
+        } else if ((t -= D_RISE) < D_SETTLE) {
+          apply(-6, 4.5 * (1 - t / D_SETTLE));
+          fullFlushed = false;
+        } else if ((t -= D_SETTLE) < D_SHIM) {
+          if (!fullFlushed) { apply(-6, 0); fullFlushed = true; }
+          var q = t / D_SHIM;
+          shine.style.opacity = Math.sin(Math.PI * q).toFixed(3);
+          shine.style.backgroundPosition = (120 - 150 * q).toFixed(1) + "% 0%";
+        } else if ((t -= D_SHIM) < D_HOLD) {
+          shine.style.opacity = "0";
+        } else if ((t -= D_HOLD) < D_DRAIN) {
+          apply(-6 + 114 * easeInCubic(t / D_DRAIN), 3.5);
+          fullFlushed = false;
+        } else {
+          apply(108, 0);
+        }
+      });
+
+      function setStatic() {
+        fill.style.clipPath = "none";
+        back.style.clipPath = "polygon(0 0, 0 0, 0 0)";
+        shine.style.opacity = "0";
+      }
+
+      var vis = onVisible(stage, function () {
+        if (reducedMotion) { setStatic(); return; }
+        loop.start();
+      }, function () { loop.stop(); });
+
+      block.addEventListener("click", function () {
+        if (reducedMotion) return;
+        tl = 0;
+      });
+
+      rmSubs.push(function (reduced) {
+        if (reduced) { loop.stop(); setStatic(); }
+        else if (vis.visible) { tl = 0; loop.start(); }
+      });
+      if (reducedMotion) setStatic();
+      else apply(108, 0);
+    })();
+
+    /* ==================== 05 word-cascade ==================== */
+    (function initCascade() {
+      var stage = document.getElementById("cw-stage");
+      var heading = document.getElementById("cw-heading");
+      var para = document.getElementById("cw-para");
+      if (!stage || !heading || !para) return;
+
+      function wrapWords(el) {
+        var text = el.textContent.replace(/\s+/g, " ").trim();
+        var words = text.split(" ");
+        el.textContent = "";
+        var spans = [];
+        for (var i = 0; i < words.length; i++) {
+          var s = document.createElement("span");
+          s.className = "cw";
+          s.textContent = words[i];
+          el.appendChild(s);
+          if (i < words.length - 1) el.appendChild(document.createTextNode(" "));
+          spans.push(s);
+        }
+        return spans;
+      }
+
+      var spans = wrapWords(heading).concat(wrapWords(para));
+      var words = spans.map(function (s) {
+        return { span: s, delay: 0, s: 0, v: 0, rot: 0, done: false };
+      });
+      var time = 0, played = false, armed = true;
+
+      function clearStyles(w) {
+        w.span.style.transform = "";
+        w.span.style.opacity = "";
+        w.span.style.filter = "";
+        w.span.style.willChange = "";
+      }
+
+      function showAll() {
+        for (var i = 0; i < words.length; i++) { clearStyles(words[i]); words[i].done = true; }
+      }
+
+      function prepare() {
+        var i, w;
+        for (i = 0; i < words.length; i++) clearStyles(words[i]);
+        /* measure lines (single read pass, after the reset writes) */
+        var tops = [];
+        for (i = 0; i < words.length; i++) {
+          var top = words[i].span.offsetTop;
+          var line = -1;
+          for (var l = 0; l < tops.length; l++) {
+            if (Math.abs(tops[l] - top) < 3) { line = l; break; }
+          }
+          if (line < 0) { tops.push(top); line = tops.length - 1; }
+          words[i].line = line;
+        }
+        var perLine = [];
+        for (i = 0; i < words.length; i++) {
+          w = words[i];
+          perLine[w.line] = (perLine[w.line] || 0) + 1;
+          w.delay = w.line * 0.15 + (perLine[w.line] - 1) * 0.04;
+          w.s = 0; w.v = 0; w.done = false;
+          w.rot = rand(-7, 7);
+          w.span.style.willChange = "transform, opacity, filter";
+          w.span.style.opacity = "0";
+          w.span.style.transform = "translateY(-44px) rotate(" + w.rot.toFixed(1) + "deg)";
+          w.span.style.filter = "blur(8px)";
+        }
+      }
+
+      var loop = makeLoop(function (dt) {
+        time += dt;
+        var allDone = true;
+        for (var i = 0; i < words.length; i++) {
+          var w = words[i];
+          if (w.done) continue;
+          if (time < w.delay) { allDone = false; continue; }
+          w.v += (180 * (1 - w.s) - 16 * w.v) * dt;
+          w.s += w.v * dt;
+          if (Math.abs(1 - w.s) < 0.002 && Math.abs(w.v) < 0.05) {
+            w.done = true;
+            clearStyles(w);
+            w.span.style.willChange = "auto";
+            continue;
+          }
+          allDone = false;
+          var sc = Math.max(0, Math.min(1, w.s));
+          var y = -44 * (1 - w.s);
+          var rot = w.rot * (1 - sc);
+          var blur = Math.max(0, 8 * (1 - sc / 0.9));
+          w.span.style.transform = "translateY(" + y.toFixed(1) + "px) rotate(" + rot.toFixed(2) + "deg)";
+          w.span.style.filter = blur > 0.15 ? "blur(" + blur.toFixed(1) + "px)" : "";
+          w.span.style.opacity = Math.min(1, sc * 2.4).toFixed(3);
+        }
+        if (allDone) loop.stop();
+      });
+
+      function play() {
+        if (reducedMotion) { showAll(); return; }
+        prepare();
+        time = 0;
+        played = true;
+        loop.start();
+      }
+
+      var vis = onVisible(stage, function () {
+        if (reducedMotion) { showAll(); return; }
+        if (armed || !played) { armed = false; play(); }
+      }, function () {
+        loop.stop();
+        armed = true;
+      });
+
+      document.getElementById("cw-replay").addEventListener("click", function () {
+        if (!reducedMotion) play();
+      });
+
+      rmSubs.push(function (reduced) {
+        if (reduced) { loop.stop(); showAll(); }
+        else if (vis.visible) play();
+      });
+      if (reducedMotion) showAll();
+    })();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
+})();
+</script>

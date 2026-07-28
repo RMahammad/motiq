@@ -41,4 +41,45 @@ describe("KpiNumberMorph", () => {
     render(<KpiNumberMorph label="Views" value={3140000} notation="compact" />);
     expect(screen.getByText(/3\.1M/)).toBeTruthy();
   });
+
+  /* --- responsive contracts (structure/class assertions jsdom can enforce) -- */
+
+  it("keeps the trend glyph and its delta in one unwrappable group", () => {
+    const { container } = render(
+      <KpiNumberMorph label="Events / min" value={1000} change={-3087} changeLabel="vs last tick" />,
+    );
+    const row = container.querySelector("[data-kpi-change]");
+    expect(row).toBeTruthy();
+    // The row wraps as a whole…
+    expect(row!.className).toContain("flex-wrap");
+    // …but the arrow and the number are one nowrap item, so a narrow tile can
+    // never strand the delta on a line away from its direction glyph.
+    const value = row!.querySelector("[data-kpi-change-value]");
+    expect(value).toBeTruthy();
+    expect(value!.className).toContain("whitespace-nowrap");
+    expect(value!.querySelector("svg")).toBeTruthy();
+    expect(value!.textContent).toContain("3,087");
+  });
+
+  it("sizes itself from its own container, never from the viewport", () => {
+    const { container } = render(<KpiNumberMorph label="Revenue" value={10} />);
+    const tile = container.firstElementChild as HTMLElement;
+    // The tile declares a *named* container context, so a KPI in a 180px column
+    // inside a 1440px window is treated as narrow.
+    expect(tile.className).toContain("@container/kpi");
+    expect(tile.className).toContain("min-w-0");
+    // Padding steps on the tile's own width, not a media query.
+    expect(tile.className).toContain("p-4");
+    expect(tile.className).toContain("@[16rem]/kpi:p-5");
+    // No viewport breakpoint may decide any of this.
+    expect(tile.className).not.toMatch(/(^|\s)(sm|md|lg|xl):/);
+  });
+
+  it("scales the number in container units (cqi), not viewport units (vw)", () => {
+    const { container } = render(<KpiNumberMorph label="Revenue" value={1240} />);
+    const number = container.querySelector("span.tabular-nums") as HTMLElement;
+    expect(number).toBeTruthy();
+    expect(number.className).toContain("text-[clamp(1.7rem,14cqi,2.3rem)]");
+    expect(number.className).not.toContain("vw");
+  });
 });

@@ -246,7 +246,9 @@ const focusRing =
 
 function CtaLink({ cta, variant }: { cta: HeroCta; variant: "primary" | "secondary" }) {
   const className = cn(
-    "inline-flex items-center justify-center gap-1.5 rounded-xl px-5 py-2.5 text-[14px] font-semibold transition-colors",
+    // Full-bleed, equal-width, 44px-tall on phones; from `sm` the original
+    // intrinsic-width pill, unchanged.
+    "inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-xl px-5 py-2.5 text-[14px] font-semibold transition-colors @md/hero:min-h-0 @md/hero:w-auto",
     focusRing,
     variant === "primary"
       ? "border border-[color-mix(in_oklab,var(--color-accent)_55%,black)] bg-[linear-gradient(180deg,color-mix(in_oklab,var(--color-accent)_86%,white)_0%,var(--color-accent)_60%)] text-[var(--color-accent-foreground,white)] shadow-[0_1px_0_0_color-mix(in_oklab,white_45%,transparent)_inset,0_8px_22px_-10px_color-mix(in_oklab,var(--color-accent)_80%,transparent)] transition-[transform,filter] hover:brightness-[1.06] motion-safe:hover:-translate-y-px"
@@ -269,6 +271,25 @@ function CtaLink({ cta, variant }: { cta: HeroCta; variant: "primary" | "seconda
 /* -------------------------------------------------------------------------- */
 /* Offscreen pause — keep continuous motion out of view idle                   */
 /* -------------------------------------------------------------------------- */
+
+/**
+ * SSR-safe "is this a phone-width viewport" flag. Starts `false` so the server
+ * and the first client render agree; it only ever *adds* narrow-viewport
+ * affordances after mount. Used strictly for behaviour that CSS cannot express
+ * (keyboard reachability of the metric rail) — every layout change is CSS.
+ */
+function useNarrowViewport(): boolean {
+  const [narrow, setNarrow] = React.useState(false);
+  React.useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
+    const mq = window.matchMedia("(max-width: 639.98px)");
+    const update = () => setNarrow(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return narrow;
+}
 
 function useInView<T extends Element>(ref: React.RefObject<T | null>): boolean {
   // Defaults to true so the very first paint (and any non-IO environment such as
@@ -335,9 +356,9 @@ const DEFAULT_PROOF: string[] = [
  *  live surface. Text-only; the check glyph is decorative. */
 function ProofStrip({ items }: { items: string[] }) {
   return (
-    <ul className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-7 sm:gap-y-2">
+    <ul className="flex flex-col gap-2 @2xl/hero:flex-row @2xl/hero:flex-wrap @2xl/hero:gap-x-7 @2xl/hero:gap-y-2">
       {items.map((t) => (
-        <li key={t} className="flex items-center gap-2.5 text-[13.5px] text-[var(--color-fg)]">
+        <li key={t} className="flex items-start gap-2.5 text-[13px] text-[var(--color-fg)] @2xl/hero:items-center @2xl/hero:text-[13.5px]">
           <span
             className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]"
             aria-hidden
@@ -356,6 +377,79 @@ function ProofStrip({ items }: { items: string[] }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Metric rail — snap carousel on phones, the original 3-up grid from `sm`      */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Three KPI tiles cost ~300px stacked on a phone, and squeezing them into
+ * columns shrinks the numbers past legibility. Below `sm` they become one
+ * snap-scrolling rail — one tile at full size is the hero's focal moment, the
+ * other two are a swipe (or an arrow key) away, and a dot row makes that
+ * obvious. From `sm` up the container is the original `grid-cols-3`, so the
+ * desktop composition is byte-for-byte what it was.
+ */
+function MetricRail({ label, tiles }: { label: string; tiles: React.ReactNode[] }) {
+  const railRef = React.useRef<HTMLDivElement | null>(null);
+  const [active, setActive] = React.useState(0);
+  // Only the narrow layout actually scrolls, so only there is the rail a
+  // focusable region — desktop keeps its original tab order.
+  const narrow = useNarrowViewport();
+
+  const handleScroll = React.useCallback(() => {
+    const el = railRef.current;
+    if (!el || tiles.length === 0) return;
+    const step = el.scrollWidth / tiles.length;
+    if (step <= 0) return;
+    setActive(Math.max(0, Math.min(tiles.length - 1, Math.round(el.scrollLeft / step))));
+  }, [tiles.length]);
+
+  return (
+    <div className="flex flex-col gap-2.5">
+      <div
+        ref={railRef}
+        onScroll={handleScroll}
+        data-metric-rail=""
+        role={narrow ? "region" : undefined}
+        aria-label={narrow ? label : undefined}
+        tabIndex={narrow ? 0 : undefined}
+        className={cn(
+          "flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+          // Three KPI tiles need ~200px each to keep a 6-glyph tabular number on
+          // one line; below that the rail scrolls instead of squeezing them.
+          "@2xl/hero:grid @2xl/hero:grid-cols-3 @2xl/hero:overflow-x-visible @2xl/hero:pb-0",
+          "rounded-2xl",
+          focusRing,
+        )}
+      >
+        {tiles.map((tile, i) => (
+          // `grid` (not `flex`) so the tile stretches on both axes and fills its
+          // slot exactly as it did when the tiles were grid children themselves.
+          <div
+            key={i}
+            className="grid min-w-[86%] shrink-0 snap-start @2xl/hero:min-w-0 @2xl/hero:shrink"
+          >
+            {tile}
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination affordance — decorative; the rail itself carries the label. */}
+      <div aria-hidden className="flex items-center justify-center gap-1.5 @2xl/hero:hidden">
+        {tiles.map((_, i) => (
+          <span
+            key={i}
+            className={cn(
+              "h-1.5 rounded-full transition-[width,background-color] duration-200 motion-reduce:transition-none",
+              i === active ? "w-5 bg-[var(--color-accent)]" : "w-1.5 bg-[var(--color-border)]",
+            )}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -495,11 +589,22 @@ export function LiveDataCommandHero({
   const getRowId = React.useCallback((r: HeroSignal) => r.id, []);
   const getItemId = React.useCallback((r: HeroSignal) => r.id, []);
 
+  /* --- narrow-viewport disclosure for the watchlist ------------------------ */
+  // On a phone the watchlist and the live feed show the same four signals, so
+  // stacking both is ~300px of duplication. The feed stays the focal surface and
+  // the watchlist collapses behind a real disclosure (CSS keeps it open from
+  // `sm` up, so the desktop two-column composition never changes).
+  const watchlistPanelId = `${React.useId()}-watchlist`;
+  const [watchlistOpen, setWatchlistOpen] = React.useState(false);
+
   return (
     <section
       ref={rootRef}
       className={cn(
-        "relative isolate w-full overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-fg)]",
+        // @container/hero: this block is routinely placed in a column far narrower
+        // than the viewport (the docs preview gives it ~780px at a 1440px screen).
+        // Layout must follow the space it actually has, not what the viewport claims.
+        "@container/hero relative isolate w-full overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg)] text-[var(--color-fg)]",
         className,
       )}
       {...rest}
@@ -512,13 +617,18 @@ export function LiveDataCommandHero({
         <HeroBackdrop />
       )}
 
-      <div className="flex flex-col gap-8 p-6 sm:p-8 lg:gap-10 lg:p-12">
+      {/* `max-[360px]` trims the padding chain on the smallest phones only, where
+          four nested paddings otherwise eat ~45% of the viewport. */}
+      <div className="flex flex-col gap-6 p-4 max-[360px]:gap-5 max-[360px]:p-3 @2xl/hero:gap-8 @2xl/hero:p-8 @4xl/hero:gap-10 @4xl/hero:p-12">
         {/* Copy band — headline/copy on one side, CTAs + live status on the
             other, so the marketing row reads wide instead of a thin column. */}
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-10">
-          <div className="flex min-w-0 flex-col gap-4">
+        {/* The side-by-side copy/CTA split only earns its keep once the container
+            can give the headline a real measure — below ~900px it produced a
+            four-line headline beside dead space, so it stacks instead. */}
+        <div className="grid gap-5 @2xl/hero:gap-6 @4xl/hero:grid-cols-[minmax(0,1fr)_auto] @4xl/hero:items-end @4xl/hero:gap-10">
+          <div className="flex min-w-0 flex-col gap-3.5 @2xl/hero:gap-4">
             {eyebrow ? (
-              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_80%,transparent)] px-3 py-1 text-[12px] font-medium uppercase tracking-wide text-[var(--color-muted)] backdrop-blur-sm">
+              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_80%,transparent)] px-3 py-1 text-[11px] font-medium uppercase tracking-wide text-[var(--color-muted)] backdrop-blur-sm @2xl/hero:text-[12px]">
                 <span className="relative flex h-1.5 w-1.5" aria-hidden>
                   <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent)] opacity-70 motion-safe:animate-ping" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
@@ -527,17 +637,23 @@ export function LiveDataCommandHero({
               </span>
             ) : null}
 
-            <h2 className="text-balance text-[clamp(2rem,4.4vw,3.1rem)] font-semibold leading-[1.05] tracking-tight text-[var(--color-fg)]">
+            {/* The `sm` expression is the original desktop clamp, untouched; the
+                unprefixed one is a phone-first scale so the headline never lands
+                at a size that costs it two extra lines. */}
+            {/* cqw, not vw: sized off the container. A vw-based clamp gave a ~50px
+                headline inside a 780px column on a 1440px screen, which is what
+                pushed it to four cramped lines. */}
+            <h2 className="text-balance text-[clamp(1.75rem,7.5cqw,2.2rem)] font-semibold leading-[1.08] tracking-tight text-[var(--color-fg)] @4xl/hero:text-[clamp(2rem,4.4cqw,3.1rem)] @4xl/hero:leading-[1.05]">
               {headline}
             </h2>
 
             {copy ? (
-              <p className="max-w-[56ch] text-[15px] leading-relaxed text-[var(--color-muted)] sm:text-[16px]">{copy}</p>
+              <p className="max-w-[56ch] text-[15px] leading-relaxed text-[var(--color-muted)] @2xl/hero:text-[16px]">{copy}</p>
             ) : null}
           </div>
 
-          <div className="flex shrink-0 flex-col items-start gap-4 lg:items-end">
-            <div className="flex flex-wrap items-center gap-3">
+          <div className="flex w-full shrink-0 flex-col items-start gap-3.5 @2xl/hero:gap-4 @4xl/hero:w-auto @4xl/hero:items-end">
+            <div className="flex w-full flex-col gap-2.5 @md/hero:w-auto @md/hero:flex-row @md/hero:flex-wrap @md/hero:items-center @md/hero:gap-3">
               {primaryCta ? <CtaLink cta={primaryCta} variant="primary" /> : null}
               {secondaryCta ? <CtaLink cta={secondaryCta} variant="secondary" /> : null}
             </div>
@@ -575,9 +691,10 @@ export function LiveDataCommandHero({
           />
           <div className="relative flex min-w-0 flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] shadow-[var(--shadow-lg)]">
             {/* Window header --------------------------------------------- */}
-            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_60%,var(--color-bg-secondary))] px-4 py-3 sm:px-5">
-              <span className="flex items-center gap-2.5 text-[13px] font-semibold">
-                <span className="flex items-center gap-1.5" aria-hidden>
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_60%,var(--color-bg-secondary))] px-3 py-2.5 @2xl/hero:px-5 @2xl/hero:py-3">
+              <span className="flex min-w-0 items-center gap-2.5 text-[13px] font-semibold">
+                {/* Window-chrome dots are pure decoration; a phone needs the room. */}
+                <span className="hidden items-center gap-1.5 @2xl/hero:flex" aria-hidden>
                   <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-error)_65%,transparent)]" />
                   <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-warning)_70%,transparent)]" />
                   <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-success)_65%,transparent)]" />
@@ -588,9 +705,9 @@ export function LiveDataCommandHero({
                     <path d="M7 14l4-4 3 3 5-6" />
                   </svg>
                 </span>
-                <span className="flex flex-col leading-tight">
+                <span className="flex min-w-0 flex-col leading-tight">
                   <span>Signal command</span>
-                  <span className="font-mono text-[10.5px] font-normal text-[var(--color-muted)]">demo-stream · fictional</span>
+                  <span className="font-mono text-[11px] font-normal text-[var(--color-muted)]">demo-stream · fictional</span>
                 </span>
               </span>
               <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--color-warning)] bg-[color-mix(in_oklab,var(--color-warning)_12%,transparent)] px-2 py-0.5 text-[11px] font-medium text-[var(--color-warning)]">
@@ -599,83 +716,143 @@ export function LiveDataCommandHero({
               </span>
             </div>
 
-            <div className="flex min-w-0 flex-col gap-4 p-4 sm:p-5">
-              {/* Refresh state — full-width strip */}
-              <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-3">
-                <DataRefreshState
-                  mode="inline"
-                  state={refreshState}
-                  label="Live signals"
-                  source="Signal warehouse · replica-1"
-                  lastUpdated={NOW}
-                  nextRefresh={NOW + REFRESH_INTERVAL}
-                  now={NOW}
-                  updatedCount={changedCount}
-                  totalCount={base.length}
-                  staleness="4m behind live"
-                  errorSummary="Upstream signal endpoint timed out (504)."
-                  reducedMotion={reduce}
-                />
-              </div>
+            <div className="flex min-w-0 flex-col gap-3 p-3 max-[360px]:gap-2.5 max-[360px]:p-2 @2xl/hero:gap-4 @2xl/hero:p-5">
+              {/* Refresh state — full-width strip. It brings its own bordered
+                  shell, so it is not wrapped in a second one. */}
+              <DataRefreshState
+                mode="inline"
+                state={refreshState}
+                label="Live signals"
+                source="Signal warehouse · replica-1"
+                lastUpdated={NOW}
+                nextRefresh={NOW + REFRESH_INTERVAL}
+                now={NOW}
+                updatedCount={changedCount}
+                totalCount={base.length}
+                staleness="4m behind live"
+                errorSummary="Upstream signal endpoint timed out (504)."
+                reducedMotion={reduce}
+              />
 
-              {/* Three KPIs — full-width row */}
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <KpiNumberMorph
-                  label="Events / min"
-                  value={agg.throughput}
-                  notation="compact"
-                  change={agg.throughput - prevAgg.throughput}
-                  changeLabel="vs last tick"
-                  state={kpiState}
-                />
-                <KpiNumberMorph
-                  label="p95 latency"
-                  value={agg.latency}
-                  suffix=" ms"
-                  change={agg.latency - prevAgg.latency}
-                  changeLabel="vs last tick"
-                  state={kpiState}
-                />
-                <KpiNumberMorph
-                  label="Error rate"
-                  value={agg.errorRate}
-                  suffix="%"
-                  decimals={2}
-                  change={round2(agg.errorRate - prevAgg.errorRate)}
-                  changeAsPercent
-                  changeLabel="vs last tick"
-                  state={kpiState}
-                />
-              </div>
+              {/* Three KPIs — a snap rail on phones, a 3-up row from `sm`. */}
+              <MetricRail
+                label="Key metrics"
+                tiles={[
+                  <KpiNumberMorph
+                    key="throughput"
+                    label="Events / min"
+                    value={agg.throughput}
+                    notation="compact"
+                    change={agg.throughput - prevAgg.throughput}
+                    changeLabel="vs last tick"
+                    state={kpiState}
+                  />,
+                  <KpiNumberMorph
+                    key="latency"
+                    label="p95 latency"
+                    value={agg.latency}
+                    suffix=" ms"
+                    change={agg.latency - prevAgg.latency}
+                    changeLabel="vs last tick"
+                    state={kpiState}
+                  />,
+                  <KpiNumberMorph
+                    key="errorRate"
+                    label="Error rate"
+                    value={agg.errorRate}
+                    suffix="%"
+                    decimals={2}
+                    change={round2(agg.errorRate - prevAgg.errorRate)}
+                    changeAsPercent
+                    changeLabel="vs last tick"
+                    state={kpiState}
+                  />,
+                ]}
+              />
 
               {/* Watched signals · live feed — two tiled columns */}
-              <div className="grid min-w-0 gap-4 lg:grid-cols-2 lg:gap-5 lg:items-start">
-                <section aria-label="Watched signals" className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-3">
-                  <FilterResultTransition<HeroSignal>
-                    items={watchlist}
-                    getItemId={getItemId}
-                    layout="list"
-                    state={filterState}
-                    regionLabel="Watched signals"
-                    activeFilters={activeFilters}
-                    loadingCount={3}
-                    error="Couldn't load signals - the endpoint is unavailable."
-                    resultLabel={(n) => (
-                      <>
-                        <span className="tabular-nums [font-variant-numeric:tabular-nums]">{n}</span>{" "}
-                        {n === 1 ? "signal watched" : "signals watched"}
-                      </>
+              <div className="grid min-w-0 gap-3 @2xl/hero:gap-4 @4xl/hero:grid-cols-2 @4xl/hero:gap-5 @4xl/hero:items-start">
+                <section aria-label="Watched signals" className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-2 @2xl/hero:p-3">
+                  {/* Narrow-container disclosure. The panel is unconditionally
+                      shown once the container passes @2xl, so this control simply
+                      does not exist at widths that can afford both tiles. */}
+                  <button
+                    type="button"
+                    aria-expanded={watchlistOpen}
+                    aria-controls={watchlistPanelId}
+                    onClick={() => setWatchlistOpen((open) => !open)}
+                    className={cn(
+                      "flex min-h-[44px] w-full items-center justify-between gap-3 rounded-lg px-1 text-left text-[13px] font-semibold text-[var(--color-fg)] @2xl/hero:hidden",
+                      focusRing,
                     )}
-                    renderItem={(r) => (
-                      <div className="flex items-center justify-between gap-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2">
-                        <span className="min-w-0">
-                          <span className="block truncate text-[12.5px] font-medium text-[var(--color-fg)]">{r.name}</span>
-                          <span className="block text-[11px] text-[var(--color-muted)]">{r.region}</span>
+                  >
+                    {/* The summary carries the state the collapsed panel holds —
+                        the live count and any active facet — so nothing is
+                        hidden behind the disclosure, only detail. */}
+                    <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+                      <span className="whitespace-nowrap">
+                        Watched signals
+                        <span className="ml-2 rounded-full bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] px-1.5 py-0.5 text-[11px] font-medium tabular-nums text-[var(--color-accent)]">
+                          {watchlist.length}
                         </span>
-                        <StatusBadge status={r.status} />
-                      </div>
-                    )}
-                  />
+                      </span>
+                      {activeFilters.map((f) => (
+                        <span
+                          key={f.id}
+                          className="whitespace-nowrap rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2 py-0.5 text-[11px] font-normal text-[var(--color-fg)]"
+                        >
+                          <span className="text-[var(--color-muted)]">{f.group}: </span>
+                          {f.label}
+                        </span>
+                      ))}
+                    </span>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden
+                      className={cn(
+                        "shrink-0 text-[var(--color-muted)] transition-transform duration-200 motion-reduce:transition-none",
+                        watchlistOpen && "rotate-180",
+                      )}
+                    >
+                      <path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+
+                  <div
+                    id={watchlistPanelId}
+                    data-watchlist-panel=""
+                    className={cn(watchlistOpen ? "block pt-1" : "hidden", "@2xl/hero:block @2xl/hero:pt-0")}
+                  >
+                    <FilterResultTransition<HeroSignal>
+                      items={watchlist}
+                      getItemId={getItemId}
+                      layout="list"
+                      state={filterState}
+                      regionLabel="Watched signals"
+                      activeFilters={activeFilters}
+                      loadingCount={3}
+                      error="Couldn't load signals - the endpoint is unavailable."
+                      resultLabel={(n) => (
+                        <>
+                          <span className="tabular-nums [font-variant-numeric:tabular-nums]">{n}</span>{" "}
+                          {n === 1 ? "signal watched" : "signals watched"}
+                        </>
+                      )}
+                      renderItem={(r) => (
+                        <div className="flex items-center justify-between gap-2.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2.5 py-2 @2xl/hero:px-3">
+                          <span className="min-w-0">
+                            {/* Wraps to two lines rather than eliding to "R…". */}
+                            <span className="line-clamp-2 text-[12.5px] font-medium text-[var(--color-fg)]">{r.name}</span>
+                            <span className="block text-[11px] text-[var(--color-muted)]">{r.region}</span>
+                          </span>
+                          <StatusBadge status={r.status} />
+                        </div>
+                      )}
+                    />
+                  </div>
                 </section>
 
                 <section aria-label="Live signal feed" className="min-w-0">
@@ -690,22 +867,36 @@ export function LiveDataCommandHero({
                     emptyContent="No signals match this view."
                     errorContent="Live feed unavailable - the endpoint timed out."
                     renderMobileRow={(r) => (
-                      <div className="flex flex-col gap-2">
+                      // Each stacked row is a labelled key/value block. Every
+                      // label sits in the same unwrappable span as its value, so
+                      // a narrow card wraps whole pairs onto the next line
+                      // instead of stranding single words (or a separator).
+                      <div className="flex flex-col gap-1.5">
                         <div className="flex items-start justify-between gap-2">
-                          <span className="min-w-0">
-                            <span className="block truncate text-[13.5px] font-semibold text-[var(--color-fg)]">{r.name}</span>
-                            <span className="block text-[11px] text-[var(--color-muted)]">{r.region}</span>
+                          <span className="line-clamp-2 min-w-0 text-[13.5px] font-semibold text-[var(--color-fg)]">
+                            {r.name}
                           </span>
                           <StatusBadge status={r.status} />
                         </div>
-                        <dl className="grid grid-cols-2 gap-2 text-[12px]">
-                          <div>
-                            <dt className="text-[10.5px] uppercase tracking-wide text-[var(--color-muted)]">Events/min</dt>
-                            <dd className="font-semibold tabular-nums text-[var(--color-fg)]">{fmtThroughput(r.throughput)}</dd>
+                        <dl
+                          data-signal-meta=""
+                          className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[11.5px]"
+                        >
+                          <div data-meta-pair="" className="whitespace-nowrap">
+                            <dt className="sr-only">Region</dt>
+                            <dd className="inline text-[var(--color-muted)]">{r.region}</dd>
                           </div>
-                          <div>
-                            <dt className="text-[10.5px] uppercase tracking-wide text-[var(--color-muted)]">Errors</dt>
-                            <dd className="font-semibold tabular-nums text-[var(--color-fg)]">{r.errorRate.toFixed(2)}%</dd>
+                          <div data-meta-pair="" className="whitespace-nowrap">
+                            <dt className="inline text-[var(--color-muted)]">Events </dt>
+                            <dd className="inline font-semibold tabular-nums text-[var(--color-fg)]">
+                              {fmtThroughput(r.throughput)}
+                            </dd>
+                          </div>
+                          <div data-meta-pair="" className="whitespace-nowrap">
+                            <dt className="inline text-[var(--color-muted)]">Errors </dt>
+                            <dd className="inline font-semibold tabular-nums text-[var(--color-fg)]">
+                              {r.errorRate.toFixed(2)}%
+                            </dd>
                           </div>
                         </dl>
                       </div>
@@ -716,7 +907,7 @@ export function LiveDataCommandHero({
             </div>
 
             {/* Honesty footer ------------------------------------------- */}
-            <div className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-2.5 sm:px-5">
+            <div className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2 @2xl/hero:px-5 @2xl/hero:py-2.5">
               <p className="inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
                 Demo data - fictional signals, no live backend.

@@ -99,6 +99,9 @@ const CATEGORY_INTRO: Record<string, string> = {
   backgrounds: "Ambient animated background components for React - performance-safe backdrops that pause offscreen and respect reduced motion. Editable source for landing pages and hero sections.",
   "product-backgrounds": "Animated product-background components for React - backdrops driven by real application state like workflows, signals, queues, and events. Editable, performance-safe source for dashboards and product heroes.",
   "workflow-heroes": "Animated hero-block components for React and Next.js - editable landing-page heroes that demonstrate a real product workflow. Copy-paste source, accessible and reduced-motion-safe.",
+  cursor: "Cursor and pointer effect components for React - magnetic docks, particle cursor trails, lens magnifiers, spotlight reveals, and gooey action menus. Editable, shadcn-compatible source with real spring physics, touch support, and reduced-motion fallbacks.",
+  media: "Animated gallery and media components for React and Next.js - 3D orbital galleries, image warp effects, velocity marquees, filmstrip scrubbers, and before/after comparators. Editable source with real inertia physics, keyboard equivalents for every gesture, and reduced-motion support.",
+  scroll: "Scroll-driven animation components for React - sticky zoom heroes, parallax depth scenes, mask wipe reveals, scroll-scrubbed counters, and velocity-skew feeds. Editable, performance-safe source that never scroll-jacks and stays readable with reduced motion.",
   "animated-shadcn": "Animated shadcn components for React - accessible Radix primitives (accordion, dialog, tabs, and more) with meaningful motion. Editable source that drops into any shadcn/ui project.",
   icons: "Animated icon components for React - tiny, tasteful motion for buttons and actions. Lightweight, editable source that respects reduced-motion preferences.",
 };

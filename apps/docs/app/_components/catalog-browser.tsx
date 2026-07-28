@@ -38,6 +38,7 @@ const NAV_GROUPS: { label: string; ids: CategoryId[] }[] = [
     ],
   },
   { label: "Creative", ids: ["text", "backgrounds", "creative"] },
+  { label: "Showpieces", ids: ["cursor", "media", "scroll"] },
   { label: "Mobile", ids: ["mobile"] },
   { label: "Foundations", ids: ["animated-shadcn", "icons"] },
 ];

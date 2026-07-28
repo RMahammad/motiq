@@ -1,0 +1,1499 @@
+<title>Motiq Motion Lab — Scroll Choreography</title>
+
+<style>
+/* ============================================================
+   Motiq Motion Lab — Batch 07 · Scroll Choreography
+   Tokens: Deep Ink + Azure + Coral. Light on :root, dark via
+   media query, then explicit data-theme overrides so the
+   artifact viewer's toggle wins in both directions.
+   ============================================================ */
+:root {
+  --bg: #f7f9fc;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #eef2f8;
+  --border: #dce4ef;
+  --border-strong: #c3cfe0;
+  --fg: #101828;
+  --fg-secondary: #344054;
+  --muted: #667085;
+  --accent: #315fea;
+  --accent-text: #244fd1;
+  --cyan: #009fb3;
+  --coral: #e9564a;
+  --success: #12b76a;
+  --warning: #dc6803;
+  --shadow: 0 24px 64px -24px rgba(16, 24, 40, 0.28);
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --fast: 120ms;
+  --normal: 220ms;
+  --slow: 360ms;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #080c14;
+    --bg-elevated: #0d1420;
+    --surface: #111827;
+    --surface-2: #192337;
+    --border: #263449;
+    --border-strong: #354863;
+    --fg: #f8fafc;
+    --fg-secondary: #cbd5e1;
+    --muted: #9caabd;
+    --accent: #4f7cff;
+    --accent-text: #7f9fff;
+    --cyan: #22c7d9;
+    --coral: #ff6b5e;
+    --success: #32d583;
+    --warning: #f6b94a;
+    --shadow: 0 24px 64px -24px rgba(0, 0, 0, 0.6);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #080c14;
+  --bg-elevated: #0d1420;
+  --surface: #111827;
+  --surface-2: #192337;
+  --border: #263449;
+  --border-strong: #354863;
+  --fg: #f8fafc;
+  --fg-secondary: #cbd5e1;
+  --muted: #9caabd;
+  --accent: #4f7cff;
+  --accent-text: #7f9fff;
+  --cyan: #22c7d9;
+  --coral: #ff6b5e;
+  --success: #32d583;
+  --warning: #f6b94a;
+  --shadow: 0 24px 64px -24px rgba(0, 0, 0, 0.6);
+}
+:root[data-theme="light"] {
+  --bg: #f7f9fc;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #eef2f8;
+  --border: #dce4ef;
+  --border-strong: #c3cfe0;
+  --fg: #101828;
+  --fg-secondary: #344054;
+  --muted: #667085;
+  --accent: #315fea;
+  --accent-text: #244fd1;
+  --cyan: #009fb3;
+  --coral: #e9564a;
+  --success: #12b76a;
+  --warning: #dc6803;
+  --shadow: 0 24px 64px -24px rgba(16, 24, 40, 0.28);
+}
+
+/* ---------- page chrome ---------- */
+.ml-page {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+.ml-wrap { max-width: 1160px; margin: 0 auto; padding: 56px 24px 96px; }
+.ml-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent-text);
+  text-transform: uppercase;
+}
+.ml-h1 { font-size: clamp(34px, 5vw, 52px); font-weight: 750; letter-spacing: -0.02em; margin: 10px 0 12px; }
+.ml-thesis { max-width: 760px; color: var(--fg-secondary); font-size: 16px; margin: 0 0 26px; }
+.ml-index { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.ml-index a {
+  display: inline-flex; align-items: baseline; gap: 8px;
+  font-family: var(--font-mono); font-size: 12px;
+  color: var(--fg-secondary); text-decoration: none;
+  border: 1px solid var(--border); border-radius: 999px;
+  padding: 6px 14px; background: var(--surface);
+  transition: border-color var(--fast) var(--ease), color var(--fast) var(--ease);
+}
+.ml-index a:hover { border-color: var(--accent); color: var(--accent-text); }
+.ml-index a b { color: var(--muted); font-weight: 500; }
+
+.ml-section { margin-top: 92px; scroll-margin-top: 32px; }
+.ml-section-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; flex-wrap: wrap; }
+.ml-num { font-family: var(--font-mono); font-size: 13px; color: var(--accent-text); }
+.ml-name { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+.ml-tag {
+  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+  border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px;
+}
+.ml-lede { color: var(--muted); font-size: 14px; margin: 0 0 20px; max-width: 720px; }
+
+.ml-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 26px; align-items: start; }
+@media (min-width: 1020px) { .ml-grid { grid-template-columns: minmax(0, 1fr) 328px; } }
+
+/* ---------- stage ---------- */
+.ml-stage {
+  --stageH: 540px;
+  position: relative;
+  height: var(--stageH);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+@media (max-width: 640px) { .ml-stage { --stageH: 470px; } }
+.ml-scroller {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+  outline: none;
+}
+.ml-scroller:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); border-radius: var(--r-lg); }
+.ml-scroller::-webkit-scrollbar { width: 8px; }
+.ml-scroller::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 8px; }
+.ml-cue {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-mono); font-size: 11px; color: var(--fg-secondary);
+  background: color-mix(in srgb, var(--bg-elevated) 82%, transparent);
+  border: 1px solid var(--border); border-radius: 999px; padding: 6px 13px;
+  pointer-events: none; z-index: 9;
+  transition: opacity var(--slow) var(--ease);
+}
+.ml-cue svg { display: block; animation: ml-bob 1.6s var(--ease) infinite; }
+.ml-cue.is-hidden { opacity: 0; }
+@keyframes ml-bob { 0%, 100% { transform: translateY(-1px); } 50% { transform: translateY(2px); } }
+@media (prefers-reduced-motion: reduce) { .ml-cue svg { animation: none; } }
+
+/* ---------- spec rail ---------- */
+.ml-rail { display: flex; flex-direction: column; gap: 18px; }
+.ml-spec {
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  background: var(--surface); padding: 16px 18px;
+}
+.ml-spec h4 {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.13em;
+  text-transform: uppercase; color: var(--accent-text); margin: 0 0 8px;
+}
+.ml-spec p { margin: 0; font-size: 13px; color: var(--fg-secondary); }
+.ml-spec ul { margin: 0; padding-left: 16px; font-size: 12.5px; color: var(--fg-secondary); }
+.ml-spec li { margin: 5px 0; }
+.ml-spec li code, .ml-spec p code {
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--accent-text);
+  background: var(--surface-2); border-radius: 4px; padding: 1px 5px;
+}
+.ml-code {
+  margin: 0; padding: 14px; overflow-x: auto;
+  font-family: var(--font-mono); font-size: 11.5px; line-height: 1.6;
+  color: var(--fg-secondary); background: var(--surface-2);
+  border-radius: var(--r-sm); border: 1px solid var(--border);
+  tab-size: 2; white-space: pre;
+}
+.ml-code .k { color: var(--accent-text); }
+.ml-code .t { color: var(--cyan); }
+.ml-code .c { color: var(--muted); }
+
+.ml-footer {
+  margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--muted);
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+}
+
+/* ============================================================
+   01 · sticky-zoom-hero
+   ============================================================ */
+#d1 { background: var(--bg); }
+.zh-track { height: calc(var(--stageH) * 3.2); }
+.zh-scene { position: sticky; top: 0; height: var(--stageH); overflow: hidden; }
+.zh-glow {
+  position: absolute; inset: -20%;
+  background:
+    radial-gradient(46% 42% at 50% 44%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%),
+    radial-gradient(30% 30% at 72% 24%, color-mix(in srgb, var(--cyan) 9%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.zh-frame {
+  position: absolute; inset: 0;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transform-origin: 50% 46%;
+  will-change: transform;
+  display: flex; flex-direction: column;
+}
+.zh-chrome {
+  flex: 0 0 34px; display: flex; align-items: center; gap: 6px;
+  padding: 0 14px; border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+}
+.zh-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border-strong); }
+.zh-dot:nth-child(1) { background: var(--coral); opacity: 0.65; }
+.zh-dot:nth-child(2) { background: var(--warning); opacity: 0.65; }
+.zh-dot:nth-child(3) { background: var(--success); opacity: 0.65; }
+.zh-url {
+  flex: 1; max-width: 300px; margin: 0 auto; height: 18px;
+  border-radius: 999px; background: var(--surface);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 9.5px; color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+}
+.zh-body { flex: 1; display: flex; min-height: 0; }
+.zh-side { flex: 0 0 148px; border-right: 1px solid var(--border); padding: 14px 12px; display: none; flex-direction: column; gap: 9px; }
+@media (min-width: 560px) { .zh-side { display: flex; } }
+.zh-nav { height: 22px; border-radius: var(--r-sm); background: var(--surface-2); }
+.zh-nav.is-active { background: color-mix(in srgb, var(--accent) 18%, var(--surface-2)); border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); }
+.zh-main { flex: 1; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.zh-title-row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.zh-title-row b { font-size: 15px; letter-spacing: -0.01em; }
+.zh-title-row span { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+.zh-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.zh-card { border: 1px solid var(--border); border-radius: var(--r-md); padding: 10px 12px; background: var(--bg-elevated); }
+.zh-card small { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.zh-card b { font-size: 16px; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.zh-card em { font-style: normal; font-family: var(--font-mono); font-size: 9.5px; margin-left: 5px; }
+.zh-card em.up { color: var(--success); }
+.zh-card em.dn { color: var(--cyan); }
+.zh-chart {
+  flex: 1; min-height: 90px; border: 1px solid var(--border); border-radius: var(--r-md);
+  background: var(--bg-elevated); padding: 12px 14px 10px;
+  display: flex; align-items: flex-end; gap: 6px;
+}
+.zh-chartbar { flex: 1; height: 100%; display: flex; align-items: flex-end; }
+.zh-chartbar i {
+  display: block; width: 100%; height: 100%; border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, var(--accent), color-mix(in srgb, var(--accent) 40%, var(--cyan)));
+  transform-origin: bottom; will-change: transform;
+}
+.zh-vignette {
+  position: absolute; inset: 0; pointer-events: none; z-index: 3;
+  background: radial-gradient(120% 92% at 50% 42%, transparent 42%, rgba(4, 8, 16, 0.62) 100%);
+  will-change: opacity;
+}
+.zh-caps { position: absolute; left: 22px; bottom: 44px; z-index: 5; pointer-events: none; }
+.zh-cap {
+  position: absolute; left: 0; bottom: 0; width: min(330px, 62vw);
+  background: color-mix(in srgb, var(--bg-elevated) 86%, transparent);
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  padding: 12px 15px;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity var(--slow) var(--ease), transform var(--slow) var(--ease);
+}
+.zh-cap b { display: block; font-size: 14px; margin-bottom: 2px; }
+.zh-cap span { font-size: 12px; color: var(--fg-secondary); }
+.zh-cap i { font-style: normal; font-family: var(--font-mono); font-size: 10px; color: var(--accent-text); display: block; margin-bottom: 4px; }
+.zh-cap.is-on { opacity: 1; transform: translateY(0); }
+.zh-hud {
+  position: absolute; top: 14px; left: 18px; right: 18px; z-index: 6;
+  display: flex; align-items: center; gap: 14px;
+}
+.zh-bar { flex: 1; height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.zh-bar i { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); will-change: transform; }
+.zh-pills { display: flex; gap: 6px; }
+.zh-pill {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.06em;
+  color: var(--muted); border: 1px solid var(--border); border-radius: 999px;
+  padding: 3px 9px; background: color-mix(in srgb, var(--bg-elevated) 80%, transparent);
+  transition: color var(--normal) var(--ease), border-color var(--normal) var(--ease);
+}
+.zh-pill.is-on { color: var(--accent-text); border-color: var(--accent); }
+
+/* ============================================================
+   02 · depth-parallax-scene
+   ============================================================ */
+#d2 { --stageH: 560px; }
+.px-layer { position: absolute; left: -7%; right: -7%; top: -14%; bottom: -14%; will-change: transform; pointer-events: none; }
+.px-layer svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.px-sky {
+  background:
+    radial-gradient(38% 34% at 68% 26%, color-mix(in srgb, var(--cyan) 22%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 14%, var(--bg)) 0%, var(--bg) 62%, color-mix(in srgb, var(--accent) 6%, var(--bg)) 100%);
+}
+.px-orb {
+  position: absolute; left: 66%; top: 18%; width: 84px; height: 84px; border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, color-mix(in srgb, var(--cyan) 65%, var(--bg-elevated)), color-mix(in srgb, var(--accent) 50%, var(--bg)) 72%);
+  box-shadow: 0 0 60px 12px color-mix(in srgb, var(--cyan) 26%, transparent);
+}
+.px-far { will-change: transform, filter; }
+.px-cards { pointer-events: none; }
+.px-uicard {
+  position: absolute; width: 172px; border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 18px 44px -18px rgba(0, 0, 0, 0.45);
+  padding: 11px 13px;
+}
+.px-uicard small { display: block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+.px-uicard b { font-size: 17px; font-variant-numeric: tabular-nums; }
+.px-uicard .px-meterline { margin-top: 7px; height: 4px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.px-uicard .px-meterline i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--cyan)); }
+.px-uicard.c1 { left: 12%; top: 26%; animation: px-float 7s ease-in-out infinite; }
+.px-uicard.c2 { right: 14%; top: 44%; width: 150px; animation: px-float 8.4s ease-in-out -2.1s infinite; }
+.px-uicard.c3 { left: 34%; top: 60%; width: 138px; animation: px-float 6.2s ease-in-out -3.7s infinite; }
+@keyframes px-float { 0%, 100% { margin-top: 0; } 50% { margin-top: -6px; } }
+@media (prefers-reduced-motion: reduce) { .px-uicard { animation: none; } }
+.px-hud {
+  position: absolute; right: 14px; bottom: 12px; z-index: 8;
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--fg-secondary);
+  background: color-mix(in srgb, var(--bg-elevated) 85%, transparent);
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  padding: 6px 10px; font-variant-numeric: tabular-nums;
+}
+.px-hint {
+  position: absolute; left: 14px; bottom: 12px; z-index: 8;
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--fg-secondary);
+  background: color-mix(in srgb, var(--bg-elevated) 85%, transparent);
+  border: 1px solid var(--border); border-radius: var(--r-sm); padding: 6px 10px;
+}
+
+/* ============================================================
+   03 · mask-wipe-sections
+   ============================================================ */
+.mw-track { height: calc(var(--stageH) * 3.8); }
+.mw-scene { position: sticky; top: 0; height: var(--stageH); overflow: hidden; }
+.mw-panel {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  justify-content: center; padding: 44px clamp(24px, 6%, 64px);
+  will-change: clip-path;
+}
+.mw-panel .mw-kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+.mw-panel h3 { font-size: clamp(24px, 3.6vw, 36px); font-weight: 750; letter-spacing: -0.02em; margin: 0 0 10px; }
+.mw-panel p { max-width: 460px; margin: 0 0 16px; color: var(--fg-secondary); font-size: 14px; }
+.mw-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.mw-chip {
+  font-family: var(--font-mono); font-size: 11px; padding: 5px 11px;
+  border-radius: 999px; border: 1px solid var(--border-strong);
+  background: color-mix(in srgb, var(--surface) 70%, transparent); color: var(--fg-secondary);
+}
+.mw-p1 { background: linear-gradient(140deg, color-mix(in srgb, var(--accent) 13%, var(--bg-elevated)), var(--bg-elevated) 58%); }
+.mw-p1 .mw-kicker { color: var(--accent-text); }
+.mw-p2 { background: linear-gradient(140deg, color-mix(in srgb, var(--cyan) 13%, var(--bg-elevated)), var(--bg-elevated) 58%); clip-path: polygon(0 0, 0 0, -24% 100%, 0 100%); }
+.mw-p2 .mw-kicker { color: var(--cyan); }
+.mw-p3 { background: linear-gradient(140deg, color-mix(in srgb, var(--success) 12%, var(--bg-elevated)), var(--bg-elevated) 58%); clip-path: circle(0px at 78% 30%); }
+.mw-p3 .mw-kicker { color: var(--success); }
+.mw-p4 { background: linear-gradient(140deg, color-mix(in srgb, var(--warning) 11%, var(--bg-elevated)), var(--bg-elevated) 58%); clip-path: inset(0 50% 0 50%); }
+.mw-p4 .mw-kicker { color: var(--warning); }
+.mw-codebox {
+  font-family: var(--font-mono); font-size: 11.5px; line-height: 1.7;
+  color: var(--fg-secondary); background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  padding: 12px 15px; max-width: 380px; white-space: pre; overflow: hidden;
+}
+.mw-deploy {
+  display: flex; align-items: center; gap: 10px; max-width: 340px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md);
+  padding: 12px 15px; font-size: 13px;
+}
+.mw-deploy .ok { width: 10px; height: 10px; border-radius: 50%; background: var(--success); box-shadow: 0 0 12px var(--success); flex: 0 0 auto; }
+.mw-bars { display: flex; align-items: flex-end; gap: 7px; height: 64px; max-width: 320px; }
+.mw-bars i { flex: 1; border-radius: 3px 3px 0 0; background: linear-gradient(180deg, var(--warning), color-mix(in srgb, var(--warning) 35%, transparent)); }
+.mw-edge {
+  position: absolute; top: -18%; bottom: -18%; left: 0; width: 3px;
+  background: linear-gradient(180deg, transparent, var(--cyan), transparent);
+  box-shadow: 0 0 18px 3px color-mix(in srgb, var(--cyan) 55%, transparent);
+  opacity: 0; will-change: transform, opacity; pointer-events: none; z-index: 5;
+}
+.mw-edge.e1 { transform-origin: center; background: linear-gradient(180deg, transparent, var(--accent), transparent); box-shadow: 0 0 18px 3px color-mix(in srgb, var(--accent) 55%, transparent); }
+.mw-ringsvg {
+  position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible;
+  pointer-events: none; z-index: 5;
+}
+.mw-ringsvg circle { fill: none; stroke: var(--success); opacity: 0; }
+.mw-ringsvg .core { stroke-width: 2.5; }
+.mw-ringsvg .glow { stroke-width: 10; }
+.mw-hud {
+  position: absolute; top: 14px; left: 18px; right: 18px; z-index: 7;
+  display: flex; gap: 8px; align-items: center;
+}
+.mw-seg { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.mw-seg small { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.mw-seg .bar { height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.mw-seg .bar i { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); will-change: transform; }
+.mw-seg:nth-child(2) .bar i { background: var(--cyan); }
+.mw-seg:nth-child(3) .bar i { background: var(--success); }
+/* reduced motion: panels leave the sticky stack and read as plain sections */
+.mw-rm .mw-track { height: auto; }
+.mw-rm .mw-scene { position: static; height: auto; }
+.mw-rm .mw-panel { position: static; clip-path: none !important; min-height: 300px; }
+.mw-rm .mw-edge, .mw-rm .mw-ringsvg, .mw-rm .mw-hud { display: none; }
+
+/* ============================================================
+   04 · scroll-count-stats
+   ============================================================ */
+#d4 { --stageH: 520px; }
+.sc-track { height: calc(var(--stageH) * 2.6); }
+.sc-scene {
+  position: sticky; top: 0; height: var(--stageH); overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 40px clamp(22px, 6%, 60px);
+  background:
+    radial-gradient(60% 50% at 50% 0%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%),
+    var(--bg-elevated);
+}
+.sc-head { margin-bottom: 34px; }
+.sc-head h3 { font-size: clamp(24px, 3.4vw, 34px); font-weight: 750; letter-spacing: -0.02em; margin: 0; display: inline-block; position: relative; }
+.sc-underline { position: absolute; left: -2px; right: -6px; bottom: -12px; width: calc(100% + 8px); height: 20px; overflow: visible; }
+.sc-underline path { fill: none; stroke: var(--coral); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.sc-head p { margin: 18px 0 0; font-size: 13px; color: var(--muted); font-family: var(--font-mono); }
+.sc-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 3vw, 34px); }
+@media (max-width: 700px) { .sc-row { grid-template-columns: 1fr; gap: 20px; } }
+.sc-stat { border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface); padding: 18px 18px 14px; }
+.sc-odo { --row: 46px; display: flex; align-items: flex-end; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
+.sc-col { height: var(--row); overflow: hidden; }
+.sc-strip { will-change: transform; }
+.sc-d, .sc-sep {
+  display: block; height: var(--row); line-height: var(--row);
+  font-size: 37px; font-weight: 750; letter-spacing: -0.01em;
+}
+.sc-suffix { font-size: 21px; font-weight: 700; color: var(--fg-secondary); margin-left: 3px; line-height: var(--row); }
+@media (max-width: 700px) { .sc-odo { --row: 40px; } .sc-d, .sc-sep { font-size: 31px; } }
+.sc-label { font-size: 12px; color: var(--muted); margin-top: 6px; min-height: 32px; }
+.sc-spark { display: block; width: 100%; height: 40px; margin-top: 10px; }
+.sc-spark .line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.sc-spark .area { fill: color-mix(in srgb, var(--accent) 22%, transparent); opacity: 0; }
+.sc-stat:nth-child(2) .sc-spark .line { stroke: var(--cyan); }
+.sc-stat:nth-child(2) .sc-spark .area { fill: color-mix(in srgb, var(--cyan) 22%, transparent); }
+.sc-stat:nth-child(3) .sc-spark .line { stroke: var(--success); }
+.sc-stat:nth-child(3) .sc-spark .area { fill: color-mix(in srgb, var(--success) 20%, transparent); }
+.sc-scrub {
+  position: absolute; top: 14px; right: 16px;
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--fg-secondary);
+  background: color-mix(in srgb, var(--bg-elevated) 85%, transparent);
+  border: 1px solid var(--border); border-radius: var(--r-sm);
+  padding: 5px 10px; font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   05 · velocity-skew-feed
+   ============================================================ */
+#d5 { --stageH: 540px; }
+.vs-meter {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 8;
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 18px;
+  background: color-mix(in srgb, var(--bg-elevated) 97%, transparent);
+  border-bottom: 1px solid var(--border);
+  pointer-events: none;
+}
+.vs-meter small { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.vs-scale { position: relative; flex: 1; height: 6px; background: var(--surface-2); border-radius: 6px; }
+.vs-zero { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--border-strong); }
+.vs-needle {
+  position: absolute; left: 50%; top: 0; bottom: 0; width: 50%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
+  transform-origin: left center; transform: scaleX(0); will-change: transform;
+}
+.vs-read { font-family: var(--font-mono); font-size: 11.5px; color: var(--fg); font-variant-numeric: tabular-nums; min-width: 92px; text-align: right; }
+.vs-peak { font-family: var(--font-mono); font-size: 9.5px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 108px; text-align: right; }
+.vs-scroller { padding: 66px 18px 18px; }
+.vs-card {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: 13px 15px; margin-bottom: 10px;
+  will-change: transform;
+}
+.vs-av {
+  flex: 0 0 34px; width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: var(--bg);
+}
+.vs-body { min-width: 0; flex: 1; }
+.vs-line1 { font-size: 13.5px; }
+.vs-line1 b { font-weight: 650; }
+.vs-line2 { display: flex; gap: 8px; align-items: center; margin-top: 3px; }
+.vs-time { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
+.vs-tag {
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.05em;
+  padding: 2px 8px; border-radius: 999px;
+  background: var(--surface-2); color: var(--fg-secondary); border: 1px solid var(--border);
+}
+</style>
+
+<div class="ml-page">
+  <div class="ml-wrap">
+
+    <header>
+      <div class="ml-eyebrow">Motiq Motion Lab — Batch 07</div>
+      <h1 class="ml-h1">Scroll Choreography</h1>
+      <p class="ml-thesis">
+        Five scroll-driven showpieces for product storytelling: a sticky zoom opener, a layered depth scene,
+        clip-path chapter wipes, scrubbable stat counters, and velocity-reactive card physics.
+        Every frame is a pure function of smoothed scroll progress — no libraries, transform and clip-path only.
+      </p>
+      <ul class="ml-index">
+        <li><a href="#s1"><b>01</b> sticky-zoom-hero</a></li>
+        <li><a href="#s2"><b>02</b> depth-parallax-scene</a></li>
+        <li><a href="#s3"><b>03</b> mask-wipe-sections</a></li>
+        <li><a href="#s4"><b>04</b> scroll-count-stats</a></li>
+        <li><a href="#s5"><b>05</b> velocity-skew-feed</a></li>
+      </ul>
+    </header>
+
+    <!-- ============ 01 · sticky-zoom-hero ============ -->
+    <section class="ml-section" id="s1">
+      <div class="ml-section-head">
+        <span class="ml-num">01</span>
+        <span class="ml-name">sticky-zoom-hero</span>
+        <span class="ml-tag">internal scroll · sticky scene</span>
+      </div>
+      <p class="ml-lede">Scroll inside the stage: a framed product shot scales to full bleed while captions crossfade through three beats and the vignette lifts.</p>
+      <div class="ml-grid">
+        <div class="ml-stage" id="d1">
+          <div class="ml-scroller zh-scroller" tabindex="0" role="region" aria-label="Sticky zoom hero demo. Scroll or use arrow keys to zoom the product frame to full bleed.">
+            <div class="zh-track">
+              <div class="zh-scene">
+                <div class="zh-glow" aria-hidden="true"></div>
+                <div class="zh-frame" aria-hidden="true">
+                  <div class="zh-chrome">
+                    <span class="zh-dot"></span><span class="zh-dot"></span><span class="zh-dot"></span>
+                    <span class="zh-url">app.motiq.dev/overview</span>
+                  </div>
+                  <div class="zh-body">
+                    <div class="zh-side">
+                      <div class="zh-nav is-active"></div>
+                      <div class="zh-nav"></div>
+                      <div class="zh-nav"></div>
+                      <div class="zh-nav"></div>
+                      <div class="zh-nav" style="margin-top:auto"></div>
+                    </div>
+                    <div class="zh-main">
+                      <div class="zh-title-row"><b>Render overview</b><span>last 12 weeks</span></div>
+                      <div class="zh-cards">
+                        <div class="zh-card"><small>Active teams</small><b>1,284</b><em class="up">+12%</em></div>
+                        <div class="zh-card"><small>Render p95</small><b>14.2 ms</b><em class="dn">−8%</em></div>
+                        <div class="zh-card"><small>Exports</small><b>32,904</b><em class="up">+21%</em></div>
+                      </div>
+                      <div class="zh-chart">
+                        <div class="zh-chartbar" style="height:34%"><i></i></div>
+                        <div class="zh-chartbar" style="height:46%"><i></i></div>
+                        <div class="zh-chartbar" style="height:40%"><i></i></div>
+                        <div class="zh-chartbar" style="height:58%"><i></i></div>
+                        <div class="zh-chartbar" style="height:52%"><i></i></div>
+                        <div class="zh-chartbar" style="height:66%"><i></i></div>
+                        <div class="zh-chartbar" style="height:61%"><i></i></div>
+                        <div class="zh-chartbar" style="height:74%"><i></i></div>
+                        <div class="zh-chartbar" style="height:69%"><i></i></div>
+                        <div class="zh-chartbar" style="height:83%"><i></i></div>
+                        <div class="zh-chartbar" style="height:78%"><i></i></div>
+                        <div class="zh-chartbar" style="height:92%"><i></i></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="zh-vignette" aria-hidden="true"></div>
+                <div class="zh-caps">
+                  <div class="zh-cap is-on"><i>01 · framed</i><b>Meet the workspace</b><span>Every render metric on one calm surface, held at arm's length.</span></div>
+                  <div class="zh-cap"><i>02 · zooming</i><b>Zoom into the detail</b><span>The frame gives way — chrome thins out as the product fills the stage.</span></div>
+                  <div class="zh-cap"><i>03 · full bleed</i><b>Full bleed, full focus</b><span>At 100% the border disappears and the story continues inside the app.</span></div>
+                </div>
+                <div class="zh-hud" aria-hidden="true">
+                  <div class="zh-bar"><i></i></div>
+                  <div class="zh-pills">
+                    <span class="zh-pill is-on">01 framed</span>
+                    <span class="zh-pill">02 zooming</span>
+                    <span class="zh-pill">03 full bleed</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ml-cue"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 3.5 L5 7.5 L9 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>scroll inside this stage</div>
+        </div>
+        <aside class="ml-rail">
+          <div class="ml-spec">
+            <h4>Niche</h4>
+            <p>The opening move of nearly every modern product site — Linear, Vercel and Stripe all begin by zooming a framed product shot into a full-bleed surface. It buys the visitor's first ten seconds with one gesture, one object, and escalating scale.</p>
+          </div>
+          <div class="ml-spec">
+            <h4>Choreography</h4>
+            <ul>
+              <li><code>0.00–0.15</code> frame idles at 45% scale, radius 16px, vignette at 85%; caption 01 held</li>
+              <li><code>0.15–0.70</code> scale 0.45 → 1.0 on easeInOutCubic; translateY 14 → 0px; radius 16 → 0; vignette lifts to 0</li>
+              <li><code>0.30–0.80</code> chart bars grow bottom-up with a 4%-of-progress per-bar stagger</li>
+              <li><code>0.34 / 0.70</code> captions crossfade, 360ms on ease(0.2, 0, 0, 1)</li>
+              <li>progress is lerped toward the raw scroll ratio at λ = 10/s, so scrubbing feels damped, never raw</li>
+            </ul>
+          </div>
+          <div class="ml-spec">
+            <h4>Props API</h4>
+            <pre class="ml-code"><span class="k">interface</span> <span class="t">StickyZoomHeroProps</span> {
+  children: React.ReactNode;
+  stages: { title: string;
+    body: string }[];  <span class="c">// 2–4 beats</span>
+  startScale?: number;   <span class="c">// 0.45</span>
+  scrollLength?: number; <span class="c">// 3.2 stages</span>
+  radius?: number;       <span class="c">// 16</span>
+  vignette?: boolean;    <span class="c">// true</span>
+  smoothing?: number;    <span class="c">// λ 10/s</span>
+  onStageChange?: (i: number) =&gt; void;
+}</pre>
+          </div>
+          <div class="ml-spec">
+            <h4>A11y &amp; perf</h4>
+            <ul>
+              <li>Reduced motion pins the scene at 100% with the final caption readable; the stage stays scrollable as plain content</li>
+              <li>Stage is a focusable region — arrow keys scrub it; wheel passes through to the page at both ends</li>
+              <li>Only transform / opacity animate; border-radius writes are quantized to whole pixels (≤ 16 paints per full pass)</li>
+              <li>rAF stops via IntersectionObserver when the stage leaves the viewport</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ 02 · depth-parallax-scene ============ -->
+    <section class="ml-section" id="s2">
+      <div class="ml-section-head">
+        <span class="ml-num">02</span>
+        <span class="ml-name">depth-parallax-scene</span>
+        <span class="ml-tag">page scroll · pointer parallax</span>
+      </div>
+      <p class="ml-lede">Driven by this page's own scroll: six generated layers travel at different rates, drift with the pointer, and the far ridge slips out of focus as near layers pass.</p>
+      <div class="ml-grid">
+        <div class="ml-stage" id="d2" role="img" aria-label="Decorative layered landscape: gradient sky, mountain ridges, a slab city, and floating interface cards moving at different depths as the page scrolls.">
+          <div class="px-layer px-sky" data-depth="0.06" aria-hidden="true"><div class="px-orb"></div></div>
+          <div class="px-layer px-far" data-depth="0.16" aria-hidden="true">
+            <svg viewBox="0 0 1200 640" preserveAspectRatio="xMidYMax slice">
+              <path d="M0 430 L110 330 L200 390 L330 280 L450 380 L560 300 L690 400 L800 320 L930 395 L1050 325 L1140 380 L1200 340 L1200 640 L0 640 Z" style="fill: var(--surface-2)"></path>
+              <path d="M0 470 L90 400 L210 450 L340 370 L470 450 L610 385 L740 460 L880 395 L1010 455 L1120 410 L1200 445 L1200 640 L0 640 Z" style="fill: var(--surface); opacity: 0.9"></path>
+            </svg>
+          </div>
+          <div class="px-layer px-mid" data-depth="0.32" aria-hidden="true">
+            <svg viewBox="0 0 1200 640" preserveAspectRatio="xMidYMax slice">
+              <g>
+                <rect x="70" y="440" width="70" height="200" style="fill: var(--surface-2); stroke: var(--border-strong)"></rect>
+                <rect x="70" y="440" width="70" height="5" style="fill: var(--accent); opacity: 0.7"></rect>
+                <rect x="180" y="400" width="54" height="240" style="fill: var(--surface-2); stroke: var(--border-strong)"></rect>
+                <rect x="180" y="400" width="54" height="5" style="fill: var(--cyan); opacity: 0.6"></rect>
+                <rect x="300" y="470" width="90" height="170" style="fill: var(--surface-2); stroke: var(--border-strong)"></rect>
+                <rect x="300" y="470" width="90" height="5" style="fill: var(--accent); opacity: 0.55"></rect>
+                <rect x="470" y="420" width="60" height="220" style="fill: var(--surface-2); stroke: var(--border-strong)"></rect>
+                <rect x="470" y="420" width="60" height="5" style="fill: var(--accent); opacity: 0.7"></rect>
+                <rect x="590" y="455" width="80" height="185" style="fill: var(--surface-2); stroke: var(--border-strong)"></rect>
+                <rect x="590" y="455" width="80" height="5" style="fill: var(--cyan); opacity: 0.55"></rect>
+                <rect x="740" y="405" width="52" height="235" style="fill: var(--surface-2); stroke: var(--border-strong)"></rect>
+                <rect x="740" y="405" width="52" height="5" style="fill: var(--accent); opacity: 0.7"></rect>
+                <rect x="850" y="460" width="96" height="180" style="fill: var(--surface-2); stroke: var(--border-strong)"></rect>
+                <rect x="850" y="460" width="96" height="5" style="fill: var(--cyan); opacity: 0.6"></rect>
+                <rect x="1010" y="430" width="64" height="210" style="fill: var(--surface-2); stroke: var(--border-strong)"></rect>
+                <rect x="1010" y="430" width="64" height="5" style="fill: var(--accent); opacity: 0.65"></rect>
+                <rect x="1120" y="470" width="70" height="170" style="fill: var(--surface-2); stroke: var(--border-strong)"></rect>
+              </g>
+            </svg>
+          </div>
+          <div class="px-layer px-fore" data-depth="0.52" aria-hidden="true">
+            <svg viewBox="0 0 1200 640" preserveAspectRatio="xMidYMax slice">
+              <path d="M0 560 L1200 520 L1200 640 L0 640 Z" style="fill: var(--bg-elevated)"></path>
+              <g style="stroke: var(--border-strong); opacity: 0.5">
+                <line x1="0" y1="588" x2="1200" y2="552"></line>
+                <line x1="0" y1="616" x2="1200" y2="586"></line>
+                <line x1="120" y1="556" x2="60" y2="640"></line>
+                <line x1="320" y1="549" x2="290" y2="640"></line>
+                <line x1="520" y1="543" x2="505" y2="640"></line>
+                <line x1="720" y1="536" x2="718" y2="640"></line>
+                <line x1="920" y1="529" x2="932" y2="640"></line>
+                <line x1="1120" y1="523" x2="1145" y2="640"></line>
+              </g>
+              <path d="M0 560 L1200 520" style="stroke: var(--accent); opacity: 0.5; stroke-width: 2"></path>
+            </svg>
+          </div>
+          <div class="px-layer px-cards" data-depth="0.78" aria-hidden="true">
+            <div class="px-uicard c1"><small>Frame budget</small><b>16.6 ms</b><div class="px-meterline"><i style="width:72%"></i></div></div>
+            <div class="px-uicard c2"><small>Layers live</small><b>6 / 6</b><div class="px-meterline"><i style="width:100%"></i></div></div>
+            <div class="px-uicard c3"><small>Travel</small><b>±140 px</b><div class="px-meterline"><i style="width:54%"></i></div></div>
+          </div>
+          <div class="px-hint" aria-hidden="true">driven by the page scroll · move the pointer</div>
+          <div class="px-hud" aria-hidden="true">p 0.50 · ptr +0.00, +0.00</div>
+        </div>
+        <aside class="ml-rail">
+          <div class="ml-spec">
+            <h4>Niche</h4>
+            <p>Depth headers sell "a world behind the glass" — hero sections and feature interludes where a flat gradient feels cheap. Layered travel plus pointer drift reads as production value, and every layer here is generated: no image assets, fully token-themed.</p>
+          </div>
+          <div class="ml-spec">
+            <h4>Choreography</h4>
+            <ul>
+              <li>progress = stage position through the viewport, measured with <code>getBoundingClientRect</code> every frame, lerped at λ = 8/s</li>
+              <li>layer travel = <code>(0.5 − p) × 180px × depth</code>; depths 0.06 / 0.16 / 0.32 / 0.52 / 0.78 back to front</li>
+              <li>pointer parallax: normalized cursor lerped at λ = 4/s → ±26px × depth horizontal, ±14px vertical</li>
+              <li>depth of field: far-ridge blur 0 → 2.5px as the scene centers, quantized to 0.2px steps to avoid per-frame filter churn</li>
+              <li>floating cards add a 6–8s CSS float loop, phase-offset per card — the ambient life on load</li>
+            </ul>
+          </div>
+          <div class="ml-spec">
+            <h4>Props API</h4>
+            <pre class="ml-code"><span class="k">interface</span> <span class="t">ParallaxLayer</span> {
+  node: React.ReactNode;
+  depth: number;   <span class="c">// 0 far – 1 near</span>
+  blur?: number;   <span class="c">// max px of DOF</span>
+}
+<span class="k">interface</span> <span class="t">DepthParallaxSceneProps</span> {
+  layers: ParallaxLayer[];
+  range?: number;      <span class="c">// 180px</span>
+  pointer?: boolean;   <span class="c">// true</span>
+  pointerStrength?: number; <span class="c">// 26</span>
+  depthOfField?: boolean;
+  height?: number | string;
+  smoothing?: number;
+}</pre>
+          </div>
+          <div class="ml-spec">
+            <h4>A11y &amp; perf</h4>
+            <ul>
+              <li>Purely decorative: the scene carries a single <code>role="img"</code> label; all inner layers are aria-hidden</li>
+              <li>Reduced motion freezes the centered composition with zero blur and no pointer response</li>
+              <li>Layers move on <code>translate3d</code> only; the blur write is change-gated; no internal scroller, so no scroll trap exists</li>
+              <li>rAF pauses offscreen; layers are 114% oversized so travel never reveals edges</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ 03 · mask-wipe-sections ============ -->
+    <section class="ml-section" id="s3">
+      <div class="ml-section-head">
+        <span class="ml-num">03</span>
+        <span class="ml-name">mask-wipe-sections</span>
+        <span class="ml-tag">internal scroll · clip-path</span>
+      </div>
+      <p class="ml-lede">Four chapters, three wipes: an angled sweep, an expanding iris, and a center-split curtain — each cut led by a glowing accent edge.</p>
+      <div class="ml-grid">
+        <div class="ml-stage" id="d3">
+          <div class="ml-scroller mw-scroller" tabindex="0" role="region" aria-label="Mask wipe sections demo. Scroll to cut between four story chapters with animated clip-path wipes.">
+            <div class="mw-track">
+              <div class="mw-scene">
+                <div class="mw-panel mw-p1">
+                  <div class="mw-kicker">Chapter 1 · Draft</div>
+                  <h3>Start with the motion, not the mockup</h3>
+                  <p>Every Motiq component begins as a choreography sheet: progress ranges, easing constants, and the one moment the eye should follow.</p>
+                  <div class="mw-chips"><span class="mw-chip">progress map</span><span class="mw-chip">easing table</span><span class="mw-chip">focal beat</span></div>
+                </div>
+                <div class="mw-panel mw-p2">
+                  <div class="mw-kicker">Chapter 2 · Build</div>
+                  <h3>One rAF loop, delta-time everywhere</h3>
+                  <p>The runtime is a single integrator per component. Springs and lerps consume real frame time, so a dropped frame never changes the destination.</p>
+                  <div class="mw-codebox">p  = damp(p, target, 9, dt)
+s += (k*(goal - s) - c*v) * dt
+clip = polygon(edge(p))</div>
+                </div>
+                <div class="mw-panel mw-p3">
+                  <div class="mw-kicker">Chapter 3 · Ship</div>
+                  <h3>Registry-first, install in one line</h3>
+                  <p>Components land as shadcn registry entries — copy the URL, own the source. No runtime dependency, no version treadmill.</p>
+                  <div class="mw-deploy"><span class="ok"></span><span><b>mask-wipe-sections</b> published — npx shadcn add motiq.dev/r/mask-wipe-sections</span></div>
+                </div>
+                <div class="mw-panel mw-p4">
+                  <div class="mw-kicker">Chapter 4 · Learn</div>
+                  <h3>Measure the feel, keep the receipts</h3>
+                  <p>Every batch ships with frame-budget traces and reduced-motion snapshots, so the polish survives the next refactor.</p>
+                  <div class="mw-bars" aria-hidden="true">
+                    <i style="height:38%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:66%"></i>
+                    <i style="height:58%"></i><i style="height:74%"></i><i style="height:69%"></i><i style="height:88%"></i>
+                  </div>
+                </div>
+                <div class="mw-edge e1" aria-hidden="true"></div>
+                <svg class="mw-ringsvg" aria-hidden="true"><circle class="glow" cx="78%" cy="30%" r="0"></circle><circle class="core" cx="78%" cy="30%" r="0"></circle></svg>
+                <div class="mw-edge e3a" aria-hidden="true"></div>
+                <div class="mw-edge e3b" aria-hidden="true"></div>
+                <div class="mw-hud" aria-hidden="true">
+                  <div class="mw-seg"><small>angled sweep</small><div class="bar"><i></i></div></div>
+                  <div class="mw-seg"><small>iris</small><div class="bar"><i></i></div></div>
+                  <div class="mw-seg"><small>curtain</small><div class="bar"><i></i></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ml-cue"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 3.5 L5 7.5 L9 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>scroll inside this stage</div>
+        </div>
+        <aside class="ml-rail">
+          <div class="ml-spec">
+            <h4>Niche</h4>
+            <p>Chaptered storytelling — pricing pages, changelogs, "how it works" walkthroughs — needs harder cuts than crossfades. Clip-path wipes carry direction and intent, and the lit leading edge makes each cut feel authored rather than triggered.</p>
+          </div>
+          <div class="ml-spec">
+            <h4>Choreography</h4>
+            <ul>
+              <li><code>0.06–0.34</code> angled sweep: a polygon edge with 12% slant slides left → right on easeInOutCubic; the edge bar tilts 8° and peaks at <code>sin(π·t)</code></li>
+              <li><code>0.39–0.64</code> iris: <code>circle()</code> grows from 78% / 30% to the full stage diagonal; a scaled ring hugs the radius</li>
+              <li><code>0.70–0.94</code> curtain: <code>inset()</code> opens from the center line; twin glow edges travel outward symmetrically</li>
+              <li>≈5% dwell gaps between wipes give each chapter a held beat; progress lerped at λ = 9/s</li>
+            </ul>
+          </div>
+          <div class="ml-spec">
+            <h4>Props API</h4>
+            <pre class="ml-code"><span class="k">interface</span> <span class="t">WipeSection</span> {
+  content: React.ReactNode;
+  wipe: "sweep" | "iris" | "curtain";
+  origin?: [number, number]; <span class="c">// iris</span>
+  accent?: string;
+}
+<span class="k">interface</span> <span class="t">MaskWipeSectionsProps</span> {
+  sections: WipeSection[];
+  scrollLength?: number; <span class="c">// 3.8</span>
+  edgeGlow?: boolean;    <span class="c">// true</span>
+  dwell?: number;        <span class="c">// 0.05</span>
+  smoothing?: number;
+  onSectionChange?: (i: number) =&gt; void;
+}</pre>
+          </div>
+          <div class="ml-spec">
+            <h4>A11y &amp; perf</h4>
+            <ul>
+              <li>Reduced motion collapses the sticky stack: panels render as plain stacked sections, all four fully readable and scrollable</li>
+              <li>Basic-shape clip-path animates on the compositor in Chromium; only the currently active wipe's style is written each frame</li>
+              <li>Stage is keyboard-scrollable and passes wheel through at both ends (overscroll-behavior: contain + edge relay)</li>
+              <li>Edge glows are transform + opacity only; rAF pauses offscreen</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ 04 · scroll-count-stats ============ -->
+    <section class="ml-section" id="s4">
+      <div class="ml-section-head">
+        <span class="ml-num">04</span>
+        <span class="ml-name">scroll-count-stats</span>
+        <span class="ml-tag">internal scroll · scrubbed</span>
+      </div>
+      <p class="ml-lede">Odometer columns roll up with per-digit stagger and a small overshoot, the coral underline draws itself, sparklines trace in — and scrolling back rewinds every bit of it.</p>
+      <div class="ml-grid">
+        <div class="ml-stage" id="d4">
+          <div class="ml-scroller sc-scroller" tabindex="0" role="region" aria-label="Scroll count stats demo. Scroll to count the statistics up; scroll back to rewind them.">
+            <div class="sc-track">
+              <div class="sc-scene">
+                <div class="sc-head">
+                  <h3>Numbers that rewind<svg class="sc-underline" viewBox="0 0 260 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 13 C 58 5, 116 18, 158 10 C 196 3, 232 12, 256 9" pathLength="1"></path></svg></h3>
+                  <p>scrub note: scroll back — the whole band unwinds</p>
+                </div>
+                <div class="sc-row">
+                  <div class="sc-stat" aria-label="48,210 registry installs, trailing 90 days">
+                    <div class="sc-odo" data-value="48,210" aria-hidden="true"></div>
+                    <div class="sc-label">registry installs, trailing 90 days</div>
+                    <svg class="sc-spark" viewBox="0 0 120 36" preserveAspectRatio="none" aria-hidden="true">
+                      <path class="area" d="M2 30 L14 26 L26 28 L38 22 L50 24 L62 17 L74 19 L86 12 L98 14 L110 7 L118 5 L118 34 L2 34 Z"></path>
+                      <path class="line" d="M2 30 L14 26 L26 28 L38 22 L50 24 L62 17 L74 19 L86 12 L98 14 L110 7 L118 5" pathLength="1"></path>
+                    </svg>
+                  </div>
+                  <div class="sc-stat" aria-label="99.98 percent of scroll frames inside the 16.6 millisecond budget">
+                    <div class="sc-odo" data-value="99.98" data-suffix="%" aria-hidden="true"></div>
+                    <div class="sc-label">of scroll frames inside the 16.6 ms budget</div>
+                    <svg class="sc-spark" viewBox="0 0 120 36" preserveAspectRatio="none" aria-hidden="true">
+                      <path class="area" d="M2 22 L14 20 L26 23 L38 18 L50 20 L62 15 L74 16 L86 10 L98 12 L110 8 L118 6 L118 34 L2 34 Z"></path>
+                      <path class="line" d="M2 22 L14 20 L26 23 L38 18 L50 20 L62 15 L74 16 L86 10 L98 12 L110 8 L118 6" pathLength="1"></path>
+                    </svg>
+                  </div>
+                  <div class="sc-stat" aria-label="312 easing-curve commits behind this batch">
+                    <div class="sc-odo" data-value="312" aria-hidden="true"></div>
+                    <div class="sc-label">easing-curve commits behind this batch</div>
+                    <svg class="sc-spark" viewBox="0 0 120 36" preserveAspectRatio="none" aria-hidden="true">
+                      <path class="area" d="M2 28 L14 29 L26 24 L38 26 L50 20 L62 22 L74 15 L86 17 L98 11 L110 12 L118 6 L118 34 L2 34 Z"></path>
+                      <path class="line" d="M2 28 L14 29 L26 24 L38 26 L50 20 L62 22 L74 15 L86 17 L98 11 L110 12 L118 6" pathLength="1"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="sc-scrub" aria-hidden="true">scrub 000%</div>
+              </div>
+            </div>
+          </div>
+          <div class="ml-cue"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 3.5 L5 7.5 L9 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>scroll inside · then scroll back</div>
+        </div>
+        <aside class="ml-rail">
+          <div class="ml-spec">
+            <h4>Niche</h4>
+            <p>Stats bands are usually fire-and-forget: they count once and go inert. Binding them to scroll turns them into scrubbable evidence — scroll back and 48,210 unwinds to zero. That reversibility is the moment visitors demo to their team.</p>
+          </div>
+          <div class="ml-spec">
+            <h4>Choreography</h4>
+            <ul>
+              <li>stat <code>i</code> activates at <code>p = 0.06 + 0.12i</code> over a 0.55 window; progress lerped at λ = 9/s</li>
+              <li>each digit column rolls a 0–9 strip, most-significant first, 5.5% stagger, easeOutCubic</li>
+              <li>overshoot: +0.35 rows via <code>sin(π·t)</code> across the last 35% of each digit — passes the target, settles exactly on it</li>
+              <li><code>0.52–0.78</code> the coral underline draws left → right (pathLength 1 + dashoffset) — this page's single coral moment</li>
+              <li>sparklines trace inside each stat's window; area fill fades to 50%; all of it a pure function of progress, so reversing scroll rewinds perfectly</li>
+            </ul>
+          </div>
+          <div class="ml-spec">
+            <h4>Props API</h4>
+            <pre class="ml-code"><span class="k">interface</span> <span class="t">CountStat</span> {
+  value: string;  <span class="c">// "48,210" — separators pass through</span>
+  label: string;
+  suffix?: string;
+  spark?: number[];
+}
+<span class="k">interface</span> <span class="t">ScrollCountStatsProps</span> {
+  stats: CountStat[];
+  stagger?: number;    <span class="c">// 0.055</span>
+  overshoot?: number;  <span class="c">// 0.35 rows</span>
+  underline?: "signature" | "none";
+  scrollLength?: number; <span class="c">// 2.6</span>
+  smoothing?: number;
+}</pre>
+          </div>
+          <div class="ml-spec">
+            <h4>A11y &amp; perf</h4>
+            <ul>
+              <li>True values live on each stat as <code>aria-label</code>; the rolling strips are aria-hidden decoration</li>
+              <li>Reduced motion renders final values immediately with the underline fully drawn</li>
+              <li>Each column is a fixed-height overflow crop — the roll is one <code>translate3d</code> per column; row height re-measured on resize</li>
+              <li>Digits use tabular-nums so columns never shift; rAF pauses offscreen</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ 05 · velocity-skew-feed ============ -->
+    <section class="ml-section" id="s5">
+      <div class="ml-section-head">
+        <span class="ml-num">05</span>
+        <span class="ml-name">velocity-skew-feed</span>
+        <span class="ml-tag">internal scroll · spring physics</span>
+      </div>
+      <p class="ml-lede">Flick the feed: cards shear and stretch with scroll velocity, then a real spring snaps them back at rest. The meter up top is the proof of physics.</p>
+      <div class="ml-grid">
+        <div class="ml-stage" id="d5">
+          <div class="vs-meter" aria-hidden="true">
+            <small>scroll velocity</small>
+            <div class="vs-scale"><span class="vs-zero"></span><span class="vs-needle"></span></div>
+            <span class="vs-read">0 px/s</span>
+            <span class="vs-peak">peak 0 px/s</span>
+          </div>
+          <div class="ml-scroller vs-scroller" tabindex="0" role="region" aria-label="Velocity skew feed demo. Scroll the activity feed quickly to see cards skew with velocity and spring back at rest.">
+            <!-- cards injected by script -->
+          </div>
+          <div class="ml-cue"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 3.5 L5 7.5 L9 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>flick this feed fast</div>
+        </div>
+        <aside class="ml-rail">
+          <div class="ml-spec">
+            <h4>Niche</h4>
+            <p>Feeds and card grids feel inert during fast scrolling. Velocity-reactive skew — Apple-style rubber physics — makes speed visible and makes the stop feel physical. It carries no information, which is exactly why it must cost nothing: transforms only, and it sleeps at rest.</p>
+          </div>
+          <div class="ml-spec">
+            <h4>Choreography</h4>
+            <ul>
+              <li>velocity = <code>ΔscrollTop / Δt</code>, smoothed at λ = 12/s; target skew = <code>clamp(v × 0.0035, ±6.5°)</code></li>
+              <li>skew runs through a real spring: <code>s″ = 90(target − s) − 14s′</code>, integrated with frame delta-time</li>
+              <li>cards apply <code>skewY(s) scaleY(1 + |s|·0.008)</code> — shear plus stretch, origin center</li>
+              <li>the needle mirrors smoothed velocity (±2,600 px/s full scale); the peak readout decays at 0.4/s</li>
+              <li>on a hard stop the spring overshoots once by ≈8% and settles in about 420ms — the rubber snap</li>
+            </ul>
+          </div>
+          <div class="ml-spec">
+            <h4>Props API</h4>
+            <pre class="ml-code"><span class="k">interface</span> <span class="t">VelocitySkewFeedProps</span> {
+  children: React.ReactNode; <span class="c">// cards</span>
+  maxSkew?: number;    <span class="c">// 6.5 deg</span>
+  stiffness?: number;  <span class="c">// 90</span>
+  damping?: number;    <span class="c">// 14</span>
+  stretch?: number;    <span class="c">// 0.008</span>
+  meter?: boolean;     <span class="c">// false in prod</span>
+  axis?: "y" | "x";
+}</pre>
+          </div>
+          <div class="ml-spec">
+            <h4>A11y &amp; perf</h4>
+            <ul>
+              <li>Reduced motion disables skew, stretch and the idle pulse entirely — the feed is a plain scroller</li>
+              <li>One transform write per card per frame, transforms only; the loop idles when spring energy falls under threshold and pauses offscreen</li>
+              <li>Wheel passes through to the page at both feed ends; feed is keyboard-scrollable</li>
+              <li>Meter text updates are throttled and tabular-nums so nothing reflows</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="ml-footer">
+      <span>motiq motion lab · batch 07 · scroll choreography</span>
+      <span>vanilla prototypes — react ports track these specs 1:1</span>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- shared helpers ---------- */
+  var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
+  var eio = function (t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
+  var eo = function (t) { return 1 - Math.pow(1 - t, 3); };
+  var damp = function (cur, tgt, lambda, dt) { return cur + (tgt - cur) * (1 - Math.exp(-lambda * dt)); };
+
+  var mqRM = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var rmSubs = [];
+  function onRM(fn) { rmSubs.push(fn); fn(mqRM.matches); }
+  function fireRM() { for (var i = 0; i < rmSubs.length; i++) rmSubs[i](mqRM.matches); }
+  if (mqRM.addEventListener) mqRM.addEventListener("change", fireRM);
+  else if (mqRM.addListener) mqRM.addListener(fireRM);
+
+  /* Theme note: every visual (DOM, inline SVG) is painted through CSS custom
+     properties, so the artifact viewer's data-theme toggle and the OS
+     prefers-color-scheme change restyle everything with zero JS — no canvas
+     layers on this page, hence no repaint hook is needed. */
+
+  /* one rAF loop per demo, gated by an IntersectionObserver */
+  function runLoop(watchEl, tick) {
+    var visible = false, raf = 0, last = 0, el = 0;
+    function frame(now) {
+      if (!visible) return;
+      var dt = (now - last) / 1000;
+      if (!(dt > 0) || dt > 0.05) dt = 0.016;
+      last = now;
+      el += dt;
+      tick(dt, el);
+      raf = requestAnimationFrame(frame);
+    }
+    var io = new IntersectionObserver(function (entries) {
+      var v = entries[0].isIntersecting;
+      if (v && !visible) { visible = true; last = performance.now(); raf = requestAnimationFrame(frame); }
+      else if (!v && visible) { visible = false; cancelAnimationFrame(raf); }
+    }, { rootMargin: "140px 0px" });
+    io.observe(watchEl);
+  }
+
+  function scrollerProgress(sc) {
+    var max = sc.scrollHeight - sc.clientHeight;
+    return max > 0 ? clamp(sc.scrollTop / max, 0, 1) : 0;
+  }
+
+  /* wheel pass-through at the ends of an internal scroller
+     (overscroll-behavior: contain blocks native chaining, so we relay) */
+  function edgePass(sc) {
+    sc.addEventListener("wheel", function (e) {
+      var atTop = sc.scrollTop <= 0;
+      var atBot = sc.scrollTop >= sc.scrollHeight - sc.clientHeight - 1;
+      if ((atTop && e.deltaY < 0) || (atBot && e.deltaY > 0)) window.scrollBy(0, e.deltaY);
+    }, { passive: true });
+  }
+
+  /* first real user interaction on a stage: stop auto-nudge, hide the cue */
+  function engage(stage, sc, fn) {
+    var done = false;
+    var mark = function () {
+      if (done) return;
+      done = true;
+      var cue = stage.querySelector(".ml-cue");
+      if (cue) cue.classList.add("is-hidden");
+      if (fn) fn();
+    };
+    ["wheel", "touchstart", "pointerdown", "keydown"].forEach(function (ev) {
+      sc.addEventListener(ev, mark, { passive: true });
+    });
+    return function () { return done; };
+  }
+
+  /* ============================================================
+     01 · sticky-zoom-hero
+     ============================================================ */
+  (function () {
+    var stage = document.getElementById("d1");
+    if (!stage) return;
+    var sc = stage.querySelector(".zh-scroller");
+    var frame = stage.querySelector(".zh-frame");
+    var vig = stage.querySelector(".zh-vignette");
+    var caps = stage.querySelectorAll(".zh-cap");
+    var barFill = stage.querySelector(".zh-bar i");
+    var pills = stage.querySelectorAll(".zh-pill");
+    var chartBars = stage.querySelectorAll(".zh-chartbar i");
+    var p = 0, lastRad = -1, lastIdx = 0, reduced = false;
+
+    edgePass(sc);
+    var engaged = engage(stage, sc);
+
+    function apply(pv) {
+      var e = eio(clamp((pv - 0.15) / 0.55, 0, 1));
+      var scale = 0.45 + 0.55 * e;
+      frame.style.transform = "translate3d(0," + ((1 - e) * 14).toFixed(2) + "px,0) scale(" + scale.toFixed(4) + ")";
+      var rad = Math.round(16 * (1 - e));
+      if (rad !== lastRad) { lastRad = rad; frame.style.borderRadius = rad + "px"; }
+      vig.style.opacity = (0.85 * (1 - e)).toFixed(3);
+      barFill.style.transform = "scaleX(" + pv.toFixed(4) + ")";
+      var idx = pv < 0.34 ? 0 : pv < 0.7 ? 1 : 2;
+      if (idx !== lastIdx || pv === 1) {
+        lastIdx = idx;
+        for (var i = 0; i < caps.length; i++) caps[i].classList.toggle("is-on", i === idx);
+        for (var j = 0; j < pills.length; j++) pills[j].classList.toggle("is-on", j === idx);
+      }
+      for (var k = 0; k < chartBars.length; k++) {
+        var tb = clamp((e * 1.6) - 0.1 - k * 0.04, 0, 1);
+        chartBars[k].style.transform = "scaleY(" + (0.3 + 0.7 * eo(tb)).toFixed(3) + ")";
+      }
+    }
+    apply(0);
+
+    onRM(function (r) { reduced = r; if (r) { p = 1; apply(1); } });
+
+    runLoop(stage, function (dt, el) {
+      if (reduced) return;
+      if (!engaged()) {
+        var amp = 34 * Math.max(0, 1 - el / 14);
+        if (amp > 0.5) sc.scrollTop = 34 + Math.sin(el * 0.9) * amp;
+      }
+      p = damp(p, scrollerProgress(sc), 10, dt);
+      apply(p);
+    });
+  })();
+
+  /* ============================================================
+     02 · depth-parallax-scene  (page-scroll + pointer driven)
+     ============================================================ */
+  (function () {
+    var stage = document.getElementById("d2");
+    if (!stage) return;
+    var layers = stage.querySelectorAll(".px-layer");
+    var far = stage.querySelector(".px-far");
+    var hud = stage.querySelector(".px-hud");
+    var depths = [];
+    for (var i = 0; i < layers.length; i++) depths.push(parseFloat(layers[i].getAttribute("data-depth")) || 0);
+
+    var p = 0.5, px = 0, py = 0, tpx = 0, tpy = 0;
+    var pointerLive = false, lastBlur = -1, hudTick = 0, reduced = false;
+
+    stage.addEventListener("pointermove", function (e) {
+      var r = stage.getBoundingClientRect();
+      tpx = clamp(((e.clientX - r.left) / r.width - 0.5) * 2, -1, 1);
+      tpy = clamp(((e.clientY - r.top) / r.height - 0.5) * 2, -1, 1);
+      pointerLive = true;
+    });
+    stage.addEventListener("pointerleave", function () { tpx = 0; tpy = 0; pointerLive = false; });
+
+    function apply() {
+      for (var i = 0; i < layers.length; i++) {
+        var d = depths[i];
+        var ty = (0.5 - p) * 180 * d + py * 14 * d;
+        var tx = px * 26 * d;
+        layers[i].style.transform = "translate3d(" + tx.toFixed(2) + "px," + ty.toFixed(2) + "px,0)";
+      }
+      var focus = 1 - Math.abs(p - 0.5) * 2;           /* 1 when centered */
+      var blur = Math.round(2.5 * eio(clamp(focus, 0, 1)) / 0.2) * 0.2;
+      if (Math.abs(blur - lastBlur) > 0.01) {
+        lastBlur = blur;
+        far.style.filter = blur > 0.05 ? "blur(" + blur.toFixed(1) + "px)" : "none";
+      }
+    }
+
+    onRM(function (r) {
+      reduced = r;
+      if (r) {
+        p = 0.5; px = 0; py = 0;
+        for (var i = 0; i < layers.length; i++) layers[i].style.transform = "none";
+        far.style.filter = "none";
+        hud.textContent = "static · reduced motion";
+      }
+    });
+
+    runLoop(stage, function (dt, el) {
+      if (reduced) return;
+      var r = stage.getBoundingClientRect();
+      var vh = window.innerHeight || 800;
+      var target = clamp((vh - r.top) / (vh + r.height), 0, 1);
+      p = damp(p, target, 8, dt);
+      if (!pointerLive) {                               /* ambient drift on load */
+        tpx = Math.sin(el * 0.5) * 0.22;
+        tpy = Math.cos(el * 0.37) * 0.16;
+      }
+      px = damp(px, tpx, 4, dt);
+      py = damp(py, tpy, 4, dt);
+      apply();
+      if (++hudTick % 8 === 0) {
+        hud.textContent = "p " + p.toFixed(2) + " · ptr " + (px >= 0 ? "+" : "") + px.toFixed(2) + ", " + (py >= 0 ? "+" : "") + py.toFixed(2);
+      }
+    });
+  })();
+
+  /* ============================================================
+     03 · mask-wipe-sections
+     ============================================================ */
+  (function () {
+    var stage = document.getElementById("d3");
+    if (!stage) return;
+    var sc = stage.querySelector(".mw-scroller");
+    var scene = stage.querySelector(".mw-scene");
+    var p2 = stage.querySelector(".mw-p2");
+    var p3 = stage.querySelector(".mw-p3");
+    var p4 = stage.querySelector(".mw-p4");
+    var e1 = stage.querySelector(".mw-edge.e1");
+    var ringCore = stage.querySelector(".mw-ringsvg .core");
+    var ringGlow = stage.querySelector(".mw-ringsvg .glow");
+    var e3a = stage.querySelector(".mw-edge.e3a");
+    var e3b = stage.querySelector(".mw-edge.e3b");
+    var segs = stage.querySelectorAll(".mw-seg .bar i");
+    var p = 0, reduced = false;
+
+    edgePass(sc);
+    var engaged = engage(stage, sc);
+
+    function apply(pv) {
+      var W = scene.clientWidth || 700;
+      var H = scene.clientHeight || 540;
+      var w1 = eio(clamp((pv - 0.06) / 0.28, 0, 1));
+      var w2 = eio(clamp((pv - 0.39) / 0.25, 0, 1));
+      var w3 = eio(clamp((pv - 0.70) / 0.24, 0, 1));
+
+      /* angled sweep */
+      var x = w1 * 124 - 12;
+      p2.style.clipPath = "polygon(0 0," + (x + 12).toFixed(2) + "% 0," + (x - 12).toFixed(2) + "% 100%,0 100%)";
+      e1.style.transform = "translate3d(" + (x / 100 * W).toFixed(1) + "px,0,0) rotate(8deg)";
+      e1.style.opacity = Math.sin(Math.PI * w1).toFixed(3);
+
+      /* iris */
+      var maxR = Math.hypot(W, H);
+      var rr = w2 * maxR;
+      p3.style.clipPath = "circle(" + rr.toFixed(1) + "px at 78% 30%)";
+      var rStr = rr.toFixed(1);
+      ringCore.setAttribute("r", rStr);
+      ringGlow.setAttribute("r", rStr);
+      var ro = Math.sin(Math.PI * w2);
+      ringCore.style.opacity = (ro * 0.95).toFixed(3);
+      ringGlow.style.opacity = (ro * 0.28).toFixed(3);
+
+      /* curtain */
+      var inset = 50 * (1 - w3);
+      p4.style.clipPath = "inset(0 " + inset.toFixed(2) + "% 0 " + inset.toFixed(2) + "%)";
+      var off = (50 - inset) / 100 * W;
+      e3a.style.transform = "translate3d(" + (W / 2 - off).toFixed(1) + "px,0,0)";
+      e3b.style.transform = "translate3d(" + (W / 2 + off).toFixed(1) + "px,0,0)";
+      var o3 = Math.sin(Math.PI * w3).toFixed(3);
+      e3a.style.opacity = o3;
+      e3b.style.opacity = o3;
+
+      segs[0].style.transform = "scaleX(" + w1.toFixed(3) + ")";
+      segs[1].style.transform = "scaleX(" + w2.toFixed(3) + ")";
+      segs[2].style.transform = "scaleX(" + w3.toFixed(3) + ")";
+    }
+    apply(0);
+
+    onRM(function (r) {
+      reduced = r;
+      stage.classList.toggle("mw-rm", r);
+      if (!r) apply(p);
+    });
+
+    runLoop(stage, function (dt, el) {
+      if (reduced) return;
+      if (!engaged()) {
+        var amp = 30 * Math.max(0, 1 - el / 14);
+        if (amp > 0.5) sc.scrollTop = 30 + Math.sin(el * 0.8) * amp;
+      }
+      p = damp(p, scrollerProgress(sc), 9, dt);
+      apply(p);
+    });
+  })();
+
+  /* ============================================================
+     04 · scroll-count-stats
+     ============================================================ */
+  (function () {
+    var stage = document.getElementById("d4");
+    if (!stage) return;
+    var sc = stage.querySelector(".sc-scroller");
+    var odos = stage.querySelectorAll(".sc-odo");
+    var underline = stage.querySelector(".sc-underline path");
+    var sparks = stage.querySelectorAll(".sc-spark");
+    var scrub = stage.querySelector(".sc-scrub");
+    var p = 0, reduced = false, lastPct = -1;
+
+    /* build digit columns: strips of 0-9 x3 for digits, static spans for separators */
+    var stats = [];
+    for (var s = 0; s < odos.length; s++) {
+      var str = odos[s].getAttribute("data-value") || "0";
+      var suffix = odos[s].getAttribute("data-suffix") || "";
+      var cols = [];
+      var digitIdx = 0;
+      for (var c = 0; c < str.length; c++) {
+        var ch = str.charAt(c);
+        if (ch >= "0" && ch <= "9") {
+          var col = document.createElement("span");
+          col.className = "sc-col";
+          var strip = document.createElement("span");
+          strip.className = "sc-strip";
+          strip.style.display = "block";
+          var html = "";
+          for (var rep = 0; rep < 3; rep++) for (var d = 0; d <= 9; d++) html += '<span class="sc-d">' + d + "</span>";
+          strip.innerHTML = html;
+          col.appendChild(strip);
+          odos[s].appendChild(col);
+          cols.push({ strip: strip, digit: parseInt(ch, 10), idx: digitIdx });
+          digitIdx++;
+        } else {
+          var sep = document.createElement("span");
+          sep.className = "sc-sep";
+          sep.textContent = ch;
+          odos[s].appendChild(sep);
+        }
+      }
+      if (suffix) {
+        var suf = document.createElement("span");
+        suf.className = "sc-suffix";
+        suf.textContent = suffix;
+        odos[s].appendChild(suf);
+      }
+      stats.push({ cols: cols, nd: digitIdx });
+    }
+
+    var rowH = 46;
+    function measure() {
+      var d0 = stage.querySelector(".sc-d");
+      if (d0) { var h = d0.getBoundingClientRect().height; if (h > 8) rowH = h; }
+    }
+    measure();
+    window.addEventListener("resize", measure);
+
+    edgePass(sc);
+    var engaged = engage(stage, sc);
+
+    function apply(pv) {
+      for (var i = 0; i < stats.length; i++) {
+        var ps = clamp((pv - 0.06 - i * 0.12) / 0.55, 0, 1);
+        var st = stats[i];
+        for (var j = 0; j < st.cols.length; j++) {
+          var col = st.cols[j];
+          var span = Math.max(0.001, 1 - 0.055 * (st.nd - 1));
+          var pd = clamp((ps - col.idx * 0.055) / span, 0, 1);
+          var roll = eo(pd);
+          var bump = 0.35 * Math.sin(Math.PI * clamp((pd - 0.65) / 0.35, 0, 1));
+          var pos = (10 + col.digit) * roll + bump;
+          col.strip.style.transform = "translate3d(0," + (-pos * rowH).toFixed(2) + "px,0)";
+        }
+        /* sparkline scrubbed inside the stat's window */
+        if (sparks[i]) {
+          var sp = eo(clamp((ps - 0.1) / 0.8, 0, 1));
+          var line = sparks[i].querySelector(".line");
+          var area = sparks[i].querySelector(".area");
+          line.style.strokeDashoffset = (1 - sp).toFixed(4);
+          area.style.opacity = (sp * 0.5).toFixed(3);
+        }
+      }
+      var u = eo(clamp((pv - 0.52) / 0.26, 0, 1));
+      underline.style.strokeDashoffset = (1 - u).toFixed(4);
+      var pct = Math.round(pv * 100);
+      if (pct !== lastPct) {
+        lastPct = pct;
+        scrub.textContent = "scrub " + String(pct).padStart(3, "0") + "%";
+      }
+    }
+    apply(0);
+
+    onRM(function (r) { reduced = r; if (r) { p = 1; apply(1); } });
+
+    runLoop(stage, function (dt, el) {
+      if (reduced) return;
+      if (!engaged()) {
+        var amp = 26 * Math.max(0, 1 - el / 14);
+        if (amp > 0.5) sc.scrollTop = 26 + Math.sin(el * 0.85) * amp;
+      }
+      p = damp(p, scrollerProgress(sc), 9, dt);
+      apply(p);
+    });
+  })();
+
+  /* ============================================================
+     05 · velocity-skew-feed
+     ============================================================ */
+  (function () {
+    var stage = document.getElementById("d5");
+    if (!stage) return;
+    var sc = stage.querySelector(".vs-scroller");
+    var needle = stage.querySelector(".vs-needle");
+    var read = stage.querySelector(".vs-read");
+    var peakEl = stage.querySelector(".vs-peak");
+
+    var FEED = [
+      ["Mira Chen", "approved the release checklist", "2m", "review"],
+      ["deploy-bot", "shipped v0.9.4 to production", "6m", "deploy"],
+      ["Jonas Weber", "commented on the parallax RFC", "11m", "rfc"],
+      ["Priya Nair", "merged scroll-count-stats #482", "18m", "merge"],
+      ["Ana Sofia Duarte", "recorded a 60 fps capture for the docs", "24m", "docs"],
+      ["Motiq CI", "216 interaction tests passed", "31m", "ci"],
+      ["Leo Marchetti", "tuned the curtain wipe damping", "44m", "motion"],
+      ["Sara Kim", "filed a Safari clip-path repro", "1h", "bug"],
+      ["deploy-bot", "preview built for velocity-skew-feed", "1h", "deploy"],
+      ["Tomás Rivera", "proposed reduced-motion snapshot tests", "2h", "a11y"],
+      ["Ingrid Halvorsen", "rewrote the odometer stagger math", "3h", "motion"],
+      ["Motiq CI", "bundle size check passed — 8.4 kB gzip", "3h", "ci"],
+      ["Mira Chen", "opened milestone: Batch 07 launch", "4h", "plan"],
+      ["Jonas Weber", "added a pointer-parallax touch fallback", "5h", "motion"],
+      ["Priya Nair", "published the lab report draft", "6h", "docs"],
+      ["Ana Sofia Duarte", "archived the violet theme tokens", "7h", "design"]
+    ];
+    var AV = ["var(--accent)", "var(--cyan)", "var(--success)", "var(--accent-text)", "var(--warning)"];
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < FEED.length; i++) {
+      var it = FEED[i];
+      var card = document.createElement("article");
+      card.className = "vs-card";
+      var initials = it[0].split(" ").map(function (w) { return w.charAt(0); }).join("").slice(0, 2).toUpperCase();
+      card.innerHTML =
+        '<span class="vs-av" style="background: linear-gradient(135deg, ' + AV[i % AV.length] + ', color-mix(in srgb, ' + AV[(i + 2) % AV.length] + ' 60%, var(--bg)))">' + initials + "</span>" +
+        '<span class="vs-body"><span class="vs-line1"><b>' + it[0] + "</b> " + it[1] + "</span>" +
+        '<span class="vs-line2"><span class="vs-time">' + it[2] + ' ago</span><span class="vs-tag">' + it[3] + "</span></span></span>";
+      frag.appendChild(card);
+    }
+    sc.appendChild(frag);
+    var cards = sc.querySelectorAll(".vs-card");
+
+    var lastSt = sc.scrollTop, velSm = 0, skew = 0, skewV = 0, peak = 0;
+    var reduced = false, readTick = 0, lastRead = -1, lastPeak = -1;
+
+    edgePass(sc);
+    var engaged = engage(stage, sc);
+
+    onRM(function (r) {
+      reduced = r;
+      if (r) {
+        for (var i = 0; i < cards.length; i++) cards[i].style.transform = "none";
+        needle.style.transform = "scaleX(0)";
+        read.textContent = "reduced motion";
+        peakEl.textContent = "physics off";
+      } else {
+        read.textContent = "0 px/s";
+        peakEl.textContent = "peak 0 px/s";
+        lastRead = -1; lastPeak = -1;
+      }
+    });
+
+    runLoop(stage, function (dt, el) {
+      if (reduced) return;
+      var st = sc.scrollTop;
+      var instV = (st - lastSt) / dt;
+      lastSt = st;
+      if (!engaged()) {                                  /* idle breathing on load */
+        instV += Math.sin(el * 1.3) * 150 * Math.max(0, 1 - el / 16);
+      }
+      velSm = damp(velSm, instV, 12, dt);
+
+      var target = clamp(velSm * 0.0035, -6.5, 6.5);
+      skewV += (90 * (target - skew) - 14 * skewV) * dt;
+      skew += skewV * dt;
+
+      /* sleep the transforms when the spring has settled */
+      var active = Math.abs(skew) > 0.02 || Math.abs(skewV) > 0.02 || Math.abs(velSm) > 2;
+      if (active) {
+        var t = "skewY(" + skew.toFixed(3) + "deg) scaleY(" + (1 + Math.abs(skew) * 0.008).toFixed(4) + ")";
+        for (var i = 0; i < cards.length; i++) cards[i].style.transform = t;
+        needle.style.transform = "scaleX(" + clamp(velSm / 2600, -1, 1).toFixed(3) + ")";
+      }
+
+      peak = Math.max(peak * (1 - 0.4 * dt), Math.abs(velSm));
+      if (++readTick % 5 === 0) {
+        var rv = Math.round(Math.abs(velSm) / 10) * 10;
+        if (rv !== lastRead) { lastRead = rv; read.textContent = rv.toLocaleString() + " px/s"; }
+        var pv = Math.round(peak / 10) * 10;
+        if (pv !== lastPeak) { lastPeak = pv; peakEl.textContent = "peak " + pv.toLocaleString() + " px/s"; }
+      }
+    });
+  })();
+
+})();
+</script>

@@ -46,6 +46,7 @@ const NAV_GROUPS: { label: string; ids: CategoryId[] }[] = [
   },
   { label: "Environments", ids: ["product-backgrounds", "workflow-heroes"] },
   { label: "Creative", ids: ["text", "backgrounds", "creative", "mobile", "animated-shadcn", "icons"] },
+  { label: "Showpieces", ids: ["cursor", "media", "scroll"] },
 ];
 
 const START_LINKS: [string, string][] = [

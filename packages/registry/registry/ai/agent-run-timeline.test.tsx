@@ -86,3 +86,76 @@ describe("AgentRunTimeline", () => {
     expect(header.getAttribute("aria-expanded")).toBe("true");
   });
 });
+
+/*
+ * Responsive contract. jsdom cannot lay out, so these assert the *structure* that
+ * makes a narrow render reflow: grouped meta spans (a "·" can never become its
+ * own flex line), line-clamped titles instead of single-line truncation, and a
+ * meta rail that takes its own full-width row until the component ITSELF is wide
+ * enough. Reflow is driven by `@container/timeline`, never by the viewport — the
+ * component is routinely tiled into a column far narrower than the window.
+ */
+describe("AgentRunTimeline — responsive contract", () => {
+  it("renders the run meta as grouped nowrap spans with no standalone separator", () => {
+    const { container } = render(<AgentRunTimeline run={BASE} />);
+    const groups = Array.from(container.querySelectorAll("[data-meta-group]"));
+    // "N of M steps", "started …", "1 failed", "1 awaiting approval".
+    expect(groups.length).toBe(4);
+    for (const g of groups) expect(g.className).toContain("whitespace-nowrap");
+
+    // Every element in the meta row is a group — never a bare "·" flex item.
+    const row = groups[0].parentElement;
+    expect(row).toBeTruthy();
+    for (const child of Array.from(row!.children)) {
+      expect(child.hasAttribute("data-meta-group")).toBe(true);
+      expect(child.textContent?.replace(/[·\s]/g, "")).not.toBe("");
+    }
+  });
+
+  it("wraps the run title and every step title instead of truncating them", () => {
+    const { container } = render(<AgentRunTimeline run={BASE} />);
+    const heading = screen.getByRole("heading", { level: 2 });
+    expect(heading.className).toContain("line-clamp-2");
+    expect(heading.className).not.toContain("truncate");
+
+    const titles = Array.from(container.querySelectorAll("[data-step-title]"));
+    expect(titles.length).toBe(BASE.steps.length);
+    for (const t of titles) {
+      expect(t.className).toContain("line-clamp-2");
+      expect(t.className).not.toContain("truncate");
+    }
+  });
+
+  it("declares its own named container context so it sizes on its own width", () => {
+    const { container } = render(<AgentRunTimeline run={BASE} />);
+    const root = container.querySelector("section");
+    expect(root).toBeTruthy();
+    expect(root!.className).toContain("@container/timeline");
+  });
+
+  it("gives each step's status + actions their own full-width row until @md/timeline", () => {
+    const { container } = render(<AgentRunTimeline run={BASE} />);
+    const rails = Array.from(container.querySelectorAll("[data-step-meta]"));
+    expect(rails.length).toBe(BASE.steps.length);
+    for (const rail of rails) {
+      expect(rail.className).toContain("w-full");
+      // Container-based, not viewport-based: a 320px tile on a wide screen must
+      // still get the stacked form.
+      expect(rail.className).toContain("@md/timeline:w-auto");
+      expect(rail.className).not.toContain("sm:w-auto");
+    }
+  });
+
+  it("gives run + step controls a 44px touch target while the timeline is narrow", () => {
+    render(
+      <AgentRunTimeline run={BASE} onApprove={vi.fn()} onRetryStep={vi.fn()} onCancelRun={vi.fn()} />,
+    );
+    for (const name of [
+      /approve wait for deployment approval/i,
+      /retry run validation/i,
+      /cancel run/i,
+    ]) {
+      expect(screen.getByRole("button", { name }).className).toContain("min-h-[44px]");
+    }
+  });
+});

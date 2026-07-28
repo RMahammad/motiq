@@ -38,3 +38,53 @@ describe("TypingAndPresence", () => {
     await noViolations(container);
   });
 });
+
+/* -- responsive contract ------------------------------------------------- */
+
+describe("TypingAndPresence — responsive contract", () => {
+  it("responds to its own width, not the viewport: the strip is a named size container", () => {
+    const { container } = render(
+      <TypingAndPresence participants={PEOPLE} mode="compact" context="#redesign" />,
+    );
+    const root = container.querySelector<HTMLElement>('[role="group"]');
+    expect(String(root?.className)).toMatch(/@container\/presence/);
+    // No viewport variants survive anywhere in the strip.
+    container.querySelectorAll("*").forEach((el) => {
+      expect(String(el.className)).not.toMatch(/(^|\s)(sm|md|lg|xl|2xl):/);
+    });
+  });
+
+  it("lets the compact strip wrap in a narrow container instead of ellipsizing the summary away", () => {
+    const { container } = render(
+      <TypingAndPresence participants={PEOPLE} mode="compact" context="#redesign" />,
+    );
+    const root = container.querySelector<HTMLElement>('[role="group"]');
+    // The flex row lives one level inside the container element: an element is
+    // never its own query container, so `@…/presence` written on the root would
+    // silently never match.
+    const row = root?.firstElementChild as HTMLElement;
+    const cls = String(row.className);
+    expect(cls).toMatch(/flex-wrap/);
+    expect(cls).toMatch(/@\[400px\]\/presence:flex-nowrap/);
+    // The root must stay block-level: an inline-flex box with
+    // `container-type: inline-size` is sized as if empty and collapses to 0.
+    expect(String(root?.className)).not.toMatch(/inline-flex/);
+
+    const summary = screen.getAllByText("Jamie is typing")[0];
+    // Truncation only applies once the strip itself has room; in a narrow
+    // container the sentence wraps rather than clipping to a few characters.
+    expect(String(summary.className)).toMatch(/@\[400px\]\/presence:truncate/);
+    expect(String(summary.className)).not.toMatch(/(^|\s)truncate(\s|$)/);
+  });
+
+  it("caps the participant panel to the viewport and gives its rows a 44px target", async () => {
+    const { container } = render(<TypingAndPresence participants={PEOPLE} maxVisible={2} />);
+    const trigger = container.querySelector<HTMLElement>('button[aria-haspopup="dialog"]');
+    expect(trigger).not.toBeNull();
+    trigger?.click();
+    const panel = await screen.findByRole("dialog");
+    expect(String(panel.className)).toMatch(/w-\[min\(256px,calc\(100vw-2rem\)\)\]/);
+    const row = panel.querySelector<HTMLElement>("[data-participant]");
+    expect(String(row?.className)).toMatch(/min-h-\[44px\]/);
+  });
+});

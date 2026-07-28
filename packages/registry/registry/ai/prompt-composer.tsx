@@ -315,7 +315,7 @@ function Menu({ label, disabled, reduce, open, onOpenChange, trigger, children }
         aria-expanded={open}
         aria-controls={open ? panelId : undefined}
         onClick={() => onOpenChange(!open)}
-        className="inline-flex min-h-[32px] items-center gap-1.5 rounded-lg px-2.5 py-1 text-[12.5px] font-medium text-[var(--color-fg)] outline-none [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50"
+        className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg px-2.5 py-1 text-[12.5px] font-medium text-[var(--color-fg)] outline-none [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50 @md/composer:min-h-[32px]"
       >
         {trigger}
       </button>
@@ -514,7 +514,13 @@ export function PromptComposer({
     <section
       aria-label={`${label} composer`}
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-2xl bg-[var(--color-surface)] shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]",
+        /* `@container/composer` — the composer sizes itself against its own
+           card, so it reads the same in a 320px tile as on a 320px phone.
+           Inline-axis containment only: the sticky action row below still
+           resolves against this card's own `overflow-hidden` scroll box, and
+           the insertion menus are portalled to `document.body`, so the
+           containing block `container-type` introduces never reaches them. */
+        "@container/composer flex w-full flex-col overflow-hidden rounded-2xl bg-[var(--color-surface)] shadow-[var(--shadow-md)] [border:1px_solid_var(--color-border)]",
         disabled && "opacity-70",
         className,
       )}
@@ -582,12 +588,16 @@ export function PromptComposer({
               return (
                 <li
                   key={att.id}
-                  className="inline-flex max-w-[220px] items-center gap-1.5 rounded-lg bg-[var(--color-bg-secondary)] px-2 py-1 text-[12px] text-[var(--color-fg)] [border:1px_solid_var(--color-border)]"
+                  className="inline-flex max-w-full items-center gap-1.5 rounded-lg bg-[var(--color-bg-secondary)] px-2 py-1 text-[12px] text-[var(--color-fg)] [border:1px_solid_var(--color-border)] @md/composer:max-w-[220px]"
                 >
                   <span className="text-[var(--color-muted)]">
                     <AttachmentGlyph kind={att.kind} />
                   </span>
-                  <span className="min-w-0 flex-1 truncate font-medium">{att.name}</span>
+                  {/* A file name may still truncate — `title` keeps the full
+                      value reachable, per the responsive standard. */}
+                  <span className="min-w-0 flex-1 truncate font-medium" title={att.name}>
+                    {att.name}
+                  </span>
                   {att.meta ? <span className="shrink-0 text-[var(--color-muted)]">{att.meta}</span> : null}
                   {s ? (
                     <span
@@ -620,7 +630,7 @@ export function PromptComposer({
                   type="button"
                   disabled={disabled}
                   onClick={onAddAttachment}
-                  className="inline-flex min-h-[30px] items-center gap-1 rounded-lg px-2 py-1 text-[12px] font-medium text-[var(--color-muted)] outline-none [border:1px_dashed_var(--color-border)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex min-h-[44px] items-center gap-1 rounded-lg px-2 py-1 text-[12px] font-medium text-[var(--color-muted)] outline-none [border:1px_dashed_var(--color-border)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50 @md/composer:min-h-[30px]"
                 >
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
                     <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -634,7 +644,7 @@ export function PromptComposer({
       ) : null}
 
       {/* sticky action row ------------------------------------------------- */}
-      <div className="sticky bottom-0 mt-1 flex flex-wrap items-center gap-2 border-t border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2.5">
+      <div className="sticky bottom-0 mt-1 flex flex-wrap items-center gap-x-2 gap-y-2 border-t border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2.5">
         {/* left: insertion menus + model picker */}
         <div className="flex min-w-0 flex-wrap items-center gap-1.5">
           {variables.length > 0 ? (
@@ -647,7 +657,7 @@ export function PromptComposer({
               trigger={
                 <>
                   <span aria-hidden className="font-mono">{"{ }"}</span>
-                  <span className="hidden sm:inline">Variable</span>
+                  <span className="hidden @md/composer:inline">Variable</span>
                   <span className="sr-only">Insert a variable</span>
                 </>
               }
@@ -686,7 +696,7 @@ export function PromptComposer({
                     <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="1.8" />
                     <path d="M8 9h8M8 13h5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                   </svg>
-                  <span className="hidden sm:inline">Template</span>
+                  <span className="hidden @md/composer:inline">Template</span>
                   <span className="sr-only">Insert a template</span>
                 </>
               }
@@ -787,7 +797,7 @@ export function PromptComposer({
               type="button"
               disabled={disabled}
               onClick={onRetry}
-              className="inline-flex min-h-[34px] items-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50 @md/composer:min-h-[34px]"
               style={{ color: statusVars("error").color, border: `1px solid ${statusVars("error").border}` }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -801,7 +811,7 @@ export function PromptComposer({
             <button
               type="button"
               onClick={onStop}
-              className="inline-flex min-h-[34px] items-center gap-1.5 rounded-lg bg-[var(--color-bg-secondary)] px-3 py-1.5 text-[13px] font-semibold text-[var(--color-fg)] outline-none [border:1px_solid_var(--color-border)] transition-colors hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-[var(--color-bg-secondary)] px-3 py-1.5 text-[13px] font-semibold text-[var(--color-fg)] outline-none [border:1px_solid_var(--color-border)] transition-colors hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @md/composer:min-h-[34px]"
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" />
@@ -814,7 +824,7 @@ export function PromptComposer({
               onClick={submit}
               disabled={!canSubmit}
               aria-keyshortcuts="Meta+Enter Control+Enter"
-              className="inline-flex min-h-[34px] items-center gap-1.5 rounded-lg bg-[var(--color-accent)] px-3.5 py-1.5 text-[13px] font-semibold text-[var(--color-accent-foreground,white)] outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-45"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-[var(--color-accent)] px-3.5 py-1.5 text-[13px] font-semibold text-[var(--color-accent-foreground,white)] outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-45 @md/composer:min-h-[34px]"
             >
               {status === "loading" ? (
                 <>
@@ -835,11 +845,18 @@ export function PromptComposer({
       </div>
 
       {/* helper line ------------------------------------------------------- */}
-      <div className="flex items-center gap-1 border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-1.5 text-[11px] text-[var(--color-muted)]">
+      {/* The two secondary clauses are visual-only while the composer is narrow
+          — the full line needs ~440px, and a touch keyboard has no Esc anyway.
+          The same wording stays available to assistive tech. */}
+      <div className="flex flex-wrap items-center gap-x-1 gap-y-1 border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-1.5 text-[11px] text-[var(--color-muted)]">
         <kbd className="rounded bg-[var(--color-surface)] px-1 [border:1px_solid_var(--color-border)]">⌘/Ctrl</kbd>
         <span aria-hidden>+</span>
         <kbd className="rounded bg-[var(--color-surface)] px-1 [border:1px_solid_var(--color-border)]">↵</kbd>
-        <span>to send · Esc closes menus · nothing is sent anywhere from this surface</span>
+        <span>to send</span>
+        <span className="hidden @md/composer:inline">· Esc closes menus · nothing is sent anywhere from this surface</span>
+        <span className="sr-only @md/composer:hidden">
+          · Esc closes menus · nothing is sent anywhere from this surface
+        </span>
       </div>
 
       {/* polite live region for insertions + model + status --------------- */}

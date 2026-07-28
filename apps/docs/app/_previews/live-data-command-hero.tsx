@@ -49,12 +49,17 @@ export function LiveDataCommandHeroPreview() {
   return (
     <div className="flex w-full max-w-[1180px] flex-col gap-4">
       <ControlBar label="Hero phase">
-        <ControlSegmented<DataHeroPhase>
-          label="Data lifecycle phase"
-          options={PHASE_OPTIONS}
-          value={phase}
-          onChange={setPhase}
-        />
+        {/* Eight segments are wider than a phone stage and `ControlSegmented` is
+            `shrink-0`, so on narrow screens the later phases would be clipped and
+            unreachable. Scroll them instead; from `sm` the bar is unchanged. */}
+        <div className="-mx-1 flex w-full min-w-0 overflow-x-auto overscroll-x-contain px-1 sm:mx-0 sm:w-auto sm:overflow-x-visible sm:px-0">
+          <ControlSegmented<DataHeroPhase>
+            label="Data lifecycle phase"
+            options={PHASE_OPTIONS}
+            value={phase}
+            onChange={setPhase}
+          />
+        </div>
         <ControlHint live>{HINT[phase]}</ControlHint>
       </ControlBar>
 

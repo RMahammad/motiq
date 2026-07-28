@@ -520,8 +520,14 @@ function ProgressRegion({
 
 /* -- action buttons -------------------------------------------------------- */
 
+// `min-h-[36px]` while the strip itself is narrow: a cramped strip is the one
+// most likely to be driven by a thumb, and the height costs nothing there.
+// Once the strip has 24rem of room it drops back to the original compact
+// chrome. The query is on the *strip's* container (`@container/refresh` on the
+// inline + panel roots), never on the viewport — a refresh strip inside a
+// 300px card is narrow no matter how wide the window is.
 const btnBase =
-  "inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-[12.5px] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] disabled:cursor-not-allowed disabled:opacity-40";
+  "inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-[12.5px] font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] disabled:cursor-not-allowed disabled:opacity-40 @sm/refresh:min-h-0";
 
 function ActionButton({
   onClick,
@@ -572,7 +578,13 @@ function IconButton({
       aria-label={label}
       title={label}
       className={cn(
-        "inline-grid h-7 w-7 shrink-0 place-items-center rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-fg)] transition-colors",
+        // A single 32px target at every size. The compact pill is an
+        // intrinsically-sized `inline-flex`, so it cannot be a query container
+        // (`container-type: inline-size` would zero its intrinsic width and
+        // collapse the pill) — and a viewport query is exactly the bug this
+        // component is being cured of. 32px clears the WCAG 2.2 AA 24px
+        // minimum with margin while keeping the pill dense.
+        "inline-grid h-8 w-8 shrink-0 place-items-center rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-fg)] transition-colors",
         "hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]",
         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)]",
       )}
@@ -742,17 +754,27 @@ export function DataRefreshState({
         role="group"
         aria-label={`${label} refresh status`}
         className={cn(
-          "flex w-full flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 shadow-[var(--shadow-sm)]",
+          // `@container/refresh`: the strip is `w-full`, so its width is handed
+          // down by whatever holds it — a hero surface, a 300px sidebar card —
+          // and every layout decision inside reads that, not the window.
+          "@container/refresh flex w-full flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 shadow-[var(--shadow-sm)]",
           className,
         )}
       >
         {liveRegion}
         <StatePill state={state} meta={meta} vars={vars} reduce={reduce} />
-        <span className="min-w-0 flex-1 truncate text-[12.5px] text-[var(--color-muted)]">
+        {/* Until the strip itself has 36rem, the detail takes its own full-width
+            row and may run to two lines — sharing a row with the pill, the
+            progress bar and the actions left it ellipsised to a few characters.
+            From 36rem of *strip* it is the original single truncated column. */}
+        <span
+          data-refresh-detail=""
+          className="min-w-0 basis-full line-clamp-2 text-[12.5px] text-[var(--color-muted)] @xl/refresh:flex-1 @xl/refresh:basis-0 @xl/refresh:line-clamp-1"
+        >
           {detail}
         </span>
         {busy ? (
-          <div className="w-24 sm:w-32">
+          <div className="w-24 @xl/refresh:w-32">
             <ProgressRegion state={state} progress={progress} vars={vars} reduce={reduce} label={`${label} refresh`} />
           </div>
         ) : null}
@@ -782,7 +804,9 @@ export function DataRefreshState({
     <section
       aria-label={`${label} refresh status`}
       className={cn(
-        "flex w-full max-w-[440px] flex-col gap-3.5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-md)]",
+        // Same named container as the inline strip, so the shared action
+        // buttons size from the panel's own width rather than the window.
+        "@container/refresh flex w-full max-w-[440px] flex-col gap-3.5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-md)]",
         className,
       )}
     >

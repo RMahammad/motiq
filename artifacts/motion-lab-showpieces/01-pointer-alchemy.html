@@ -1,0 +1,2233 @@
+<title>Motiq Motion Lab — Pointer Alchemy</title>
+
+<style>
+  /* ============================================================
+     Motiq Motion Lab — Batch 07 — Pointer Alchemy
+     Brand: Deep Ink + Azure + Coral. Tokens only. Dark is hero.
+     ============================================================ */
+
+  :root {
+    --color-bg: #f7f9fc;
+    --color-bg-elevated: #ffffff;
+    --color-surface: #ffffff;
+    --color-surface-2: #eef2f8;
+    --color-border: #dce4ef;
+    --color-border-strong: #bccadd;
+    --color-fg: #101828;
+    --color-fg-secondary: #344054;
+    --color-muted: #667085;
+    --color-accent: #315fea;
+    --color-accent-text: #244fd1;
+    --color-cyan: #009fb3;
+    --color-coral: #e9564a;
+    --color-success: #12805c;
+    --color-warning: #9a6a09;
+
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+    --dur-fast: 120ms;
+    --dur-normal: 220ms;
+    --dur-slow: 360ms;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #080c14;
+      --color-bg-elevated: #0d1420;
+      --color-surface: #111827;
+      --color-surface-2: #192337;
+      --color-border: #263449;
+      --color-border-strong: #354863;
+      --color-fg: #f8fafc;
+      --color-fg-secondary: #cbd5e1;
+      --color-muted: #9caabd;
+      --color-accent: #4f7cff;
+      --color-accent-text: #7f9fff;
+      --color-cyan: #22c7d9;
+      --color-coral: #ff6b5e;
+      --color-success: #32d583;
+      --color-warning: #f6b94a;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --color-bg: #080c14;
+    --color-bg-elevated: #0d1420;
+    --color-surface: #111827;
+    --color-surface-2: #192337;
+    --color-border: #263449;
+    --color-border-strong: #354863;
+    --color-fg: #f8fafc;
+    --color-fg-secondary: #cbd5e1;
+    --color-muted: #9caabd;
+    --color-accent: #4f7cff;
+    --color-accent-text: #7f9fff;
+    --color-cyan: #22c7d9;
+    --color-coral: #ff6b5e;
+    --color-success: #32d583;
+    --color-warning: #f6b94a;
+  }
+
+  :root[data-theme="light"] {
+    --color-bg: #f7f9fc;
+    --color-bg-elevated: #ffffff;
+    --color-surface: #ffffff;
+    --color-surface-2: #eef2f8;
+    --color-border: #dce4ef;
+    --color-border-strong: #bccadd;
+    --color-fg: #101828;
+    --color-fg-secondary: #344054;
+    --color-muted: #667085;
+    --color-accent: #315fea;
+    --color-accent-text: #244fd1;
+    --color-cyan: #009fb3;
+    --color-coral: #e9564a;
+    --color-success: #12805c;
+    --color-warning: #9a6a09;
+  }
+
+  #lab {
+    font-family: var(--font-sans);
+    color: var(--color-fg);
+    background: var(--color-bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 clamp(16px, 4vw, 48px) 96px;
+  }
+
+  #lab * { box-sizing: border-box; }
+  #lab a { color: var(--color-accent-text); text-decoration: none; }
+  #lab a:hover { text-decoration: underline; }
+
+  /* ---------- Header ---------- */
+
+  .lab-header {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: clamp(40px, 7vw, 76px) 0 8px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    color: var(--color-accent-text);
+    text-transform: uppercase;
+  }
+
+  .lab-header h1 {
+    margin: 10px 0 12px;
+    font-size: clamp(34px, 5.5vw, 56px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  .thesis {
+    max-width: 640px;
+    margin: 0;
+    color: var(--color-fg-secondary);
+    font-size: 16px;
+  }
+
+  .lab-index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lab-index a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 7px 13px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    font-size: 13px;
+    color: var(--color-fg-secondary);
+    transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  }
+
+  .lab-index a:hover {
+    border-color: var(--color-border-strong);
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+
+  .lab-index .n {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-accent-text);
+  }
+
+  /* ---------- Sections ---------- */
+
+  .lab-section {
+    max-width: 1080px;
+    margin: clamp(56px, 9vw, 104px) auto 0;
+    scroll-margin-top: 32px;
+  }
+
+  .section-head { margin-bottom: 20px; }
+
+  .section-head .kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+
+  .section-head .kicker .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+  }
+
+  .section-head h2 {
+    margin: 10px 0 6px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: clamp(20px, 3vw, 26px);
+    letter-spacing: -0.01em;
+  }
+
+  .section-head .lede {
+    margin: 0;
+    max-width: 620px;
+    color: var(--color-fg-secondary);
+    font-size: 15px;
+  }
+
+  /* ---------- Stage ---------- */
+
+  .stage {
+    position: relative;
+    min-height: 440px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-elevated);
+    overflow: hidden;
+    touch-action: pan-y;
+    isolation: isolate;
+  }
+
+  .stage-hint {
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    z-index: 30;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-muted);
+    background: color-mix(in srgb, var(--color-surface) 82%, transparent);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 4px 10px;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+  }
+
+  .stage-hint .reduced-note { display: none; }
+  #lab.reduced .stage-hint .live-note { display: none; }
+  #lab.reduced .stage-hint .reduced-note { display: inline; }
+
+  /* ---------- Spec rail ---------- */
+
+  .spec {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 980px) { .spec { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .spec { grid-template-columns: 1fr; } }
+
+  .spec-block {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    padding: 16px;
+    min-width: 0;
+  }
+
+  .spec-block h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent-text);
+    font-weight: 600;
+  }
+
+  .spec-block p {
+    margin: 0 0 8px;
+    font-size: 13px;
+    color: var(--color-fg-secondary);
+  }
+
+  .spec-block p:last-child { margin-bottom: 0; }
+
+  .spec-block ol, .spec-block ul {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 13px;
+    color: var(--color-fg-secondary);
+  }
+
+  .spec-block li { margin-bottom: 7px; }
+  .spec-block li:last-child { margin-bottom: 0; }
+
+  .spec-block li strong {
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+
+  .spec-block code, .spec-block .k {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--color-accent-text);
+    background: var(--color-surface-2);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+
+  .spec-block pre {
+    margin: 0;
+    padding: 12px;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--color-fg-secondary);
+  }
+
+  .spec-block pre .t { color: var(--color-cyan); }
+  .spec-block pre .p { color: var(--color-accent-text); }
+  .spec-block pre .c { color: var(--color-muted); }
+
+  /* ============================================================
+     01 — magnetic-dock
+     ============================================================ */
+
+  .dock-stage {
+    background:
+      radial-gradient(120% 90% at 50% -20%, color-mix(in srgb, var(--color-accent) 9%, transparent), transparent 60%),
+      var(--color-bg-elevated);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .dock-scene-copy {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .dock-scene-copy .big {
+    font-size: clamp(22px, 3.4vw, 32px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-fg);
+  }
+
+  .dock-scene-copy .sub {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+  }
+
+  .dock-bar {
+    /* Centered without transforms so offsetLeft stays truthful for JS. */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 44px;
+    margin: 0 auto;
+    width: max-content;
+    max-width: calc(100% - 24px);
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    padding: 12px 18px;
+    border-radius: 22px;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 18px 50px -18px color-mix(in srgb, var(--color-accent) 35%, transparent);
+  }
+
+  .dock-icon {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    border: 0;
+    padding: 0;
+    border-radius: 14px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transform-origin: 50% 100%;
+    will-change: transform;
+    background: linear-gradient(140deg, var(--i1), var(--i2));
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--color-fg) 22%, transparent),
+      0 8px 20px -8px color-mix(in srgb, var(--i1) 60%, transparent);
+  }
+
+  .dock-icon:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  .dock-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--color-bg);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .dock-icon.i-1 { --i1: var(--color-accent); --i2: var(--color-cyan); }
+  .dock-icon.i-2 { --i1: var(--color-cyan); --i2: color-mix(in srgb, var(--color-cyan) 40%, var(--color-accent)); }
+  .dock-icon.i-3 { --i1: color-mix(in srgb, var(--color-accent) 70%, var(--color-fg)); --i2: var(--color-accent); }
+  .dock-icon.i-4 { --i1: var(--color-success); --i2: var(--color-cyan); }
+  .dock-icon.i-5 { --i1: var(--color-accent); --i2: color-mix(in srgb, var(--color-accent) 45%, var(--color-cyan)); }
+  .dock-icon.i-6 { --i1: var(--color-warning); --i2: color-mix(in srgb, var(--color-warning) 45%, var(--color-accent)); }
+  .dock-icon.i-7 { --i1: color-mix(in srgb, var(--color-cyan) 70%, var(--color-fg)); --i2: var(--color-cyan); }
+  .dock-icon.i-8 { --i1: color-mix(in srgb, var(--color-accent) 80%, var(--color-cyan)); --i2: var(--color-accent); }
+
+  .dock-tip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    transform: translate3d(-999px, -999px, 0);
+    padding: 5px 11px;
+    border-radius: 8px;
+    background: var(--color-fg);
+    color: var(--color-bg);
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .dock-tip::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+    width: 8px;
+    height: 8px;
+    background: var(--color-fg);
+    transform: translateX(-50%) rotate(45deg);
+    border-radius: 2px;
+  }
+
+  #lab.reduced .dock-icon { transition: transform var(--dur-fast) var(--ease); }
+  #lab.reduced .dock-icon:hover,
+  #lab.reduced .dock-icon:focus-visible { transform: translateY(-8px) scale(1.14); }
+  #lab.reduced .dock-tip { display: none; }
+
+  /* ============================================================
+     02 — cursor-comet
+     ============================================================ */
+
+  .comet-stage {
+    min-height: 480px;
+    background:
+      radial-gradient(90% 120% at 80% 110%, color-mix(in srgb, var(--color-cyan) 7%, transparent), transparent 55%),
+      radial-gradient(90% 120% at 15% -10%, color-mix(in srgb, var(--color-accent) 9%, transparent), transparent 55%),
+      var(--color-bg);
+    cursor: crosshair;
+  }
+
+  .comet-stage canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .comet-copy {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    z-index: 2;
+    mix-blend-mode: normal;
+  }
+
+  .comet-copy .big {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: color-mix(in srgb, var(--color-fg) 62%, transparent);
+  }
+
+  .comet-copy .sub {
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+
+  /* ============================================================
+     03 — lens-card
+     ============================================================ */
+
+  .lens-stage {
+    min-height: 460px;
+    background: var(--color-bg);
+    cursor: none;
+  }
+
+  #lab.reduced .lens-stage { cursor: default; }
+
+  .lens-grid-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1;
+  }
+
+  .lens-base, .lens-mag-inner, .lens-chroma-inner {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    padding: clamp(20px, 4vw, 44px);
+    align-content: center;
+  }
+
+  @media (max-width: 640px) {
+    .lens-base, .lens-mag-inner, .lens-chroma-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .lens-base { z-index: 2; }
+
+  .lens-tile {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+    padding: 16px;
+    min-width: 0;
+  }
+
+  .lens-tile .lbl {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .lens-tile .val {
+    margin-top: 6px;
+    font-size: clamp(18px, 2.6vw, 26px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .lens-tile .val small {
+    font-size: 0.55em;
+    font-weight: 600;
+    color: var(--color-muted);
+    margin-left: 2px;
+  }
+
+  .lens-tile .delta { font-size: 11.5px; font-family: var(--font-mono); margin-top: 4px; }
+  .lens-tile .delta.up { color: var(--color-success); }
+  .lens-tile .delta.down { color: var(--color-warning); }
+
+  .lens-tile svg.spark {
+    display: block;
+    width: 100%;
+    height: 26px;
+    margin-top: 8px;
+  }
+
+  .lens-tile svg.spark path {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+
+  .lens-tile svg.spark path.area {
+    fill: color-mix(in srgb, var(--color-accent) 14%, transparent);
+    stroke: none;
+  }
+
+  .lens-mag, .lens-chroma {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    clip-path: circle(0px at -200px -200px);
+    pointer-events: none;
+    background: var(--color-bg);
+  }
+
+  .lens-chroma {
+    z-index: 3;
+    background: transparent;
+    opacity: 0.45;
+    filter: hue-rotate(150deg) saturate(1.6);
+    mix-blend-mode: screen;
+  }
+
+  :root[data-theme="light"] .lens-chroma { mix-blend-mode: multiply; opacity: 0.18; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) .lens-chroma { mix-blend-mode: multiply; opacity: 0.18; }
+  }
+
+  .lens-mag-inner, .lens-chroma-inner {
+    transform-origin: 0 0;
+    will-change: transform;
+  }
+
+  .lens-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 208px;
+    height: 208px;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate3d(-999px, -999px, 0);
+    will-change: transform;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 60%, transparent);
+    box-shadow:
+      inset 0 0 0 1.5px color-mix(in srgb, var(--color-cyan) 35%, transparent),
+      inset 0 0 26px color-mix(in srgb, var(--color-accent) 22%, transparent),
+      0 0 34px color-mix(in srgb, var(--color-accent) 30%, transparent);
+  }
+
+  .lens-ring::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--color-fg) 14%, transparent), transparent 42%);
+  }
+
+  /* ============================================================
+     04 — torch-reveal
+     ============================================================ */
+
+  .torch-stage {
+    min-height: 480px;
+    cursor: none;
+    background: var(--color-bg-elevated);
+  }
+
+  #lab.reduced .torch-stage { cursor: default; }
+
+  .torch-layer {
+    position: absolute;
+    inset: 0;
+    padding: clamp(20px, 4vw, 48px);
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(16px, 3vw, 40px);
+    align-items: center;
+  }
+
+  @media (max-width: 700px) {
+    .torch-layer { grid-template-columns: 1fr; align-content: center; }
+    .torch-card { display: none; }
+  }
+
+  .torch-base {
+    z-index: 1;
+    background:
+      radial-gradient(70% 90% at 85% 15%, color-mix(in srgb, var(--color-accent) 16%, transparent), transparent 60%),
+      radial-gradient(60% 80% at 10% 90%, color-mix(in srgb, var(--color-cyan) 10%, transparent), transparent 55%),
+      var(--color-bg-elevated);
+  }
+
+  .torch-base .t-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-cyan);
+  }
+
+  .torch-base h3 {
+    margin: 10px 0 10px;
+    font-size: clamp(24px, 3.6vw, 38px);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  .torch-base .t-sub {
+    margin: 0 0 18px;
+    max-width: 400px;
+    color: var(--color-fg-secondary);
+    font-size: 14.5px;
+  }
+
+  .torch-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(140deg, var(--color-accent), color-mix(in srgb, var(--color-accent) 55%, var(--color-cyan)));
+    color: var(--color-bg);
+    font-size: 13.5px;
+    font-weight: 600;
+    border: 0;
+  }
+
+  .torch-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+    padding: 18px;
+    box-shadow: 0 24px 60px -30px color-mix(in srgb, var(--color-accent) 45%, transparent);
+  }
+
+  .torch-card .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 12.5px;
+  }
+
+  .torch-card .row:last-child { border-bottom: 0; }
+  .torch-card .row .k2 { color: var(--color-muted); font-family: var(--font-mono); font-size: 11px; }
+  .torch-card .row .v { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .torch-card .row .v.ok { color: var(--color-success); }
+
+  .torch-card .bars {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    height: 44px;
+    margin-top: 10px;
+  }
+
+  .torch-card .bars i {
+    flex: 1;
+    border-radius: 3px 3px 0 0;
+    background: linear-gradient(to top, color-mix(in srgb, var(--color-accent) 65%, transparent), var(--color-cyan));
+    height: calc(var(--h) * 1%);
+  }
+
+  /* Blueprint layer — masked by an alpha radial-gradient (NOT an SVG
+     luminance mask; those silently no-op in Chromium). */
+  .torch-blueprint {
+    z-index: 2;
+    --tx: -400;
+    --ty: -400;
+    --tr: 175;
+    background:
+      repeating-linear-gradient(to right, color-mix(in srgb, var(--color-cyan) 14%, transparent) 0 1px, transparent 1px 28px),
+      repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-cyan) 14%, transparent) 0 1px, transparent 1px 28px),
+      color-mix(in srgb, var(--color-bg) 92%, var(--color-cyan));
+    -webkit-mask-image: radial-gradient(circle calc(var(--tr) * 1px) at calc(var(--tx) * 1px) calc(var(--ty) * 1px), #000 0 52%, transparent 100%);
+    mask-image: radial-gradient(circle calc(var(--tr) * 1px) at calc(var(--tx) * 1px) calc(var(--ty) * 1px), #000 0 52%, transparent 100%);
+  }
+
+  .torch-blueprint .t-eyebrow, .torch-blueprint h3, .torch-blueprint .t-sub {
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--color-cyan) 75%, transparent);
+  }
+
+  .torch-blueprint .t-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .torch-blueprint h3 { margin: 10px 0; font-size: clamp(24px, 3.6vw, 38px); line-height: 1.08; letter-spacing: -0.02em; font-weight: 700; }
+  .torch-blueprint .t-sub { margin: 0 0 18px; max-width: 400px; font-size: 14.5px; -webkit-text-stroke-width: 0.6px; }
+
+  .torch-blueprint .wire-cta {
+    display: inline-block;
+    width: 132px;
+    height: 38px;
+    border: 1.5px dashed var(--color-cyan);
+    border-radius: var(--radius-md);
+    position: relative;
+  }
+
+  .torch-blueprint .wire-card {
+    border: 1.5px dashed var(--color-cyan);
+    border-radius: var(--radius-lg);
+    height: 232px;
+    position: relative;
+    background: transparent;
+  }
+
+  @media (max-width: 700px) { .torch-blueprint .wire-card { display: none; } }
+
+  .anno {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-cyan);
+    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-cyan) 45%, transparent);
+    border-radius: 4px;
+    padding: 2px 6px;
+    white-space: nowrap;
+  }
+
+  .torch-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate3d(-999px, -999px, 0);
+    will-change: transform;
+    background: radial-gradient(circle, color-mix(in srgb, var(--color-cyan) 16%, transparent), transparent 62%);
+    mix-blend-mode: screen;
+  }
+
+  :root[data-theme="light"] .torch-glow { mix-blend-mode: multiply; opacity: 0.4; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) .torch-glow { mix-blend-mode: multiply; opacity: 0.4; }
+  }
+
+  /* Reduced motion: static split comparison instead of a moving torch */
+  #lab.reduced .torch-blueprint {
+    -webkit-mask-image: none;
+    mask-image: none;
+    clip-path: inset(0 0 0 55%);
+    border-left: 1.5px dashed var(--color-cyan);
+  }
+
+  #lab.reduced .torch-glow { display: none; }
+
+  /* ============================================================
+     05 — gooey-actions
+     ============================================================ */
+
+  .goo-stage {
+    min-height: 460px;
+    background:
+      radial-gradient(100% 100% at 50% 120%, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 55%),
+      var(--color-bg-elevated);
+  }
+
+  .goo-field {
+    position: absolute;
+    inset: 0;
+    filter: url(#motiq-goo);
+    z-index: 1;
+  }
+
+  .goo-blob {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    border-radius: 50%;
+    background: var(--color-accent);
+    transform: translate(-50%, -50%);
+    will-change: transform;
+  }
+
+  .goo-blob.b-main { width: 74px; height: 74px; }
+  .goo-blob.b-sat { width: 46px; height: 46px; }
+  .goo-blob.b-amb1 { width: 20px; height: 20px; }
+  .goo-blob.b-amb2 { width: 14px; height: 14px; }
+
+  .goo-ui {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+
+  .goo-ui button {
+    position: absolute;
+    left: 50%;
+    top: 58%;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: var(--color-bg);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+  }
+
+  .goo-ui button:focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 4px;
+  }
+
+  .goo-ui .u-main { width: 74px; height: 74px; }
+  .goo-ui .u-sat { width: 46px; height: 46px; }
+
+  .goo-ui svg {
+    width: 22px;
+    height: 22px;
+    stroke: var(--color-bg);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+  }
+
+  .u-main svg {
+    width: 26px;
+    height: 26px;
+    transition: transform var(--dur-normal) var(--ease);
+  }
+
+  .goo-stage.open .u-main svg { transform: rotate(45deg); }
+
+  .goo-label {
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    transform: translate3d(-999px, -999px, 0);
+    padding: 4px 10px;
+    border-radius: 7px;
+    background: var(--color-fg);
+    color: var(--color-bg);
+    font-size: 11.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-fast) var(--ease);
+  }
+
+  .goo-label.on { opacity: 1; }
+
+  .goo-copy {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .goo-copy .big { font-size: clamp(20px, 3vw, 28px); font-weight: 700; letter-spacing: -0.02em; }
+  .goo-copy .sub { margin-top: 4px; font-family: var(--font-mono); font-size: 12px; color: var(--color-muted); }
+
+  #lab.reduced .goo-ui .u-sat { transition: opacity var(--dur-normal) var(--ease); }
+
+  /* ---------- Footer ---------- */
+
+  .lab-footer {
+    max-width: 1080px;
+    margin: 96px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-muted);
+  }
+</style>
+
+<div id="lab">
+
+  <header class="lab-header">
+    <div class="eyebrow">Motiq Motion Lab — Batch 07</div>
+    <h1>Pointer Alchemy</h1>
+    <p class="thesis">
+      Five cursor-physics showpieces for the catalog's first pointer category. The premise:
+      treat the cursor as a physical object — with mass, heat, and optics — instead of a hit-testing
+      dot. Every demo below runs real spring integration with delta-time, stays alive at idle,
+      pauses offscreen, and degrades to a deliberate static state under reduced motion.
+    </p>
+    <ul class="lab-index">
+      <li><a href="#magnetic-dock"><span class="n">01</span>magnetic-dock</a></li>
+      <li><a href="#cursor-comet"><span class="n">02</span>cursor-comet</a></li>
+      <li><a href="#lens-card"><span class="n">03</span>lens-card</a></li>
+      <li><a href="#torch-reveal"><span class="n">04</span>torch-reveal</a></li>
+      <li><a href="#gooey-actions"><span class="n">05</span>gooey-actions</a></li>
+    </ul>
+  </header>
+
+  <!-- ========================================================
+       01 · magnetic-dock
+       ======================================================== -->
+  <section class="lab-section" id="magnetic-dock">
+    <div class="section-head">
+      <div class="kicker"><span>01 / 05</span><span class="rule"></span><span>attraction field</span></div>
+      <h2>magnetic-dock</h2>
+      <p class="lede">
+        A launcher dock where icons live inside a shared gaussian attraction field. The pointer
+        doesn't trigger per-icon hover states — it bends one continuous field, so neighbors cascade
+        naturally and the whole bar feels like liquid under a magnet.
+      </p>
+    </div>
+
+    <div class="stage dock-stage" data-demo="dock" aria-label="Magnetic dock demo. A row of app icons that swell and rise toward the pointer.">
+      <div class="dock-scene-copy" aria-hidden="true">
+        <div class="big">Workspace</div>
+        <div class="sub">8 apps · field radius 78px</div>
+      </div>
+      <div class="dock-bar">
+        <button class="dock-icon i-1" data-label="Compose" aria-label="Compose">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l3.5-1 11-11a2.1 2.1 0 0 0-3-3l-11 11L4 20z"></path><path d="M13.5 6.5l3 3"></path></svg>
+        </button>
+        <button class="dock-icon i-2" data-label="Search" aria-label="Search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"></circle><path d="M20 20l-4.5-4.5"></path></svg>
+        </button>
+        <button class="dock-icon i-3" data-label="Deploy" aria-label="Deploy">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"></path><path d="M6 11l6-6 6 6"></path></svg>
+        </button>
+        <button class="dock-icon i-4" data-label="Metrics" aria-label="Metrics">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V12"></path><path d="M12 20V6"></path><path d="M19 20v-5"></path></svg>
+        </button>
+        <button class="dock-icon i-5" data-label="Voice" aria-label="Voice">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v2"></path><path d="M8 9v8"></path><path d="M12 5v14"></path><path d="M16 8v9"></path><path d="M20 11v4"></path></svg>
+        </button>
+        <button class="dock-icon i-6" data-label="Vault" aria-label="Vault">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="9" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3"></path></svg>
+        </button>
+        <button class="dock-icon i-7" data-label="Prism" aria-label="Prism">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l8 15H4l8-15z"></path><path d="M12 4v15"></path></svg>
+        </button>
+        <button class="dock-icon i-8" data-label="Relay" aria-label="Relay">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4L10.5 13.5"></path><path d="M21 4l-6.5 16-4-6.5L4 9.5 21 4z"></path></svg>
+        </button>
+      </div>
+      <div class="dock-tip" aria-hidden="true">Compose</div>
+      <div class="stage-hint">
+        <span class="live-note">sweep the dock · springs k420 / c26</span>
+        <span class="reduced-note">reduced motion · hover lifts, no springs</span>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-block">
+        <h3>Niche</h3>
+        <p>The macOS dock effect is the most requested "how did they do that" pattern in landing-page navs, floating toolbars, and app switchers — and almost every open clone animates each icon independently, which reads as stiff and twitchy.</p>
+        <p>Modeling one shared field instead gives free neighbor cascade and makes the component usable for horizontal navs, emoji pickers, and avatar strips, not just docks.</p>
+      </div>
+      <div class="spec-block">
+        <h3>Choreography</h3>
+        <ol>
+          <li><strong>Field.</strong> Per frame, each icon samples a gaussian <code>exp(-d&sup2;/2&sigma;&sup2;)</code> of its distance to the pointer, &sigma; = 78px, attenuated by vertical distance so the field dies above the bar.</li>
+          <li><strong>Response.</strong> Influence drives three springs: scale to 1 + 0.95&middot;inf (k 420, c 26, &zeta;&asymp;0.63), lift to &minus;40px (k 360, c 22), and lateral drift 0.13&middot;d&middot;inf toward the pointer — that drift is what makes it liquid.</li>
+          <li><strong>Tooltip.</strong> Above 0.55 influence, the label chip springs horizontally (k 340) to the winning icon and fades in over ~120ms.</li>
+          <li><strong>Idle.</strong> No pointer: a virtual pointer sweeps the bar on a 11.4s sine at 42% strength, so the dock breathes on load.</li>
+        </ol>
+      </div>
+      <div class="spec-block">
+        <h3>Props API</h3>
+        <pre><span class="t">interface</span> MagneticDockProps {
+  <span class="p">items</span>: DockItem[]
+  <span class="p">magnetRadius</span>?: number   <span class="c">// σ px · 78</span>
+  <span class="p">maxScale</span>?: number       <span class="c">// 1.95</span>
+  <span class="p">lift</span>?: number           <span class="c">// px · 40</span>
+  <span class="p">stiffness</span>?: number      <span class="c">// 420</span>
+  <span class="p">damping</span>?: number        <span class="c">// 26</span>
+  <span class="p">idleWave</span>?: boolean      <span class="c">// true</span>
+  <span class="p">tooltip</span>?: boolean
+  <span class="p">onSelect</span>?: (id: string) =&gt; void
+}</pre>
+      </div>
+      <div class="spec-block">
+        <h3>A11y &amp; perf</h3>
+        <ul>
+          <li>Reduced motion: springs off; icons keep a 120ms CSS hover lift so the affordance survives.</li>
+          <li>Icons are real <code>button</code>s; keyboard focus rings sit outside the transform so they never scale.</li>
+          <li>Transform-only animation; base positions cached from <code>offsetLeft</code> (transform-immune) so there is zero layout feedback.</li>
+          <li>Touch: the field tracks the finger during pan; taps still activate. rAF loop stops via IntersectionObserver when the stage scrolls out.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       02 · cursor-comet
+       ======================================================== -->
+  <section class="lab-section" id="cursor-comet">
+    <div class="section-head">
+      <div class="kicker"><span>02 / 05</span><span class="rule"></span><span>velocity plume</span></div>
+      <h2>cursor-comet</h2>
+      <p class="lede">
+        A canvas particle comet that reads pointer velocity, not just position. Slow movement
+        holds a tight ember; a fast flick ionizes into a long azure-to-cyan tail with coral
+        sparks at peak speed. Untouched, the particles fall into an ambient orbit so the
+        stage never plays dead.
+      </p>
+    </div>
+
+    <div class="stage comet-stage" data-demo="comet" aria-label="Cursor comet demo. Particles trail the pointer with velocity-reactive length and glow.">
+      <canvas></canvas>
+      <div class="comet-copy" aria-hidden="true">
+        <div class="big">Flick fast. Then drift.</div>
+        <div class="sub">tail length ∝ pointer velocity</div>
+      </div>
+      <div class="stage-hint">
+        <span class="live-note">240-particle pool · additive blend</span>
+        <span class="reduced-note">reduced motion · static orbit rendering</span>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-block">
+        <h3>Niche</h3>
+        <p>Cursor trails are the single most shared component class on reactbits — they sell a site's craft in the first half-second. Most are constant-length snakes; making the plume velocity-reactive is what separates "effect" from "physics."</p>
+        <p>Target placements: hero sections, 404s, changelog pages, anywhere the brand wants visible energy without layout cost.</p>
+      </div>
+      <div class="spec-block">
+        <h3>Choreography</h3>
+        <ol>
+          <li><strong>Emission.</strong> Spawn rate 2→22 particles/frame, linear in pointer speed (clamped at 3000 px/s). Particles inherit 22% of pointer velocity, reversed, plus radial jitter.</li>
+          <li><strong>Flight.</strong> Drag <code>v &middot;= e^(−2.2·dt)</code>; life 0.5–1.4s scaling with launch speed. Color crossfades azure→cyan across life; every particle is a pre-rendered radial-gradient sprite drawn with <code>lighter</code> compositing.</li>
+          <li><strong>Ionization.</strong> Above 900 px/s, short-lived coral sparks spawn at the head — the page's single coral moment, reserved for peak energy.</li>
+          <li><strong>Idle.</strong> Pointer gone: a virtual head wanders a Lissajous path and particles feel a soft radial spring toward a 62px orbit ring, so the comet coils into a living ember.</li>
+        </ol>
+      </div>
+      <div class="spec-block">
+        <h3>Props API</h3>
+        <pre><span class="t">interface</span> CursorCometProps {
+  <span class="p">particleBudget</span>?: number  <span class="c">// 240</span>
+  <span class="p">velocityGain</span>?: number    <span class="c">// 0–1 · 0.22</span>
+  <span class="p">drag</span>?: number             <span class="c">// 2.2 /s</span>
+  <span class="p">headColor</span>?: string       <span class="c">// token azure</span>
+  <span class="p">tailColor</span>?: string       <span class="c">// token cyan</span>
+  <span class="p">sparkColor</span>?: string      <span class="c">// token coral</span>
+  <span class="p">sparkThreshold</span>?: number  <span class="c">// px/s · 900</span>
+  <span class="p">idleOrbit</span>?: boolean      <span class="c">// true</span>
+}</pre>
+      </div>
+      <div class="spec-block">
+        <h3>A11y &amp; perf</h3>
+        <ul>
+          <li>Purely decorative: canvas is skipped by AT; underlying content stays interactive.</li>
+          <li>Reduced motion renders one static frame — an orbit ring of glow dots — re-drawn only on theme change or resize.</li>
+          <li>Fixed pool (no GC churn), DPR-capped at 2&times;, sprite <code>drawImage</code> instead of per-particle gradients or <code>shadowBlur</code>.</li>
+          <li>Sprites rebuilt from <code>getComputedStyle</code> tokens on theme flips; loop hard-stops offscreen via IntersectionObserver, independent of <code>document.visibilityState</code>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       03 · lens-card
+       ======================================================== -->
+  <section class="lab-section" id="lens-card">
+    <div class="section-head">
+      <div class="kicker"><span>03 / 05</span><span class="rule"></span><span>refraction</span></div>
+      <h2>lens-card</h2>
+      <p class="lede">
+        A refraction lens that floats over a metrics grid: content under the glass magnifies
+        1.35&times; with a chromatic fringe, and the background grid lines physically bend around
+        the lens edge. Implemented as a duplicated scaled layer clipped by a moving
+        <code>circle()</code> — no filters, no repaint storms, 60fps on integrated GPUs.
+      </p>
+    </div>
+
+    <div class="stage lens-stage" data-demo="lens" aria-label="Lens card demo. A magnifying lens follows the pointer over a grid of metric tiles.">
+      <canvas class="lens-grid-canvas" aria-hidden="true"></canvas>
+      <div class="lens-base">
+        <div class="lens-tile">
+          <div class="lbl">Latency p95</div>
+          <div class="val">128<small>ms</small></div>
+          <div class="delta up">▼ 11% wk/wk</div>
+          <svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true"><path class="area" d="M0 20 L14 16 L28 18 L42 10 L56 13 L70 7 L84 9 L100 4 L100 26 L0 26 Z"></path><path d="M0 20 L14 16 L28 18 L42 10 L56 13 L70 7 L84 9 L100 4"></path></svg>
+        </div>
+        <div class="lens-tile">
+          <div class="lbl">Throughput</div>
+          <div class="val">4.2<small>k rps</small></div>
+          <div class="delta up">▲ 6.3% wk/wk</div>
+          <svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true"><path class="area" d="M0 18 L14 19 L28 14 L42 15 L56 9 L70 11 L84 6 L100 7 L100 26 L0 26 Z"></path><path d="M0 18 L14 19 L28 14 L42 15 L56 9 L70 11 L84 6 L100 7"></path></svg>
+        </div>
+        <div class="lens-tile">
+          <div class="lbl">Error budget</div>
+          <div class="val">98.4<small>%</small></div>
+          <div class="delta up">on track · 21d left</div>
+          <svg class="spark" viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true"><path class="area" d="M0 8 L14 9 L28 7 L42 10 L56 8 L70 12 L84 10 L100 11 L100 26 L0 26 Z"></path><path d="M0 8 L14 9 L28 7 L42 10 L56 8 L70 12 L84 10 L100 11"></path></svg>
+        </div>
+        <div class="lens-tile">
+          <div class="lbl">Active regions</div>
+          <div class="val">12<small>/14</small></div>
+          <div class="delta down">iad + syd draining</div>
+        </div>
+        <div class="lens-tile">
+          <div class="lbl">Queue depth</div>
+          <div class="val">341</div>
+          <div class="delta up">▼ draining 84/s</div>
+        </div>
+        <div class="lens-tile">
+          <div class="lbl">Spend today</div>
+          <div class="val">$212<small>.40</small></div>
+          <div class="delta down">▲ 3.1% vs avg</div>
+        </div>
+      </div>
+      <div class="lens-chroma" aria-hidden="true"><div class="lens-chroma-inner"></div></div>
+      <div class="lens-mag" aria-hidden="true"><div class="lens-mag-inner"></div></div>
+      <div class="lens-ring" aria-hidden="true"></div>
+      <div class="stage-hint">
+        <span class="live-note">glide the lens · 1.35× · chroma +2.2px</span>
+        <span class="reduced-note">reduced motion · lens parked center</span>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-block">
+        <h3>Niche</h3>
+        <p>Dashboards and pricing grids are dense by design; a lens gives momentary local zoom without a modal or a layout shift. As a marketing surface it's a signature move — Vercel- and Linear-class sites use optical tricks exactly like this to make static data feel machined.</p>
+        <p>The clip-path approach means any children work: text, charts, images, code.</p>
+      </div>
+      <div class="spec-block">
+        <h3>Choreography</h3>
+        <ol>
+          <li><strong>Follow.</strong> Lens center springs to the pointer (k 300, c 27 → ~90ms of lag), which sells glass mass. Radius springs 0→104px on entry with mild overshoot.</li>
+          <li><strong>Refraction.</strong> A cloned layer scales 1.35&times; from origin 0,0 with <code>translate = (1−s)·lens</code>, so the point under the lens center stays optically fixed. Clip: <code>circle(104px at x y)</code>.</li>
+          <li><strong>Chromatic fringe.</strong> A second clone at 1.38&times;, offset +2.2px, hue-rotated 150° and screen-blended at 45% — reads as edge dispersion for the cost of one extra composite.</li>
+          <li><strong>Grid bend.</strong> Canvas grid lines displace radially by a gaussian centered on the lens rim (&sigma; 60px, 16px amplitude), tinted azure within 1.7R.</li>
+          <li><strong>Idle.</strong> The lens drifts on a slow two-frequency orbit so the refraction is visible before any input.</li>
+        </ol>
+      </div>
+      <div class="spec-block">
+        <h3>Props API</h3>
+        <pre><span class="t">interface</span> LensCardProps {
+  <span class="p">children</span>: ReactNode
+  <span class="p">radius</span>?: number         <span class="c">// px · 104</span>
+  <span class="p">magnification</span>?: number  <span class="c">// 1.35</span>
+  <span class="p">chromatic</span>?: number      <span class="c">// px · 2.2, 0 = off</span>
+  <span class="p">lag</span>?: { stiffness: number; damping: number }
+  <span class="p">gridBend</span>?: boolean      <span class="c">// true</span>
+  <span class="p">idleDrift</span>?: boolean     <span class="c">// true</span>
+  <span class="p">showRing</span>?: boolean      <span class="c">// true</span>
+}</pre>
+      </div>
+      <div class="spec-block">
+        <h3>A11y &amp; perf</h3>
+        <ul>
+          <li>The magnified clone is <code>aria-hidden</code> and <code>inert</code>-equivalent (pointer-events none); AT reads the base layer once.</li>
+          <li>Reduced motion parks the lens center-stage, static — the zoom affordance remains, the chase does not.</li>
+          <li>Clip-path + transform are compositor-side in Chromium; the only CPU work is the grid canvas (~90 polylines).</li>
+          <li>Touch: lens rides the finger; base tiles remain tappable because overlay layers never intercept events.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       04 · torch-reveal
+       ======================================================== -->
+  <section class="lab-section" id="torch-reveal">
+    <div class="section-head">
+      <div class="kicker"><span>04 / 05</span><span class="rule"></span><span>hidden layer</span></div>
+      <h2>torch-reveal</h2>
+      <p class="lede">
+        A finished hero with a blueprint twin hiding above it. A soft torch around the cursor
+        reveals the wireframe — dashed outlines, an 8pt grid, spacing annotations — as if
+        inspecting the build behind the paint. The reveal is a CSS alpha mask, deliberately
+        not an SVG luminance mask (those silently no-op in Chromium).
+      </p>
+    </div>
+
+    <div class="stage torch-stage" data-demo="torch" aria-label="Torch reveal demo. Moving the pointer reveals a blueprint wireframe layer over a finished hero.">
+      <div class="torch-layer torch-base">
+        <div>
+          <div class="t-eyebrow">Relay · deploy pipeline</div>
+          <h3>Ship the interface.<br>Keep the blueprint.</h3>
+          <p class="t-sub">Every surface in this hero has a second life as its own spec sheet. Bring a light and read the construction lines.</p>
+          <button class="torch-cta" type="button">Start deploying
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+          </button>
+        </div>
+        <div class="torch-card" aria-hidden="true">
+          <div class="row"><span class="k2">build</span><span class="v ok">passing · 41s</span></div>
+          <div class="row"><span class="k2">canary</span><span class="v">2% traffic</span></div>
+          <div class="row"><span class="k2">p99</span><span class="v">203 ms</span></div>
+          <div class="bars">
+            <i style="--h:34"></i><i style="--h:52"></i><i style="--h:41"></i><i style="--h:66"></i>
+            <i style="--h:58"></i><i style="--h:78"></i><i style="--h:70"></i><i style="--h:92"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="torch-layer torch-blueprint" aria-hidden="true">
+        <div style="position: relative;">
+          <div class="t-eyebrow">Relay · deploy pipeline</div>
+          <h3>Ship the interface.<br>Keep the blueprint.</h3>
+          <p class="t-sub">Every surface in this hero has a second life as its own spec sheet. Bring a light and read the construction lines.</p>
+          <span class="wire-cta"><span class="anno" style="top: -22px; left: 0;">radius 10 · pad 9/16</span></span>
+          <span class="anno" style="top: 46%; left: -14px;">leading 1.08</span>
+        </div>
+        <div class="wire-card">
+          <span class="anno" style="top: -22px; right: 0;">surface/88 · blur 0</span>
+          <span class="anno" style="bottom: 10px; left: 12px;">bars: 8 × flex-1 · gap 4</span>
+          <span class="anno" style="top: 38%; right: -10px;">grid 8pt</span>
+        </div>
+      </div>
+
+      <div class="torch-glow" aria-hidden="true"></div>
+      <div class="stage-hint">
+        <span class="live-note">carry the torch · r 175px · 9Hz flicker</span>
+        <span class="reduced-note">reduced motion · static split view</span>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-block">
+        <h3>Niche</h3>
+        <p>Dual-layer reveals are how design tools, dev tools, and API companies say "we respect the craft underneath." Flashlight heroes trend on every launch site aggregator, but nearly all reveal a plain dark layer — revealing an annotated blueprint twin gives the effect an actual story.</p>
+        <p>Also works inverted: reveal the finished render over a wireframe base for before/after product shots.</p>
+      </div>
+      <div class="spec-block">
+        <h3>Choreography</h3>
+        <ol>
+          <li><strong>Carry.</strong> Torch position springs after the pointer (k 260, c 24) — enough lag to feel hand-held rather than parented.</li>
+          <li><strong>Flame.</strong> Radius breathes: 175px base + two incommensurate sines (9Hz &times; 5px, 23Hz &times; 2.5px) for an organic flicker; a screen-blended cyan glow rides on top.</li>
+          <li><strong>Mask.</strong> The blueprint layer is masked by <code>radial-gradient(#000 0 52%, transparent 100%)</code> whose center/radius live in CSS custom properties — JS writes three numbers per frame, never a new string of layout.</li>
+          <li><strong>Idle.</strong> Unattended, the torch patrols a Lissajous path across the hero, pausing near the annotated card — a built-in product tour.</li>
+        </ol>
+      </div>
+      <div class="spec-block">
+        <h3>Props API</h3>
+        <pre><span class="t">interface</span> TorchRevealProps {
+  <span class="p">base</span>: ReactNode
+  <span class="p">reveal</span>: ReactNode        <span class="c">// blueprint layer</span>
+  <span class="p">radius</span>?: number          <span class="c">// px · 175</span>
+  <span class="p">softness</span>?: number        <span class="c">// 0–1 · 0.48</span>
+  <span class="p">flicker</span>?: number         <span class="c">// 0–1 · 0.35</span>
+  <span class="p">lag</span>?: { stiffness: number; damping: number }
+  <span class="p">idlePatrol</span>?: boolean     <span class="c">// true</span>
+  <span class="p">reducedFallback</span>?: "split" | "off"
+}</pre>
+      </div>
+      <div class="spec-block">
+        <h3>A11y &amp; perf</h3>
+        <ul>
+          <li>The blueprint twin is <code>aria-hidden</code>; the readable hero is always the base layer, torch or no torch.</li>
+          <li>Reduced motion swaps to a static 55/45 split with a dashed divider — the "two layers" story survives without any tracking.</li>
+          <li>Mask position updates via custom properties on a composited layer; the flicker costs one mask re-raster per frame, measured well under budget at 480px stages.</li>
+          <li>Uses alpha masks only. SVG luminance masks with gradient content are a silent no-op in Chromium — this is a hard rule for the ported component.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       05 · gooey-actions
+       ======================================================== -->
+  <section class="lab-section" id="gooey-actions">
+    <div class="section-head">
+      <div class="kicker"><span>05 / 05</span><span class="rule"></span><span>metaball bloom</span></div>
+      <h2>gooey-actions</h2>
+      <p class="lede">
+        A floating action button that blooms into five satellites through a gooey metaball merge —
+        blur + alpha-contrast SVG filter under the hood, underdamped springs for the overshoot,
+        and per-satellite magnetic hover so each action leans into the cursor before commit.
+      </p>
+    </div>
+
+    <div class="stage goo-stage" data-demo="goo" aria-label="Gooey actions demo. A floating action button that expands into satellite actions with a liquid merge effect.">
+      <div class="goo-copy" aria-hidden="true">
+        <div class="big">One button, five intents</div>
+        <div class="sub">tap the core · goo: blur 10 → alpha ×24 −12</div>
+      </div>
+      <div class="goo-field" aria-hidden="true">
+        <div class="goo-blob b-amb1"></div>
+        <div class="goo-blob b-amb2"></div>
+        <div class="goo-blob b-sat" data-i="0"></div>
+        <div class="goo-blob b-sat" data-i="1"></div>
+        <div class="goo-blob b-sat" data-i="2"></div>
+        <div class="goo-blob b-sat" data-i="3"></div>
+        <div class="goo-blob b-sat" data-i="4"></div>
+        <div class="goo-blob b-main"></div>
+      </div>
+      <div class="goo-ui">
+        <button class="u-sat" data-i="0" data-label="Reply" aria-label="Reply" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"></path><path d="M4 9h10a6 6 0 0 1 6 6v3"></path></svg>
+        </button>
+        <button class="u-sat" data-i="1" data-label="Star" aria-label="Star" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"></path></svg>
+        </button>
+        <button class="u-sat" data-i="2" data-label="Share" aria-label="Share" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2.5"></circle><circle cx="17" cy="6" r="2.5"></circle><circle cx="17" cy="18" r="2.5"></circle><path d="M8.3 10.8l6.4-3.6"></path><path d="M8.3 13.2l6.4 3.6"></path></svg>
+        </button>
+        <button class="u-sat" data-i="3" data-label="Edit" aria-label="Edit" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l3.5-1 11-11a2.1 2.1 0 0 0-3-3l-11 11L4 20z"></path></svg>
+        </button>
+        <button class="u-sat" data-i="4" data-label="Archive" aria-label="Archive" tabindex="-1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"></rect><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"></path><path d="M10 13h4"></path></svg>
+        </button>
+        <button class="u-main" aria-label="Actions" aria-expanded="false" aria-haspopup="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+        </button>
+      </div>
+      <div class="goo-label" aria-hidden="true">Reply</div>
+      <div class="stage-hint">
+        <span class="live-note">click the core · springs k230 / c13 · ~18% overshoot</span>
+        <span class="reduced-note">reduced motion · instant open, fade only</span>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-block">
+        <h3>Niche</h3>
+        <p>Speed-dial FABs are everywhere in product UI — messaging, docs, mobile-first dashboards — and they almost always animate as disconnected circles. The metaball merge makes the button read as one liquid organism dividing, which is the moment people screenshot.</p>
+        <p>The same goo field powers menu reveals, reaction pickers, and multi-cursor presence blobs.</p>
+      </div>
+      <div class="spec-block">
+        <h3>Choreography</h3>
+        <ol>
+          <li><strong>Bloom.</strong> On toggle, satellites spring from the core to a 118px arc (−160°→−20°) with 45ms stagger. Springs k 230, c 13 → &zeta;&asymp;0.43, ~18% overshoot — the goo stretches, necks, then snaps free.</li>
+          <li><strong>Goo.</strong> Filter chain: <code>feGaussianBlur stdDeviation 10</code> → <code>feColorMatrix</code> alpha row <code>0 0 0 24 −12</code>. Solid blobs animate under the filter; crisp icons live on an unfiltered twin layer sharing the same transforms.</li>
+          <li><strong>Magnet.</strong> Within 52px, a satellite leans up to 35% of the gap toward the pointer and scales to 1.16 — commit feels pre-confirmed before the click.</li>
+          <li><strong>Idle.</strong> Closed, two ember blobs orbit the core through the goo field (merging and splitting), and the core breathes at 4% amplitude. First interaction retires an auto-peek that fires every ~7s.</li>
+        </ol>
+      </div>
+      <div class="spec-block">
+        <h3>Props API</h3>
+        <pre><span class="t">interface</span> GooeyActionsProps {
+  <span class="p">actions</span>: ActionItem[]   <span class="c">// 3–6</span>
+  <span class="p">radius</span>?: number         <span class="c">// px · 118</span>
+  <span class="p">arc</span>?: [number, number]  <span class="c">// deg · [-160,-20]</span>
+  <span class="p">stagger</span>?: number        <span class="c">// ms · 45</span>
+  <span class="p">stiffness</span>?: number      <span class="c">// 230</span>
+  <span class="p">damping</span>?: number        <span class="c">// 13</span>
+  <span class="p">magnetRange</span>?: number    <span class="c">// px · 52</span>
+  <span class="p">open</span>?: boolean          <span class="c">// controlled</span>
+  <span class="p">onOpenChange</span>?: (open: boolean) =&gt; void
+}</pre>
+      </div>
+      <div class="spec-block">
+        <h3>A11y &amp; perf</h3>
+        <ul>
+          <li>Core is a <code>button</code> with <code>aria-expanded</code>/<code>aria-haspopup</code>; satellites get <code>tabindex 0</code> + labels only while open, <code>Escape</code> closes and returns focus.</li>
+          <li>Reduced motion keeps the goo look but opens instantly with a fade — no springs, no orbiting embers.</li>
+          <li>The filter costs one fixed-size offscreen surface; blobs animate with transforms only, so the blur re-runs but never re-lays-out. Icons stay crisp because they never enter the filtered subtree.</li>
+          <li>Touch: first tap opens, second tap on a satellite commits; magnetic lean is pointer-only. Loop parks offscreen via IntersectionObserver.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="lab-footer">
+    <span>motiq motion lab · batch 07 · pointer alchemy</span>
+    <span>5 prototypes · vanilla physics · tokens only · port target: registry/pointer</span>
+  </footer>
+
+</div>
+
+<!-- Goo filter: blur + alpha contrast. Wide region so blobs never clip. -->
+<svg width="0" height="0" style="position: absolute;" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="motiq-goo" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"></feGaussianBlur>
+      <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -12" result="goo"></feColorMatrix>
+      <feComposite in="SourceGraphic" in2="goo" operator="atop"></feComposite>
+    </filter>
+  </defs>
+</svg>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     Shared lab runtime: tokens, springs, pointer, loop control
+     ============================================================ */
+
+  var root = document.documentElement;
+  var lab = document.getElementById("lab");
+  var mqDark = window.matchMedia("(prefers-color-scheme: dark)");
+  var mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var REDUCED = mqReduce.matches;
+
+  var themeSubs = [];
+  var reduceSubs = [];
+
+  function readTokens() {
+    var cs = getComputedStyle(root);
+    function g(n) { return cs.getPropertyValue(n).trim(); }
+    return {
+      bg: g("--color-bg") || "#080c14",
+      surface: g("--color-surface") || "#111827",
+      border: g("--color-border") || "#263449",
+      borderStrong: g("--color-border-strong") || "#354863",
+      fg: g("--color-fg") || "#f8fafc",
+      muted: g("--color-muted") || "#9caabd",
+      accent: g("--color-accent") || "#4f7cff",
+      cyan: g("--color-cyan") || "#22c7d9",
+      coral: g("--color-coral") || "#ff6b5e"
+    };
+  }
+
+  var TOK = readTokens();
+
+  function notifyTheme() {
+    TOK = readTokens();
+    for (var i = 0; i < themeSubs.length; i++) themeSubs[i](TOK);
+  }
+
+  if (mqDark.addEventListener) mqDark.addEventListener("change", notifyTheme);
+  else if (mqDark.addListener) mqDark.addListener(notifyTheme);
+
+  new MutationObserver(notifyTheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+
+  function notifyReduce() {
+    REDUCED = mqReduce.matches;
+    lab.classList.toggle("reduced", REDUCED);
+    for (var i = 0; i < reduceSubs.length; i++) reduceSubs[i](REDUCED);
+  }
+
+  if (mqReduce.addEventListener) mqReduce.addEventListener("change", notifyReduce);
+  else if (mqReduce.addListener) mqReduce.addListener(notifyReduce);
+  lab.classList.toggle("reduced", REDUCED);
+
+  function hexToRgb(h) {
+    h = (h || "").replace("#", "");
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    var n = parseInt(h, 16);
+    if (isNaN(n)) return [128, 128, 128];
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+
+  function rgba(hex, a) {
+    var c = hexToRgb(hex);
+    return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")";
+  }
+
+  /* Semi-implicit Euler spring with substeps for stability. */
+  function spr(s, target, k, c, dt) {
+    var n = dt > 0.012 ? Math.ceil(dt / 0.008) : 1;
+    var h = dt / n;
+    for (var i = 0; i < n; i++) {
+      s.v += (-k * (s.x - target) - c * s.v) * h;
+      s.x += s.v * h;
+    }
+    return s.x;
+  }
+
+  function mkSpring(x) { return { x: x || 0, v: 0 }; }
+
+  function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+
+  /* Pointer tracker: unified mouse + touch via pointer events. */
+  function trackPointer(stage) {
+    var p = { x: -1e4, y: -1e4, vx: 0, vy: 0, inside: false, down: false, t: 0 };
+    function set(e) {
+      var r = stage.getBoundingClientRect();
+      var nx = e.clientX - r.left;
+      var ny = e.clientY - r.top;
+      var now = performance.now();
+      if (p.t) {
+        var dt = Math.max(8, now - p.t) / 1000;
+        p.vx = clamp((nx - p.x) / dt, -3000, 3000);
+        p.vy = clamp((ny - p.y) / dt, -3000, 3000);
+      }
+      p.x = nx; p.y = ny; p.t = now; p.inside = true;
+    }
+    stage.addEventListener("pointermove", set, { passive: true });
+    stage.addEventListener("pointerdown", function (e) { p.down = true; set(e); }, { passive: true });
+    window.addEventListener("pointerup", function () { p.down = false; }, { passive: true });
+    stage.addEventListener("pointerleave", function () { p.inside = false; p.vx = 0; p.vy = 0; });
+    stage.addEventListener("pointercancel", function () { p.inside = false; p.down = false; });
+    return p;
+  }
+
+  /* Per-demo rAF loop: pauses offscreen, honors reduced motion. */
+  function runDemo(el, demo) {
+    var raf = 0, on = false, last = 0, staticDone = false;
+    function frame(now) {
+      raf = requestAnimationFrame(frame);
+      var dt = (now - last) / 1000;
+      last = now;
+      if (!(dt > 0) || dt > 0.05) dt = 0.016;
+      if (REDUCED) {
+        if (!staticDone && demo.renderStatic) { demo.renderStatic(); staticDone = true; }
+        return;
+      }
+      staticDone = false;
+      demo.step(dt, now / 1000);
+    }
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        var e = entries[i];
+        if (e.isIntersecting && !on) {
+          on = true;
+          last = performance.now();
+          raf = requestAnimationFrame(frame);
+        } else if (!e.isIntersecting && on) {
+          on = false;
+          cancelAnimationFrame(raf);
+        }
+      }
+    }, { threshold: 0.06 });
+    io.observe(el);
+    themeSubs.push(function () {
+      staticDone = false;
+      if (demo.onTheme) demo.onTheme();
+    });
+    reduceSubs.push(function () { staticDone = false; });
+    return { invalidate: function () { staticDone = false; } };
+  }
+
+  /* DPR-aware canvas fitting with resize handling. */
+  function setupCanvas(canvas, onResize) {
+    var ctx = canvas.getContext("2d");
+    var st = { w: 1, h: 1, dpr: 1 };
+    function fit() {
+      var r = canvas.getBoundingClientRect();
+      if (r.width < 1 || r.height < 1) return;
+      st.dpr = Math.min(2, window.devicePixelRatio || 1);
+      st.w = r.width;
+      st.h = r.height;
+      canvas.width = Math.round(st.w * st.dpr);
+      canvas.height = Math.round(st.h * st.dpr);
+      ctx.setTransform(st.dpr, 0, 0, st.dpr, 0, 0);
+      if (onResize) onResize(st);
+    }
+    new ResizeObserver(fit).observe(canvas);
+    fit();
+    return { ctx: ctx, st: st, fit: fit };
+  }
+
+  /* ============================================================
+     01 — magnetic-dock
+     ============================================================ */
+
+  (function magneticDock() {
+    var stage = document.querySelector('[data-demo="dock"]');
+    if (!stage) return;
+    var bar = stage.querySelector(".dock-bar");
+    var icons = Array.prototype.slice.call(stage.querySelectorAll(".dock-icon"));
+    var tip = stage.querySelector(".dock-tip");
+    var p = trackPointer(stage);
+
+    var SIGMA = 78, LIFT = 40, GROW = 0.95, DRIFT = 0.13;
+    var state = icons.map(function () {
+      return { s: mkSpring(1), y: mkSpring(0), dx: mkSpring(0) };
+    });
+    var tipX = mkSpring(0), tipO = mkSpring(0);
+    var base = [];
+    var idleT = Math.random() * 20;
+
+    function measure() {
+      /* offsetLeft/offsetTop ignore transforms — no feedback loop. */
+      var bx = bar.offsetLeft, by = bar.offsetTop;
+      base = icons.map(function (ic) {
+        return {
+          x: bx + ic.offsetLeft + ic.offsetWidth / 2,
+          y: by + ic.offsetTop + ic.offsetHeight / 2
+        };
+      });
+    }
+    new ResizeObserver(measure).observe(stage);
+    measure();
+
+    function step(dt, t) {
+      idleT += dt;
+      var w = stage.clientWidth, h = stage.clientHeight;
+      var px, py, amp;
+      if (p.inside) {
+        px = p.x; py = p.y; amp = 1;
+      } else {
+        px = w / 2 + Math.sin(idleT * 0.55) * w * 0.34;
+        py = h - 70;
+        amp = 0.42;
+      }
+      var bestI = -1, bestInf = 0;
+      for (var i = 0; i < icons.length; i++) {
+        var b = base[i];
+        if (!b) continue;
+        var d = px - b.x;
+        var vert = Math.max(0, 1 - Math.abs(py - b.y) / 220);
+        var inf = Math.exp(-(d * d) / (2 * SIGMA * SIGMA)) * amp * vert;
+        if (inf > bestInf) { bestInf = inf; bestI = i; }
+        var st = state[i];
+        spr(st.s, 1 + GROW * inf, 420, 26, dt);
+        spr(st.y, -LIFT * inf, 360, 22, dt);
+        spr(st.dx, d * DRIFT * inf, 300, 20, dt);
+        icons[i].style.transform =
+          "translate3d(" + st.dx.x.toFixed(2) + "px," + st.y.x.toFixed(2) + "px,0) scale(" + st.s.x.toFixed(3) + ")";
+      }
+      /* Tooltip chases the winning icon. */
+      var showTip = p.inside && bestInf > 0.55 && bestI >= 0;
+      if (showTip) {
+        tip.textContent = icons[bestI].getAttribute("data-label") || "";
+        spr(tipX, base[bestI].x, 340, 26, dt);
+      }
+      spr(tipO, showTip ? 1 : 0, 220, 24, dt);
+      var o = clamp(tipO.x, 0, 1);
+      if (o > 0.01 && bestI >= 0) {
+        var ty = base[bestI].y - 72 - state[bestI].y.x * -0.4 - 18 * o;
+        tip.style.opacity = o.toFixed(3);
+        tip.style.transform = "translate3d(" + (tipX.x - tip.offsetWidth / 2).toFixed(1) + "px," + ty.toFixed(1) + "px,0)";
+      } else {
+        tip.style.opacity = "0";
+      }
+    }
+
+    function renderStatic() {
+      for (var i = 0; i < icons.length; i++) icons[i].style.transform = "";
+      tip.style.opacity = "0";
+    }
+
+    runDemo(stage, { step: step, renderStatic: renderStatic });
+  })();
+
+  /* ============================================================
+     02 — cursor-comet
+     ============================================================ */
+
+  (function cursorComet() {
+    var stage = document.querySelector('[data-demo="comet"]');
+    if (!stage) return;
+    var canvas = stage.querySelector("canvas");
+    var cv = setupCanvas(canvas);
+    var ctx = cv.ctx, st = cv.st;
+    var p = trackPointer(stage);
+
+    var N = 240;
+    var parts = [];
+    for (var i = 0; i < N; i++) {
+      parts.push({ x: 0, y: 0, vx: 0, vy: 0, life: 0, max: 1, sz: 1, spark: false });
+    }
+    var cursor = 0;
+    var emitAcc = 0;
+    var head = { x: 0, y: 0 };
+    var prevHead = { x: 0, y: 0, has: false };
+    var sprites = null;
+
+    function makeSprite(hex, hot) {
+      var c = document.createElement("canvas");
+      c.width = c.height = 64;
+      var g = c.getContext("2d");
+      var gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+      gr.addColorStop(0, rgba(hex, hot ? 0.9 : 0.62));
+      gr.addColorStop(0.3, rgba(hex, hot ? 0.4 : 0.28));
+      gr.addColorStop(1, rgba(hex, 0));
+      g.fillStyle = gr;
+      g.fillRect(0, 0, 64, 64);
+      return c;
+    }
+
+    function buildSprites() {
+      sprites = {
+        azure: makeSprite(TOK.accent, false),
+        cyan: makeSprite(TOK.cyan, false),
+        coral: makeSprite(TOK.coral, true),
+        core: makeSprite(TOK.fg, true)
+      };
+    }
+    buildSprites();
+
+    function spawn(x, y, vx, vy, life, sz, spark) {
+      var pt = parts[cursor];
+      cursor = (cursor + 1) % N;
+      pt.x = x; pt.y = y; pt.vx = vx; pt.vy = vy;
+      pt.life = life; pt.max = life; pt.sz = sz; pt.spark = spark;
+    }
+
+    function step(dt, t) {
+      var w = st.w, h = st.h;
+      /* Head: pointer when present, Lissajous attractor otherwise. */
+      var idle = !p.inside;
+      var ax = w * 0.5 + Math.sin(t * 0.4) * w * 0.28;
+      var ay = h * 0.5 + Math.sin(t * 0.63 + 1.7) * h * 0.2;
+      head.x = idle ? ax : p.x;
+      head.y = idle ? ay : p.y;
+
+      var speed = Math.hypot(p.vx, p.vy);
+      p.vx *= Math.exp(-5 * dt);
+      p.vy *= Math.exp(-5 * dt);
+
+      /* Emission: velocity-reactive when driven, gentle when idle. */
+      var rate = idle ? 160 : (110 + speed * 0.6);
+      emitAcc += rate * dt;
+      var count = Math.floor(emitAcc);
+      emitAcc -= count;
+      count = Math.min(count, 14);
+      /* Distribute spawns along the head's path this frame, so fast
+         flicks lay particles into a tail instead of one clump. */
+      if (!prevHead.has) { prevHead.x = head.x; prevHead.y = head.y; prevHead.has = true; }
+      for (var e = 0; e < count; e++) {
+        var frac = count > 1 ? (e + Math.random()) / count : Math.random();
+        var hx = prevHead.x + (head.x - prevHead.x) * frac;
+        var hy = prevHead.y + (head.y - prevHead.y) * frac;
+        var ang = Math.random() * Math.PI * 2;
+        var jr = Math.random() * (4 + speed * 0.008);
+        var jx = Math.cos(ang) * jr, jy = Math.sin(ang) * jr;
+        var launch = 30 + Math.random() * 40;
+        var vx = -p.vx * 0.22 + Math.cos(ang) * launch;
+        var vy = -p.vy * 0.22 + Math.sin(ang) * launch;
+        if (idle) {
+          /* seed onto the orbit ring with tangential motion */
+          hx = head.x; hy = head.y;
+          var oa = Math.random() * Math.PI * 2;
+          jx = Math.cos(oa) * 62; jy = Math.sin(oa) * 62;
+          vx = -Math.sin(oa) * 55; vy = Math.cos(oa) * 55;
+        }
+        var life = idle ? (0.9 + Math.random() * 0.9)
+                        : (0.5 + Math.random() * 0.9 * clamp(speed / 1400, 0.2, 1));
+        spawn(hx + jx, hy + jy, vx, vy, life, (idle ? 5 : 6) + Math.random() * 8, false);
+      }
+      prevHead.x = head.x; prevHead.y = head.y;
+      /* Ionization sparks — the page's one coral moment. */
+      if (!idle && speed > 900) {
+        for (var s2 = 0; s2 < 2; s2++) {
+          var sa = Math.random() * Math.PI * 2;
+          spawn(head.x, head.y,
+            -p.vx * 0.32 + Math.cos(sa) * 90,
+            -p.vy * 0.32 + Math.sin(sa) * 90,
+            0.28 + Math.random() * 0.2, 3.5 + Math.random() * 3, true);
+        }
+      }
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = "lighter";
+
+      var drag = Math.exp(-2.2 * dt);
+      for (var i2 = 0; i2 < N; i2++) {
+        var pt = parts[i2];
+        if (pt.life <= 0) continue;
+        pt.life -= dt;
+        if (idle && !pt.spark) {
+          /* Soft radial spring toward a 62px orbit around the attractor. */
+          var dx = pt.x - head.x, dy = pt.y - head.y;
+          var d = Math.hypot(dx, dy) || 1;
+          var pull = (62 - d) * 3.2;
+          pt.vx += (dx / d) * pull * dt * 10;
+          pt.vy += (dy / d) * pull * dt * 10;
+          /* mild tangential swirl */
+          pt.vx += (-dy / d) * 34 * dt;
+          pt.vy += (dx / d) * 34 * dt;
+        }
+        pt.vx *= drag;
+        pt.vy *= drag;
+        pt.x += pt.vx * dt;
+        pt.y += pt.vy * dt;
+        var a = clamp(pt.life / pt.max, 0, 1);
+        var size = pt.sz * (0.5 + a * 0.9) * 2.4;
+        var img;
+        if (pt.spark) img = sprites.coral;
+        else img = a > 0.55 ? sprites.azure : sprites.cyan;
+        ctx.globalAlpha = a * (pt.spark ? 0.95 : 0.5);
+        ctx.drawImage(img, pt.x - size / 2, pt.y - size / 2, size, size);
+      }
+
+      /* Comet head: layered glow + hot core. */
+      ctx.globalAlpha = idle ? 0.5 : 0.8;
+      ctx.drawImage(sprites.azure, head.x - 30, head.y - 30, 60, 60);
+      ctx.globalAlpha = idle ? 0.35 : 0.65;
+      ctx.drawImage(sprites.core, head.x - 5, head.y - 5, 10, 10);
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "source-over";
+    }
+
+    function renderStatic() {
+      var w = st.w, h = st.h;
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = "lighter";
+      var cx = w / 2, cy = h / 2;
+      for (var i = 0; i < 26; i++) {
+        var a = (i / 26) * Math.PI * 2;
+        var r = 62 + Math.sin(i * 2.4) * 8;
+        var x = cx + Math.cos(a) * r, y = cy + Math.sin(a) * r * 0.72;
+        var img = i % 2 ? sprites.azure : sprites.cyan;
+        var s = 10 + (i % 3) * 5;
+        ctx.globalAlpha = 0.55;
+        ctx.drawImage(img, x - s / 2, y - s / 2, s, s);
+      }
+      ctx.globalAlpha = 0.7;
+      ctx.drawImage(sprites.azure, cx - 26, cy - 26, 52, 52);
+      ctx.drawImage(sprites.core, cx - 6, cy - 6, 12, 12);
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "source-over";
+    }
+
+    runDemo(stage, { step: step, renderStatic: renderStatic, onTheme: buildSprites });
+  })();
+
+  /* ============================================================
+     03 — lens-card
+     ============================================================ */
+
+  (function lensCard() {
+    var stage = document.querySelector('[data-demo="lens"]');
+    if (!stage) return;
+    var baseLayer = stage.querySelector(".lens-base");
+    var magWrap = stage.querySelector(".lens-mag");
+    var magInner = stage.querySelector(".lens-mag-inner");
+    var chromaWrap = stage.querySelector(".lens-chroma");
+    var chromaInner = stage.querySelector(".lens-chroma-inner");
+    var ring = stage.querySelector(".lens-ring");
+    var canvas = stage.querySelector(".lens-grid-canvas");
+    var cv = setupCanvas(canvas);
+    var ctx = cv.ctx, st = cv.st;
+    var p = trackPointer(stage);
+
+    /* Duplicate the content into the magnified + chroma layers. */
+    function syncClones() {
+      magInner.innerHTML = baseLayer.innerHTML;
+      chromaInner.innerHTML = baseLayer.innerHTML;
+    }
+    syncClones();
+
+    var R = 104, MAG = 1.35, MAG2 = 1.38;
+    var lx = mkSpring(-200), ly = mkSpring(-200), pres = mkSpring(0);
+    var idleT = Math.random() * 30;
+
+    function place(x, y, r) {
+      magWrap.style.clipPath = "circle(" + r.toFixed(1) + "px at " + x.toFixed(1) + "px " + y.toFixed(1) + "px)";
+      chromaWrap.style.clipPath = "circle(" + (r + 3).toFixed(1) + "px at " + x.toFixed(1) + "px " + y.toFixed(1) + "px)";
+      magInner.style.transform =
+        "translate3d(" + ((1 - MAG) * x).toFixed(2) + "px," + ((1 - MAG) * y).toFixed(2) + "px,0) scale(" + MAG + ")";
+      chromaInner.style.transform =
+        "translate3d(" + ((1 - MAG2) * x + 2.2).toFixed(2) + "px," + ((1 - MAG2) * y + 1.4).toFixed(2) + "px,0) scale(" + MAG2 + ")";
+      var rs = (r * 2) / 208;
+      ring.style.transform =
+        "translate3d(" + (x - 104).toFixed(1) + "px," + (y - 104).toFixed(1) + "px,0) scale(" + rs.toFixed(3) + ")";
+    }
+
+    function drawGrid(x, y, r) {
+      var w = st.w, h = st.h;
+      ctx.clearRect(0, 0, w, h);
+      var gap = 36, seg = 14;
+      var sigma = 60, amp = 16;
+      var reach = r * 1.9;
+
+      function warp(px, py, out) {
+        var dx = px - x, dy = py - y;
+        var d = Math.hypot(dx, dy);
+        if (d > reach || d < 0.5) { out[0] = px; out[1] = py; return; }
+        var e = d - r;
+        var push = amp * Math.exp(-(e * e) / (2 * sigma * sigma));
+        if (d < r) push *= d / r; /* bulge fades toward center (covered by mag layer) */
+        out[0] = px + (dx / d) * push;
+        out[1] = py + (dy / d) * push;
+      }
+
+      var tmp = [0, 0];
+      function pass(color, alpha, clipR) {
+        ctx.save();
+        if (clipR) {
+          ctx.beginPath();
+          ctx.arc(x, y, clipR, 0, Math.PI * 2);
+          ctx.clip();
+        }
+        ctx.strokeStyle = color;
+        ctx.globalAlpha = alpha;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        var gx, gy, i;
+        for (gx = gap / 2; gx < w; gx += gap) {
+          for (i = 0; i <= h; i += seg) {
+            warp(gx, i, tmp);
+            if (i === 0) ctx.moveTo(tmp[0], tmp[1]);
+            else ctx.lineTo(tmp[0], tmp[1]);
+          }
+        }
+        for (gy = gap / 2; gy < h; gy += gap) {
+          for (i = 0; i <= w; i += seg) {
+            warp(i, gy, tmp);
+            if (i === 0) ctx.moveTo(tmp[0], gy === tmp[1] ? gy : tmp[1]);
+            else ctx.lineTo(tmp[0], tmp[1]);
+          }
+        }
+        ctx.stroke();
+        ctx.restore();
+        ctx.globalAlpha = 1;
+      }
+
+      pass(TOK.border, 0.85, 0);
+      pass(TOK.accent, 0.5, r * 1.7);
+    }
+
+    function step(dt, t) {
+      idleT += dt;
+      var w = st.w, h = st.h;
+      var tx, ty;
+      if (p.inside) {
+        tx = p.x; ty = p.y;
+      } else {
+        tx = w * (0.5 + 0.3 * Math.sin(idleT * 0.33));
+        ty = h * (0.5 + 0.26 * Math.sin(idleT * 0.47 + 1.2));
+      }
+      spr(lx, tx, 300, 27, dt);
+      spr(ly, ty, 300, 27, dt);
+      spr(pres, 1, 200, 18, dt);
+      var r = R * clamp(pres.x, 0, 1.2);
+      place(lx.x, ly.x, Math.max(1, r));
+      drawGrid(lx.x, ly.x, Math.max(1, r));
+    }
+
+    function renderStatic() {
+      var w = st.w, h = st.h;
+      var x = w / 2, y = h / 2;
+      place(x, y, R);
+      drawGrid(x, y, R);
+    }
+
+    runDemo(stage, { step: step, renderStatic: renderStatic });
+  })();
+
+  /* ============================================================
+     04 — torch-reveal
+     ============================================================ */
+
+  (function torchReveal() {
+    var stage = document.querySelector('[data-demo="torch"]');
+    if (!stage) return;
+    var blueprint = stage.querySelector(".torch-blueprint");
+    var glow = stage.querySelector(".torch-glow");
+    var p = trackPointer(stage);
+
+    var tx = mkSpring(-400), ty = mkSpring(-400);
+    var idleT = Math.random() * 40;
+
+    function step(dt, t) {
+      idleT += dt;
+      var w = stage.clientWidth, h = stage.clientHeight;
+      var gx, gy;
+      if (p.inside) {
+        gx = p.x; gy = p.y;
+      } else {
+        gx = w * (0.5 + 0.36 * Math.sin(idleT * 0.3));
+        gy = h * (0.5 + 0.3 * Math.sin(idleT * 0.43 + 0.9));
+      }
+      spr(tx, gx, 260, 24, dt);
+      spr(ty, gy, 260, 24, dt);
+      var r = 175 + Math.sin(t * 9) * 5 + Math.sin(t * 23 + 1.3) * 2.5;
+      blueprint.style.setProperty("--tx", tx.x.toFixed(1));
+      blueprint.style.setProperty("--ty", ty.x.toFixed(1));
+      blueprint.style.setProperty("--tr", r.toFixed(1));
+      glow.style.transform = "translate3d(" + (tx.x - 210).toFixed(1) + "px," + (ty.x - 210).toFixed(1) + "px,0)";
+    }
+
+    function renderStatic() {
+      /* CSS handles the split view; just park the vars. */
+      blueprint.style.setProperty("--tx", "-400");
+      blueprint.style.setProperty("--ty", "-400");
+    }
+
+    runDemo(stage, { step: step, renderStatic: renderStatic });
+  })();
+
+  /* ============================================================
+     05 — gooey-actions
+     ============================================================ */
+
+  (function gooeyActions() {
+    var stage = document.querySelector('[data-demo="goo"]');
+    if (!stage) return;
+    var fab = stage.querySelector(".u-main");
+    var satsUi = Array.prototype.slice.call(stage.querySelectorAll(".goo-ui .u-sat"));
+    var satsBlob = Array.prototype.slice.call(stage.querySelectorAll(".goo-blob.b-sat"));
+    var mainBlob = stage.querySelector(".goo-blob.b-main");
+    var amb1 = stage.querySelector(".goo-blob.b-amb1");
+    var amb2 = stage.querySelector(".goo-blob.b-amb2");
+    var label = stage.querySelector(".goo-label");
+    var p = trackPointer(stage);
+
+    var COUNT = satsUi.length;
+    var RADIUS = 118, A0 = -160 * Math.PI / 180, A1 = -20 * Math.PI / 180;
+    var STAGGER = 0.045, K = 230, C = 13;
+
+    var open = false;
+    var toggleAt = -1e4;
+    var interacted = false;
+    var peekT = 3.5;
+    var nowT = 0;
+
+    var sats = [];
+    for (var i = 0; i < COUNT; i++) {
+      var a = COUNT === 1 ? (A0 + A1) / 2 : A0 + (A1 - A0) * (i / (COUNT - 1));
+      sats.push({
+        ang: a,
+        x: mkSpring(0), y: mkSpring(0), s: mkSpring(0.6),
+        hover: false
+      });
+    }
+    var breathe = mkSpring(1);
+
+    function setOpen(next) {
+      open = next;
+      toggleAt = nowT;
+      interacted = true;
+      stage.classList.toggle("open", open);
+      fab.setAttribute("aria-expanded", open ? "true" : "false");
+      for (var i = 0; i < COUNT; i++) {
+        satsUi[i].tabIndex = open ? 0 : -1;
+        if (open) satsUi[i].removeAttribute("aria-hidden");
+        else satsUi[i].setAttribute("aria-hidden", "true");
+      }
+      if (!open) { label.classList.remove("on"); }
+      if (REDUCED) layoutInstant();
+    }
+
+    fab.addEventListener("click", function () { setOpen(!open); });
+    stage.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && open) { setOpen(false); fab.focus(); }
+    });
+    satsUi.forEach(function (btn) {
+      btn.addEventListener("focus", function () { showLabelFor(btn); });
+      btn.addEventListener("blur", function () { label.classList.remove("on"); });
+      btn.addEventListener("click", function () { setOpen(false); });
+    });
+
+    function center() {
+      return { x: stage.clientWidth / 2, y: stage.clientHeight * 0.58 };
+    }
+
+    function showLabelFor(btn) {
+      var i = parseInt(btn.getAttribute("data-i"), 10);
+      var s = sats[i];
+      var c = center();
+      label.textContent = btn.getAttribute("data-label") || "";
+      label.style.transform = "translate3d(" +
+        (c.x + s.x.x - label.offsetWidth / 2).toFixed(1) + "px," +
+        (c.y + s.y.x - 58).toFixed(1) + "px,0)";
+      label.classList.add("on");
+    }
+
+    function apply(i) {
+      var s = sats[i];
+      var tr = "translate(-50%,-50%) translate3d(" + s.x.x.toFixed(2) + "px," + s.y.x.toFixed(2) + "px,0) scale(" + s.s.x.toFixed(3) + ")";
+      satsBlob[i].style.transform = tr;
+      satsUi[i].style.transform = tr;
+      satsUi[i].style.opacity = s.s.x < 0.35 ? "0" : "1";
+      satsUi[i].style.pointerEvents = open ? "auto" : "none";
+    }
+
+    function layoutInstant() {
+      for (var i = 0; i < COUNT; i++) {
+        var s = sats[i];
+        s.x.x = open ? Math.cos(s.ang) * RADIUS : 0;
+        s.y.x = open ? Math.sin(s.ang) * RADIUS : 0;
+        s.s.x = open ? 1 : 0.6;
+        s.x.v = s.y.v = s.s.v = 0;
+        apply(i);
+      }
+      mainBlob.style.transform = "translate(-50%,-50%)";
+      amb1.style.transform = "translate(-50%,-50%) scale(0)";
+      amb2.style.transform = "translate(-50%,-50%) scale(0)";
+    }
+
+    function step(dt, t) {
+      nowT = t;
+      var c = center();
+
+      /* Auto-peek until first interaction so the demo sells itself. */
+      var peek = 0;
+      if (!interacted && !open) {
+        var ph = (t - peekT) % 7;
+        if (ph > 0 && ph < 1.4) peek = Math.sin((ph / 1.4) * Math.PI) * 0.24;
+      }
+
+      var hoverAny = -1;
+      for (var i = 0; i < COUNT; i++) {
+        var s = sats[i];
+        var mount = open && (t - toggleAt) >= i * STAGGER;
+        var ext = mount ? 1 : peek;
+        var txd = Math.cos(s.ang) * RADIUS * ext;
+        var tyd = Math.sin(s.ang) * RADIUS * ext;
+        var tscale = mount ? 1 : (peek > 0 ? 0.62 + peek : 0.6);
+
+        /* Magnetic lean toward the pointer. */
+        s.hover = false;
+        if (open && p.inside) {
+          var sx = c.x + s.x.x, sy = c.y + s.y.x;
+          var dx = p.x - sx, dy = p.y - sy;
+          var d = Math.hypot(dx, dy);
+          if (d < 52) {
+            var pullF = 1 - d / 52;
+            txd += dx * 0.35 * pullF;
+            tyd += dy * 0.35 * pullF;
+            tscale = 1 + 0.16 * pullF;
+            s.hover = true;
+            if (hoverAny < 0) hoverAny = i;
+          }
+        }
+
+        spr(s.x, txd, K, C, dt);
+        spr(s.y, tyd, K, C, dt);
+        spr(s.s, tscale, 300, 20, dt);
+        apply(i);
+      }
+
+      /* Hover label follows the magnetized satellite. */
+      if (hoverAny >= 0) showLabelFor(satsUi[hoverAny]);
+      else if (document.activeElement && document.activeElement.classList &&
+               document.activeElement.classList.contains("u-sat")) { /* keep focus label */ }
+      else label.classList.remove("on");
+
+      /* Core breathing + ambient embers orbiting through the goo. */
+      spr(breathe, open ? 1.06 : 1 + Math.sin(t * 1.6) * 0.04, 200, 18, dt);
+      mainBlob.style.transform = "translate(-50%,-50%) scale(" + breathe.x.toFixed(3) + ")";
+      fab.style.transform = "translate(-50%,-50%) scale(" + breathe.x.toFixed(3) + ")";
+
+      var hideAmb = open ? 0 : 1;
+      var r1 = 46 + Math.sin(t * 0.7) * 12;
+      var a1 = t * 0.9;
+      amb1.style.transform = "translate(-50%,-50%) translate3d(" +
+        (Math.cos(a1) * r1).toFixed(1) + "px," + (Math.sin(a1) * r1 * 0.8).toFixed(1) + "px,0) scale(" + hideAmb + ")";
+      var r2 = 58 + Math.sin(t * 0.9 + 2) * 10;
+      var a2 = -t * 0.6 + 2.1;
+      amb2.style.transform = "translate(-50%,-50%) translate3d(" +
+        (Math.cos(a2) * r2).toFixed(1) + "px," + (Math.sin(a2) * r2 * 0.8).toFixed(1) + "px,0) scale(" + hideAmb + ")";
+    }
+
+    function renderStatic() {
+      layoutInstant();
+    }
+
+    runDemo(stage, { step: step, renderStatic: renderStatic });
+
+    /* Initialize closed state attributes. */
+    for (var j = 0; j < COUNT; j++) {
+      satsUi[j].style.pointerEvents = "none";
+      satsUi[j].style.opacity = "0";
+    }
+  })();
+
+})();
+</script>

@@ -51,6 +51,21 @@
       "@/components/motiq/luminous-topography": [
         "registry/backgrounds/luminous-topography.tsx"
       ],
+      "@/components/motiq/loom-draft": [
+        "registry/backgrounds/loom-draft.tsx"
+      ],
+      "@/components/motiq/copperplate-hatch": [
+        "registry/backgrounds/copperplate-hatch.tsx"
+      ],
+      "@/components/motiq/chart-recorder": [
+        "registry/backgrounds/chart-recorder.tsx"
+      ],
+      "@/components/motiq/riso-registration": [
+        "registry/backgrounds/riso-registration.tsx"
+      ],
+      "@/components/motiq/core-strata": [
+        "registry/backgrounds/core-strata.tsx"
+      ],
       "@/components/motiq/workflow-topology-field": [
         "registry/backgrounds/workflow-topology-field.tsx"
       ],

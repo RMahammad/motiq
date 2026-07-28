@@ -6,6 +6,34 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import { StreamingDataRows, type Column } from "./streaming-data-rows";
 
+/**
+ * jsdom has no layout, so every measured box is 0x0 and the component always
+ * resolves to its wide branch. This installs a ResizeObserver that reports a
+ * narrow content box, forcing the stacked-card presentation so it can be
+ * asserted like any other structure. The component measures its OWN width (not
+ * the viewport), which is why stubbing matchMedia would no longer do anything.
+ */
+function withNarrowViewport(run: () => void) {
+  const original = globalThis.ResizeObserver;
+  class NarrowResizeObserver {
+    constructor(private readonly cb: ResizeObserverCallback) {}
+    observe(target: Element) {
+      this.cb(
+        [{ target, contentRect: { width: 320, height: 0 } } as unknown as ResizeObserverEntry],
+        this as unknown as ResizeObserver,
+      );
+    }
+    unobserve() {}
+    disconnect() {}
+  }
+  globalThis.ResizeObserver = NarrowResizeObserver as unknown as typeof ResizeObserver;
+  try {
+    run();
+  } finally {
+    globalThis.ResizeObserver = original;
+  }
+}
+
 afterEach(cleanup);
 
 const WCAG = { type: "tag" as const, values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"] };
@@ -97,5 +125,55 @@ describe("StreamingDataRows", () => {
     expect(screen.getAllByRole("columnheader").length).toBeGreaterThanOrEqual(3);
     expect(screen.getAllByRole("rowgroup").length).toBeGreaterThanOrEqual(2); // thead + tbody
     await noViolations(container);
+  });
+
+  /* --- narrow-viewport contracts ----------------------------------------- */
+
+  it("reflows to labelled stacked cards (not a shrunken table) on a narrow viewport", async () => {
+    let container!: HTMLElement;
+    withNarrowViewport(() => {
+      act(() => {
+        ({ container } = render(
+          <Harness rows={base} renderMobileRow={(r) => <span>{r.name}</span>} />,
+        ));
+      });
+    });
+    // The table is replaced, not scrolled…
+    expect(container.querySelector("table")).toBeNull();
+    const list = container.querySelector("[data-stacked-rows]") as HTMLElement;
+    expect(list).toBeTruthy();
+    // …and it keeps the caption as its accessible name, so nothing is lost.
+    expect(list.getAttribute("aria-label")).toBe("Jobs");
+    expect(within(list).getAllByRole("listitem").length).toBe(base.length);
+    await noViolations(container);
+  });
+
+  it("shows a busy skeleton in the stacked layout while loading", () => {
+    let container!: HTMLElement;
+    withNarrowViewport(() => {
+      act(() => {
+        ({ container } = render(
+          <Harness rows={base} state="loading" renderMobileRow={(r) => <span>{r.name}</span>} />,
+        ));
+      });
+    });
+    const list = container.querySelector("[data-stacked-rows]") as HTMLElement;
+    expect(list.getAttribute("aria-busy")).toBe("true");
+    // Real rows must not leak through the loading state (they did before).
+    expect(container.textContent).not.toContain("Alpha");
+  });
+
+  it("makes the table's horizontal scroller a labelled, focusable region only when there is no stacked fallback", () => {
+    const { container: withFallback } = render(
+      <Harness rows={base} renderMobileRow={(r) => <span>{r.name}</span>} />,
+    );
+    expect(withFallback.querySelector('[role="region"]')).toBeNull();
+
+    cleanup();
+    const { container: tableOnly } = render(<Harness rows={base} />);
+    const region = tableOnly.querySelector('[role="region"]') as HTMLElement;
+    expect(region).toBeTruthy();
+    expect(region.getAttribute("tabindex")).toBe("0");
+    expect(region.getAttribute("aria-label")).toBe("Jobs");
   });
 });

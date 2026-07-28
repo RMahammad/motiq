@@ -94,4 +94,24 @@ describe("FilterResultTransition", () => {
     const after = container.querySelector('[data-item-id="a"]') as HTMLElement;
     expect(after.dataset.marker).toBe("kept");
   });
+
+  /* --- responsive contracts (structure/class assertions jsdom can enforce) -- */
+
+  it("keeps each active filter chip as one unwrappable unit with a 24px remove target", () => {
+    const { container } = render(
+      <Harness
+        items={ALL}
+        activeFilters={[{ id: "cat:design", group: "Category", label: "Design" }]}
+        onRemoveFilter={() => {}}
+      />,
+    );
+    const chip = container.querySelector("[data-filter-chip]") as HTMLElement;
+    expect(chip).toBeTruthy();
+    // "Category:", "Design" and the remove control can never split across lines.
+    expect(chip.className).toContain("whitespace-nowrap");
+    const remove = chip.querySelector("button") as HTMLElement;
+    // h-6/w-6 === 24px, the WCAG 2.2 AA minimum target size.
+    expect(remove.className).toContain("h-6");
+    expect(remove.className).toContain("w-6");
+  });
 });

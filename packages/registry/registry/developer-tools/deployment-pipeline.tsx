@@ -198,6 +198,7 @@ function StageRow({ stage, isLast, expanded, onToggle, onRetry, reduce, active }
   const done = stage.status === "passed";
   const logsId = `dp-logs-${stage.id}`;
   const hasLogs = Boolean(stage.logs && stage.logs.length > 0);
+  const hasActions = Boolean((meta.retryable && onRetry) || hasLogs);
   // Emphasis animation only when running, on-screen/visible, and motion is allowed.
   const animate = running && active && !reduce;
 
@@ -281,71 +282,90 @@ function StageRow({ stage, isLast, expanded, onToggle, onRetry, reduce, active }
       </div>
 
       {/* Content ------------------------------------------------------ */}
-      <div className="min-w-0 flex-1 pb-4">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <span className="text-[14px] font-semibold text-[var(--color-fg)]">{stage.name}</span>
-
-          {/* Status pill: icon + TEXT, so it never relies on color alone. */}
-          <span
-            className="inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11.5px] font-medium"
-            style={{
-              color: meta.color,
-              borderColor: `color-mix(in oklab, ${meta.color} 45%, var(--color-border))`,
-              background: `color-mix(in oklab, ${meta.color} 10%, transparent)`,
-            }}
-          >
-            <StatusIcon status={stage.status} />
-            {meta.label}
+      <div className="min-w-0 flex-1 pb-3 @sm/pipeline:pb-4">
+        <div
+          data-slot="stage-meta"
+          className="flex flex-wrap items-center gap-x-3 gap-y-1.5"
+        >
+          <span className="min-w-0 break-words text-[14px] font-semibold text-[var(--color-fg)]">
+            {stage.name}
           </span>
 
-          {typeof stage.durationMs === "number" ? (
-            <span className="font-mono text-[11.5px] text-[var(--color-muted)]">
-              {formatDuration(stage.durationMs)}
+          {/* Status and duration travel as ONE wrapping group: when the row wraps
+              at narrow widths a bare duration can never strand on its own line. */}
+          <span
+            data-slot="stage-status-group"
+            className="inline-flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 @sm/pipeline:gap-x-3"
+          >
+            {/* Status pill: icon + TEXT, so it never relies on color alone. */}
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11.5px] font-medium"
+              style={{
+                color: meta.color,
+                borderColor: `color-mix(in oklab, ${meta.color} 45%, var(--color-border))`,
+                background: `color-mix(in oklab, ${meta.color} 10%, transparent)`,
+              }}
+            >
+              <StatusIcon status={stage.status} />
+              {meta.label}
+            </span>
+
+            {typeof stage.durationMs === "number" ? (
+              <span className="font-mono text-[11.5px] text-[var(--color-muted)]">
+                {formatDuration(stage.durationMs)}
+              </span>
+            ) : null}
+          </span>
+
+          {/* Actions take their own full-width line in a narrow pipeline
+              (comfortable 44px targets) and tuck back to the right of the row
+              from `@sm/pipeline` (384px) up. The
+              wrapper is omitted entirely when there is nothing to render, so an
+              empty flex item can never claim a line of its own. */}
+          {hasActions ? (
+            <span className="flex w-full items-center gap-1.5 @sm/pipeline:ml-auto @sm/pipeline:w-auto">
+              {meta.retryable && onRetry ? (
+                <button
+                  type="button"
+                  onClick={() => onRetry(stage.id)}
+                  className={cn(
+                    "inline-flex min-h-[44px] items-center gap-1.5 rounded-md border border-[var(--color-border)] @sm/pipeline:min-h-0",
+                    "bg-[var(--color-surface)] px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)]",
+                    "transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))]",
+                  )}
+                >
+                  <RetryIcon />
+                  Retry
+                  <span className="sr-only"> {stage.name} stage</span>
+                </button>
+              ) : null}
+
+              {hasLogs ? (
+                <button
+                  type="button"
+                  onClick={onToggle}
+                  aria-expanded={expanded}
+                  aria-controls={logsId}
+                  className={cn(
+                    "inline-flex min-h-[44px] items-center gap-1 rounded-md border border-transparent px-2 py-1 @sm/pipeline:min-h-0 @sm/pipeline:px-1.5",
+                    "text-[12px] font-medium text-[var(--color-muted)]",
+                    "transition-colors hover:text-[var(--color-fg)]",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))]",
+                  )}
+                >
+                  <span>{expanded ? "Hide logs" : "Logs"}</span>
+                  <motion.span
+                    className="grid place-items-center"
+                    animate={{ rotate: expanded ? 180 : 0 }}
+                    transition={reduce ? { duration: 0 } : { duration: 0.2, ease: [0.2, 0, 0, 1] }}
+                  >
+                    <Chevron />
+                  </motion.span>
+                </button>
+              ) : null}
             </span>
           ) : null}
-
-          <span className="flex w-full items-center gap-1.5 sm:ml-auto sm:w-auto">
-            {meta.retryable && onRetry ? (
-              <button
-                type="button"
-                onClick={() => onRetry(stage.id)}
-                className={cn(
-                  "inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)]",
-                  "bg-[var(--color-surface)] px-2 py-1 text-[12px] font-medium text-[var(--color-fg)]",
-                  "transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))]",
-                )}
-              >
-                <RetryIcon />
-                Retry
-                <span className="sr-only"> {stage.name} stage</span>
-              </button>
-            ) : null}
-
-            {hasLogs ? (
-              <button
-                type="button"
-                onClick={onToggle}
-                aria-expanded={expanded}
-                aria-controls={logsId}
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-md border border-transparent px-1.5 py-1",
-                  "text-[12px] font-medium text-[var(--color-muted)]",
-                  "transition-colors hover:text-[var(--color-fg)]",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))]",
-                )}
-              >
-                <span>{expanded ? "Hide logs" : "Logs"}</span>
-                <motion.span
-                  className="grid place-items-center"
-                  animate={{ rotate: expanded ? 180 : 0 }}
-                  transition={reduce ? { duration: 0 } : { duration: 0.2, ease: [0.2, 0, 0, 1] }}
-                >
-                  <Chevron />
-                </motion.span>
-              </button>
-            ) : null}
-          </span>
         </div>
 
         {/* Expandable console logs. */}
@@ -429,7 +449,10 @@ export function DeploymentPipeline({
       role="group"
       aria-label={label}
       className={cn(
-        "w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-md)] sm:p-5",
+        // `@container/pipeline`: every threshold below reads the pipeline's own
+        // width, so a run rendered in a 311px tile of a 1440px page stacks its
+        // stage actions exactly as it does on a phone.
+        "@container/pipeline w-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-md)] @sm/pipeline:p-5",
         className,
       )}
     >

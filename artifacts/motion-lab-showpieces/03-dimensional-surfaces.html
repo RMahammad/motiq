@@ -1,0 +1,2026 @@
+<title>Motiq Motion Lab — Dimensional Surfaces</title>
+
+<style>
+/* ============================================================
+   Motiq Motion Lab — Batch 07 — Dimensional Surfaces
+   Tokens: light on :root, dark via media query, data-theme wins.
+   ============================================================ */
+:root {
+  --bg: #f7f9fc;
+  --bg-elev: #eef2f9;
+  --surface: #ffffff;
+  --surface-2: #f1f5fb;
+  --border: #dce4ef;
+  --border-strong: #c3cfe0;
+  --fg: #101828;
+  --fg-2: #344054;
+  --muted: #667085;
+  --accent: #315fea;
+  --accent-text: #244fd1;
+  --cyan: #009fb3;
+  --coral: #e9564a;
+  --success: #0e9f6e;
+  --warning: #b7791f;
+
+  --glass-fill: rgba(255, 255, 255, 0.55);
+  --glass-stroke: rgba(255, 255, 255, 0.85);
+  --glass-inner: rgba(16, 24, 40, 0.06);
+  --glare: rgba(255, 255, 255, 0.75);
+  --shadow-color: rgba(16, 24, 40, 0.22);
+  --stage-vignette: rgba(16, 24, 40, 0.05);
+  --foil-blend: soft-light;
+  --foil-opacity: 0.5;
+  --aurora-sky: #e8f0fc;
+  --aurora-mode: light;
+  --code-bg: #0d1420;
+  --code-fg: #cbd5e1;
+
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur-fast: 120ms;
+  --dur-normal: 220ms;
+  --dur-slow: 360ms;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #080c14;
+    --bg-elev: #0d1420;
+    --surface: #111827;
+    --surface-2: #192337;
+    --border: #263449;
+    --border-strong: #354863;
+    --fg: #f8fafc;
+    --fg-2: #cbd5e1;
+    --muted: #9caabd;
+    --accent: #4f7cff;
+    --accent-text: #7f9fff;
+    --cyan: #22c7d9;
+    --coral: #ff6b5e;
+    --success: #32d583;
+    --warning: #f6b94a;
+
+    --glass-fill: rgba(255, 255, 255, 0.06);
+    --glass-stroke: rgba(255, 255, 255, 0.16);
+    --glass-inner: rgba(255, 255, 255, 0.05);
+    --glare: rgba(255, 255, 255, 0.5);
+    --shadow-color: rgba(2, 5, 12, 0.65);
+    --stage-vignette: rgba(2, 5, 12, 0.4);
+    --foil-blend: color-dodge;
+    --foil-opacity: 0.32;
+    --aurora-sky: #060a13;
+    --aurora-mode: dark;
+    --code-bg: #0a101c;
+    --code-fg: #cbd5e1;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #080c14;
+  --bg-elev: #0d1420;
+  --surface: #111827;
+  --surface-2: #192337;
+  --border: #263449;
+  --border-strong: #354863;
+  --fg: #f8fafc;
+  --fg-2: #cbd5e1;
+  --muted: #9caabd;
+  --accent: #4f7cff;
+  --accent-text: #7f9fff;
+  --cyan: #22c7d9;
+  --coral: #ff6b5e;
+  --success: #32d583;
+  --warning: #f6b94a;
+
+  --glass-fill: rgba(255, 255, 255, 0.06);
+  --glass-stroke: rgba(255, 255, 255, 0.16);
+  --glass-inner: rgba(255, 255, 255, 0.05);
+  --glare: rgba(255, 255, 255, 0.5);
+  --shadow-color: rgba(2, 5, 12, 0.65);
+  --stage-vignette: rgba(2, 5, 12, 0.4);
+  --foil-blend: color-dodge;
+  --foil-opacity: 0.32;
+  --aurora-sky: #060a13;
+  --aurora-mode: dark;
+  --code-bg: #0a101c;
+  --code-fg: #cbd5e1;
+}
+
+:root[data-theme="light"] {
+  --bg: #f7f9fc;
+  --bg-elev: #eef2f9;
+  --surface: #ffffff;
+  --surface-2: #f1f5fb;
+  --border: #dce4ef;
+  --border-strong: #c3cfe0;
+  --fg: #101828;
+  --fg-2: #344054;
+  --muted: #667085;
+  --accent: #315fea;
+  --accent-text: #244fd1;
+  --cyan: #009fb3;
+  --coral: #e9564a;
+  --success: #0e9f6e;
+  --warning: #b7791f;
+
+  --glass-fill: rgba(255, 255, 255, 0.55);
+  --glass-stroke: rgba(255, 255, 255, 0.85);
+  --glass-inner: rgba(16, 24, 40, 0.06);
+  --glare: rgba(255, 255, 255, 0.75);
+  --shadow-color: rgba(16, 24, 40, 0.22);
+  --stage-vignette: rgba(16, 24, 40, 0.05);
+  --foil-blend: soft-light;
+  --foil-opacity: 0.5;
+  --aurora-sky: #e8f0fc;
+  --aurora-mode: light;
+  --code-bg: #0d1420;
+  --code-fg: #cbd5e1;
+}
+
+/* ---------- base ---------- */
+.lab {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  padding: 48px 24px 80px;
+}
+.lab * { box-sizing: border-box; margin: 0; padding: 0; }
+.lab-inner { max-width: 1180px; margin: 0 auto; }
+.lab a { color: var(--accent-text); text-decoration: none; }
+.lab a:hover { text-decoration: underline; }
+.lab :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+/* ---------- header ---------- */
+.lab-header { margin-bottom: 64px; }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--accent-text);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.eyebrow::before {
+  content: "";
+  width: 20px; height: 1px;
+  background: var(--accent);
+  display: inline-block;
+}
+.lab-title {
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-top: 14px;
+  line-height: 1.05;
+}
+.lab-thesis {
+  margin-top: 14px;
+  font-size: 17px;
+  color: var(--fg-2);
+  max-width: 640px;
+}
+.lab-index {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+}
+.lab-index a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--fg-2);
+  font-family: var(--font-mono);
+  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.lab-index a:hover {
+  border-color: var(--accent);
+  color: var(--accent-text);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+.lab-index .idx { color: var(--muted); font-size: 11px; }
+
+/* ---------- section scaffold ---------- */
+.lab-section { margin-bottom: 88px; scroll-margin-top: 24px; }
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 16px;
+}
+.section-index {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+.section-head h2 {
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  font-family: var(--font-mono);
+}
+.section-sub { color: var(--muted); font-size: 14px; margin-top: 4px; }
+.section-tag {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  border: 1px solid var(--border-strong);
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.section-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 980px) {
+  .section-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---------- stage ---------- */
+.stage {
+  position: relative;
+  min-height: 460px;
+  background: var(--bg-elev);
+  background-image: radial-gradient(120% 90% at 50% 0%, transparent 55%, var(--stage-vignette));
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 40px 24px 52px;
+}
+.stage-hint {
+  position: absolute;
+  left: 0; right: 0; bottom: 14px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* ---------- spec rail ---------- */
+.spec {
+  display: grid;
+  gap: 14px;
+}
+.spec-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+}
+.spec-block h4 {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.spec-block p { font-size: 13.5px; color: var(--fg-2); }
+.spec-block ol, .spec-block ul {
+  font-size: 13px;
+  color: var(--fg-2);
+  padding-left: 18px;
+  display: grid;
+  gap: 7px;
+}
+.spec-block li::marker { color: var(--accent-text); font-family: var(--font-mono); font-size: 11px; }
+.spec-block strong { color: var(--fg); font-weight: 600; }
+.spec-block pre {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: var(--r-sm);
+  padding: 14px;
+  overflow-x: auto;
+  font-size: 12px;
+  line-height: 1.6;
+  border: 1px solid var(--border);
+}
+.spec-block code { font-family: var(--font-mono); }
+.tok { color: #7f9fff; }
+.tok-t { color: #22c7d9; }
+.tok-c { color: #64748b; }
+.tok-s { color: #9ce8b5; }
+
+/* ============================================================
+   01 · HOLO CARD
+   ============================================================ */
+.holo-scene {
+  position: relative;
+  perspective: 1100px;
+  width: 340px;
+  max-width: 100%;
+}
+.holo-shadow {
+  position: absolute;
+  left: 8%; right: 8%; bottom: -26px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, var(--shadow-color), transparent 70%);
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+}
+.holo-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.586 / 1;
+  border-radius: var(--r-lg);
+  background:
+    linear-gradient(145deg, var(--surface-2), var(--surface) 55%, var(--surface-2));
+  border: 1px solid var(--border-strong);
+  transform-style: preserve-3d;
+  will-change: transform;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  --px: 0.5;
+  --py: 0.5;
+  --foilhue: 0;
+  --glare-o: 0.35;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 var(--glass-stroke);
+}
+.holo-foil {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(115deg,
+      rgba(255, 255, 255, 0.06) 0px, rgba(255, 255, 255, 0.06) 1px,
+      transparent 1px, transparent 5px),
+    conic-gradient(from 210deg at calc(var(--px) * 100%) calc(var(--py) * 100%),
+      #4f7cff 0deg, #22c7d9 90deg, #7ff0d3 160deg,
+      #4f7cff 230deg, #315fea 300deg, #4f7cff 360deg);
+  mix-blend-mode: var(--foil-blend);
+  opacity: var(--foil-opacity);
+  filter: hue-rotate(calc(var(--foilhue) * 1deg)) saturate(1.25);
+  transform: translateZ(0);
+}
+.holo-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(200px circle at calc(var(--px) * 100%) calc(var(--py) * 100%),
+    var(--glare), transparent 65%);
+  mix-blend-mode: screen;
+  opacity: var(--glare-o);
+  transform: translateZ(0);
+}
+.holo-content {
+  position: absolute;
+  inset: 0;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateZ(1px);
+}
+.holo-row { display: flex; align-items: center; justify-content: space-between; }
+.holo-mark {
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  font-size: 14px;
+  color: var(--fg);
+}
+.holo-pass {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--accent-text);
+  border: 1px solid var(--border-strong);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.holo-mid { display: flex; align-items: center; gap: 14px; }
+.holo-chip { width: 44px; height: 34px; flex: none; }
+.holo-serial {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  color: var(--muted);
+}
+.holo-stat { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.holo-stat small { display: block; font-size: 10px; font-weight: 500; letter-spacing: 0.18em; color: var(--muted); text-transform: uppercase; margin-top: 3px; }
+.holo-foot { font-family: var(--font-mono); font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; letter-spacing: 0.06em; }
+
+/* ============================================================
+   02 · BORDER BEAM PANEL
+   ============================================================ */
+.beam-panel {
+  position: relative;
+  width: 440px;
+  max-width: 100%;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 28px 30px;
+  --beam-a: 0deg;
+  isolation: isolate;
+}
+.beam-ring, .beam-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--r-lg);
+  pointer-events: none;
+  background: conic-gradient(from var(--beam-a),
+    transparent 0deg,
+    rgba(79, 124, 255, 0) 18deg,
+    rgba(79, 124, 255, 0.55) 46deg,
+    #22c7d9 56deg,
+    #eaf2ff 60deg,
+    transparent 63deg,
+    transparent 198deg,
+    rgba(255, 107, 94, 0) 216deg,
+    rgba(255, 107, 94, 0.5) 244deg,
+    var(--coral) 254deg,
+    #ffe3df 258deg,
+    transparent 261deg,
+    transparent 360deg);
+}
+.beam-ring {
+  padding: 2px;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+.beam-glow {
+  filter: blur(14px);
+  opacity: 0.35;
+  z-index: -1;
+}
+.beam-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.beam-panel h3 { font-size: 21px; font-weight: 650; letter-spacing: -0.02em; margin-top: 10px; }
+.beam-panel .beam-body { font-size: 14px; color: var(--fg-2); margin-top: 10px; }
+.beam-cmd {
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 11px 14px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.beam-cmd .dollar { color: var(--cyan); }
+.beam-stats {
+  display: flex;
+  gap: 18px;
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.beam-stats b { color: var(--fg); font-weight: 600; }
+
+/* ============================================================
+   03 · CARD STACK DECK
+   ============================================================ */
+.deck-scene {
+  perspective: 1300px;
+  width: 320px;
+  max-width: 100%;
+  outline-offset: 12px;
+}
+.deck {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  transform-style: preserve-3d;
+}
+.deck-card {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 280px;
+  max-width: 100%;
+  height: 210px;
+  border-radius: 14px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.deck-card:active { cursor: grabbing; }
+.deck-face {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid var(--border-strong);
+  overflow: hidden;
+}
+.deck-front {
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+}
+.deck-band {
+  height: 74px;
+  flex: none;
+  position: relative;
+}
+.deck-band::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, var(--surface), transparent 60%);
+}
+.deck-body { padding: 14px 18px 16px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.deck-cat { font-size: 16px; font-weight: 650; letter-spacing: -0.01em; }
+.deck-count { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.deck-install {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.deck-back {
+  transform: rotateY(180deg);
+  background:
+    repeating-linear-gradient(45deg,
+      rgba(79, 124, 255, 0.14) 0 2px, transparent 2px 12px),
+    linear-gradient(150deg, var(--surface-2), var(--surface));
+  display: grid;
+  place-items: center;
+}
+.deck-back-mark {
+  font-weight: 800;
+  font-size: 30px;
+  letter-spacing: 0.3em;
+  color: var(--accent-text);
+  opacity: 0.85;
+  text-indent: 0.3em;
+}
+.deck-dim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--bg);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateZ(2px);
+}
+.deck-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+.deck-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--fg-2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.deck-btn:hover { border-color: var(--accent); color: var(--accent-text); }
+
+/* ============================================================
+   04 · GLASS REFRACTION PANEL
+   ============================================================ */
+.glass-stage { position: relative; }
+.glass-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+.glass-field {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  display: grid;
+  place-items: center;
+}
+.glass-layer {
+  position: absolute;
+  border-radius: var(--r-md);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: blur(16px) saturate(1.45);
+  backdrop-filter: blur(16px) saturate(1.45);
+  border: 1px solid var(--glass-stroke);
+  box-shadow:
+    inset 0 1px 0 var(--glass-stroke),
+    inset 0 -14px 24px -18px var(--glass-inner),
+    0 18px 40px -18px var(--shadow-color);
+  will-change: transform;
+  overflow: hidden;
+}
+.glass-chip {
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.glass-chip b { color: var(--fg); font-weight: 600; }
+.glass-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); flex: none; }
+.glass-chip-a { top: 13%; left: 8%; }
+.glass-chip-b { bottom: 12%; right: 7%; }
+.glass-main {
+  position: relative;
+  width: 340px;
+  max-width: 82%;
+  border-radius: var(--r-lg);
+  padding: 26px 28px;
+}
+.glass-main h3 { font-size: 20px; font-weight: 650; letter-spacing: -0.02em; }
+.glass-main .glass-sub { font-size: 13.5px; color: var(--fg-2); margin-top: 8px; }
+.glass-list { list-style: none; margin-top: 16px; display: grid; gap: 9px; font-size: 13px; color: var(--fg-2); }
+.glass-list li { display: flex; align-items: center; gap: 10px; }
+.glass-list svg { flex: none; color: var(--cyan); }
+.glass-cta {
+  margin-top: 20px;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #f8fafc;
+  background: linear-gradient(160deg, var(--accent), color-mix(in srgb, var(--accent) 70%, var(--cyan)));
+  border-radius: var(--r-sm);
+  padding: 9px 16px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -8px var(--accent);
+}
+.glass-streak {
+  position: absolute;
+  top: -45%;
+  bottom: -45%;
+  left: 0;
+  width: 36%;
+  background: linear-gradient(100deg, transparent, var(--glare), transparent);
+  opacity: 0.55;
+  transform: translateX(-220%) rotate(16deg);
+  pointer-events: none;
+}
+.glass-main.sweep .glass-streak {
+  animation: streak-sweep 950ms var(--ease) 180ms both;
+}
+@keyframes streak-sweep {
+  from { transform: translateX(-220%) rotate(16deg); }
+  to   { transform: translateX(420%) rotate(16deg); }
+}
+
+/* ============================================================
+   05 · AURORA PANEL
+   ============================================================ */
+.aurora-card {
+  width: 480px;
+  max-width: 100%;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: 0 24px 48px -24px var(--shadow-color);
+}
+.aurora-roof {
+  position: relative;
+  height: 210px;
+  background: var(--aurora-sky);
+  overflow: hidden;
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+.aurora-canvas {
+  position: absolute;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
+  filter: blur(9px) saturate(1.2);
+}
+.aurora-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-repeat: repeat;
+}
+.aurora-roof::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 56px;
+  background: linear-gradient(to bottom, transparent, var(--surface));
+  pointer-events: none;
+}
+.aurora-badge {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #eaf2ff;
+  background: rgba(8, 12, 20, 0.45);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 4px 10px;
+}
+:root[data-theme="light"] .aurora-badge { color: #101828; background: rgba(255,255,255,0.5); border-color: rgba(16,24,40,0.14); }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .aurora-badge { color: #101828; background: rgba(255,255,255,0.5); border-color: rgba(16,24,40,0.14); }
+}
+.aurora-body { padding: 22px 26px 24px; }
+.aurora-title-row { display: flex; align-items: baseline; gap: 10px; }
+.aurora-body h3 { font-family: var(--font-mono); font-size: 18px; font-weight: 650; letter-spacing: -0.01em; }
+.aurora-new {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--success);
+  border: 1px solid color-mix(in srgb, var(--success) 40%, transparent);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.aurora-desc { font-size: 13.5px; color: var(--fg-2); margin-top: 10px; }
+.aurora-cmd {
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 10px 13px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.aurora-meta {
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.aurora-meta b { color: var(--fg); font-weight: 600; }
+
+/* ---------- footer ---------- */
+.lab-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-main.sweep .glass-streak { animation: none; }
+  .lab-index a { transition: none; }
+}
+</style>
+
+<div class="lab">
+  <div class="lab-inner">
+
+    <!-- ================= HEADER ================= -->
+    <header class="lab-header">
+      <span class="eyebrow">Motiq Motion Lab — Batch 07</span>
+      <h1 class="lab-title">Dimensional Surfaces</h1>
+      <p class="lab-thesis">
+        Five surfaces that behave like material, not markup — they tilt, catch light,
+        shuffle with weight, refract a scene behind them, and carry living skies.
+        Everything below runs on transforms, hand-rolled springs, and Canvas 2D.
+      </p>
+      <ul class="lab-index">
+        <li><a href="#holo-card"><span class="idx">01</span> holo-card</a></li>
+        <li><a href="#border-beam-panel"><span class="idx">02</span> border-beam-panel</a></li>
+        <li><a href="#card-stack-deck"><span class="idx">03</span> card-stack-deck</a></li>
+        <li><a href="#glass-refraction-panel"><span class="idx">04</span> glass-refraction-panel</a></li>
+        <li><a href="#aurora-panel"><span class="idx">05</span> aurora-panel</a></li>
+      </ul>
+    </header>
+
+    <!-- ================= 01 HOLO CARD ================= -->
+    <section class="lab-section" id="holo-card" aria-labelledby="holo-h">
+      <div class="section-head">
+        <span class="section-index">01</span>
+        <div>
+          <h2 id="holo-h">holo-card</h2>
+          <p class="section-sub">Spring-tracked 3D tilt with specular glare and iridescent foil</p>
+        </div>
+        <span class="section-tag">Flagship</span>
+      </div>
+      <div class="section-grid">
+        <div class="stage" id="holo-stage">
+          <div class="holo-scene">
+            <div class="holo-shadow" id="holo-shadow" aria-hidden="true"></div>
+            <div class="holo-card" id="holo-el" tabindex="0" role="img"
+                 aria-label="Motiq open pass membership card. Tilts in 3D with pointer or arrow keys.">
+              <div class="holo-foil" aria-hidden="true"></div>
+              <div class="holo-content">
+                <div class="holo-row">
+                  <span class="holo-mark">MOTIQ</span>
+                  <span class="holo-pass">OPEN PASS</span>
+                </div>
+                <div class="holo-mid">
+                  <svg class="holo-chip" viewBox="0 0 44 34" aria-hidden="true">
+                    <rect x="1" y="1" width="42" height="32" rx="6" fill="none"
+                          stroke="var(--border-strong)" stroke-width="1.5"></rect>
+                    <path d="M1 12 h13 v10 h-13 M43 12 h-13 v10 h13 M17 1 v8 M27 1 v8 M17 33 v-8 M27 33 v-8"
+                          fill="none" stroke="var(--border-strong)" stroke-width="1.2"></path>
+                    <rect x="17" y="12" width="10" height="10" rx="2" fill="var(--accent)" opacity="0.55"></rect>
+                  </svg>
+                  <div>
+                    <div class="holo-stat">128<small>components · all free</small></div>
+                  </div>
+                </div>
+                <div class="holo-foot">
+                  <span>M-0128-2607</span>
+                  <span>MIT · SINCE 2026</span>
+                </div>
+              </div>
+              <div class="holo-glare" aria-hidden="true"></div>
+            </div>
+          </div>
+          <p class="stage-hint">move pointer to tilt · drag on touch · arrow keys when focused</p>
+        </div>
+        <aside class="spec" aria-label="holo-card specification">
+          <div class="spec-block">
+            <h4>Niche</h4>
+            <p>
+              Tilt cards are the most-installed component class on every animated catalog —
+              they turn a static pricing tier, membership pass, or team card into an object
+              people want to touch. The holo variant earns the hero slot on landing pages
+              and account screens, where one card carries the brand's entire material feel.
+            </p>
+          </div>
+          <div class="spec-block">
+            <h4>Choreography</h4>
+            <ol>
+              <li><strong>Idle sway</strong> — before any input, tilt targets follow
+                sin(0.5t)·4° / cos(0.37t)·3°, so the foil moves on load.</li>
+              <li><strong>Track</strong> — pointer offset maps to targets rotateX ±11°,
+                rotateY ±15°; two springs (k=120, d=10, ζ≈0.46) chase them, so tracking
+                lags ~80ms with a soft elastic feel.</li>
+              <li><strong>Light</strong> — glare hotspot and foil conic origin are pinned to
+                the raw pointer (no smoothing: light is instant, mass is not); foil hue
+                rotates 4°/deg of rotateY plus 40° across the card's width.</li>
+              <li><strong>Counter-shadow</strong> — ground shadow translates opposite the
+                tilt (−1.8px/deg) and dilates ~8% at full lean.</li>
+              <li><strong>Release</strong> — targets return to the idle sway; the underdamped
+                spring overshoots ≈6% once before settling (~600ms).</li>
+            </ol>
+          </div>
+          <div class="spec-block">
+            <h4>Props API</h4>
+            <pre><code><span class="tok">interface</span> <span class="tok-t">HoloCardProps</span> {
+  children: React.ReactNode
+  maxTilt?: <span class="tok-t">number</span>          <span class="tok-c">// deg, default 14</span>
+  spring?: { stiffness: <span class="tok-t">number</span>; damping: <span class="tok-t">number</span> }
+  foil?: <span class="tok-s">"azure"</span> | <span class="tok-s">"spectral"</span> | <span class="tok-s">"none"</span>
+  glare?: <span class="tok-t">boolean</span>           <span class="tok-c">// default true</span>
+  shadow?: <span class="tok-t">boolean</span>          <span class="tok-c">// counter-moving ground shadow</span>
+  idleSway?: <span class="tok-t">boolean</span>        <span class="tok-c">// ambient motion before hover</span>
+  onTilt?: (rx: <span class="tok-t">number</span>, ry: <span class="tok-t">number</span>) =&gt; <span class="tok-t">void</span>
+}</code></pre>
+          </div>
+          <div class="spec-block">
+            <h4>A11y &amp; Perf</h4>
+            <ul>
+              <li>Reduced motion: fixed −6°/8° tilt with a static foil — still dimensional, zero movement.</li>
+              <li>Keyboard: card is focusable; arrow keys nudge tilt targets ±4° per press.</li>
+              <li>Touch: pointer events + <code>touch-action: none</code> on the card only, so the page still scrolls.</li>
+              <li>GPU: transform-only motion; foil/glare are pre-painted layers whose custom properties move gradient origins — no repaints of card content.</li>
+              <li>Single rAF loop, delta-time clamped at 50ms; IntersectionObserver parks it offscreen.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ================= 02 BORDER BEAM PANEL ================= -->
+    <section class="lab-section" id="border-beam-panel" aria-labelledby="beam-h">
+      <div class="section-head">
+        <span class="section-index">02</span>
+        <div>
+          <h2 id="beam-h">border-beam-panel</h2>
+          <p class="section-sub">Twin comets orbiting a masked border ring, velocity-sprung on hover</p>
+        </div>
+        <span class="section-tag">Signature coral</span>
+      </div>
+      <div class="section-grid">
+        <div class="stage" id="beam-stage">
+          <div class="beam-panel" id="beam-el">
+            <div class="beam-glow" aria-hidden="true"></div>
+            <div class="beam-ring" aria-hidden="true"></div>
+            <span class="beam-eyebrow">Registry</span>
+            <h3>One command, zero setup</h3>
+            <p class="beam-body">
+              Every Motiq component installs straight from the registry — the source lands
+              in your project, typed and themeable, with nothing to version or configure.
+            </p>
+            <div class="beam-cmd"><span class="dollar">$</span> npx shadcn add https://motiq.dev/r/border-beam</div>
+            <div class="beam-stats">
+              <span><b>2.1 kB</b> gzip</span>
+              <span><b>0</b> deps</span>
+              <span><b>MIT</b> license</span>
+            </div>
+          </div>
+          <p class="stage-hint">hover the panel — the comets accelerate</p>
+        </div>
+        <aside class="spec" aria-label="border-beam-panel specification">
+          <div class="spec-block">
+            <h4>Niche</h4>
+            <p>
+              The border beam is the modern "look here" affordance — changelog highlights,
+              featured plans, active integrations. It adds motion to a container without
+              touching its layout or content, which is why it is one of the most copied
+              effects on product marketing sites.
+            </p>
+          </div>
+          <div class="spec-block">
+            <h4>Choreography</h4>
+            <ol>
+              <li><strong>Ring construction</strong> — a rotating conic gradient sits behind a
+                2px ring cut with a two-layer CSS alpha mask
+                (<code>mask-composite: exclude</code>). No SVG luminance masks — those
+                silently no-op in Chromium.</li>
+              <li><strong>Twin comets</strong> — one azure→cyan comet and one coral comet
+                180° apart, each a ~45° tail easing into a 4° bright head. The coral head
+                is this page's single signature-color moment.</li>
+              <li><strong>Idle orbit</strong> — angular velocity rests at 42°/s
+                (~8.5s per lap). A blurred copy of the same gradient sits behind the panel
+                at 35% opacity as cast light.</li>
+              <li><strong>Hover surge</strong> — velocity itself is sprung (k=30, d=11)
+                toward 240°/s on pointerenter, so the comets wind up and coast down instead
+                of snapping between speeds.</li>
+            </ol>
+          </div>
+          <div class="spec-block">
+            <h4>Props API</h4>
+            <pre><code><span class="tok">interface</span> <span class="tok-t">BorderBeamPanelProps</span> {
+  children: React.ReactNode
+  beams?: <span class="tok-t">1</span> | <span class="tok-t">2</span>              <span class="tok-c">// default 2, opposed</span>
+  colors?: [<span class="tok-t">string</span>, <span class="tok-t">string</span>?]
+  thickness?: <span class="tok-t">number</span>       <span class="tok-c">// px, default 2</span>
+  idleSpeed?: <span class="tok-t">number</span>       <span class="tok-c">// deg/s, default 42</span>
+  hoverSpeed?: <span class="tok-t">number</span>      <span class="tok-c">// deg/s, default 240</span>
+  glow?: <span class="tok-t">boolean</span>           <span class="tok-c">// blurred cast light</span>
+  radius?: <span class="tok-t">number</span>          <span class="tok-c">// px, default 16</span>
+}</code></pre>
+          </div>
+          <div class="spec-block">
+            <h4>A11y &amp; Perf</h4>
+            <ul>
+              <li>Reduced motion: orbit freezes at 40° with both comets visible — reads as a lit border, not a broken one.</li>
+              <li>Decorative layers are <code>aria-hidden</code> and <code>pointer-events: none</code>; content semantics untouched.</li>
+              <li>Only one custom property (<code>--beam-a</code>) changes per frame; the conic gradient re-rasterizes on the compositor-backed ring layer, content never repaints.</li>
+              <li>rAF loop is per-panel and IO-paused; velocity spring uses delta-time so tab jank never skips the beam ahead.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ================= 03 CARD STACK DECK ================= -->
+    <section class="lab-section" id="card-stack-deck" aria-labelledby="deck-h">
+      <div class="section-head">
+        <span class="section-index">03</span>
+        <div>
+          <h2 id="deck-h">card-stack-deck</h2>
+          <p class="section-sub">A physical deck — the top card arcs, flips, and tucks to the back</p>
+        </div>
+        <span class="section-tag">Interactive</span>
+      </div>
+      <div class="section-grid">
+        <div class="stage" id="deck-stage">
+          <div>
+            <div class="deck-scene" id="deck-scene" tabindex="0" role="group"
+                 aria-roledescription="card deck"
+                 aria-label="Motiq category deck. Use left and right arrow keys to shuffle, or drag the front card.">
+              <div class="deck" id="deck-el"></div>
+            </div>
+            <div class="deck-controls">
+              <button class="deck-btn" id="deck-prev" type="button" aria-label="Bring previous card to front">&#8592; prev</button>
+              <button class="deck-btn" id="deck-next" type="button" aria-label="Send front card to back">next &#8594;</button>
+            </div>
+            <div class="visually-hidden" aria-live="polite" id="deck-live"></div>
+          </div>
+          <p class="stage-hint">click or drag the front card · arrow keys when focused</p>
+        </div>
+        <aside class="spec" aria-label="card-stack-deck specification">
+          <div class="spec-block">
+            <h4>Niche</h4>
+            <p>
+              Stacked decks compress a set — testimonials, templates, categories — into one
+              card's footprint and make browsing feel like handling objects. Product sites
+              use them where a carousel would feel flat: onboarding tips, feature tours,
+              gallery teasers.
+            </p>
+          </div>
+          <div class="spec-block">
+            <h4>Choreography</h4>
+            <ol>
+              <li><strong>Rest fan</strong> — five cards at continuous slot p:
+                y = −18p px, z = −62p px, scale = 1 − 0.05p, rotateZ = 2.2p°, with a dim
+                overlay fading in 0.14/slot. <code>preserve-3d</code> lets the browser
+                depth-sort — no z-index management.</li>
+              <li><strong>Send</strong> — click, drag past ±90px, or ArrowRight retargets
+                the front card's slot spring 0→4 (k=90, d=12). Progress q = p/4 drives the
+                signature arc: x = sin(qπ)·210px, z-lift = sin(qπ)·150px, rotateY = q·360°
+                — the card swings out, shows its patterned back at the apex, and lands
+                face-up behind the deck.</li>
+              <li><strong>Ripple</strong> — the other four cards spring one slot forward on
+                the same constants, arriving ~120ms after the send starts.</li>
+              <li><strong>Drag</strong> — a separate offset spring carries pointer delta
+                (with rotateZ = dx·0.06°); on release below threshold it snaps home at
+                k=200, d=16.</li>
+              <li><strong>Idle</strong> — the front card breathes: ±2px bob and ±0.7° sway
+                on slow sines.</li>
+            </ol>
+          </div>
+          <div class="spec-block">
+            <h4>Props API</h4>
+            <pre><code><span class="tok">interface</span> <span class="tok-t">CardStackDeckProps</span> {
+  items: React.ReactNode[]
+  cardBack?: React.ReactNode   <span class="tok-c">// shown mid-flip</span>
+  fan?: { y: <span class="tok-t">number</span>; z: <span class="tok-t">number</span>; rotate: <span class="tok-t">number</span> }
+  arcWidth?: <span class="tok-t">number</span>         <span class="tok-c">// px, default 210</span>
+  spring?: { stiffness: <span class="tok-t">number</span>; damping: <span class="tok-t">number</span> }
+  dragToShuffle?: <span class="tok-t">boolean</span>   <span class="tok-c">// default true</span>
+  loop?: <span class="tok-t">boolean</span>
+  onTopChange?: (index: <span class="tok-t">number</span>) =&gt; <span class="tok-t">void</span>
+}</code></pre>
+          </div>
+          <div class="spec-block">
+            <h4>A11y &amp; Perf</h4>
+            <ul>
+              <li>Keyboard: deck is a focusable group; ArrowRight/ArrowLeft (and the visible buttons) shuffle both directions.</li>
+              <li>An <code>aria-live="polite"</code> region announces the new front card after every shuffle.</li>
+              <li>Reduced motion: cards reorder instantly with no arc or flip; the fan itself stays as static depth.</li>
+              <li>Transforms only — the depth dim is an opacity overlay, not a filter, because filters would flatten <code>preserve-3d</code>.</li>
+              <li>One rAF loop for all five cards; springs sleep when every card is within 0.001 of target.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ================= 04 GLASS REFRACTION PANEL ================= -->
+    <section class="lab-section" id="glass-refraction-panel" aria-labelledby="glass-h">
+      <div class="section-head">
+        <span class="section-index">04</span>
+        <div>
+          <h2 id="glass-h">glass-refraction-panel</h2>
+          <p class="section-sub">Frosted layers over a live scene, parallax-separated by pointer depth</p>
+        </div>
+        <span class="section-tag">Layered</span>
+      </div>
+      <div class="section-grid">
+        <div class="stage" id="glass-stage" style="padding: 0;">
+          <div class="glass-field" id="glass-field">
+            <canvas class="glass-canvas" id="glass-canvas" aria-hidden="true"></canvas>
+            <div class="glass-layer glass-chip glass-chip-a" id="glass-l1">
+              <span class="glass-dot" aria-hidden="true"></span>
+              <span><b>4,900+</b> installs / week</span>
+            </div>
+            <div class="glass-layer glass-main" id="glass-l2">
+              <h3>Everything ships free</h3>
+              <p class="glass-sub">
+                The full Motiq catalog — every card, background, and block — is open source
+                and yours to keep.
+              </p>
+              <ul class="glass-list">
+                <li>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  Full source, no obfuscation
+                </li>
+                <li>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  MIT licensed, commercial OK
+                </li>
+                <li>
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  Copy the code or use the CLI
+                </li>
+              </ul>
+              <button class="glass-cta" type="button">Browse the catalog</button>
+              <div class="glass-streak" aria-hidden="true"></div>
+            </div>
+            <div class="glass-layer glass-chip glass-chip-b" id="glass-l3">
+              <span><b>128</b> components · 24 categories</span>
+            </div>
+          </div>
+          <p class="stage-hint">move pointer — each pane refracts at its own depth</p>
+        </div>
+        <aside class="spec" aria-label="glass-refraction-panel specification">
+          <div class="spec-block">
+            <h4>Niche</h4>
+            <p>
+              Glassmorphism only convinces when something moves behind the glass. This panel
+              pairs frosted layers with a live scene and depth-ranked parallax, which is what
+              hero sections, pricing overlays, and OS-style widgets need to feel physical
+              rather than like a blurred PNG.
+            </p>
+          </div>
+          <div class="spec-block">
+            <h4>Choreography</h4>
+            <ol>
+              <li><strong>Scene</strong> — five gradient orbs drift on lissajous paths on a
+                DPR-aware canvas; additive blending in dark, soft alpha in light. Palette is
+                read from tokens at runtime and re-read on theme change.</li>
+              <li><strong>Refraction</strong> — each glass layer is
+                <code>backdrop-filter: blur(16px) saturate(1.45)</code> with a 1px specular
+                top edge and an inner floor shadow.</li>
+              <li><strong>Parallax</strong> — pointer position drives per-layer offsets at
+                depths 9 / 16 / 26px, each on a critically damped spring (k=110, d=21,
+                ζ≈1.0) — near panes travel further, selling true separation. Idle: targets
+                follow a slow lissajous so the stack never freezes.</li>
+              <li><strong>Entrance streak</strong> — on first viewport entry (and again on
+                re-entry) a rotated specular band sweeps the main pane in 950ms, delayed
+                180ms so it reads as light, not load-in.</li>
+            </ol>
+          </div>
+          <div class="spec-block">
+            <h4>Props API</h4>
+            <pre><code><span class="tok">interface</span> <span class="tok-t">GlassRefractionPanelProps</span> {
+  children: React.ReactNode
+  layers?: { node: React.ReactNode; depth: <span class="tok-t">number</span> }[]
+  scene?: <span class="tok-s">"orbs"</span> | <span class="tok-s">"custom"</span> | <span class="tok-s">"none"</span>
+  blur?: <span class="tok-t">number</span>            <span class="tok-c">// px, default 16</span>
+  parallax?: <span class="tok-t">number</span>        <span class="tok-c">// depth multiplier, 0 disables</span>
+  streakOnEnter?: <span class="tok-t">boolean</span>  <span class="tok-c">// default true</span>
+  tint?: <span class="tok-t">string</span>            <span class="tok-c">// glass fill override</span>
+}</code></pre>
+          </div>
+          <div class="spec-block">
+            <h4>A11y &amp; Perf</h4>
+            <ul>
+              <li>Reduced motion: one static orb frame is painted, parallax and streak are disabled — the glass treatment itself carries the design.</li>
+              <li>Canvas is <code>aria-hidden</code>; all real content lives in the DOM layers with normal semantics and focus order.</li>
+              <li>Canvas re-themes via a <code>prefers-color-scheme</code> listener plus a MutationObserver on <code>data-theme</code>.</li>
+              <li>Layer motion is translate3d-only; blur cost is paid once per layer by the compositor, and the scene canvas is capped at 2× DPR.</li>
+              <li>IO pauses the orb loop offscreen; the streak runs as a one-shot CSS animation, not in JS.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ================= 05 AURORA PANEL ================= -->
+    <section class="lab-section" id="aurora-panel" aria-labelledby="aurora-h">
+      <div class="section-head">
+        <span class="section-index">05</span>
+        <div>
+          <h2 id="aurora-h">aurora-panel</h2>
+          <p class="section-sub">A product card with a living roof — contained aurora that leans toward you</p>
+        </div>
+        <span class="section-tag">Living surface</span>
+      </div>
+      <div class="section-grid">
+        <div class="stage" id="aurora-stage">
+          <div class="aurora-card">
+            <div class="aurora-roof" id="aurora-roof">
+              <canvas class="aurora-canvas" id="aurora-canvas" aria-hidden="true"></canvas>
+              <div class="aurora-grain" id="aurora-grain" aria-hidden="true"></div>
+              <span class="aurora-badge">Live surface</span>
+            </div>
+            <div class="aurora-body">
+              <div class="aurora-title-row">
+                <h3>aurora-panel</h3>
+                <span class="aurora-new">New</span>
+              </div>
+              <p class="aurora-desc">
+                Three sinusoidal ribbons drift across a canvas header and lean toward the
+                pointer — a contained sky for cards, not another full-page background.
+              </p>
+              <div class="aurora-cmd">npx shadcn add https://motiq.dev/r/aurora-panel</div>
+              <div class="aurora-meta">
+                <span><b>3.4 kB</b> gzip</span>
+                <span><b>Canvas 2D</b></span>
+                <span><b>rm-safe</b></span>
+              </div>
+            </div>
+          </div>
+          <p class="stage-hint">hover the roof — the aurora leans toward the pointer</p>
+        </div>
+        <aside class="spec" aria-label="aurora-panel specification">
+          <div class="spec-block">
+            <h4>Niche</h4>
+            <p>
+              Full-page auroras are everywhere; a card that carries its own sky is not.
+              Scoping the effect to a header band gives feature cards, changelog entries,
+              and plan tiles a premium "live" quality without fighting page backgrounds —
+              and several roofs can coexist on one grid.
+            </p>
+          </div>
+          <div class="spec-block">
+            <h4>Choreography</h4>
+            <ol>
+              <li><strong>Ribbons</strong> — three bands, each the sum of two sines
+                (wavelengths ~340/210px, speeds 0.10–0.23 rad/s), filled with a vertical
+                azure→cyan→transparent gradient. Additive <code>lighter</code> compositing
+                in dark; saturated source-over strokes on a pale sky in light.</li>
+              <li><strong>Finish</strong> — the canvas is drawn crisp, then softened by a
+                single GPU CSS blur(9px) at 116% scale (edges hidden); a generated noise
+                tile overlays at 40% with <code>overlay</code> blending for grain.</li>
+              <li><strong>Lean</strong> — pointer x over the roof retargets a lean spring
+                (k=50, d=14, ζ≈0.99); lean shifts each ribbon's phase by up to 90px and
+                raises amplitude ~20%, weighted more on nearer ribbons. On leave it
+                relaxes home over ~700ms.</li>
+              <li><strong>Stars</strong> — 40 static points shimmer on individual sine
+                phases, dark theme only.</li>
+            </ol>
+          </div>
+          <div class="spec-block">
+            <h4>Props API</h4>
+            <pre><code><span class="tok">interface</span> <span class="tok-t">AuroraPanelProps</span> {
+  children: React.ReactNode    <span class="tok-c">// card body</span>
+  height?: <span class="tok-t">number</span>          <span class="tok-c">// roof px, default 210</span>
+  ribbons?: <span class="tok-t">number</span>         <span class="tok-c">// 2-5, default 3</span>
+  colors?: <span class="tok-t">string</span>[]        <span class="tok-c">// defaults to theme azure/cyan</span>
+  lean?: <span class="tok-t">boolean</span>           <span class="tok-c">// pointer lean, default true</span>
+  grain?: <span class="tok-t">number</span>           <span class="tok-c">// 0-1 opacity, default 0.4</span>
+  speed?: <span class="tok-t">number</span>           <span class="tok-c">// time multiplier</span>
+  overlay?: React.ReactNode    <span class="tok-c">// badge slot on the roof</span>
+}</code></pre>
+          </div>
+          <div class="spec-block">
+            <h4>A11y &amp; Perf</h4>
+            <ul>
+              <li>Reduced motion: a single hand-tuned frame is painted and the loop never starts — the roof reads as a still sky photo.</li>
+              <li>Roof canvas and grain are decorative and <code>aria-hidden</code>; card content below is plain DOM.</li>
+              <li>Ribbon paths sample every 8px (~60 points each) — trivial per frame; the expensive blur is CSS, done once on the compositor.</li>
+              <li>Theme swap re-reads token colors and the sky fill live (media listener + MutationObserver); grain tile regenerates only on demand.</li>
+              <li>IO pauses drawing offscreen; <code>touch-action: pan-y</code> keeps mobile scroll intact over the roof.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="lab-footer">
+      <span>Motiq Motion Lab · Batch 07 · Dimensional Surfaces</span>
+      <span>Prototypes are vanilla JS — production ports ship as React registry components</span>
+    </footer>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     Shared infrastructure
+     ============================================================ */
+  var docEl = document.documentElement;
+  var mqDark = window.matchMedia("(prefers-color-scheme: dark)");
+  var mqReduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function isReduced() { return mqReduce.matches; }
+
+  var themeCbs = [];
+  function onTheme(fn) { themeCbs.push(fn); }
+  function fireTheme() {
+    // wait a frame so computed styles reflect the new tokens
+    requestAnimationFrame(function () {
+      for (var i = 0; i < themeCbs.length; i++) themeCbs[i]();
+    });
+  }
+  if (mqDark.addEventListener) mqDark.addEventListener("change", fireTheme);
+  else if (mqDark.addListener) mqDark.addListener(fireTheme);
+  new MutationObserver(fireTheme).observe(docEl, { attributes: true, attributeFilter: ["data-theme"] });
+
+  function cssVar(name) {
+    return getComputedStyle(docEl).getPropertyValue(name).trim();
+  }
+  function hexToRgb(hex) {
+    hex = (hex || "").replace("#", "");
+    if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    var n = parseInt(hex, 16);
+    if (isNaN(n)) return [79, 124, 255];
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function rgba(rgb, a) { return "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + a + ")"; }
+
+  function Spring(value, k, d) {
+    this.x = value; this.v = 0; this.target = value; this.k = k; this.d = d;
+  }
+  Spring.prototype.step = function (dt) {
+    var a = this.k * (this.target - this.x) - this.d * this.v;
+    this.v += a * dt;
+    this.x += this.v * dt;
+    return this.x;
+  };
+  Spring.prototype.settled = function (eps) {
+    eps = eps || 0.001;
+    return Math.abs(this.v) < eps && Math.abs(this.target - this.x) < eps;
+  };
+
+  // Per-demo rAF loop: pauses when offscreen (IO) or disabled (reduced motion).
+  function makeLoop(el, tick) {
+    var running = false, rafId = 0, last = 0, visible = false, enabled = true;
+    var t = Math.random() * 7; // desync ambient phases between demos
+    function frame(now) {
+      if (!running) return;
+      var dt = (now - last) / 1000;
+      last = now;
+      if (dt > 0.05) dt = 0.05;
+      if (dt < 0) dt = 0;
+      t += dt;
+      tick(dt, t);
+      rafId = requestAnimationFrame(frame);
+    }
+    function update() {
+      var should = visible && enabled;
+      if (should && !running) {
+        running = true;
+        last = performance.now();
+        rafId = requestAnimationFrame(frame);
+      } else if (!should && running) {
+        running = false;
+        cancelAnimationFrame(rafId);
+      }
+    }
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) visible = entries[i].isIntersecting;
+      update();
+    }, { threshold: 0.05 });
+    io.observe(el);
+    return {
+      setEnabled: function (v) { enabled = v; update(); }
+    };
+  }
+
+  // Tracks CSS size of an element via ResizeObserver; cb fires on change.
+  function sizeTracker(el, cb) {
+    var size = { w: el.clientWidth, h: el.clientHeight };
+    var ro = new ResizeObserver(function () {
+      size.w = el.clientWidth;
+      size.h = el.clientHeight;
+      if (cb) cb(size);
+    });
+    ro.observe(el);
+    return size;
+  }
+  function fitCanvas(canvas, w, h) {
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    var W = Math.max(1, Math.round(w * dpr));
+    var H = Math.max(1, Math.round(h * dpr));
+    if (canvas.width !== W || canvas.height !== H) {
+      canvas.width = W;
+      canvas.height = H;
+    }
+    return dpr;
+  }
+
+  var demos = []; // { loop, applyStatic, applyLive? }
+  function registerDemo(d) { demos.push(d); }
+  function applyReducedState() {
+    var reduced = isReduced();
+    for (var i = 0; i < demos.length; i++) {
+      demos[i].loop.setEnabled(!reduced);
+      if (reduced && demos[i].applyStatic) demos[i].applyStatic();
+    }
+  }
+  if (mqReduce.addEventListener) mqReduce.addEventListener("change", applyReducedState);
+  else if (mqReduce.addListener) mqReduce.addListener(applyReducedState);
+
+  /* ============================================================
+     01 · HOLO CARD
+     ============================================================ */
+  (function holoCard() {
+    var stage = document.getElementById("holo-stage");
+    var card = document.getElementById("holo-el");
+    var shadow = document.getElementById("holo-shadow");
+    if (!stage || !card) return;
+
+    var MAX_X = 11, MAX_Y = 15;
+    var sx = new Spring(0, 120, 10); // rotateX
+    var sy = new Spring(0, 120, 10); // rotateY
+    var hovering = false;
+    var px = 0.5, py = 0.5; // raw pointer 0..1 over card
+
+    function pointerToTargets(e) {
+      var r = card.getBoundingClientRect();
+      px = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+      py = Math.min(1, Math.max(0, (e.clientY - r.top) / r.height));
+      sy.target = (px - 0.5) * 2 * MAX_Y;
+      sx.target = -(py - 0.5) * 2 * MAX_X;
+    }
+
+    stage.addEventListener("pointermove", function (e) {
+      if (isReduced()) return;
+      hovering = true;
+      pointerToTargets(e);
+    });
+    stage.addEventListener("pointerdown", function (e) {
+      if (isReduced()) return;
+      hovering = true;
+      pointerToTargets(e);
+    });
+    stage.addEventListener("pointerleave", function () { hovering = false; });
+    stage.addEventListener("pointerup", function (e) {
+      if (e.pointerType !== "mouse") hovering = false; // touch lift releases
+    });
+    stage.addEventListener("pointercancel", function () { hovering = false; });
+
+    card.addEventListener("keydown", function (e) {
+      if (isReduced()) return;
+      var step = 4, used = true;
+      if (e.key === "ArrowLeft") sy.target = Math.max(-MAX_Y, sy.target - step);
+      else if (e.key === "ArrowRight") sy.target = Math.min(MAX_Y, sy.target + step);
+      else if (e.key === "ArrowUp") sx.target = Math.min(MAX_X, sx.target + step);
+      else if (e.key === "ArrowDown") sx.target = Math.max(-MAX_X, sx.target - step);
+      else if (e.key === "Escape") { sx.target = 0; sy.target = 0; }
+      else used = false;
+      if (used) { hovering = true; e.preventDefault(); }
+    });
+    card.addEventListener("blur", function () { hovering = false; });
+
+    function render(rx, ry) {
+      card.style.transform = "rotateX(" + rx.toFixed(3) + "deg) rotateY(" + ry.toFixed(3) + "deg)";
+      card.style.setProperty("--px", px.toFixed(4));
+      card.style.setProperty("--py", py.toFixed(4));
+      var hue = ry * 4 + (px - 0.5) * 40;
+      card.style.setProperty("--foilhue", hue.toFixed(2));
+      var lean = (Math.abs(rx) + Math.abs(ry)) / (MAX_X + MAX_Y);
+      card.style.setProperty("--glare-o", (0.22 + lean * 0.4).toFixed(3));
+      shadow.style.transform =
+        "translate3d(" + (-ry * 1.8).toFixed(2) + "px," + (rx * 1.2).toFixed(2) + "px,0)" +
+        " scale(" + (1 + lean * 0.08).toFixed(3) + ")";
+      shadow.style.opacity = (0.75 + lean * 0.25).toFixed(3);
+    }
+
+    var loop = makeLoop(stage, function (dt, t) {
+      if (!hovering) {
+        sy.target = Math.sin(t * 0.5) * 4;
+        sx.target = Math.cos(t * 0.37) * 3;
+        // drift light back toward center
+        px += (0.5 - px) * Math.min(1, dt * 2);
+        py += (0.5 - py) * Math.min(1, dt * 2);
+      }
+      render(sx.step(dt), sy.step(dt));
+    });
+
+    registerDemo({
+      loop: loop,
+      applyStatic: function () {
+        sx.x = sx.target = -6; sx.v = 0;
+        sy.x = sy.target = 8; sy.v = 0;
+        px = 0.62; py = 0.3;
+        render(-6, 8);
+      }
+    });
+  })();
+
+  /* ============================================================
+     02 · BORDER BEAM PANEL
+     ============================================================ */
+  (function borderBeam() {
+    var stage = document.getElementById("beam-stage");
+    var panel = document.getElementById("beam-el");
+    if (!stage || !panel) return;
+
+    var IDLE = 42, HOVER = 240;
+    var speed = new Spring(IDLE, 30, 11);
+    var angle = Math.random() * 360;
+
+    panel.addEventListener("pointerenter", function () { speed.target = HOVER; });
+    panel.addEventListener("pointerleave", function () { speed.target = IDLE; });
+
+    function render() {
+      panel.style.setProperty("--beam-a", (angle % 360).toFixed(2) + "deg");
+    }
+
+    var loop = makeLoop(stage, function (dt) {
+      angle += speed.step(dt) * dt;
+      render();
+    });
+
+    registerDemo({
+      loop: loop,
+      applyStatic: function () {
+        angle = 40;
+        render();
+      }
+    });
+  })();
+
+  /* ============================================================
+     03 · CARD STACK DECK
+     ============================================================ */
+  (function cardDeck() {
+    var stage = document.getElementById("deck-stage");
+    var scene = document.getElementById("deck-scene");
+    var deckEl = document.getElementById("deck-el");
+    var live = document.getElementById("deck-live");
+    var btnNext = document.getElementById("deck-next");
+    var btnPrev = document.getElementById("deck-prev");
+    if (!stage || !deckEl) return;
+
+    var CATS = [
+      { name: "Backgrounds", count: 27, from: "#4f7cff", to: "#22c7d9" },
+      { name: "Cards & Surfaces", count: 14, from: "#22c7d9", to: "#7ff0d3" },
+      { name: "Navigation", count: 11, from: "#315fea", to: "#4f7cff" },
+      { name: "Forms & Inputs", count: 19, from: "#4f7cff", to: "#9ce8b5" },
+      { name: "Data Display", count: 16, from: "#22c7d9", to: "#4f7cff" }
+    ];
+
+    var cards = []; // state objects, index = current slot order (0 = front)
+    for (var i = 0; i < CATS.length; i++) {
+      var c = CATS[i];
+      var el = document.createElement("div");
+      el.className = "deck-card";
+      el.setAttribute("role", "img");
+      el.setAttribute("aria-label", c.name + ", " + c.count + " components");
+      el.innerHTML =
+        '<div class="deck-face deck-front">' +
+          '<div class="deck-band" style="background: linear-gradient(120deg,' + c.from + "," + c.to + ')"></div>' +
+          '<div class="deck-body">' +
+            '<span class="deck-cat">' + c.name + "</span>" +
+            '<span class="deck-count">' + c.count + " components · MIT</span>" +
+            '<span class="deck-install">npx shadcn add https://motiq.dev/r/' +
+              c.name.toLowerCase().replace(/[^a-z]+/g, "-").replace(/-+$/, "") + "</span>" +
+          "</div>" +
+        "</div>" +
+        '<div class="deck-face deck-back"><span class="deck-back-mark">MOTIQ</span></div>' +
+        '<div class="deck-dim"></div>';
+      deckEl.appendChild(el);
+      cards.push({
+        el: el,
+        dim: el.querySelector(".deck-dim"),
+        cat: c,
+        p: new Spring(i, 90, 12),   // continuous slot position
+        dx: new Spring(0, 200, 16), // drag offset (front card only)
+        arcDir: 0                    // +1 send right, -1 return left, 0 none
+      });
+    }
+
+    function announce() {
+      if (live) live.textContent = "Front card: " + cards[0].cat.name + ", " + cards[0].cat.count + " components";
+    }
+    announce();
+
+    var busyUntilSettled = false;
+
+    function layoutStatic() {
+      for (var i = 0; i < cards.length; i++) {
+        var s = cards[i];
+        s.p.x = s.p.target = i; s.p.v = 0;
+        s.dx.x = s.dx.target = 0; s.dx.v = 0;
+        s.arcDir = 0;
+        renderCard(s, 0);
+      }
+    }
+
+    function renderCard(s, t) {
+      var p = s.p.x;
+      var q = Math.min(1, Math.max(0, p / 4));
+      var arc = Math.sin(q * Math.PI) * s.arcDir;
+      var x = arc * 210 + s.dx.x;
+      var y = -p * 18 + (p < 0.5 && t ? Math.sin(t * 1.2) * 2 * (1 - p * 2) : 0);
+      var z = -p * 62 + Math.abs(arc) * 150;
+      var rz = p * 2.2 + s.dx.x * 0.06 + (p < 0.5 && t ? Math.sin(t * 0.8) * 0.7 * (1 - p * 2) : 0);
+      var ry = s.arcDir !== 0 ? q * 360 : 0;
+      var sc = 1 - Math.min(4, Math.max(0, p)) * 0.05;
+      s.el.style.transform =
+        "translate3d(" + x.toFixed(2) + "px," + y.toFixed(2) + "px," + z.toFixed(2) + "px)" +
+        " rotateZ(" + rz.toFixed(3) + "deg) rotateY(" + ry.toFixed(2) + "deg)" +
+        " scale(" + sc.toFixed(4) + ")";
+      s.dim.style.opacity = Math.min(0.6, Math.max(0, p) * 0.14).toFixed(3);
+    }
+
+    function shuffle(dir) {
+      if (cards.length < 2) return;
+      if (isReduced()) {
+        if (dir > 0) cards.push(cards.shift());
+        else cards.unshift(cards.pop());
+        layoutStatic();
+        announce();
+        return;
+      }
+      if (busyUntilSettled) return;
+      busyUntilSettled = true;
+      if (dir > 0) {
+        var front = cards.shift();
+        cards.push(front);
+        front.arcDir = 1;
+        front.p.target = 4;
+      } else {
+        var back = cards.pop();
+        cards.unshift(back);
+        back.arcDir = -1;
+        back.p.target = 0;
+      }
+      for (var i = 0; i < cards.length; i++) {
+        if (cards[i].arcDir === 0) cards[i].p.target = i;
+        else cards[i].p.target = i; // arc card also targets its new slot
+      }
+      announce();
+    }
+
+    // --- drag on front card ---
+    var drag = null;
+    deckEl.addEventListener("pointerdown", function (e) {
+      var front = cards[0];
+      if (busyUntilSettled && !isReduced()) return;
+      if (e.target === front.el || front.el.contains(e.target)) {
+        drag = { id: e.pointerId, x0: e.clientX, moved: false };
+        try { front.el.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+    });
+    deckEl.addEventListener("pointermove", function (e) {
+      if (!drag || e.pointerId !== drag.id || isReduced()) return;
+      var dx = e.clientX - drag.x0;
+      if (Math.abs(dx) > 4) drag.moved = true;
+      cards[0].dx.x = dx;
+      cards[0].dx.target = dx;
+      cards[0].dx.v = 0;
+    });
+    function endDrag(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var dx = e.clientX - drag.x0;
+      var wasTap = !drag.moved;
+      drag = null;
+      cards[0].dx.target = 0;
+      if (isReduced()) { cards[0].dx.x = 0; }
+      if (Math.abs(dx) > 90) shuffle(dx > 0 ? 1 : -1);
+      else if (wasTap) shuffle(1);
+    }
+    deckEl.addEventListener("pointerup", endDrag);
+    deckEl.addEventListener("pointercancel", function (e) {
+      if (drag && e.pointerId === drag.id) { drag = null; cards[0].dx.target = 0; }
+    });
+
+    // --- keyboard + buttons ---
+    scene.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight" || e.key === "Enter" || e.key === " ") { shuffle(1); e.preventDefault(); }
+      else if (e.key === "ArrowLeft") { shuffle(-1); e.preventDefault(); }
+    });
+    if (btnNext) btnNext.addEventListener("click", function () { shuffle(1); });
+    if (btnPrev) btnPrev.addEventListener("click", function () { shuffle(-1); });
+
+    var loop = makeLoop(stage, function (dt, t) {
+      var allSettled = true;
+      for (var i = 0; i < cards.length; i++) {
+        var s = cards[i];
+        s.p.step(dt);
+        s.dx.step(dt);
+        if (!s.p.settled(0.002) || !s.dx.settled(0.02)) allSettled = false;
+        if (s.arcDir !== 0 && s.p.settled(0.01)) s.arcDir = 0;
+        renderCard(s, t);
+      }
+      if (allSettled) busyUntilSettled = false;
+    });
+
+    registerDemo({
+      loop: loop,
+      applyStatic: function () { busyUntilSettled = false; layoutStatic(); }
+    });
+  })();
+
+  /* ============================================================
+     04 · GLASS REFRACTION PANEL
+     ============================================================ */
+  (function glassPanel() {
+    var stage = document.getElementById("glass-stage");
+    var field = document.getElementById("glass-field");
+    var canvas = document.getElementById("glass-canvas");
+    var main = document.getElementById("glass-l2");
+    if (!stage || !canvas) return;
+    var ctx = canvas.getContext("2d");
+
+    var layers = [
+      { el: document.getElementById("glass-l1"), depth: 26, sx: new Spring(0, 110, 21), sy: new Spring(0, 110, 21) },
+      { el: main, depth: 16, sx: new Spring(0, 110, 21), sy: new Spring(0, 110, 21) },
+      { el: document.getElementById("glass-l3"), depth: 9, sx: new Spring(0, 110, 21), sy: new Spring(0, 110, 21) }
+    ];
+
+    var pal = null;
+    function refreshPalette() {
+      pal = {
+        bg: cssVar("--bg-elev") || "#0d1420",
+        dark: (cssVar("--aurora-mode") || "dark").indexOf("dark") !== -1,
+        orbs: [
+          hexToRgb(cssVar("--accent")),
+          hexToRgb(cssVar("--cyan")),
+          hexToRgb(cssVar("--accent")),
+          hexToRgb(cssVar("--cyan")),
+          hexToRgb(cssVar("--accent-text"))
+        ]
+      };
+    }
+    refreshPalette();
+
+    // orb definitions: lissajous drift
+    var orbs = [
+      { r: 0.34, cx: 0.24, cy: 0.30, ax: 0.16, ay: 0.12, fx: 0.11, fy: 0.09, ph: 0.0 },
+      { r: 0.28, cx: 0.74, cy: 0.26, ax: 0.13, ay: 0.15, fx: 0.08, fy: 0.13, ph: 1.7 },
+      { r: 0.30, cx: 0.52, cy: 0.72, ax: 0.18, ay: 0.10, fx: 0.10, fy: 0.07, ph: 3.1 },
+      { r: 0.20, cx: 0.16, cy: 0.78, ax: 0.10, ay: 0.12, fx: 0.14, fy: 0.10, ph: 4.4 },
+      { r: 0.16, cx: 0.86, cy: 0.66, ax: 0.09, ay: 0.13, fx: 0.12, fy: 0.15, ph: 5.6 }
+    ];
+
+    var size = sizeTracker(field, function () {
+      if (isReduced()) drawScene(1.5);
+    });
+
+    function drawScene(t) {
+      var dpr = fitCanvas(canvas, size.w, size.h);
+      var W = canvas.width, H = canvas.height;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = pal.bg;
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = pal.dark ? "lighter" : "source-over";
+      var base = Math.max(W, H);
+      var alpha = pal.dark ? 0.4 : 0.5;
+      for (var i = 0; i < orbs.length; i++) {
+        var o = orbs[i];
+        var x = (o.cx + Math.sin(t * o.fx * Math.PI * 2 + o.ph) * o.ax) * W;
+        var y = (o.cy + Math.cos(t * o.fy * Math.PI * 2 + o.ph) * o.ay) * H;
+        var r = o.r * base;
+        var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        var rgb = pal.orbs[i];
+        g.addColorStop(0, rgba(rgb, alpha));
+        g.addColorStop(0.55, rgba(rgb, alpha * 0.35));
+        g.addColorStop(1, rgba(rgb, 0));
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    onTheme(function () {
+      refreshPalette();
+      if (isReduced()) drawScene(1.5);
+    });
+
+    // parallax pointer
+    var pointer = { active: false, x: 0.5, y: 0.5 };
+    field.addEventListener("pointermove", function (e) {
+      if (isReduced()) return;
+      var r = field.getBoundingClientRect();
+      pointer.active = true;
+      pointer.x = (e.clientX - r.left) / r.width;
+      pointer.y = (e.clientY - r.top) / r.height;
+    });
+    field.addEventListener("pointerleave", function () { pointer.active = false; });
+
+    function renderLayers() {
+      for (var i = 0; i < layers.length; i++) {
+        var L = layers[i];
+        if (!L.el) continue;
+        L.el.style.transform = "translate3d(" + L.sx.x.toFixed(2) + "px," + L.sy.x.toFixed(2) + "px,0)";
+      }
+    }
+
+    var loop = makeLoop(stage, function (dt, t) {
+      drawScene(t * 0.35);
+      var tx, ty;
+      if (pointer.active) { tx = (pointer.x - 0.5) * 2; ty = (pointer.y - 0.5) * 2; }
+      else { tx = Math.sin(t * 0.3) * 0.3; ty = Math.cos(t * 0.23) * 0.3; }
+      for (var i = 0; i < layers.length; i++) {
+        var L = layers[i];
+        L.sx.target = tx * L.depth;
+        L.sy.target = ty * L.depth;
+        L.sx.step(dt);
+        L.sy.step(dt);
+      }
+      renderLayers();
+    });
+
+    // entrance streak (separate IO so it can re-fire on re-entry)
+    if (main) {
+      var streakIO = new IntersectionObserver(function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting && !isReduced()) {
+            main.classList.remove("sweep");
+            // force reflow so the animation can restart
+            void main.offsetWidth;
+            main.classList.add("sweep");
+          }
+        }
+      }, { threshold: 0.5 });
+      streakIO.observe(main);
+      main.addEventListener("animationend", function () { main.classList.remove("sweep"); });
+    }
+
+    registerDemo({
+      loop: loop,
+      applyStatic: function () {
+        refreshPalette();
+        drawScene(1.5);
+        for (var i = 0; i < layers.length; i++) {
+          var L = layers[i];
+          L.sx.x = L.sx.target = 0; L.sx.v = 0;
+          L.sy.x = L.sy.target = 0; L.sy.v = 0;
+        }
+        renderLayers();
+        if (main) main.classList.remove("sweep");
+      }
+    });
+  })();
+
+  /* ============================================================
+     05 · AURORA PANEL
+     ============================================================ */
+  (function auroraPanel() {
+    var stage = document.getElementById("aurora-stage");
+    var roof = document.getElementById("aurora-roof");
+    var canvas = document.getElementById("aurora-canvas");
+    var grain = document.getElementById("aurora-grain");
+    if (!stage || !canvas || !roof) return;
+    var ctx = canvas.getContext("2d");
+
+    // generated grain tile (data URI, no external request)
+    (function makeGrain() {
+      var n = document.createElement("canvas");
+      n.width = n.height = 96;
+      var nx = n.getContext("2d");
+      var img = nx.createImageData(96, 96);
+      for (var i = 0; i < img.data.length; i += 4) {
+        var v = (Math.random() * 255) | 0;
+        img.data[i] = v; img.data[i + 1] = v; img.data[i + 2] = v;
+        img.data[i + 3] = 26;
+      }
+      nx.putImageData(img, 0, 0);
+      if (grain) grain.style.backgroundImage = "url(" + n.toDataURL() + ")";
+    })();
+
+    var pal = null;
+    function refreshPalette() {
+      pal = {
+        sky: cssVar("--aurora-sky") || "#060a13",
+        dark: (cssVar("--aurora-mode") || "dark").indexOf("dark") !== -1,
+        a: hexToRgb(cssVar("--accent")),
+        c: hexToRgb(cssVar("--cyan")),
+        at: hexToRgb(cssVar("--accent-text"))
+      };
+    }
+    refreshPalette();
+
+    var ribbons = [
+      { yf: 0.40, amp: 26, th: 42, w1: 0.0185, w2: 0.031, s1: 0.16, s2: 0.23, leanW: 1.0, col: "c" },
+      { yf: 0.55, amp: 34, th: 56, w1: 0.0150, w2: 0.026, s1: 0.10, s2: 0.17, leanW: 0.7, col: "a" },
+      { yf: 0.68, amp: 22, th: 38, w1: 0.0210, w2: 0.034, s1: 0.13, s2: 0.20, leanW: 0.45, col: "at" }
+    ];
+
+    // static star field (dark mode only)
+    var stars = [];
+    for (var si = 0; si < 40; si++) {
+      stars.push({ x: Math.random(), y: Math.random() * 0.7, r: Math.random() * 1.1 + 0.4, ph: Math.random() * 6.28 });
+    }
+
+    var lean = new Spring(0, 50, 14); // -1..1
+
+    roof.addEventListener("pointermove", function (e) {
+      if (isReduced()) return;
+      var r = roof.getBoundingClientRect();
+      lean.target = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    });
+    roof.addEventListener("pointerleave", function () { lean.target = 0; });
+
+    var size = sizeTracker(canvas, function () {
+      if (isReduced()) draw(2.0);
+    });
+
+    function draw(t) {
+      var dpr = fitCanvas(canvas, size.w, size.h);
+      var W = canvas.width, H = canvas.height;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var w = W / dpr, h = H / dpr;
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = pal.sky;
+      ctx.fillRect(0, 0, w, h);
+
+      if (pal.dark) {
+        ctx.fillStyle = "#dbe7ff";
+        for (var i = 0; i < stars.length; i++) {
+          var st = stars[i];
+          ctx.globalAlpha = 0.25 + 0.45 * (0.5 + 0.5 * Math.sin(t * 0.9 + st.ph));
+          ctx.beginPath();
+          ctx.arc(st.x * w, st.y * h, st.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+      }
+
+      ctx.globalCompositeOperation = pal.dark ? "lighter" : "source-over";
+      var L = lean.x;
+      for (var ri = 0; ri < ribbons.length; ri++) {
+        var rb = ribbons[ri];
+        var rgb = pal[rb.col];
+        var phase = L * 90 * rb.leanW;
+        var amp = rb.amp * (1 + Math.abs(L) * 0.2 * rb.leanW);
+        var baseY = rb.yf * h;
+        var alpha = pal.dark ? 0.5 : 0.55;
+
+        ctx.beginPath();
+        var step = 8;
+        var x, y;
+        for (x = -step; x <= w + step; x += step) {
+          y = baseY +
+            Math.sin((x + phase) * rb.w1 + t * rb.s1 * 6.283) * amp +
+            Math.sin((x - phase * 0.6) * rb.w2 - t * rb.s2 * 6.283) * amp * 0.45;
+          if (x === -step) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        for (x = w + step; x >= -step; x -= step) {
+          y = baseY +
+            Math.sin((x + phase) * rb.w1 + t * rb.s1 * 6.283) * amp +
+            Math.sin((x - phase * 0.6) * rb.w2 - t * rb.s2 * 6.283) * amp * 0.45 +
+            rb.th;
+          ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+
+        var g = ctx.createLinearGradient(0, baseY - amp - 10, 0, baseY + rb.th + amp);
+        g.addColorStop(0, rgba(rgb, 0));
+        g.addColorStop(0.35, rgba(rgb, alpha));
+        g.addColorStop(1, rgba(rgb, 0));
+        ctx.fillStyle = g;
+        ctx.fill();
+      }
+    }
+
+    onTheme(function () {
+      refreshPalette();
+      if (isReduced()) draw(2.0);
+    });
+
+    var loop = makeLoop(stage, function (dt, t) {
+      lean.step(dt);
+      draw(t);
+    });
+
+    registerDemo({
+      loop: loop,
+      applyStatic: function () {
+        refreshPalette();
+        lean.x = lean.target = 0; lean.v = 0;
+        draw(2.0);
+      }
+    });
+  })();
+
+  /* ============================================================
+     boot
+     ============================================================ */
+  applyReducedState();
+})();
+</script>

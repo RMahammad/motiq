@@ -149,3 +149,36 @@ describe("PromptComposer", () => {
     expect(onRetry).toHaveBeenCalledTimes(1);
   });
 });
+
+/* Responsive contract — every lifecycle control is a 44px target while the
+   composer is narrow and falls back to the dense height once the component
+   ITSELF is wide enough. Container-driven (`@container/composer`), never
+   viewport-driven: a composer tiled into a 320px column on a wide screen must
+   still get the roomy form. */
+describe("PromptComposer — responsive contract", () => {
+  it("declares its own named container context so it sizes on its own width", () => {
+    const { container } = render(<PromptComposer defaultValue="go" />);
+    const root = container.querySelector("section");
+    expect(root).toBeTruthy();
+    expect(root!.className).toContain("@container/composer");
+  });
+
+  it("gives submit / stop / retry a 44px touch target while the composer is narrow", () => {
+    const { rerender } = render(<PromptComposer defaultValue="go" />);
+    const send = screen.getByRole("button", { name: /send/i });
+    expect(send.className).toContain("min-h-[44px]");
+    expect(send.className).toContain("@md/composer:min-h-[34px]");
+    expect(send.className).not.toContain("sm:min-h-[34px]");
+
+    rerender(<PromptComposer defaultValue="go" status="streaming" onStop={vi.fn()} />);
+    expect(screen.getByRole("button", { name: /stop/i }).className).toContain("min-h-[44px]");
+
+    rerender(<PromptComposer defaultValue="go" status="error" onRetry={vi.fn()} />);
+    expect(screen.getByRole("button", { name: /retry/i }).className).toContain("min-h-[44px]");
+  });
+
+  it("keeps the full keyboard hint available to assistive tech when it is visually trimmed", () => {
+    render(<PromptComposer defaultValue="go" />);
+    expect(screen.getAllByText(/nothing is sent anywhere from this surface/i).length).toBe(2);
+  });
+});

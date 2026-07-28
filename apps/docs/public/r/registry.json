@@ -2343,6 +2343,167 @@
       }
     },
     {
+      "name": "loom-draft",
+      "type": "registry:component",
+      "title": "Loom Draft",
+      "description": "A living woven fabric background: a shuttle of light races the loom laying luminous weft row by row, an iridescent violet→cyan→pink sheen rolls across the finished cloth, and warp threads sway. One canvas + a single rAF loop; committed dark Motion Lab palette; reduced-motion static frame, offscreen-paused, forced-colors fallback.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/loom-draft.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/loom-draft.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "loom",
+          "weave",
+          "textile",
+          "jacquard",
+          "svg",
+          "ambient"
+        ]
+      }
+    },
+    {
+      "name": "copperplate-hatch",
+      "type": "registry:component",
+      "title": "Copperplate Hatch",
+      "description": "An engraved plate lit from within: candle-gold light waves radiate from a focal point and ignite each burin stroke as they pass, making the whole plate glint in sequence. One canvas + a single rAF loop; committed dark Motion Lab palette; reduced-motion static frame, offscreen-paused, forced-colors fallback.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/copperplate-hatch.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/copperplate-hatch.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "engraving",
+          "hatch",
+          "crosshatch",
+          "print",
+          "svg",
+          "ambient"
+        ]
+      }
+    },
+    {
+      "name": "chart-recorder",
+      "type": "registry:component",
+      "title": "Chart Recorder",
+      "description": "Five spectrum lanes written live by glowing pens: data packets stream the traces, hot ink cools into a settled trail, and event markers bloom rings as the pens cross them. One canvas + a single rAF loop; committed dark Motion Lab palette; reduced-motion static frame, offscreen-paused, forced-colors fallback.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/chart-recorder.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/chart-recorder.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "chart",
+          "recorder",
+          "instrument",
+          "lanes",
+          "svg",
+          "ambient"
+        ]
+      }
+    },
+    {
+      "name": "riso-registration",
+      "type": "registry:component",
+      "title": "Riso Registration",
+      "description": "Two halftone ink plates hunting for register: pink and blue screen-blended grids drift apart then snap into alignment as a press roller sweeps through. One canvas + a single rAF loop; committed dark Motion Lab palette; reduced-motion static frame, offscreen-paused, forced-colors fallback.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/riso-registration.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/riso-registration.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "riso",
+          "halftone",
+          "registration",
+          "print",
+          "svg",
+          "ambient"
+        ]
+      }
+    },
+    {
+      "name": "core-strata",
+      "type": "registry:component",
+      "title": "Core Strata",
+      "description": "A survey scanner reading the deep record: three parallax strata layers drift while a luminous beam sweeps the core, igniting amber marker seams as it finds them. One canvas + a single rAF loop; committed dark Motion Lab palette; reduced-motion static frame, offscreen-paused, forced-colors fallback.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/backgrounds/core-strata.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/core-strata.tsx"
+        }
+      ],
+      "meta": {
+        "category": "backgrounds",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "background",
+          "strata",
+          "geology",
+          "sediment",
+          "core sample",
+          "scroll",
+          "svg",
+          "ambient"
+        ]
+      }
+    },
+    {
       "name": "animated-icons",
       "type": "registry:ui",
       "title": "Animated Icons",
@@ -2369,6 +2530,819 @@
           "copy",
           "svg",
           "micro-interaction"
+        ]
+      }
+    },
+    {
+      "name": "magnetic-dock",
+      "type": "registry:component",
+      "title": "Magnetic Dock",
+      "description": "A launcher dock whose icons live inside one shared gaussian attraction field instead of per-icon hover states, so neighbours cascade and the bar reads as liquid under a magnet. Influence drives scale, lift and lateral drift springs; a label chip springs to the dominant icon; a virtual pointer sweeps the bar at idle. Transform-only, offscreen-paused, reduced-motion hover fallback.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/cursor/magnetic-dock.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/magnetic-dock.tsx"
+        }
+      ],
+      "meta": {
+        "category": "cursor",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "dock",
+          "cursor",
+          "pointer",
+          "magnetic",
+          "spring",
+          "nav",
+          "launcher",
+          "hover"
+        ]
+      }
+    },
+    {
+      "name": "cursor-comet",
+      "type": "registry:component",
+      "title": "Cursor Comet",
+      "description": "A canvas particle comet that reads pointer velocity, not just position: a tight ember when you drift, a long azure-to-cyan plume with coral sparks when you flick. Idle, the particles coil into an ambient orbit ring. Fixed particle pool, pre-rendered sprites with additive blending, DPR capped at 2x, one rAF loop, offscreen-paused, static orbit frame under reduced motion.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/cursor/cursor-comet.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/cursor-comet.tsx"
+        }
+      ],
+      "meta": {
+        "category": "cursor",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "cursor",
+          "trail",
+          "particles",
+          "canvas",
+          "comet",
+          "velocity",
+          "hero",
+          "decorative"
+        ]
+      }
+    },
+    {
+      "name": "lens-card",
+      "type": "registry:component",
+      "title": "Lens Card",
+      "description": "A refraction lens that floats over your own content: everything under the glass magnifies with a chromatic fringe while the background grid physically bends around the rim. A duplicated scaled clone clipped by a moving circle() - no filters, no repaint storms - with a spring-lagged centre that drifts on its own when unattended. Clones are aria-hidden, so AT reads the content once.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/cursor/lens-card.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/lens-card.tsx"
+        }
+      ],
+      "meta": {
+        "category": "cursor",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "lens",
+          "magnifier",
+          "refraction",
+          "cursor",
+          "pointer",
+          "dashboard",
+          "clip-path",
+          "canvas"
+        ]
+      }
+    },
+    {
+      "name": "torch-reveal",
+      "type": "registry:component",
+      "title": "Torch Reveal",
+      "description": "A finished hero with a second layer hiding above it: a soft, flickering torch around the pointer uncovers a blueprint twin, a wireframe, or a before/after render. The reveal is a CSS alpha mask driven by three custom properties per frame (never an SVG luminance mask, which silently no-ops in Chromium). Springs after the pointer, patrols a Lissajous path at idle, and degrades to a static split view.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/cursor/torch-reveal.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/torch-reveal.tsx"
+        }
+      ],
+      "meta": {
+        "category": "cursor",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "torch",
+          "flashlight",
+          "reveal",
+          "mask",
+          "cursor",
+          "hero",
+          "blueprint",
+          "before after"
+        ]
+      }
+    },
+    {
+      "name": "gooey-actions",
+      "type": "registry:component",
+      "title": "Gooey Actions",
+      "description": "A floating action button that blooms into satellite actions through a gooey metaball merge - blur plus alpha contrast under the hood - with underdamped springs (~18% overshoot, 45ms stagger) and per-satellite magnetic hover. Crisp icons ride an unfiltered twin layer sharing the same transforms. Real buttons with menu semantics, roving focus, and Escape-to-close; instant fade under reduced motion.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/cursor/gooey-actions.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/gooey-actions.tsx"
+        }
+      ],
+      "meta": {
+        "category": "cursor",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "fab",
+          "speed dial",
+          "gooey",
+          "metaball",
+          "actions",
+          "menu",
+          "spring",
+          "svg filter"
+        ]
+      }
+    },
+    {
+      "name": "decrypt-text",
+      "type": "registry:component",
+      "title": "Decrypt Text",
+      "description": "Copy that arrives decoded rather than typed: every glyph boils from the first frame and character i locks at 350 + i·55ms ± 120ms behind a 420ms accent flash. Mount / in-view / hover triggers, a monospace terminal variant, SSR-readable text, reduced-motion safe.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/text/decrypt-text.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/decrypt-text.tsx"
+        }
+      ],
+      "meta": {
+        "category": "text",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "text",
+          "decrypt",
+          "scramble",
+          "terminal",
+          "hero",
+          "headline",
+          "typography"
+        ]
+      }
+    },
+    {
+      "name": "proximity-type",
+      "type": "registry:component",
+      "title": "Proximity Type",
+      "description": "A headline with gravity: each character chases a numeric font weight (340 → 900) based on pointer distance with exponential smoothing, so the type visibly lags the cursor. Glow, letter-spacing falloff and an idle breathing wave. Reduced-motion safe.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/text/proximity-type.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/proximity-type.tsx"
+        }
+      ],
+      "meta": {
+        "category": "text",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "text",
+          "proximity",
+          "variable font",
+          "pointer",
+          "hero",
+          "headline",
+          "typography"
+        ]
+      }
+    },
+    {
+      "name": "split-flap",
+      "type": "registry:component",
+      "title": "Split Flap",
+      "description": "A departures board that actually flips: cells step through the charset drum-style with a col·38 + row·110 ± 90ms sweep, 3D top/bottom halves, motion blur on fast runs, a back-ease slap on the final flap and idle twitches. Polite live region announces each settled page.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/text/split-flap.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/split-flap.tsx"
+        }
+      ],
+      "meta": {
+        "category": "text",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "text",
+          "split-flap",
+          "board",
+          "ticker",
+          "departures",
+          "mechanical",
+          "status"
+        ]
+      }
+    },
+    {
+      "name": "liquid-fill-headline",
+      "type": "registry:component",
+      "title": "Liquid Fill Headline",
+      "description": "An outlined wordmark that fills bottom-up with a sloshing two-polygon clip-path wave rebuilt per frame, settles as the amplitude decays, then takes a coral shimmer sweep. Pure CSS-clipped text (never an SVG luminance mask), controllable level, reduced-motion safe.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/text/liquid-fill-headline.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/liquid-fill-headline.tsx"
+        }
+      ],
+      "meta": {
+        "category": "text",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "text",
+          "liquid",
+          "fill",
+          "headline",
+          "progress",
+          "clip-path",
+          "hero"
+        ]
+      }
+    },
+    {
+      "name": "word-cascade",
+      "type": "registry:component",
+      "title": "Word Cascade",
+      "description": "Hero copy that arrives cast rather than printed: words are measured into real visual lines and each runs its own underdamped spring (k=180, c=16) with blur, rotation and ~6% overshoot. Viewport-triggered, re-arms on exit, replay token, reduced-motion safe.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/text/word-cascade.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/word-cascade.tsx"
+        }
+      ],
+      "meta": {
+        "category": "text",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "text",
+          "cascade",
+          "words",
+          "spring",
+          "entrance",
+          "hero",
+          "paragraph"
+        ]
+      }
+    },
+    {
+      "name": "holo-card",
+      "type": "registry:component",
+      "title": "Holo Card",
+      "description": "A 3D tilt card that behaves like a physical foil pass: twin underdamped springs (k=120, d=10) chase the pointer so the card lags and overshoots ~6% on release, while the specular glare and iridescent conic foil stay pinned to the raw pointer — light is instant, mass is not. Counter-moving ground shadow, arrow-key tilt, touch drag, reduced-motion resting pose, offscreen-paused.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/creative/holo-card.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/holo-card.tsx"
+        }
+      ],
+      "meta": {
+        "category": "creative",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "card",
+          "tilt",
+          "3d",
+          "holographic",
+          "foil",
+          "glare",
+          "spring",
+          "pointer"
+        ]
+      }
+    },
+    {
+      "name": "border-beam-panel",
+      "type": "registry:component",
+      "title": "Border Beam Panel",
+      "description": "A panel with twin comets orbiting a 2px border ring built from a rotating conic gradient cut by a two-layer CSS alpha mask (never an SVG luminance mask). The angular velocity itself is sprung (k=30, d=11), winding to 240 deg/s on hover and coasting back to 42 deg/s, with an optional coral signature comet 180 degrees opposed. One custom property per frame; content never repaints.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/creative/border-beam-panel.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/border-beam-panel.tsx"
+        }
+      ],
+      "meta": {
+        "category": "creative",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "border",
+          "beam",
+          "comet",
+          "conic",
+          "mask",
+          "highlight",
+          "panel",
+          "changelog"
+        ]
+      }
+    },
+    {
+      "name": "card-stack-deck",
+      "type": "registry:component",
+      "title": "Card Stack Deck",
+      "description": "A deck that handles like physical cards: every card rides a continuous slot spring (k=90, d=12) and sending the front card drives a 210px side arc, a 150px z-lift and a full rotateY flip that reveals a patterned back before it tucks in behind. Drag, tap, prev/next buttons and arrow keys all drive one state, with an aria-live announcement per shuffle and instant reordering under reduced motion.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/creative/card-stack-deck.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/card-stack-deck.tsx"
+        }
+      ],
+      "meta": {
+        "category": "creative",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "deck",
+          "stack",
+          "cards",
+          "shuffle",
+          "flip",
+          "drag",
+          "carousel",
+          "3d"
+        ]
+      }
+    },
+    {
+      "name": "glass-refraction-panel",
+      "type": "registry:component",
+      "title": "Glass Refraction Panel",
+      "description": "Frosted panes over a live scene: five gradient orbs drift on lissajous paths across a DPR-capped canvas (additive in dark, soft alpha in light, palette re-read from tokens on theme change) while each glass pane parallaxes at its own depth on a critically damped spring (k=110, d=21). A rotated specular band sweeps the main pane on every viewport entry. Translate3d-only layer motion, offscreen-paused.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/creative/glass-refraction-panel.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/glass-refraction-panel.tsx"
+        }
+      ],
+      "meta": {
+        "category": "creative",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "glass",
+          "glassmorphism",
+          "backdrop-filter",
+          "parallax",
+          "refraction",
+          "canvas",
+          "hero"
+        ]
+      }
+    },
+    {
+      "name": "aurora-panel",
+      "type": "registry:component",
+      "title": "Aurora Panel",
+      "description": "A product card that carries its own sky: three dual-sine ribbons drift across a canvas roof, softened by one GPU CSS blur at 116% scale with a seeded grain tile over the top and dark-only stars beneath. Pointer x retargets a lean spring (k=50, d=14) that shifts ribbon phase up to 90px and lifts amplitude ~20%, relaxing home on leave. One rAF loop, DPR capped at 2x, still-frame under reduced motion.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/creative/aurora-panel.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/aurora-panel.tsx"
+        }
+      ],
+      "meta": {
+        "category": "creative",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "aurora",
+          "canvas",
+          "card",
+          "ribbons",
+          "sky",
+          "ambient",
+          "product card"
+        ]
+      }
+    },
+    {
+      "name": "sticky-zoom-hero",
+      "type": "registry:component",
+      "title": "Sticky Zoom Hero",
+      "description": "The opening move of a product page: a framed hero card held at arm's length scales to full bleed as you scroll, the corner radius closes to 0, the vignette lifts, and captions crossfade through the beats. One rAF loop, getBoundingClientRect progress smoothed through an exponential lerp, transform + opacity only; page or container scroll mode, SSR-settled markup, reduced-motion static layout.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/scroll/sticky-zoom-hero.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/sticky-zoom-hero.tsx"
+        }
+      ],
+      "meta": {
+        "category": "scroll",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "scroll",
+          "hero",
+          "zoom",
+          "sticky",
+          "parallax",
+          "storytelling",
+          "product"
+        ]
+      }
+    },
+    {
+      "name": "depth-parallax-scene",
+      "type": "registry:component",
+      "title": "Depth Parallax Scene",
+      "description": "A world behind the glass: consumer-supplied layers travel at depth-proportional rates as the scene passes through the viewport and drift subtly with the pointer, while the far layers slip out of focus as the near ones pass. translate3d only, quantized depth-of-field blur, one rAF loop, no scroll container in page mode, reduced-motion frozen composition.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/scroll/depth-parallax-scene.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/depth-parallax-scene.tsx"
+        }
+      ],
+      "meta": {
+        "category": "scroll",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "scroll",
+          "parallax",
+          "depth",
+          "layers",
+          "pointer",
+          "depth of field",
+          "hero"
+        ]
+      }
+    },
+    {
+      "name": "mask-wipe-sections",
+      "type": "registry:component",
+      "title": "Mask Wipe Sections",
+      "description": "Chaptered storytelling with hard cuts instead of crossfades: each section is revealed by a scroll-driven clip-path wipe - an angled sweep, an expanding iris, or a centre-split curtain - led by a lit accent edge. The iris ring is an SVG circle whose radius animates, so the stroke hugs the clip edge at constant width. Reduced motion collapses the sticky stack into plain stacked sections.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/scroll/mask-wipe-sections.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/mask-wipe-sections.tsx"
+        }
+      ],
+      "meta": {
+        "category": "scroll",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "scroll",
+          "clip-path",
+          "wipe",
+          "iris",
+          "curtain",
+          "chapters",
+          "storytelling"
+        ]
+      }
+    },
+    {
+      "name": "scroll-count-stats",
+      "type": "registry:component",
+      "title": "Scroll Count Stats",
+      "description": "A stats band that is a pure function of scroll progress, so scrolling back rewinds it digit by digit instead of counting once and going inert. Per-digit odometer columns roll with stagger and a small overshoot, the coral signature underline draws itself, and sparklines trace in. Fixed-height column crops, tabular-nums, true values always in the accessible tree.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/scroll/scroll-count-stats.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/scroll-count-stats.tsx"
+        }
+      ],
+      "meta": {
+        "category": "scroll",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "scroll",
+          "stats",
+          "counter",
+          "odometer",
+          "scrub",
+          "sparkline",
+          "metrics"
+        ]
+      }
+    },
+    {
+      "name": "velocity-skew-feed",
+      "type": "registry:component",
+      "title": "Velocity Skew Feed",
+      "description": "A feed whose cards shear and stretch with scroll velocity and rubber-snap back when you stop. Smoothed velocity drives a real spring (s\" = k(target - s) - c*s'), integrated with frame delta-time so a hard stop overshoots once and settles. Transforms only, one write per card per frame, and the loop stops writing entirely once the spring's energy falls under threshold.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/scroll/velocity-skew-feed.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/velocity-skew-feed.tsx"
+        }
+      ],
+      "meta": {
+        "category": "scroll",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "scroll",
+          "velocity",
+          "skew",
+          "spring",
+          "physics",
+          "feed",
+          "rubber"
+        ]
+      }
+    },
+    {
+      "name": "orbital-gallery",
+      "type": "registry:component",
+      "title": "Orbital Gallery",
+      "description": "Media cards on a perspective ring you can grab and flick: real inertia clamped to ±6 rad/s decaying as v·e^(−2.2t), an under-damped focus spring, and depth cues (scale, dim, quantized blur) driven by cos θ. Drag, wheel, click and arrow keys all drive one selection; reduced-motion jumps instantly, loop pauses offscreen.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/media/orbital-gallery.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/orbital-gallery.tsx"
+        }
+      ],
+      "meta": {
+        "category": "media",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "gallery",
+          "carousel",
+          "ring",
+          "3d",
+          "inertia",
+          "drag",
+          "media",
+          "portfolio"
+        ]
+      }
+    },
+    {
+      "name": "flow-warp-image",
+      "type": "registry:component",
+      "title": "Flow Warp Image",
+      "description": "A media surface that liquefies under the pointer: a 32×20 spring mesh (k=90, c=8) displaces sub-rects of your image with a (1−d/R)² falloff and snaps back elastically, throws a radial splash on pointer exit, and swells on a Lissajous path while idle. One canvas, DPR capped at 2, arrow keys and Space as the keyboard equivalent.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/media/flow-warp-image.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/flow-warp-image.tsx"
+        }
+      ],
+      "meta": {
+        "category": "media",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "image",
+          "warp",
+          "liquid",
+          "mesh",
+          "spring",
+          "canvas",
+          "pointer",
+          "hero"
+        ]
+      }
+    },
+    {
+      "name": "velocity-marquee",
+      "type": "registry:component",
+      "title": "Velocity Marquee",
+      "description": "Counter-rotating media rails that feed on page-scroll velocity: a smoothed reading surges them to ~6× and shears them ±10° while you scroll, then exhales back to a 36px/s drift over ~600ms. Hover or focus a rail to ease it to a quarter speed and lift the card out of the stream. One passive scroll listener, one rAF loop.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/media/velocity-marquee.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/velocity-marquee.tsx"
+        }
+      ],
+      "meta": {
+        "category": "media",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "marquee",
+          "logo wall",
+          "scroll",
+          "velocity",
+          "ticker",
+          "rail",
+          "media",
+          "skew"
+        ]
+      }
+    },
+    {
+      "name": "filmstrip-scrub",
+      "type": "registry:component",
+      "title": "Filmstrip Scrub",
+      "description": "A filmstrip with a spring-loaded playhead (k=90, c=16, ζ≈0.84 — one soft overshoot): hover or drag the strip and the large preview crossfades ⌊p⌋ into ⌈p⌉ by the fractional part, with frame ticks and a monospace timecode. Scrubs itself at 0.9 frames/s when idle. The strip is a real slider with arrow/Home/End keys.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/media/filmstrip-scrub.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/filmstrip-scrub.tsx"
+        }
+      ],
+      "meta": {
+        "category": "media",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "filmstrip",
+          "scrubber",
+          "timeline",
+          "playhead",
+          "timecode",
+          "frames",
+          "media",
+          "slider"
+        ]
+      }
+    },
+    {
+      "name": "compare-reveal",
+      "type": "registry:component",
+      "title": "Compare Reveal",
+      "description": "A before/after comparator whose divider chases the pointer through a spring (k=140, c=18, ζ≈0.76) so the lag reads as elastic resistance, demonstrates itself once on first viewport entry (50 → 96 → 4 → 50 over 2.6s), and snaps home on double-click. Coral signature handle; real slider semantics with 2% / Shift 10% arrow steps.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://motiq.dev/r/utils.json",
+        "https://motiq.dev/r/primitives.json"
+      ],
+      "files": [
+        {
+          "path": "registry/media/compare-reveal.tsx",
+          "type": "registry:component",
+          "target": "components/motiq/compare-reveal.tsx"
+        }
+      ],
+      "meta": {
+        "category": "media",
+        "tier": "free",
+        "signature": false,
+        "keywords": [
+          "compare",
+          "before after",
+          "slider",
+          "reveal",
+          "divider",
+          "clip-path",
+          "media",
+          "diff"
         ]
       }
     }

@@ -328,7 +328,7 @@ function ParticipantList({
               type="button"
               data-participant
               onClick={() => onSelect?.(p.id)}
-              className="flex w-full items-center gap-2.5 rounded-lg px-2 py-1.5 text-left outline-none hover:bg-[var(--color-bg-secondary)] focus-visible:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+              className="flex min-h-[44px] w-full items-center gap-2.5 rounded-lg px-2 py-1.5 text-left outline-none hover:bg-[var(--color-bg-secondary)] focus-visible:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
             >
               <span className="relative">
                 <Avatar participant={p} size={30} decorative />
@@ -387,7 +387,12 @@ function TypingRegion({
         </span>
       ) : null}
       <TypingDots animate={animate} />
-      <span className={cn("truncate text-[var(--color-muted)]", compact ? "text-[12px]" : "text-[13px]")}>
+      {/* The summary wraps in a narrow strip instead of ellipsizing ("Devon
+          Achebe is typing" would clip to a couple of characters); the original
+          single-line truncation returns from `@[400px]/presence` — 400px, the width
+          at which the avatar cluster (~90px) and the longest realistic typing
+          sentence (~250px) share one line without an ellipsis. */}
+      <span className={cn("min-w-0 text-[var(--color-muted)] @[400px]/presence:truncate", compact ? "text-[12px]" : "text-[13px]")}>
         {summary}
       </span>
     </span>
@@ -455,7 +460,14 @@ function PresenceCluster({
 
   return (
     <div ref={rootRef} className="relative inline-flex items-center">
-      <div className="relative flex items-center rounded-full [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] py-1 pl-2 pr-1 shadow-[var(--shadow-sm)]">
+      {/* The whole pill is one control (the overlay button below), so its touch
+          height is padded to 44px for coarse pointers and returns to the tighter
+          desktop rhythm for fine ones. Deliberately NOT a container query: the
+          pill is intrinsically sized, and `container-type: inline-size` on a
+          shrink-to-fit box makes it size as if it had no contents — it would
+          collapse to zero width. The rule encodes touch comfort anyway, so the
+          honest signal is the pointer, not a width. */}
+      <div className="relative flex items-center rounded-full [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] py-1.5 pl-2 pr-1 shadow-[var(--shadow-sm)] pointer-fine:py-1">
         <ul role="list" className="flex items-center">
           <AnimatePresence initial={false} mode="popLayout">
             {visible.map((p, i) => (
@@ -529,7 +541,9 @@ function PresenceCluster({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.18, ease: EASE }}
-            className="absolute left-0 top-full z-50 mt-2 min-w-[256px] origin-top-left rounded-xl [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] p-1.5 shadow-[var(--shadow-lg)]"
+            // Capped to the viewport so the detail panel can never push the page
+            // sideways (or be clipped) on a 320px screen.
+            className="absolute left-0 top-full z-50 mt-2 w-[min(256px,calc(100vw-2rem))] origin-top-left rounded-xl [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] p-1.5 shadow-[var(--shadow-lg)]"
           >
             <p className="px-2 pb-1 pt-1.5 text-[11px] font-medium uppercase tracking-wide text-[var(--color-muted)]">
               {label}
@@ -674,7 +688,7 @@ export function TypingAndPresence({
         role="group"
         aria-label={groupLabel}
         className={cn(
-          "flex w-full max-w-[340px] flex-col rounded-2xl [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)]",
+          "@container/presence flex w-full max-w-[340px] flex-col rounded-2xl [border:1px_solid_var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)]",
           className,
         )}
       >
@@ -724,10 +738,24 @@ export function TypingAndPresence({
         ref={rootRef}
         role="group"
         aria-label={groupLabel}
-        className={cn("inline-flex max-w-full items-center gap-2.5", className)}
+        // The container context lives on this element; the flex row that reacts
+        // to it lives one level in. An element is never its OWN query container,
+        // so `@[400px]/presence:flex-nowrap` written here would silently never match.
+        //
+        // The row is also block-level rather than the old `sm:inline-flex`: it
+        // renders identically (content still packs left and the strip has no
+        // background of its own), but an `inline-flex` box with
+        // `container-type: inline-size` is sized as if it had no contents and
+        // would collapse to zero width.
+        className={cn("@container/presence w-full max-w-full", className)}
       >
-        {cluster}
-        <span className="min-w-0 truncate">{typingSlot}</span>
+        {/* Compact stays a single dense line from `@[400px]/presence` up; below that
+            the cluster and the typing/presence sentence wrap onto two lines
+            rather than the sentence being ellipsized away. */}
+        <div className="flex max-w-full flex-wrap items-center gap-x-2.5 gap-y-1.5 @[400px]/presence:flex-nowrap">
+          {cluster}
+          <span className="min-w-0 flex-1 @[400px]/presence:flex-none @[400px]/presence:truncate">{typingSlot}</span>
+        </div>
         {liveRegion}
       </div>
     );
@@ -739,7 +767,7 @@ export function TypingAndPresence({
       ref={rootRef}
       role="group"
       aria-label={groupLabel}
-      className={cn("flex w-full max-w-full flex-wrap items-center gap-3", className)}
+      className={cn("@container/presence flex w-full max-w-full flex-wrap items-center gap-3", className)}
     >
       {cluster}
       <span aria-hidden className="h-5 w-px bg-[var(--color-border)]" />
