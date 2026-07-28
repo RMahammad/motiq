@@ -4,6 +4,7 @@ import { catalog } from "../../lib/catalog";
 import { product, installCommand } from "../../lib/product";
 import { pageMetadata } from "../../lib/seo";
 import { InstallCommand } from "../_components/code-block";
+import { StarButton } from "../_components/github-star";
 
 export const metadata = pageMetadata({
   title: "Get started",
@@ -86,6 +87,18 @@ export default function GettingStartedPage() {
           <li>· Accessible and reduced-motion-safe by default, with dark mode built in.</li>
           <li>· Free and open: the whole catalog is public and installable.</li>
         </ul>
+      </section>
+
+      {/* The ask lands after the install worked, not before anyone has tried anything. */}
+      <section className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+        <h2 className="text-[17px] font-semibold tracking-tight text-[var(--color-fg)]">Command worked? Star the repo</h2>
+        <p className="mt-2 max-w-[58ch] text-[14px] leading-relaxed text-[var(--color-muted)]">
+          {product.productName} is free and MIT-licensed - no account, nothing to pay for. Stars are what put it in
+          front of the next developer looking for exactly this, and they are the one thing that genuinely helps.
+        </p>
+        <div className="mt-4">
+          <StarButton source="page" variant="solid" />
+        </div>
       </section>
     </div>
   );

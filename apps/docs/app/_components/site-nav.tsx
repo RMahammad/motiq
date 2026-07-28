@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { categories, categoryCount, type CategoryId } from "../../lib/catalog";
+import { StarButton } from "./github-star";
 import { SearchTrigger } from "./search";
 import { ThemeToggle } from "./theme";
 
@@ -252,6 +253,11 @@ export function SiteNav({ productName, waitlistEnabled, ctaHref, ctaLabel }: Nav
 
         <div className="ml-auto flex items-center gap-1.5">
           <SearchTrigger />
+          {/* Persistent star ask. Hidden on the narrowest viewports, where the
+              header has no room for it — the drawer carries it there instead. */}
+          <span className="hidden sm:inline-flex">
+            <StarButton source="nav" variant="nav" />
+          </span>
           <ThemeToggle />
           <Link
             href={ctaHref}
@@ -305,6 +311,9 @@ export function SiteNav({ productName, waitlistEnabled, ctaHref, ctaLabel }: Nav
               >
                 {ctaLabel}
               </Link>
+              <div className="mt-2.5">
+                <StarButton source="nav-mobile" variant="outline" block />
+              </div>
               <nav aria-label="Primary" className="mt-4 flex flex-col gap-0.5">
                 {[
                   ["/components", "All components"],

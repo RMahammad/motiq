@@ -1,9 +1,9 @@
 # 21 — Component inventory
 
-> **Type:** 🟢 Canonical component matrix · **Implementation status:** 🔵 Planned (every component is Planned; **Doc** and **Test** columns are "—" until built) · **Last reviewed:** 2026-07-14
-> **Owns:** the maintainable component matrix. Update a component's **Status/Doc/Test** rows here when it is built; keep in sync with the component folders via [`tooling/check-inventory.mjs`](tooling/) (planned).
-> **Related:** [`20-mvp-roadmap.md`](20-mvp-roadmap.md) · [`09-component-api-standard.md`](09-component-api-standard.md) · [`12`](12-accessibility-standard.md) · [`13`](13-performance-standard.md)
-> **Legend:** Tier = Free/Premium · Stage = MVP/V1/V2/X(experimental) · risks L/M/H · Doc/Test = ✅ done / — not started.
+> **Type:** 🟢 Canonical matrix for the **library primitives** in `@scope/{motion,react,sections,recipes}` · **Last reviewed:** 2026-07-28
+> **Scope:** the shared primitives and sections that ship inside the workspace packages — 22 component sources, reconciled on every `pnpm docs:check` by [`tooling/check-inventory.mjs`](tooling/). This file does **not** track the registry catalog: the 94 installable catalog items (86 components · 8 workflow blocks · 4 packs · 20 categories) are recorded in [`39-catalog-production-board.md`](39-catalog-production-board.md), and `apps/docs/lib/catalog.ts` is their source of truth. Update a primitive's **Status/Doc/Test** row here when it is built.
+> **Related:** [`39-catalog-production-board.md`](39-catalog-production-board.md) · [`20-mvp-roadmap.md`](20-mvp-roadmap.md) · [`09-component-api-standard.md`](09-component-api-standard.md) · [`12`](12-accessibility-standard.md) · [`13`](13-performance-standard.md)
+> **Legend:** Stage = MVP/V1/V2/X(experimental) · risks L/M/H · Doc/Test = ✅ done / — not started. The **Tier** column is obsolete — after the free/open pivot every item is free and MIT-licensed; historical Free/Premium values are kept only as a record of when the row was written.
 
 ## Matrix (MVP + near-term)
 

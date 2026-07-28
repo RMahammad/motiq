@@ -9,7 +9,7 @@ Everything for promoting Motiq lives here:
 
 The rendered media (`*.gif`, `*.mp4`, `*.png`, `*.jpg`) is **gitignored** — regenerable from `apps/promo` — *except* the files the root README embeds (`campaign/motiq-readme-hero.gif`, `showcase/*.gif`, `showcase/motiq-showcase.png`), which must be committed so GitHub can render them. Distribute everything else via a GitHub Release or upload natively when posting.
 
-Channel rules, timing, and the full launch sequence live in [`LAUNCH.md`](../LAUNCH.md); this file maps assets to channels and gives paste-ready captions. **All claims match LAUNCH.md's fact sheet** (56 components + 8 blocks → "60+ components & blocks"; free & open source; shadcn-registry install). Never add user counts or download numbers to a caption.
+Channel rules, timing, and the full launch sequence live in [`LAUNCH.md`](../LAUNCH.md); this file maps assets to channels and gives paste-ready captions. **All claims match LAUNCH.md's fact sheet** (86 components + 8 blocks + 4 packs → "90+ components & blocks"; free & open source; shadcn-registry install). Never add user counts or download numbers to a caption.
 
 ---
 
@@ -62,7 +62,7 @@ Generated 2026-07-18 from the live docs previews (dark theme, real components, s
 **X — launch post (attach `promo/motiq-trailer.mp4`):**
 > Stop building UI animation from scratch.
 >
-> I built Motiq — 60+ animated React & shadcn components and blocks. Accessible, reduced-motion safe, RSC-safe, installed as editable source into your repo.
+> I built Motiq — 90+ animated React & shadcn components and blocks. Accessible, reduced-motion safe, RSC-safe, installed as editable source into your repo.
 >
 > 100% free & open source. No signup.
 >
@@ -76,7 +76,7 @@ Generated 2026-07-18 from the live docs previews (dark theme, real components, s
 > Free & open source → motiq.dev
 
 **Reddit — r/reactjs or r/SideProject (native video upload of trailer or a category MP4, text-post framing per LAUNCH.md):**
-> **I built a free library of 60+ animated React/shadcn components — all editable source, no paywall**
+> **I built a free library of 90+ animated React/shadcn components — all editable source, no paywall**
 >
 > After rebuilding the same animated cards/streams/checkout flows for the third client, I turned them into a catalog. Everything installs through the shadcn registry as plain source you own — no npm dependency, no lock-in. Accessibility and prefers-reduced-motion are handled on every component.
 >
@@ -87,7 +87,7 @@ Generated 2026-07-18 from the live docs previews (dark theme, real components, s
 **r/webdev:** Showoff Saturday megathread only — same copy, shorter.
 
 **LinkedIn (attach the trailer or square loop):**
-> Shipping polished UI motion is still weirdly hard: engineers hand-roll animations, then accessibility and reduced-motion get skipped under deadline. I built Motiq to fix that — 60+ production-ready animated React components, free and open source, installed as editable source through the shadcn registry. motiq.dev
+> Shipping polished UI motion is still weirdly hard: engineers hand-roll animations, then accessibility and reduced-motion get skipped under deadline. I built Motiq to fix that — 90+ production-ready animated React components, free and open source, installed as editable source through the shadcn registry. motiq.dev
 
 ## Rules of thumb (from research — sources in LAUNCH.md)
 

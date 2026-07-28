@@ -4,8 +4,9 @@
  * across landscape, square, and vertical outputs.
  *
  * Claim discipline: every number below is verified against the repo.
- * - "56 animated React components" = 47 `registry:component` + 9 `registry:ui`
- *   items in packages/registry/registry.json (LAUNCH.md fact sheet agrees).
+ * - "86 animated React components" = 77 `registry:component` + 9 `registry:ui`
+ *   items in packages/registry/registry.json, which matches the 86 the docs
+ *   catalog counts (LAUNCH.md fact sheet agrees). Verified 2026-07-28.
  * - "4 complete workflow packs" = ai-interface-pack, developer-tools-pack,
  *   collaboration-pack, data-motion-pack.
  * - Install command matches apps/docs/lib/product.ts (`npx shadcn@latest add
@@ -20,7 +21,7 @@ export const brand = {
 } as const;
 
 export const claims = {
-  components: "56 animated React components",
+  components: "86 animated React components",
   packs: "4 complete workflow packs",
   source: "Installed as editable source",
   license: "Free and open source.",

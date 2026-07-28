@@ -5,10 +5,14 @@ X/social meta, dev communities & aggregators). Every channel below has current r
 and ready-to-paste content. This is a personal growth doc, not shipped product.
 
 **Repo:** https://github.com/RMahammad/motiq · **Site:** https://motiq.dev
-**Facts you may claim (all true):** 56 components + 8 workflow blocks + 4 packs across 17
-categories · MIT · free, no signup · shadcn-registry install (`npx shadcn@latest add
-https://motiq.dev/r/<name>`) · Tailwind v4 · React 18.3+/19 · WCAG 2.2 AA target ·
-reduced-motion behavior on every animation · offscreen pause · RSC-safe.
+**Facts you may claim (all true, verified 2026-07-28):** 86 components + 8 workflow blocks + 4
+packs across 20 categories (94 catalog items, published as a 100-item shadcn registry) · MIT ·
+free, no signup · shadcn-registry install (`npx shadcn@latest add https://motiq.dev/r/<name>`) ·
+Tailwind v4 · React 18.3+/19 · WCAG 2.2 AA target · reduced-motion behavior on every animation ·
+offscreen pause · RSC-safe.
+**Round number to use in headlines:** "90+ components and blocks" (94 items — never round up past
+what ships). Re-verify against motiq.dev/components before a launch post; the homepage stat tile
+and this line come from the same catalog.
 **Never claim:** user counts, download numbers, "trusted by" anything. One fake stat kills a launch.
 
 ---
@@ -76,7 +80,7 @@ already run `npx shadcn add`.
 within days). One PR, two sections. Entry text:
 
 > ```
-> - [Motiq](https://motiq.dev) - 60+ free animated components for product UI (AI
+> - [Motiq](https://motiq.dev) - 90+ free animated components for product UI (AI
 >   interfaces, dev tools, collaboration, data) with reduced-motion and a11y built in.
 >   Installable via shadcn registry. MIT.
 > ```
@@ -156,7 +160,7 @@ Every draft is honest and rule-compliant. Personalize before posting (see 0.5).
 **Title (pick one — story-driven beats generic; the closest comp, "I reverse engineered
 top websites to build an animated UI library", hit 156 points):**
 
-> Show HN: Motiq – 60 animated React components with reduced-motion built in (MIT)
+> Show HN: Motiq – 90+ animated React components with reduced-motion built in (MIT)
 
 or
 
@@ -169,7 +173,7 @@ or
 > prefers-reduced-motion behavior, focus loss, RSC errors, animation loops running
 > offscreen forever.
 >
-> Motiq is 60+ components for product UI (AI response streams, deployment pipelines,
+> Motiq is 90+ components for product UI (AI response streams, deployment pipelines,
 > live presence, streaming data) where every animation has a deliberate reduced-motion
 > fallback, keyboard/screen-reader semantics, and explicit client boundaries for
 > Next.js. Continuous effects pause offscreen.
@@ -197,7 +201,7 @@ second-chance pool review — that's an accepted practice. Expect ~1.4 stars per
 
 **Title:**
 
-> I open-sourced Motiq: 60+ animated React components where reduced-motion and
+> I open-sourced Motiq: 90+ animated React components where reduced-motion and
 > accessibility aren't an afterthought (MIT, shadcn registry)
 
 **Body:**
@@ -205,7 +209,7 @@ second-chance pool review — that's an accepted practice. Expect ~1.4 stars per
 > Hey r/reactjs — I've spent the last months building Motiq, and it's now fully free
 > and MIT, so I wanted to share it here.
 >
-> **What it is:** 56 components, 8 composed blocks, and 4 packs for *product* UI —
+> **What it is:** 86 components, 8 composed blocks, and 4 packs for *product* UI —
 > AI response streaming, agent run timelines, deployment pipelines, live log streams,
 > presence stacks, KPI morphs, streaming table rows. Not landing-page confetti;
 > the states and interactions apps actually need.
@@ -241,7 +245,7 @@ Attach the catalog montage video or 2–3 GIFs. Reply to every comment for 3 hou
 
 **Title:**
 
-> Showoff Saturday: I made 60+ animated React components free and open source —
+> Showoff Saturday: I made 90+ animated React components free and open source —
 > every one has reduced-motion support and pauses offscreen
 
 **Body (shorter — webdev rewards the visual):**
@@ -267,7 +271,7 @@ Lead with the montage video. Visual posts get 2–3× engagement here.
 
 **Title:**
 
-> Free shadcn registry with 60+ animated components — RSC-safe, Tailwind v4,
+> Free shadcn registry with 90+ animated components — RSC-safe, Tailwind v4,
 > reduced-motion handled (MIT)
 
 **Body:**
@@ -303,7 +307,7 @@ Lead with the montage video. Visual posts get 2–3× engagement here.
 
 > The plan was a paid component library. Somewhere along the way I realized the
 > libraries I most admired (and that actually grew) gave the code away, so I
-> open-sourced the entire catalog: 60+ animated components, blocks, and packs. MIT,
+> open-sourced the entire catalog: 90+ animated components, blocks, and packs. MIT,
 > no signup, no "pro" tier.
 >
 > It's called Motiq. Components for product UI — AI response streams, deployment
@@ -329,7 +333,7 @@ real product, no landing-page gates, engage in comments.)
 
 **Title:**
 
-> Motiq — MIT-licensed catalog of 60+ animated React components, distributed as
+> Motiq — MIT-licensed catalog of 90+ animated React components, distributed as
 > editable source rather than a package
 
 **Body:**
@@ -360,7 +364,7 @@ especially important here — the OSS community is mid AI-slop backlash.)
 
 **Title:**
 
-> 60+ animated components built on Tailwind v4 semantic tokens — free, MIT,
+> 90+ animated components built on Tailwind v4 semantic tokens — free, MIT,
 > installable as source via shadcn registry
 
 **Body:**
@@ -384,7 +388,7 @@ especially important here — the OSS community is mid AI-slop backlash.)
 
 **Title:**
 
-> Motiq — 60+ free animated React components with accessibility and reduced-motion
+> Motiq — 90+ free animated React components with accessibility and reduced-motion
 > built in [MIT, TypeScript]
 
 Link post directly to the GitHub repo (the sub auto-assigns language flair). The README
@@ -401,7 +405,7 @@ fast · X Communities no longer exist (shut down May 2026).
 
 **Launch thread (Tue, after r/reactjs is live):**
 
-> **1/** I just open-sourced 6+ months of work: Motiq — 60+ animated React components
+> **1/** I just open-sourced 6+ months of work: Motiq — 90+ animated React components
 > for product UI. Free. MIT. Install the source, own the code.
 > [attach: catalog montage video]
 >
@@ -422,7 +426,7 @@ fast · X Communities no longer exist (shut down May 2026).
 > [attach: 10s terminal clip of the install + component appearing]
 >
 > **5/** Tailwind v4, React 18/19, RSC-safe client boundaries, WCAG 2.2 AA target,
-> strict TypeScript. 56 components, 8 blocks, 4 packs, 17 categories. All of it free.
+> strict TypeScript. 86 components, 8 blocks, 4 packs, 20 categories. All of it free.
 >
 > **6/** Live previews + repo linked below. If Motiq saves you time, a star helps
 > more people find it ⭐️
@@ -461,7 +465,7 @@ relevant Motiq demo clip (not a pitch — a demo). Same for @mattgperry (Motion)
 
 ### 10. Bluesky (cross-post, links allowed in-post, hashtags DO work)
 
-> I open-sourced Motiq — 60+ animated React components for product UI (AI streams,
+> I open-sourced Motiq — 90+ animated React components for product UI (AI streams,
 > deploy pipelines, live presence, data motion). Every animation is
 > reduced-motion-safe. Install the editable source via shadcn registry. Free, MIT,
 > no signup.
@@ -480,13 +484,13 @@ Cross-post 2–3 drip videos per week with the same 2–3 tags (custom feeds key
 
 **Title:**
 
-> I open-sourced 60+ animated React components — here's how I made every animation
+> I open-sourced 90+ animated React components — here's how I made every animation
 > reduced-motion-safe
 
 **Structure (this exact "launch + how I built it" format is what took react-bits to
 ~1K stars in week one):**
 
-1. **Cold open:** the montage video/GIF, then: "Motiq is now fully free and MIT — 56
+1. **Cold open:** the montage video/GIF, then: "Motiq is now fully free and MIT — 86
    components, 8 blocks, 4 packs. Here's the engineering that went into making
    animated components actually shippable."
 2. **The problem:** animation libraries that demo well and ship badly (no
@@ -511,12 +515,12 @@ writer form) and Hackernoon (8 tags + feature image, 3–5 day review).
 **A. One email covers React Status + JavaScript Weekly + Frontend Focus
 (→ editor@cooperpress.com):**
 
-> Subject: Motiq — open-source animated React component registry (60+ components, MIT)
+> Subject: Motiq — open-source animated React component registry (90+ components, MIT)
 >
 > Hi — I'm Mahammad, sharing a project for possible inclusion in React Status (or
 > JavaScript Weekly / Frontend Focus if a better fit).
 >
-> Motiq is a free, MIT-licensed catalog of 60+ animated React components for product
+> Motiq is a free, MIT-licensed catalog of 90+ animated React components for product
 > UI — AI response streaming, deployment pipelines, live presence, animated data.
 > The angle that might interest readers: every animation has a deliberate
 > prefers-reduced-motion behavior, continuous effects pause offscreen, and it's
@@ -534,7 +538,7 @@ writer form) and Hackernoon (8 tags + feature image, 3–5 day review).
 regularly). DM @sebastienlorber on X:**
 
 > Hi Sébastien — long-shot pitch for This Week In React: I open-sourced Motiq,
-> 60+ animated React components distributed as a shadcn registry (editable source
+> 90+ animated React components distributed as a shadcn registry (editable source
 > install). The differentiator is reduced-motion + a11y engineering on every
 > component. Previews: https://motiq.dev/components · Repo:
 > https://github.com/RMahammad/motiq. Thanks for the newsletter either way!
@@ -550,7 +554,7 @@ trends, so they're a byproduct, not a target.)
 **Reactiflux `#showcase`** (explicitly sanctioned for library launches —
 reactiflux.com/promotion; be an active member first, post once, don't repost updates):
 
-> Just open-sourced Motiq — 60+ animated React components for product UI (AI
+> Just open-sourced Motiq — 90+ animated React components for product UI (AI
 > streams, deploy pipelines, presence, data motion). Every animation is
 > reduced-motion-safe, continuous effects pause offscreen, and it installs as
 > editable source via the shadcn registry — free + MIT, no signup.
@@ -577,7 +581,7 @@ community server if you want one more venue.
 > Hey Product Hunt 👋 I'm Mahammad, maker of Motiq.
 >
 > I spent 6+ months building an animated component library and then made the whole
-> thing free and open source. 60+ React components for product UI — AI response
+> thing free and open source. 90+ React components for product UI — AI response
 > streams, deployment pipelines, live presence, animated data — installable as
 > editable source through the shadcn registry. One command, and the TypeScript +
 > Tailwind code is yours.
@@ -601,7 +605,7 @@ Personal profile (5×+ page reach), 3–5 hashtags max: `#opensource #react
 > For the last 6+ months I built an animated React component library on nights and
 > weekends. The original plan was to sell it. Last week I open-sourced all of it.
 >
-> Motiq is 60+ components for product interfaces — AI response streaming, deployment
+> Motiq is 90+ components for product interfaces — AI response streaming, deployment
 > pipelines, live collaboration, animated data. MIT-licensed, installable as
 > editable source, free with no signup.
 >
@@ -625,14 +629,14 @@ carousels are LinkedIn's top-engagement format).
 **Mastodon (fosstodon/hachyderm — hashtags drive discovery; no promo-spam tone; CoC
 prohibits commercial promotion, which free+MIT satisfies):**
 
-> I made Motiq, and it's fully open source: 60+ animated #React components where
+> I made Motiq, and it's fully open source: 90+ animated #React components where
 > every animation has a real reduced-motion fallback and a11y is part of the
 > contract. Installable as editable source (shadcn registry), MIT, no signup, no
 > telemetry. https://github.com/RMahammad/motiq #opensource #webdev #a11y
 
 **Threads (one tag only — that's the platform rule; links are fine):**
 
-> Open-sourced my animated React component library today — 60+ components, MIT,
+> Open-sourced my animated React component library today — 90+ components, MIT,
 > install the editable source with one command. motiq.dev #react
 > [attach montage video]
 
@@ -646,7 +650,7 @@ the biggest single-day spikes.
 
 > Subject: Motiq — free animated React component registry (b-roll included)
 >
-> Hi <name> — I open-sourced Motiq: 60+ animated React components (AI streams,
+> Hi <name> — I open-sourced Motiq: 90+ animated React components (AI streams,
 > deploy pipelines, presence, data motion) installable as editable source via the
 > shadcn registry. MIT, no signup. The angle that might fit your audience: every
 > animation is reduced-motion-safe and pauses offscreen — "animation you can
@@ -672,7 +676,7 @@ drip to add 26K. Your levers, in order:
    library", "shadcn animation", "framer motion components", "aceternity alternative" —
    reply helpfully where Motiq genuinely fits. High-intent, evergreen.
 4. **Ship visibly.** Inventory is frozen, so frame drip content as hardening: "made all
-   60 components pass reduced-motion audit", "cut bundle cost of X by Y%". Each is a
+   94 catalog items pass reduced-motion audit", "cut bundle cost of X by Y%". Each is a
    post.
 5. **More articles.** Each deep-dive (offscreen pause pattern, motion tokens, RSC
    boundaries) is a dev.to/HN-able asset. Articles are the only format that works on
