@@ -11,6 +11,7 @@ Install the source with shadcn. Own the code. Ship it your way.
 [![MIT License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](./LICENSE)
 [![CI](https://img.shields.io/github/actions/workflow/status/RMahammad/motiq/ci.yml?branch=main&style=for-the-badge&label=CI)](https://github.com/RMahammad/motiq/actions/workflows/ci.yml)
 [![Support Motiq on Ko-fi](https://img.shields.io/badge/Support-Ko--fi-4f7cff?style=for-the-badge&logo=kofi&logoColor=white)](https://ko-fi.com/motiq)
+[![Built with Claude Code](https://img.shields.io/badge/Built_with-Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white)](https://claude.com/claude-code)
 
 [Explore components](https://motiq.dev/components) ·
 [Get started](https://motiq.dev/getting-started) ·
@@ -204,6 +205,32 @@ publishes invented audience or reach numbers.
 <a href="https://github.com/RMahammad/motiq/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=RMahammad/motiq" alt="Motiq contributors" />
 </a>
+
+## Acknowledgments
+
+Motiq is a one-maintainer project with a catalog-sized surface area, and a lot of
+that reach comes from building with
+[**Claude Code**](https://claude.com/claude-code) by [Anthropic](https://anthropic.com).
+It is part of the day-to-day workflow here:
+
+- **Component work** — drafting new components against the existing token and
+  motion primitives, then reviewing the result for the guarantees in the table
+  above rather than just the happy path.
+- **Accessibility and motion passes** — sweeping the catalog for keyboard traps,
+  focus handling, color-independent states, and missing `prefers-reduced-motion`
+  behavior, which is exactly the tedious work a solo maintainer skips.
+- **Consistency at scale** — applying a convention change across 60+ components
+  and their tests, docs pages, and registry entries in one coherent pass.
+- **Docs and registry plumbing** — keeping component pages, install commands, and
+  registry metadata in sync with the source.
+
+Every change still goes through the same review, tests, and checks as any other
+contribution — the tooling accelerates the work, it does not approve it.
+
+Thanks as well to the projects Motiq is built on: [React](https://react.dev),
+[Tailwind CSS](https://tailwindcss.com), [Motion](https://motion.dev),
+[Radix UI](https://www.radix-ui.com), and [shadcn/ui](https://ui.shadcn.com),
+whose registry format Motiq ships against.
 
 ## License
 

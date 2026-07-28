@@ -5,6 +5,7 @@ import "@scope/tokens/styles.css";
 import "./globals.css";
 
 import { product, commerce } from "../lib/product";
+import { legalApproved, legalNav } from "../lib/legal";
 import { siteUrl, absoluteUrl } from "../lib/seo";
 import { SiteNav } from "./_components/site-nav";
 
@@ -136,28 +137,33 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div>
               <p className="font-medium text-[var(--color-fg)]">{product.productName}</p>
               <p className="mt-1">{product.tagline}</p>
-              <p className="mt-2 text-[12px]">Accessible · reduced-motion-safe · editable source.</p>
+              {/* Kept as a description of the standard we build to, not an
+                  unqualified conformance claim — see /legal/terms §Disclaimers. */}
+              <p className="mt-2 text-[12px]">
+                Built to an accessibility and reduced-motion standard · editable source.
+              </p>
             </div>
             <nav aria-label="Product" className="flex flex-col gap-1.5">
               <span className="text-[12px] font-medium uppercase tracking-wide text-[var(--color-fg)]">Product</span>
               <Link href="/components" className="hover:text-[var(--color-fg)]">Components</Link>
               <Link href="/packs" className="hover:text-[var(--color-fg)]">Workflow packs</Link>
-              {commerce.waitlistEnabled ? <Link href="/access" className="hover:text-[var(--color-fg)]">Request access</Link> : null}
               <Link href="/updates" className="hover:text-[var(--color-fg)]">Updates</Link>
-              <Link href="/portal" className="hover:text-[var(--color-fg)]">Account portal</Link>
               <Link href="/sponsor" className="hover:text-[var(--color-fg)]">Sponsor</Link>
               <a href={product.sponsorUrl} target="_blank" rel="noreferrer" className="hover:text-[var(--color-fg)]">Support on Ko-fi</a>
             </nav>
             <nav aria-label="Legal" className="flex flex-col gap-1.5">
-              <span className="text-[12px] font-medium uppercase tracking-wide text-[var(--color-fg)]">Legal (draft)</span>
-              <Link href="/legal/license" className="hover:text-[var(--color-fg)]">License</Link>
-              <Link href="/legal/terms" className="hover:text-[var(--color-fg)]">Terms</Link>
-              <Link href="/legal/privacy" className="hover:text-[var(--color-fg)]">Privacy</Link>
-              <Link href="/legal/refund-policy" className="hover:text-[var(--color-fg)]">Refunds</Link>
+              <span className="text-[12px] font-medium uppercase tracking-wide text-[var(--color-fg)]">
+                {legalApproved ? "Legal" : "Legal (pending review)"}
+              </span>
+              {legalNav.map((item) => (
+                <Link key={item.href} href={item.href} className="hover:text-[var(--color-fg)]">
+                  {item.label}
+                </Link>
+              ))}
             </nav>
             <div className="flex flex-col gap-1.5">
               <span className="text-[12px] font-medium uppercase tracking-wide text-[var(--color-fg)]">Status</span>
-              <p>Policy pages are drafts pending legal review.</p>
+              {legalApproved ? null : <p>Policy pages await legal review and are not yet in force.</p>}
               {product.namespaceIsPreview ? <p className="text-[12px]">Registry namespace is a preview value.</p> : null}
             </div>
           </div>
