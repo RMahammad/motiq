@@ -15,6 +15,7 @@ import { PreviewCodeTabs } from "../../_components/preview-code-tabs";
 import { FeaturedBadge } from "../../_components/catalog-card";
 import { DocsSidebar, DocsMobileControls, type TocItem } from "../../_components/docs-sidebar";
 import { DocsToc } from "../../_components/docs-toc";
+import { StarCta } from "../../_components/github-star";
 import { SponsorCta } from "../../_components/sponsor-cta";
 import { GoldSponsors } from "../../_components/gold-sponsors";
 
@@ -465,6 +466,9 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
                 </div>
               </dl>
             </div>
+            {/* The star ask sits above the sponsor ask: it is the cheaper action,
+                so leading with it converts more of the same visitors. */}
+            <StarCta source="rail" />
             <SponsorCta />
             {/* Gold Sponsors — always visible: real logos when present, otherwise
                 an honest "be the first" invite that solicits Gold Sponsors. */}

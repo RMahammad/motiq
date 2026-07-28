@@ -41,7 +41,10 @@ export type AnalyticsEvent =
   | "preview_onboarding_viewed"
   | "preview_dashboard_viewed"
   | "preview_token_created"
-  | "preview_activated";
+  | "preview_activated"
+  | "github_star_clicked"
+  | "star_prompt_shown"
+  | "star_prompt_dismissed";
 
 /** Small, non-sensitive properties only. */
 export type AnalyticsProps = Record<string, string | number | boolean | undefined>;
@@ -83,6 +86,9 @@ const ALLOWED = new Set<string>([
   "preview_dashboard_viewed",
   "preview_token_created",
   "preview_activated",
+  "github_star_clicked",
+  "star_prompt_shown",
+  "star_prompt_dismissed",
 ]);
 
 // In-memory ring buffer for the dev dashboard (client-side only).

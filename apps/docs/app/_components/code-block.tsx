@@ -3,6 +3,7 @@
 import * as React from "react";
 
 import { track, type AnalyticsEvent } from "../../lib/analytics";
+import { emitStarSignal, type StarSignal } from "../../lib/star-nudge";
 
 export function CopyButton({
   text,
@@ -10,6 +11,7 @@ export function CopyButton({
   className,
   trackEvent,
   trackProps,
+  starSignal,
 }: {
   text: string;
   label?: string;
@@ -17,17 +19,25 @@ export function CopyButton({
   /** Optional analytics event fired on a successful copy (serializable — safe from Server Components). */
   trackEvent?: AnalyticsEvent;
   trackProps?: Record<string, string>;
+  /** Reports intent to the star prompt on a successful copy (serializable — safe from Server Components). */
+  starSignal?: StarSignal;
 }) {
   const [copied, setCopied] = React.useState(false);
   return (
     <button
       type="button"
       onClick={() => {
-        navigator.clipboard?.writeText(text).then(() => {
-          setCopied(true);
-          if (trackEvent) track(trackEvent, trackProps);
-          setTimeout(() => setCopied(false), 1400);
-        });
+        navigator.clipboard
+          ?.writeText(text)
+          .then(() => {
+            setCopied(true);
+            if (trackEvent) track(trackEvent, trackProps);
+            if (starSignal) emitStarSignal(starSignal);
+            setTimeout(() => setCopied(false), 1400);
+          })
+          // A denied clipboard permission leaves the button in its idle state,
+          // which is the honest result — nothing was copied.
+          .catch(() => {});
       }}
       className={
         className ??
@@ -79,7 +89,9 @@ export function InstallCommand({
         <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap font-mono text-[13px] text-[var(--color-code-fg)] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {command}
         </code>
-        <CopyButton text={command} label="Copy" className="shrink-0 inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)]" trackEvent={trackEvent} trackProps={trackProps} />
+        {/* Copying an install command is the clearest sign someone is actually
+            using Motiq — the moment the star prompt waits for. */}
+        <CopyButton text={command} label="Copy" className="shrink-0 inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)]" trackEvent={trackEvent} trackProps={trackProps} starSignal="install" />
       </div>
     </div>
   );

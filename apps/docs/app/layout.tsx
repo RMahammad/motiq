@@ -7,7 +7,9 @@ import "./globals.css";
 import { product, commerce } from "../lib/product";
 import { legalApproved, legalNav } from "../lib/legal";
 import { siteUrl, absoluteUrl } from "../lib/seo";
+import { FooterStarLink, StarCta } from "./_components/github-star";
 import { SiteNav } from "./_components/site-nav";
+import { StarPrompt } from "./_components/star-prompt";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -150,6 +152,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/updates" className="hover:text-[var(--color-fg)]">Updates</Link>
               <Link href="/sponsor" className="hover:text-[var(--color-fg)]">Sponsor</Link>
               <a href={product.sponsorUrl} target="_blank" rel="noreferrer" className="hover:text-[var(--color-fg)]">Support on Ko-fi</a>
+              <FooterStarLink />
             </nav>
             <nav aria-label="Legal" className="flex flex-col gap-1.5">
               <span className="text-[12px] font-medium uppercase tracking-wide text-[var(--color-fg)]">
@@ -161,13 +164,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </Link>
               ))}
             </nav>
-            <div className="flex flex-col gap-1.5">
-              <span className="text-[12px] font-medium uppercase tracking-wide text-[var(--color-fg)]">Status</span>
+            <div className="flex flex-col gap-2.5">
+              <span className="text-[12px] font-medium uppercase tracking-wide text-[var(--color-fg)]">Open source</span>
+              <StarCta source="footer" compact />
               {legalApproved ? null : <p>Policy pages await legal review and are not yet in force.</p>}
               {product.namespaceIsPreview ? <p className="text-[12px]">Registry namespace is a preview value.</p> : null}
             </div>
           </div>
         </footer>
+
+        {/* Earned star ask — see app/_components/star-prompt.tsx for when it fires. */}
+        <StarPrompt />
       </body>
     </html>
   );
