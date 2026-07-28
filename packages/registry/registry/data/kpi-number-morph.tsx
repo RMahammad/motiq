@@ -108,7 +108,19 @@ export function KpiNumberMorph({
   return (
     <div
       className={cn(
-        "flex min-w-[9rem] flex-col gap-1.5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 shadow-[var(--shadow-sm)]",
+        // `@container/kpi` — every size decision below reacts to *this tile's*
+        // width, never the viewport. A KPI in a 180px column inside a 1440px
+        // window is a narrow KPI, and the viewport has no way to know that.
+        //
+        // The `p-4 → p-5` step is a container query on the tile's own box, so
+        // the threshold (16rem of content) is deliberately placed far from any
+        // width the padding step itself could push across it.
+        //
+        // Sizing note: `container-type: inline-size` zeroes the element's
+        // intrinsic inline contribution, so give the tile a definite or
+        // stretched width (a grid/flex track, `w-full`) — never let it size to
+        // its own content.
+        "@container/kpi flex min-w-0 flex-col gap-1.5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-sm)] @[16rem]/kpi:p-5",
         className,
       )}
       role="group"
@@ -117,7 +129,10 @@ export function KpiNumberMorph({
       {...rest}
     >
       {label ? (
-        <span className="text-[12.5px] font-medium tracking-wide text-[var(--color-muted)] uppercase">{label}</span>
+        // Wraps rather than truncating: a metric name is never worth eliding.
+        <span className="text-[12px] font-medium tracking-wide text-[var(--color-muted)] uppercase @[16rem]/kpi:text-[12.5px]">
+          {label}
+        </span>
       ) : null}
 
       {state === "error" ? (
@@ -133,7 +148,12 @@ export function KpiNumberMorph({
         </div>
       ) : (
         <span
-          className="text-[clamp(1.7rem,3.4vw,2.3rem)] font-semibold leading-none tracking-tight text-[var(--color-fg)] tabular-nums [font-variant-numeric:tabular-nums]"
+          // `cqi` (1% of this tile's inline size), not `vw`: the number is sized
+          // by the room it actually has. 14cqi reaches the 2.3rem ceiling at
+          // ~263px of tile content — the width a three-up KPI row has on a real
+          // desktop — so wide layouts are unchanged and narrow tiles step down
+          // to the 1.7rem floor instead of overflowing.
+          className="text-[clamp(1.7rem,14cqi,2.3rem)] font-semibold leading-none tracking-tight text-[var(--color-fg)] tabular-nums [font-variant-numeric:tabular-nums]"
           aria-hidden
         >
           {formatted}
@@ -141,16 +161,27 @@ export function KpiNumberMorph({
       )}
 
       {state === "idle" && changeText ? (
+        // Grouped, wrappable trend row: the glyph + delta are one unwrappable
+        // unit and the qualifier is another, so a narrow tile drops the label to
+        // its own line instead of stranding "+1.2" and "vs" on separate rows.
         <span
           aria-hidden
-          className={cn(
-            "mt-0.5 inline-flex items-center gap-1 text-[13px] font-medium",
-            dir === "up" ? "text-[var(--color-success)]" : "text-[var(--color-muted)]",
-          )}
+          data-kpi-change=""
+          className="mt-0.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[13px] font-medium"
         >
-          <Trend dir={dir} />
-          {changeText}
-          {changeLabel ? <span className="font-normal text-[var(--color-muted)]">{changeLabel}</span> : null}
+          <span
+            data-kpi-change-value=""
+            className={cn(
+              "inline-flex items-center gap-1 whitespace-nowrap",
+              dir === "up" ? "text-[var(--color-success)]" : "text-[var(--color-muted)]",
+            )}
+          >
+            <Trend dir={dir} />
+            {changeText}
+          </span>
+          {changeLabel ? (
+            <span className="font-normal text-[var(--color-muted)]">{changeLabel}</span>
+          ) : null}
         </span>
       ) : null}
     </div>

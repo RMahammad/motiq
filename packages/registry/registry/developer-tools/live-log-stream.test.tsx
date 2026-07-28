@@ -87,4 +87,48 @@ describe("LiveLogStream", () => {
     );
     await noViolations(container);
   });
+
+  /* Responsive contract — see docs/responsive-standard.md. */
+  describe("responsive contract", () => {
+    it("groups the status chip with the line count so neither strands alone", () => {
+      const { container } = render(<LiveLogStream entries={BASE} />);
+      const meta = container.querySelector<HTMLElement>('[data-slot="stream-meta"]');
+      expect(meta).toBeTruthy();
+      expect(meta!.className).toContain("flex-wrap");
+      expect(meta!.textContent).toContain("Streaming");
+      expect(meta!.textContent).toContain("3 lines");
+    });
+
+    it("keeps the level chips full-width and scrollable when narrow, wrapping from @md/logs up", () => {
+      const { container } = render(<LiveLogStream entries={BASE} />);
+      const strip = container.querySelector<HTMLElement>('[data-slot="level-filter"]');
+      expect(strip).toBeTruthy();
+      expect(strip!.getAttribute("role")).toBe("group");
+      expect(strip!.getAttribute("aria-label")).toBe("Filter by level");
+      // A real, labelled horizontal scroll region rather than silent clipping.
+      expect(strip!.className).toContain("overflow-x-auto");
+      expect(strip!.className).toContain("overscroll-x-contain");
+      expect(strip!.className).toContain("@md/logs:flex-wrap");
+    });
+
+    it("names every toolbar control even when its label is visually hidden in a narrow console", () => {
+      render(<LiveLogStream entries={BASE} onClear={() => {}} />);
+      // `sr-only @md/logs:not-sr-only` keeps the accessible name at every width,
+      // unlike a `hidden` label which would leave an unnamed icon-only button.
+      for (const name of [/pause/i, /copy/i, /clear/i]) {
+        const btn = screen.getByRole("button", { name });
+        const label = btn.querySelector("span.sr-only");
+        expect(label?.className).toContain("@md/logs:not-sr-only");
+      }
+    });
+
+    it("gives toolbar buttons and the search field a 44px narrow target", () => {
+      render(<LiveLogStream entries={BASE} />);
+      const pause = screen.getByRole("button", { name: /pause/i });
+      expect(pause.className).toContain("min-h-[44px]");
+      expect(pause.className).toContain("@md/logs:min-h-0");
+      const search = screen.getByRole("searchbox");
+      expect(search.className).toContain("min-h-[44px]");
+    });
+  });
 });

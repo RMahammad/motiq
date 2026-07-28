@@ -155,3 +155,67 @@ describe("CommentThread", () => {
     expect(document.activeElement).toBe(composer);
   });
 });
+
+/* -- responsive contract ------------------------------------------------- */
+
+describe("CommentThread — responsive contract", () => {
+  it("reacts to its own width, not the viewport", () => {
+    const { container } = render(<CommentThread comments={baseComments()} currentUser={me} />);
+    const root = container.firstElementChild as HTMLElement;
+    expect(String(root.className)).toMatch(/@container\/thread/);
+    // An element is never its own query container — the root must not query itself.
+    expect(String(root.className)).not.toMatch(/@\[400px\]\/thread:/);
+    container.querySelectorAll("*").forEach((el) => {
+      expect(String(el.className)).not.toMatch(/(^|\s)(sm|md|lg|xl|2xl):/);
+    });
+  });
+
+  it("caps the reply indent in a narrow card: only the first level is indented", () => {
+    const nested: Comment[] = [
+      {
+        id: "r0",
+        author: mira,
+        body: "Top level",
+        createdAt: T - 4_000_000,
+        replies: [
+          {
+            id: "r1",
+            author: me,
+            body: "Level one",
+            createdAt: T - 3_000_000,
+            replies: [
+              {
+                id: "r2",
+                author: mira,
+                body: "Level two",
+                createdAt: T - 2_000_000,
+                replies: [{ id: "r3", author: me, body: "Level three", createdAt: T - 1_000_000 }],
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    const { container } = render(<CommentThread comments={nested} currentUser={me} />);
+    const rails = [...container.querySelectorAll<HTMLElement>("div")].filter((d) =>
+      /border-l/.test(String(d.className)) && /pl-2\.5/.test(String(d.className)),
+    );
+    expect(rails.length).toBe(3); // one rail per reply level
+
+    const narrowIndents = rails.map((r) => (/(^|\s)ml-3(\s|$)/.test(String(r.className)) ? "ml-3" : "ml-0"));
+    // Exactly ONE indent step in a narrow card, regardless of depth …
+    expect(narrowIndents).toEqual(["ml-3", "ml-0", "ml-0"]);
+    // … while every level keeps the original per-level indent once the CARD
+    // itself is wide enough — not once the window is.
+    rails.forEach((r) => expect(String(r.className)).toMatch(/@\[400px\]\/thread:ml-6/));
+  });
+
+  it("gives comment actions a 44px touch target in a narrow card and keeps ≥24px when it has room", () => {
+    const { container } = render(
+      <CommentThread comments={baseComments()} currentUser={me} onReply={() => {}} />,
+    );
+    const reply = within(container).getAllByRole("button", { name: "Reply" })[0];
+    expect(String(reply.className)).toMatch(/min-h-\[44px\]/);
+    expect(String(reply.className)).toMatch(/@\[400px\]\/thread:min-h-\[24px\]/);
+  });
+});

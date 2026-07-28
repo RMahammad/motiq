@@ -74,4 +74,61 @@ describe("DataRefreshState", () => {
     expect(screen.getAllByText(/refreshing/i).length).toBeGreaterThan(0);
     await noViolations(container);
   });
+
+  /* --- responsive contracts (structure/class assertions jsdom can enforce) -- */
+
+  it("gives the inline detail its own full-width row in a narrow container instead of ellipsising it", () => {
+    const { container } = render(
+      <DataRefreshState
+        mode="inline"
+        state="error"
+        label="Live signals"
+        errorSummary="Upstream signal endpoint timed out (504)."
+      />,
+    );
+    const detail = container.querySelector("[data-refresh-detail]") as HTMLElement;
+    expect(detail).toBeTruthy();
+    expect(detail.textContent).toBe("Upstream signal endpoint timed out (504).");
+    // Full-width row + two lines while the strip is narrow; the original single
+    // truncated column once the strip itself is wide. Container-, not
+    // viewport-scoped, so a strip inside a 300px card behaves the same on a
+    // phone and on a 1440px desktop.
+    expect(detail.className).toContain("basis-full");
+    expect(detail.className).toContain("line-clamp-2");
+    expect(detail.className).toContain("@xl/refresh:basis-0");
+    expect(detail.className).toContain("@xl/refresh:line-clamp-1");
+    expect(detail.className).not.toMatch(/(^|\s)(sm|md|lg|xl):/);
+    // A one-line `truncate` would clip this message to a few characters.
+    expect(detail.className).not.toContain("truncate");
+  });
+
+  it("declares a named container context on the inline strip", () => {
+    const { container } = render(
+      <DataRefreshState mode="inline" state="idle" label="Metrics" lastUpdated={TS} />,
+    );
+    const strip = container.querySelector('[role="group"]') as HTMLElement;
+    expect(strip.className).toContain("@container/refresh");
+    // A `w-full` root is a safe query container: its inline size comes from the
+    // parent, so `container-type: inline-size` can never collapse it.
+    expect(strip.className).toContain("w-full");
+  });
+
+  it("gives inline controls a touch-sized height while the strip is narrow", () => {
+    render(<DataRefreshState mode="inline" state="idle" label="Metrics" onRefresh={() => {}} />);
+    const btn = screen.getByRole("button", { name: /refresh/i });
+    expect(btn.className).toContain("min-h-[36px]");
+    expect(btn.className).toContain("@sm/refresh:min-h-0");
+    expect(btn.className).not.toMatch(/(^|\s)(sm|md|lg|xl):/);
+  });
+
+  it("keeps the compact pill's icon controls above the WCAG 2.2 target minimum without a media query", () => {
+    render(<DataRefreshState mode="compact" state="idle" label="Metrics" onRefresh={() => {}} />);
+    const btn = screen.getByRole("button", { name: /refresh now/i });
+    // 32px ≥ the 24px AA minimum. The compact pill is intrinsically sized, so it
+    // deliberately is *not* a query container — sizing it with one would zero
+    // its intrinsic width.
+    expect(btn.className).toContain("h-8");
+    expect(btn.className).toContain("w-8");
+    expect(btn.className).not.toMatch(/(^|\s)(sm|md|lg|xl):/);
+  });
 });

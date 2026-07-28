@@ -212,14 +212,14 @@ export function teamCta(): Cta | null {
       kind: "contact-sales",
       label: FALLBACK.teamContact,
       note: "Team and agency access are being finalized.",
-      href: commerce.salesEmail ? `mailto:${commerce.salesEmail}` : "/access?tier=team",
+      href: commerce.salesEmail ? `mailto:${commerce.salesEmail}` : product.supportUrl,
       event: "contact_sales_clicked",
     };
   }
   return {
     kind: "contact-sales",
     label: "Contact sales",
-    href: commerce.salesEmail ? `mailto:${commerce.salesEmail}` : "/access?tier=team",
+    href: commerce.salesEmail ? `mailto:${commerce.salesEmail}` : product.supportUrl,
     event: "contact_sales_clicked",
   };
 }

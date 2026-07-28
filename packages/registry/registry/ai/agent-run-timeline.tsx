@@ -381,8 +381,12 @@ function StatusGlyph({ status, reduce }: { status: StepStatus | RunStatus; reduc
 /* Controls                                                                     */
 /* -------------------------------------------------------------------------- */
 
+/* Touch-first: 44px tall while the timeline is narrow, back to the dense form
+   once the CARD it sits in is wide enough — a 320px tile on a 1440px monitor is
+   still a 320px tile, so this reads `@md/timeline`, never `sm:`. The dense form
+   still measures ~30px, clear of the 24px WCAG 2.2 AA target minimum. */
 const actionBtn =
-  "inline-flex shrink-0 items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-[12.5px] font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] disabled:opacity-50";
+  "inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-[12.5px] font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] disabled:opacity-50 @md/timeline:min-h-0";
 
 const neutralBtn =
   "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-fg)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]";
@@ -541,7 +545,7 @@ function StepRow({
       {/* Card -------------------------------------------------------------- */}
       <div
         className={cn(
-          "mb-2.5 min-w-0 flex-1 rounded-xl border bg-[var(--color-surface)] transition-colors",
+          "mb-2 min-w-0 flex-1 rounded-xl border bg-[var(--color-surface)] transition-colors @md/timeline:mb-2.5",
           compact ? "opacity-95" : "",
         )}
         style={
@@ -550,7 +554,16 @@ function StepRow({
             : { borderColor: "var(--color-border)" }
         }
       >
-        <div className={cn("flex items-start gap-2 pl-2.5 pr-2", compact ? "py-1.5" : "py-2.5")}>
+        {/* The header wraps: in a narrow timeline the status chip + actions drop
+            onto their own full-width line so the title keeps the whole card
+            width instead of ellipsising to a couple of characters. At
+            `@md/timeline` it is the original row. */}
+        <div
+          className={cn(
+            "flex flex-wrap items-start gap-x-2 gap-y-1.5 pl-2.5 pr-2",
+            compact ? "py-1.5" : "py-2.5",
+          )}
+        >
           <button
             type="button"
             ref={(el) => registerHeader(step.id, el)}
@@ -560,7 +573,9 @@ function StepRow({
             aria-describedby={isFailed && step.error ? errorId : undefined}
             aria-current={isCurrent ? "step" : undefined}
             onClick={onHeaderClick}
-            className="group flex min-w-0 flex-1 items-start gap-2 rounded-lg text-left outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
+            // min-h-6: a single-line collapsed step measured 20px, under the 24px
+            // WCAG 2.2 AA target minimum. Padding would shift the rail alignment.
+            className="group flex min-h-6 min-w-0 flex-[1_1_9rem] items-start gap-2 rounded-lg text-left outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)]"
           >
             <span
               className={cn(
@@ -576,13 +591,19 @@ function StepRow({
             </span>
 
             <span className="min-w-0 flex-1">
-              <span className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                <span className="font-mono text-[11px] text-[var(--color-muted)]" aria-hidden>
+              {/* items-start, not items-baseline: the title below is a
+                  `-webkit-box` (line-clamp), whose synthesized baseline is not
+                  reliable across engines. The 2px nudge does the optical align. */}
+              <span className="flex flex-wrap items-start gap-x-2 gap-y-0.5">
+                <span className="mt-[2px] font-mono text-[11px] leading-snug text-[var(--color-muted)]" aria-hidden>
                   {String(index + 1).padStart(2, "0")}
                 </span>
+                {/* line-clamp (not truncate): a narrow card wraps to two lines
+                    rather than ellipsising the title down to a letter or two. */}
                 <span
+                  data-step-title
                   className={cn(
-                    "min-w-0 truncate font-medium text-[var(--color-fg)]",
+                    "min-w-0 font-medium leading-snug text-[var(--color-fg)] [overflow-wrap:anywhere] line-clamp-2",
                     compact ? "text-[13px]" : "text-[13.5px]",
                     step.status === "skipped" || step.status === "cancelled" ? "line-through decoration-[var(--color-muted)]" : "",
                   )}
@@ -592,28 +613,42 @@ function StepRow({
               </span>
 
               {!compact && step.description ? (
-                <span className="mt-0.5 block truncate text-[12px] text-[var(--color-muted)]">{step.description}</span>
+                <span className="mt-0.5 block text-[12px] leading-snug text-[var(--color-muted)] [overflow-wrap:anywhere] line-clamp-2">
+                  {step.description}
+                </span>
               ) : null}
 
               {isFailed && step.error ? (
-                <span id={errorId} className="mt-1 block truncate text-[12px] text-[var(--color-error)]">
+                <span
+                  id={errorId}
+                  className="mt-1 block text-[12px] leading-snug text-[var(--color-error)] [overflow-wrap:anywhere] line-clamp-3"
+                >
                   {step.error}
                 </span>
               ) : null}
 
+              {/* The raw tool identifier is developer detail — it is repeated in
+                  full inside the expanded panel, so it stands down in a narrow
+                  timeline where vertical room is the scarce resource. */}
               {step.toolCall && !compact ? (
-                <span className="mt-1 inline-flex max-w-full items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-1.5 py-0.5 font-mono text-[10.5px] text-[var(--color-muted)]">
+                <span className="mt-1 hidden max-w-full items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-1.5 py-0.5 font-mono text-[10.5px] text-[var(--color-muted)] @md/timeline:inline-flex">
                   <svg width="11" height="11" {...ICON} className="shrink-0">
                     <path d="M14.5 5.5a3.5 3.5 0 0 1-4.6 4.6L5 15l4 4 4.9-4.9a3.5 3.5 0 0 1 4.6-4.6l-2.3 2.3-2-2z" {...STROKE} strokeWidth={1.6} />
                   </svg>
-                  <span className="truncate">{step.toolCall.name}</span>
+                  <span className="min-w-0 [overflow-wrap:anywhere]">{step.toolCall.name}</span>
                 </span>
               ) : null}
             </span>
           </button>
 
-          {/* Right rail: status chip + per-state actions (siblings of the toggle). */}
-          <div className="flex shrink-0 flex-col items-end gap-1.5">
+          {/* Right rail: status chip + per-state actions (siblings of the toggle).
+              Full-width row under the title while the timeline is narrow (the
+              title needs ~144px and this rail ~170px, so the row form needs the
+              card past ~330px), stacked column from `@md/timeline`. */}
+          <div
+            data-step-meta
+            className="flex w-full shrink-0 flex-wrap items-center justify-end gap-1.5 @md/timeline:w-auto @md/timeline:flex-col @md/timeline:items-end"
+          >
             <StatusChip status={step.status} reduce={reduce} />
             {showAttempts ? (
               <span className="font-mono text-[10.5px] tabular-nums text-[var(--color-muted)]">
@@ -732,15 +767,15 @@ function StepRow({
                         const subMeta = getStatusMeta(sub.status);
                         const subVars = statusVars(subMeta.tone as StatusTone);
                         return (
-                          <li key={sub.id} className="flex items-center gap-2 text-[12.5px] text-[var(--color-fg)]">
+                          <li key={sub.id} className="flex items-start gap-2 text-[12.5px] text-[var(--color-fg)]">
                             <span
-                              className="grid h-4 w-4 shrink-0 place-items-center rounded-full"
+                              className="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full"
                               style={{ color: subVars.color, background: subVars.bg }}
                               aria-hidden
                             >
                               <StepMarker status={sub.status} reduce />
                             </span>
-                            <span className="min-w-0 flex-1 truncate">{sub.label}</span>
+                            <span className="min-w-0 flex-1 [overflow-wrap:anywhere] line-clamp-2">{sub.label}</span>
                             <span className="shrink-0 text-[11px] text-[var(--color-muted)]">{subMeta.label}</span>
                           </li>
                         );
@@ -926,16 +961,44 @@ export function AgentRunTimeline({
   const isPaused = run.status === "paused";
   const heading = title ?? run.title;
 
+  /* Header meta as GROUPED items. Each entry renders as one `whitespace-nowrap`
+     span that carries its own leading separator, so a narrow header can never
+     put "·" — or a single word — on a line of its own. */
+  const metaItems: { key: string; text: string; className?: string }[] = [
+    { key: "steps", text: `${resolved} of ${total} steps` },
+  ];
+  if (run.startedAt != null) {
+    metaItems.push({ key: "started", text: `started ${formatTs(run.startedAt)}` });
+  }
+  if (failedCount > 0) {
+    metaItems.push({ key: "failed", text: `${failedCount} failed`, className: "text-[var(--color-error)]" });
+  }
+  if (waitingCount > 0) {
+    metaItems.push({
+      key: "waiting",
+      text: `${waitingCount} awaiting approval`,
+      className: "text-[var(--color-warning)]",
+    });
+  }
+
   return (
     <section
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
+        /* `@container/timeline` — every size decision inside this component
+           reads the width of THIS card, not the window. A run in a 320px tile
+           on a 27" monitor is a 320px run. `container-type: inline-size` only
+           contains the inline axis, so the Framer `layout` height animations
+           inside are unaffected; the section is already `overflow-hidden`, so
+           the containing block it introduces changes nothing (the only absolute
+           children are the status glyph rings, inside their own `relative`
+           spans). */
+        "@container/timeline flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
         className,
       )}
       aria-label={`Run: ${heading}`}
     >
       {/* Header ----------------------------------------------------------- */}
-      <header className="border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-3">
+      <header className="border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-3 @md/timeline:px-4">
         <div className="flex flex-wrap items-start gap-x-3 gap-y-2">
           <span
             className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-lg text-[var(--color-accent-fg)]"
@@ -948,34 +1011,31 @@ export function AgentRunTimeline({
             </svg>
           </span>
 
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2">
-              <h2 className="truncate text-[14px] font-semibold text-[var(--color-fg)]">{heading}</h2>
+          {/* `flex-[1_1_12rem]` keeps a real minimum measure for the title block,
+              so the run actions wrap below it instead of squeezing it to nothing. */}
+          <div className="min-w-0 flex-[1_1_12rem]">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <h2 className="min-w-0 text-[14px] font-semibold leading-snug text-[var(--color-fg)] [overflow-wrap:anywhere] line-clamp-2">
+                {heading}
+              </h2>
               <StatusChip status={run.status} reduce={reduce} />
             </div>
-            <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11.5px] text-[var(--color-muted)]">
-              <span>
-                {resolved} of {total} steps
-              </span>
-              {run.startedAt != null ? <span aria-hidden>·</span> : null}
-              {run.startedAt != null ? <span>started {formatTs(run.startedAt)}</span> : null}
-              {failedCount > 0 ? (
-                <>
-                  <span aria-hidden>·</span>
-                  <span className="text-[var(--color-error)]">{failedCount} failed</span>
-                </>
-              ) : null}
-              {waitingCount > 0 ? (
-                <>
-                  <span aria-hidden>·</span>
-                  <span className="text-[var(--color-warning)]">{waitingCount} awaiting approval</span>
-                </>
-              ) : null}
+            <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11.5px] text-[var(--color-muted)]">
+              {metaItems.map((item, i) => (
+                <span key={item.key} data-meta-group className={cn("whitespace-nowrap", item.className)}>
+                  {i > 0 ? (
+                    <span aria-hidden className="mr-2 text-[var(--color-muted)]">
+                      ·
+                    </span>
+                  ) : null}
+                  {item.text}
+                </span>
+              ))}
             </p>
           </div>
 
-          {/* Run-level actions */}
-          <div className="flex shrink-0 items-center gap-1.5">
+          {/* Run-level actions — their own full-width row while the timeline is narrow. */}
+          <div className="flex w-full shrink-0 items-center justify-end gap-1.5 @md/timeline:w-auto @md/timeline:justify-start">
             {isPaused ? (
               <button type="button" onClick={() => onResumeRun?.()} className={cn(actionBtn, neutralBtn)}>
                 <svg width="13" height="13" {...ICON}>
@@ -1015,7 +1075,7 @@ export function AgentRunTimeline({
                   <path d="M5 15V6a2 2 0 0 1 2-2h9" {...STROKE} strokeWidth={1.7} />
                 </svg>
               )}
-              <span className="sr-only sm:not-sr-only">{copied ? "Copied" : "Copy"}</span>
+              <span className="sr-only @md/timeline:not-sr-only">{copied ? "Copied" : "Copy"}</span>
             </button>
           </div>
         </div>
@@ -1049,7 +1109,7 @@ export function AgentRunTimeline({
       {total === 0 ? (
         <p className="px-4 py-8 text-center text-[13px] text-[var(--color-muted)]">This run has no steps yet.</p>
       ) : (
-        <ol className="flex flex-col px-3.5 pb-2 pt-3">
+        <ol className="flex flex-col px-2.5 pb-2 pt-3 @md/timeline:px-3.5">
           <AnimatePresence initial={false} mode="popLayout">
             {run.steps.map((step, index) => {
               const isExpanded = expanded.has(step.id);
@@ -1087,7 +1147,7 @@ export function AgentRunTimeline({
 
       {/* Run summary (only when supplied — never fabricated). */}
       {run.summary ? (
-        <div className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-3">
+        <div className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-3 @md/timeline:px-4">
           <p className="mb-1 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">
             <svg width="13" height="13" {...ICON}>
               <path d="M5 5h14M5 10h14M5 15h9" {...STROKE} strokeWidth={1.8} />

@@ -3,7 +3,12 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { useControllableState, useReducedMotion, type StatusTone } from "@/lib/motiq";
+import {
+  useControllableState,
+  useDisclosure,
+  useReducedMotion,
+  type StatusTone,
+} from "@/lib/motiq";
 
 import {
   LivePresenceStack,
@@ -39,10 +44,32 @@ import {
  * components at *reduced* complexity to tell one story: people are here
  * (LivePresenceStack), someone is writing right now (TypingAndPresence), a short
  * review is underway (ActivityStream), there is one change request in the thread
- * (CommentThread), and one decision is pending (ApprovalWorkflow). On wide
- * screens the surface tiles into two columns (the decision · the discussion) so
- * the hero holds a calm height. It is deliberately not a generic social feed —
- * the surface always resolves to a single approaching outcome.
+ * (CommentThread), and one decision is pending (ApprovalWorkflow). In a wide
+ * container the surface tiles into two columns (the decision · the discussion)
+ * so the hero holds a calm height. It is deliberately not a generic social feed
+ * — the surface always resolves to a single approaching outcome.
+ *
+ * RESPONSIVENESS IS CONTAINER-BASED, NOT VIEWPORT-BASED. The block is a
+ * `@container/hero`, and every layout decision below queries that container, so
+ * the hero composes correctly inside a narrow content column on a wide screen
+ * (a docs preview, a two-column marketing page, a CMS slot) — not just at
+ * full-bleed viewport width. Thresholds (measured on the container's CONTENT
+ * box, which is how container queries resolve):
+ *
+ *   @lg/hero      512px  past-phone chrome: type ramp, roomier gaps, intrinsic
+ *                        CTA widths, the window's own padding + subtitle.
+ *   @2xl/hero     672px  the outer gutter steps to 48px — below this a 48px
+ *                        inset eats the surface it is meant to frame.
+ *   @[1000px]/hero       the split: copy + CTA rail side by side, and the
+ *                        surface tiles two-up. Chosen from content, not device
+ *                        names — 1000px is the first width where both tiles
+ *                        still clear ~420px, which is what the composed cards
+ *                        need to stay legible (their own threshold is 400px).
+ *                        Below it the hero stacks and folds discussion +
+ *                        activity behind one disclosure.
+ *
+ * The composed children carry their OWN container contexts, so a tile reacts to
+ * the tile, never to the hero and never to the viewport.
  *
  * The seven review phases are a controlled prop; the app owns the state. Acting
  * on the approval controls advances the phase so the hero also reads as
@@ -459,8 +486,10 @@ function PhaseStatus({ meta }: { meta: PhaseMeta }) {
 /* -- CTA ----------------------------------------------------------------- */
 
 function CtaButton({ cta, variant }: { cta: CollabHeroCta; variant: "primary" | "secondary" }) {
+  // Full-bleed and equal-width in a narrow container (two ragged intrinsic
+  // widths read unfinished); intrinsic width again once the hero clears @lg.
   const base =
-    "inline-flex min-h-[44px] items-center justify-center rounded-xl px-5 text-[14px] font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]";
+    "inline-flex min-h-[44px] w-full items-center justify-center rounded-xl px-5 text-[14px] font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] @lg/hero:w-auto";
   const look =
     variant === "primary"
       ? "border border-[color-mix(in_oklab,var(--color-accent)_55%,black)] bg-[linear-gradient(180deg,color-mix(in_oklab,var(--color-accent)_86%,white)_0%,var(--color-accent)_60%)] text-[var(--color-accent-foreground,white)] shadow-[0_1px_0_0_color-mix(in_oklab,white_45%,transparent)_inset,0_8px_22px_-10px_color-mix(in_oklab,var(--color-accent)_80%,transparent)] transition-[transform,filter] hover:brightness-[1.06] motion-safe:hover:-translate-y-px"
@@ -525,7 +554,7 @@ const DEFAULT_PROOF: string[] = [
  *  live surface. Text-only; the check glyph is decorative. */
 function ProofStrip({ items }: { items: string[] }) {
   return (
-    <ul className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-7 sm:gap-y-2">
+    <ul className="flex flex-col gap-2 @lg/hero:flex-row @lg/hero:flex-wrap @lg/hero:gap-x-7 @lg/hero:gap-y-2">
       {items.map((t) => (
         <li key={t} className="flex items-center gap-2.5 text-[13.5px] text-[var(--color-fg)]">
           <span
@@ -599,6 +628,12 @@ export function CollaborativeLaunchHero({
     onChange: onPhaseChange,
   });
 
+  // Narrow-container disclosure for the discussion + activity column. Its
+  // trigger is `@[1000px]/hero:hidden`, so once the hero's own container clears
+  // 1000px the panel is unconditionally shown by CSS and this state is inert —
+  // the two-column desktop composition is unchanged.
+  const secondary = useDisclosure({ idPrefix: "collab-hero-secondary" });
+
   // Anchor the demo timeline. Starts at the fixed epoch for a deterministic SSR
   // render, then re-anchors to the real clock after mount so "3m ago" reads
   // naturally. Never reads the clock during render.
@@ -636,7 +671,13 @@ export function CollaborativeLaunchHero({
     <section
       aria-label="Collaborative launch"
       className={cn(
-        "relative isolate w-full overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6 sm:p-8 lg:p-12",
+        // `@container/hero` makes every rule below react to the width the hero
+        // actually has. The gutter lives on the inner wrapper, not here: an
+        // element is never its own query container, so padding written here
+        // could not respond to `@…/hero` — and container queries resolve
+        // against the CONTENT box, so padding on the container would also skew
+        // every threshold by twice the gutter.
+        "@container/hero relative isolate w-full overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg)]",
         className,
       )}
       style={reduce ? undefined : { transition: "background 200ms ease" }}
@@ -650,13 +691,19 @@ export function CollaborativeLaunchHero({
         <HeroBackdrop />
       )}
 
-      <div className="flex flex-col gap-8 lg:gap-10">
+      <div className="flex flex-col gap-5 p-4 @lg/hero:gap-8 @lg/hero:p-8 @2xl/hero:p-12 @[1000px]/hero:gap-10">
         {/* Copy band — headline/copy on one side, CTAs + current phase on the
-            other, so the marketing row reads wide instead of a thin column. */}
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-10">
-          <div className="flex min-w-0 flex-col gap-4">
+            other, so the marketing row reads wide instead of a thin column. It
+            splits only once the hero's container clears 1000px, which is the
+            first width where the copy column keeps ~520px (a 2-3 line headline)
+            AND the CTA rail keeps its ~340px. In a 782px docs column the band
+            stacks instead — headline, copy, then two equal full-width CTAs with
+            the phase pill on its own line — rather than wrapping the headline
+            to four lines beside a half-empty rail. */}
+        <div className="grid gap-4 @lg/hero:gap-6 @[1000px]/hero:grid-cols-[minmax(0,1fr)_auto] @[1000px]/hero:items-end @[1000px]/hero:gap-10">
+          <div className="flex min-w-0 flex-col gap-3 @lg/hero:gap-4">
             {eyebrow ? (
-              <span className="inline-flex w-fit items-center gap-2 text-[12.5px] font-semibold uppercase tracking-wide text-[var(--color-accent)]">
+              <span className="inline-flex w-fit items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--color-accent)] @lg/hero:text-[12.5px] @lg/hero:tracking-wide">
                 <span className="relative flex h-1.5 w-1.5" aria-hidden>
                   <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent)] opacity-70 motion-safe:animate-ping" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
@@ -665,17 +712,27 @@ export function CollaborativeLaunchHero({
               </span>
             ) : null}
 
-            <h1 className="text-balance text-[clamp(2rem,4.4vw,3.25rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-[var(--color-fg)]">
+            {/* Two clamps rather than one: the narrow ramp starts at 28px and
+                tops out at @lg, where the original desktop ramp resumes. The
+                fluid term is `min(vw, cqw)` so the headline is capped by
+                WHICHEVER is smaller — the screen or the hero's own column. For
+                a full-bleed hero the vw term always wins (cqw ≈ vw), so desktop
+                sizing is byte-for-byte the old ramp; inside a 782px column on a
+                1440px screen the cqw term takes over and the headline sizes to
+                the space it really has instead of to the window. */}
+            <h1 className="text-balance text-[clamp(1.75rem,min(7.5vw,9cqw),2.25rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--color-fg)] @lg/hero:text-[clamp(2rem,min(4.4vw,6cqw),3.25rem)] @lg/hero:leading-[1.05]">
               {headline}
             </h1>
 
             {copy ? (
-              <p className="max-w-[56ch] text-pretty text-[16px] leading-relaxed text-[var(--color-muted)]">{copy}</p>
+              <p className="max-w-[56ch] text-pretty text-[15px] leading-relaxed text-[var(--color-muted)] @lg/hero:text-[16px]">
+                {copy}
+              </p>
             ) : null}
           </div>
 
-          <div className="flex shrink-0 flex-col items-start gap-4 lg:items-end">
-            <div className="flex flex-wrap items-center gap-3">
+          <div className="flex w-full shrink-0 flex-col items-start gap-3 @lg/hero:gap-4 @[1000px]/hero:w-auto @[1000px]/hero:items-end">
+            <div className="flex w-full flex-col gap-2.5 @lg/hero:w-auto @lg/hero:flex-row @lg/hero:flex-wrap @lg/hero:items-center @lg/hero:gap-3">
               {primaryCta ? <CtaButton cta={primaryCta} variant="primary" /> : null}
               {secondaryCta ? <CtaButton cta={secondaryCta} variant="secondary" /> : null}
             </div>
@@ -684,14 +741,14 @@ export function CollaborativeLaunchHero({
         </div>
 
         {/* Proof row — three capability lines that carry the copy region. */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3 @lg/hero:gap-4">
           <div className="h-px w-full bg-[var(--color-border)]" />
           <ProofStrip items={DEFAULT_PROOF} />
         </div>
 
-        {/* Collaboration surface — a full-width app window. On wide screens the
-            pending decision and the discussion tile into two columns so the hero
-            holds a calm height. No overflow/max-height clip: the composed
+        {/* Collaboration surface — a full-width app window. In a wide container
+            the pending decision and the discussion tile into two columns so the
+            hero holds a calm height. No overflow/max-height clip: the composed
             children run Framer `layout` animations that collapse inside a
             constrained scroll ancestor. */}
         <div className="relative min-w-0">
@@ -705,7 +762,7 @@ export function CollaborativeLaunchHero({
           />
           <div className="relative flex min-w-0 flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg)]">
             {/* Window header: who's here + demo badge -------------------- */}
-            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-bg)_45%,var(--color-surface))] px-4 py-3 sm:px-5">
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-bg)_45%,var(--color-surface))] px-3 py-2.5 @lg/hero:px-5 @lg/hero:py-3">
               <span className="flex items-center gap-2.5 text-[13px] font-semibold">
                 <span className="flex items-center gap-1.5" aria-hidden>
                   <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-error)_65%,transparent)]" />
@@ -714,7 +771,12 @@ export function CollaborativeLaunchHero({
                 </span>
                 <span className="flex flex-col leading-tight">
                   <span>Launch review</span>
-                  <span className="text-[11px] font-normal text-[var(--color-muted)]">{dataset.reviewTitle}</span>
+                  {/* The review title repeats verbatim as the sign-off card's own
+                      heading immediately below — in a narrow container that is a
+                      wasted line. */}
+                  <span className="hidden text-[11px] font-normal text-[var(--color-muted)] @lg/hero:block">
+                    {dataset.reviewTitle}
+                  </span>
                 </span>
               </span>
               <span className="flex items-center gap-2.5">
@@ -726,10 +788,10 @@ export function CollaborativeLaunchHero({
               </span>
             </div>
 
-            <div className="flex min-w-0 flex-col gap-4 p-4 sm:p-5">
+            <div className="flex min-w-0 flex-col gap-3 p-2.5 @lg/hero:gap-4 @lg/hero:p-5">
               {/* What's happening + who's writing — full-width status strip.
                   The current phase pill lives once, up in the copy band. */}
-              <div className="flex flex-col gap-3 rounded-xl border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-bg)_45%,var(--color-surface))] p-3">
+              <div className="flex flex-col gap-2 rounded-xl border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-bg)_45%,var(--color-surface))] p-2 @lg/hero:gap-3 @lg/hero:p-3">
                 <p className="flex items-center gap-2 text-[12.5px] text-[var(--color-muted)]">
                   <span
                     className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]"
@@ -746,8 +808,17 @@ export function CollaborativeLaunchHero({
                 />
               </div>
 
-              {/* Decision · discussion — two tiled columns */}
-              <div className="grid min-w-0 gap-4 lg:grid-cols-2 lg:gap-5 lg:items-start">
+              {/* Decision · discussion — two tiled columns once the HERO'S OWN
+                  container clears 1000px (each tile then still keeps ~418px).
+                  Below that the hero shows only the tile the story is about (the
+                  open decision) and folds the discussion + activity behind one
+                  disclosure, instead of stacking three dense tiles into a
+                  ~2400px wall. Gating this on the container rather than the
+                  viewport is the whole fix: at a 1440px viewport a 782px hero
+                  column used to split into two 311px tiles — narrower than a
+                  phone — while the disclosure that exists for exactly that case
+                  stayed switched off because `lg` was "active". */}
+              <div className="grid min-w-0 gap-3 @lg/hero:gap-4 @[1000px]/hero:grid-cols-2 @[1000px]/hero:items-start @[1000px]/hero:gap-5">
                 <div className="flex min-w-0 flex-col gap-4">
                   <ApprovalWorkflow
                     workflow={workflow}
@@ -761,7 +832,65 @@ export function CollaborativeLaunchHero({
                   />
                 </div>
 
-                <div className="flex min-w-0 flex-col gap-4">
+                <button
+                  type="button"
+                  {...secondary.triggerProps}
+                  className="group flex min-h-[48px] w-full items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-accent)_7%,var(--color-surface))] px-3 py-2 text-left outline-none transition-colors hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[1000px]/hero:hidden"
+                >
+                  <span
+                    aria-hidden
+                    className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M4 5h16v10H9l-4 4V5Z"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[13.5px] font-semibold text-[var(--color-fg)]">
+                      {secondary.open ? "Hide" : "Show"} discussion &amp; activity
+                    </span>
+                    <span className="block text-[12px] text-[var(--color-muted)]">
+                      {comments.length} {comments.length === 1 ? "comment" : "comments"}
+                      <span className="whitespace-nowrap">
+                        {" · "}
+                        {events.length} {events.length === 1 ? "update" : "updates"}
+                      </span>
+                    </span>
+                  </span>
+                  <svg
+                    aria-hidden
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    className={cn(
+                      "shrink-0 text-[var(--color-muted)] motion-safe:transition-transform",
+                      secondary.open && "rotate-180",
+                    )}
+                  >
+                    <path
+                      d="m6 9 6 6 6-6"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+
+                <div
+                  id={secondary.panelProps.id}
+                  className={cn(
+                    "min-w-0 flex-col gap-4 @[1000px]/hero:flex",
+                    secondary.open ? "flex" : "hidden",
+                  )}
+                >
                   <CommentThread
                     comments={comments}
                     currentUser={viewer}
@@ -774,10 +903,15 @@ export function CollaborativeLaunchHero({
             </div>
 
             {/* Honesty footer ------------------------------------------- */}
-            <div className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2.5 sm:px-5">
+            <div className="border-t border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 @lg/hero:px-5 @lg/hero:py-2.5">
+              {/* The honesty note stays at every width; only its wording shortens
+                  in a narrow container so it fits one line instead of three. */}
               <p className="inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
-                Demo data - a fictional launch review driven from local state.
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]" aria-hidden />
+                <span className="@lg/hero:hidden">Demo data - a fictional review.</span>
+                <span className="hidden @lg/hero:inline">
+                  Demo data - a fictional launch review driven from local state.
+                </span>
               </p>
             </div>
           </div>

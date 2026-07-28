@@ -165,7 +165,13 @@ export function ControlSegmented<T extends string>({ label, options, value, onCh
     <div
       role="radiogroup"
       aria-label={label}
-      className={cx("inline-flex shrink-0 overflow-hidden rounded-lg border border-[var(--color-border)]", className)}
+      className={cx(
+        // Segment sets can outgrow a phone-width control bar (8-phase heroes do).
+        // Scroll inside the group rather than letting it clip: focused segments are
+        // scrolled into view by the browser, so keyboard reach is unaffected.
+        "inline-flex max-w-full overflow-x-auto overscroll-x-contain rounded-lg border border-[var(--color-border)] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        className,
+      )}
     >
       {options.map((opt) => {
         const on = opt.value === value;
@@ -177,7 +183,7 @@ export function ControlSegmented<T extends string>({ label, options, value, onCh
             aria-checked={on}
             onClick={() => onChange(opt.value)}
             className={cx(
-              "px-2.5 py-1 text-[12px] font-medium transition-colors",
+              "shrink-0 whitespace-nowrap px-2.5 py-1 text-[12px] font-medium transition-colors",
               FOCUS,
               on
                 ? `bg-[color-mix(in_oklab,${TINT}_16%,var(--color-surface))] text-[var(--color-fg)]`

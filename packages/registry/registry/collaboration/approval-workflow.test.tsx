@@ -168,3 +168,79 @@ describe("ApprovalWorkflow", () => {
     }
   });
 });
+
+/* -- responsive contract ------------------------------------------------- */
+
+/** A "·" (or "•") that is its own element inside a flex row becomes its own flex
+ *  item and can wrap onto a line by itself. Separators must always travel with
+ *  the text they separate (or live in plain inline flow). */
+function standaloneSeparatorsInFlex(root: HTMLElement): string[] {
+  const bad: string[] = [];
+  root.querySelectorAll<HTMLElement>("*").forEach((el) => {
+    if (el.children.length > 0) return;
+    const text = (el.textContent ?? "").trim();
+    if (text !== "·" && text !== "•") return;
+    const parentClass = el.parentElement?.className ?? "";
+    if (/(^|[\s:])flex(\s|$)/.test(String(parentClass))) bad.push(String(parentClass));
+  });
+  return bad;
+}
+
+describe("ApprovalWorkflow — responsive contract", () => {
+  it("never renders a bare separator as its own flex item", () => {
+    const { container } = render(
+      <ApprovalWorkflow workflow={baseWorkflow({ createdAt: T - 86_400_000 })} currentUserId="you" />,
+    );
+    expect(standaloneSeparatorsInFlex(container)).toEqual([]);
+  });
+
+  it("clamps a reviewer note to two lines instead of truncating it to a few characters", () => {
+    const wf = baseWorkflow();
+    wf.stages[1].reviewers[0] = {
+      id: "you",
+      name: "You Reviewer",
+      decision: "changes_requested",
+      decidedAt: T - 60_000,
+      note: "The CTA copy overflows on the narrow breakpoint and the plan grid needs another pass.",
+    };
+    const { container } = render(<ApprovalWorkflow workflow={wf} currentUserId="you" />);
+    const note = container.querySelector<HTMLElement>('[data-part="reviewer-note"]');
+    expect(note).not.toBeNull();
+    const cls = String(note?.className);
+    // Two clamped lines on a full-width row — never a single-line ellipsis.
+    expect(cls).toMatch(/line-clamp-2/);
+    expect(cls).not.toMatch(/(^|\s)truncate(\s|$)/);
+    expect(cls).toMatch(/w-full/);
+  });
+
+  it("reacts to its own width, not the viewport", () => {
+    const { container } = render(<ApprovalWorkflow workflow={baseWorkflow()} currentUserId="you" />);
+    const root = container.firstElementChild as HTMLElement;
+    expect(String(root.className)).toMatch(/@container\/workflow/);
+    // An element is never its own query container — the root must not query itself.
+    expect(String(root.className)).not.toMatch(/@\[400px\]\/workflow:/);
+    container.querySelectorAll("*").forEach((el) => {
+      expect(String(el.className)).not.toMatch(/(^|\s)(sm|md|lg|xl|2xl):/);
+    });
+  });
+
+  it("tiles the stage actions two-up with 44px targets in a narrow card, and inline once the card has room", () => {
+    const { container } = render(<ApprovalWorkflow workflow={baseWorkflow()} currentUserId="you" />);
+    const group = container.querySelector<HTMLElement>('[aria-label="Stage actions"]');
+    expect(group).not.toBeNull();
+    const cls = String(group?.className);
+    expect(cls).toMatch(/grid-cols-2/);
+    expect(cls).toMatch(/@\[400px\]\/workflow:flex/);
+    const approve = screen.getByRole("button", { name: /^Approve$/i });
+    expect(String(approve.className)).toMatch(/min-h-\[44px\]/);
+  });
+
+  it("gives the title its own full-width line in a narrow card so it is never squeezed by the status pill", () => {
+    const { container } = render(<ApprovalWorkflow workflow={baseWorkflow()} currentUserId="you" />);
+    const heading = screen.getByRole("heading", { name: /Launch approval/ });
+    const row = heading.parentElement?.parentElement;
+    expect(String(row?.className)).toMatch(/flex-col/);
+    expect(String(row?.className)).toMatch(/@\[400px\]\/workflow:flex-row/);
+    expect(container).toBeTruthy();
+  });
+});

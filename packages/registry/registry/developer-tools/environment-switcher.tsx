@@ -341,7 +341,7 @@ function TypeBadge({ env }: { env: Environment }) {
   const svars = statusVars(prod ? "warning" : "neutral");
   return (
     <span
-      className="inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10.5px] font-bold uppercase leading-none tracking-wide"
+      className="inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[11px] @sm/env:text-[10.5px] font-bold uppercase leading-none tracking-wide"
       style={{ color: svars.color, borderColor: svars.border, background: svars.bg }}
     >
       {prod ? <ShieldGlyph /> : null}
@@ -425,17 +425,21 @@ function OptionRow({
       </span>
 
       <span className="flex min-w-0 flex-1 flex-col gap-1">
-        <span className="flex flex-wrap items-center gap-1.5">
-          <span className="truncate text-[13.5px] font-semibold text-[var(--color-fg)]">{env.name}</span>
+        <span className="flex min-w-0 flex-wrap items-center gap-1.5">
+          {/* Wrap to a second line before ever ellipsising a name down to a few
+              characters — an option label must stay recognisable at 320px. */}
+          <span className="line-clamp-2 min-w-0 break-words text-[13.5px] font-semibold text-[var(--color-fg)]">
+            {env.name}
+          </span>
           <TypeBadge env={env} />
           {badges.favorite ? (
-            <span className="inline-flex items-center gap-0.5 text-[10.5px] font-medium text-[var(--color-accent)]" title="Favorite">
+            <span className="inline-flex items-center gap-0.5 text-[11px] @sm/env:text-[10.5px] font-medium text-[var(--color-accent)]" title="Favorite">
               <StarGlyph />
               <span className="sr-only">Favorite</span>
             </span>
           ) : null}
           {badges.recent && !badges.favorite ? (
-            <span className="text-[10.5px] font-medium text-[var(--color-muted)]">Recent</span>
+            <span className="text-[11px] @sm/env:text-[10.5px] font-medium text-[var(--color-muted)]">Recent</span>
           ) : null}
         </span>
 
@@ -469,7 +473,7 @@ function OptionRow({
         ) : null}
       </span>
 
-      <span className="ml-auto flex shrink-0 items-center gap-2">
+      <span className="ml-auto flex shrink-0 flex-wrap items-center justify-end gap-1.5 @sm/env:gap-2">
         {typeof env.health === "number" ? <HealthMeter value={env.health} reduce={reduce} /> : null}
         <StatusChip status={env.status} reduce={reduce} />
       </span>
@@ -482,7 +486,7 @@ function HealthMeter({ value, reduce }: { value: number; reduce: boolean }) {
   const tone: StatusTone = clamped >= 80 ? "success" : clamped >= 50 ? "warning" : "error";
   const svars = statusVars(tone);
   return (
-    <span className="hidden items-center gap-1 sm:inline-flex" title={`Health ${clamped}%`}>
+    <span className="hidden items-center gap-1 @sm/env:inline-flex" title={`Health ${clamped}%`}>
       <span className="h-1.5 w-10 overflow-hidden rounded-full bg-[var(--color-bg-secondary)]" aria-hidden>
         <motion.span
           className="block h-full rounded-full"
@@ -492,7 +496,7 @@ function HealthMeter({ value, reduce }: { value: number; reduce: boolean }) {
           transition={{ duration: 0.5, ease: EASE }}
         />
       </span>
-      <span className="text-[10.5px] font-medium tabular-nums text-[var(--color-muted)]">
+      <span className="text-[11px] @sm/env:text-[10.5px] font-medium tabular-nums text-[var(--color-muted)]">
         <span className="sr-only">Health </span>
         {clamped}%
       </span>
@@ -792,7 +796,18 @@ export function EnvironmentSwitcher({
       const t = triggerRef.current;
       if (!t) return;
       const r = t.getBoundingClientRect();
-      const next = { top: r.bottom + 8, left: r.left, right: window.innerWidth - r.right };
+      // Mirror the popup's own CSS width so the anchor can be clamped inside the
+      // viewport: on a phone the trigger's left edge plus a 92vw popup would
+      // otherwise hang off the right edge and create horizontal overflow.
+      const vw = window.innerWidth;
+      const popupWidth = Math.min(vw * 0.92, 416);
+      const gutter = 8;
+      const maxOffset = Math.max(gutter, vw - popupWidth - gutter);
+      const next = {
+        top: r.bottom + 8,
+        left: Math.min(Math.max(gutter, r.left), maxOffset),
+        right: Math.min(Math.max(gutter, vw - r.right), maxOffset),
+      };
       setAnchor((prev) =>
         prev && prev.top === next.top && prev.left === next.left && prev.right === next.right ? prev : next,
       );
@@ -861,7 +876,12 @@ export function EnvironmentSwitcher({
     <div
       ref={rootRef}
       onBlur={onRootBlur}
-      className={cn("relative inline-block w-full max-w-[420px] text-left", className)}
+      // `@container/env` — the trigger, the error banner, and the confirm dialog
+      // all size themselves from the switcher's OWN width, so a switcher in a
+      // 311px tile of a 1440px page wraps like it does on a phone. The root is
+      // already `relative`, so `container-type: inline-size` changes nothing for
+      // the absolutely-positioned confirm dialog it contains.
+      className={cn("@container/env relative inline-block w-full max-w-[420px] text-left", className)}
     >
       {/* Trigger -------------------------------------------------------- */}
       <button
@@ -876,7 +896,12 @@ export function EnvironmentSwitcher({
         onClick={() => (open ? closeMenu(false) : openMenu())}
         onKeyDown={onTriggerKeyDown}
         className={cn(
-          "flex min-h-[44px] w-full items-center gap-2.5 rounded-xl border px-3 py-2 text-left transition-colors",
+          // A narrow switcher wraps: the status chip drops to its own line
+          // rather than squeezing the environment name down to an ellipsis. From
+          // `@sm/env` (384px of switcher width) up the row is the single-line
+          // layout it has always been.
+          "flex min-h-[44px] w-full flex-wrap items-center gap-x-2.5 gap-y-1.5 rounded-xl border px-3 py-2 text-left transition-colors",
+          "@sm/env:flex-nowrap @sm/env:gap-y-0",
           "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-fg)] shadow-[var(--shadow-sm)]",
           "hover:border-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-55",
           focusRing,
@@ -887,9 +912,9 @@ export function EnvironmentSwitcher({
         </span>
 
         <span className="flex min-w-0 flex-1 flex-col">
-          <span className="text-[10.5px] font-medium uppercase tracking-wide text-[var(--color-muted)]">{label}</span>
-          <span className="flex items-center gap-1.5">
-            <span className="truncate text-[13.5px] font-semibold text-[var(--color-fg)]">
+          <span className="text-[11px] @sm/env:text-[10.5px] font-medium uppercase tracking-wide text-[var(--color-muted)]">{label}</span>
+          <span className="flex min-w-0 flex-wrap items-center gap-1.5">
+            <span className="min-w-0 truncate text-[13.5px] font-semibold text-[var(--color-fg)]">
               {switching
                 ? `Switching to ${(switchingId && environments.find((e) => e.id === switchingId)?.name) ?? selectedEnv?.name ?? "…"}`
                 : selectedEnv?.name ?? placeholder}
@@ -898,7 +923,14 @@ export function EnvironmentSwitcher({
           </span>
         </span>
 
-        {selectedEnv && !switching ? <StatusChip status={selectedEnv.status} reduce={reduce} /> : null}
+        {selectedEnv && !switching ? (
+          <span
+            data-slot="trigger-status"
+            className="order-last w-full @sm/env:order-none @sm/env:w-auto"
+          >
+            <StatusChip status={selectedEnv.status} reduce={reduce} />
+          </span>
+        ) : null}
 
         <motion.span
           className="shrink-0 text-[var(--color-muted)]"
@@ -924,19 +956,19 @@ export function EnvironmentSwitcher({
           >
             <div
               role="alert"
-              className="mt-2 flex items-start gap-2 rounded-lg border px-3 py-2 text-[12.5px]"
+              className="mt-2 flex flex-wrap items-start gap-x-2 gap-y-2 rounded-lg border px-3 py-2 text-[12.5px]"
               style={{ color: statusVars("error").color, borderColor: statusVars("error").border, background: statusVars("error").bg }}
             >
               <span className="mt-0.5 shrink-0">
                 <WarnGlyph />
               </span>
-              <span className="flex-1 text-[var(--color-fg)]">{error}</span>
+              <span className="min-w-0 flex-1 break-words text-[var(--color-fg)]">{error}</span>
               {onRetry ? (
                 <button
                   type="button"
                   onClick={onRetry}
                   className={cn(
-                    "inline-flex min-h-[32px] shrink-0 items-center gap-1 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[12px] font-semibold text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]",
+                    "inline-flex min-h-[44px] w-full shrink-0 items-center justify-center gap-1 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[12px] font-semibold text-[var(--color-fg)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] @sm/env:min-h-[32px] @sm/env:w-auto @sm/env:justify-start",
                     focusRing,
                   )}
                 >
@@ -961,7 +993,12 @@ export function EnvironmentSwitcher({
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
                   transition={{ duration: 0.16, ease: EASE }}
-                  className="z-[60] w-[min(92vw,26rem)] origin-top overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg,var(--shadow-md))]"
+                  // The popup is portaled to <body>, so it is NOT inside the
+                  // root's container. It declares its own container under the
+                  // SAME name, so shared pieces (TypeBadge, HealthMeter, the
+                  // option badges) resolve against whichever `env` container
+                  // actually wraps them — the trigger's root, or this popup.
+                  className="@container/env z-[60] w-[min(92vw,26rem)] origin-top overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-lg,var(--shadow-md))]"
                   style={{
                     position: "fixed",
                     top: anchor.top,
@@ -992,7 +1029,7 @@ export function EnvironmentSwitcher({
                   onKeyDown={onSearchKeyDown}
                   placeholder="Search environments…"
                   className={cn(
-                    "min-h-[40px] w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] py-2 pl-8 pr-2 text-[13px] text-[var(--color-fg)] placeholder:text-[var(--color-muted)]",
+                    "min-h-[44px] w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] py-2 pl-8 pr-2 text-[13px] text-[var(--color-fg)] placeholder:text-[var(--color-muted)] @sm/env:min-h-[40px]",
                     focusRing,
                   )}
                 />
@@ -1005,7 +1042,8 @@ export function EnvironmentSwitcher({
               id={listboxId}
               role="listbox"
               aria-label={`${label} options`}
-              className="max-h-[19rem] overflow-y-auto overflow-x-hidden p-1"
+              // Never taller than half the (often short) phone viewport.
+              className="max-h-[min(19rem,50vh)] overflow-y-auto overflow-x-hidden p-1"
             >
               {flat.length === 0 ? (
                 <p className="px-3 py-6 text-center text-[12.5px] text-[var(--color-muted)]">
@@ -1057,7 +1095,7 @@ export function EnvironmentSwitcher({
                   });
                   return section.label ? (
                     <div key={section.label + si} role="group" aria-label={section.label}>
-                      <div className="px-2.5 pb-1 pt-2 text-[10.5px] font-semibold uppercase tracking-wide text-[var(--color-muted)]" aria-hidden>
+                      <div className="px-2.5 pb-1 pt-2 text-[11px] @sm/env:text-[10.5px] font-semibold uppercase tracking-wide text-[var(--color-muted)]" aria-hidden>
                         {section.label}
                       </div>
                       {body}
@@ -1093,7 +1131,9 @@ export function EnvironmentSwitcher({
               aria-labelledby={`${baseId}-confirm-title`}
               aria-describedby={`${baseId}-confirm-desc`}
               onKeyDown={onConfirmKeyDown}
-              className="w-[min(92vw,26rem)] rounded-xl border p-4 shadow-[var(--shadow-lg,var(--shadow-md))]"
+              // Bounded by its container, not the viewport: the switcher can sit
+              // inside a narrow `overflow-hidden` card that would clip 92vw.
+              className="w-[min(100%,26rem)] rounded-xl border p-4 shadow-[var(--shadow-lg,var(--shadow-md))]"
               style={{ borderColor: statusVars("warning").border, background: "var(--color-surface)" }}
             >
               <div className="flex items-start gap-2.5">
@@ -1118,13 +1158,13 @@ export function EnvironmentSwitcher({
                   </p>
                 </div>
               </div>
-              <div className="mt-4 flex flex-wrap justify-end gap-2">
+              <div className="mt-4 flex flex-col gap-2 @sm/env:flex-row @sm/env:flex-wrap @sm/env:justify-end">
                 <button
                   ref={confirmCancelRef}
                   type="button"
                   onClick={cancelProduction}
                   className={cn(
-                    "inline-flex min-h-[40px] items-center rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-[13px] font-medium text-[var(--color-fg)] transition-colors hover:bg-[var(--color-bg-secondary)]",
+                    "inline-flex min-h-[44px] items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-[13px] font-medium text-[var(--color-fg)] transition-colors hover:bg-[var(--color-bg-secondary)] @sm/env:min-h-[40px] @sm/env:justify-start",
                     focusRing,
                   )}
                 >
@@ -1134,7 +1174,7 @@ export function EnvironmentSwitcher({
                   type="button"
                   onClick={confirmProduction}
                   className={cn(
-                    "inline-flex min-h-[40px] items-center gap-1.5 rounded-lg border px-3 py-2 text-[13px] font-semibold transition-colors",
+                    "inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-[13px] font-semibold transition-colors @sm/env:min-h-[40px] @sm/env:justify-start",
                     focusRing,
                   )}
                   style={{

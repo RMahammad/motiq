@@ -230,7 +230,19 @@ export function LivePresenceStack({
       className={cn("relative inline-flex w-fit items-center", className)}
     >
       {/* the pill: avatar cluster + expand affordance */}
-      <div className="relative flex items-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] py-1 pl-2 pr-1 shadow-[var(--shadow-sm)]">
+      {/* The whole pill is one control (see the overlay button below), so its
+          touch height is padded to 44px for coarse pointers and returns to the
+          tighter desktop rhythm for fine ones.
+
+          This is the one rule here that is not a container query, on purpose.
+          The stack's root is intrinsically sized (`inline-flex w-fit` — it must
+          hug the avatars), and `container-type: inline-size` makes a
+          shrink-to-fit box size as if it had no contents, collapsing it to zero
+          width. So the stack cannot host a size container, and it has no
+          layout that depends on width anyway: the row is always one line and
+          overflows into the "+N" chip. What is left is a touch-comfort rule,
+          and the honest signal for that is the pointer, not a width. */}
+      <div className="relative flex items-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] py-1.5 pl-2 pr-1 shadow-[var(--shadow-sm)] pointer-fine:py-1">
         <ul role="list" className="flex items-center">
           <AnimatePresence initial={false} mode="popLayout">
             {visible.map((user, i) => (
@@ -317,7 +329,9 @@ export function LivePresenceStack({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.18, ease: EASE }}
-            className="absolute left-0 top-full z-50 mt-2 min-w-[248px] origin-top-left rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-1.5 shadow-[var(--shadow-lg)]"
+            // Width is capped to the viewport so the panel can never push the page
+            // sideways (or be clipped) on a 320px screen.
+            className="absolute left-0 top-full z-50 mt-2 w-[min(248px,calc(100vw-2rem))] origin-top-left rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-1.5 shadow-[var(--shadow-lg)]"
           >
             <p className="px-2 pb-1 pt-1.5 text-[11px] font-medium uppercase tracking-wide text-[var(--color-muted)]">
               {groupLabel}
@@ -334,7 +348,7 @@ export function LivePresenceStack({
                         onSelect?.(user.id);
                         close(true);
                       }}
-                      className="flex w-full items-center gap-2.5 rounded-lg px-2 py-1.5 text-left outline-none hover:bg-[var(--color-bg-secondary)] focus-visible:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+                      className="flex min-h-[44px] w-full items-center gap-2.5 rounded-lg px-2 py-1.5 text-left outline-none hover:bg-[var(--color-bg-secondary)] focus-visible:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
                     >
                       <span className="relative">
                         <AvatarFace user={user} size={30} decorative />

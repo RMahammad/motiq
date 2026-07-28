@@ -57,6 +57,11 @@ import { ToolCallActivityCatalogPreview } from "./catalog/tool-call-activity";
 import { TwoFactorSetupFlowCatalogPreview } from "./catalog/two-factor-setup-flow";
 import { TypingAndPresenceCatalogPreview } from "./catalog/typing-and-presence";
 import { WebhookEventStreamCatalogPreview } from "./catalog/webhook-event-stream";
+import { LoomDraftCatalogPreview } from "./catalog/loom-draft";
+import { CopperplateHatchCatalogPreview } from "./catalog/copperplate-hatch";
+import { ChartRecorderCatalogPreview } from "./catalog/chart-recorder";
+import { RisoRegistrationCatalogPreview } from "./catalog/riso-registration";
+import { CoreStrataCatalogPreview } from "./catalog/core-strata";
 
 /**
  * Compact catalog adapters (docs/55 §7). Each renders the REAL component (or an
@@ -124,4 +129,9 @@ export const catalogPreviewMap: Record<string, React.ComponentType> = {
   "two-factor-setup-flow": TwoFactorSetupFlowCatalogPreview,
   "typing-and-presence": TypingAndPresenceCatalogPreview,
   "webhook-event-stream": WebhookEventStreamCatalogPreview,
+  "loom-draft": LoomDraftCatalogPreview,
+  "copperplate-hatch": CopperplateHatchCatalogPreview,
+  "chart-recorder": ChartRecorderCatalogPreview,
+  "riso-registration": RisoRegistrationCatalogPreview,
+  "core-strata": CoreStrataCatalogPreview,
 };

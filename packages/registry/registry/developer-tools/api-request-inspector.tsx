@@ -473,9 +473,11 @@ function Highlight({ text, needle }: { text: string; needle: string }): React.Re
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--color-surface)]";
 
+// Narrow-first: comfortable 44px targets, back to the compact desktop toolbar
+// density from `@md/inspector` (448px of inspector width) up.
 const toolBtn = cn(
-  "inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)]",
-  "px-2 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors",
+  "inline-flex min-h-[44px] items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] @md/inspector:min-h-0",
+  "px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors @md/inspector:px-2",
   "hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]",
   "disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-fg)]",
   focusRing,
@@ -509,11 +511,21 @@ function KeyValueRows({
   wrap: boolean;
 }) {
   return (
-    <dl className="m-0 grid grid-cols-[minmax(6rem,auto)_1fr] gap-x-4 gap-y-1.5 font-mono text-[12.5px]">
+    // A narrow inspector stacks each key above its value (a 6rem key column
+    // would leave a header value ~4 characters wide); `@md/inspector:contents`
+    // hands the pairs straight back to the two-column grid from
+    // `@md/inspector` (448px) up, unchanged.
+    <dl
+      data-slot="kv-rows"
+      className={cn(
+        "m-0 flex flex-col gap-2.5 font-mono text-[12.5px]",
+        "@md/inspector:grid @md/inspector:grid-cols-[minmax(6rem,auto)_1fr] @md/inspector:gap-x-4 @md/inspector:gap-y-1.5",
+      )}
+    >
       {entries.map(([k, v]) => {
         const redacted = shouldRedact({ key: k, value: v, section, path: k });
         return (
-          <React.Fragment key={k}>
+          <div key={k} className="min-w-0 @md/inspector:contents">
             <dt className="min-w-0 select-text break-words font-medium text-[var(--color-muted)]">
               <Highlight text={k} needle={needle} />
             </dt>
@@ -543,7 +555,7 @@ function KeyValueRows({
                 </span>
               )}
             </dd>
-          </React.Fragment>
+          </div>
         );
       })}
     </dl>
@@ -558,15 +570,24 @@ function BodyBlock({
   text,
   needle,
   wrap,
+  label,
 }: {
   text: string;
   needle: string;
   wrap: boolean;
+  /** Accessible name for the scrollable payload region. */
+  label: string;
 }) {
   return (
+    // A scrollable region needs a name and a keyboard route into it (WCAG 2.1.1):
+    // `tabIndex` lets a keyboard user scroll a long unwrapped payload.
     <pre
+      role="group"
+      aria-label={label}
+      tabIndex={0}
       className={cn(
-        "m-0 max-h-[22rem] overflow-auto rounded-lg bg-[var(--color-bg)] p-3 font-mono text-[12.5px] leading-relaxed text-[var(--color-fg)]",
+        "m-0 max-h-[16rem] overflow-auto rounded-lg bg-[var(--color-bg)] p-3 font-mono text-[12.5px] leading-relaxed text-[var(--color-fg)] @md/inspector:max-h-[22rem]",
+        focusRing,
         wrap ? "whitespace-pre-wrap break-words" : "whitespace-pre",
       )}
     >
@@ -614,7 +635,7 @@ function InspectorSection({
           type="button"
           {...triggerProps}
           className={cn(
-            "flex w-full items-center gap-2 px-3.5 py-2.5 text-left text-[13px] font-semibold text-[var(--color-fg)] transition-colors",
+            "flex min-h-[44px] w-full items-center gap-2 px-3.5 py-2.5 text-left text-[13px] font-semibold text-[var(--color-fg)] transition-colors @md/inspector:min-h-0",
             "hover:bg-[var(--color-bg-secondary)]",
             focusRing,
           )}
@@ -627,7 +648,7 @@ function InspectorSection({
           >
             <Chevron />
           </motion.span>
-          <span>{title}</span>
+          <span className="min-w-0 break-words">{title}</span>
           {countLabel ? (
             <span className="rounded-full bg-[var(--color-bg-secondary)] px-1.5 py-0.5 text-[11px] font-medium tabular-nums text-[var(--color-muted)]">
               {countLabel}
@@ -799,14 +820,18 @@ export function ApiRequestInspector({
   return (
     <div
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)]",
+        // `@container/inspector` — every threshold below reads the inspector's
+        // OWN width, not the viewport's, so a request rendered in a 311px tile of
+        // a 1440px page wraps its URL and stacks its key/value rows exactly as it
+        // does on a phone.
+        "@container/inspector flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)]",
         "bg-[var(--color-surface)] text-[var(--color-fg)] shadow-[var(--shadow-md)]",
         className,
       )}
     >
       {/* Header ---------------------------------------------------------- */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3.5 py-2.5">
-        <span className="flex items-center gap-2 text-[13px] font-semibold">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3.5 py-2.5">
+        <span className="flex min-w-0 items-center gap-2 break-words text-[13px] font-semibold">
           <span className="relative grid h-2.5 w-2.5 place-items-center" aria-hidden>
             <span className="h-2 w-2 rounded-full" style={{ background: svars.color }} />
             {inFlight && !reduce ? (
@@ -822,21 +847,25 @@ export function ApiRequestInspector({
           {title}
         </span>
 
-        {/* status chip: icon + text label, tinted via tokens — never colour alone */}
-        <span
-          className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold"
-          style={{ color: svars.color, borderColor: svars.border, background: svars.bg }}
-        >
-          {state === "timeout" ? <ClockGlyph /> : null}
-          {(state === "server_error" || state === "client_error") ? <AlertGlyph /> : null}
-          {meta.label}
-        </span>
-
-        {request.environment ? (
-          <span className="rounded-full border border-[var(--color-border)] px-2 py-0.5 text-[11px] font-medium text-[var(--color-muted)]">
-            {request.environment}
+        {/* Status + environment are one wrapping group so neither can strand as a
+            lone chip on its own line when the header wraps on a phone. */}
+        <span data-slot="inspector-meta" className="inline-flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1.5">
+          {/* status chip: icon + text label, tinted via tokens — never colour alone */}
+          <span
+            className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold"
+            style={{ color: svars.color, borderColor: svars.border, background: svars.bg }}
+          >
+            {state === "timeout" ? <ClockGlyph /> : null}
+            {(state === "server_error" || state === "client_error") ? <AlertGlyph /> : null}
+            {meta.label}
           </span>
-        ) : null}
+
+          {request.environment ? (
+            <span className="rounded-full border border-[var(--color-border)] px-2 py-0.5 text-[11px] font-medium text-[var(--color-muted)]">
+              {request.environment}
+            </span>
+          ) : null}
+        </span>
 
         {request.timestamp != null ? (
           <time
@@ -849,7 +878,7 @@ export function ApiRequestInspector({
       </div>
 
       {/* Request line ---------------------------------------------------- */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-[var(--color-border)] px-3.5 py-2.5">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 border-b border-[var(--color-border)] px-3.5 py-2.5">
         <span
           className="inline-flex shrink-0 items-center rounded-md border px-2 py-1 font-mono text-[12px] font-bold uppercase leading-none"
           style={{ color: methodVars.color, borderColor: methodVars.border, background: methodVars.bg }}
@@ -857,8 +886,15 @@ export function ApiRequestInspector({
           {request.method}
         </span>
 
-        <span className="min-w-0 flex-1 overflow-x-auto">
-          <code className="select-text whitespace-nowrap font-mono text-[13px] text-[var(--color-fg)]">
+        {/* In a narrow inspector the URL takes a full line of its own and wraps, instead of
+            being crushed into a ~30px horizontal scroller between the method chip
+            and the status/duration/copy cluster. `@md/inspector` and up is unchanged: one
+            row, one line, scrolls horizontally. */}
+        <span
+          data-slot="request-url"
+          className="order-last w-full min-w-0 @md/inspector:order-none @md/inspector:w-auto @md/inspector:flex-1 @md/inspector:overflow-x-auto"
+        >
+          <code className="select-text break-all font-mono text-[13px] text-[var(--color-fg)] @md/inspector:whitespace-nowrap @md/inspector:break-normal">
             {request.url}
           </code>
         </span>
@@ -879,11 +915,13 @@ export function ApiRequestInspector({
 
         <button
           type="button"
-          className={cn(toolBtn, "shrink-0")}
+          // Hugs the right edge of the narrow row (where the URL no longer sits)
+          // and returns to its inline position from `@md/inspector` up.
+          className={cn(toolBtn, "ml-auto shrink-0 @md/inspector:ml-0")}
           onClick={() => doCopy(request.url, "URL")}
         >
           {copied && copyLabel === "URL" ? <CheckGlyph /> : <CopyGlyph />}
-          <span className="hidden sm:inline">{copied && copyLabel === "URL" ? "Copied" : "URL"}</span>
+          <span className="sr-only @md/inspector:not-sr-only">{copied && copyLabel === "URL" ? "Copied" : "URL"}</span>
         </button>
       </div>
 
@@ -932,7 +970,9 @@ export function ApiRequestInspector({
 
       {/* Toolbar --------------------------------------------------------- */}
       <div className="flex flex-wrap items-center gap-2 border-b border-[var(--color-border)] px-3.5 py-2">
-        <label className="relative flex min-w-[9rem] flex-1 items-center">
+        {/* Full-width in a narrow inspector: a search field squeezed beside six
+            controls is unusable. It shares the row again from `@md/inspector` up. */}
+        <label className="relative flex w-full items-center @md/inspector:w-auto @md/inspector:min-w-[9rem] @md/inspector:flex-1">
           <span className="pointer-events-none absolute left-2 text-[var(--color-muted)]">
             <SearchGlyph />
           </span>
@@ -943,7 +983,7 @@ export function ApiRequestInspector({
             onChange={(e) => setRawQuery(e.target.value)}
             placeholder="Search payload…"
             className={cn(
-              "w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] py-1 pl-8 pr-2",
+              "min-h-[44px] w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] py-1 pl-8 pr-2 @md/inspector:min-h-0",
               "text-[12.5px] text-[var(--color-fg)] placeholder:text-[var(--color-muted)]",
               focusRing,
             )}
@@ -965,7 +1005,7 @@ export function ApiRequestInspector({
               aria-pressed={activeView === v}
               onClick={() => setView(v)}
               className={cn(
-                "px-2.5 py-1 text-[12px] font-medium capitalize transition-colors",
+                "min-h-[44px] px-3 py-1 text-[12px] font-medium capitalize transition-colors @md/inspector:min-h-0 @md/inspector:px-2.5",
                 focusRing,
                 activeView === v
                   ? "bg-[var(--color-surface)] text-[var(--color-fg)]"
@@ -978,8 +1018,8 @@ export function ApiRequestInspector({
         </div>
 
         <button type="button" className={toolBtn} onClick={() => setWrap(!isWrapped)} aria-pressed={isWrapped}>
-          <span className="hidden sm:inline">{isWrapped ? "Wrapped" : "Wrap"}</span>
-          <span className="sm:hidden">↵</span>
+          <span className="sr-only @md/inspector:not-sr-only">{isWrapped ? "Wrapped" : "Wrap"}</span>
+          <span className="@md/inspector:hidden">↵</span>
         </button>
 
         <button
@@ -988,7 +1028,7 @@ export function ApiRequestInspector({
           onClick={() => doCopy(requestToText(request, activeView, formatTimestamp, shouldRedact), "request")}
         >
           {copied && copyLabel === "request" ? <CheckGlyph /> : <CopyGlyph />}
-          <span className="hidden sm:inline">{copied && copyLabel === "request" ? "Copied" : "Request"}</span>
+          <span className="sr-only @md/inspector:not-sr-only">{copied && copyLabel === "request" ? "Copied" : "Request"}</span>
         </button>
 
         <button
@@ -998,20 +1038,20 @@ export function ApiRequestInspector({
           onClick={() => response && doCopy(responseToText(response, activeView, shouldRedact), "response")}
         >
           {copied && copyLabel === "response" ? <CheckGlyph /> : <CopyGlyph />}
-          <span className="hidden sm:inline">{copied && copyLabel === "response" ? "Copied" : "Response"}</span>
+          <span className="sr-only @md/inspector:not-sr-only">{copied && copyLabel === "response" ? "Copied" : "Response"}</span>
         </button>
 
         {onRetry && (state === "client_error" || state === "server_error" || state === "timeout" || state === "cancelled") ? (
           <button type="button" className={cn(toolBtn, "font-semibold")} onClick={onRetry}>
             <RetryGlyph />
-            <span className="hidden sm:inline">Retry</span>
+            <span className="sr-only @md/inspector:not-sr-only">Retry</span>
           </button>
         ) : null}
 
         {onCancel && inFlight ? (
           <button type="button" className={toolBtn} onClick={onCancel}>
             <CancelGlyph />
-            <span className="hidden sm:inline">Cancel</span>
+            <span className="sr-only @md/inspector:not-sr-only">Cancel</span>
           </button>
         ) : null}
       </div>
@@ -1056,7 +1096,7 @@ export function ApiRequestInspector({
             reduce={reduce}
           >
             {renderBody ? renderBody(bodyToText(request.body, "requestBody", activeView, shouldRedact), { kind: "request" }) : (
-              <BodyBlock text={reqBodyText} needle={needle} wrap={isWrapped} />
+              <BodyBlock text={reqBodyText} needle={needle} wrap={isWrapped} label="Request body" />
             )}
           </InspectorSection>
         ) : null}
@@ -1165,7 +1205,7 @@ export function ApiRequestInspector({
             reduce={reduce}
           >
             {renderBody ? renderBody(bodyToText(response!.body, "responseBody", activeView, shouldRedact), { kind: "response" }) : (
-              <BodyBlock text={resBodyText} needle={needle} wrap={isWrapped} />
+              <BodyBlock text={resBodyText} needle={needle} wrap={isWrapped} label="Response body" />
             )}
           </InspectorSection>
         ) : null}

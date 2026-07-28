@@ -1,0 +1,2286 @@
+<title>Motiq Motion Lab — Media in Motion</title>
+
+<style>
+  :root {
+    color-scheme: light dark;
+    --color-bg: #f7f9fc;
+    --color-bg-elevated: #fbfcfe;
+    --color-surface: #ffffff;
+    --color-surface-2: #eef2f8;
+    --color-border: #dce4ef;
+    --color-border-strong: #c3cfdf;
+    --color-fg: #101828;
+    --color-fg-secondary: #344054;
+    --color-muted: #667085;
+    --color-accent: #315fea;
+    --color-accent-text: #244fd1;
+    --color-cyan: #009fb3;
+    --color-coral: #e9564a;
+    --color-success: #12b76a;
+    --color-warning: #b54708;
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+    --dur-fast: 120ms;
+    --dur-normal: 220ms;
+    --dur-slow: 360ms;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #080c14;
+      --color-bg-elevated: #0d1420;
+      --color-surface: #111827;
+      --color-surface-2: #192337;
+      --color-border: #263449;
+      --color-border-strong: #354863;
+      --color-fg: #f8fafc;
+      --color-fg-secondary: #cbd5e1;
+      --color-muted: #9caabd;
+      --color-accent: #4f7cff;
+      --color-accent-text: #7f9fff;
+      --color-cyan: #22c7d9;
+      --color-coral: #ff6b5e;
+      --color-success: #32d583;
+      --color-warning: #f6b94a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --color-bg: #080c14;
+    --color-bg-elevated: #0d1420;
+    --color-surface: #111827;
+    --color-surface-2: #192337;
+    --color-border: #263449;
+    --color-border-strong: #354863;
+    --color-fg: #f8fafc;
+    --color-fg-secondary: #cbd5e1;
+    --color-muted: #9caabd;
+    --color-accent: #4f7cff;
+    --color-accent-text: #7f9fff;
+    --color-cyan: #22c7d9;
+    --color-coral: #ff6b5e;
+    --color-success: #32d583;
+    --color-warning: #f6b94a;
+  }
+  :root[data-theme="light"] {
+    --color-bg: #f7f9fc;
+    --color-bg-elevated: #fbfcfe;
+    --color-surface: #ffffff;
+    --color-surface-2: #eef2f8;
+    --color-border: #dce4ef;
+    --color-border-strong: #c3cfdf;
+    --color-fg: #101828;
+    --color-fg-secondary: #344054;
+    --color-muted: #667085;
+    --color-accent: #315fea;
+    --color-accent-text: #244fd1;
+    --color-cyan: #009fb3;
+    --color-coral: #e9564a;
+    --color-success: #12b76a;
+    --color-warning: #b54708;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  * { box-sizing: border-box; }
+
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ---------- header ---------- */
+  .lab-header { margin-bottom: 56px; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--color-accent-text);
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+  .lab-header h1 {
+    font-size: clamp(34px, 5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+    font-weight: 750;
+  }
+  .thesis {
+    color: var(--color-fg-secondary);
+    font-size: 17px;
+    max-width: 640px;
+    margin: 0 0 26px;
+  }
+  .index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .index a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-fg-secondary);
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    border-radius: 999px;
+    padding: 7px 14px;
+    transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  }
+  .index a b { color: var(--color-accent-text); font-weight: 600; }
+  .index a:hover {
+    border-color: var(--color-accent);
+    color: var(--color-fg);
+    transform: translateY(-1px);
+  }
+
+  /* ---------- section chrome ---------- */
+  .lab { margin-bottom: 72px; scroll-margin-top: 24px; }
+  .lab-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .lab-num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 3px 8px;
+  }
+  .lab-head h2 {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .lab-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-cyan);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+  .lab-sub {
+    width: 100%;
+    margin: 4px 0 0;
+    color: var(--color-muted);
+    font-size: 14.5px;
+    max-width: 720px;
+  }
+  .lab-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 1020px) {
+    .lab-body { grid-template-columns: 1fr; }
+  }
+
+  .stage {
+    position: relative;
+    min-height: 420px;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .stage:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .hint {
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    z-index: 30;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    background: color-mix(in srgb, var(--color-bg-elevated) 78%, transparent);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 5px 11px;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+  }
+
+  /* ---------- spec rail ---------- */
+  .rail { display: grid; gap: 14px; }
+  .spec {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+  }
+  .spec h3 {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-accent-text);
+    margin: 0 0 9px;
+    font-weight: 650;
+  }
+  .spec p { margin: 0; font-size: 13.5px; color: var(--color-fg-secondary); }
+  .spec ol, .spec ul { margin: 0; padding-left: 18px; font-size: 13px; color: var(--color-fg-secondary); display: grid; gap: 6px; }
+  .spec li b { color: var(--color-fg); font-weight: 600; }
+  .spec pre {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    line-height: 1.65;
+    color: var(--color-fg-secondary);
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .spec pre .k { color: var(--color-accent-text); }
+  .spec pre .t { color: var(--color-cyan); }
+  .spec pre .c { color: var(--color-muted); }
+
+  /* ---------- 01 orbital gallery ---------- */
+  .og-scene {
+    position: absolute;
+    inset: 0 0 52px 0;
+    perspective: 1150px;
+    display: grid;
+    place-items: center;
+  }
+  .og-scale {
+    position: relative;
+    width: 0; height: 0;
+    transform-style: preserve-3d;
+  }
+  @media (max-width: 620px) {
+    .og-scale { transform: scale(0.68); }
+  }
+  .og-world {
+    position: absolute;
+    transform-style: preserve-3d;
+  }
+  .og-card {
+    position: absolute;
+    left: -95px;
+    top: -125px;
+    width: 190px;
+    height: 250px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border-strong);
+    box-shadow: 0 18px 40px -18px rgba(2, 6, 16, 0.55);
+    will-change: transform;
+  }
+  .og-art { position: absolute; inset: 0; width: 100%; height: 82%; object-fit: cover; }
+  .og-cap {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 18%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--color-fg);
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    white-space: nowrap;
+  }
+  .og-cap span { font-family: var(--font-mono); font-size: 10px; color: var(--color-muted); }
+  .og-dim {
+    position: absolute;
+    inset: 0;
+    background: var(--color-bg);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .og-floor {
+    position: absolute;
+    left: 50%; bottom: 40px;
+    width: 560px; height: 110px;
+    transform: translateX(-50%);
+    background: radial-gradient(50% 50% at 50% 50%, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 70%);
+    filter: blur(4px);
+    pointer-events: none;
+  }
+  .og-bar {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 18px;
+    border-top: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 86%, transparent);
+    backdrop-filter: blur(8px);
+    z-index: 20;
+  }
+  .og-bar .og-t { font-size: 13px; font-weight: 650; }
+  .og-bar .og-i { font-family: var(--font-mono); font-size: 11px; color: var(--color-muted); }
+  .og-bar .og-k { margin-left: auto; font-family: var(--font-mono); font-size: 10.5px; color: var(--color-muted); letter-spacing: 0.06em; }
+  #og-stage { cursor: grab; }
+  #og-stage.dragging { cursor: grabbing; }
+  #og-stage.dragging .og-card { pointer-events: none; }
+
+  /* ---------- 02 flow warp ---------- */
+  #fw-stage { height: 460px; cursor: crosshair; }
+  #fw-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .fw-title {
+    position: absolute;
+    top: 18px; left: 18px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .fw-title .a {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: rgba(240, 247, 255, 0.75);
+    text-transform: uppercase;
+  }
+  .fw-title .b {
+    font-size: 20px;
+    font-weight: 700;
+    color: #f5f9ff;
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 18px rgba(3, 8, 20, 0.6);
+  }
+
+  /* ---------- 03 velocity marquee ---------- */
+  #mq-stage {
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 0 56px;
+  }
+  .mq-row { overflow: hidden; width: 100%; }
+  .mq-track {
+    display: flex;
+    gap: 18px;
+    width: max-content;
+    will-change: transform;
+    padding: 6px 0;
+  }
+  .mq-card {
+    position: relative;
+    width: 168px;
+    flex: none;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    transition: transform var(--dur-normal) var(--ease), box-shadow var(--dur-normal) var(--ease), border-color var(--dur-normal) var(--ease);
+  }
+  .mq-card canvas { display: block; width: 100%; height: 104px; }
+  .mq-card .mq-label {
+    padding: 8px 12px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--color-fg-secondary);
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .mq-card .mq-label span { font-family: var(--font-mono); font-size: 10px; color: var(--color-muted); }
+  .mq-card:hover {
+    transform: translateY(-6px) scale(1.04);
+    border-color: var(--color-accent);
+    box-shadow: 0 20px 38px -18px rgba(3, 8, 22, 0.5);
+    z-index: 5;
+  }
+  .mq-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: none;
+    height: 58px;
+    padding: 0 22px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-muted);
+    font-size: 14px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    transition: transform var(--dur-normal) var(--ease), color var(--dur-normal) var(--ease), border-color var(--dur-normal) var(--ease);
+  }
+  .mq-chip svg { width: 20px; height: 20px; }
+  .mq-chip:hover {
+    color: var(--color-accent-text);
+    border-color: var(--color-accent);
+    transform: translateY(-4px);
+  }
+  .mq-meter {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--color-muted);
+    letter-spacing: 0.08em;
+    background: color-mix(in srgb, var(--color-bg-elevated) 78%, transparent);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 5px 11px;
+    pointer-events: none;
+  }
+  .mq-meter b { color: var(--color-cyan); font-weight: 600; }
+
+  /* ---------- 04 filmstrip ---------- */
+  #fs-stage {
+    height: 520px;
+    display: flex;
+    flex-direction: column;
+    touch-action: pan-y;
+  }
+  .fs-preview {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .fs-preview canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .fs-readout {
+    position: absolute;
+    top: 14px; left: 14px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #eef4ff;
+    background: rgba(6, 10, 20, 0.55);
+    border: 1px solid rgba(160, 186, 224, 0.25);
+    border-radius: var(--radius-sm);
+    padding: 7px 12px;
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+  }
+  .fs-readout .tc { letter-spacing: 0.06em; }
+  .fs-readout .ph { color: var(--color-warning); text-transform: uppercase; font-size: 10px; letter-spacing: 0.12em; }
+  .fs-rec {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--color-success);
+  }
+  .fs-strip-wrap {
+    position: relative;
+    height: 116px;
+    flex: none;
+    background: var(--color-surface);
+    padding: 12px 16px 26px;
+    cursor: ew-resize;
+  }
+  .fs-strip {
+    position: relative;
+    display: flex;
+    gap: 3px;
+    height: 100%;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .fs-thumb {
+    flex: 1;
+    min-width: 0;
+    position: relative;
+    opacity: 0.62;
+    transition: opacity var(--dur-fast) var(--ease);
+  }
+  .fs-thumb canvas { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .fs-thumb.active { opacity: 1; }
+  .fs-thumb.active::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--color-accent);
+    border-radius: 3px;
+    pointer-events: none;
+  }
+  .fs-ticks {
+    position: absolute;
+    left: 16px; right: 16px; bottom: 10px;
+    height: 8px;
+    background: repeating-linear-gradient(to right, var(--color-border-strong) 0 1px, transparent 1px calc(100% / 48));
+    pointer-events: none;
+  }
+  .fs-playhead {
+    position: absolute;
+    top: 6px;
+    bottom: 4px;
+    width: 2px;
+    margin-left: -1px;
+    background: var(--color-accent);
+    z-index: 12;
+    pointer-events: none;
+    will-change: left;
+  }
+  .fs-playhead::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px; height: 12px;
+    border-radius: 3px;
+    background: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 25%, transparent);
+  }
+
+  /* ---------- 05 compare reveal ---------- */
+  #cr-stage { height: 460px; cursor: ew-resize; }
+  .cr-layer { position: absolute; inset: 0; }
+  .cr-layer canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #cr-top { will-change: clip-path; }
+  .cr-divider {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 2px;
+    margin-left: -1px;
+    background: color-mix(in srgb, var(--color-coral) 85%, white);
+    z-index: 10;
+    will-change: left;
+    pointer-events: none;
+  }
+  .cr-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 2px solid var(--color-coral);
+    background: color-mix(in srgb, var(--color-bg-elevated) 82%, transparent);
+    color: var(--color-coral);
+    display: grid;
+    place-items: center;
+    cursor: ew-resize;
+    pointer-events: auto;
+    padding: 0;
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--color-coral) 18%, transparent),
+                0 0 26px color-mix(in srgb, var(--color-coral) 45%, transparent);
+    backdrop-filter: blur(4px);
+    transition: box-shadow var(--dur-normal) var(--ease);
+  }
+  .cr-handle:hover, .cr-handle:focus-visible {
+    box-shadow: 0 0 0 9px color-mix(in srgb, var(--color-coral) 24%, transparent),
+                0 0 40px color-mix(in srgb, var(--color-coral) 60%, transparent);
+  }
+  .cr-handle:focus-visible { outline: 2px solid var(--color-coral); outline-offset: 3px; }
+  .cr-label {
+    position: absolute;
+    top: 16px;
+    z-index: 8;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(6, 10, 20, 0.55);
+    border: 1px solid rgba(160, 186, 224, 0.3);
+    color: #eef4ff;
+    backdrop-filter: blur(6px);
+    transition: opacity var(--dur-slow) var(--ease);
+    pointer-events: none;
+  }
+  .cr-label.v1 { left: 16px; }
+  .cr-label.v2 { right: 16px; }
+  .cr-label b { color: var(--color-cyan); font-weight: 600; }
+
+  /* ---------- footer ---------- */
+  .lab-footer {
+    border-top: 1px solid var(--color-border);
+    padding-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-muted);
+  }
+  .lab-footer b { color: var(--color-fg-secondary); font-weight: 600; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 1ms !important; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="lab-header">
+    <p class="eyebrow">Motiq Motion Lab — Batch 07</p>
+    <h1>Media in Motion</h1>
+    <p class="thesis">Five gallery, carousel and image-effect prototypes with real physics — the weight, inertia and tactility a media surface needs before we port it to the registry. Every image on this page is generated in-canvas; nothing is fetched.</p>
+    <ul class="index">
+      <li><a href="#orbital-gallery"><b>01</b> orbital-gallery</a></li>
+      <li><a href="#flow-warp-image"><b>02</b> flow-warp-image</a></li>
+      <li><a href="#velocity-marquee"><b>03</b> velocity-marquee</a></li>
+      <li><a href="#filmstrip-scrub"><b>04</b> filmstrip-scrub</a></li>
+      <li><a href="#compare-reveal"><b>05</b> compare-reveal</a></li>
+    </ul>
+  </header>
+
+  <!-- ============ 01 ORBITAL GALLERY ============ -->
+  <section class="lab" id="orbital-gallery" aria-labelledby="og-h">
+    <header class="lab-head">
+      <span class="lab-num">01</span>
+      <h2 id="og-h">orbital-gallery</h2>
+      <span class="lab-tag">3D ring · inertia</span>
+      <p class="lab-sub">Nine media cards on a perspective ring. Grab and flick it — the ring carries momentum and coasts to a stop; the front card sharpens and scales while the rest fall back into haze. Click any card to spring it to the front.</p>
+    </header>
+    <div class="lab-body">
+      <div class="stage" id="og-stage" style="height: 480px;" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Orbital gallery. Use left and right arrow keys to rotate; press a card to focus it.">
+        <div class="og-floor" aria-hidden="true"></div>
+        <div class="og-scene" aria-hidden="true">
+          <div class="og-scale">
+            <div class="og-world" id="og-world"></div>
+          </div>
+        </div>
+        <div class="og-bar">
+          <span class="og-t" id="og-title">—</span>
+          <span class="og-i" id="og-index">— / —</span>
+          <span class="og-k">drag · flick · wheel-x · arrows</span>
+        </div>
+      </div>
+      <aside class="rail">
+        <div class="spec">
+          <h3>Niche</h3>
+          <p>Grid galleries read as inventory; a ring with momentum reads as a collection you handle. Built for template showcases, artwork portfolios and case-study switchers where six to twelve items deserve equal billing — the category that drives reactbits' circular-gallery traffic.</p>
+        </div>
+        <div class="spec">
+          <h3>Choreography</h3>
+          <ol class="chor">
+            <li><b>Idle drift</b> — ring eases toward 0.14 rad/s after 2.5 s without input.</li>
+            <li><b>Grab</b> — pointer locks 1:1 at 0.0045 rad/px; release velocity sampled with a 25% EMA.</li>
+            <li><b>Coast</b> — flick clamped to ±6 rad/s, decays as v·e^(−2.2t). A hard flick spins roughly two revolutions.</li>
+            <li><b>Focus</b> — click or arrow key springs to the nearest equivalent angle (k=26, c=9.5, slightly under-damped).</li>
+            <li><b>Depth cue</b> — per frame from cos θ: scale 0.94→1.06, dim 0→0.78, blur 0→2.2 px in 0.25 px steps.</li>
+          </ol>
+        </div>
+        <div class="spec">
+          <h3>Props API</h3>
+          <pre><span class="k">interface</span> <span class="t">OrbitalGalleryProps</span> {
+  items: <span class="t">MediaItem</span>[]        <span class="c">// 6–12 cards</span>
+  radius?: <span class="t">number</span>          <span class="c">// px, auto from card width</span>
+  autoRotate?: <span class="t">number</span>      <span class="c">// rad/s, default 0.14</span>
+  friction?: <span class="t">number</span>        <span class="c">// 1/s decay, default 2.2</span>
+  dimRear?: <span class="t">number</span>         <span class="c">// 0–1, default 0.78</span>
+  blurRear?: <span class="t">number</span>        <span class="c">// px, default 2.2</span>
+  onFocus?: (item: <span class="t">MediaItem</span>,
+    index: <span class="t">number</span>) =&gt; <span class="t">void</span>
+}</pre>
+        </div>
+        <div class="spec">
+          <h3>A11y &amp; perf</h3>
+          <ul>
+            <li>Stage is a focusable group; ← / → rotate one card with the same spring. Front card announced via the caption bar (aria-live polite in the React port).</li>
+            <li>Reduced motion: no drift, no inertia — drag maps directly, arrows jump instantly.</li>
+            <li>Only rotateY / translateZ / scale change per frame — fully composited; blur quantized to 0.25 px so the filter string rarely invalidates.</li>
+            <li>rAF stops the moment the stage leaves the viewport.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ 02 FLOW WARP ============ -->
+  <section class="lab" id="flow-warp-image" aria-labelledby="fw-h">
+    <header class="lab-head">
+      <span class="lab-num">02</span>
+      <h2 id="fw-h">flow-warp-image</h2>
+      <span class="lab-tag">canvas mesh · springs</span>
+      <p class="lab-sub">A 32×20 spring mesh over a rendered dusk scene. Sweep across it and the surface parts around the cursor like liquid, snapping back elastically; leave the frame and it throws a radial splash. It swells on its own while idle.</p>
+    </header>
+    <div class="lab-body">
+      <div class="stage" id="fw-stage" tabindex="0" role="img" aria-label="Interactive warping image of a mountain ridge at dusk. Arrow keys move a ripple point; Space triggers a splash.">
+        <canvas id="fw-canvas" aria-hidden="true"></canvas>
+        <div class="fw-title" aria-hidden="true">
+          <div class="a">Field Study 12</div>
+          <div class="b">Ridgeline, dusk</div>
+        </div>
+        <span class="hint">sweep the surface · exit for a splash</span>
+      </div>
+      <aside class="rail">
+        <div class="spec">
+          <h3>Niche</h3>
+          <p>Cursor-reactive imagery is the most-shared effect category on component showcases. This one earns hero sections, gallery covers and 404 pages: the photo stays legible at rest and only liquefies where the pointer moves, so it works over real product art.</p>
+        </div>
+        <div class="spec">
+          <h3>Choreography</h3>
+          <ol class="chor">
+            <li><b>Rest</b> — 33×21 grid nodes at zero offset; the scene is pre-rendered once to an offscreen canvas.</li>
+            <li><b>Push</b> — nodes within a 140 px radius get an impulse away from the pointer, gain 260 + 0.45·|pointer velocity|, falloff (1−d/R)².</li>
+            <li><b>Return</b> — per-node spring, k=90, c=8, dt-integrated; the wake ripples for ~700 ms.</li>
+            <li><b>Splash</b> — on pointer exit, a one-shot radial impulse (230 px radius) blooms from the last position.</li>
+            <li><b>Idle swell</b> — after 3 s a virtual pointer rides a Lissajous path so the surface never dies.</li>
+          </ol>
+        </div>
+        <div class="spec">
+          <h3>Props API</h3>
+          <pre><span class="k">interface</span> <span class="t">FlowWarpImageProps</span> {
+  src: <span class="t">string</span> | <span class="t">HTMLCanvasElement</span>
+  grid?: [<span class="t">number</span>, <span class="t">number</span>]  <span class="c">// default [32, 20]</span>
+  stiffness?: <span class="t">number</span>       <span class="c">// default 90</span>
+  damping?: <span class="t">number</span>         <span class="c">// default 8</span>
+  radius?: <span class="t">number</span>          <span class="c">// px, default 140</span>
+  strength?: <span class="t">number</span>        <span class="c">// gain, default 1</span>
+  splashOnLeave?: <span class="t">boolean</span>  <span class="c">// default true</span>
+  idleWave?: <span class="t">boolean</span>       <span class="c">// default true</span>
+}</pre>
+        </div>
+        <div class="spec">
+          <h3>A11y &amp; perf</h3>
+          <ul>
+            <li>Keyboard: focus the stage, arrows steer a ripple point, Space fires a center splash. The effect is decorative — the image itself carries the alt text.</li>
+            <li>Reduced motion: renders the still image, physics loop never starts.</li>
+            <li>640 sub-rect drawImage calls per frame from one offscreen source; DPR capped at 2. No per-pixel work, no getImageData.</li>
+            <li>touch-action pan-y: horizontal strokes warp, vertical swipes still scroll the page. Loop pauses offscreen.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ 03 VELOCITY MARQUEE ============ -->
+  <section class="lab" id="velocity-marquee" aria-labelledby="mq-h">
+    <header class="lab-head">
+      <span class="lab-num">03</span>
+      <h2 id="mq-h">velocity-marquee</h2>
+      <span class="lab-tag">scroll-reactive · dual row</span>
+      <p class="lab-sub">Two counter-rotating rails that feed on your scroll velocity: shove the page and they surge and shear, stop and they settle back to a calm drift. Hover any card to slow its row and lift it out of the stream.</p>
+    </header>
+    <div class="lab-body">
+      <div class="stage" id="mq-stage" role="group" aria-label="Two-row media marquee. Content repeats decoratively; the same items are listed in the section text.">
+        <div class="mq-row" id="mq-rowA"><div class="mq-track" id="mq-trackA"></div></div>
+        <div class="mq-row" id="mq-rowB"><div class="mq-track" id="mq-trackB"></div></div>
+        <span class="hint">scroll the page fast</span>
+        <span class="mq-meter">boost <b id="mq-meter-v">1.00×</b></span>
+      </div>
+      <aside class="rail">
+        <div class="spec">
+          <h3>Niche</h3>
+          <p>Logo walls and media rails are dead weight until they acknowledge the user. A velocity-reactive marquee makes customer-logo sections, gallery teasers and footer reels feel wired into the page — the scroll is the throttle.</p>
+        </div>
+        <div class="spec">
+          <h3>Choreography</h3>
+          <ol class="chor">
+            <li><b>Drift</b> — rows glide at 36 px/s in opposite directions, offsets wrapped modulo half the track width.</li>
+            <li><b>Charge</b> — page scroll velocity is smoothed with an 8 Hz EMA; boost = 1 + min(|v|·0.006, 5).</li>
+            <li><b>Shear</b> — skewX eases toward clamp(v·0.012, ±10°) at 6 Hz, signed by row direction.</li>
+            <li><b>Relax</b> — boost and skew bleed off over ~600 ms once scrolling stops.</li>
+            <li><b>Hover</b> — the row under the pointer eases to 0.25× speed; the card lifts −6 px, scale 1.04, 220 ms.</li>
+          </ol>
+        </div>
+        <div class="spec">
+          <h3>Props API</h3>
+          <pre><span class="k">interface</span> <span class="t">VelocityMarqueeProps</span> {
+  rows: <span class="t">MarqueeRow</span>[]       <span class="c">// items + direction</span>
+  baseSpeed?: <span class="t">number</span>      <span class="c">// px/s, default 36</span>
+  velocityGain?: <span class="t">number</span>   <span class="c">// default 0.006</span>
+  maxBoost?: <span class="t">number</span>       <span class="c">// default 5</span>
+  maxSkew?: <span class="t">number</span>        <span class="c">// deg, default 10</span>
+  hoverSlow?: <span class="t">number</span>      <span class="c">// default 0.25</span>
+  pauseOffscreen?: <span class="t">boolean</span> <span class="c">// default true</span>
+}</pre>
+        </div>
+        <div class="spec">
+          <h3>A11y &amp; perf</h3>
+          <ul>
+            <li>Duplicated track content is aria-hidden in the React port; one canonical list stays in the DOM for readers.</li>
+            <li>Reduced motion: rows freeze at rest offsets; every item remains hoverable and focusable.</li>
+            <li>One translate3d + skewX per row per frame; card lift is a CSS transition, so hover costs nothing in the rAF loop.</li>
+            <li>Scroll velocity is sampled inside the loop (no scroll listener churn); loop pauses offscreen.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ 04 FILMSTRIP SCRUB ============ -->
+  <section class="lab" id="filmstrip-scrub" aria-labelledby="fs-h">
+    <header class="lab-head">
+      <span class="lab-num">04</span>
+      <h2 id="fs-h">filmstrip-scrub</h2>
+      <span class="lab-tag">timeline · spring playhead</span>
+      <p class="lab-sub">Twelve generated stills of one valley, dawn to midnight. Drag or hover the strip and the big preview scrubs through them like video, with a spring-loaded playhead, frame ticks and a live 24 fps timecode. It scrubs itself when you leave it alone.</p>
+    </header>
+    <div class="lab-body">
+      <div class="stage" id="fs-stage">
+        <div class="fs-preview">
+          <canvas id="fs-canvas" aria-hidden="true"></canvas>
+          <div class="fs-readout" aria-hidden="true">
+            <span class="fs-rec"></span>
+            <span class="tc" id="fs-tc">00:00:00:00</span>
+            <span class="ph" id="fs-phase">dawn</span>
+          </div>
+          <span class="hint">drag or hover the strip</span>
+        </div>
+        <div class="fs-strip-wrap" id="fs-stripwrap" tabindex="0" role="slider" aria-label="Timeline scrubber, 12 frames from dawn to midnight" aria-valuemin="0" aria-valuemax="11" aria-valuenow="0">
+          <div class="fs-strip" id="fs-strip"></div>
+          <div class="fs-ticks" aria-hidden="true"></div>
+          <div class="fs-playhead" id="fs-playhead" aria-hidden="true"></div>
+        </div>
+      </div>
+      <aside class="rail">
+        <div class="spec">
+          <h3>Niche</h3>
+          <p>Product tours and changelogs want the feel of scrubbing a video without shipping one. A filmstrip of stills with a springy playhead covers feature timelines, process breakdowns and before-to-after sequences at a fraction of the bytes.</p>
+        </div>
+        <div class="spec">
+          <h3>Choreography</h3>
+          <ol class="chor">
+            <li><b>Idle scrub</b> — the target position ping-pongs at 0.9 frames/s, so the page moves before anyone touches it.</li>
+            <li><b>Seek</b> — hover or drag sets the target; the playhead chases it with a spring (k=90, c=16, ζ≈0.84) — it lands with one soft overshoot.</li>
+            <li><b>Morph</b> — preview crossfades frame ⌊p⌋ into ⌈p⌉ by the fractional part; adjacent stills share geometry so the blend reads as time passing, not a dissolve.</li>
+            <li><b>Readout</b> — timecode derives from p at 24 fps; phase label (dawn → night) switches with the sun position.</li>
+            <li><b>Resume</b> — autoplay returns 3 s after the last interaction.</li>
+          </ol>
+        </div>
+        <div class="spec">
+          <h3>Props API</h3>
+          <pre><span class="k">interface</span> <span class="t">FilmstripScrubProps</span> {
+  frames: <span class="t">FrameSource</span>[]    <span class="c">// 8–24 stills</span>
+  fps?: <span class="t">number</span>            <span class="c">// timecode base, 24</span>
+  idleSpeed?: <span class="t">number</span>      <span class="c">// frames/s, 0.9</span>
+  spring?: { stiffness: <span class="t">number</span>
+    damping: <span class="t">number</span> }     <span class="c">// 90 / 16</span>
+  hoverScrub?: <span class="t">boolean</span>    <span class="c">// default true</span>
+  loop?: <span class="t">boolean</span>          <span class="c">// ping-pong, true</span>
+  onFrameChange?: (i: <span class="t">number</span>) =&gt; <span class="t">void</span>
+}</pre>
+        </div>
+        <div class="spec">
+          <h3>A11y &amp; perf</h3>
+          <ul>
+            <li>The strip is a real slider: focusable, arrow keys step one frame, Home/End jump to the ends, aria-valuenow tracks the frame.</li>
+            <li>Reduced motion: no autoplay, no spring — the playhead and preview snap directly to the pointer or key press.</li>
+            <li>All 12 frames render once to offscreen canvases; per frame the preview is two drawImage calls. Playhead moves via left on a composited layer.</li>
+            <li>Loop pauses offscreen; thumbnails are static canvases.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ 05 COMPARE REVEAL ============ -->
+  <section class="lab" id="compare-reveal" aria-labelledby="cr-h">
+    <header class="lab-head">
+      <span class="lab-num">05</span>
+      <h2 id="cr-h">compare-reveal</h2>
+      <span class="lab-tag">before / after · elastic</span>
+      <p class="lab-sub">Wireframe pass on the left, finished render on the right — the same scene, same geometry. The divider chases your pointer with a hint of elastic resistance, demos itself with a full sweep on first sight, and double-click snaps it home to 50%.</p>
+    </header>
+    <div class="lab-body">
+      <div class="stage" id="cr-stage" role="group" aria-label="Before and after comparison: design v1 wireframe versus design v2 render.">
+        <div class="cr-layer" id="cr-bottom"><canvas id="cr-canvas-b" aria-hidden="true"></canvas></div>
+        <div class="cr-layer" id="cr-top"><canvas id="cr-canvas-a" aria-hidden="true"></canvas></div>
+        <span class="cr-label v1" id="cr-label1"><b>v1</b> wireframe</span>
+        <span class="cr-label v2" id="cr-label2"><b>v2</b> render</span>
+        <div class="cr-divider" id="cr-divider">
+          <button class="cr-handle" id="cr-handle" role="slider" aria-label="Reveal divider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+            <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
+              <path d="M6 1 L1 7 L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M12 1 L17 7 L12 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+        </div>
+        <span class="hint">drag · double-click for 50%</span>
+      </div>
+      <aside class="rail">
+        <div class="spec">
+          <h3>Niche</h3>
+          <p>Design-refresh announcements, image-pipeline docs and photo-editing landing pages all need a comparator, and most ship a lifeless input range. The self-demonstrating sweep teaches the interaction with zero tooltips.</p>
+        </div>
+        <div class="spec">
+          <h3>Choreography</h3>
+          <ol class="chor">
+            <li><b>Intro sweep</b> — on first viewport entry, once: 50 → 96 → 4 → 50 over 2.6 s, cubic ease per leg. Replays only if it was interrupted.</li>
+            <li><b>Drag</b> — the target tracks the pointer exactly; the divider follows through a spring (k=140, c=18, ζ≈0.76). The lag reads as elastic resistance, the release as a soft snap.</li>
+            <li><b>Snap</b> — double-click sets the target to 50%; the same spring carries it home with one overshoot.</li>
+            <li><b>Labels</b> — v1 / v2 chips fade out when their side narrows past 12%.</li>
+            <li><b>Signature</b> — the coral handle glow is this page's single signature-color moment.</li>
+          </ol>
+        </div>
+        <div class="spec">
+          <h3>Props API</h3>
+          <pre><span class="k">interface</span> <span class="t">CompareRevealProps</span> {
+  before: <span class="t">ReactNode</span>
+  after: <span class="t">ReactNode</span>
+  initial?: <span class="t">number</span>         <span class="c">// %, default 50</span>
+  introSweep?: <span class="t">boolean</span>    <span class="c">// once, default true</span>
+  elasticity?: { stiffness: <span class="t">number</span>
+    damping: <span class="t">number</span> }     <span class="c">// 140 / 18</span>
+  labels?: [<span class="t">string</span>, <span class="t">string</span>]
+  snapOnDoubleClick?: <span class="t">number</span> <span class="c">// %, 50</span>
+  onChange?: (pct: <span class="t">number</span>) =&gt; <span class="t">void</span>
+}</pre>
+        </div>
+        <div class="spec">
+          <h3>A11y &amp; perf</h3>
+          <ul>
+            <li>The handle is a native button with role slider: arrows move 2%, Shift+arrows 10%, aria-valuenow live.</li>
+            <li>Reduced motion: no intro sweep, no spring — the divider maps 1:1 to input.</li>
+            <li>Reveal is a clip-path inset on a composited layer; both scenes are painted once per resize/theme, never per frame.</li>
+            <li>Intro and spring run in one rAF loop that stops offscreen and when settled.</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <footer class="lab-footer">
+    <span><b>Motiq Motion Lab</b> · batch 07 · media in motion</span>
+    <span>prototypes: vanilla JS, zero dependencies</span>
+    <span>constants above are the ship spec</span>
+    <span>next: port to registry as <b>media/*</b></span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ============================================================
+     Shared: tokens, theme watch, reduced motion, loops, IO
+     ============================================================ */
+  var root = document.documentElement;
+  var RMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var reduced = RMQ.matches;
+
+  function hexLuma(hex) {
+    var v = (hex || "").replace("#", "").trim();
+    if (v.length === 3) v = v.split("").map(function (c) { return c + c; }).join("");
+    var n = parseInt(v, 16);
+    if (isNaN(n)) return 0;
+    return 0.2126 * ((n >> 16) & 255) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255);
+  }
+
+  function readTokens() {
+    var cs = getComputedStyle(root);
+    function g(n) { return cs.getPropertyValue(n).trim(); }
+    var bg = g("--color-bg");
+    return {
+      bg: bg,
+      bgElev: g("--color-bg-elevated"),
+      surface: g("--color-surface"),
+      surface2: g("--color-surface-2"),
+      border: g("--color-border"),
+      borderStrong: g("--color-border-strong"),
+      fg: g("--color-fg"),
+      fgSec: g("--color-fg-secondary"),
+      muted: g("--color-muted"),
+      accent: g("--color-accent"),
+      accentText: g("--color-accent-text"),
+      cyan: g("--color-cyan"),
+      coral: g("--color-coral"),
+      dark: hexLuma(bg) < 128
+    };
+  }
+  var T = readTokens();
+
+  var themeSubs = [];
+  function themeChanged() {
+    var next = readTokens();
+    if (next.bg === T.bg && next.accent === T.accent) return;
+    T = next;
+    themeSubs.forEach(function (f) { f(T); });
+  }
+  new MutationObserver(themeChanged).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function () {
+    requestAnimationFrame(themeChanged);
+  });
+
+  var rmSubs = [];
+  RMQ.addEventListener("change", function () {
+    reduced = RMQ.matches;
+    rmSubs.forEach(function (f) { f(reduced); });
+  });
+
+  function makeLoop(fn) {
+    var id = null, last = 0;
+    function frame(ts) {
+      var dt = Math.min(0.05, Math.max(0.001, (ts - last) / 1000));
+      last = ts;
+      fn(dt, ts / 1000);
+      if (id !== null) id = requestAnimationFrame(frame);
+    }
+    return {
+      start: function () {
+        if (id === null) { last = performance.now(); id = requestAnimationFrame(frame); }
+      },
+      stop: function () {
+        if (id !== null) { cancelAnimationFrame(id); id = null; }
+      }
+    };
+  }
+
+  var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
+  var lerp = function (a, b, t) { return a + (b - a) * t; };
+
+  function mulberry32(a) {
+    a |= 0;
+    return function () {
+      a = (a + 0x6D2B79F5) | 0;
+      var t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  /* ============================================================
+     Procedural scene painters
+     ============================================================ */
+  function hsl(c) { return "hsl(" + c[0].toFixed(1) + "," + c[1].toFixed(1) + "%," + c[2].toFixed(1) + "%)"; }
+  function hsla(c, a) { return "hsla(" + c[0].toFixed(1) + "," + c[1].toFixed(1) + "%," + c[2].toFixed(1) + "%," + a + ")"; }
+
+  function grain(ctx, w, h, rnd, n, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    for (var i = 0; i < n; i++) {
+      ctx.fillStyle = rnd() > 0.5 ? "#ffffff" : "#000000";
+      ctx.fillRect(rnd() * w, rnd() * h, 1, 1);
+    }
+    ctx.restore();
+  }
+
+  function vignette(ctx, w, h, a) {
+    var g = ctx.createRadialGradient(w / 2, h / 2, Math.min(w, h) * 0.42, w / 2, h / 2, Math.max(w, h) * 0.78);
+    g.addColorStop(0, "rgba(0,0,0,0)");
+    g.addColorStop(1, "rgba(4,8,16," + a + ")");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  function hsl2rgb(c) {
+    var h = ((c[0] % 360) + 360) % 360, s = c[1] / 100, l = c[2] / 100;
+    var k = function (n) { return (n + h / 30) % 12; };
+    var a = s * Math.min(l, 1 - l);
+    var f = function (n) { return l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1))); };
+    return [f(0) * 255, f(8) * 255, f(4) * 255];
+  }
+  function rgb2hsl(c) {
+    var r = c[0] / 255, g = c[1] / 255, b = c[2] / 255;
+    var mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+    var h = 0, s = 0, l = (mx + mn) / 2, d = mx - mn;
+    if (d > 0.0001) {
+      s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+      if (mx === r) h = (g - b) / d + (g < b ? 6 : 0);
+      else if (mx === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h *= 60;
+    }
+    return [h, s * 100, l * 100];
+  }
+
+  function skyAt(t, light) {
+    var K = [
+      { t: 0.00, top: [222, 58, 12], hor: [36, 72, 50], sun: [42, 95, 72], alt: 0.06 },
+      { t: 0.30, top: [210, 72, 46], hor: [194, 58, 68], sun: [50, 100, 86], alt: 0.85 },
+      { t: 0.62, top: [226, 60, 17], hor: [26, 80, 48], sun: [30, 95, 60], alt: 0.28 },
+      { t: 0.85, top: [224, 48, 9], hor: [218, 42, 17], sun: [208, 28, 88], alt: 0.5 },
+      { t: 1.00, top: [224, 46, 6], hor: [218, 40, 13], sun: [208, 28, 90], alt: 0.66 }
+    ];
+    var a = K[0], b = K[K.length - 1];
+    for (var i = 0; i < K.length - 1; i++) {
+      if (t >= K[i].t && t <= K[i + 1].t) { a = K[i]; b = K[i + 1]; break; }
+    }
+    var u = (t - a.t) / Math.max(0.0001, b.t - a.t);
+    u = clamp(u, 0, 1);
+    // mix in RGB so distant hues cross through neutral haze, never green skies
+    function mix(p, q) {
+      var pr = hsl2rgb(p), qr = hsl2rgb(q);
+      return rgb2hsl([lerp(pr[0], qr[0], u), lerp(pr[1], qr[1], u), lerp(pr[2], qr[2], u)]);
+    }
+    var s = { top: mix(a.top, b.top), hor: mix(a.hor, b.hor), sun: mix(a.sun, b.sun), alt: lerp(a.alt, b.alt, u) };
+    if (light) {
+      s.top[2] = Math.min(86, s.top[2] + 12);
+      s.hor[2] = Math.min(90, s.hor[2] + 9);
+    }
+    return s;
+  }
+
+  function ridgePoints(seed, L, w, h) {
+    var rnd = mulberry32((Math.floor(seed * 131) + L * 977) | 0);
+    var base = h * (0.52 + L * 0.115);
+    var amp = h * (0.045 + L * 0.03);
+    var f1 = 1 + rnd() * 1.2, f2 = 2.6 + rnd() * 2, f3 = 5.5 + rnd() * 3;
+    var p1 = rnd() * 7, p2 = rnd() * 7, p3 = rnd() * 7;
+    var pts = [], n = 72;
+    for (var i = 0; i <= n; i++) {
+      var x = (i / n) * w;
+      var u = (i / n) * Math.PI * 2;
+      var y = base
+        + Math.sin(u * f1 + p1) * amp * 0.6
+        + Math.sin(u * f2 + p2) * amp * 0.32
+        + Math.abs(Math.sin(u * f3 + p3)) * amp * 0.26;
+      pts.push([x, y]);
+    }
+    return pts;
+  }
+
+  function paintLandscape(ctx, w, h, o) {
+    var t = o.t == null ? 0.4 : o.t;
+    var seed = o.seed || 7;
+    var dark = o.dark !== false;
+    var s = skyAt(t, !dark);
+    var rnd = mulberry32(Math.floor(seed * 7919) + 29);
+
+    var g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, hsl(s.top));
+    g.addColorStop(0.58, hsl(s.hor));
+    g.addColorStop(1, hsl([s.hor[0], s.hor[1] * 0.6, Math.max(6, s.hor[2] * 0.45)]));
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    if (t > 0.78) {
+      ctx.save();
+      for (var i = 0; i < 70; i++) {
+        ctx.globalAlpha = 0.15 + rnd() * 0.5;
+        ctx.fillStyle = "#e6efff";
+        ctx.fillRect(rnd() * w, rnd() * h * 0.55, rnd() > 0.9 ? 2 : 1, 1);
+      }
+      ctx.restore();
+    }
+
+    var sx = w * lerp(0.16, 0.84, t);
+    var sy = h * (0.66 - s.alt * 0.5);
+    var glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, w * 0.5);
+    glow.addColorStop(0, hsla(s.sun, 0.5));
+    glow.addColorStop(1, hsla(s.sun, 0));
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, w, h);
+    ctx.beginPath();
+    ctx.arc(sx, sy, Math.max(6, w * 0.045), 0, 7);
+    ctx.fillStyle = hsl([s.sun[0], s.sun[1], Math.min(96, s.sun[2] + 8)]);
+    ctx.fill();
+
+    for (var L = 0; L < 4; L++) {
+      var pts = ridgePoints(seed, L, w, h);
+      var shade = Math.max(4, (dark ? 1 : 1.7) * s.hor[2] * (0.55 - L * 0.13));
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      for (var p = 0; p < pts.length; p++) ctx.lineTo(pts[p][0], pts[p][1]);
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      ctx.fillStyle = hsl([s.hor[0], Math.min(60, s.hor[1] * 0.55), shade]);
+      ctx.fill();
+    }
+
+    grain(ctx, w, h, rnd, Math.floor(w * h / 900), 0.05);
+    vignette(ctx, w, h, dark ? 0.32 : 0.14);
+  }
+
+  function paintGeo(ctx, w, h, o) {
+    var v = o.v || 0;
+    var dark = o.dark !== false;
+    var rnd = mulberry32(101 + v * 53);
+    var hues = [[212, 187], [187, 42], [152, 212]][v % 3];
+
+    var g = ctx.createLinearGradient(0, 0, w, h);
+    g.addColorStop(0, hsl([hues[0], 55, dark ? 16 : 80]));
+    g.addColorStop(1, hsl([hues[0], 60, dark ? 8 : 64]));
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.save();
+    var i;
+    if (v === 0) {
+      var cx = w * 0.38, cy = h * 0.42;
+      for (i = 0; i < 9; i++) {
+        ctx.beginPath();
+        ctx.arc(cx, cy, (i + 1) * Math.min(w, h) * 0.09, 0, 7);
+        ctx.strokeStyle = hsla([hues[i % 3 === 0 ? 1 : 0], 70, dark ? 62 : 38], Math.max(0.08, 0.5 - i * 0.045));
+        ctx.lineWidth = 2 + (i % 3 === 0 ? 5 : 0);
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.arc(w * 0.72, h * 0.72, w * 0.09, 0, 7);
+      ctx.fillStyle = hsla([hues[1], 70, dark ? 60 : 36], 0.85);
+      ctx.fill();
+    } else if (v === 1) {
+      for (i = 0; i < 14; i++) {
+        var bw = w * 0.11;
+        ctx.save();
+        ctx.translate(w / 2, h / 2);
+        ctx.rotate(-0.5);
+        ctx.translate(-w, -h);
+        ctx.fillStyle = hsla([hues[i % 2], 65, dark ? 55 : 40], i % 2 ? 0.14 : 0.32);
+        ctx.fillRect(i * bw * 1.18, 0, bw, h * 2.6);
+        ctx.restore();
+      }
+      ctx.beginPath();
+      ctx.arc(w * 0.3, h * 0.3, w * 0.13, 0, 7);
+      ctx.strokeStyle = hsla([hues[1], 80, dark ? 70 : 34], 0.9);
+      ctx.lineWidth = 5;
+      ctx.stroke();
+    } else {
+      var step = Math.min(w, h) / 13;
+      for (var y = step / 2; y < h; y += step) {
+        for (var x = step / 2; x < w; x += step) {
+          var r = 1.2 + (Math.sin(x * 0.022 + y * 0.013) + 1) * step * 0.17;
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, 7);
+          ctx.fillStyle = hsla([hues[1], 62, dark ? 60 : 36], 0.5);
+          ctx.fill();
+        }
+      }
+    }
+    ctx.restore();
+
+    grain(ctx, w, h, rnd, Math.floor(w * h / 1200), 0.05);
+    vignette(ctx, w, h, dark ? 0.3 : 0.1);
+  }
+
+  function paintCity(ctx, w, h, o) {
+    var dark = o.dark !== false;
+    var rnd = mulberry32(913);
+    var s = skyAt(0.68, !dark);
+
+    var g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, hsl(s.top));
+    g.addColorStop(0.7, hsl(s.hor));
+    g.addColorStop(1, hsl([s.hor[0], s.hor[1] * 0.5, Math.max(6, s.hor[2] * 0.4)]));
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    var sx = w * 0.68, sy = h * 0.5;
+    var glow = ctx.createRadialGradient(sx, sy, 0, sx, sy, w * 0.4);
+    glow.addColorStop(0, hsla(s.sun, 0.45));
+    glow.addColorStop(1, hsla(s.sun, 0));
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, w, h);
+    ctx.beginPath();
+    ctx.arc(sx, sy, w * 0.05, 0, 7);
+    ctx.fillStyle = hsl(s.sun);
+    ctx.fill();
+
+    var horizon = h * 0.58;
+    var x = -w * 0.02;
+    while (x < w) {
+      var bw = w * (0.05 + rnd() * 0.1);
+      var bh = h * (0.12 + rnd() * 0.42);
+      ctx.fillStyle = hsl([222, 35, dark ? 7 : 20]);
+      ctx.fillRect(x, horizon - bh, bw, bh + h);
+      var wx, wy;
+      for (wy = horizon - bh + 6; wy < h * 0.92; wy += 11) {
+        for (wx = x + 4; wx < x + bw - 5; wx += 9) {
+          if (rnd() < 0.32) {
+            ctx.fillStyle = hsla([42, 90, 66], 0.75);
+            ctx.fillRect(wx, wy, 3, 4);
+          }
+        }
+      }
+      x += bw + w * 0.012;
+    }
+
+    grain(ctx, w, h, rnd, Math.floor(w * h / 1000), 0.05);
+    vignette(ctx, w, h, dark ? 0.34 : 0.16);
+  }
+
+  function paintOrbs(ctx, w, h, o) {
+    var dark = o.dark !== false;
+    var rnd = mulberry32(577);
+    ctx.fillStyle = dark ? "#0a101c" : "#dbe6f5";
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.save();
+    ctx.globalCompositeOperation = dark ? "lighter" : "source-over";
+    for (var i = 0; i < 16; i++) {
+      var r = w * (0.05 + rnd() * 0.16);
+      var x = rnd() * w, y = rnd() * h;
+      var hue = i === 7 ? 42 : 188 + rnd() * 34;
+      var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, hsla([hue, 80, dark ? 60 : 52], dark ? 0.5 : 0.32));
+      g.addColorStop(1, hsla([hue, 80, 60], 0));
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, 7);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    for (var k = 0; k < 3; k++) {
+      ctx.beginPath();
+      ctx.arc(w * (0.25 + k * 0.24), h * (0.3 + k * 0.2), w * (0.08 + k * 0.05), 0, 7);
+      ctx.strokeStyle = hsla([200, 60, dark ? 70 : 35], 0.28);
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+
+    grain(ctx, w, h, rnd, Math.floor(w * h / 1100), 0.05);
+    vignette(ctx, w, h, dark ? 0.3 : 0.1);
+  }
+
+  function paintScene(ctx, w, h, d) {
+    ctx.clearRect(0, 0, w, h);
+    var o = { dark: T.dark, seed: d.seed || 7, t: d.t, v: d.v };
+    if (d.kind === "land") paintLandscape(ctx, w, h, o);
+    else if (d.kind === "geo") paintGeo(ctx, w, h, o);
+    else if (d.kind === "city") paintCity(ctx, w, h, o);
+    else paintOrbs(ctx, w, h, o);
+  }
+
+  function paintBlueprint(ctx, w, h, seed) {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = T.bgElev;
+    ctx.fillRect(0, 0, w, h);
+
+    // grid
+    ctx.save();
+    ctx.strokeStyle = T.border;
+    ctx.globalAlpha = 0.55;
+    ctx.lineWidth = 1;
+    var gstep = Math.max(24, Math.round(w / 34));
+    ctx.beginPath();
+    for (var gx = 0; gx <= w; gx += gstep) { ctx.moveTo(gx + 0.5, 0); ctx.lineTo(gx + 0.5, h); }
+    for (var gy = 0; gy <= h; gy += gstep) { ctx.moveTo(0, gy + 0.5); ctx.lineTo(w, gy + 0.5); }
+    ctx.stroke();
+    ctx.restore();
+
+    // horizon guide
+    ctx.save();
+    ctx.setLineDash([6, 6]);
+    ctx.strokeStyle = T.muted;
+    ctx.globalAlpha = 0.7;
+    ctx.beginPath();
+    ctx.moveTo(0, h * 0.52);
+    ctx.lineTo(w, h * 0.52);
+    ctx.stroke();
+    ctx.restore();
+
+    // sun placeholder
+    var t = 0.62;
+    var s = skyAt(t, !T.dark);
+    var sx = w * lerp(0.16, 0.84, t);
+    var sy = h * (0.66 - s.alt * 0.5);
+    ctx.save();
+    ctx.setLineDash([4, 5]);
+    ctx.strokeStyle = T.accentText;
+    ctx.globalAlpha = 0.9;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(sx, sy, Math.max(6, w * 0.045), 0, 7);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(sx - 14, sy); ctx.lineTo(sx + 14, sy);
+    ctx.moveTo(sx, sy - 14); ctx.lineTo(sx, sy + 14);
+    ctx.globalAlpha = 0.5;
+    ctx.stroke();
+    ctx.restore();
+
+    // ridge outlines — same geometry as the render
+    for (var L = 0; L < 4; L++) {
+      var pts = ridgePoints(seed, L, w, h);
+      ctx.save();
+      ctx.beginPath();
+      for (var p = 0; p < pts.length; p++) {
+        if (p === 0) ctx.moveTo(pts[p][0], pts[p][1]);
+        else ctx.lineTo(pts[p][0], pts[p][1]);
+      }
+      ctx.strokeStyle = T.accentText;
+      ctx.globalAlpha = 0.95 - L * 0.16;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+      ctx.fillStyle = T.accent;
+      ctx.globalAlpha = 0.035;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    // annotations
+    ctx.save();
+    ctx.font = "11px " + "ui-monospace, SFMono-Regular, Menlo, monospace";
+    ctx.fillStyle = T.muted;
+    ctx.globalAlpha = 0.95;
+    ctx.fillText("scene-04 / valley — v1 wireframe", 14, 22);
+    ctx.fillText("grad: sky-01 (deferred)", 14, 38);
+    for (var L2 = 0; L2 < 4; L2++) {
+      var pts2 = ridgePoints(seed, L2, w, h);
+      var mid = pts2[Math.floor(pts2.length * (0.22 + L2 * 0.18))];
+      ctx.fillText("L" + L2, mid[0], mid[1] - 8);
+    }
+    // measurement line
+    var my = h - 26;
+    ctx.strokeStyle = T.muted;
+    ctx.globalAlpha = 0.8;
+    ctx.beginPath();
+    ctx.moveTo(w * 0.12, my); ctx.lineTo(w * 0.5, my);
+    ctx.moveTo(w * 0.12, my - 5); ctx.lineTo(w * 0.12, my + 5);
+    ctx.moveTo(w * 0.5, my - 5); ctx.lineTo(w * 0.5, my + 5);
+    ctx.stroke();
+    ctx.fillText("ridge span 38%", w * 0.12, my - 10);
+    ctx.restore();
+  }
+
+  /* ============================================================
+     Demo registry / IntersectionObserver
+     ============================================================ */
+  var demos = [];
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var d = e.target.__demo;
+      if (!d) return;
+      d.visible = e.isIntersecting;
+      if (e.isIntersecting) d.wake(); else d.sleep();
+    });
+  }, { threshold: 0.08 });
+
+  /* ============================================================
+     01 — orbital-gallery
+     ============================================================ */
+  function initOrbital() {
+    var stage = document.getElementById("og-stage");
+    var world = document.getElementById("og-world");
+    var titleEl = document.getElementById("og-title");
+    var idxEl = document.getElementById("og-index");
+
+    var N = 9, STEP = Math.PI * 2 / N, R = 300;
+    var defs = [
+      { kind: "land", t: 0.30, seed: 11, name: "Basin at noon" },
+      { kind: "geo", v: 0, name: "Signal bloom" },
+      { kind: "land", t: 0.62, seed: 23, name: "Ridgeline, dusk" },
+      { kind: "city", name: "Glass district" },
+      { kind: "orbs", name: "Night transit" },
+      { kind: "land", t: 0.08, seed: 31, name: "First light" },
+      { kind: "geo", v: 2, name: "Static tide" },
+      { kind: "land", t: 0.9, seed: 41, name: "Moon interval" },
+      { kind: "geo", v: 1, name: "Coast strata" }
+    ];
+    var cards = [];
+    defs.forEach(function (d, i) {
+      var card = document.createElement("div");
+      card.className = "og-card";
+      card.dataset.i = String(i);
+      var cv = document.createElement("canvas");
+      cv.width = 380; cv.height = 420;
+      cv.className = "og-art";
+      var cap = document.createElement("div");
+      cap.className = "og-cap";
+      var num = document.createElement("span");
+      num.textContent = String(i + 1).padStart(2, "0");
+      cap.appendChild(num);
+      cap.appendChild(document.createTextNode(d.name));
+      var dim = document.createElement("div");
+      dim.className = "og-dim";
+      card.appendChild(cv);
+      card.appendChild(cap);
+      card.appendChild(dim);
+      world.appendChild(card);
+      cards.push({ el: card, cv: cv, dim: dim, def: d, lastBlur: -1 });
+    });
+
+    function paintCards() {
+      cards.forEach(function (c) {
+        paintScene(c.cv.getContext("2d"), 380, 420, c.def);
+      });
+    }
+    paintCards();
+
+    var rot = 0, vel = 0.9, dragging = false, focusTarget = null;
+    var lastInteract = -100;
+    var frontI = -1;
+
+    function render() {
+      var best = -2, bestI = 0;
+      for (var i = 0; i < N; i++) {
+        var a = rot + i * STEP;
+        var c = Math.cos(a);
+        var depth = (c + 1) / 2;
+        var card = cards[i];
+        var s = 0.94 + depth * 0.12;
+        card.el.style.transform = "rotateY(" + a.toFixed(4) + "rad) translateZ(" + R + "px) scale(" + s.toFixed(3) + ")";
+        var blur = Math.round((1 - depth) * 2.2 * 4) / 4;
+        if (blur !== card.lastBlur) {
+          card.el.style.filter = blur > 0.2 ? "blur(" + blur + "px)" : "none";
+          card.lastBlur = blur;
+        }
+        card.dim.style.opacity = ((1 - depth) * 0.78).toFixed(3);
+        if (c > best) { best = c; bestI = i; }
+      }
+      if (bestI !== frontI) {
+        frontI = bestI;
+        titleEl.textContent = cards[bestI].def.name;
+        idxEl.textContent = String(bestI + 1).padStart(2, "0") + " / " + String(N).padStart(2, "0");
+      }
+    }
+
+    var loop = makeLoop(function (dt, now) {
+      if (dragging) {
+        // rotation applied directly in pointermove
+      } else if (focusTarget !== null) {
+        var diff = focusTarget - rot;
+        vel += (diff * 26 - vel * 9.5) * dt;
+        rot += vel * dt;
+        if (Math.abs(diff) < 0.002 && Math.abs(vel) < 0.01) {
+          rot = focusTarget; vel = 0; focusTarget = null;
+        }
+      } else {
+        rot += vel * dt;
+        vel *= Math.exp(-2.2 * dt);
+        if (!reduced && now - lastInteract > 2.5 && Math.abs(vel) < 0.3) {
+          vel += (0.14 - vel) * Math.min(1, dt * 0.9);
+        }
+      }
+      render();
+    });
+
+    function mark() { lastInteract = performance.now() / 1000; }
+
+    var px = 0, pt = 0, moved = 0, pvel = 0, activePointer = null;
+
+    stage.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      dragging = true;
+      focusTarget = null;
+      moved = 0;
+      px = e.clientX;
+      pt = performance.now();
+      pvel = 0;
+      activePointer = e.pointerId;
+      try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+      stage.classList.add("dragging");
+      mark();
+    });
+    stage.addEventListener("pointermove", function (e) {
+      if (!dragging || e.pointerId !== activePointer) return;
+      var nx = e.clientX;
+      var nt = performance.now();
+      var dx = nx - px;
+      var dts = Math.max(0.001, (nt - pt) / 1000);
+      moved += Math.abs(dx);
+      var dr = dx * 0.0045;
+      rot += dr;
+      pvel = 0.75 * pvel + 0.25 * (dr / dts);
+      px = nx; pt = nt;
+      if (reduced) render();
+      mark();
+    });
+    function endDrag(e) {
+      if (!dragging || (e && e.pointerId !== activePointer)) return;
+      dragging = false;
+      stage.classList.remove("dragging");
+      vel = reduced ? 0 : clamp(pvel, -6, 6);
+      mark();
+      if (e && moved < 6) {
+        var el = document.elementFromPoint(e.clientX, e.clientY);
+        var cardEl = el && el.closest ? el.closest(".og-card") : null;
+        if (cardEl && world.contains(cardEl)) focusIndex(parseInt(cardEl.dataset.i, 10));
+      }
+    }
+    stage.addEventListener("pointerup", endDrag);
+    stage.addEventListener("pointercancel", endDrag);
+
+    function focusIndex(i) {
+      var t = -i * STEP;
+      t += Math.round((rot - t) / (Math.PI * 2)) * Math.PI * 2;
+      if (reduced) { rot = t; vel = 0; focusTarget = null; render(); }
+      else { focusTarget = t; }
+      mark();
+    }
+
+    stage.addEventListener("wheel", function (e) {
+      var d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
+      if (!d) return;
+      e.preventDefault();
+      focusTarget = null;
+      rot += d * 0.0022;
+      vel = clamp(vel + d * 0.012, -5, 5);
+      if (reduced) { vel = 0; render(); }
+      mark();
+    }, { passive: false });
+
+    stage.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      var dir = e.key === "ArrowRight" ? 1 : -1;
+      var cur = Math.round(-rot / STEP);
+      focusIndex(((cur + dir) % N + N) % N);
+    });
+
+    render();
+
+    return {
+      el: stage,
+      visible: true,
+      wake: function () { if (reduced) { vel = 0; render(); } else loop.start(); },
+      sleep: function () { loop.stop(); },
+      repaint: function () { paintCards(); frontI = -1; render(); }
+    };
+  }
+
+  /* ============================================================
+     02 — flow-warp-image
+     ============================================================ */
+  function initFlowWarp() {
+    var stage = document.getElementById("fw-stage");
+    var canvas = document.getElementById("fw-canvas");
+    var ctx = canvas.getContext("2d");
+
+    var COLS = 32, ROWS = 20, NX = COLS + 1, NY = ROWS + 1;
+    var nodes = new Float32Array(NX * NY * 4); // ox, oy, vx, vy
+    var W = 0, H = 0, dpr = 1, src = null;
+    var K = 90, C = 8;
+    var pointer = { inside: false, x: 0, y: 0, px: 0, py: 0, speed: 0 };
+    var kb = { x: 0.5, y: 0.5 };
+    var lastInteract = -100;
+
+    function resize() {
+      var r = stage.getBoundingClientRect();
+      if (r.width < 2) return;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = Math.round(r.width * dpr);
+      H = Math.round(r.height * dpr);
+      canvas.width = W;
+      canvas.height = H;
+      src = document.createElement("canvas");
+      src.width = W; src.height = H;
+      paintLandscape(src.getContext("2d"), W, H, { seed: 12, t: 0.62, dark: T.dark });
+      nodes.fill(0);
+      drawMesh();
+    }
+
+    function drawMesh() {
+      if (!src) return;
+      ctx.clearRect(0, 0, W, H);
+      var cw = W / COLS, ch = H / ROWS;
+      for (var j = 0; j < ROWS; j++) {
+        for (var i = 0; i < COLS; i++) {
+          var a = (j * NX + i) * 4;
+          var b = (j * NX + i + 1) * 4;
+          var c2 = ((j + 1) * NX + i) * 4;
+          var dx = i * cw + nodes[a];
+          var dy = j * ch + nodes[a + 1];
+          var dw = cw + nodes[b] - nodes[a];
+          var dh = ch + nodes[c2 + 1] - nodes[a + 1];
+          ctx.drawImage(src, i * cw, j * ch, cw, ch, dx, dy, dw + 0.7, dh + 0.7);
+        }
+      }
+    }
+
+    function splash(x, y, power) {
+      var R2 = 230 * dpr;
+      var cw = W / COLS, ch = H / ROWS;
+      for (var j = 0; j < NY; j++) {
+        for (var i = 0; i < NX; i++) {
+          var nx = i * cw, ny = j * ch;
+          var ddx = nx - x, ddy = ny - y;
+          var d = Math.hypot(ddx, ddy);
+          if (d < R2 && d > 0.001) {
+            var fall = 1 - d / R2;
+            var idx = (j * NX + i) * 4;
+            nodes[idx + 2] += (ddx / d) * fall * fall * power * dpr;
+            nodes[idx + 3] += (ddy / d) * fall * fall * power * dpr;
+          }
+        }
+      }
+    }
+
+    var loop = makeLoop(function (dt, now) {
+      var active = false, pxx = 0, pyy = 0, speed = 0, RAD = 140 * dpr;
+      if (pointer.inside) {
+        pxx = pointer.x; pyy = pointer.y;
+        speed = Math.min(Math.hypot(pointer.x - pointer.px, pointer.y - pointer.py) / dt, 3200 * dpr);
+        pointer.px = pointer.x; pointer.py = pointer.y;
+        active = true;
+      } else if (now - lastInteract > 3) {
+        // idle swell — virtual pointer on a Lissajous path
+        pxx = W * (0.5 + 0.36 * Math.sin(now * 0.7));
+        pyy = H * (0.5 + 0.3 * Math.sin(now * 1.13 + 1.7));
+        speed = 700 * dpr * (0.6 + 0.4 * Math.sin(now * 0.53));
+        RAD = 115 * dpr;
+        active = true;
+      }
+      var cw = W / COLS, ch = H / ROWS;
+      var gain = (260 * dpr + speed * 0.45) * dt;
+      for (var j = 0; j < NY; j++) {
+        for (var i = 0; i < NX; i++) {
+          var idx = (j * NX + i) * 4;
+          var ox = nodes[idx], oy = nodes[idx + 1];
+          var vx = nodes[idx + 2], vy = nodes[idx + 3];
+          if (active) {
+            var nx = i * cw, ny = j * ch;
+            var ddx = nx - pxx, ddy = ny - pyy;
+            var d = Math.hypot(ddx, ddy);
+            if (d < RAD && d > 0.001) {
+              var fall = 1 - d / RAD;
+              var f = fall * fall * gain;
+              vx += (ddx / d) * f;
+              vy += (ddy / d) * f;
+            }
+          }
+          vx += (-K * ox - C * vx) * dt;
+          vy += (-K * oy - C * vy) * dt;
+          ox += vx * dt;
+          oy += vy * dt;
+          nodes[idx] = ox; nodes[idx + 1] = oy;
+          nodes[idx + 2] = vx; nodes[idx + 3] = vy;
+        }
+      }
+      drawMesh();
+    });
+
+    function toLocal(e) {
+      var r = canvas.getBoundingClientRect();
+      return { x: (e.clientX - r.left) * dpr, y: (e.clientY - r.top) * dpr };
+    }
+
+    stage.addEventListener("pointerenter", function (e) {
+      if (reduced) return;
+      var p = toLocal(e);
+      pointer.inside = true;
+      pointer.x = pointer.px = p.x;
+      pointer.y = pointer.py = p.y;
+      lastInteract = performance.now() / 1000;
+    });
+    stage.addEventListener("pointermove", function (e) {
+      if (reduced) return;
+      var p = toLocal(e);
+      pointer.inside = true;
+      pointer.x = p.x; pointer.y = p.y;
+      lastInteract = performance.now() / 1000;
+    });
+    stage.addEventListener("pointerleave", function (e) {
+      if (reduced) return;
+      if (pointer.inside) {
+        var p = toLocal(e);
+        splash(p.x, p.y, 300);
+      }
+      pointer.inside = false;
+      lastInteract = performance.now() / 1000;
+    });
+    stage.addEventListener("keydown", function (e) {
+      if (reduced) return;
+      var step = 0.08, hit = true;
+      if (e.key === "ArrowLeft") kb.x = clamp(kb.x - step, 0.05, 0.95);
+      else if (e.key === "ArrowRight") kb.x = clamp(kb.x + step, 0.05, 0.95);
+      else if (e.key === "ArrowUp") kb.y = clamp(kb.y - step, 0.05, 0.95);
+      else if (e.key === "ArrowDown") kb.y = clamp(kb.y + step, 0.05, 0.95);
+      else if (e.key === " " || e.key === "Enter") { splash(W * kb.x, H * kb.y, 340); e.preventDefault(); lastInteract = performance.now() / 1000; return; }
+      else hit = false;
+      if (hit) {
+        e.preventDefault();
+        splash(W * kb.x, H * kb.y, 130);
+        lastInteract = performance.now() / 1000;
+      }
+    });
+
+    var ro = new ResizeObserver(function () { resize(); });
+    ro.observe(stage);
+    resize();
+
+    return {
+      el: stage,
+      visible: true,
+      wake: function () {
+        if (!src || src.width !== W) resize();
+        if (reduced) { nodes.fill(0); drawMesh(); }
+        else loop.start();
+      },
+      sleep: function () { loop.stop(); },
+      repaint: function () { resize(); }
+    };
+  }
+
+  /* ============================================================
+     03 — velocity-marquee
+     ============================================================ */
+  function initMarquee() {
+    var stage = document.getElementById("mq-stage");
+    var meterEl = document.getElementById("mq-meter-v");
+
+    var mediaDefs = [
+      { kind: "land", t: 0.3, seed: 11, name: "Basin at noon", tag: "RAW" },
+      { kind: "geo", v: 0, name: "Signal bloom", tag: "GEN" },
+      { kind: "land", t: 0.62, seed: 23, name: "Ridgeline, dusk", tag: "RAW" },
+      { kind: "orbs", name: "Night transit", tag: "GEN" },
+      { kind: "geo", v: 1, name: "Coast strata", tag: "GEN" },
+      { kind: "city", name: "Glass district", tag: "RAW" },
+      { kind: "land", t: 0.08, seed: 31, name: "First light", tag: "RAW" },
+      { kind: "geo", v: 2, name: "Static tide", tag: "GEN" },
+      { kind: "land", t: 0.9, seed: 41, name: "Moon interval", tag: "RAW" },
+      { kind: "land", t: 0.66, seed: 53, name: "Amber field", tag: "RAW" }
+    ];
+    var logos = [
+      "Northbeam", "Kelp Audio", "Arcline", "Fjordworks", "Halbach",
+      "Prism & Co", "Tidewater", "Moraine", "Cobalt Labs", "Ostara"
+    ];
+    var MARKS = [
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 4v16" stroke="currentColor" stroke-width="2"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 21 20 H3 Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 18V9M10 18V4M16 18v-8M22 18v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 16a9 9 0 0 1 18 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16" r="2.4" fill="currentColor"/></svg>'
+    ];
+
+    var mediaCanvases = [];
+
+    function buildRowA(track) {
+      track.textContent = "";
+      mediaCanvases = [];
+      for (var copy = 0; copy < 2; copy++) {
+        mediaDefs.forEach(function (d) {
+          var card = document.createElement("div");
+          card.className = "mq-card";
+          if (copy === 1) card.setAttribute("aria-hidden", "true");
+          var cv = document.createElement("canvas");
+          cv.width = 336; cv.height = 208;
+          var label = document.createElement("div");
+          label.className = "mq-label";
+          label.textContent = d.name;
+          var tag = document.createElement("span");
+          tag.textContent = d.tag;
+          label.appendChild(tag);
+          card.appendChild(cv);
+          card.appendChild(label);
+          track.appendChild(card);
+          mediaCanvases.push({ cv: cv, def: d });
+        });
+      }
+    }
+    function buildRowB(track) {
+      track.textContent = "";
+      for (var copy = 0; copy < 2; copy++) {
+        logos.forEach(function (name, i) {
+          var chip = document.createElement("div");
+          chip.className = "mq-chip";
+          if (copy === 1) chip.setAttribute("aria-hidden", "true");
+          chip.innerHTML = MARKS[i % MARKS.length];
+          chip.appendChild(document.createTextNode(name));
+          track.appendChild(chip);
+        });
+      }
+    }
+
+    var rows = [
+      { track: document.getElementById("mq-trackA"), dir: 1, off: 0, loopW: 1, hover: 1, hTarget: 1 },
+      { track: document.getElementById("mq-trackB"), dir: -1, off: 0, loopW: 1, hover: 1, hTarget: 1 }
+    ];
+    buildRowA(rows[0].track);
+    buildRowB(rows[1].track);
+
+    function paintCards() {
+      mediaCanvases.forEach(function (m) {
+        paintScene(m.cv.getContext("2d"), 336, 208, m.def);
+      });
+    }
+    paintCards();
+
+    function measure() {
+      rows.forEach(function (r) {
+        r.loopW = Math.max(1, r.track.scrollWidth / 2 + 9); // half + half the gap
+      });
+    }
+    var ro = new ResizeObserver(measure);
+    ro.observe(rows[0].track);
+    ro.observe(rows[1].track);
+    measure();
+
+    rows.forEach(function (r) {
+      r.track.addEventListener("pointerenter", function () { r.hTarget = 0.25; });
+      r.track.addEventListener("pointerleave", function () { r.hTarget = 1; });
+    });
+
+    var prevY = window.scrollY, sv = 0, boost = 1, skew = 0;
+    var BASE = 36;
+
+    function apply() {
+      rows.forEach(function (r) {
+        var sk = skew * r.dir;
+        r.track.style.transform = "translate3d(" + (-r.off).toFixed(2) + "px,0,0) skewX(" + sk.toFixed(2) + "deg)";
+      });
+    }
+
+    var loop = makeLoop(function (dt) {
+      var y = window.scrollY;
+      var inst = (y - prevY) / dt;
+      prevY = y;
+      sv += (inst - sv) * Math.min(1, dt * 8);
+      var targetBoost = 1 + Math.min(Math.abs(sv) * 0.006, 5);
+      boost += (targetBoost - boost) * Math.min(1, dt * 6);
+      var targetSkew = clamp(sv * 0.012, -10, 10);
+      skew += (targetSkew - skew) * Math.min(1, dt * 6);
+      rows.forEach(function (r) {
+        r.hover += (r.hTarget - r.hover) * Math.min(1, dt * 8);
+        r.off += r.dir * BASE * boost * r.hover * dt;
+        r.off = ((r.off % r.loopW) + r.loopW) % r.loopW;
+      });
+      apply();
+      meterEl.textContent = boost.toFixed(2) + "×";
+    });
+
+    return {
+      el: stage,
+      visible: true,
+      wake: function () {
+        prevY = window.scrollY;
+        if (reduced) {
+          rows.forEach(function (r) { r.track.style.transform = "translate3d(0,0,0)"; });
+          meterEl.textContent = "1.00×";
+        } else loop.start();
+      },
+      sleep: function () { loop.stop(); },
+      repaint: function () { paintCards(); }
+    };
+  }
+
+  /* ============================================================
+     04 — filmstrip-scrub
+     ============================================================ */
+  function initFilmstrip() {
+    var stage = document.getElementById("fs-stage");
+    var preview = document.getElementById("fs-canvas");
+    var pctx = preview.getContext("2d");
+    var stripWrap = document.getElementById("fs-stripwrap");
+    var strip = document.getElementById("fs-strip");
+    var playhead = document.getElementById("fs-playhead");
+    var tcEl = document.getElementById("fs-tc");
+    var phEl = document.getElementById("fs-phase");
+
+    var N = 12, FW = 560, FH = 315, SEED = 5;
+    var frames = [], thumbs = [];
+
+    for (var i = 0; i < N; i++) {
+      var f = document.createElement("canvas");
+      f.width = FW; f.height = FH;
+      frames.push(f);
+      var holder = document.createElement("div");
+      holder.className = "fs-thumb";
+      var tc = document.createElement("canvas");
+      tc.width = 140; tc.height = 84;
+      holder.appendChild(tc);
+      strip.appendChild(holder);
+      thumbs.push({ holder: holder, cv: tc });
+    }
+
+    function paintFrames() {
+      for (var i = 0; i < N; i++) {
+        var t = i / (N - 1);
+        var fx = frames[i].getContext("2d");
+        fx.clearRect(0, 0, FW, FH);
+        paintLandscape(fx, FW, FH, { seed: SEED, t: t, dark: T.dark });
+        thumbs[i].cv.getContext("2d").drawImage(frames[i], 0, 0, 140, 84);
+      }
+    }
+    paintFrames();
+
+    var PW = 0, PH = 0;
+    function resizePreview() {
+      var r = preview.parentElement.getBoundingClientRect();
+      if (r.width < 2) return;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      PW = Math.round(r.width * dpr);
+      PH = Math.round(r.height * dpr);
+      preview.width = PW;
+      preview.height = PH;
+      drawPreview();
+    }
+
+    var p = 0, pv = 0, target = 0, dirp = 1;
+    var lastInteract = -100, dragging = false, activeThumb = -1;
+
+    function drawCover(img) {
+      var s = Math.max(PW / img.width, PH / img.height);
+      var dw = img.width * s, dh = img.height * s;
+      pctx.drawImage(img, (PW - dw) / 2, (PH - dh) / 2, dw, dh);
+    }
+
+    function drawPreview() {
+      if (!PW) return;
+      var i0 = clamp(Math.floor(p), 0, N - 1);
+      var i1 = clamp(Math.ceil(p), 0, N - 1);
+      var frac = p - i0;
+      pctx.globalAlpha = 1;
+      drawCover(frames[i0]);
+      if (i1 !== i0 && frac > 0.001) {
+        pctx.globalAlpha = frac;
+        drawCover(frames[i1]);
+        pctx.globalAlpha = 1;
+      }
+    }
+
+    function phaseName(t) {
+      if (t < 0.12) return "dawn";
+      if (t < 0.42) return "morning";
+      if (t < 0.56) return "midday";
+      if (t < 0.7) return "golden hour";
+      if (t < 0.84) return "dusk";
+      return "night";
+    }
+
+    function updateChrome() {
+      var frac = clamp(p / (N - 1), 0, 1);
+      playhead.style.left = "calc(16px + " + (frac * 100).toFixed(3) + "% * " + ((stripWrap.clientWidth - 32) / Math.max(1, stripWrap.clientWidth)).toFixed(4) + ")";
+      var sec = p;
+      var ss = Math.floor(sec);
+      var ff = Math.floor((sec - ss) * 24);
+      tcEl.textContent = "00:00:" + String(ss).padStart(2, "0") + ":" + String(ff).padStart(2, "0");
+      phEl.textContent = phaseName(frac);
+      var act = Math.round(p);
+      if (act !== activeThumb) {
+        if (activeThumb >= 0) thumbs[activeThumb].holder.classList.remove("active");
+        thumbs[act].holder.classList.add("active");
+        activeThumb = act;
+        stripWrap.setAttribute("aria-valuenow", String(act));
+      }
+    }
+
+    var loop = makeLoop(function (dt, now) {
+      if (!dragging && now - lastInteract > 3) {
+        target += dirp * 0.9 * dt;
+        if (target >= N - 1) { target = N - 1; dirp = -1; }
+        if (target <= 0) { target = 0; dirp = 1; }
+      }
+      pv += ((target - p) * 90 - pv * 16) * dt;
+      p += pv * dt;
+      p = clamp(p, 0, N - 1);
+      drawPreview();
+      updateChrome();
+    });
+
+    function seekFromEvent(e) {
+      var r = strip.getBoundingClientRect();
+      var frac = clamp((e.clientX - r.left) / Math.max(1, r.width), 0, 1);
+      target = frac * (N - 1);
+      lastInteract = performance.now() / 1000;
+      if (reduced) { p = target; pv = 0; drawPreview(); updateChrome(); }
+    }
+
+    stripWrap.addEventListener("pointerdown", function (e) {
+      dragging = true;
+      try { stripWrap.setPointerCapture(e.pointerId); } catch (err) {}
+      seekFromEvent(e);
+    });
+    stripWrap.addEventListener("pointermove", function (e) {
+      if (dragging || e.pointerType === "mouse") seekFromEvent(e);
+    });
+    stripWrap.addEventListener("pointerup", function () { dragging = false; lastInteract = performance.now() / 1000; });
+    stripWrap.addEventListener("pointercancel", function () { dragging = false; });
+
+    stripWrap.addEventListener("keydown", function (e) {
+      var cur = Math.round(target), hit = true;
+      if (e.key === "ArrowLeft") target = clamp(cur - 1, 0, N - 1);
+      else if (e.key === "ArrowRight") target = clamp(cur + 1, 0, N - 1);
+      else if (e.key === "Home") target = 0;
+      else if (e.key === "End") target = N - 1;
+      else hit = false;
+      if (hit) {
+        e.preventDefault();
+        lastInteract = performance.now() / 1000;
+        if (reduced) { p = target; pv = 0; drawPreview(); updateChrome(); }
+      }
+    });
+
+    var ro = new ResizeObserver(function () { resizePreview(); updateChrome(); });
+    ro.observe(preview.parentElement);
+    resizePreview();
+    updateChrome();
+
+    return {
+      el: stage,
+      visible: true,
+      wake: function () {
+        if (reduced) { p = target; pv = 0; drawPreview(); updateChrome(); }
+        else loop.start();
+      },
+      sleep: function () { loop.stop(); },
+      repaint: function () { paintFrames(); drawPreview(); }
+    };
+  }
+
+  /* ============================================================
+     05 — compare-reveal
+     ============================================================ */
+  function initCompare() {
+    var stage = document.getElementById("cr-stage");
+    var top = document.getElementById("cr-top");
+    var cvA = document.getElementById("cr-canvas-a"); // v1 wireframe (top, left side)
+    var cvB = document.getElementById("cr-canvas-b"); // v2 render (bottom)
+    var divider = document.getElementById("cr-divider");
+    var handle = document.getElementById("cr-handle");
+    var label1 = document.getElementById("cr-label1");
+    var label2 = document.getElementById("cr-label2");
+
+    var SEED = 21;
+    var x = 50, v = 0, target = 50;
+    var dragging = false;
+    var introActive = false, introDone = false, intro0 = 0;
+
+    function resize() {
+      var r = stage.getBoundingClientRect();
+      if (r.width < 2) return;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var W = Math.round(r.width * dpr), H = Math.round(r.height * dpr);
+      [cvA, cvB].forEach(function (c) { c.width = W; c.height = H; });
+      paintBlueprint(cvA.getContext("2d"), W, H, SEED);
+      var bx = cvB.getContext("2d");
+      bx.clearRect(0, 0, W, H);
+      paintLandscape(bx, W, H, { seed: SEED, t: 0.62, dark: T.dark });
+      // v2 polish pass: birds
+      bx.save();
+      bx.strokeStyle = "rgba(240,248,255,0.85)";
+      bx.lineWidth = Math.max(1.5, dpr);
+      var flock = [[0.62, 0.24, 9], [0.68, 0.2, 7], [0.57, 0.19, 6]];
+      flock.forEach(function (b) {
+        var fx = W * b[0], fy = H * b[1], s = b[2] * dpr;
+        bx.beginPath();
+        bx.moveTo(fx - s, fy);
+        bx.quadraticCurveTo(fx - s / 2, fy - s * 0.7, fx, fy);
+        bx.quadraticCurveTo(fx + s / 2, fy - s * 0.7, fx + s, fy);
+        bx.stroke();
+      });
+      bx.restore();
+      apply();
+    }
+
+    function apply() {
+      var cx = clamp(x, 0, 100);
+      top.style.clipPath = "inset(0 " + (100 - cx).toFixed(3) + "% 0 0)";
+      divider.style.left = cx.toFixed(3) + "%";
+      handle.setAttribute("aria-valuenow", String(Math.round(cx)));
+      label1.style.opacity = cx > 12 ? "1" : "0";
+      label2.style.opacity = cx < 88 ? "1" : "0";
+    }
+
+    function easeC(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+    function sweepAt(u) {
+      if (u < 0.38) return lerp(50, 96, easeC(u / 0.38));
+      if (u < 0.78) return lerp(96, 4, easeC((u - 0.38) / 0.4));
+      return lerp(4, 50, easeC((u - 0.78) / 0.22));
+    }
+
+    var loop = makeLoop(function (dt, now) {
+      if (introActive) {
+        var u = (now - intro0) / 2.6;
+        if (u >= 1) { introActive = false; introDone = true; target = 50; }
+        else target = sweepAt(u);
+      }
+      v += ((target - x) * 140 - v * 18) * dt;
+      x += v * dt;
+      if (x < 0) { x = 0; v = 0; }
+      if (x > 100) { x = 100; v = 0; }
+      apply();
+    });
+
+    function targetFromEvent(e) {
+      var r = stage.getBoundingClientRect();
+      target = clamp(((e.clientX - r.left) / Math.max(1, r.width)) * 100, 0, 100);
+      if (reduced) { x = target; v = 0; apply(); }
+    }
+
+    stage.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      dragging = true;
+      introActive = false;
+      introDone = true;
+      try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+      targetFromEvent(e);
+    });
+    stage.addEventListener("pointermove", function (e) {
+      if (dragging) targetFromEvent(e);
+    });
+    stage.addEventListener("pointerup", function () { dragging = false; });
+    stage.addEventListener("pointercancel", function () { dragging = false; });
+    stage.addEventListener("dblclick", function () {
+      target = 50;
+      if (reduced) { x = 50; v = 0; apply(); }
+    });
+
+    handle.addEventListener("keydown", function (e) {
+      var step = e.shiftKey ? 10 : 2, hit = true;
+      if (e.key === "ArrowLeft") target = clamp(target - step, 0, 100);
+      else if (e.key === "ArrowRight") target = clamp(target + step, 0, 100);
+      else if (e.key === "Home") target = 0;
+      else if (e.key === "End") target = 100;
+      else hit = false;
+      if (hit) {
+        e.preventDefault();
+        introActive = false; introDone = true;
+        if (reduced) { x = target; v = 0; apply(); }
+      }
+    });
+
+    var ro = new ResizeObserver(function () { resize(); });
+    ro.observe(stage);
+    resize();
+    apply();
+
+    return {
+      el: stage,
+      visible: true,
+      wake: function () {
+        if (reduced) {
+          introDone = true; introActive = false;
+          x = target; v = 0; apply();
+          return;
+        }
+        if (!introDone) { introActive = true; intro0 = performance.now() / 1000; }
+        loop.start();
+      },
+      sleep: function () {
+        loop.stop();
+        if (introActive) { introActive = false; target = 50; } // replay in full next entry
+      },
+      repaint: function () { resize(); }
+    };
+  }
+
+  /* ============================================================
+     boot
+     ============================================================ */
+  demos.push(initOrbital(), initFlowWarp(), initMarquee(), initFilmstrip(), initCompare());
+  demos.forEach(function (d) {
+    d.el.__demo = d;
+    io.observe(d.el);
+    d.wake(); // optimistic start; IO refines within a frame or two
+  });
+
+  themeSubs.push(function () {
+    demos.forEach(function (d) { if (d.repaint) d.repaint(); });
+  });
+  rmSubs.push(function () {
+    demos.forEach(function (d) {
+      d.sleep();
+      if (d.visible) d.wake();
+    });
+  });
+})();
+</script>

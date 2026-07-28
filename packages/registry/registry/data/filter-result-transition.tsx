@@ -422,7 +422,7 @@ export function FilterResultTransition<T>({
         </h3>
 
         {hasFilters ? (
-          <div className="flex flex-1 flex-wrap items-center gap-1.5" role="group" aria-label="Active filters">
+          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5" role="group" aria-label="Active filters">
             <ul className="flex flex-wrap items-center gap-1.5">
               <AnimatePresence initial={false}>
                 {activeFilters!.map((f) => (
@@ -434,7 +434,12 @@ export function FilterResultTransition<T>({
                     exit={suppress ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.16, ease: EASE }}
                   >
-                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] py-0.5 pl-2 pr-0.5 text-[12px] text-[var(--color-fg)]">
+                    {/* One unwrappable unit: the facet name, its value, and the
+                        remove control never split across lines. */}
+                    <span
+                      data-filter-chip=""
+                      className="inline-flex items-center gap-1 whitespace-nowrap rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] py-0.5 pl-2 pr-0.5 text-[12px] text-[var(--color-fg)]"
+                    >
                       {f.group ? <span className="text-[var(--color-muted)]">{f.group}:</span> : null}
                       <span className="font-medium">{f.label}</span>
                       {onRemoveFilter ? (
@@ -442,7 +447,8 @@ export function FilterResultTransition<T>({
                           type="button"
                           onClick={() => onRemoveFilter(f)}
                           aria-label={`Remove filter ${f.group ? `${f.group}: ` : ""}${f.label}`}
-                          className="ml-0.5 grid h-4 w-4 place-items-center rounded-full text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)] hover:text-[var(--color-fg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[var(--color-focus,var(--color-accent))]"
+                          // 24px: the WCAG 2.2 AA minimum target size.
+                          className="ml-0.5 grid h-6 w-6 place-items-center rounded-full text-[var(--color-muted)] transition-colors hover:bg-[var(--color-surface)] hover:text-[var(--color-fg)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[var(--color-focus,var(--color-accent))]"
                         >
                           <CloseIcon />
                         </button>

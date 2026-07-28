@@ -392,7 +392,15 @@ export function ActivityStream({
     <div
       ref={rootRef}
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
+        // A named size container. Every layout rule inside the stream queries
+        // `@…/stream` — the width THIS card has, not the viewport — so the
+        // filter bar decides scroll-vs-wrap, and the unread cue decides
+        // meta-row vs row-end column, from their own room. `@[400px]/stream` = 400px
+        // of card. Measured, not guessed: the widest phone rendering of this card
+        // is ~382px (a 440px device) and the narrowest one the hero can produce
+        // on a desktop is ~418px, so 400 clears both ends by ~18px and neither
+        // changes density.
+        "@container/stream flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
         className,
       )}
     >
@@ -403,7 +411,7 @@ export function ActivityStream({
           <button
             type="button"
             onClick={jumpToUnread}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] outline-none hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            className="inline-flex min-h-[32px] items-center gap-1.5 rounded-full border border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] outline-none hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/stream:min-h-[26px]"
           >
             <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
             {formatNumber(unreadCount)} unread
@@ -411,7 +419,14 @@ export function ActivityStream({
         ) : null}
 
         {showFilters && presentTypes.length > 1 ? (
-          <div className="ml-auto flex flex-wrap items-center gap-1" role="group" aria-label="Filter activity by type">
+          // Below `@[400px]/stream` the type filters stay on ONE line and scroll sideways
+          // (bleeding to the card edges) instead of wrapping into a three-row
+          // block that doubles the header height in a narrow card.
+          <div
+            className="-mx-4 flex w-full flex-nowrap items-center gap-1 overflow-x-auto overscroll-x-contain px-4 @[400px]/stream:mx-0 @[400px]/stream:ml-auto @[400px]/stream:w-auto @[400px]/stream:flex-wrap @[400px]/stream:overflow-visible @[400px]/stream:px-0"
+            role="group"
+            aria-label="Filter activity by type"
+          >
             <FilterChip
               active={!filters.types || filters.types.length === 0}
               onClick={() => setFilters({ ...filters, types: [] })}
@@ -526,7 +541,7 @@ function FilterChip({
       aria-pressed={active}
       onClick={onClick}
       className={cn(
-        "rounded-full px-2.5 py-1 text-[12px] font-medium capitalize outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]",
+        "inline-flex min-h-[32px] shrink-0 items-center rounded-full px-2.5 py-1 text-[12px] font-medium capitalize outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/stream:min-h-[26px] @[400px]/stream:shrink",
         active
           ? "bg-[var(--color-accent)] text-[var(--color-accent-foreground,white)] [border:1px_solid_var(--color-accent)]"
           : "text-[var(--color-muted)] [border:1px_solid_var(--color-border)] hover:text-[var(--color-fg)]",
@@ -541,11 +556,14 @@ function FilterChip({
 
 function EventBody({
   event,
+  unread = false,
   fmt,
   renderMetadata,
   onEventAction,
 }: {
   event: ActivityEvent;
+  /** Renders the "Unread" text cue inside the wrapping meta row below `@[400px]/stream`. */
+  unread?: boolean;
   fmt: (v: ActivityEvent["timestamp"]) => string;
   renderMetadata?: (event: ActivityEvent) => React.ReactNode;
   onEventAction?: (event: ActivityEvent) => void;
@@ -583,6 +601,15 @@ function EventBody({
         <time className="text-[12px] text-[var(--color-muted)]" dateTime={new Date(toMs(event.timestamp)).toISOString()}>
           {fmt(event.timestamp)}
         </time>
+        {/* On phones the unread cue rides the wrapping meta row instead of a
+            fixed right-hand column that would squeeze the sentence above it.
+            From `@[400px]/stream` the row-end chip takes over (see EventRow). */}
+        {unread ? (
+          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[var(--color-accent)] @[400px]/stream:hidden">
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+            Unread
+          </span>
+        ) : null}
         {renderMetadata
           ? renderMetadata(event)
           : event.metadata
@@ -600,7 +627,7 @@ function EventBody({
           <button
             type="button"
             onClick={() => onEventAction(event)}
-            className="rounded-md px-1.5 py-0.5 text-[12px] font-medium text-[var(--color-accent)] outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            className="inline-flex min-h-[32px] items-center rounded-md px-1.5 py-0.5 text-[12px] font-medium text-[var(--color-accent)] outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/stream:min-h-[24px]"
           >
             {event.actionLabel}
           </button>
@@ -646,9 +673,9 @@ function EventRow({
           </span>
         </span>
       </div>
-      <EventBody event={event} fmt={fmt} renderMetadata={renderMetadata} onEventAction={onEventAction} />
+      <EventBody event={event} unread={unread} fmt={fmt} renderMetadata={renderMetadata} onEventAction={onEventAction} />
       {unread ? (
-        <span className="ml-1 mt-1 inline-flex shrink-0 items-center gap-1 text-[11px] font-medium text-[var(--color-accent)]">
+        <span className="ml-1 mt-1 hidden shrink-0 items-center gap-1 text-[11px] font-medium text-[var(--color-accent)] @[400px]/stream:inline-flex">
           <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
           Unread
         </span>
@@ -705,7 +732,7 @@ function GroupRow({
         aria-expanded={open}
         aria-controls={panelId}
         onClick={onToggle}
-        className="flex w-full items-center gap-3 rounded-xl px-2 py-2 text-left outline-none hover:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+        className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-2 py-2 text-left outline-none hover:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/stream:min-h-0"
       >
         {/* clustered avatars for the group */}
         <span className="relative flex shrink-0 items-center">
@@ -721,13 +748,23 @@ function GroupRow({
 
         <span className="min-w-0 flex-1">
           <span className="block text-[13.5px] font-medium leading-snug text-[var(--color-fg)]">{summary}</span>
-          <span className="text-[12px] text-[var(--color-muted)]">
-            {fmt(events[0].timestamp)} · {fmt(events[count - 1].timestamp)}
+          <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[12px] text-[var(--color-muted)]">
+            {/* Both timestamps and their separator are one item, so a wrap can
+                never strand the "·" on a line by itself. */}
+            <span className="whitespace-nowrap">
+              {fmt(events[0].timestamp)} · {fmt(events[count - 1].timestamp)}
+            </span>
+            {unread ? (
+              <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[var(--color-accent)] @[400px]/stream:hidden">
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+                Unread
+              </span>
+            ) : null}
           </span>
         </span>
 
         {unread ? (
-          <span className="inline-flex shrink-0 items-center gap-1 text-[11px] font-medium text-[var(--color-accent)]">
+          <span className="hidden shrink-0 items-center gap-1 text-[11px] font-medium text-[var(--color-accent)] @[400px]/stream:inline-flex">
             <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
             Unread
           </span>
@@ -759,7 +796,7 @@ function GroupRow({
             transition={{ duration: 0.24, ease: EASE }}
             className="overflow-hidden"
           >
-            <ul role="list" className="ml-4 border-l border-[var(--color-border)] pl-3">
+            <ul role="list" className="ml-1.5 border-l border-[var(--color-border)] pl-2.5 @[400px]/stream:ml-4 @[400px]/stream:pl-3">
               {events.map((e) => (
                 <li key={e.id} className="flex gap-3 py-1.5">
                   <span className="relative mt-0.5">

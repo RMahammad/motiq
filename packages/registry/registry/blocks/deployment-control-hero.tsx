@@ -35,10 +35,17 @@ import {
  * sits above a full-width release-console window that composes four released
  * developer-tools components — an EnvironmentSwitcher (the selected target), a
  * DeploymentPipeline (four clear stages), one short LiveLogStream, and one
- * ApiRequestInspector (the release request/result). On wide screens the surface
- * tiles into two columns (target + pipeline + logs · release response) so the
- * hero holds a calm height. It is a hero framing of a real workflow, not a
- * crammed dashboard.
+ * ApiRequestInspector (the release request/result). Once the console is wide
+ * enough the surface tiles into two columns (target + pipeline + logs · release
+ * response) so the hero holds a calm height. It is a hero framing of a real
+ * workflow, not a crammed dashboard.
+ *
+ * Layout is driven by CONTAINER queries, not viewport breakpoints: the root
+ * declares `@container/hero`, the release console declares `@container/console`,
+ * and each composed component declares its own. A hero rendered in a 782px
+ * content column of a 1440px page therefore lays out like a 782px hero — the
+ * copy band stays stacked, the console stays single-column, and the panels get
+ * the full column width instead of two ~311px slivers.
  *
  * IMPORTANT — DEMO ONLY. Nothing here talks to a real provider. The repo,
  * branch, commit, host, release id, headers, and timings are all fictional and
@@ -386,17 +393,26 @@ const DEFAULT_ENVIRONMENTS: Environment[] = [
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]";
 
+// Both CTAs are full-width in a narrow hero (equal, deliberate blocks rather
+// than two ragged intrinsic widths) and return to intrinsic width from
+// `@md/hero` (448px) up, which is the first width where the pair fits side by
+// side without either label wrapping.
+const ctaBase =
+  "inline-flex min-h-[46px] w-full items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-[14px] font-semibold @md/hero:w-auto";
+
 const primaryCtaCls = cn(
-  "inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-[color-mix(in_oklab,var(--color-accent)_55%,black)]",
-  "bg-[linear-gradient(180deg,color-mix(in_oklab,var(--color-accent)_86%,white)_0%,var(--color-accent)_60%)] px-5 py-2.5 text-[14px] font-semibold text-[var(--color-accent-fg,white)]",
+  ctaBase,
+  "border border-[color-mix(in_oklab,var(--color-accent)_55%,black)]",
+  "bg-[linear-gradient(180deg,color-mix(in_oklab,var(--color-accent)_86%,white)_0%,var(--color-accent)_60%)] text-[var(--color-accent-fg,white)]",
   "shadow-[0_1px_0_0_color-mix(in_oklab,white_45%,transparent)_inset,0_8px_22px_-10px_color-mix(in_oklab,var(--color-accent)_80%,transparent)]",
   "transition-[transform,box-shadow,filter] hover:brightness-[1.06] motion-safe:hover:-translate-y-px",
   focusRing,
 );
 
 const secondaryCtaCls = cn(
-  "inline-flex min-h-[46px] items-center justify-center gap-2 rounded-xl border border-[var(--color-border)]",
-  "bg-[var(--color-surface)] px-5 py-2.5 text-[14px] font-semibold text-[var(--color-fg)] transition-colors",
+  ctaBase,
+  "border border-[var(--color-border)]",
+  "bg-[var(--color-surface)] text-[var(--color-fg)] transition-colors",
   "hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]",
   focusRing,
 );
@@ -415,6 +431,14 @@ function ArrowGlyph() {
   return (
     <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden focusable="false">
       <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}
+
+function ChevronGlyph() {
+  return (
+    <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden focusable="false">
+      <path d="m6 9 6 6 6-6" />
     </svg>
   );
 }
@@ -454,6 +478,14 @@ export interface DeploymentControlHeroProps
   environments?: Environment[];
   /** Which environment id is selected on first render. */
   defaultEnvironmentId?: string;
+  /**
+   * A narrow release console (under `@lg/console`, i.e. 512px of console width)
+   * collapses the two dense panels (deploy output + release response) behind a
+   * disclosure so the hero stays a readable height; set this to render them
+   * expanded from the start. Ignored once the console is 512px or wider, where
+   * every panel is always visible.
+   */
+  defaultDetailPanelsOpen?: boolean;
   /** A decorative slot rendered behind the hero. Never imported here. */
   background?: React.ReactNode;
   /** Force reduced motion for this block's own decorative motion. */
@@ -505,7 +537,7 @@ const DEFAULT_PROOF: string[] = [
  *  live surface. Text-only; the check glyph is decorative. */
 function ProofStrip({ items }: { items: string[] }) {
   return (
-    <ul className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-7 sm:gap-y-2">
+    <ul className="flex flex-col gap-2.5 @2xl/hero:flex-row @2xl/hero:flex-wrap @2xl/hero:gap-x-7 @2xl/hero:gap-y-2">
       {items.map((t) => (
         <li key={t} className="flex items-center gap-2.5 text-[13.5px] text-[var(--color-fg)]">
           <span
@@ -545,6 +577,7 @@ export function DeploymentControlHero({
   dataset = DEFAULT_DATASET,
   environments = DEFAULT_ENVIRONMENTS,
   defaultEnvironmentId,
+  defaultDetailPanelsOpen = false,
   background,
   reducedMotion,
   className,
@@ -553,6 +586,10 @@ export function DeploymentControlHero({
   const hookReduce = useReducedMotion();
   const reduce = reducedMotion ?? hookReduce;
   const headingId = React.useId();
+  const panelsId = React.useId();
+  const logsPanelId = `${panelsId}-logs`;
+  const responsePanelId = `${panelsId}-response`;
+  const [detailPanelsOpen, setDetailPanelsOpen] = React.useState(defaultDetailPanelsOpen);
 
   const [currentPhase, setPhase] = useControllableState<DeployHeroPhase>({
     value: phase,
@@ -631,7 +668,13 @@ export function DeploymentControlHero({
     <section
       aria-labelledby={headingId}
       className={cn(
-        "relative isolate w-full overflow-hidden rounded-3xl border border-[var(--color-border)]",
+        // `@container/hero` — every layout decision in this block reads the
+        // hero's OWN width, never the viewport's. A hero rendered in a 782px
+        // content column of a 1440px page must lay out like a 782px hero, not
+        // like a desktop one squeezed into half the room. The root is already
+        // `relative isolate`, so `container-type: inline-size` adds no new
+        // containing block or stacking context for the decorative layers.
+        "@container/hero relative isolate w-full overflow-hidden rounded-3xl border border-[var(--color-border)]",
         "bg-[var(--color-bg)] text-[var(--color-fg)] shadow-[var(--shadow-md)]",
         className,
       )}
@@ -646,13 +689,13 @@ export function DeploymentControlHero({
         <HeroBackdrop />
       )}
 
-      <div className="flex flex-col gap-8 p-6 sm:p-8 lg:gap-10 lg:p-12">
+      <div className="flex flex-col gap-7 p-5 @2xl/hero:gap-8 @2xl/hero:p-8 @5xl/hero:gap-10 @5xl/hero:p-12">
         {/* Copy band — headline/copy on one side, CTAs + live status on the
             other, so the marketing row reads wide instead of a thin column. */}
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-10">
+        <div className="grid gap-6 @5xl/hero:grid-cols-[minmax(0,1fr)_auto] @5xl/hero:items-end @5xl/hero:gap-10">
           <div className="flex min-w-0 flex-col gap-4">
             {eyebrow ? (
-              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_80%,transparent)] px-3 py-1 text-[12.5px] font-semibold uppercase tracking-wide text-[var(--color-muted)] backdrop-blur-sm">
+              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_80%,transparent)] px-3 py-1 text-[11.5px] font-semibold uppercase tracking-[0.08em] text-[var(--color-muted)] backdrop-blur-sm @2xl/hero:text-[12.5px]">
                 <span className="relative flex h-1.5 w-1.5" aria-hidden>
                   <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent)] opacity-70 motion-safe:animate-ping" />
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
@@ -661,27 +704,36 @@ export function DeploymentControlHero({
               </span>
             ) : null}
 
+            {/* Container-fluid headline: one curve driven by `cqi` (the hero's
+                own inline size) instead of two viewport curves. 28px below a
+                538px hero, scaling to the same 52px ceiling the desktop curve
+                has always topped out at, reached at a 1000px hero — so a true
+                desktop hero is pixel-identical while a 782px column gets a
+                proportionate ~41px headline instead of a 52px one wrapping to
+                four lines. Balanced so the last line is never an orphan word. */}
             <h2
               id={headingId}
-              className="text-balance text-[clamp(2rem,4.6vw,3.25rem)] font-bold leading-[1.05] tracking-tight text-[var(--color-fg)]"
+              className="text-balance text-[clamp(1.75rem,5.2cqi,3.25rem)] font-bold leading-[1.08] tracking-tight text-[var(--color-fg)] @2xl/hero:leading-[1.05]"
             >
               {headline}
             </h2>
 
             {copy ? (
-              <p className="max-w-[56ch] text-[15px] leading-relaxed text-[var(--color-muted)] sm:text-[16px]">
+              <p className="max-w-[56ch] text-[15px] leading-relaxed text-[var(--color-muted)] @2xl/hero:text-[16px]">
                 {copy}
               </p>
             ) : null}
           </div>
 
-          <div className="flex shrink-0 flex-col items-start gap-4 lg:items-end">
-            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <div className="flex shrink-0 flex-col items-stretch gap-4 @md/hero:items-start @5xl/hero:items-end">
+            <div className="flex w-full flex-col gap-3 @md/hero:w-auto @md/hero:flex-row @md/hero:flex-wrap">
               {renderCta(primaryCta, primaryCtaCls, true)}
               {secondaryCta ? renderCta(secondaryCta, secondaryCtaCls, false) : null}
             </div>
+            {/* The status pill always takes a line of its own — never squeezed
+                in beside a CTA. */}
             <span
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-[12.5px] font-medium text-[var(--color-fg)]"
+              className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 text-[12.5px] font-medium text-[var(--color-fg)]"
               role="status"
               aria-live="polite"
             >
@@ -708,9 +760,11 @@ export function DeploymentControlHero({
           <ProofStrip items={DEFAULT_PROOF} />
         </div>
 
-        {/* Release console — a full-width app window. On wide screens the control
-            surface tiles into two columns (target + pipeline · logs + response)
-            so the hero holds a calm height. No overflow/max-height clip: the
+        {/* Release console — a full-width app window. From `@4xl/console`
+            (896px of console width, i.e. ~418px per column — enough for a log
+            line with a timestamp, or a request line with a URL and a status) the
+            control surface tiles into two columns (target + pipeline · logs +
+            response) so the hero holds a calm height. No overflow/max-height clip: the
             composed children run Framer `layout` animations that collapse inside
             a constrained scroll ancestor. */}
         <div className="relative min-w-0">
@@ -722,21 +776,27 @@ export function DeploymentControlHero({
                 "radial-gradient(55% 40% at 50% 0%, color-mix(in oklab, var(--color-accent) 18%, transparent), transparent)",
             }}
           />
-          <div className="relative flex min-w-0 flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] shadow-[var(--shadow-lg)]">
+          {/* `@container/console` — the surface tiles from its own width, which
+              is what the panels inside actually get. It is already `relative`,
+              and the decorative glow above is a sibling outside it, so the new
+              containment changes nothing about how either is positioned. */}
+          <div className="@container/console relative flex min-w-0 flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)] shadow-[var(--shadow-lg)]">
             {/* Window header --------------------------------------------- */}
-            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_60%,var(--color-bg-secondary))] px-4 py-3 sm:px-5">
-              <span className="flex items-center gap-2.5 text-[13px] font-semibold">
-                <span className="flex items-center gap-1.5" aria-hidden>
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_60%,var(--color-bg-secondary))] px-3 py-3 @lg/console:px-5">
+              <span className="flex min-w-0 items-center gap-2.5 text-[13px] font-semibold">
+                {/* Decorative window dots — pure chrome, dropped in a narrow
+                    console so the title and repo keep the width they need. */}
+                <span className="hidden items-center gap-1.5 @lg/console:flex" aria-hidden>
                   <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-error)_65%,transparent)]" />
                   <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-warning)_70%,transparent)]" />
                   <span className="h-2.5 w-2.5 rounded-full bg-[color-mix(in_oklab,var(--color-success)_65%,transparent)]" />
                 </span>
-                <span className="grid h-7 w-7 place-items-center rounded-lg bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]" aria-hidden>
+                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-[color-mix(in_oklab,var(--color-accent)_16%,transparent)] text-[var(--color-accent)]" aria-hidden>
                   <RocketGlyph />
                 </span>
-                <span className="flex flex-col leading-tight">
+                <span className="flex min-w-0 flex-col leading-tight">
                   <span>Release console</span>
-                  <span className="font-mono text-[11px] font-normal text-[var(--color-muted)]">
+                  <span className="truncate font-mono text-[11px] font-normal text-[var(--color-muted)]">
                     {dataset.repo}
                   </span>
                 </span>
@@ -749,7 +809,7 @@ export function DeploymentControlHero({
             </div>
 
             {/* Two tiled columns: target + pipeline · logs + response ---- */}
-            <div className="grid min-w-0 gap-4 p-4 sm:p-5 lg:grid-cols-2 lg:gap-5 lg:items-start">
+            <div className="grid min-w-0 gap-4 p-3 @lg/console:p-5 @4xl/console:grid-cols-2 @4xl/console:gap-5 @4xl/console:items-start">
               <div className="flex min-w-0 flex-col gap-4">
                 <EnvironmentSwitcher
                   environments={environments}
@@ -767,7 +827,48 @@ export function DeploymentControlHero({
                   <DeploymentPipeline stages={stages} onRetry={retry} />
                 </section>
 
-                <section aria-label="Deployment output" className="min-w-0">
+                {/* Narrow-console disclosure. The two dense, monospace-heavy
+                    panels (deploy output + release response) are the ones that
+                    turn the hero into a wall in a ~311px column, so a narrow
+                    console opens on the story — target, then pipeline — and
+                    offers the detail on request. It controls both panels (they
+                    live in different grid columns) and disappears entirely from
+                    `@lg/console` (512px) up, where every panel is visible as
+                    before — including the 782px docs column. */}
+                <button
+                  type="button"
+                  onClick={() => setDetailPanelsOpen((v) => !v)}
+                  aria-expanded={detailPanelsOpen}
+                  aria-controls={`${logsPanelId} ${responsePanelId}`}
+                  className={cn(
+                    "flex min-h-[48px] w-full items-center justify-between gap-3 rounded-xl border border-[var(--color-border)] @lg/console:hidden",
+                    "bg-[var(--color-surface)] px-4 py-2.5 text-left text-[13px] font-semibold text-[var(--color-fg)]",
+                    "transition-colors hover:border-[var(--color-accent)]",
+                    focusRing,
+                  )}
+                >
+                  <span className="flex min-w-0 flex-col leading-tight">
+                    <span>{detailPanelsOpen ? "Hide" : "Show"} deploy output &amp; response</span>
+                    <span className="text-[11.5px] font-normal text-[var(--color-muted)]">
+                      2 panels · live log and release response
+                    </span>
+                  </span>
+                  <motion.span
+                    className="shrink-0 text-[var(--color-accent)]"
+                    animate={reduce ? undefined : { rotate: detailPanelsOpen ? 180 : 0 }}
+                    transition={{ duration: 0.2, ease: [0.2, 0, 0, 1] }}
+                    style={{ display: "inline-flex" }}
+                    aria-hidden
+                  >
+                    <ChevronGlyph />
+                  </motion.span>
+                </button>
+
+                <section
+                  id={logsPanelId}
+                  aria-label="Deployment output"
+                  className={cn("min-w-0", !detailPanelsOpen && "hidden @lg/console:block")}
+                >
                   <LiveLogStream
                     entries={entries}
                     status={view.streamStatus}
@@ -782,7 +883,11 @@ export function DeploymentControlHero({
 
               <div className="flex min-w-0 flex-col gap-4">
                 {request ? (
-                  <section aria-label="Release request" className="min-w-0">
+                  <section
+                    id={responsePanelId}
+                    aria-label="Release request"
+                    className={cn("min-w-0", !detailPanelsOpen && "hidden @lg/console:block")}
+                  >
                     <ApiRequestInspector
                       request={request}
                       response={response}
@@ -798,7 +903,7 @@ export function DeploymentControlHero({
             </div>
 
             {/* Honesty footer ------------------------------------------- */}
-            <div className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-2.5 sm:px-5">
+            <div className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5 @lg/console:px-5">
               <p className="inline-flex items-center gap-1.5 text-[11px] text-[var(--color-muted)]">
                 <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden />
                 Demo data - fictional, no live provider.

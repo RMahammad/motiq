@@ -101,4 +101,49 @@ describe("EnvironmentSwitcher", () => {
     await user.click(screen.getByRole("button", { name: /retry/i }));
     expect(onRetry).toHaveBeenCalledTimes(1);
   });
+
+  /* Responsive contract — see docs/responsive-standard.md. */
+  describe("responsive contract", () => {
+    it("drops the trigger's status chip to its own line in a narrow switcher", () => {
+      const { container } = render(<EnvironmentSwitcher environments={ENVS} value="staging" />);
+      const trigger = screen.getByRole("button", { name: /environment/i });
+      // The trigger wraps below `@sm/env` — the switcher's OWN width, not the
+      // viewport's — so the chip can never squeeze the name.
+      expect(trigger.className).toContain("flex-wrap");
+      expect(trigger.className).toContain("@sm/env:flex-nowrap");
+      const chip = container.querySelector<HTMLElement>('[data-slot="trigger-status"]');
+      expect(chip!.className).toContain("w-full");
+      expect(chip!.className).toContain("@sm/env:w-auto");
+      expect(chip!.textContent).toContain("Active");
+    });
+
+    it("wraps a long option name to two lines rather than ellipsising it", async () => {
+      const user = userEvent.setup();
+      const long: Environment[] = [
+        { id: "p", name: "Preview · pull request 4821 · checkout redesign", type: "preview", status: "available" },
+      ];
+      render(<EnvironmentSwitcher environments={long} defaultValue="p" />);
+      await openMenu(user);
+      const option = screen.getByRole("option");
+      const name = within(option).getByText("Preview · pull request 4821 · checkout redesign");
+      expect(name.className).toContain("line-clamp-2");
+      expect(name.className).not.toContain("truncate");
+    });
+
+    it("keeps the production confirm dialog inside its container and its buttons at 44px", async () => {
+      const user = userEvent.setup();
+      render(
+        <EnvironmentSwitcher environments={ENVS} defaultValue="local" requireProductionConfirmation />,
+      );
+      await openMenu(user);
+      await user.click(screen.getByRole("option", { name: /Production/i }));
+      const dialog = await screen.findByRole("alertdialog");
+      // Bounded by the container (not 92vw), so a narrow overflow-hidden card
+      // can never clip it.
+      expect(dialog.className).toContain("w-[min(100%,26rem)]");
+      for (const name of [/cancel/i, /switch to production/i]) {
+        expect(within(dialog).getByRole("button", { name }).className).toContain("min-h-[44px]");
+      }
+    });
+  });
 });

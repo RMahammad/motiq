@@ -75,3 +75,50 @@ describe("ToolCallActivity", () => {
     }
   });
 });
+
+/*
+ * Responsive contract — jsdom asserts the structure that makes a narrow row
+ * reflow rather than ellipsise: a line-clamped call name and a status/action
+ * rail that drops to its own full-width row until the component ITSELF is wide
+ * enough. Driven by `@container/toolcalls`, never by the viewport.
+ */
+describe("ToolCallActivity — responsive contract", () => {
+  it("declares its own named container context so it sizes on its own width", () => {
+    const { container } = render(<ToolCallActivity calls={BASE} />);
+    const root = container.querySelector("section");
+    expect(root).toBeTruthy();
+    expect(root!.className).toContain("@container/toolcalls");
+  });
+
+  it("wraps a call name to two lines instead of truncating it", () => {
+    const { container } = render(<ToolCallActivity calls={BASE} />);
+    const names = Array.from(container.querySelectorAll("[data-call-name]"));
+    expect(names.length).toBe(BASE.length);
+    for (const n of names) {
+      expect(n.className).toContain("line-clamp-2");
+      expect(n.className).not.toContain("truncate");
+    }
+  });
+
+  it("gives each call's status + actions their own full-width row until @md/toolcalls", () => {
+    const { container } = render(<ToolCallActivity calls={BASE} />);
+    const rails = Array.from(container.querySelectorAll("[data-call-meta]"));
+    expect(rails.length).toBe(BASE.length);
+    for (const rail of rails) {
+      expect(rail.className).toContain("w-full");
+      // Container-based, not viewport-based.
+      expect(rail.className).toContain("@md/toolcalls:w-auto");
+      expect(rail.className).not.toContain("sm:w-auto");
+    }
+  });
+
+  it("gives call controls a 44px touch target while the panel is narrow", () => {
+    render(<ToolCallActivity calls={BASE} onApprove={vi.fn()} onRetry={vi.fn()} />);
+    for (const name of [
+      /approve searching project documentation/i,
+      /retry reading a configuration file/i,
+    ]) {
+      expect(screen.getByRole("button", { name }).className).toContain("min-h-[44px]");
+    }
+  });
+});

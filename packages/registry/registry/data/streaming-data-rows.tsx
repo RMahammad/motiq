@@ -100,9 +100,9 @@ export interface StreamingDataRowsProps<T> {
   /** Retry affordance shown in the error state. */
   onRetry?: () => void;
 
-  /** Stacked card renderer used on narrow viewports. */
+  /** Stacked card renderer used when the component's own box is narrow. */
   renderMobileRow?: (row: T, ctx: { actions: React.ReactNode }) => React.ReactNode;
-  /** Max viewport width (px) at which the stacked layout is used. */
+  /** Width (px) of *this component's box* below which the stacked layout is used. */
   mobileBreakpoint?: number;
 
   /** Visually-hidden `<caption>` describing the table. */
@@ -125,18 +125,28 @@ const ALIGN: Record<CellAlign, string> = {
   end: "text-right",
 };
 
-/** SSR-safe media query — defaults to `false` so server + first client render match. */
-function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = React.useState(false);
+/**
+ * Is this component's own box narrower than `maxWidth`?
+ *
+ * Deliberately measures the element, not the viewport: a 4-column table placed in
+ * a 300px column on a 1440px screen must still fall back to stacked cards, and a
+ * viewport media query gets that exactly backwards. Defaults to `false` so the
+ * server and first client render agree; the observer corrects it after mount.
+ */
+function useNarrowContainer(ref: React.RefObject<HTMLElement | null>, maxWidth: number): boolean {
+  const [narrow, setNarrow] = React.useState(false);
   React.useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
-    const mq = window.matchMedia(query);
-    const update = () => setMatches(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, [query]);
-  return matches;
+    const el = ref.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const measure = (width: number) => setNarrow(width > 0 && width < maxWidth);
+    measure(el.getBoundingClientRect().width);
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) measure(entry.contentRect.width);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [ref, maxWidth]);
+  return narrow;
 }
 
 function nextSort(current: SortState | null | undefined, key: string): SortState | null {
@@ -349,7 +359,8 @@ export function StreamingDataRows<T>({
 }: StreamingDataRowsProps<T>) {
   const reduce = useReducedMotion();
   const suppress = reduce || paused;
-  const isMobile = useMediaQuery(`(max-width: ${mobileBreakpoint - 0.02}px)`) && !!renderMobileRow;
+  const rootRef = React.useRef<HTMLDivElement | null>(null);
+  const isMobile = useNarrowContainer(rootRef, mobileBreakpoint) && !!renderMobileRow;
 
   /* ---- sort (controlled / uncontrolled) --------------------------------- */
   const [internalSort, setInternalSort] = React.useState<SortState | null>(defaultSort);
@@ -528,8 +539,22 @@ export function StreamingDataRows<T>({
   });
 
   /* ---- desktop table ---------------------------------------------------- */
+  // When no `renderMobileRow` is supplied the table is the only presentation at
+  // every width, so its horizontal scroller has to be a labelled, keyboard
+  // reachable region. With a stacked fallback the table never scrolls on narrow
+  // viewports, so it stays out of the tab order.
+  const scrollerIsRegion = !renderMobileRow;
   const table = (
-    <div className="overflow-x-auto">
+    <div
+      className={cn(
+        "overflow-x-auto",
+        scrollerIsRegion &&
+          "focus-visible:outline focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-[var(--color-focus)]",
+      )}
+      {...(scrollerIsRegion
+        ? { role: "region" as const, tabIndex: 0, "aria-label": caption ?? "Data table" }
+        : {})}
+    >
       <table className="w-full border-collapse text-[13.5px] text-[var(--color-fg)]" aria-busy={state === "loading" || undefined}>
         {caption ? <caption className="sr-only">{caption}</caption> : null}
         <thead>
@@ -619,8 +644,28 @@ export function StreamingDataRows<T>({
   );
 
   /* ---- mobile stacked layout ------------------------------------------- */
+  // The narrow-viewport equivalent of the table: one labelled card per row.
+  // It carries the same accessible name (`caption`) and the same busy state as
+  // the table it replaces, so nothing is lost by reflowing instead of scrolling.
   const mobile = renderMobileRow ? (
-    <ul className="flex flex-col gap-2 p-2">
+    <ul
+      className="flex flex-col gap-2 p-2"
+      aria-label={caption}
+      aria-busy={state === "loading" || undefined}
+      data-stacked-rows=""
+    >
+      {state === "loading" ? (
+        Array.from({ length: loadingRows }).map((_, i) => (
+          <li
+            key={`skeleton-${i}`}
+            aria-hidden
+            className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-3"
+          >
+            <span className="block h-4 w-1/2 animate-pulse rounded bg-[var(--color-bg-secondary)] motion-reduce:animate-none" />
+            <span className="mt-2 block h-3 w-4/5 animate-pulse rounded bg-[var(--color-bg-secondary)] motion-reduce:animate-none" />
+          </li>
+        ))
+      ) : (
       <LayoutGroup>
         <AnimatePresence initial={false} mode="popLayout">
           {sortedRows.map((row) => {
@@ -643,14 +688,15 @@ export function StreamingDataRows<T>({
           })}
         </AnimatePresence>
       </LayoutGroup>
-      {sortedRows.length === 0 ? (
+      )}
+      {state !== "loading" && sortedRows.length === 0 ? (
         <li className="px-3 py-10 text-center text-[13.5px] text-[var(--color-muted)]">{emptyContent ?? "No rows yet."}</li>
       ) : null}
     </ul>
   ) : null;
 
   return (
-    <div className={cn(shellClass, className)}>
+    <div ref={rootRef} className={cn(shellClass, className)}>
       {/* Rate-limited, polite update summary for screen readers. */}
       <div aria-live="polite" role="status" className="sr-only">
         {announcement}

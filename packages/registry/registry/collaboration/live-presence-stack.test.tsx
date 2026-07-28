@@ -57,3 +57,40 @@ describe("LivePresenceStack", () => {
     expect(document.activeElement).toBe(trigger);
   });
 });
+
+/* -- responsive contract ------------------------------------------------- */
+
+describe("LivePresenceStack — responsive contract", () => {
+  it("caps the detail popover to the viewport and gives its rows a 44px target", async () => {
+    const user = userEvent.setup();
+    render(<LivePresenceStack users={USERS} max={5} />);
+    await user.click(screen.getByRole("button", { name: /Show details/ }));
+    const dialog = await screen.findByRole("dialog", { name: "Participants" });
+    // A fixed 248px min-width overflows a 320px screen; the cap makes it fluid.
+    expect(String(dialog.className)).toMatch(/w-\[min\(248px,calc\(100vw-2rem\)\)\]/);
+    expect(String(dialog.className)).not.toMatch(/min-w-\[248px\]/);
+    const row = dialog.querySelector<HTMLElement>("[data-participant]");
+    expect(String(row?.className)).toMatch(/min-h-\[44px\]/);
+  });
+
+  it("sizes the pill's touch target from the pointer, and never declares a size container", () => {
+    const { container } = render(<LivePresenceStack users={USERS} max={5} />);
+    const root = container.querySelector<HTMLElement>('[role="group"]') as HTMLElement;
+    const pill = root.firstElementChild as HTMLElement;
+
+    // The pill's padding is a touch-comfort rule, so it keys off the pointer.
+    expect(String(pill.className)).toMatch(/pointer-fine:py-1/);
+    // No viewport breakpoints survive: nothing here should depend on the window.
+    container.querySelectorAll("*").forEach((el) => {
+      expect(String(el.className)).not.toMatch(/(^|\s)(sm|md|lg|xl|2xl):/);
+    });
+    // And the stack must NOT become a size container. Its root is intrinsically
+    // sized (`inline-flex w-fit`), and `container-type: inline-size` makes a
+    // shrink-to-fit box size as if it had no contents — it would collapse to
+    // zero width and the avatars would disappear.
+    expect(String(root.className)).toMatch(/inline-flex/);
+    container.querySelectorAll("*").forEach((el) => {
+      expect(String(el.className)).not.toMatch(/@container/);
+    });
+  });
+});

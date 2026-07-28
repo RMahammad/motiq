@@ -46,7 +46,8 @@ for (const item of index.items) {
   if (item.kind === "pack") continue;
   const block = docsContent.split(`"${item.name}"`)[1] ?? "";
   const nextKey = block.indexOf("\n  \"");
-  const seg = nextKey > 0 ? block.slice(0, nextKey) : block.slice(0, 1200);
+  // No next key means this is the file's last entry — scan it whole, not a 1200-char prefix.
+  const seg = nextKey > 0 ? block.slice(0, nextKey) : block;
   if (!/accessibility:\s*\[/.test(seg)) problems.push(`${item.name}: docs-content missing accessibility notes`);
   if (!/performance:\s*\[/.test(seg)) problems.push(`${item.name}: docs-content missing performance notes`);
 }

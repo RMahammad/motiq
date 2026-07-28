@@ -504,25 +504,41 @@ export function ApprovalWorkflow({
     <section
       aria-label={regionLabel}
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
+        // A named size container. The action row, the header's title/status
+        // split and the reviewer meta lines all query `@…/workflow` — the width
+        // THIS card has, not the viewport — so a workflow in a narrow tile goes
+        // two-up/stacked on its own evidence. `@[400px]/workflow` = 400px of
+        // card. Measured, not guessed: the widest phone rendering of this card is
+        // ~382px (a 440px device) and the narrowest one the hero can produce on a
+        // desktop is ~418px, so 400 clears both ends by ~18px.
+        "@container/workflow flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
         className,
       )}
     >
       {/* header */}
-      <header className="flex flex-col gap-3 border-b border-[var(--color-border)] px-4 py-4 sm:px-5">
-        <div className="flex flex-wrap items-start gap-3">
+      <header className="flex flex-col gap-2.5 border-b border-[var(--color-border)] px-4 py-3 @[400px]/workflow:gap-3 @[400px]/workflow:px-5 @[400px]/workflow:py-4">
+        {/* Title + status. Below `@[400px]/workflow` the status pill drops to its own line so the
+            title keeps the full measure instead of being squeezed to 2-3 words. */}
+        <div className="flex flex-col items-start gap-2 @[400px]/workflow:flex-row @[400px]/workflow:flex-wrap @[400px]/workflow:items-start @[400px]/workflow:gap-3">
           <div className="min-w-0 flex-1">
             <h3 className="text-[15px] font-semibold leading-snug text-[var(--color-fg)]">
               {workflow.title}
             </h3>
-            <p className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[12.5px] text-[var(--color-muted)]">
-              <span>
-                Requested by <span className="font-medium text-[var(--color-fg)]">{workflow.requester.name}</span>
-              </span>
+            {/* Plain inline flow, not a flex row: the requester and the time can
+                never each become a one-word column, and the "·" only exists on
+                the width where both facts share a line — below `@[400px]/workflow` the time
+                simply takes its own line with no orphaned separator. */}
+            <p className="mt-1 text-[12.5px] leading-snug text-[var(--color-muted)]">
+              Requested by <span className="font-medium text-[var(--color-fg)]">{workflow.requester.name}</span>
               {workflow.createdAt != null ? (
                 <>
-                  <span aria-hidden>·</span>
-                  <time dateTime={new Date(toMs(workflow.createdAt)).toISOString()}>{fmt(workflow.createdAt)}</time>
+                  <span aria-hidden className="hidden @[400px]/workflow:inline">{" · "}</span>
+                  <time
+                    className="block @[400px]/workflow:inline"
+                    dateTime={new Date(toMs(workflow.createdAt)).toISOString()}
+                  >
+                    {fmt(workflow.createdAt)}
+                  </time>
                 </>
               ) : null}
             </p>
@@ -585,7 +601,7 @@ export function ApprovalWorkflow({
       </header>
 
       {/* stages */}
-      <ol role="list" className="flex flex-col px-3 py-3 sm:px-4">
+      <ol role="list" className="flex flex-col px-3 py-2.5 @[400px]/workflow:px-4 @[400px]/workflow:py-3">
         {workflow.stages.map((stage, i) => {
           const isCurrent = stage.id === currentStageId && actionable;
           const resolved = isResolved(stage.status);
@@ -610,7 +626,7 @@ export function ApprovalWorkflow({
 
       {/* current-stage action bar */}
       {actionable && currentStage ? (
-        <div className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-3 sm:px-5">
+        <div className="border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-2.5 @[400px]/workflow:px-5 @[400px]/workflow:py-3">
           {viewerReviewer && viewerReviewer.decision && viewerReviewer.decision !== "pending" ? (
             <p className="mb-2.5 flex items-center gap-1.5 text-[12.5px] text-[var(--color-muted)]">
               <ToneIcon tone={DECISION_META[viewerReviewer.decision].tone} />
@@ -661,12 +677,12 @@ export function ApprovalWorkflow({
               <span className="flex items-center gap-1.5 font-medium" style={{ color: statusVars("error").color }}>
                 <ToneIcon tone="error" /> Reject {currentStage.name}? This returns the request to the requester.
               </span>
-              <span className="ml-auto flex gap-2">
+              <span className="flex w-full gap-2 @[400px]/workflow:ml-auto @[400px]/workflow:w-auto">
                 <button
                   type="button"
                   ref={confirmRejectRef}
                   onClick={handleRejectClick}
-                  className="rounded-md px-2.5 py-1 text-[12.5px] font-semibold text-[var(--color-error-foreground,white)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+                  className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-md px-2.5 py-1 text-[12.5px] font-semibold text-[var(--color-error-foreground,white)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/workflow:min-h-0 @[400px]/workflow:flex-none"
                   style={{ background: statusVars("error").color }}
                 >
                   Confirm reject
@@ -674,7 +690,7 @@ export function ApprovalWorkflow({
                 <button
                   type="button"
                   onClick={cancelRejectConfirm}
-                  className="rounded-md px-2.5 py-1 text-[12.5px] font-medium text-[var(--color-fg)] outline-none [border:1px_solid_var(--color-border)] hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+                  className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-md px-2.5 py-1 text-[12.5px] font-medium text-[var(--color-fg)] outline-none [border:1px_solid_var(--color-border)] hover:border-[var(--color-accent)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/workflow:min-h-0 @[400px]/workflow:flex-none"
                 >
                   Keep reviewing
                 </button>
@@ -682,8 +698,14 @@ export function ApprovalWorkflow({
             </div>
           ) : null}
 
-          {/* action buttons */}
-          <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Stage actions">
+          {/* Action buttons. Below `@[400px]/workflow` they tile into an even two-up grid with
+              44px targets instead of squeezing three ragged buttons across a
+              narrow card; from `@[400px]/workflow` up the original inline row is restored. */}
+          <div
+            className="grid grid-cols-2 gap-2 @[400px]/workflow:flex @[400px]/workflow:flex-wrap @[400px]/workflow:items-center"
+            role="group"
+            aria-label="Stage actions"
+          >
             <ActionButton tone="success" primary permission={permission("approve")} onClick={handleApprove}>
               <ToneIcon tone="success" /> Approve
             </ActionButton>
@@ -708,7 +730,7 @@ export function ApprovalWorkflow({
               {composer.open ? "Notes open" : "Add comment"}
             </ActionButton>
             {onCancel ? (
-              <ActionButton tone="neutral" className="ml-auto" permission={permission("cancel")} onClick={handleCancel}>
+              <ActionButton tone="neutral" className="@[400px]/workflow:ml-auto" permission={permission("cancel")} onClick={handleCancel}>
                 Cancel request
               </ActionButton>
             ) : null}
@@ -720,11 +742,11 @@ export function ApprovalWorkflow({
           </div>
         </div>
       ) : canResubmit && onResubmit ? (
-        <div className="flex flex-wrap items-center gap-2 border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-3 sm:px-5">
+        <div className="flex flex-wrap items-center gap-2 border-t border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-3 @[400px]/workflow:px-5">
           <p className="text-[12.5px] text-[var(--color-muted)]">
             This request was {meta.label.toLowerCase()}. Address the feedback and resubmit for review.
           </p>
-          <span className="ml-auto">
+          <span className="w-full @[400px]/workflow:ml-auto @[400px]/workflow:w-auto">
             <ActionButton tone="active" primary permission={permission("resubmit")} onClick={handleResubmit}>
               Resubmit for review
             </ActionButton>
@@ -734,11 +756,11 @@ export function ApprovalWorkflow({
 
       {/* decision history (useDisclosure) */}
       {workflow.history && workflow.history.length > 0 ? (
-        <div className="border-t border-[var(--color-border)] px-4 py-2.5 sm:px-5">
+        <div className="border-t border-[var(--color-border)] px-4 py-1.5 @[400px]/workflow:px-5 @[400px]/workflow:py-2.5">
           <button
             type="button"
             {...history.triggerProps}
-            className="flex w-full items-center gap-2 rounded-md py-1 text-left text-[12.5px] font-medium text-[var(--color-fg)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            className="flex min-h-[44px] w-full items-center gap-2 rounded-md py-1 text-left text-[12.5px] font-medium text-[var(--color-fg)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/workflow:min-h-0"
           >
             <motion.svg
               aria-hidden
@@ -792,7 +814,7 @@ export function ApprovalWorkflow({
 
       {/* attachments */}
       {workflow.attachments && workflow.attachments.length > 0 ? (
-        <div className="flex flex-wrap items-center gap-2 border-t border-[var(--color-border)] px-4 py-3 sm:px-5">
+        <div className="flex flex-wrap items-center gap-2 border-t border-[var(--color-border)] px-4 py-3 @[400px]/workflow:px-5">
           <span className="text-[11px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">Attachments</span>
           {workflow.attachments.map((a) =>
             renderAttachment ? (
@@ -846,7 +868,7 @@ const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProps>(func
   const reasonId = React.useId();
   const disabled = !permission.allowed;
   return (
-    <span className={cn("inline-flex flex-col", className)}>
+    <span className={cn("flex w-full flex-col @[400px]/workflow:inline-flex @[400px]/workflow:w-auto", className)}>
       <button
         type="button"
         ref={ref}
@@ -855,7 +877,9 @@ const ActionButton = React.forwardRef<HTMLButtonElement, ActionButtonProps>(func
         title={disabled ? permission.reason : undefined}
         aria-describedby={disabled && permission.reason ? reasonId : undefined}
         className={cn(
-          "inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-45",
+          // 44px comfortable target on touch; the original compact height from `@[400px]/workflow`.
+          "inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-semibold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-45",
+          "@[400px]/workflow:min-h-0 @[400px]/workflow:w-auto @[400px]/workflow:justify-start",
           primary && !disabled && "text-[var(--color-success-foreground,white)]",
         )}
         style={
@@ -945,11 +969,11 @@ function StageRow({
             aria-expanded={false}
             aria-controls={panelId}
             onClick={onToggle}
-            className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left outline-none hover:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+            className="flex min-h-[44px] w-full flex-wrap items-center gap-x-2 gap-y-1 rounded-lg px-2 py-1.5 text-left outline-none hover:bg-[var(--color-bg-secondary)] focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/workflow:min-h-0 @[400px]/workflow:flex-nowrap"
           >
             <span className="text-[13.5px] font-medium text-[var(--color-fg)]">{stage.name}</span>
             <StatusPill tone={stageMeta.tone} label={stageMeta.label} size="sm" />
-            <span className="text-[12px] text-[var(--color-muted)]">{progress.given} approvals</span>
+            <span className="whitespace-nowrap text-[12px] text-[var(--color-muted)]">{progress.given} approvals</span>
             <span className="ml-auto text-[12px] text-[var(--color-accent)]">Show</span>
           </button>
         ) : (
@@ -957,7 +981,7 @@ function StageRow({
             id={expanded || resolved ? panelId : undefined}
             layout={!reduce}
             className={cn(
-              "rounded-xl p-2.5",
+              "rounded-xl p-2 @[400px]/workflow:p-2.5",
               isCurrent && "bg-[color-mix(in_oklab,var(--color-accent)_7%,transparent)] [box-shadow:inset_0_0_0_1px_color-mix(in_oklab,var(--color-accent)_35%,transparent)]",
             )}
           >
@@ -978,7 +1002,7 @@ function StageRow({
                   aria-expanded={expanded}
                   aria-controls={panelId}
                   onClick={onToggle}
-                  className="ml-auto rounded-md px-1.5 py-0.5 text-[12px] font-medium text-[var(--color-accent)] outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--color-accent)]"
+                  className="ml-auto inline-flex min-h-[32px] items-center rounded-md px-1.5 py-0.5 text-[12px] font-medium text-[var(--color-accent)] outline-none hover:underline focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] @[400px]/workflow:min-h-[24px]"
                 >
                   Hide
                 </button>
@@ -989,10 +1013,13 @@ function StageRow({
               <p className="mt-1 text-[12.5px] leading-snug text-[var(--color-muted)]">{stage.description}</p>
             ) : null}
 
-            <p className="mt-1.5 flex items-center gap-2 text-[12px] text-[var(--color-muted)]">
+            {/* Mode + tally are two whole phrases in inline flow; below `@[400px]/workflow` the
+                tally takes its own line and the "·" is dropped rather than left
+                leading a line on its own. */}
+            <p className="mt-1.5 text-[12px] leading-snug text-[var(--color-muted)]">
               <span className="font-medium text-[var(--color-fg)]">{progress.modeLabel}</span>
-              <span aria-hidden>·</span>
-              <span className="tabular-nums">
+              <span aria-hidden className="hidden @[400px]/workflow:inline">{" · "}</span>
+              <span className="block tabular-nums @[400px]/workflow:inline">
                 {progress.given} of {progress.needed} approval{progress.needed === 1 ? "" : "s"}
               </span>
             </p>
@@ -1030,7 +1057,7 @@ function ReviewerRow({
   return (
     <motion.li
       layout={!reduce}
-      className="flex items-center gap-2.5 rounded-lg px-1.5 py-1"
+      className="flex flex-wrap items-center gap-x-2.5 gap-y-1 rounded-lg px-1.5 py-1"
     >
       <Avatar person={reviewer} size={28} />
       <span className="min-w-0 flex-1">
@@ -1043,9 +1070,6 @@ function ReviewerRow({
           ) : null}
         </span>
         {reviewer.role ? <span className="block text-[11.5px] text-[var(--color-muted)]">{reviewer.role}</span> : null}
-        {reviewer.note ? (
-          <span className="mt-0.5 block truncate text-[11.5px] italic text-[var(--color-muted)]">“{reviewer.note}”</span>
-        ) : null}
       </span>
       <span className="flex shrink-0 flex-col items-end gap-0.5">
         <StatusPill tone={dm.tone} label={dm.label} size="sm" />
@@ -1053,6 +1077,18 @@ function ReviewerRow({
           <span className="text-[10.5px] text-[var(--color-muted)]">{fmt(reviewer.decidedAt)}</span>
         ) : null}
       </span>
+      {/* The note takes a full-width line under the row and clamps to two lines.
+          Squeezed into the name column it truncated to a couple of characters
+          next to the decision pill — a note has to be readable to be worth
+          rendering. `pl-9` keeps it aligned with the name, past the avatar. */}
+      {reviewer.note ? (
+        <span
+          data-part="reviewer-note"
+          className="line-clamp-2 w-full pl-9 text-[11.5px] italic leading-snug text-[var(--color-muted)]"
+        >
+          “{reviewer.note}”
+        </span>
+      ) : null}
     </motion.li>
   );
 }

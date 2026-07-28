@@ -288,8 +288,12 @@ function StatusGlyph({ status, reduce }: { status: ToolCallStatus; reduce: boole
 /* Controls                                                                     */
 /* -------------------------------------------------------------------------- */
 
+/* Touch-first: 44px tall while the panel is narrow, back to the dense form once
+   THIS card is wide enough — a 320px tile on a 27" monitor is still 320px, so
+   this reads `@md/toolcalls`, never `sm:`. The dense form still measures ~30px,
+   clear of the 24px WCAG 2.2 AA target minimum. */
 const actionBtn =
-  "inline-flex shrink-0 items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-[12.5px] font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] disabled:opacity-50";
+  "inline-flex min-h-[44px] shrink-0 items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-[12.5px] font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)] disabled:opacity-50 @md/toolcalls:min-h-0";
 
 function CopyDetailsButton({
   getText,
@@ -464,7 +468,15 @@ function ToolCallRow({
         />
       ) : null}
 
-      <div className={cn("flex items-start gap-2 pl-3 pr-2.5", compact ? "py-2" : "py-2.5")}>
+      {/* The row wraps: in a narrow panel the status chip + actions take their
+          own full-width line so the call name keeps the card width.
+          `@md/toolcalls` restores the original single row. */}
+      <div
+        className={cn(
+          "flex flex-wrap items-start gap-x-2 gap-y-1.5 pl-2.5 pr-2 @md/toolcalls:pl-3 @md/toolcalls:pr-2.5",
+          compact ? "py-2" : "py-2.5",
+        )}
+      >
         <button
           type="button"
           ref={(el) => registerToggle(call.id, el)}
@@ -473,7 +485,7 @@ function ToolCallRow({
           aria-controls={expanded && hasDetails ? detailsId : undefined}
           aria-describedby={isFailed && call.error ? errorId : undefined}
           disabled={!hasDetails}
-          className="group flex min-w-0 flex-1 items-start gap-2.5 rounded-lg text-left outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] disabled:cursor-default"
+          className="group flex min-w-0 flex-[1_1_9rem] items-start gap-2.5 rounded-lg text-left outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] disabled:cursor-default"
         >
           {/* Disclosure chevron */}
           <span
@@ -503,7 +515,15 @@ function ToolCallRow({
 
           <span className="min-w-0 flex-1">
             <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <span className={cn("truncate font-medium text-[var(--color-fg)]", compact ? "text-[13px]" : "text-[13.5px]")}>
+              {/* line-clamp (not truncate): a narrow row wraps to two lines
+                  rather than ellipsising the name down to a letter or two. */}
+              <span
+                data-call-name
+                className={cn(
+                  "min-w-0 font-medium leading-snug text-[var(--color-fg)] [overflow-wrap:anywhere] line-clamp-2",
+                  compact ? "text-[13px]" : "text-[13.5px]",
+                )}
+              >
                 {call.name}
               </span>
               {call.category && !compact ? (
@@ -515,7 +535,10 @@ function ToolCallRow({
 
             {/* Failed calls surface a short error inline (always visible), associated via aria-describedby. */}
             {isFailed && call.error ? (
-              <span id={errorId} className="mt-1 block truncate text-[12px] text-[var(--color-error)]">
+              <span
+                id={errorId}
+                className="mt-1 block text-[12px] leading-snug text-[var(--color-error)] [overflow-wrap:anywhere] line-clamp-3"
+              >
                 {call.error}
               </span>
             ) : null}
@@ -525,8 +548,14 @@ function ToolCallRow({
           </span>
         </button>
 
-        {/* Right rail: status chip, duration, and per-state actions (siblings of the toggle, never nested). */}
-        <div className="flex shrink-0 flex-col items-end gap-1.5">
+        {/* Right rail: status chip, duration, and per-state actions (siblings of
+            the toggle, never nested). Full-width row under the name while the
+            panel is narrow — the name block needs ~144px and this rail ~170px,
+            so the single-row form waits for `@md/toolcalls`. */}
+        <div
+          data-call-meta
+          className="flex w-full shrink-0 flex-wrap items-center justify-end gap-1.5 @md/toolcalls:w-auto @md/toolcalls:flex-col @md/toolcalls:items-end"
+        >
           <span
             className="inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11.5px] font-medium"
             style={{ color: vars.color, borderColor: vars.border, background: vars.bg }}
@@ -779,13 +808,19 @@ export function ToolCallActivity({
   return (
     <section
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
+        /* `@container/toolcalls` — this component sizes itself against its own
+           card, not the window, so a 320px tile renders the 320px layout. Inline
+           containment only, so the Framer `layout` height animations still
+           measure from content; the section is already `overflow-hidden` and the
+           only absolute children (progress fills, the current-call accent bar)
+           sit inside their own `relative` boxes. */
+        "@container/toolcalls flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
         className,
       )}
       aria-label={title}
     >
       {/* Header ---------------------------------------------------------- */}
-      <header className="flex items-center gap-2.5 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-4 py-2.5">
+      <header className="flex flex-wrap items-center gap-2.5 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2.5 @md/toolcalls:px-4">
         <span
           className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-[linear-gradient(135deg,var(--color-accent),color-mix(in_oklab,var(--color-accent)_55%,#000))] text-[var(--color-accent-fg)]"
           aria-hidden
@@ -795,7 +830,7 @@ export function ToolCallActivity({
             <path d="m16 10 3 3 3-6" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
-        <span className="text-[13px] font-semibold text-[var(--color-fg)]">{title}</span>
+        <span className="min-w-0 text-[13px] font-semibold text-[var(--color-fg)] [overflow-wrap:anywhere]">{title}</span>
 
         <div className="ml-auto flex flex-wrap items-center justify-end gap-1.5">
           {SUMMARY_TONES.map(({ status, label }) => {
@@ -830,7 +865,7 @@ export function ToolCallActivity({
       {calls.length === 0 ? (
         <p className="px-4 py-8 text-center text-[13px] text-[var(--color-muted)]">No tool activity yet.</p>
       ) : (
-        <ol className="flex flex-col gap-2 p-3">
+        <ol className="flex flex-col gap-2 p-2.5 @md/toolcalls:p-3">
           <AnimatePresence initial={false} mode="popLayout">
             {calls.map((call) => {
               const isExpanded = expanded.has(call.id);

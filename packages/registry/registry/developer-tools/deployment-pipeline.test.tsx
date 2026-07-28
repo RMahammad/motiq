@@ -56,4 +56,54 @@ describe("DeploymentPipeline", () => {
     await user.click(screen.getByRole("button", { name: /retry test stage/i }));
     expect(onRetry).toHaveBeenCalledWith("test");
   });
+
+  /* Responsive contract — see docs/responsive-standard.md. jsdom cannot lay out,
+     so these assert the *structure* that makes the row reflow at 320–375px. */
+  describe("responsive contract", () => {
+    it("keeps the status pill and duration inside one wrapping group", () => {
+      const { container } = render(<DeploymentPipeline stages={STAGES} />);
+      const rows = container.querySelectorAll<HTMLElement>('[data-slot="stage-meta"]');
+      expect(rows.length).toBe(STAGES.length);
+      for (const row of rows) {
+        expect(row.className).toContain("flex-wrap");
+      }
+      // A duration is never a standalone flex child of the wrapping meta row:
+      // it always lives inside the status group, so it can never strand alone.
+      const install = rows[0];
+      const group = install.querySelector<HTMLElement>('[data-slot="stage-status-group"]');
+      expect(group).toBeTruthy();
+      expect(group!.textContent).toContain("Passed");
+      expect(group!.textContent).toContain("8.4s");
+    });
+
+    it("omits the action wrapper entirely when a stage has neither logs nor retry", () => {
+      const { container } = render(
+        <DeploymentPipeline stages={[{ id: "only", name: "Only", status: "passed" }]} />,
+      );
+      const row = container.querySelector<HTMLElement>('[data-slot="stage-meta"]');
+      // Stage name + status group only — no empty `w-full` child claiming a line.
+      expect(row!.children.length).toBe(2);
+    });
+
+    it("gives the row controls a 44px narrow target that relaxes from @sm/pipeline up", () => {
+      render(<DeploymentPipeline stages={STAGES} onRetry={() => {}} />);
+      const retry = screen.getByRole("button", { name: /retry test stage/i });
+      const logs = screen.getAllByRole("button", { name: /logs/i })[0];
+      for (const el of [retry, logs]) {
+        expect(el.className).toContain("min-h-[44px]");
+        expect(el.className).toContain("@sm/pipeline:min-h-0");
+      }
+    });
+
+    it("lets a long stage name wrap instead of ellipsising", () => {
+      render(
+        <DeploymentPipeline
+          stages={[{ id: "x", name: "Provision ephemeral preview infrastructure", status: "running" }]}
+        />,
+      );
+      const name = screen.getByText("Provision ephemeral preview infrastructure");
+      expect(name.className).toContain("break-words");
+      expect(name.className).not.toContain("truncate");
+    });
+  });
 });

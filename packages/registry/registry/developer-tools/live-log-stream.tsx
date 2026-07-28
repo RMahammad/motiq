@@ -211,14 +211,14 @@ const LogRow = React.memo(function LogRow({ entry, fmt, animate, renderEntry }: 
   ) : (
     <>
       {entry.timestamp != null ? (
-        <time className="hidden shrink-0 select-none tabular-nums text-[var(--color-muted)] sm:inline" dateTime={new Date(entry.timestamp).toISOString?.() || undefined}>
+        <time className="hidden shrink-0 select-none tabular-nums text-[var(--color-muted)] @md/logs:inline" dateTime={new Date(entry.timestamp).toISOString?.() || undefined}>
           {fmt(entry.timestamp)}
         </time>
       ) : null}
 
       {/* Level chip: icon + text prefix, tinted via status tokens — never colour alone. */}
       <span
-        className="inline-flex shrink-0 items-center gap-1 rounded border px-1.5 py-px text-[10.5px] font-semibold uppercase leading-none"
+        className="inline-flex shrink-0 items-center gap-1 rounded border px-1.5 py-px text-[11px] @md/logs:text-[10.5px] font-semibold uppercase leading-none"
         style={{ color: vars.color, borderColor: vars.border, background: vars.bg }}
       >
         <LevelIcon level={entry.level} />
@@ -409,9 +409,12 @@ export function LiveLogStream({
 
   const focusRing =
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus,var(--color-accent))] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--color-surface)]";
+  // Narrow-first: comfortable 44px targets, back to the compact desktop density
+  // from `@md/logs` (448px of console width) up, where the toolbar is dense by
+  // design.
   const btn = cn(
-    "inline-flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)]",
-    "px-2 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors",
+    "inline-flex min-h-[44px] items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] @md/logs:min-h-0",
+    "px-2.5 py-1 text-[12px] font-medium text-[var(--color-fg)] transition-colors @md/logs:px-2",
     "hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]",
     "disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:border-[var(--color-border)] disabled:hover:text-[var(--color-fg)]",
     focusRing,
@@ -421,14 +424,17 @@ export function LiveLogStream({
     <div
       ref={rootRef}
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)]",
+        // `@container/logs` makes every layout decision below a function of the
+        // console's OWN width instead of the viewport's, so a stream dropped into
+        // a 311px tile of a wide page looks exactly like it does on a phone.
+        "@container/logs flex w-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)]",
         "bg-[var(--color-surface)] shadow-[var(--shadow-md)]",
         className,
       )}
     >
       {/* Header ---------------------------------------------------------- */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2">
-        <span className="flex items-center gap-2 text-[13px] font-semibold text-[var(--color-fg)]">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] px-3 py-2">
+        <span className="flex min-w-0 items-center gap-2 text-[13px] font-semibold text-[var(--color-fg)]">
           <span
             className="relative grid h-2.5 w-2.5 place-items-center"
             aria-hidden
@@ -447,16 +453,20 @@ export function LiveLogStream({
           {title}
         </span>
 
-        <span
-          className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium"
-          style={{ color: statusVar.color, borderColor: statusVar.border, background: statusVar.bg }}
-        >
-          {statusText}
-        </span>
+        {/* Status + line count are one wrapping group, so the count can never be
+            orphaned onto a line of its own when the header wraps on a phone. */}
+        <span data-slot="stream-meta" className="inline-flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+          <span
+            className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium"
+            style={{ color: statusVar.color, borderColor: statusVar.border, background: statusVar.bg }}
+          >
+            {statusText}
+          </span>
 
-        <span className="text-[11.5px] tabular-nums text-[var(--color-muted)]">
-          {formatNumber(visible.length)}
-          {visible.length !== capped.length ? ` / ${formatNumber(capped.length)}` : ""} lines
+          <span className="text-[11.5px] tabular-nums text-[var(--color-muted)]">
+            {formatNumber(visible.length)}
+            {visible.length !== capped.length ? ` / ${formatNumber(capped.length)}` : ""} lines
+          </span>
         </span>
 
         <div className="ml-auto flex items-center gap-1.5">
@@ -467,17 +477,17 @@ export function LiveLogStream({
             aria-pressed={isPaused}
           >
             {isPaused ? <PlayGlyph /> : <PauseGlyph />}
-            <span className="hidden sm:inline">{isPaused ? "Resume" : "Pause"}</span>
+            <span className="sr-only @md/logs:not-sr-only">{isPaused ? "Resume" : "Pause"}</span>
           </button>
           <button type="button" className={btn} onClick={handleCopy} disabled={visible.length === 0}>
             {copied ? <CheckGlyph /> : <CopyGlyph />}
-            <span className="hidden sm:inline">{copied ? "Copied" : "Copy"}</span>
+            <span className="sr-only @md/logs:not-sr-only">{copied ? "Copied" : "Copy"}</span>
             {copied ? <span className="sr-only" role="status">Copied {visible.length} lines to clipboard</span> : null}
           </button>
           {onClear ? (
             <button type="button" className={btn} onClick={onClear} disabled={isEmpty}>
               <ClearGlyph />
-              <span className="hidden sm:inline">Clear</span>
+              <span className="sr-only @md/logs:not-sr-only">Clear</span>
             </button>
           ) : null}
         </div>
@@ -485,7 +495,9 @@ export function LiveLogStream({
 
       {/* Search + level filter ------------------------------------------ */}
       <div className="flex flex-wrap items-center gap-2 border-b border-[var(--color-border)] px-3 py-2">
-        <label className="relative flex min-w-[9rem] flex-1 items-center">
+        {/* The search field owns a full line in a narrow console instead of being squeezed
+            into a few characters beside five filter chips. */}
+        <label className="relative flex w-full items-center @md/logs:w-auto @md/logs:min-w-[9rem] @md/logs:flex-1">
           <span className="pointer-events-none absolute left-2 text-[var(--color-muted)]">
             <SearchGlyph />
           </span>
@@ -496,14 +508,26 @@ export function LiveLogStream({
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search logs…"
             className={cn(
-              "w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] py-1 pl-8 pr-2",
+              "min-h-[44px] w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] py-1 pl-8 pr-2 @md/logs:min-h-0",
               "text-[12.5px] text-[var(--color-fg)] placeholder:text-[var(--color-muted)]",
               focusRing,
             )}
           />
         </label>
 
-        <div className="flex flex-wrap items-center gap-1" role="group" aria-label="Filter by level">
+        {/* Level chips keep their full labels in a narrow console by scrolling in their
+            own labelled strip rather than shrinking or wrapping into a wall.
+            Tabbing through the buttons scrolls the strip, so it stays keyboard
+            operable; from `@md/logs` up they simply wrap as before. */}
+        <div
+          data-slot="level-filter"
+          className={cn(
+            "-mx-1 flex w-full min-w-0 items-center gap-1 overflow-x-auto overscroll-x-contain px-1 pb-0.5",
+            "@md/logs:mx-0 @md/logs:w-auto @md/logs:flex-wrap @md/logs:overflow-x-visible @md/logs:px-0 @md/logs:pb-0",
+          )}
+          role="group"
+          aria-label="Filter by level"
+        >
           {levels.map((lvl) => {
             const meta = LEVEL_META[lvl];
             const on = activeLevels.has(lvl);
@@ -515,7 +539,8 @@ export function LiveLogStream({
                 aria-pressed={on}
                 onClick={() => toggleLevel(lvl)}
                 className={cn(
-                  "inline-flex items-center gap-1 rounded-md border px-1.5 py-1 text-[11px] font-medium leading-none transition-colors",
+                  "inline-flex min-h-[44px] shrink-0 items-center gap-1 rounded-md border px-2 py-1 text-[11px] font-medium leading-none transition-colors",
+                  "@md/logs:min-h-0 @md/logs:shrink @md/logs:px-1.5",
                   focusRing,
                   on
                     ? "text-[var(--color-fg)]"
@@ -604,13 +629,21 @@ export function LiveLogStream({
       {/* Error banner ---------------------------------------------------- */}
       {isError ? (
         <div
-          className="flex items-center gap-2 border-t px-3 py-2 text-[12.5px]"
+          className="flex flex-wrap items-start gap-x-2 gap-y-2 border-t px-3 py-2 text-[12.5px] @md/logs:items-center"
           style={{ color: statusVar.color, borderColor: statusVar.border, background: statusVar.bg }}
         >
-          <LevelIcon level="error" />
-          <span className="text-[var(--color-fg)]">{errorMessage ?? "The stream ended with an error."}</span>
+          <span className="mt-px shrink-0">
+            <LevelIcon level="error" />
+          </span>
+          <span className="min-w-0 flex-1 break-words text-[var(--color-fg)]">
+            {errorMessage ?? "The stream ended with an error."}
+          </span>
           {onRetry ? (
-            <button type="button" onClick={onRetry} className={cn(btn, "ml-auto")}>
+            <button
+              type="button"
+              onClick={onRetry}
+              className={cn(btn, "w-full justify-center @md/logs:ml-auto @md/logs:w-auto")}
+            >
               Retry
             </button>
           ) : null}

@@ -56,9 +56,12 @@ function legalStillDraft() {
     }
   };
   walk(legalDir);
+  // Any unresolved decision token on a legal page keeps the pages in draft.
+  // Tokens are rendered by app/legal/_doc.tsx (<Decide> / <Review />) and by
+  // apps/docs/lib/legal.ts (ownerDecision() / LEGAL_REVIEW).
   return files.some((f) => {
     const t = readFileSync(f, "utf8");
-    return /REQUIRES LEGAL REVIEW|Draft — requires legal review|COMMERCIAL DECISION REQUIRED/.test(t);
+    return /OWNER DECISION REQUIRED|LEGAL REVIEW REQUIRED|EFFECTIVE DATE REQUIRED|<Decide>|<Review \/>/.test(t);
   });
 }
 

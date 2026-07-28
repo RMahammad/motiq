@@ -87,6 +87,36 @@ import {
   AnimatedAccordionTrigger,
   AnimatedAccordionContent,
 } from "@/registry/animated-shadcn/animated-accordion";
+import { LoomDraftPreview } from "./loom-draft";
+import { CopperplateHatchPreview } from "./copperplate-hatch";
+import { ChartRecorderPreview } from "./chart-recorder";
+import { RisoRegistrationPreview } from "./riso-registration";
+import { CoreStrataPreview } from "./core-strata";
+import { MagneticDockPreview } from "./magnetic-dock";
+import { CursorCometPreview } from "./cursor-comet";
+import { LensCardPreview } from "./lens-card";
+import { TorchRevealPreview } from "./torch-reveal";
+import { GooeyActionsPreview } from "./gooey-actions";
+import { DecryptTextPreview } from "./decrypt-text";
+import { ProximityTypePreview } from "./proximity-type";
+import { SplitFlapPreview } from "./split-flap";
+import { LiquidFillHeadlinePreview } from "./liquid-fill-headline";
+import { WordCascadePreview } from "./word-cascade";
+import { HoloCardPreview } from "./holo-card";
+import { BorderBeamPanelPreview } from "./border-beam-panel";
+import { CardStackDeckPreview } from "./card-stack-deck";
+import { GlassRefractionPanelPreview } from "./glass-refraction-panel";
+import { AuroraPanelPreview } from "./aurora-panel";
+import { StickyZoomHeroPreview } from "./sticky-zoom-hero";
+import { DepthParallaxScenePreview } from "./depth-parallax-scene";
+import { MaskWipeSectionsPreview } from "./mask-wipe-sections";
+import { ScrollCountStatsPreview } from "./scroll-count-stats";
+import { VelocitySkewFeedPreview } from "./velocity-skew-feed";
+import { OrbitalGalleryPreview } from "./orbital-gallery";
+import { FlowWarpImagePreview } from "./flow-warp-image";
+import { VelocityMarqueePreview } from "./velocity-marquee";
+import { FilmstripScrubPreview } from "./filmstrip-scrub";
+import { CompareRevealPreview } from "./compare-reveal";
 
 /* shared bits ---------------------------------------------------------- */
 
@@ -706,6 +736,36 @@ export const previewMap: Record<string, React.ComponentType> = {
   "spotlight-card": SpotlightCardPreview,
   "animated-grid": AnimatedGridPreview,
   "animated-icons": AnimatedIconsPreview,
+  "loom-draft": LoomDraftPreview,
+  "copperplate-hatch": CopperplateHatchPreview,
+  "chart-recorder": ChartRecorderPreview,
+  "riso-registration": RisoRegistrationPreview,
+  "core-strata": CoreStrataPreview,
+  "magnetic-dock": MagneticDockPreview,
+  "cursor-comet": CursorCometPreview,
+  "lens-card": LensCardPreview,
+  "torch-reveal": TorchRevealPreview,
+  "gooey-actions": GooeyActionsPreview,
+  "decrypt-text": DecryptTextPreview,
+  "proximity-type": ProximityTypePreview,
+  "split-flap": SplitFlapPreview,
+  "liquid-fill-headline": LiquidFillHeadlinePreview,
+  "word-cascade": WordCascadePreview,
+  "holo-card": HoloCardPreview,
+  "border-beam-panel": BorderBeamPanelPreview,
+  "card-stack-deck": CardStackDeckPreview,
+  "glass-refraction-panel": GlassRefractionPanelPreview,
+  "aurora-panel": AuroraPanelPreview,
+  "sticky-zoom-hero": StickyZoomHeroPreview,
+  "depth-parallax-scene": DepthParallaxScenePreview,
+  "mask-wipe-sections": MaskWipeSectionsPreview,
+  "scroll-count-stats": ScrollCountStatsPreview,
+  "velocity-skew-feed": VelocitySkewFeedPreview,
+  "orbital-gallery": OrbitalGalleryPreview,
+  "flow-warp-image": FlowWarpImagePreview,
+  "velocity-marquee": VelocityMarqueePreview,
+  "filmstrip-scrub": FilmstripScrubPreview,
+  "compare-reveal": CompareRevealPreview,
 };
 
 export function Preview({ id }: { id: string }) {

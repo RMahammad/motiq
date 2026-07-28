@@ -34,7 +34,7 @@
     "teamLicenseEnabled": false,
     "agencyLicenseEnabled": false,
     "currency": "USD",
-    "supportEmail": "",
+    "supportEmail": "support@motiq.dev",
     "salesEmail": "",
     "termsUrl": "/legal/terms",
     "privacyUrl": "/legal/privacy",
