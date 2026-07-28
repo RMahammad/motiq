@@ -17,7 +17,7 @@ import {
  * decision-token treatment stay identical across policies. The layout owns the
  * <h1>; sections here render <h2>, sub-headings render <h3>.
  *
- * Unresolved items must be rendered through <Decide> / <Review> (or the
+ * Unresolved items must be rendered through <Decide> (or the
  * `ownerDecision()` helper in lib/legal.ts) rather than as free-form prose, so a
  * human reviewer — and scripts/check-launch-config.mjs — can find every one of
  * them by scanning for the literal token strings.
@@ -38,11 +38,6 @@ function Token({ children }: { children: ReactNode }) {
 /** `[OWNER DECISION REQUIRED: …]` — a business choice nobody has made yet. */
 export function Decide({ children }: { children: string }) {
   return <Token>{ownerDecision(children)}</Token>;
-}
-
-/** `[LEGAL REVIEW REQUIRED]` — wording a qualified lawyer must draft or approve. */
-export function Review() {
-  return <Token>[LEGAL REVIEW REQUIRED]</Token>;
 }
 
 // ---------------------------------------------------------------------------

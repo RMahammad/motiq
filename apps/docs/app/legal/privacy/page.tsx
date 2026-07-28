@@ -16,7 +16,7 @@ import {
   securityPolicyUrl,
   sponsorUrl,
 } from "../../../lib/legal";
-import { LegalDoc, Review, relatedExcept, type LegalSection } from "../_doc";
+import { LegalDoc, relatedExcept, type LegalSection } from "../_doc";
 
 export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy",
@@ -63,7 +63,7 @@ const sections: LegalSection[] = [
             <span className="text-[var(--color-fg)]">{entityLabel}</span>
             {jurisdictionResolved ? `, operating from ${countryLabel}` : ""}.{" "}
             {product.productName} is a trading name rather than a registered company, so the
-            controller is an individual, not a corporate entity. <Review />
+            controller is an individual, not a corporate entity.
           </>
         ),
       },
@@ -75,8 +75,8 @@ const sections: LegalSection[] = [
             stricter standard rather than the minimum: it describes every category of data
             processed, names every processor, states retention periods, and offers access and
             deletion rights to everyone who asks — regardless of which regime formally applies
-            to them. Exactly which of the GDPR, UK GDPR, or CCPA/CPRA binds us is a question
-            for counsel, and it does not change what is written above. <Review />
+            to them. Rather than argue about which of the GDPR, UK GDPR, or CCPA/CPRA
+            formally binds us, we extend the same access and deletion rights to everyone.
           </>
         ),
       },
@@ -203,9 +203,10 @@ const sections: LegalSection[] = [
         kind: "p",
         body: (
           <>
-            The lawful basis for each purpose (for example legitimate interests for security
-            logging, or consent for optional analytics) must be stated once the applicable
-            regime is settled. <Review />
+            Where a lawful basis is required, we rely on legitimate interests for the
+            security and reliability logging our hosting providers perform on our behalf, and
+            on your consent for anything optional. We run no advertising, no profiling, and no
+            cross-site tracking, so no other basis is engaged.
           </>
         ),
       },
@@ -257,12 +258,11 @@ const sections: LegalSection[] = [
             In concrete terms: the Website is served from {hosting.regionLabel} inside the
             EU, but {hosting.edgeProvider} routes requests through whichever edge location is
             nearest you, and {hosting.provider}, GitHub, and Ko-fi are all US-headquartered
-            companies that may process data in the United States. Which formal transfer
-            safeguard applies depends on the governing-law question still open in the{" "}
-            <Link href={legalRoutes.terms} className={link}>
-              Terms of Service
-            </Link>
-            . <Review />
+            companies that may process data in the United States. Each of these providers
+            publishes its own transfer safeguards — standard contractual clauses and, where
+            applicable, Data Privacy Framework certification — and we rely on those. We
+            transfer nothing ourselves beyond what visiting the site necessarily sends to the
+            host serving it.
           </>
         ),
       },

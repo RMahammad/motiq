@@ -31,8 +31,7 @@ export default function LegalLayout({ children }: { children: ReactNode }) {
           <p className="mt-1 text-[13.5px] leading-relaxed text-[var(--color-muted)]">
             These policies describe how {product.productName} actually operates today and are
             complete, but they have not been reviewed by a qualified lawyer and are not yet in
-            force. Clauses where professional drafting matters most are marked inline with{" "}
-            <code className="text-[var(--color-fg)]">[LEGAL REVIEW REQUIRED]</code>.
+            force.
           </p>
         </div>
       )}

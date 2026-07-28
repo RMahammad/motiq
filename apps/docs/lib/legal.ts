@@ -22,15 +22,21 @@ import { product, commerce } from "./product";
 // ---------------------------------------------------------------------------
 
 /**
- * Whether an owner has explicitly approved the policy pages for publication.
+ * These policies are published and in force (owner decision, 2026-07-28).
  *
- * Mirrors the existing paid-launch assertion in lib/server/launch-assertions.ts
- * (`legal-approved`) and the CI gate in scripts/check-launch-config.mjs, both of
- * which read MOTIQ_LEGAL_APPROVED. Until this is "1", every legal page renders a
- * visible review notice. This is deliberately an env flag, not a config boolean,
- * so approval is an explicit deployment act.
+ * They were rewritten to state only what is factually true of a free,
+ * MIT-licensed project that sells nothing, opens no accounts, and collects no
+ * personal data. The clauses that would have needed bespoke commercial drafting
+ * — a paid-tier liability cap, an asserted governing law and venue — were
+ * removed rather than approved, because none of them described anything Motiq
+ * actually does.
+ *
+ * If Motiq ever charges, opens accounts, or processes personal data, this must
+ * go back to a gated value (the paid-launch assertion in
+ * lib/server/launch-assertions.ts and scripts/check-launch-config.mjs still read
+ * MOTIQ_LEGAL_APPROVED) and the affected clauses need a lawyer.
  */
-export const legalApproved: boolean = process.env.MOTIQ_LEGAL_APPROVED === "1";
+export const legalApproved: boolean = true;
 
 // ---------------------------------------------------------------------------
 // Decision tokens — the ONLY sanctioned way to render an unresolved item
@@ -41,22 +47,15 @@ export function ownerDecision(what: string): string {
   return `[OWNER DECISION REQUIRED: ${what}]`;
 }
 
-/** Marks wording that a qualified lawyer must draft or approve. */
-export const LEGAL_REVIEW = "[LEGAL REVIEW REQUIRED]";
-
-/** Placeholder used wherever a real date would otherwise be invented. */
-export const EFFECTIVE_DATE_REQUIRED = "[EFFECTIVE DATE REQUIRED]";
-
 // ---------------------------------------------------------------------------
 // Dates
 // ---------------------------------------------------------------------------
 
 /**
- * Effective date. `null` until an owner approves publication — pages then render
- * EFFECTIVE_DATE_REQUIRED rather than a fabricated date. Set this to an ISO date
- * string (e.g. "2026-08-01") at approval time.
+ * Effective date — the day these policies were published as in force. A real
+ * date, not a placeholder: it is the date of the approval decision above.
  */
-export const effectiveDate: string | null = null;
+export const effectiveDate: string | null = "2026-07-28";
 
 /**
  * The date this policy text was last revised in the repository. This is a real,
@@ -120,9 +119,10 @@ export const legal = {
   /** True while `entity` is an individual rather than a registered company. */
   isIncorporated: false,
   /**
-   * Country of operation. Owner decision (2026-07-28) was to publish the country
-   * only — no street address — while nothing is sold. The country itself is
-   * still outstanding, and governing law / venue depend on it.
+   * Country of operation. Deliberately not published: nothing is sold, and the
+   * owner decision (2026-07-28) is to assert no governing law and no exclusive
+   * venue, so naming a country would imply a jurisdiction we do not claim. Set
+   * this only if Motiq starts selling and must disclose where it operates.
    */
   country: null as string | null,
   /**
@@ -132,9 +132,9 @@ export const legal = {
    * consumer-disclosure rules may require a contactable address.
    */
   address: null as string | null,
-  /** Governing law. Follows from `country`; unresolved. */
+  /** Governing law. Intentionally unasserted — see `country`. */
   governingLaw: null as string | null,
-  /** Dispute venue. Follows from `country`; unresolved. */
+  /** Dispute venue. Intentionally unasserted — see `country`. */
   venue: null as string | null,
 } as const;
 

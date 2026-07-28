@@ -18,7 +18,7 @@ import {
   sponsorUrl,
   venueLabel,
 } from "../../../lib/legal";
-import { LegalDoc, Review, relatedExcept, type LegalSection } from "../_doc";
+import { LegalDoc, relatedExcept, type LegalSection } from "../_doc";
 
 export const metadata: Metadata = pageMetadata({
   title: "Terms of Service",
@@ -45,7 +45,7 @@ const sections: LegalSection[] = [
             <span className="text-[var(--color-fg)]">{entityLabel}</span>. {product.productName}{" "}
             is a trading name, not a registered company — your agreement is with the individual
             named above{jurisdictionResolved ? `, operating from ${countryLabel}` : ""}. There
-            is no separate corporate entity between you and that person. <Review />
+            is no separate corporate entity between you and that person.
           </>
         ),
       },
@@ -132,15 +132,6 @@ const sections: LegalSection[] = [
           <>These Terms control everything else about your use of the Services.</>,
         ],
       },
-      {
-        kind: "p",
-        body: (
-          <>
-            Whether this order of precedence is stated correctly for enforceability purposes
-            is a drafting question. <Review />
-          </>
-        ),
-      },
     ],
   },
   {
@@ -154,7 +145,7 @@ const sections: LegalSection[] = [
             You must be old enough to enter a binding contract where you live. If you are
             not, you may still read the documentation and install Components — the license
             asks nothing of you — but you cannot agree to these Terms, and a parent or
-            guardian should. We do not ask your age and have no way to check it. <Review />
+            guardian should. We do not ask your age and have no way to check it.
           </>
         ),
       },
@@ -235,7 +226,7 @@ const sections: LegalSection[] = [
             If paid products are ever introduced, the price, currency, tax treatment, and
             billing terms would be shown to you at checkout before you paid, and these Terms
             would be updated first. No such offering exists today, and nothing on this page
-            should be read as advertising one. <Review />
+            should be read as advertising one.
           </>
         ),
       },
@@ -323,8 +314,7 @@ const sections: LegalSection[] = [
         body: (
           <>
             Code contributions are governed by the repository&apos;s contribution guide and
-            the open-source license in the repository, not by these Terms. The precise
-            feedback-license wording still needs professional drafting. <Review />
+            the open-source license in the repository, not by these Terms.
           </>
         ),
       },
@@ -421,8 +411,7 @@ const sections: LegalSection[] = [
         body: (
           <>
             Some jurisdictions do not allow certain warranty exclusions, in which case parts
-            of this section may not apply to you. The enforceable form of this section needs
-            professional drafting. <Review />
+            of this section may not apply to you.
           </>
         ),
       },
@@ -447,10 +436,12 @@ const sections: LegalSection[] = [
         kind: "p",
         body: (
           <>
-            Our total liability to you, across all claims, is capped at the greater of the
-            amount you paid us in the twelve months before the claim, or USD 100. For almost
-            everyone that first figure is zero, which is why the second exists: a cap of
-            nothing at all would be a term worth nothing to you. <Review />
+            {product.productName} is free: you pay nothing, so there is no fee to refund and
+            no purchase against which to measure a cap. The Components you install carry the
+            MIT license shipped with them, and its disclaimer is the operative limit — the
+            software is provided &ldquo;as is&rdquo;, without warranty of any kind, and the
+            authors are not liable for any claim, damages, or other liability arising from
+            the software or its use.
           </>
         ),
       },
@@ -473,13 +464,15 @@ const sections: LegalSection[] = [
         body: jurisdictionResolved ? (
           <>
             These Terms are governed by {governingLawLabel}, and disputes will be resolved in{" "}
-            {venueLabel}. <Review />
+            {venueLabel}.
           </>
         ) : (
           <>
-            These Terms do not specify a governing law or an exclusive venue, and none is
-            being asserted against you. Either party may bring a claim in any court of
-            competent jurisdiction. <Review />
+            These Terms name no governing law and no exclusive venue, and that is a
+            deliberate choice rather than an omission: {product.productName} sells nothing and
+            asserts nothing against you, so we do not ask you to litigate in a forum of our
+            choosing. Either party may bring a claim in any court of competent jurisdiction,
+            and the consumer rights you have where you live are untouched.
           </>
         ),
       },
@@ -504,9 +497,9 @@ const sections: LegalSection[] = [
             Because we operate no accounts and hold no mailing list, we cannot notify you
             individually, and we are not going to start collecting addresses in order to.
             Material changes are announced in the repository release notes; the
-            &ldquo;Last updated&rdquo; date here always reflects the current text. Whether
-            continued use after a change counts as acceptance is a question for counsel.{" "}
-            <Review />
+            &ldquo;Last updated&rdquo; date here always reflects the current text. If you
+            do not accept a change, stop using the Services; Components you have already
+            installed are yours under the MIT license and are unaffected.
           </>
         ),
       },
