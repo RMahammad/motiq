@@ -12,6 +12,7 @@ import { CatalogPreview } from "./_previews";
 import { RuntimeSignalMapHeroPreview } from "./_previews/catalog/runtime-signal-map-hero";
 import { CatalogStage } from "./_components/catalog-stage";
 import { FundingPipeline } from "./_components/funding-pipeline";
+import { StarButton } from "./_components/github-star";
 import { GoldSponsors } from "./_components/gold-sponsors";
 import { LazyPreview } from "./_components/lazy-preview";
 import { HeroShowcase } from "./_components/hero-showcase";
@@ -32,19 +33,18 @@ type Family = {
   cat: string;
   name: string;
   value: string;
-  count: number;
   icon: string;
   c: string;
 };
 const FAMILIES: Family[] = [
-  { cat: "ai", name: "AI workspace", value: "Streaming responses, agent runs, and tool activity.", count: 6, c: "#4f7cff", icon: "M12 3l1.8 4.7L18.5 9l-4.7 1.3L12 15l-1.8-4.7L5.5 9l4.7-1.3zM18 15l.9 2.3L21 18l-2.1.7L18 21l-.9-2.3L15 18l2.1-.7z" },
-  { cat: "developer-tools", name: "Developer console", value: "Pipelines, logs, inspectors, and environments.", count: 6, c: "#3e5ae8", icon: "M5 6l6 6-6 6M13 18h6" },
-  { cat: "collaboration", name: "Collaboration", value: "Presence, approvals, comments, and activity.", count: 6, c: "#22c7d9", icon: "M9 11a3 3 0 100-6 3 3 0 000 6zM3 20a6 6 0 0112 0M17 11a3 3 0 10-2-5.2M15.5 14.5A6 6 0 0121 20" },
-  { cat: "data-motion", name: "Data motion", value: "KPIs, refresh states, and streaming tables.", count: 6, c: "#14b8a6", icon: "M5 20V11M12 20V4M19 20v-6" },
-  { cat: "commerce", name: "Commerce", value: "Variants, cart, and checkout flows.", count: 3, c: "#10b981", icon: "M4 6h15l-1.6 8.5a2 2 0 01-2 1.6H8.6a2 2 0 01-2-1.7L4.7 4.6A1 1 0 003.7 4H2M8 20a1 1 0 100-2 1 1 0 000 2zM17 20a1 1 0 100-2 1 1 0 000 2z" },
-  { cat: "security", name: "Security", value: "Passkeys, two-factor, and session safety.", count: 3, c: "#6366f1", icon: "M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6zM9 12l2 2 4-4" },
-  { cat: "productivity", name: "Productivity", value: "Boards, timelines, and dependencies.", count: 3, c: "#f59e0b", icon: "M4 4h5v16H4zM10 4h4v10h-4zM15 4h5v7h-5z" },
-  { cat: "text", name: "Text & creative", value: "Kinetic text, cards, and backgrounds.", count: 6, c: "#ff6b5e", icon: "M4 7V5h16v2M12 5v14M9 19h6" },
+  { cat: "ai", name: "AI workspace", value: "Streaming responses, agent runs, and tool activity.", c: "#4f7cff", icon: "M12 3l1.8 4.7L18.5 9l-4.7 1.3L12 15l-1.8-4.7L5.5 9l4.7-1.3zM18 15l.9 2.3L21 18l-2.1.7L18 21l-.9-2.3L15 18l2.1-.7z" },
+  { cat: "developer-tools", name: "Developer console", value: "Pipelines, logs, inspectors, and environments.", c: "#3e5ae8", icon: "M5 6l6 6-6 6M13 18h6" },
+  { cat: "collaboration", name: "Collaboration", value: "Presence, approvals, comments, and activity.", c: "#22c7d9", icon: "M9 11a3 3 0 100-6 3 3 0 000 6zM3 20a6 6 0 0112 0M17 11a3 3 0 10-2-5.2M15.5 14.5A6 6 0 0121 20" },
+  { cat: "data-motion", name: "Data motion", value: "KPIs, refresh states, and streaming tables.", c: "#14b8a6", icon: "M5 20V11M12 20V4M19 20v-6" },
+  { cat: "commerce", name: "Commerce", value: "Variants, cart, and checkout flows.", c: "#10b981", icon: "M4 6h15l-1.6 8.5a2 2 0 01-2 1.6H8.6a2 2 0 01-2-1.7L4.7 4.6A1 1 0 003.7 4H2M8 20a1 1 0 100-2 1 1 0 000 2zM17 20a1 1 0 100-2 1 1 0 000 2z" },
+  { cat: "security", name: "Security", value: "Passkeys, two-factor, and session safety.", c: "#6366f1", icon: "M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6zM9 12l2 2 4-4" },
+  { cat: "productivity", name: "Productivity", value: "Boards, timelines, and dependencies.", c: "#f59e0b", icon: "M4 4h5v16H4zM10 4h4v10h-4zM15 4h5v7h-5z" },
+  { cat: "text", name: "Text & creative", value: "Kinetic text, cards, and backgrounds.", c: "#ff6b5e", icon: "M4 7V5h16v2M12 5v14M9 19h6" },
 ];
 
 const categoryHref = (cat: string) => `/components?category=${cat}`;
@@ -413,7 +413,7 @@ export default function HomePage() {
                 Animated React components and complete workflows, delivered as editable source through a shadcn-compatible registry. Your application owns the state.
               </p>
 
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <Link
                   href="/getting-started"
                   className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-accent)] px-6 text-[15px] font-semibold text-[var(--color-accent-fg)] shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] sm:w-auto"
@@ -429,6 +429,7 @@ export default function HomePage() {
                 >
                   Browse components
                 </Link>
+                <StarButton source="hero" variant="outline" className="w-full sm:w-auto" />
               </div>
             </div>
 
@@ -779,7 +780,11 @@ export default function HomePage() {
               >
                 Browse components
               </Link>
+              <StarButton source="page" variant="outline" className="!border-[var(--color-border-strong)] !bg-[var(--color-surface)]" />
             </div>
+            <p className="mt-5 text-[13px] text-[var(--color-muted)]">
+              Motiq is free and MIT-licensed. If it saves you an afternoon, a star is the whole price.
+            </p>
           </div>
         </div>
       </section>
