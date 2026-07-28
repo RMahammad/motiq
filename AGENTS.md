@@ -1,9 +1,9 @@
 # AGENTS.md
 
-A commercially-sold **animated component library for React and Next.js** — accessible, reduced-motion-safe, RSC-safe, sold as editable source through a shadcn-compatible registry. The moat is production-readiness and a coherent catalog, not component count.
+A free, MIT-licensed **animated component library for React and Next.js** — accessible, reduced-motion-safe, RSC-safe, distributed as editable source through a shadcn-compatible registry. The moat is production-readiness and a coherent catalog, not component count.
 
-> **Phase:** 🟡 Phase 2 (MVP). 60 catalog items across `@scope/{tokens,motion,react,sections}` + registry + docs site + Storybook + CI.
-> **Component inventory is FROZEN** (2026-07-16 cleanup): no new components, blocks, packs, themes, or features. Work is cleanup, consistency, and reliability only. Cleanup tracker: [`docs/57-library-production-cleanup.md`](docs/57-library-production-cleanup.md).
+> **Phase:** 🟢 Shipping, free and open. **94 catalog items** — 86 components, 8 composed workflow blocks, and 4 packs across 20 categories — published as a **100-item shadcn registry** (77 components, 12 blocks, 9 ui, 2 lib), built from `@scope/{tokens,motion,react,sections,recipes}` + registry + docs site + Storybook + CI.
+> **The 2026-07-16 inventory freeze is lifted** — it ended when the 25-piece showpiece batch shipped on 2026-07-28. Catalog additions are allowed again, but every one still passes the production-readiness bar in [`docs/57-library-production-cleanup.md`](docs/57-library-production-cleanup.md): reduced motion, targeted tests, a preview, and docs before `Released`.
 
 ## Source of truth
 
@@ -42,7 +42,7 @@ Canonical docs (start here). Detailed/record docs are linked from these.
 - **Semantic tokens** over one-off values; never hardcode the brand or a placeholder `@scope/*` in visitor-facing output — brand comes from [`product.config.json`](product.config.json).
 - **Motion for React** is the default engine; CSS for simple effects; heavy engines stay component-local and lazy. Motion is not in every component.
 - **Registry source is customer-editable:** exact files/deps, no docs/preview/test/internal imports, no secrets. See [`docs/registry-authoring.md`](docs/registry-authoring.md).
-- **Free source is public; Pro source is protected** and must never appear in public build output ([`docs/security-model.md`](docs/security-model.md)). No runtime license checks; no secrets in client code.
+- **The whole catalog is free, public, and MIT-licensed** — no pricing, checkout, or gating. Anything in the separate protected tree must never appear in public build output ([`docs/security-model.md`](docs/security-model.md)); `pnpm check:exposure` enforces that. No runtime license checks; no secrets in client code.
 - **Clean-room only:** no competitor source, names, effects, or APIs copied. Renaming is not remediation.
 - Documentation has one canonical owner per topic.
 
@@ -58,7 +58,7 @@ Canonical docs (start here). Detailed/record docs are linked from these.
 
 - **Default track:** [`registry-release`](.Codex/skills/registry-release/SKILL.md) — one-page brief → build → wire registry/preview/docs → lightweight release gate → mark Released/Experimental in [`docs/39-catalog-production-board.md`](docs/39-catalog-production-board.md). Status set: `Idea · Building · Preview-ready · Registry-ready · Released · Experimental · Deprecated`. No subjective scores.
 - **Signature track:** heavier review is reserved for homepage centerpieces and complex Pro creative effects only ([`docs/36-premium-creative-component-strategy.md`](docs/36-premium-creative-component-strategy.md)). It is not the default.
-- One component's polish does not block unrelated work. Free and Pro share the same accessibility/usability baseline.
+- One component's polish does not block unrelated work. Every catalog item shares the same accessibility/usability baseline.
 
 ### Shared-file editing rule (parallel work)
 
@@ -100,7 +100,6 @@ pnpm check:launch                                    # launch-mode gates (fails 
 
 ## Prohibited
 
-- New components/blocks/packs/themes/features while the inventory is frozen.
 - Any component without reduced-motion behavior, targeted tests, a preview, and docs.
 - Arbitrary visual values when a token exists; hardcoded brand in visitor output.
 - Remotion/Node/`next` imports in core packages; `@scope/*`/docs/preview imports in registry source.

@@ -1,8 +1,8 @@
 # Documentation index
 
-> **Type:** Index (start here) · **Reviewed:** 2026-07-16
+> **Type:** Index (start here) · **Reviewed:** 2026-07-28
 
-A commercially-sold animated component library for React and Next.js, delivered as editable source through a shadcn-compatible registry. **Phase 2 (MVP):** 60 catalog items across `@scope/{tokens,motion,react,sections}` + registry + docs site + Storybook + CI. The component inventory is **frozen** for the current production-readiness cleanup — see [`57-library-production-cleanup.md`](57-library-production-cleanup.md).
+A free, MIT-licensed animated component library for React and Next.js, delivered as editable source through a shadcn-compatible registry. **Shipping:** 94 catalog items — 86 components, 8 composed workflow blocks, and 4 packs across 20 categories — published as a 100-item shadcn registry, built from `@scope/{tokens,motion,react,sections,recipes}` + registry + docs site + Storybook + CI. The 2026-07-16 inventory freeze ended with the 2026-07-28 showpiece batch; the production-readiness bar still applies to every addition — see [`57-library-production-cleanup.md`](57-library-production-cleanup.md).
 
 ## Canonical standards
 

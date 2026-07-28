@@ -74,6 +74,7 @@ pnpm typecheck
 
 Requires `ffmpeg` on PATH for the GIF palette encode.
 
-Claim discipline: the numbers in `src/campaign.ts` (56 components, 4 packs,
+Claim discipline: the numbers in `src/campaign.ts` (86 components, 4 packs,
 install command) are verified against `packages/registry/registry.json` and
-`LAUNCH.md` — update them together.
+`LAUNCH.md` — update them together, then **re-render**: the committed files in
+`assets/campaign/` bake the old numbers into their frames.

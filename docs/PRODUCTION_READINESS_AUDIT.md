@@ -243,10 +243,11 @@ _(pending)_
 
 - Severity: **P4** (Documentation polish)
 - Area: Documentation accuracy
-- Status: Confirmed
+- Status: **Resolved 2026-07-28**
 - Affected files: `README.md` (line 7 "60+", line 24 alt "56+", lines 103-104 "56 components, 8 blocks, 4 packs, 17 categories")
-- Note: the detailed "56/8/4/17" line is accurate to registry.json; the "60+"/"56+" are loose rounding. Low impact.
+- Note: the detailed "56/8/4/17" line was accurate to registry.json at audit time; the "60+"/"56+" were loose rounding. Low impact.
 - Recommendation: make the headline consistent with the precise line.
+- Resolution: every count claim across `README.md`, `LAUNCH.md`, `assets/README.md`, `CLAUDE.md`/`AGENTS.md`, `docs/README.md`, `docs/39`, and `apps/promo/src/campaign.ts` was re-derived from `apps/docs/lib/catalog.ts` and `packages/registry/registry.json` and now reads **86 components · 8 workflow blocks · 4 packs · 20 categories** (94 catalog items, 100 registry items). `LAUNCH.md` carries the one approved round number ("90+").
 
 ## Consumer installation matrix
 
@@ -286,7 +287,7 @@ Precise wording: *no automated axe violations in the tested states; keyboard/rol
 
 - MQA-002: docs `catalog.ts` `access:"pro"` on 26 free items (public pages unaffected; legacy portal only).
 - MQA-003: homepage category tiles hardcode ai/dev-tools/collaboration=6, data-motion=6; registry has 8/8/8/7.
-- MQA-004: README "60+"/"56+" headline vs precise "56 components, 8 blocks, 4 packs, 17 categories" (the precise line is accurate to registry.json).
+- MQA-004: README "60+"/"56+" headline vs precise "56 components, 8 blocks, 4 packs, 17 categories" (the precise line was accurate to registry.json). **Resolved 2026-07-28** — all count claims re-derived from the catalog and registry.
 - `catalog.ts` (64 entries) and `registry.json` (70) are independently hand-maintained with no reconciliation script (drift risk).
 
 ## Changes made during audit
