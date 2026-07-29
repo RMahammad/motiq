@@ -9,7 +9,7 @@ Everything for promoting Motiq lives here:
 
 The rendered media (`*.gif`, `*.mp4`, `*.png`, `*.jpg`) is **gitignored** — regenerable from `apps/promo` — *except* the files the root README embeds (`campaign/motiq-readme-hero.gif`, `showcase/*.gif`, `showcase/motiq-showcase.png`), which must be committed so GitHub can render them. Distribute everything else via a GitHub Release or upload natively when posting.
 
-Channel rules, timing, and the full launch sequence live in [`LAUNCH.md`](../LAUNCH.md); this file maps assets to channels and gives paste-ready captions. **All claims match LAUNCH.md's fact sheet** (86 components + 8 blocks + 4 packs → "90+ components & blocks"; free & open source; shadcn-registry install). Never add user counts or download numbers to a caption.
+Channel rules, timing, and the full launch sequence live in [`LAUNCH.md`](../LAUNCH.md); this file maps assets to channels and gives paste-ready captions. **All claims match LAUNCH.md's fact sheet** (86 components + 8 workflow blocks + 4 packs, stated exactly — never rounded to "90+"; free & open source; shadcn-registry install). Never add user counts or download numbers to a caption.
 
 ---
 

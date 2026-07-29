@@ -334,7 +334,7 @@ export const definitions: Definition[] = [
   {
     term: "Motiq",
     meaning:
-      `The open-source component catalog published at ${product.documentationUrl.replace(/^https?:\/\//, "").replace(/\/docs$/, "")} and in the ${product.githubUrl.replace(/^https?:\/\//, "")} repository, together with the person or entity that publishes it. Also referred to below as "we", "us", and "our".`,
+      `The open-source component catalog published at ${product.documentationUrl.replace(/^https?:\/\//, "")} and in the ${product.githubUrl.replace(/^https?:\/\//, "")} repository, together with the person or entity that publishes it. Also referred to below as "we", "us", and "our".`,
   },
   {
     term: "Website",

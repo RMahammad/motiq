@@ -98,6 +98,13 @@ npx shadcn@latest add https://motiq.dev/r/ai-response-stream
 The command copies the component and its registry dependencies into your project.
 Every component page has its exact copy-ready command.
 
+This repository is also a shadcn registry in its own right, so you can install
+straight from GitHub and pin to a tag:
+
+```bash
+npx shadcn@latest add RMahammad/motiq/ai-response-stream
+```
+
 **Requirements:** React 18.3+ or 19, Tailwind CSS v4, and a
 [shadcn-initialized project](https://ui.shadcn.com/docs/installation).
 
@@ -138,7 +145,7 @@ an endless gallery of disconnected effects.
 
 ## Local development
 
-Motiq is a pnpm monorepo and requires Node.js 22.13 or newer.
+Motiq is a pnpm monorepo and requires **Node.js 22.13 or newer** (see [`.nvmrc`](./.nvmrc)).
 
 ```bash
 git clone https://github.com/RMahammad/motiq.git

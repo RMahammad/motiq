@@ -38,7 +38,10 @@ const PROTECTED_OUT = process.env.REGISTRY_PROTECTED_OUT
   ? resolve(process.env.REGISTRY_PROTECTED_OUT)
   : join(pkgRoot, ".protected", "r");
 const BASE_URL = process.env.REGISTRY_BASE_URL || config.registryBaseUrl;
-const PROTECTED_BASE_URL = process.env.REGISTRY_PROTECTED_BASE_URL || `${config.documentationUrl.replace(/\/docs$/, "")}/api/registry`;
+// documentationUrl is the site origin (there is no /docs route — it used to be
+// pointed at one that 404s, which is why this and legal.ts both stripped a
+// trailing "/docs"). Kept plain now that the config value is correct.
+const PROTECTED_BASE_URL = process.env.REGISTRY_PROTECTED_BASE_URL || `${config.documentationUrl}/api/registry`;
 const NAMESPACE = config.registryNamespace; // e.g. "@motiq"
 const ITEM_SCHEMA = "https://ui.shadcn.com/schema/registry-item.json";
 
@@ -139,6 +142,32 @@ writeFileSync(
       name: config.shortName.toLowerCase(),
       homepage: config.documentationUrl,
       items: manifest.items.map((it) => ({ ...it, registryDependencies: depsToUrls(it.registryDependencies) })),
+    },
+    null,
+    2,
+  ) + "\n",
+);
+
+// Repo-root registry.json — lets the public GitHub repo act as a shadcn registry
+// directly (`npx shadcn@latest add RMahammad/motiq/<item>`), which needs the
+// manifest at the repository root with paths resolvable from the repo root.
+// Generated, never hand-maintained: a second hand-written copy of a 100-item
+// manifest is a drift bug waiting to happen.
+const REGISTRY_PKG_PREFIX = "packages/registry/";
+writeFileSync(
+  join(repoRoot, "registry.json"),
+  JSON.stringify(
+    {
+      $schema: manifest.$schema,
+      name: config.shortName.toLowerCase(),
+      homepage: config.documentationUrl,
+      items: manifest.items.map((it) => ({
+        ...it,
+        registryDependencies: depsToUrls(it.registryDependencies),
+        // Authoring paths are relative to packages/registry; from the repo root
+        // they must include that prefix or the CLI cannot fetch the source.
+        files: (it.files ?? []).map((f) => ({ ...f, path: `${REGISTRY_PKG_PREFIX}${f.path}` })),
+      })),
     },
     null,
     2,
