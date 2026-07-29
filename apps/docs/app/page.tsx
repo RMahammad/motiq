@@ -4,7 +4,7 @@ import Link from "next/link";
 import { product } from "../lib/product";
 import { absoluteUrl } from "../lib/seo";
 import { AiResponseStream, type ResponseSegment } from "@/registry/ai/ai-response-stream";
-import { featuredItems, categoryCount, bySlug, packSpans, SPAN_CLASS, resolvePresentation, componentItems, type CatalogItem } from "../lib/catalog";
+import { featuredItems, categoryCount, bySlug, packSpans, SPAN_CLASS, resolvePresentation, componentItems, blockItems, type CatalogItem } from "../lib/catalog";
 import { packs, type Pack } from "../lib/packs";
 import { statusLabel } from "../lib/commerce";
 import { fundingConfig } from "../lib/funding";
@@ -291,6 +291,7 @@ export default function HomePage() {
   const featuredSpans = packSpans(featured);
 
   const componentTotal = componentItems().length;
+  const blockTotal = blockItems().length;
 
   // Product environments showcase — a controlled selection (not all ten): one
   // lead animated background, one hero block, and two more backgrounds. Each
@@ -458,9 +459,12 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <div className="mt-3.5 grid grid-cols-2 gap-3">
+                {/* Canonical formulation — the same three figures, counted the same
+                    way, as the README, /sponsor, and the release notes. */}
+                <div className="mt-3.5 grid grid-cols-3 gap-3">
                   <ProofStat value={`${componentTotal}`} label="released components" />
-                  <ProofStat value={`${packs.length}`} label="complete workflow packs" />
+                  <ProofStat value={`${blockTotal}`} label="workflow blocks" />
+                  <ProofStat value={`${packs.length}`} label="one-command packs" />
                 </div>
 
                 {/* one real component, live — footer controls hidden so it reads

@@ -1,14 +1,13 @@
 name: CI
 
-# paths-ignore skips runs for files no CI check consumes (root docs, license, image
-# assets). docs/** and CLAUDE.md are NOT listed — the doc-consistency checks scan them.
+# paths-ignore skips runs only for files no CI check consumes. README.md,
+# CONTRIBUTING.md, AGENTS.md and LAUNCH.md are deliberately NOT listed: they carry
+# the catalog counts that check-catalog-counts.mjs verifies, so skipping CI for a
+# doc-only edit is exactly how a stale count would slip through.
 on:
   push:
     branches: [main]
     paths-ignore: &docs-only
-      - README.md
-      - CONTRIBUTING.md
-      - AGENTS.md
       - LICENSE
       - .github/assets/**
   pull_request:
@@ -33,7 +32,9 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Single source of truth for the supported floor (README + CONTRIBUTING
+          # + package.json engines all state 22.13); CI proves that floor works.
+          node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
@@ -43,6 +44,7 @@ jobs:
       - run: node docs/tooling/check-duplicate-titles.mjs
       - run: node docs/tooling/check-stale-dates.mjs
       - run: node docs/tooling/check-inventory.mjs
+      - run: node docs/tooling/check-catalog-counts.mjs
 
       # Code gates
       - run: pnpm lint            # import-boundary firewall (docs/03)
@@ -61,7 +63,9 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Single source of truth for the supported floor (README + CONTRIBUTING
+          # + package.json engines all state 22.13); CI proves that floor works.
+          node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build

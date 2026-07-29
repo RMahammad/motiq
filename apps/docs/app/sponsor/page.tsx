@@ -161,9 +161,11 @@ function TierCard({ tier }: { tier: SponsorTier }) {
 
 /* ---- Metrics — verified counts derived from the canonical catalog/pack data ---- */
 
-function Metric({ value, label }: { value: string; label: string }) {
+function Metric({ value, label, className = "" }: { value: string; label: string; className?: string }) {
   return (
-    <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-5 shadow-[var(--shadow-sm)]">
+    <div
+      className={`rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-5 shadow-[var(--shadow-sm)] ${className}`}
+    >
       <div className="text-[30px] font-semibold leading-none tabular-nums tracking-tight text-[var(--color-fg)]">
         {value}
       </div>
@@ -173,7 +175,12 @@ function Metric({ value, label }: { value: string; label: string }) {
 }
 
 export default function SponsorPage() {
-  const releasedComponents = componentItems().length + blockItems().length;
+  // Canonical formulation, identical to the homepage and README: components,
+  // workflow blocks, and packs are counted separately and never merged into one
+  // number — a combined "components & blocks" figure reads as a contradiction
+  // next to the homepage's component count.
+  const componentTotal = componentItems().length;
+  const blockTotal = blockItems().length;
   const activeCategories = categories.filter((c) => categoryCount(c.id) > 0).length;
 
   const jsonLd = {
@@ -263,11 +270,14 @@ export default function SponsorPage() {
 
       {/* ===== 2 · Project metrics — verified counts from the catalog ===== */}
       <section className="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8" aria-label="Project metrics">
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          <Metric value={`${releasedComponents}`} label="Released components & blocks" />
-          <Metric value={`${packs.length}`} label="Complete workflow packs" />
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
+          <Metric value={`${componentTotal}`} label="Released components" />
+          <Metric value={`${blockTotal}`} label="Composed workflow blocks" />
+          <Metric value={`${packs.length}`} label="One-command packs" />
           <Metric value={`${activeCategories}`} label="Workflow categories" />
-          <Metric value="MIT" label="Open source, free to use commercially" />
+          {/* Five tiles into two columns leaves this one orphaned on the last
+              row; span it so the block reads as finished, not truncated. */}
+          <Metric value="MIT" label="Free to use commercially" className="col-span-2 lg:col-span-1" />
         </div>
       </section>
 

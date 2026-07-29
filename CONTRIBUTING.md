@@ -5,7 +5,8 @@ repo running and the bar every change is held to.
 
 ## Getting started
 
-Requires **Node ≥ 20** and **pnpm**.
+Requires **Node.js 22.13 or newer** (the version in [`.nvmrc`](./.nvmrc), which is
+what CI runs) and **pnpm**.
 
 ```bash
 git clone https://github.com/RMahammad/motiq.git

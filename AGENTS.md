@@ -2,7 +2,7 @@
 
 A free, MIT-licensed **animated component library for React and Next.js** — accessible, reduced-motion-safe, RSC-safe, distributed as editable source through a shadcn-compatible registry. The moat is production-readiness and a coherent catalog, not component count.
 
-> **Phase:** 🟢 Shipping, free and open. **94 catalog items** — 86 components, 8 composed workflow blocks, and 4 packs across 20 categories — published as a **100-item shadcn registry** (77 components, 12 blocks, 9 ui, 2 lib), built from `@scope/{tokens,motion,react,sections,recipes}` + registry + docs site + Storybook + CI.
+> **Phase:** 🟢 Shipping, free and open. **94 catalog items** — 86 components, 8 composed workflow blocks, and 4 packs across 20 categories — published as a **100-item shadcn registry** (77 `registry:component`, 12 `registry:block`, 9 `registry:ui`, 2 `registry:lib`) <!-- not-a-catalog-count: registry item types, not catalog components/blocks -->, built from `@scope/{tokens,motion,react,sections,recipes}` + registry + docs site + Storybook + CI.
 > **The 2026-07-16 inventory freeze is lifted** — it ended when the 25-piece showpiece batch shipped on 2026-07-28. Catalog additions are allowed again, but every one still passes the production-readiness bar in [`docs/57-library-production-cleanup.md`](docs/57-library-production-cleanup.md): reduced motion, targeted tests, a preview, and docs before `Released`.
 
 ## Source of truth

@@ -7,7 +7,7 @@
   "npmScope": "@scope",
   "registryNamespace": "@motiq",
   "registryBaseUrl": "https://motiq.dev/r",
-  "documentationUrl": "https://motiq.dev/docs",
+  "documentationUrl": "https://motiq.dev",
   "githubUrl": "https://github.com/RMahammad/motiq",
   "supportUrl": "https://github.com/RMahammad/motiq/issues",
   "sponsorUrl": "https://ko-fi.com/motiq",

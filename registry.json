@@ -14,7 +14,7 @@
       ],
       "files": [
         {
-          "path": "registry/lib/utils.ts",
+          "path": "packages/registry/registry/lib/utils.ts",
           "type": "registry:lib",
           "target": "lib/utils.ts"
         }
@@ -33,7 +33,7 @@
       "dependencies": [],
       "files": [
         {
-          "path": "registry/lib/motion.ts",
+          "path": "packages/registry/registry/lib/motion.ts",
           "type": "registry:lib",
           "target": "lib/motiq.ts"
         }
@@ -58,7 +58,7 @@
       ],
       "files": [
         {
-          "path": "registry/ai/ai-response-stream.tsx",
+          "path": "packages/registry/registry/ai/ai-response-stream.tsx",
           "type": "registry:component",
           "target": "components/motiq/ai-response-stream.tsx"
         }
@@ -93,7 +93,7 @@
       ],
       "files": [
         {
-          "path": "registry/developer-tools/deployment-pipeline.tsx",
+          "path": "packages/registry/registry/developer-tools/deployment-pipeline.tsx",
           "type": "registry:component",
           "target": "components/motiq/deployment-pipeline.tsx"
         }
@@ -128,7 +128,7 @@
       ],
       "files": [
         {
-          "path": "registry/collaboration/live-presence-stack.tsx",
+          "path": "packages/registry/registry/collaboration/live-presence-stack.tsx",
           "type": "registry:component",
           "target": "components/motiq/live-presence-stack.tsx"
         }
@@ -159,7 +159,7 @@
       ],
       "files": [
         {
-          "path": "registry/data/kpi-number-morph.tsx",
+          "path": "packages/registry/registry/data/kpi-number-morph.tsx",
           "type": "registry:component",
           "target": "components/motiq/kpi-number-morph.tsx"
         }
@@ -192,7 +192,7 @@
       ],
       "files": [
         {
-          "path": "registry/ai/tool-call-activity.tsx",
+          "path": "packages/registry/registry/ai/tool-call-activity.tsx",
           "type": "registry:component",
           "target": "components/motiq/tool-call-activity.tsx"
         }
@@ -227,7 +227,7 @@
       ],
       "files": [
         {
-          "path": "registry/developer-tools/live-log-stream.tsx",
+          "path": "packages/registry/registry/developer-tools/live-log-stream.tsx",
           "type": "registry:component",
           "target": "components/motiq/live-log-stream.tsx"
         }
@@ -262,7 +262,7 @@
       ],
       "files": [
         {
-          "path": "registry/collaboration/activity-stream.tsx",
+          "path": "packages/registry/registry/collaboration/activity-stream.tsx",
           "type": "registry:component",
           "target": "components/motiq/activity-stream.tsx"
         }
@@ -296,7 +296,7 @@
       ],
       "files": [
         {
-          "path": "registry/data/streaming-data-rows.tsx",
+          "path": "packages/registry/registry/data/streaming-data-rows.tsx",
           "type": "registry:component",
           "target": "components/motiq/streaming-data-rows.tsx"
         }
@@ -328,7 +328,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/luminous-topography.tsx",
+          "path": "packages/registry/registry/backgrounds/luminous-topography.tsx",
           "type": "registry:component",
           "target": "components/motiq/luminous-topography.tsx"
         }
@@ -359,7 +359,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/workflow-topology-field.tsx",
+          "path": "packages/registry/registry/backgrounds/workflow-topology-field.tsx",
           "type": "registry:component",
           "target": "components/motiq/workflow-topology-field.tsx"
         }
@@ -391,7 +391,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/queue-pulse-lanes.tsx",
+          "path": "packages/registry/registry/backgrounds/queue-pulse-lanes.tsx",
           "type": "registry:component",
           "target": "components/motiq/queue-pulse-lanes.tsx"
         }
@@ -423,7 +423,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/adaptive-safe-zone-grid.tsx",
+          "path": "packages/registry/registry/backgrounds/adaptive-safe-zone-grid.tsx",
           "type": "registry:component",
           "target": "components/motiq/adaptive-safe-zone-grid.tsx"
         }
@@ -455,7 +455,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/runtime-signal-map.tsx",
+          "path": "packages/registry/registry/backgrounds/runtime-signal-map.tsx",
           "type": "registry:component",
           "target": "components/motiq/runtime-signal-map.tsx"
         }
@@ -487,7 +487,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/event-propagation-matrix.tsx",
+          "path": "packages/registry/registry/backgrounds/event-propagation-matrix.tsx",
           "type": "registry:component",
           "target": "components/motiq/event-propagation-matrix.tsx"
         }
@@ -519,7 +519,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/data-contour-surface.tsx",
+          "path": "packages/registry/registry/backgrounds/data-contour-surface.tsx",
           "type": "registry:component",
           "target": "components/motiq/data-contour-surface.tsx"
         }
@@ -557,7 +557,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/agent-operations-hero.tsx",
+          "path": "packages/registry/registry/blocks/agent-operations-hero.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/agent-operations-hero.tsx"
         }
@@ -595,7 +595,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/deployment-control-hero.tsx",
+          "path": "packages/registry/registry/blocks/deployment-control-hero.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/deployment-control-hero.tsx"
         }
@@ -633,7 +633,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/live-data-command-hero.tsx",
+          "path": "packages/registry/registry/blocks/live-data-command-hero.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/live-data-command-hero.tsx"
         }
@@ -672,7 +672,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/collaborative-launch-hero.tsx",
+          "path": "packages/registry/registry/blocks/collaborative-launch-hero.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/collaborative-launch-hero.tsx"
         }
@@ -706,7 +706,7 @@
       ],
       "files": [
         {
-          "path": "registry/ai/source-citation-rail.tsx",
+          "path": "packages/registry/registry/ai/source-citation-rail.tsx",
           "type": "registry:component",
           "target": "components/motiq/source-citation-rail.tsx"
         }
@@ -741,7 +741,7 @@
       ],
       "files": [
         {
-          "path": "registry/developer-tools/api-request-inspector.tsx",
+          "path": "packages/registry/registry/developer-tools/api-request-inspector.tsx",
           "type": "registry:component",
           "target": "components/motiq/api-request-inspector.tsx"
         }
@@ -777,7 +777,7 @@
       ],
       "files": [
         {
-          "path": "registry/collaboration/approval-workflow.tsx",
+          "path": "packages/registry/registry/collaboration/approval-workflow.tsx",
           "type": "registry:component",
           "target": "components/motiq/approval-workflow.tsx"
         }
@@ -811,7 +811,7 @@
       ],
       "files": [
         {
-          "path": "registry/data/filter-result-transition.tsx",
+          "path": "packages/registry/registry/data/filter-result-transition.tsx",
           "type": "registry:component",
           "target": "components/motiq/filter-result-transition.tsx"
         }
@@ -845,7 +845,7 @@
       ],
       "files": [
         {
-          "path": "registry/mobile/swipe-action-row.tsx",
+          "path": "packages/registry/registry/mobile/swipe-action-row.tsx",
           "type": "registry:component",
           "target": "components/motiq/swipe-action-row.tsx"
         }
@@ -879,7 +879,7 @@
       ],
       "files": [
         {
-          "path": "registry/ai/agent-run-timeline.tsx",
+          "path": "packages/registry/registry/ai/agent-run-timeline.tsx",
           "type": "registry:component",
           "target": "components/motiq/agent-run-timeline.tsx"
         }
@@ -915,7 +915,7 @@
       ],
       "files": [
         {
-          "path": "registry/developer-tools/environment-switcher.tsx",
+          "path": "packages/registry/registry/developer-tools/environment-switcher.tsx",
           "type": "registry:component",
           "target": "components/motiq/environment-switcher.tsx"
         }
@@ -951,7 +951,7 @@
       ],
       "files": [
         {
-          "path": "registry/collaboration/comment-thread.tsx",
+          "path": "packages/registry/registry/collaboration/comment-thread.tsx",
           "type": "registry:component",
           "target": "components/motiq/comment-thread.tsx"
         }
@@ -985,7 +985,7 @@
       ],
       "files": [
         {
-          "path": "registry/data/data-refresh-state.tsx",
+          "path": "packages/registry/registry/data/data-refresh-state.tsx",
           "type": "registry:component",
           "target": "components/motiq/data-refresh-state.tsx"
         }
@@ -1020,7 +1020,7 @@
       ],
       "files": [
         {
-          "path": "registry/mobile/mobile-filter-sheet.tsx",
+          "path": "packages/registry/registry/mobile/mobile-filter-sheet.tsx",
           "type": "registry:component",
           "target": "components/motiq/mobile-filter-sheet.tsx"
         }
@@ -1056,7 +1056,7 @@
       ],
       "files": [
         {
-          "path": "registry/ai/prompt-composer.tsx",
+          "path": "packages/registry/registry/ai/prompt-composer.tsx",
           "type": "registry:component",
           "target": "components/motiq/prompt-composer.tsx"
         }
@@ -1092,7 +1092,7 @@
       ],
       "files": [
         {
-          "path": "registry/developer-tools/webhook-event-stream.tsx",
+          "path": "packages/registry/registry/developer-tools/webhook-event-stream.tsx",
           "type": "registry:component",
           "target": "components/motiq/webhook-event-stream.tsx"
         }
@@ -1128,7 +1128,7 @@
       ],
       "files": [
         {
-          "path": "registry/collaboration/mention-suggestions.tsx",
+          "path": "packages/registry/registry/collaboration/mention-suggestions.tsx",
           "type": "registry:component",
           "target": "components/motiq/mention-suggestions.tsx"
         }
@@ -1163,7 +1163,7 @@
       ],
       "files": [
         {
-          "path": "registry/data/data-quality-status.tsx",
+          "path": "packages/registry/registry/data/data-quality-status.tsx",
           "type": "registry:component",
           "target": "components/motiq/data-quality-status.tsx"
         }
@@ -1198,7 +1198,7 @@
       ],
       "files": [
         {
-          "path": "registry/mobile/keyboard-safe-form.tsx",
+          "path": "packages/registry/registry/mobile/keyboard-safe-form.tsx",
           "type": "registry:component",
           "target": "components/motiq/keyboard-safe-form.tsx"
         }
@@ -1234,7 +1234,7 @@
       ],
       "files": [
         {
-          "path": "registry/file/file-upload-pipeline.tsx",
+          "path": "packages/registry/registry/file/file-upload-pipeline.tsx",
           "type": "registry:component",
           "target": "components/motiq/file-upload-pipeline.tsx"
         }
@@ -1269,7 +1269,7 @@
       ],
       "files": [
         {
-          "path": "registry/commerce/product-variant-selector.tsx",
+          "path": "packages/registry/registry/commerce/product-variant-selector.tsx",
           "type": "registry:component",
           "target": "components/motiq/product-variant-selector.tsx"
         }
@@ -1304,7 +1304,7 @@
       ],
       "files": [
         {
-          "path": "registry/security/passkey-setup-flow.tsx",
+          "path": "packages/registry/registry/security/passkey-setup-flow.tsx",
           "type": "registry:component",
           "target": "components/motiq/passkey-setup-flow.tsx"
         }
@@ -1339,7 +1339,7 @@
       ],
       "files": [
         {
-          "path": "registry/communication/message-delivery-states.tsx",
+          "path": "packages/registry/registry/communication/message-delivery-states.tsx",
           "type": "registry:component",
           "target": "components/motiq/message-delivery-states.tsx"
         }
@@ -1374,7 +1374,7 @@
       ],
       "files": [
         {
-          "path": "registry/productivity/kanban-card-movement.tsx",
+          "path": "packages/registry/registry/productivity/kanban-card-movement.tsx",
           "type": "registry:component",
           "target": "components/motiq/kanban-card-movement.tsx"
         }
@@ -1410,7 +1410,7 @@
       ],
       "files": [
         {
-          "path": "registry/file/multi-file-queue.tsx",
+          "path": "packages/registry/registry/file/multi-file-queue.tsx",
           "type": "registry:component",
           "target": "components/motiq/multi-file-queue.tsx"
         }
@@ -1446,7 +1446,7 @@
       ],
       "files": [
         {
-          "path": "registry/commerce/cart-item-transition.tsx",
+          "path": "packages/registry/registry/commerce/cart-item-transition.tsx",
           "type": "registry:component",
           "target": "components/motiq/cart-item-transition.tsx"
         }
@@ -1482,7 +1482,7 @@
       ],
       "files": [
         {
-          "path": "registry/security/two-factor-setup-flow.tsx",
+          "path": "packages/registry/registry/security/two-factor-setup-flow.tsx",
           "type": "registry:component",
           "target": "components/motiq/two-factor-setup-flow.tsx"
         }
@@ -1517,7 +1517,7 @@
       ],
       "files": [
         {
-          "path": "registry/communication/typing-and-presence.tsx",
+          "path": "packages/registry/registry/communication/typing-and-presence.tsx",
           "type": "registry:component",
           "target": "components/motiq/typing-and-presence.tsx"
         }
@@ -1552,7 +1552,7 @@
       ],
       "files": [
         {
-          "path": "registry/productivity/task-dependency-map.tsx",
+          "path": "packages/registry/registry/productivity/task-dependency-map.tsx",
           "type": "registry:component",
           "target": "components/motiq/task-dependency-map.tsx"
         }
@@ -1588,7 +1588,7 @@
       ],
       "files": [
         {
-          "path": "registry/file/processing-timeline.tsx",
+          "path": "packages/registry/registry/file/processing-timeline.tsx",
           "type": "registry:component",
           "target": "components/motiq/processing-timeline.tsx"
         }
@@ -1623,7 +1623,7 @@
       ],
       "files": [
         {
-          "path": "registry/commerce/checkout-progress.tsx",
+          "path": "packages/registry/registry/commerce/checkout-progress.tsx",
           "type": "registry:component",
           "target": "components/motiq/checkout-progress.tsx"
         }
@@ -1658,7 +1658,7 @@
       ],
       "files": [
         {
-          "path": "registry/security/session-security-center.tsx",
+          "path": "packages/registry/registry/security/session-security-center.tsx",
           "type": "registry:component",
           "target": "components/motiq/session-security-center.tsx"
         }
@@ -1693,7 +1693,7 @@
       ],
       "files": [
         {
-          "path": "registry/communication/thread-expansion.tsx",
+          "path": "packages/registry/registry/communication/thread-expansion.tsx",
           "type": "registry:component",
           "target": "components/motiq/thread-expansion.tsx"
         }
@@ -1728,7 +1728,7 @@
       ],
       "files": [
         {
-          "path": "registry/productivity/project-timeline.tsx",
+          "path": "packages/registry/registry/productivity/project-timeline.tsx",
           "type": "registry:component",
           "target": "components/motiq/project-timeline.tsx"
         }
@@ -1767,7 +1767,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/ai-agent-workspace.tsx",
+          "path": "packages/registry/registry/blocks/ai-agent-workspace.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/ai-agent-workspace.tsx"
         }
@@ -1803,7 +1803,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/deployment-command-center.tsx",
+          "path": "packages/registry/registry/blocks/deployment-command-center.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/deployment-command-center.tsx"
         }
@@ -1839,7 +1839,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/collaborative-review-workspace.tsx",
+          "path": "packages/registry/registry/blocks/collaborative-review-workspace.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/collaborative-review-workspace.tsx"
         }
@@ -1875,7 +1875,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/live-operations-dashboard.tsx",
+          "path": "packages/registry/registry/blocks/live-operations-dashboard.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/live-operations-dashboard.tsx"
         }
@@ -1911,7 +1911,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/ai-agent-workspace.tsx",
+          "path": "packages/registry/registry/blocks/ai-agent-workspace.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/ai-agent-workspace.tsx"
         }
@@ -1946,7 +1946,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/deployment-command-center.tsx",
+          "path": "packages/registry/registry/blocks/deployment-command-center.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/deployment-command-center.tsx"
         }
@@ -1981,7 +1981,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/collaborative-review-workspace.tsx",
+          "path": "packages/registry/registry/blocks/collaborative-review-workspace.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/collaborative-review-workspace.tsx"
         }
@@ -2016,7 +2016,7 @@
       ],
       "files": [
         {
-          "path": "registry/blocks/live-operations-dashboard.tsx",
+          "path": "packages/registry/registry/blocks/live-operations-dashboard.tsx",
           "type": "registry:block",
           "target": "components/motiq/blocks/live-operations-dashboard.tsx"
         }
@@ -2046,7 +2046,7 @@
       ],
       "files": [
         {
-          "path": "registry/text/kinetic-emphasis.tsx",
+          "path": "packages/registry/registry/text/kinetic-emphasis.tsx",
           "type": "registry:component",
           "target": "components/motiq/kinetic-emphasis.tsx"
         }
@@ -2079,7 +2079,7 @@
       ],
       "files": [
         {
-          "path": "registry/text/blur-text.tsx",
+          "path": "packages/registry/registry/text/blur-text.tsx",
           "type": "registry:component",
           "target": "components/motiq/blur-text.tsx"
         }
@@ -2110,7 +2110,7 @@
       ],
       "files": [
         {
-          "path": "registry/creative/spotlight-card.tsx",
+          "path": "packages/registry/registry/creative/spotlight-card.tsx",
           "type": "registry:ui",
           "target": "components/motiq/spotlight-card.tsx"
         }
@@ -2142,7 +2142,7 @@
       ],
       "files": [
         {
-          "path": "registry/animated-shadcn/animated-dialog.tsx",
+          "path": "packages/registry/registry/animated-shadcn/animated-dialog.tsx",
           "type": "registry:ui",
           "target": "components/motiq/animated-dialog.tsx"
         }
@@ -2173,7 +2173,7 @@
       ],
       "files": [
         {
-          "path": "registry/animated-shadcn/animated-tabs.tsx",
+          "path": "packages/registry/registry/animated-shadcn/animated-tabs.tsx",
           "type": "registry:ui",
           "target": "components/motiq/animated-tabs.tsx"
         }
@@ -2204,7 +2204,7 @@
       ],
       "files": [
         {
-          "path": "registry/animated-shadcn/animated-accordion.tsx",
+          "path": "packages/registry/registry/animated-shadcn/animated-accordion.tsx",
           "type": "registry:ui",
           "target": "components/motiq/animated-accordion.tsx"
         }
@@ -2234,7 +2234,7 @@
       ],
       "files": [
         {
-          "path": "registry/animated-shadcn/animated-button.tsx",
+          "path": "packages/registry/registry/animated-shadcn/animated-button.tsx",
           "type": "registry:ui",
           "target": "components/motiq/animated-button.tsx"
         }
@@ -2264,7 +2264,7 @@
       ],
       "files": [
         {
-          "path": "registry/text/rotating-text.tsx",
+          "path": "packages/registry/registry/text/rotating-text.tsx",
           "type": "registry:ui",
           "target": "components/motiq/rotating-text.tsx"
         }
@@ -2294,7 +2294,7 @@
       ],
       "files": [
         {
-          "path": "registry/creative/animated-list.tsx",
+          "path": "packages/registry/registry/creative/animated-list.tsx",
           "type": "registry:ui",
           "target": "components/motiq/animated-list.tsx"
         }
@@ -2325,7 +2325,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/animated-grid.tsx",
+          "path": "packages/registry/registry/backgrounds/animated-grid.tsx",
           "type": "registry:ui",
           "target": "components/motiq/animated-grid.tsx"
         }
@@ -2354,7 +2354,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/loom-draft.tsx",
+          "path": "packages/registry/registry/backgrounds/loom-draft.tsx",
           "type": "registry:component",
           "target": "components/motiq/loom-draft.tsx"
         }
@@ -2386,7 +2386,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/copperplate-hatch.tsx",
+          "path": "packages/registry/registry/backgrounds/copperplate-hatch.tsx",
           "type": "registry:component",
           "target": "components/motiq/copperplate-hatch.tsx"
         }
@@ -2418,7 +2418,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/chart-recorder.tsx",
+          "path": "packages/registry/registry/backgrounds/chart-recorder.tsx",
           "type": "registry:component",
           "target": "components/motiq/chart-recorder.tsx"
         }
@@ -2450,7 +2450,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/riso-registration.tsx",
+          "path": "packages/registry/registry/backgrounds/riso-registration.tsx",
           "type": "registry:component",
           "target": "components/motiq/riso-registration.tsx"
         }
@@ -2482,7 +2482,7 @@
       ],
       "files": [
         {
-          "path": "registry/backgrounds/core-strata.tsx",
+          "path": "packages/registry/registry/backgrounds/core-strata.tsx",
           "type": "registry:component",
           "target": "components/motiq/core-strata.tsx"
         }
@@ -2516,7 +2516,7 @@
       ],
       "files": [
         {
-          "path": "registry/icons/animated-icons.tsx",
+          "path": "packages/registry/registry/icons/animated-icons.tsx",
           "type": "registry:ui",
           "target": "components/motiq/animated-icons.tsx"
         }
@@ -2545,7 +2545,7 @@
       ],
       "files": [
         {
-          "path": "registry/cursor/magnetic-dock.tsx",
+          "path": "packages/registry/registry/cursor/magnetic-dock.tsx",
           "type": "registry:component",
           "target": "components/motiq/magnetic-dock.tsx"
         }
@@ -2578,7 +2578,7 @@
       ],
       "files": [
         {
-          "path": "registry/cursor/cursor-comet.tsx",
+          "path": "packages/registry/registry/cursor/cursor-comet.tsx",
           "type": "registry:component",
           "target": "components/motiq/cursor-comet.tsx"
         }
@@ -2611,7 +2611,7 @@
       ],
       "files": [
         {
-          "path": "registry/cursor/lens-card.tsx",
+          "path": "packages/registry/registry/cursor/lens-card.tsx",
           "type": "registry:component",
           "target": "components/motiq/lens-card.tsx"
         }
@@ -2644,7 +2644,7 @@
       ],
       "files": [
         {
-          "path": "registry/cursor/torch-reveal.tsx",
+          "path": "packages/registry/registry/cursor/torch-reveal.tsx",
           "type": "registry:component",
           "target": "components/motiq/torch-reveal.tsx"
         }
@@ -2677,7 +2677,7 @@
       ],
       "files": [
         {
-          "path": "registry/cursor/gooey-actions.tsx",
+          "path": "packages/registry/registry/cursor/gooey-actions.tsx",
           "type": "registry:component",
           "target": "components/motiq/gooey-actions.tsx"
         }
@@ -2710,7 +2710,7 @@
       ],
       "files": [
         {
-          "path": "registry/text/decrypt-text.tsx",
+          "path": "packages/registry/registry/text/decrypt-text.tsx",
           "type": "registry:component",
           "target": "components/motiq/decrypt-text.tsx"
         }
@@ -2742,7 +2742,7 @@
       ],
       "files": [
         {
-          "path": "registry/text/proximity-type.tsx",
+          "path": "packages/registry/registry/text/proximity-type.tsx",
           "type": "registry:component",
           "target": "components/motiq/proximity-type.tsx"
         }
@@ -2774,7 +2774,7 @@
       ],
       "files": [
         {
-          "path": "registry/text/split-flap.tsx",
+          "path": "packages/registry/registry/text/split-flap.tsx",
           "type": "registry:component",
           "target": "components/motiq/split-flap.tsx"
         }
@@ -2806,7 +2806,7 @@
       ],
       "files": [
         {
-          "path": "registry/text/liquid-fill-headline.tsx",
+          "path": "packages/registry/registry/text/liquid-fill-headline.tsx",
           "type": "registry:component",
           "target": "components/motiq/liquid-fill-headline.tsx"
         }
@@ -2838,7 +2838,7 @@
       ],
       "files": [
         {
-          "path": "registry/text/word-cascade.tsx",
+          "path": "packages/registry/registry/text/word-cascade.tsx",
           "type": "registry:component",
           "target": "components/motiq/word-cascade.tsx"
         }
@@ -2870,7 +2870,7 @@
       ],
       "files": [
         {
-          "path": "registry/creative/holo-card.tsx",
+          "path": "packages/registry/registry/creative/holo-card.tsx",
           "type": "registry:component",
           "target": "components/motiq/holo-card.tsx"
         }
@@ -2903,7 +2903,7 @@
       ],
       "files": [
         {
-          "path": "registry/creative/border-beam-panel.tsx",
+          "path": "packages/registry/registry/creative/border-beam-panel.tsx",
           "type": "registry:component",
           "target": "components/motiq/border-beam-panel.tsx"
         }
@@ -2936,7 +2936,7 @@
       ],
       "files": [
         {
-          "path": "registry/creative/card-stack-deck.tsx",
+          "path": "packages/registry/registry/creative/card-stack-deck.tsx",
           "type": "registry:component",
           "target": "components/motiq/card-stack-deck.tsx"
         }
@@ -2969,7 +2969,7 @@
       ],
       "files": [
         {
-          "path": "registry/creative/glass-refraction-panel.tsx",
+          "path": "packages/registry/registry/creative/glass-refraction-panel.tsx",
           "type": "registry:component",
           "target": "components/motiq/glass-refraction-panel.tsx"
         }
@@ -3001,7 +3001,7 @@
       ],
       "files": [
         {
-          "path": "registry/creative/aurora-panel.tsx",
+          "path": "packages/registry/registry/creative/aurora-panel.tsx",
           "type": "registry:component",
           "target": "components/motiq/aurora-panel.tsx"
         }
@@ -3033,7 +3033,7 @@
       ],
       "files": [
         {
-          "path": "registry/scroll/sticky-zoom-hero.tsx",
+          "path": "packages/registry/registry/scroll/sticky-zoom-hero.tsx",
           "type": "registry:component",
           "target": "components/motiq/sticky-zoom-hero.tsx"
         }
@@ -3065,7 +3065,7 @@
       ],
       "files": [
         {
-          "path": "registry/scroll/depth-parallax-scene.tsx",
+          "path": "packages/registry/registry/scroll/depth-parallax-scene.tsx",
           "type": "registry:component",
           "target": "components/motiq/depth-parallax-scene.tsx"
         }
@@ -3097,7 +3097,7 @@
       ],
       "files": [
         {
-          "path": "registry/scroll/mask-wipe-sections.tsx",
+          "path": "packages/registry/registry/scroll/mask-wipe-sections.tsx",
           "type": "registry:component",
           "target": "components/motiq/mask-wipe-sections.tsx"
         }
@@ -3129,7 +3129,7 @@
       ],
       "files": [
         {
-          "path": "registry/scroll/scroll-count-stats.tsx",
+          "path": "packages/registry/registry/scroll/scroll-count-stats.tsx",
           "type": "registry:component",
           "target": "components/motiq/scroll-count-stats.tsx"
         }
@@ -3161,7 +3161,7 @@
       ],
       "files": [
         {
-          "path": "registry/scroll/velocity-skew-feed.tsx",
+          "path": "packages/registry/registry/scroll/velocity-skew-feed.tsx",
           "type": "registry:component",
           "target": "components/motiq/velocity-skew-feed.tsx"
         }
@@ -3193,7 +3193,7 @@
       ],
       "files": [
         {
-          "path": "registry/media/orbital-gallery.tsx",
+          "path": "packages/registry/registry/media/orbital-gallery.tsx",
           "type": "registry:component",
           "target": "components/motiq/orbital-gallery.tsx"
         }
@@ -3226,7 +3226,7 @@
       ],
       "files": [
         {
-          "path": "registry/media/flow-warp-image.tsx",
+          "path": "packages/registry/registry/media/flow-warp-image.tsx",
           "type": "registry:component",
           "target": "components/motiq/flow-warp-image.tsx"
         }
@@ -3259,7 +3259,7 @@
       ],
       "files": [
         {
-          "path": "registry/media/velocity-marquee.tsx",
+          "path": "packages/registry/registry/media/velocity-marquee.tsx",
           "type": "registry:component",
           "target": "components/motiq/velocity-marquee.tsx"
         }
@@ -3292,7 +3292,7 @@
       ],
       "files": [
         {
-          "path": "registry/media/filmstrip-scrub.tsx",
+          "path": "packages/registry/registry/media/filmstrip-scrub.tsx",
           "type": "registry:component",
           "target": "components/motiq/filmstrip-scrub.tsx"
         }
@@ -3325,7 +3325,7 @@
       ],
       "files": [
         {
-          "path": "registry/media/compare-reveal.tsx",
+          "path": "packages/registry/registry/media/compare-reveal.tsx",
           "type": "registry:component",
           "target": "components/motiq/compare-reveal.tsx"
         }
