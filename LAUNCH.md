@@ -76,22 +76,26 @@ Enable it:
 gh repo edit RMahammad/motiq --enable-discussions
 ```
 
-GitHub seeds default categories (Announcements, General, Ideas, Polls, Q&A, Show and
-tell). There is no API for creating categories, so adjust them by hand under
-**Settings → Discussions → Categories** to:
+GitHub seeds six defaults: Announcements, General, Ideas, Polls, Q&A, Show and tell.
+The GraphQL API has **no mutation for creating, renaming, or deleting categories**
+(verified — only discussion/comment mutations exist), so this part is manual, under
+**Settings → Discussions → Categories**.
 
-| Category | Format | Purpose |
-| --- | --- | --- |
-| Announcements | Announcement | Releases and breaking changes. Maintainer-only posting. |
-| Show and tell | Open-ended | What people built with Motiq — the category that does the most recruiting. |
-| Component requests | Open-ended | Catalog gaps. Ask for the *product problem*, not the effect. |
-| Help | Q&A | Install, Tailwind v4, and RSC setup questions. Q&A format so answers get marked. |
-| Ideas | Open-ended | Direction, API shape, and roadmap argument. |
-| Accessibility feedback | Open-ended | Screen-reader, keyboard, contrast, reduced-motion reports. A confirmed defect graduates to a bug issue. |
+You do not need to create anything: **rename the three unused defaults into the three
+missing categories.** GitHub derives the slug from the name, so renaming also produces
+the slugs `.github/ISSUE_TEMPLATE/config.yml` already links to.
 
-Delete the unused defaults (General, Polls) so the list is not mostly empty rooms.
-`.github/ISSUE_TEMPLATE/config.yml` already routes people to these categories from the
-"New issue" screen — those links 404 until Discussions is on, so enable it first.
+| Default | Action | Becomes | Format | Purpose |
+| --- | --- | --- | --- | --- |
+| Announcements | keep | Announcements | Announcement | Releases and breaking changes. Maintainer-only posting. |
+| Show and tell | keep | Show and tell | Open-ended | What people built with Motiq — the category that does the most recruiting. |
+| Ideas | keep | Ideas | Open-ended | Direction, API shape, and roadmap argument. |
+| **Q&A** | rename → | **Help** | Q&A *(keep it)* | Install, Tailwind v4, and RSC setup. Q&A format so answers get marked. |
+| **General** | rename → | **Component requests** | Open-ended | Catalog gaps. Ask for the *product problem*, not the effect. |
+| **Polls** | rename → | **Accessibility feedback** | Open-ended | Screen-reader, keyboard, contrast, reduced-motion reports. A confirmed defect graduates to a bug issue. |
+
+Names must match exactly — the config links resolve to `help`, `component-requests`,
+and `accessibility-feedback`, and will 404 until the renames are done.
 
 Seed each category with one real post before the launch wave. An empty Discussions tab
 is weaker evidence of a community than no Discussions tab at all.
