@@ -4,19 +4,29 @@ import Link from "next/link";
 import { product } from "../lib/product";
 import { absoluteUrl } from "../lib/seo";
 import { AiResponseStream, type ResponseSegment } from "@/registry/ai/ai-response-stream";
-import { featuredItems, categoryCount, bySlug, packSpans, SPAN_CLASS, resolvePresentation, componentItems, blockItems, type CatalogItem } from "../lib/catalog";
+import { categories, categoryCount, bySlug, SPAN_CLASS, componentItems, blockItems, type CatalogItem, type CardSpan, type Category, type CategoryId } from "../lib/catalog";
 import { packs, type Pack } from "../lib/packs";
 import { statusLabel } from "../lib/commerce";
 import { fundingConfig } from "../lib/funding";
-import { CatalogPreview } from "./_previews";
-import { RuntimeSignalMapHeroPreview } from "./_previews/catalog/runtime-signal-map-hero";
-import { CatalogStage } from "./_components/catalog-stage";
+import { installCommand } from "../lib/product";
+import {
+  AmbientScene,
+  CollaborationScene,
+  DeveloperScene,
+  FileScene,
+  HeroBlockScene,
+  ProductivityScene,
+  SecurityScene,
+  TextScene,
+} from "./_components/category-scenes";
 import { FundingPipeline } from "./_components/funding-pipeline";
 import { StarButton } from "./_components/github-star";
 import { GoldSponsors } from "./_components/gold-sponsors";
-import { LazyPreview } from "./_components/lazy-preview";
+import { InstallChip } from "./_components/install-chip";
 import { HeroShowcase } from "./_components/hero-showcase";
+import { Reveal } from "./_components/reveal";
 import { PageView } from "./_components/page-view";
+import { MediaGalleryHero } from "./_components/media-gallery-hero";
 
 /* ------------------------------------------------------------------ *
  * Homepage art-direction (docs/59). Seven distinct sections, one visual
@@ -29,23 +39,33 @@ import { PageView } from "./_components/page-view";
 // Controlled per-family accent palette — one hue per workflow family, used only
 // on card chrome (icon, count pill, explore link, hover ring). Shared design
 // system; distinct color so families are visually separable at a glance.
-type Family = {
-  cat: string;
-  name: string;
-  value: string;
-  icon: string;
-  c: string;
+/* Per-category identity — one accent + one glyph for every catalog category.
+   Single source of truth: the showcase cards above and the browse index below
+   both read from it, so a category looks the same wherever it appears. Accents
+   stay inside the brand-adjacent range (azure / cyan / teal / emerald / sky /
+   indigo / amber / coral / slate); purple is retired. */
+const CATEGORY_META: Record<CategoryId, { c: string; icon: string }> = {
+  ai: { c: "#4f7cff", icon: "M12 3l1.8 4.7L18.5 9l-4.7 1.3L12 15l-1.8-4.7L5.5 9l4.7-1.3zM18 15l.9 2.3L21 18l-2.1.7L18 21l-.9-2.3L15 18l2.1-.7z" },
+  "developer-tools": { c: "#3e5ae8", icon: "M5 6l6 6-6 6M13 18h6" },
+  collaboration: { c: "#22c7d9", icon: "M9 11a3 3 0 100-6 3 3 0 000 6zM3 20a6 6 0 0112 0M17 11a3 3 0 10-2-5.2M15.5 14.5A6 6 0 0121 20" },
+  "data-motion": { c: "#14b8a6", icon: "M5 20V11M12 20V4M19 20v-6" },
+  mobile: { c: "#0ea5e9", icon: "M8 3h8a1 1 0 011 1v16a1 1 0 01-1 1H8a1 1 0 01-1-1V4a1 1 0 011-1zM11 18h2" },
+  file: { c: "#38bdf8", icon: "M6 3h9l4 4v14H6zM14 3v5h5M9 13h6M9 17h4" },
+  commerce: { c: "#10b981", icon: "M4 6h15l-1.6 8.5a2 2 0 01-2 1.6H8.6a2 2 0 01-2-1.7L4.7 4.6A1 1 0 003.7 4H2M8 20a1 1 0 100-2 1 1 0 000 2zM17 20a1 1 0 100-2 1 1 0 000 2z" },
+  security: { c: "#6366f1", icon: "M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6zM9 12l2 2 4-4" },
+  communication: { c: "#2dd4bf", icon: "M4 5h16v10H9l-5 4V5zM8 10h.01M12 10h.01M16 10h.01" },
+  productivity: { c: "#f59e0b", icon: "M4 4h5v16H4zM10 4h4v10h-4zM15 4h5v7h-5z" },
+  text: { c: "#e0b341", icon: "M4 7V5h16v2M12 5v14M9 19h6" },
+  creative: { c: "#fb7185", icon: "M4 5h16v6H4zM4 14h10v5H4zM16 14h4v5h-4z" },
+  cursor: { c: "#f59e0b", icon: "M5 3l14 8-6 1.5L9.5 19z" },
+  media: { c: "#22c7d9", icon: "M4 5h16v14H4zM4 15l4-4 4 4 3-3 5 5M9 9.5a1 1 0 100-2 1 1 0 000 2z" },
+  scroll: { c: "#6366f1", icon: "M12 4v13M7 12l5 5 5-5M5 20h14" },
+  backgrounds: { c: "#ff6b5e", icon: "M3 11c3-4 6-4 9 0s6 4 9 0M3 16c3-4 6-4 9 0s6 4 9 0M3 6c3-4 6-4 9 0s6 4 9 0" },
+  "product-backgrounds": { c: "#4f7cff", icon: "M5 7l7 5 7-5M5 17l7-5 7 5M5 7v10M19 7v10" },
+  "workflow-heroes": { c: "#22c7d9", icon: "M4 5h16v6H4zM4 14h7v5H4zM13 14h7v5h-7z" },
+  "animated-shadcn": { c: "#94a3b8", icon: "M4 4h16v16H4zM4 10h16M10 10v10" },
+  icons: { c: "#f6b94a", icon: "M12 3l2.2 5.3L20 10l-5.8 1.7L12 17l-2.2-5.3L4 10l5.8-1.7z" },
 };
-const FAMILIES: Family[] = [
-  { cat: "ai", name: "AI workspace", value: "Streaming responses, agent runs, and tool activity.", c: "#4f7cff", icon: "M12 3l1.8 4.7L18.5 9l-4.7 1.3L12 15l-1.8-4.7L5.5 9l4.7-1.3zM18 15l.9 2.3L21 18l-2.1.7L18 21l-.9-2.3L15 18l2.1-.7z" },
-  { cat: "developer-tools", name: "Developer console", value: "Pipelines, logs, inspectors, and environments.", c: "#3e5ae8", icon: "M5 6l6 6-6 6M13 18h6" },
-  { cat: "collaboration", name: "Collaboration", value: "Presence, approvals, comments, and activity.", c: "#22c7d9", icon: "M9 11a3 3 0 100-6 3 3 0 000 6zM3 20a6 6 0 0112 0M17 11a3 3 0 10-2-5.2M15.5 14.5A6 6 0 0121 20" },
-  { cat: "data-motion", name: "Data motion", value: "KPIs, refresh states, and streaming tables.", c: "#14b8a6", icon: "M5 20V11M12 20V4M19 20v-6" },
-  { cat: "commerce", name: "Commerce", value: "Variants, cart, and checkout flows.", c: "#10b981", icon: "M4 6h15l-1.6 8.5a2 2 0 01-2 1.6H8.6a2 2 0 01-2-1.7L4.7 4.6A1 1 0 003.7 4H2M8 20a1 1 0 100-2 1 1 0 000 2zM17 20a1 1 0 100-2 1 1 0 000 2z" },
-  { cat: "security", name: "Security", value: "Passkeys, two-factor, and session safety.", c: "#6366f1", icon: "M12 3l7 3v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6zM9 12l2 2 4-4" },
-  { cat: "productivity", name: "Productivity", value: "Boards, timelines, and dependencies.", c: "#f59e0b", icon: "M4 4h5v16H4zM10 4h4v10h-4zM15 4h5v7h-5z" },
-  { cat: "text", name: "Text & creative", value: "Kinetic text, cards, and backgrounds.", c: "#ff6b5e", icon: "M4 7V5h16v2M12 5v14M9 19h6" },
-];
 
 const categoryHref = (cat: string) => `/components?category=${cat}`;
 
@@ -65,70 +85,234 @@ const DIFFERENTIATORS = [
   { t: "Composed blocks", d: "Four components compose into one installable, app-owned workflow block.", icon: "M4 4h7v7H4zM13 13h7v7h-7zM13 4h7v7h-7z" },
 ];
 
-/* ---- Featured component card (lean, editorial) ---- */
-function FeaturedCard({ item, wide }: { item: CatalogItem; wide?: boolean }) {
-  const p = resolvePresentation(item);
-  const stage = (
-    <CatalogStage size={p.previewSize} family={p.stageFamily} ambient={p.previewMode === "ambient"} mobileFrame={p.previewSize === "mobile"}>
-      <CatalogPreview id={item.id} />
-    </CatalogStage>
-  );
-  const preview =
-    p.previewSize === "full" || p.previewSize === "wide" || p.previewSize === "mobile" ? (
-      <LazyPreview label={`${item.name} preview`} minHeightClass="min-h-[300px]">
-        {stage}
-      </LazyPreview>
-    ) : (
-      stage
-    );
-
-  const meta = (
-    <div className={`flex flex-col ${wide ? "justify-center gap-3 p-6 lg:p-8" : "gap-2 p-5"}`}>
-      <div className="flex items-center gap-2.5">
-        <h3 className={`font-semibold tracking-tight text-[var(--color-fg)] ${wide ? "text-[22px]" : "text-[17px]"}`}>
-          <Link href={item.documentationPath} className="outline-none after:absolute after:inset-0 after:rounded-3xl hover:text-[var(--color-accent-text)]">
-            {item.name}
-          </Link>
-        </h3>
-        <FeaturedPill featured={item.featured} />
+/* ---- Shared section header (docs/61) — keyline eyebrow + balanced title on
+        the left, one quiet bordered CTA button bottom-aligned on the right. ---- */
+function SectionHead({
+  eyebrow,
+  signature,
+  title,
+  desc,
+  href,
+  cta,
+}: {
+  eyebrow: string;
+  /** Coral keyline for the one commercial "ship faster" moment. */
+  signature?: boolean;
+  title: string;
+  desc: ReactNode;
+  href: string;
+  cta: string;
+}) {
+  const tone = signature ? "text-[var(--color-signature-text)]" : "text-[var(--color-accent-text)]";
+  const line = signature ? "bg-[var(--color-signature)]" : "bg-[var(--color-accent)]";
+  return (
+    <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
+      <div className="max-w-[660px]">
+        <p className={`inline-flex items-center gap-2.5 text-[12.5px] font-semibold uppercase tracking-[0.12em] ${tone}`}>
+          <span aria-hidden className={`h-[1.5px] w-[22px] rounded-full ${line}`} />
+          {eyebrow}
+        </p>
+        <h2 className="mt-3 text-balance text-[clamp(1.8rem,3.4vw,2.75rem)] font-semibold leading-[1.06] tracking-[-0.023em] text-[var(--color-fg)]">
+          {title}
+        </h2>
+        <p className="mt-3.5 max-w-[58ch] text-[15.5px] leading-relaxed text-[var(--color-muted)]">{desc}</p>
       </div>
-      <p className={`text-[var(--color-muted)] ${wide ? "max-w-md text-[15px] leading-relaxed" : "line-clamp-2 text-[13.5px] leading-relaxed"}`}>
-        {item.description.split(" - ")[0].split(". ")[0]}.
-      </p>
-      <span className="mt-1 inline-flex items-center gap-1 text-[13.5px] font-medium text-[var(--color-accent-text)]">
-        Open component →
+      <Link
+        href={href}
+        className="group inline-flex h-[42px] shrink-0 items-center gap-2 rounded-xl border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-5 text-[14px] font-semibold text-[var(--color-fg)] shadow-[var(--shadow-sm)] transition-colors hover:border-[var(--color-accent)] hover:bg-[var(--color-surface-hover)]"
+      >
+        {cta}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden className="transition-transform duration-200 group-hover:translate-x-[3px]">
+          <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </Link>
+    </div>
+  );
+}
+
+/* ---- Section atmosphere — the hero's lit-studio language (azure spotlight,
+        cyan counter-glow, edge-light, masked dot lattice), echoed per band. ---- */
+function SectionAtmo({ dots, counter }: { dots?: boolean; counter?: boolean }) {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+      <div className="absolute inset-0" style={{ background: "radial-gradient(48% 46% at 85% -6%, var(--color-spotlight), transparent 64%)" }} />
+      {counter ? (
+        <div className="absolute inset-0" style={{ background: "radial-gradient(36% 40% at 4% 100%, var(--color-secondary-accent-soft), transparent 60%)" }} />
+      ) : null}
+      <div
+        className="absolute inset-x-0 top-0 h-px"
+        style={{ background: "linear-gradient(to right, transparent, color-mix(in oklab, var(--color-accent) 42%, transparent), transparent)" }}
+      />
+      {dots ? (
+        <div
+          className="absolute inset-0 opacity-[0.55]"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-fg) 7%, transparent) 1px, transparent 0)",
+            backgroundSize: "28px 28px",
+            WebkitMaskImage: "radial-gradient(110% 70% at 80% 0%, #000, transparent 62%)",
+            maskImage: "radial-gradient(110% 70% at 80% 0%, #000, transparent 62%)",
+          }}
+        />
+      ) : null}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * Catalog category card (docs/61). The homepage sells CATEGORIES, not single
+ * components: each card carries one simplified scene standing for that
+ * category's work, its live component count, and links straight to the
+ * filtered catalog. Full live previews live on the category and component
+ * pages, where there is room to read them.
+ * ------------------------------------------------------------------ */
+type CategoryCardSpec = {
+  cat: CategoryId;
+  label: string;
+  value: string;
+  accent: string;
+  scene: ReactNode;
+  span?: CardSpan;
+  /** Full-bleed scenes (backgrounds/heroes) skip the panel padding + lattice. */
+  bleed?: boolean;
+  minH?: string;
+};
+
+function CategoryCard({ cat, label, value, accent, scene, bleed, minH = "min-h-[250px]" }: CategoryCardSpec) {
+  return (
+    <Link
+      href={categoryHref(cat)}
+      className="group relative flex h-full flex-col overflow-hidden rounded-[22px] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:border-[color-mix(in_oklab,var(--fam)_45%,var(--color-border))] hover:shadow-[var(--shadow-md)]"
+      style={{ ["--fam" as string]: accent }}
+    >
+      <div
+        className={`sheen relative flex-1 overflow-hidden border-b border-[var(--color-border)] ${minH} ${
+          bleed ? "" : "grid place-items-center px-[26px] pb-[26px] pt-[30px]"
+        }`}
+        style={{
+          background:
+            "radial-gradient(100% 100% at 50% 0%, color-mix(in oklab, var(--fam) 9%, transparent), transparent 72%), var(--color-bg-elevated)",
+        }}
+      >
+        {bleed ? null : (
+          <span
+            aria-hidden
+            className="absolute inset-0 opacity-50"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--color-fg) 8%, transparent) 1px, transparent 0)",
+              backgroundSize: "20px 20px",
+              WebkitMaskImage: "radial-gradient(90% 90% at 50% 0%, #000, transparent 82%)",
+              maskImage: "radial-gradient(90% 90% at 50% 0%, #000, transparent 82%)",
+            }}
+          />
+        )}
+        {scene}
+        <span
+          className="absolute left-[15px] top-[15px] z-[3] inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold tabular-nums tracking-[0.04em]"
+          style={{
+            color: "var(--fam)",
+            background: "color-mix(in oklab, var(--fam) 13%, var(--color-surface))",
+            borderColor: "color-mix(in oklab, var(--fam) 32%, transparent)",
+          }}
+        >
+          {categoryCount(cat)} components
+        </span>
+      </div>
+      <div className="flex items-center gap-3.5 px-[19px] py-[17px]">
+        <span className="min-w-0">
+          <h3 className="text-[16.5px] font-semibold tracking-[-0.012em] text-[var(--color-fg)] transition-colors group-hover:text-[var(--color-accent-text)]">
+            {label}
+          </h3>
+          <p className="mt-0.5 truncate text-[13.5px] text-[var(--color-muted)]">{value}</p>
+        </span>
+        <span
+          aria-hidden
+          className="ml-auto grid h-[38px] w-[38px] shrink-0 place-items-center rounded-full border border-[var(--color-border-strong)] text-[var(--color-muted)] transition-all duration-300 [transition-timing-function:cubic-bezier(0.2,0,0,1)] group-hover:-rotate-45 group-hover:border-[var(--color-accent)] group-hover:bg-[var(--color-accent)] group-hover:text-[var(--color-accent-fg)]"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+            <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * Browse-index card (docs/61 §index). The showcase above previews nine
+ * categories at full size; this is the COMPLETE index — every category, in a
+ * denser icon-led card so the two grids never read as the same thing. Cards
+ * rise in on scroll and answer to hover: accent rail, lifting glyph, sheen,
+ * and a chevron that slides out of the label.
+ * ------------------------------------------------------------------ */
+function CategoryIndexCard({ cat }: { cat: Category }) {
+  const meta = CATEGORY_META[cat.id];
+  return (
+    <Link
+      href={categoryHref(cat.id)}
+      className="group sheen relative flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-[var(--shadow-sm)] transition-all duration-300 [transition-timing-function:cubic-bezier(0.2,0,0,1)] hover:-translate-y-1 hover:border-[color-mix(in_oklab,var(--fam)_50%,var(--color-border))] hover:shadow-[var(--shadow-md)]"
+      style={{ ["--fam" as string]: meta.c }}
+    >
+      {/* accent rail draws in from the left on hover */}
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 transition-transform duration-300 [transition-timing-function:cubic-bezier(0.2,0,0,1)] group-hover:scale-x-100"
+        style={{ background: "linear-gradient(to right, var(--fam), transparent)" }}
+      />
+
+      <span className="flex items-start justify-between gap-2">
+        <span
+          aria-hidden
+          className="grid h-10 w-10 place-items-center rounded-xl transition-transform duration-300 [transition-timing-function:cubic-bezier(0.2,0,0,1)] group-hover:-translate-y-0.5 group-hover:scale-110"
+          style={{
+            color: "var(--fam)",
+            background: "color-mix(in oklab, var(--fam) 14%, transparent)",
+            border: "1px solid color-mix(in oklab, var(--fam) 30%, transparent)",
+          }}
+        >
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+            <path d={meta.icon} stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+        <span
+          className="rounded-full px-2 py-0.5 text-[11.5px] font-bold tabular-nums transition-colors"
+          style={{ color: "var(--fam)", background: "color-mix(in oklab, var(--fam) 13%, transparent)" }}
+        >
+          {categoryCount(cat.id)}
+        </span>
       </span>
-    </div>
-  );
 
-  return (
-    <div className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] ring-1 ring-transparent transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--color-accent)_35%,var(--color-border))] hover:shadow-[var(--shadow-md)] hover:ring-[color-mix(in_oklab,var(--color-accent)_18%,transparent)]">
-      {wide ? (
-        <div className="grid lg:grid-cols-[1.35fr_0.65fr]">
-          <div className="min-w-0 border-b border-[var(--color-border)] lg:border-b-0 lg:border-r">{preview}</div>
-          {meta}
-        </div>
-      ) : (
-        <>
-          <div className="border-b border-[var(--color-border)]">{preview}</div>
-          {meta}
-        </>
-      )}
-    </div>
+      <h3 className="mt-3.5 flex items-center gap-1 text-[14.5px] font-semibold tracking-[-0.01em] text-[var(--color-fg)] transition-colors group-hover:text-[var(--fam)]">
+        {cat.label}
+        <svg
+          width="13"
+          height="13"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden
+          className="-translate-x-1 opacity-0 transition-all duration-300 [transition-timing-function:cubic-bezier(0.2,0,0,1)] group-hover:translate-x-0 group-hover:opacity-100"
+        >
+          <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </h3>
+      <p className="mt-1 line-clamp-2 text-[12.5px] leading-relaxed text-[var(--color-muted)]">{cat.blurb}</p>
+    </Link>
   );
 }
 
-function FeaturedPill({ featured }: { featured: boolean }) {
-  if (!featured) return null;
-  return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-[var(--color-accent-soft)] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">
-      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-        <path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" />
-      </svg>
-      Featured
-    </span>
-  );
-}
+/* One unified grid (docs/61 §catalog): every catalog family the homepage
+   showcases, in bento order — 8+4 / 4+4+4 / 6+6 / 12. The interactive
+   product-backgrounds lead card is rendered separately above these. */
+const CATALOG_CARDS: CategoryCardSpec[] = [
+  { cat: "developer-tools", label: "Developer console", value: "Pipelines, logs, inspectors, and environments.", accent: "#3e5ae8", span: 8, scene: <DeveloperScene /> },
+  { cat: "collaboration", label: "Collaboration", value: "Presence, approvals, and activity.", accent: "#22c7d9", span: 4, scene: <CollaborationScene /> },
+  { cat: "file", label: "File workflows", value: "Upload, queue, and processing.", accent: "#38bdf8", span: 4, scene: <FileScene /> },
+  { cat: "security", label: "Security & accounts", value: "Passkeys, two-factor, and sessions.", accent: "#6366f1", span: 4, scene: <SecurityScene /> },
+  { cat: "productivity", label: "Productivity", value: "Boards, timelines, and dependencies.", accent: "#f59e0b", span: 4, scene: <ProductivityScene /> },
+  { cat: "workflow-heroes", label: "Workflow heroes", value: "Hero blocks around a real workflow.", accent: "#22c7d9", span: 6, scene: <HeroBlockScene />, bleed: true, minH: "min-h-[210px]" },
+  { cat: "backgrounds", label: "Ambient backgrounds", value: "Quiet, performance-safe texture and light.", accent: "#ff6b5e", span: 6, scene: <AmbientScene />, bleed: true, minH: "min-h-[210px]" },
+  { cat: "text", label: "Text animations", value: "Headline-grade reveals, scrambles, and loops.", accent: "#e0b341", span: 12, scene: <TextScene />, minH: "min-h-[240px]" },
+];
 
 /* ---- Hero product-proof stat tile (truthful, catalog-derived — never fake trust) ---- */
 function ProofStat({ value, label }: { value: ReactNode; label: string }) {
@@ -164,113 +348,314 @@ function StrengthChip({ path, children }: { path: string; children: ReactNode })
   );
 }
 
-/* ---- Workflow category tile (bold family-colored cover) ---- */
-function CategoryTile({ f }: { f: Family }) {
-  const n = categoryCount(f.cat as never);
+/* ------------------------------------------------------------------ *
+ * Pack card (docs/61) — a product shot of the composed block. A browser-frame
+ * window renders the block's real workspace layout with its four components as
+ * numbered regions, a legend maps numbers to component names, and the footer
+ * carries the real one-command install. Identity first; no staircase list.
+ * ------------------------------------------------------------------ */
+
+type ShotArt = { c: string; icon: string; addr: string; grid: React.CSSProperties; blockNote: string };
+const PACK_ART: Record<string, ShotArt> = {
+  "ai-interface": {
+    c: "#4f7cff",
+    icon: "M12 3l1.8 4.7L18.5 9l-4.7 1.3L12 15l-1.8-4.7L5.5 9l4.7-1.3zM18 15l.9 2.3L21 18l-2.1.7L18 21l-.9-2.3L15 18l2.1-.7z",
+    addr: "yourapp.com/agent",
+    grid: { gridTemplateColumns: "96px 1fr 92px", gridTemplateRows: "1fr 46px", gridTemplateAreas: '"ra rb rc" "ra rd rc"' },
+    blockNote: "app-controlled state",
+  },
+  "developer-tools": {
+    c: "#3e5ae8",
+    icon: "M5 6l6 6-6 6M13 18h6",
+    addr: "yourapp.com/deploys",
+    grid: { gridTemplateColumns: "1.15fr 1fr", gridTemplateRows: "34px 56px 1fr", gridTemplateAreas: '"ra ra" "rb rb" "rc rd"' },
+    blockNote: "provider-neutral",
+  },
+  collaboration: {
+    c: "#22c7d9",
+    icon: "M9 11a3 3 0 100-6 3 3 0 000 6zM3 20a6 6 0 0112 0M17 11a3 3 0 10-2-5.2M15.5 14.5A6 6 0 0121 20",
+    addr: "yourapp.com/reviews/128",
+    grid: { gridTemplateColumns: "1fr 108px", gridTemplateRows: "36px 1fr 42px", gridTemplateAreas: '"ra ra" "rc rb" "rd rb"' },
+    blockNote: "your users & permissions",
+  },
+  "data-motion": {
+    c: "#14b8a6",
+    icon: "M5 20V11M12 20V4M19 20v-6",
+    addr: "yourapp.com/ops",
+    grid: { gridTemplateColumns: "1fr 1fr", gridTemplateRows: "58px 34px 1fr", gridTemplateAreas: '"ra ra" "rb rc" "rd rd"' },
+    blockNote: "no charting library",
+  },
+};
+
+/* Skeleton atoms for the window regions. `Ln` renders `[data-ln]` so the
+   pack-type / pack-logs / pack-rows loops in globals.css can address lines. */
+function Ln({ w, dim, fam, ml }: { w: string; dim?: boolean; fam?: boolean; ml?: string }) {
   return (
-    <Link
-      href={categoryHref(f.cat)}
-      className="group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
-      style={{ ["--fam" as string]: f.c }}
+    <div
+      data-ln
+      className="mb-[5px] h-[5px] rounded-[4px] last:mb-0"
+      style={{
+        width: w,
+        marginLeft: ml,
+        background: fam
+          ? "color-mix(in oklab, var(--fam) 45%, transparent)"
+          : dim
+            ? "color-mix(in oklab, var(--color-fg) 7%, transparent)"
+            : "color-mix(in oklab, var(--color-fg) 13%, transparent)",
+      }}
+    />
+  );
+}
+function MPill({ w, h = 12, on, round, className, style }: { w: number | string; h?: number; on?: boolean; round?: boolean; className?: string; style?: React.CSSProperties }) {
+  return (
+    <span
+      className={className}
+      style={{
+        display: "inline-block",
+        width: w,
+        height: h,
+        borderRadius: round ? "50%" : 99,
+        background: on ? "color-mix(in oklab, var(--fam) 45%, transparent)" : "color-mix(in oklab, var(--color-fg) 9%, transparent)",
+        ...style,
+      }}
+    />
+  );
+}
+function ShotRegion({ area, n, label, children, className }: { area: string; n: number; label: string; children?: ReactNode; className?: string }) {
+  return (
+    <div
+      className={`relative min-h-0 min-w-0 overflow-hidden rounded-[9px] border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 pb-2 pt-6 ${className ?? ""}`}
+      style={{ gridArea: area }}
     >
-      {/* Family cover — restrained: a top-border accent + a SOFT top-down tint +
-          a colored glyph chip. The family colour reads through the icon, border,
-          and a faint wash only — never a filled colour panel (cool identity rule). */}
-      <div
-        className="relative flex h-[136px] items-center justify-center overflow-hidden border-t-2"
-        style={{
-          borderTopColor: "var(--fam)",
-          background: "radial-gradient(120% 120% at 50% 0%, color-mix(in oklab, var(--fam) 13%, var(--color-surface)) 0%, var(--color-surface) 72%)",
-        }}
-        aria-hidden
+      <span
+        className="absolute left-[7px] top-[6px] inline-flex max-w-[calc(100%-14px)] items-center gap-[5px] rounded-[5px] px-1.5 py-[2px] text-[8.5px] font-bold uppercase tracking-[0.05em]"
+        style={{ color: "var(--fam)", background: "color-mix(in oklab, var(--fam) 13%, transparent)" }}
       >
-        <div
-          className="absolute inset-0 opacity-[0.3]"
-          style={{ backgroundImage: "radial-gradient(circle at 1px 1px, color-mix(in oklab, var(--fam) 34%, transparent) 1px, transparent 0)", backgroundSize: "18px 18px", WebkitMaskImage: "radial-gradient(90% 90% at 50% 0%, #000, transparent 75%)", maskImage: "radial-gradient(90% 90% at 50% 0%, #000, transparent 75%)" }}
-        />
-        <span
-          className="relative grid h-16 w-16 place-items-center rounded-2xl border shadow-[var(--shadow-sm)] transition-transform duration-300 group-hover:scale-105"
-          style={{ background: "color-mix(in oklab, var(--fam) 16%, var(--color-surface))", borderColor: "color-mix(in oklab, var(--fam) 40%, transparent)", color: "var(--fam)" }}
-        >
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <path d={f.icon} stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+        <span aria-hidden className="grid h-[11px] w-[11px] shrink-0 place-items-center rounded-[4px] text-[8px]" style={{ background: "var(--fam)", color: "var(--color-bg)" }}>
+          {n}
         </span>
-      </div>
-      <div className="flex flex-1 flex-col gap-2 p-6">
-        <div className="flex items-center gap-2.5">
-          <h3 className="text-[19px] font-semibold tracking-tight text-[var(--color-fg)]">{f.name}</h3>
-          <span
-            className="ml-auto rounded-full px-2.5 py-0.5 text-[12px] font-semibold tabular-nums"
-            style={{ background: "color-mix(in oklab, var(--fam) 16%, transparent)", color: "var(--fam)" }}
-          >
-            {n}
-          </span>
-        </div>
-        <p className="text-[14px] leading-relaxed text-[var(--color-muted)]">{f.value}</p>
-        <span className="mt-auto inline-flex items-center gap-1 pt-2 text-[13.5px] font-semibold" style={{ color: "var(--fam)" }}>
-          Explore {f.name} →
-        </span>
-      </div>
-    </Link>
+        <span className="truncate">{label}</span>
+      </span>
+      {children}
+    </div>
   );
 }
 
-/* ---- Pack card (product offering, static composition) ---- */
+/* Per-pack window interior — the block's real workspace layout, abstracted. */
+function PackShotRegions({ slug }: { slug: string }) {
+  switch (slug) {
+    case "ai-interface":
+      return (
+        <>
+          <ShotRegion area="ra" n={1} label="Runs">
+            <MPill w="80%" h={10} on style={{ borderRadius: 6 }} />
+            <div className="mt-[6px]">
+              <Ln w="70%" dim /><Ln w="85%" dim /><Ln w="60%" dim /><Ln w="75%" dim />
+            </div>
+          </ShotRegion>
+          <ShotRegion area="rb" n={3} label="Answer" className="pack-type">
+            <Ln w="92%" /><Ln w="84%" /><Ln w="95%" /><Ln w="70%" /><Ln w="40%" fam />
+          </ShotRegion>
+          <ShotRegion area="rc" n={4} label="Sources">
+            <MPill w="100%" h={16} style={{ borderRadius: 5 }} />
+            <MPill w="100%" h={16} style={{ borderRadius: 5, marginTop: 5 }} />
+            <MPill w="100%" h={16} on style={{ borderRadius: 5, marginTop: 5 }} />
+          </ShotRegion>
+          <ShotRegion area="rd" n={2} label="Tools">
+            <div className="flex flex-wrap gap-1">
+              <MPill w={56} on /><MPill w={44} /><MPill w={62} />
+            </div>
+          </ShotRegion>
+        </>
+      );
+    case "developer-tools":
+      return (
+        <>
+          <ShotRegion area="ra" n={1} label="Environments">
+            <div className="absolute right-[9px] top-[5px] flex gap-1">
+              <MPill w={52} /><MPill w={64} on /><MPill w={46} />
+            </div>
+          </ShotRegion>
+          <ShotRegion area="rb" n={2} label="Pipeline">
+            <div className="mt-[3px] flex items-center gap-1">
+              <MPill w="15%" h={14} on style={{ borderRadius: 5 }} />
+              <MPill w="15%" h={14} on style={{ borderRadius: 5 }} />
+              <MPill w="15%" h={14} on className="pack-blink" style={{ borderRadius: 5 }} />
+              <MPill w="15%" h={14} style={{ borderRadius: 5 }} />
+              <MPill w="15%" h={14} style={{ borderRadius: 5 }} />
+            </div>
+          </ShotRegion>
+          <ShotRegion area="rc" n={3} label="Live logs" className="pack-logs">
+            <Ln w="90%" dim /><Ln w="74%" dim /><Ln w="86%" dim /><Ln w="64%" fam />
+          </ShotRegion>
+          <ShotRegion area="rd" n={4} label="Inspector">
+            <div className="mb-[5px] flex gap-1">
+              <MPill w={38} h={11} on /><MPill w={30} h={11} />
+            </div>
+            <Ln w="88%" dim /><Ln w="66%" dim />
+          </ShotRegion>
+        </>
+      );
+    case "collaboration":
+      return (
+        <>
+          <ShotRegion area="ra" n={1} label="Presence">
+            <div className="absolute right-[9px] top-[5px] flex gap-1">
+              <MPill w={14} h={14} on round />
+              <MPill w={14} h={14} on round style={{ opacity: 0.7 }} />
+              <MPill w={14} h={14} round />
+              <MPill w={28} h={14} />
+            </div>
+          </ShotRegion>
+          <ShotRegion area="rc" n={3} label="Comments">
+            <Ln w="85%" /><Ln w="65%" dim /><Ln w="78%" dim ml="14px" /><Ln w="52%" fam ml="14px" />
+          </ShotRegion>
+          <ShotRegion area="rb" n={2} label="Approvals">
+            <MPill w="100%" h={18} on style={{ borderRadius: 6 }} />
+            <MPill w="100%" h={18} style={{ borderRadius: 6, marginTop: 5 }} />
+            <MPill w="100%" h={18} style={{ borderRadius: 6, marginTop: 5 }} />
+          </ShotRegion>
+          <ShotRegion area="rd" n={4} label="Activity" className="pack-rows">
+            <Ln w="80%" dim />
+          </ShotRegion>
+        </>
+      );
+    default: // data-motion
+      return (
+        <>
+          <ShotRegion area="ra" n={1} label="KPIs">
+            <div className="flex gap-[5px]">
+              {["24.8k", "99.98%", "312ms", "$41.2k"].map((v) => (
+                <span key={v} className="flex-1 rounded-[6px] px-[6px] py-[5px]" style={{ background: "color-mix(in oklab, var(--color-fg) 6%, transparent)" }}>
+                  <span className="block text-[10px] font-bold tabular-nums text-[var(--color-fg-secondary)]">{v}</span>
+                  <span className="mt-[3px] block h-[3.5px] w-[70%] rounded-[3px]" style={{ background: "color-mix(in oklab, var(--color-fg) 10%, transparent)" }} />
+                </span>
+              ))}
+            </div>
+          </ShotRegion>
+          <ShotRegion area="rb" n={2} label="Refresh">
+            <MPill w={52} h={12} on className="pack-blink" style={{ position: "absolute", right: 9, top: 6 }} />
+          </ShotRegion>
+          <ShotRegion area="rc" n={3} label="Filters">
+            <div className="absolute right-[9px] top-[6px] flex gap-1">
+              <MPill w={40} on /><MPill w={34} />
+            </div>
+          </ShotRegion>
+          <ShotRegion area="rd" n={4} label="Streaming rows" className="pack-rows">
+            <Ln w="96%" /><Ln w="96%" dim /><Ln w="96%" dim /><Ln w="80%" dim />
+          </ShotRegion>
+        </>
+      );
+  }
+}
+
 function PackCard({ p }: { p: Pack }) {
   const comps = p.components.map((s) => bySlug.get(s)).filter(Boolean) as CatalogItem[];
+  const art = PACK_ART[p.slug] ?? PACK_ART["ai-interface"];
   return (
-    <Link
-      href={`/packs/${p.slug}`}
-      className="group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] transition-all hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--color-accent)_45%,var(--color-border))] hover:shadow-[var(--shadow-md)]"
+    <div
+      className="group relative flex flex-col overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] transition-all duration-300 hover:-translate-y-1 hover:border-[color-mix(in_oklab,var(--fam)_46%,var(--color-border))] hover:shadow-[var(--shadow-md)]"
+      style={{ ["--fam" as string]: art.c }}
     >
-      {/* Static composition: the block, evoked as a layered stack of its parts. */}
-      <div className="relative overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)] p-6">
-        <div
+      {/* family hairline across the top */}
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 z-10 h-[2px]"
+        style={{ background: "linear-gradient(to right, transparent, color-mix(in oklab, var(--fam) 72%, transparent), transparent)" }}
+      />
+
+      <div className="flex items-center gap-3.5 px-[26px] pt-6">
+        <span
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-70"
-          style={{ background: "radial-gradient(120% 120% at 15% -20%, color-mix(in oklab, var(--color-accent) 12%, transparent), transparent 60%)" }}
+          className="grid h-[46px] w-[46px] shrink-0 place-items-center rounded-[14px]"
+          style={{
+            color: "var(--fam)",
+            background: "color-mix(in oklab, var(--fam) 14%, var(--color-surface))",
+            border: "1px solid color-mix(in oklab, var(--fam) 35%, transparent)",
+          }}
+        >
+          <svg width="23" height="23" viewBox="0 0 24 24" fill="none">
+            <path d={art.icon} stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+        <span className="min-w-0">
+          <h3 className="text-[20px] font-semibold tracking-[-0.016em] text-[var(--color-fg)]">
+            <Link href={`/packs/${p.slug}`} className="outline-none hover:text-[var(--color-accent-text)]">
+              {p.name}
+            </Link>
+          </h3>
+          <span className="block truncate text-[12.5px] text-[var(--color-subtle)]">Installs the {p.blockName} block</span>
+        </span>
+        <span
+          className="ml-auto shrink-0 rounded-full px-3 py-[4.5px] text-[11.5px] font-semibold"
+          style={{ color: "var(--fam)", background: "color-mix(in oklab, var(--fam) 12%, transparent)" }}
+        >
+          {comps.length} components
+        </span>
+      </div>
+
+      <p className="mt-3 px-[26px] text-[14px] leading-relaxed text-[var(--color-muted)]">{p.tagline}</p>
+
+      {/* the block, as a product shot */}
+      <div className="relative mx-[26px] mt-[18px]" aria-hidden>
+        <span
+          className="pointer-events-none absolute -inset-3.5 rounded-[20px]"
+          style={{ background: "radial-gradient(70% 60% at 50% 20%, color-mix(in oklab, var(--fam) 13%, transparent), transparent 72%)" }}
         />
-        <div className="relative">
-          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1 text-[11.5px] font-medium text-[var(--color-muted)]">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" /> Installs 1 block · {comps.length} components
-          </span>
-          <div className="mt-4 space-y-2">
-            {comps.map((c, i) => (
-              <div
-                key={c.id}
-                className="flex items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-3.5 py-2.5 shadow-[var(--shadow-sm)]"
-                style={{ marginLeft: `${i * 10}px`, width: `calc(100% - ${i * 10}px)` }}
-              >
-                <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-[color-mix(in_oklab,var(--color-accent)_14%,transparent)] text-[11px] font-semibold text-[var(--color-accent-text)]" aria-hidden>
-                  {i + 1}
-                </span>
-                <span className="truncate text-[13px] font-medium text-[var(--color-fg)]">{c.name}</span>
-                {c.featured ? (
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-label="Featured" className="ml-auto shrink-0 text-[var(--color-accent-text)]">
-                    <path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" />
-                  </svg>
-                ) : null}
-              </div>
-            ))}
+        <div className="relative overflow-hidden rounded-[15px] border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] shadow-[var(--shadow-lg)]">
+          <div className="flex h-[30px] items-center border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-surface)_65%,var(--color-bg-elevated))] px-3">
+            <span className="flex gap-[6px]">
+              <i className="h-2 w-2 rounded-full bg-[var(--color-surface-strong)]" />
+              <i className="h-2 w-2 rounded-full bg-[var(--color-surface-strong)]" />
+              <i className="h-2 w-2 rounded-full bg-[var(--color-surface-strong)]" />
+            </span>
+            <span className="mx-auto rounded-[6px] border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-[2px] font-mono text-[9.5px] text-[var(--color-subtle)]">
+              {art.addr}
+            </span>
+          </div>
+          <div className="grid h-[208px] gap-[7px] p-[9px]" style={art.grid}>
+            <PackShotRegions slug={p.slug} />
           </div>
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col p-6">
-        <p className="text-[12px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">Complete workflow</p>
-        <h3 className="mt-1.5 text-[20px] font-semibold tracking-tight text-[var(--color-fg)]">{p.name}</h3>
-        <p className="mt-2 text-[14px] leading-relaxed text-[var(--color-muted)]">{p.tagline}</p>
-        <div className="mt-5 flex items-center justify-between gap-3 border-t border-[var(--color-border)] pt-4">
-          <span className="text-[13px] font-medium text-[var(--color-muted)]">
-            <span className="text-[var(--color-fg)]">{comps.length} components</span> · {p.blockName}
+      {/* legend — numbers → real component names */}
+      <div className="mt-3.5 flex flex-wrap gap-1.5 px-[26px]">
+        {comps.map((c, i) => (
+          <span
+            key={c.id}
+            className="inline-flex items-center gap-[7px] rounded-full border border-[var(--color-border)] bg-[var(--color-bg-elevated)] py-[5px] pl-[6px] pr-3 text-[12px] font-semibold text-[var(--color-fg-secondary)]"
+          >
+            <span
+              aria-hidden
+              className="grid h-[17px] w-[17px] place-items-center rounded-full text-[9.5px] font-bold"
+              style={{ background: "color-mix(in oklab, var(--fam) 80%, var(--color-fg))", color: "var(--color-bg)" }}
+            >
+              {i + 1}
+            </span>
+            {c.name}
+            {c.featured ? (
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-label="Featured" style={{ color: "var(--fam)" }}>
+                <path d="M12 2l2.9 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 7.1-1.01L12 2z" />
+              </svg>
+            ) : null}
           </span>
-          <span className="inline-flex items-center gap-1 rounded-lg bg-[var(--color-accent)] px-3.5 py-2 text-[13px] font-semibold text-[var(--color-accent-fg)] transition-colors group-hover:bg-[var(--color-accent-hover)]">
-            View pack →
-          </span>
-        </div>
+        ))}
       </div>
-    </Link>
+
+      <div className="mt-5 flex items-center gap-3 border-t border-[var(--color-border)] px-[18px] pb-[18px] pt-[15px]">
+        <InstallChip
+          command={installCommand(p.packRegistryItem)}
+          display={`${product.registryBaseUrl.replace(/^https?:\/\//, "")}/${p.packRegistryItem}`}
+        />
+        <Link
+          href={`/packs/${p.slug}`}
+          className="inline-flex h-10 shrink-0 items-center rounded-[11px] bg-[var(--color-accent)] px-[18px] text-[13.5px] font-semibold text-[var(--color-accent-fg)] shadow-[var(--shadow-sm)] transition-colors hover:bg-[var(--color-accent-hover)]"
+        >
+          View pack
+        </Link>
+      </div>
+    </div>
   );
 }
 
@@ -287,20 +672,8 @@ const HERO_STREAM_SEGMENTS: ResponseSegment[] = [
 ];
 
 export default function HomePage() {
-  const featured = featuredItems();
-  const featuredSpans = packSpans(featured);
-
   const componentTotal = componentItems().length;
   const blockTotal = blockItems().length;
-
-  // Product environments showcase — a controlled selection (not all ten): one
-  // lead animated background, one hero block, and two more backgrounds. Each
-  // renders through LazyPreview (mounts on scroll) + the components' own
-  // offscreen pause + reduced-motion, so nothing autoplays off-screen.
-  const productEnvLead = bySlug.get("runtime-signal-map");
-  const productEnvCards = ["agent-operations-hero", "workflow-topology-field", "queue-pulse-lanes"]
-    .map((s) => bySlug.get(s))
-    .filter(Boolean) as CatalogItem[];
 
   const catalogList = componentItems();
   const catalogJsonLd = {
@@ -587,119 +960,88 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 3 · Featured components — editorial showcase on the page base ===== */}
-      <section className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-          <div className="max-w-xl">
-            <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">The catalog</p>
-            <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Featured components</h2>
-            <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Six of the catalog’s strongest - each preview is the real component in one representative state.</p>
-          </div>
-          <Link href="/components" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
-            All components →
-          </Link>
-        </div>
-        <div className="grid grid-cols-12 items-start gap-5">
-          {featured.map((item) => {
-            const span = featuredSpans.get(item.id) ?? 6;
-            return (
-              <div key={item.id} className={SPAN_CLASS[span]}>
-                <FeaturedCard item={item} wide={span === 12} />
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      {/* ===== 3 · The catalog, one unified animated grid (docs/61 §catalog).
+              Formerly two sections ("Featured components" + "Backgrounds that
+              carry product state"); merged so the page tells the catalog story
+              once. Bento order: interactive lead → workflow surfaces →
+              environments → the text finale. Cards rise in on scroll (Reveal),
+              each scene carries one ambient loop, and hover adds lift + sheen. ===== */}
+      <section className="relative isolate overflow-clip py-16 lg:py-[96px]">
+        <SectionAtmo dots counter />
+        <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
+          <SectionHead
+            eyebrow="The catalog"
+            title="Every surface your product ships"
+            desc={`Workflow surfaces, animated environments, and text — ${categories.length} categories, each shown in one live state. Open a category to preview and install its ${componentTotal} components.`}
+            href="/components"
+            cta={`All ${categories.length} categories`}
+          />
 
-      {/* ===== 3.5 · Product environments — animated backgrounds driven by app
-              state + one editable workflow hero. A controlled selection (four of
-              ten), each lazy-mounted and offscreen-paused so nothing autoplays
-              off-screen. ===== */}
-      <section className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-          <div className="max-w-xl">
-            <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">Product environments</p>
-            <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Backgrounds that carry product state</h2>
-            <p className="mt-2.5 max-w-xl text-[15px] leading-relaxed text-[var(--color-muted)]">
-              Animated backgrounds driven by your application state, and editable hero blocks that demonstrate a real
-              workflow - foreground-safe, reduced-motion-safe, and never just decoration.
-            </p>
-          </div>
-          <Link href="/components?category=product-backgrounds" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
-            All environments →
-          </Link>
-        </div>
-        {productEnvLead ? (
-          <div className="group relative mb-5 overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] transition-all duration-300 hover:border-[color-mix(in_oklab,var(--color-accent)_35%,var(--color-border))] hover:shadow-[var(--shadow-md)]">
-            <LazyPreview label={`${productEnvLead.name} preview`} minHeightClass="min-h-[420px]">
-              <div className="relative w-full bg-[var(--color-bg)]">
-                <RuntimeSignalMapHeroPreview />
-              </div>
-            </LazyPreview>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-[var(--color-border)] px-6 py-4">
-              <h3 className="text-[17px] font-semibold tracking-tight text-[var(--color-fg)]">
-                <Link href={productEnvLead.documentationPath} className="outline-none after:absolute after:inset-0 hover:text-[var(--color-accent-text)]">
-                  {productEnvLead.name}
-                </Link>
-              </h3>
-              <FeaturedPill featured={productEnvLead.featured} />
-              <span className="ml-auto inline-flex items-center gap-1 text-[13.5px] font-medium text-[var(--color-accent-text)]">
-                Open component →
-              </span>
+          <div className="grid grid-cols-12 items-stretch gap-5">
+            {/* Lead card — the most kinetic surface in the catalog. */}
+            <div className="col-span-12">
+              <Reveal>
+                <MediaGalleryHero count={categoryCount("media")} href={categoryHref("media")} />
+              </Reveal>
             </div>
-          </div>
-        ) : null}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {productEnvCards.map((item) => (
-            <FeaturedCard key={item.id} item={item} />
-          ))}
-        </div>
-      </section>
 
-      {/* ===== 4 · Workflow categories — vibrant but controlled, warm sand band ===== */}
-      <section className="relative">
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 border-y border-[var(--color-border)] bg-[var(--color-bg-secondary)]" />
-        <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <div className="max-w-xl">
-              <p className="text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">By workflow</p>
-              <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Built for real workflows</h2>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Eight product families - each with its own accent - pick a surface, preview it live, install what you need.</p>
-            </div>
-            <Link href="/components" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
-              All categories →
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {FAMILIES.map((f) => (
-              <CategoryTile key={f.cat} f={f} />
+            {CATALOG_CARDS.map((c, i) => (
+              <div key={c.cat} className={SPAN_CLASS[c.span ?? 4]}>
+                {/* stagger resets per row so a wide card never delays the next row */}
+                <Reveal delay={(i % 3) * 70} className="h-full">
+                  <CategoryCard {...c} />
+                </Reveal>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ===== 5 · Complete packs — productized, azure-lit elevated band ===== */}
+      {/* ===== 4 · Category index (docs/61). The showcase above presents six
+              categories as full cards; repeating that card design here made the
+              same names appear twice, so this is now the complete, compact
+              browse surface — every category, one row of chips. ===== */}
       <section className="relative">
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[var(--color-bg-elevated)]" />
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10" style={{ background: "radial-gradient(55% 55% at 88% -5%, var(--color-spotlight), transparent 62%)" }} />
-        {/* subtle azure edge-light across the top of the band */}
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px" style={{ background: "linear-gradient(to right, transparent, color-mix(in oklab, var(--color-accent) 40%, transparent), transparent)" }} />
-        <div className="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 lg:px-8">
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <div className="max-w-xl">
-              {/* the one small Coral commercial highlight in this section */}
-              <p className="inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-wide text-[var(--color-accent-text)]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-signature)]" aria-hidden />
-                Ship faster
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 border-y border-[var(--color-border)] bg-[var(--color-bg-secondary)]" />
+        <div className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 lg:px-8">
+          <div className="mb-7 flex flex-wrap items-end justify-between gap-5">
+            <div className="max-w-[640px]">
+              <p className="inline-flex items-center gap-2.5 text-[12.5px] font-semibold uppercase tracking-[0.12em] text-[var(--color-accent-text)]">
+                <span aria-hidden className="h-[1.5px] w-[22px] rounded-full bg-[var(--color-accent)]" />
+                By workflow
               </p>
-              <h2 className="mt-2 text-[clamp(1.8rem,3.4vw,2.7rem)] font-semibold tracking-tight text-[var(--color-fg)]">Complete workflow packs</h2>
-              <p className="mt-2.5 text-[15px] leading-relaxed text-[var(--color-muted)]">Finished product outcomes - four components composed into one installable, app-controlled block.</p>
+              <h2 className="mt-3 text-[clamp(1.5rem,2.6vw,2.05rem)] font-semibold leading-[1.1] tracking-[-0.02em] text-[var(--color-fg)]">
+                Built for real workflows
+              </h2>
+              <p className="mt-3 text-[15px] leading-relaxed text-[var(--color-muted)]">
+                Every category in the catalog — pick a surface, preview it live, install what you need.
+              </p>
             </div>
-            <Link href="/packs" className="shrink-0 text-[14px] font-semibold text-[var(--color-accent-text)] hover:underline">
-              All packs →
-            </Link>
           </div>
-          <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2">
+          <div className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {categories.map((c, i) => (
+              <Reveal key={c.id} delay={(i % 5) * 55} className="h-full">
+                <CategoryIndexCard cat={c} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 5 · Complete packs (docs/61) — product shots of the composed
+              blocks, coral "ship faster" eyebrow, azure-lit band ===== */}
+      <section className="relative isolate overflow-clip py-16 lg:py-[88px]">
+        <SectionAtmo dots counter />
+        <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
+          <SectionHead
+            eyebrow="Ship faster"
+            signature
+            title="Complete workflow packs"
+            desc="Finished product outcomes — four components composed into one installable, app-controlled block. One command, editable source."
+            href="/packs"
+            cta="All packs"
+          />
+          <div className="grid grid-cols-1 items-stretch gap-5 lg:grid-cols-2">
             {packs.map((p) => (
               <PackCard key={p.slug} p={p} />
             ))}

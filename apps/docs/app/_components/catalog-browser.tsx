@@ -3,10 +3,13 @@
 import * as React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
+import Link from "next/link";
+
 import {
   catalog,
   categories,
   categoryCount,
+  itemsByCategory,
   searchCatalog,
   kindOf,
   resolvePresentation,
@@ -17,12 +20,14 @@ import {
   type CatalogItem,
 } from "../../lib/catalog";
 import { CatalogCard } from "./catalog-card";
+import { NavSheet } from "./nav-sheet";
+import { NavChevron, NavCount, NavGroupLabel, navChildClass, navChildListClass, navRowClass } from "./sidebar-nav";
 
 type Sort = "default" | "recent";
 
-/** Sidebar groups — compact, scannable discovery (docs/56 §8). */
+/** Sidebar groups — the same grouping the component-docs rail uses, so the two
+    navigations read as one system (docs/56 §8). */
 const NAV_GROUPS: { label: string; ids: CategoryId[] }[] = [
-  { label: "Product environments", ids: ["product-backgrounds", "workflow-heroes"] },
   {
     label: "Product workflows",
     ids: [
@@ -30,17 +35,16 @@ const NAV_GROUPS: { label: string; ids: CategoryId[] }[] = [
       "developer-tools",
       "collaboration",
       "data-motion",
-      "productivity",
       "file",
       "commerce",
       "security",
       "communication",
+      "productivity",
     ],
   },
-  { label: "Creative", ids: ["text", "backgrounds", "creative"] },
+  { label: "Environments", ids: ["product-backgrounds", "workflow-heroes"] },
+  { label: "Creative", ids: ["text", "backgrounds", "creative", "mobile", "animated-shadcn", "icons"] },
   { label: "Showpieces", ids: ["cursor", "media", "scroll"] },
-  { label: "Mobile", ids: ["mobile"] },
-  { label: "Foundations", ids: ["animated-shadcn", "icons"] },
 ];
 
 // Row packing + span classes are shared from lib/catalog (also used by the homepage).
@@ -56,7 +60,6 @@ export function CatalogBrowser() {
   const sort = (params.get("sort") as Sort | null) ?? "default";
   const [query, setQuery] = React.useState(params.get("q") ?? "");
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const [collapsed, setCollapsed] = React.useState<Record<string, boolean>>({});
 
   const setParam = React.useCallback(
     (key: string, value: string | null) => {
@@ -78,91 +81,104 @@ export function CatalogBrowser() {
   const grouped = !query && sort === "default";
 
   const chip = (active: boolean) =>
-    `rounded-full border px-3 py-1.5 text-[13px] transition-colors ${
+    `rounded-full border px-2.5 py-1 text-[12.5px] transition-colors ${
       active
-        ? "border-[var(--color-accent)] bg-[color-mix(in_oklab,var(--color-accent)_12%,transparent)] text-[var(--color-accent)]"
-        : "border-[var(--color-border)] text-[var(--color-muted)] hover:text-[var(--color-fg)]"
+        ? "border-[color-mix(in_oklab,var(--color-accent)_45%,transparent)] bg-[color-mix(in_oklab,var(--color-accent)_12%,transparent)] text-[var(--color-accent-text)]"
+        : "border-[var(--color-border)] text-[var(--color-muted)] hover:border-[color-mix(in_oklab,var(--color-fg)_22%,var(--color-border))] hover:text-[var(--color-fg)]"
     }`;
 
   const filters = (
-    <div className="flex flex-col gap-4">
-      <input
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-          setParam("q", e.target.value);
-        }}
-        placeholder="Search components…"
-        aria-label="Search components"
-        className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-[14px] text-[var(--color-fg)] outline-none placeholder:text-[var(--color-muted)] focus-visible:border-[var(--color-accent)]"
-      />
-
-      {/* Category groups with counts + active highlight + collapsible headers. */}
-      <nav className="flex flex-col gap-3" aria-label="Component categories">
-        <button
-          onClick={() => setParam("category", null)}
-          className={`flex items-center justify-between rounded-lg px-2.5 py-1.5 text-[13.5px] font-medium transition-colors ${
-            !category
-              ? "bg-[color-mix(in_oklab,var(--color-accent)_12%,transparent)] text-[var(--color-accent)]"
-              : "text-[var(--color-fg)] hover:bg-[var(--color-bg-secondary)]"
-          }`}
+    <div className="flex flex-col gap-4 text-[13.5px]">
+      {/* Search — the calm, neutral chrome of the docs rail's search trigger.
+          This one filters the grid inline rather than opening the palette. */}
+      <div className="relative">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden
+          className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[var(--color-muted)]"
         >
-          <span>All components</span>
-          <span className="text-[12px] tabular-nums text-[var(--color-muted)]">{catalog.length}</span>
-        </button>
+          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.8" />
+          <path d="m20 20-3-3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+        <input
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setParam("q", e.target.value);
+          }}
+          placeholder="Search"
+          aria-label="Search components"
+          data-noring
+          style={{ boxShadow: "none" }}
+          className="w-full rounded-md border border-[var(--color-border)] bg-transparent py-1.5 pl-8 pr-2.5 text-[13px] text-[var(--color-fg)] outline-none transition-colors placeholder:text-[var(--color-muted)] hover:border-[color-mix(in_oklab,var(--color-fg)_22%,var(--color-border))] focus-visible:border-[color-mix(in_oklab,var(--color-fg)_38%,var(--color-border))]"
+        />
+      </div>
 
-        {NAV_GROUPS.map((group) => {
-          const isCollapsed = collapsed[group.label];
-          return (
-            <div key={group.label}>
-              <button
-                onClick={() => setCollapsed((c) => ({ ...c, [group.label]: !c[group.label] }))}
-                className="flex w-full items-center justify-between px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-muted)]"
-                aria-expanded={!isCollapsed}
-              >
-                {group.label}
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className={isCollapsed ? "-rotate-90" : ""} aria-hidden>
-                  <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-              {!isCollapsed && (
-                <ul className="mt-0.5">
-                  {group.ids.map((id) => {
-                    const c = catById.get(id);
-                    if (!c) return null;
-                    const n = categoryCount(id);
-                    if (n === 0) return null;
-                    const active = category === id;
-                    return (
-                      <li key={id}>
-                        <button
-                          onClick={() => {
-                            setParam("category", id);
-                            setDrawerOpen(false);
-                          }}
-                          className={`flex w-full items-center justify-between rounded-md px-2.5 py-1.5 text-[13.5px] transition-colors ${
-                            active
-                              ? "bg-[color-mix(in_oklab,var(--color-accent)_12%,transparent)] font-medium text-[var(--color-accent)]"
-                              : "text-[var(--color-muted)] hover:bg-[var(--color-bg-secondary)] hover:text-[var(--color-fg)]"
-                          }`}
-                        >
-                          <span className="truncate">{c.label}</span>
-                          <span className="ml-2 text-[12px] tabular-nums opacity-70">{n}</span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
-          );
-        })}
+      <nav aria-label="Component categories">
+        <ul className="space-y-0.5">
+          <li>
+            <button type="button" onClick={() => setParam("category", null)} className={navRowClass(!category)}>
+              <span>All components</span>
+              <NavCount>{catalog.length}</NavCount>
+            </button>
+          </li>
+        </ul>
+
+        {NAV_GROUPS.map((group) => (
+          <div key={group.label} className="mt-5">
+            <NavGroupLabel>{group.label}</NavGroupLabel>
+            <ul>
+              {group.ids.map((id) => {
+                const c = catById.get(id);
+                if (!c) return null;
+                const n = categoryCount(id);
+                if (!n) return null;
+                // The selected category is also the expanded one: one click
+                // filters the grid and reveals what is inside it.
+                const active = category === id;
+                return (
+                  <li key={id}>
+                    <button
+                      type="button"
+                      aria-expanded={active}
+                      onClick={() => {
+                        setParam("category", active ? null : id);
+                        setDrawerOpen(false);
+                      }}
+                      className={navRowClass(active)}
+                    >
+                      <span className="flex min-w-0 items-center gap-1.5">
+                        <NavChevron open={active} />
+                        <span className="truncate">{c.label}</span>
+                      </span>
+                      <NavCount>{n}</NavCount>
+                    </button>
+                    {active ? (
+                      <ul className={navChildListClass}>
+                        {itemsByCategory(id).map((item) => (
+                          <li key={item.slug}>
+                            <Link href={item.documentationPath} className={navChildClass(false)}>
+                              {item.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
       </nav>
 
-      <div className="flex flex-col gap-3 border-t border-[var(--color-border)] pt-4">
+      <div className="mt-1 flex flex-col gap-3 border-t border-[var(--color-border)] pt-4">
         <div>
-          <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">Highlight</p>
-          <div className="flex flex-wrap gap-2">
+          <NavGroupLabel>Highlight</NavGroupLabel>
+          <div className="flex flex-wrap gap-2 px-2.5">
             <button onClick={() => setParam("featured", null)} className={chip(!featuredOnly)}>
               All
             </button>
@@ -172,8 +188,8 @@ export function CatalogBrowser() {
           </div>
         </div>
         <div>
-          <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">Type</p>
-          <div className="flex flex-wrap gap-2">
+          <NavGroupLabel>Type</NavGroupLabel>
+          <div className="flex flex-wrap gap-2 px-2.5">
             {(["all", "component", "block", "pack"] as const).map((k) => (
               <button key={k} onClick={() => setParam("kind", k)} className={chip(kind === k)}>
                 {k === "all" ? "All" : k[0].toUpperCase() + k.slice(1)}
@@ -182,8 +198,8 @@ export function CatalogBrowser() {
           </div>
         </div>
         <div>
-          <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--color-muted)]">Sort</p>
-          <div className="flex flex-wrap gap-2">
+          <NavGroupLabel>Sort</NavGroupLabel>
+          <div className="flex flex-wrap gap-2 px-2.5">
             <button onClick={() => setParam("sort", "default")} className={chip(sort === "default")}>
               Curated
             </button>
@@ -205,28 +221,34 @@ export function CatalogBrowser() {
         </p>
       </header>
 
-      {/* Mobile filter trigger (drawer below lg). */}
-      <div className="mb-4 lg:hidden">
+      {/* Mobile controls — the component-docs sub-header pattern: a sticky,
+          blurred bar whose button opens the SAME slide-in sheet, instead of the
+          old panel that expanded inline and pushed the grid down. */}
+      <div className="sticky top-14 z-30 -mx-4 mb-6 border-b border-[var(--color-border)] bg-[color-mix(in_oklab,var(--color-bg)_92%,transparent)] px-4 py-2 backdrop-blur-md sm:-mx-6 sm:px-6 lg:hidden">
         <button
-          onClick={() => setDrawerOpen((o) => !o)}
-          className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-[14px] font-medium text-[var(--color-fg)]"
+          type="button"
+          onClick={() => setDrawerOpen(true)}
           aria-expanded={drawerOpen}
+          className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 text-[13px] font-medium text-[var(--color-fg)]"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          Filters
-          {category ? <span className="text-[var(--color-accent)]">· {catById.get(category)?.label}</span> : null}
+          Browse
+          {category ? (
+            <span className="text-[var(--color-accent-text)]">· {catById.get(category)?.label}</span>
+          ) : null}
         </button>
-        {drawerOpen && (
-          <div className="mt-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-4">{filters}</div>
-        )}
       </div>
+
+      <NavSheet open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Browse components">
+        {filters}
+      </NavSheet>
 
       <div className="lg:grid lg:grid-cols-[240px_1fr] lg:gap-8">
         {/* Sidebar — sticky, own bounded scroll, never determines section height. */}
         <aside className="hidden lg:block">
-          <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto pr-2">{filters}</div>
+          <div className="sticky top-14 max-h-[calc(100dvh-3.5rem)] overflow-y-auto py-2 pr-3">{filters}</div>
         </aside>
 
         {/* Results */}
