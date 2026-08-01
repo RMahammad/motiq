@@ -2,12 +2,12 @@
 
 Everything for promoting Motiq lives here:
 
-- **[`campaign/`](campaign/)** — the primary set: README hero (2K MP4 / GIF / poster), pack spotlights, vertical cut, reduced-motion demo. Source: [`apps/promo/`](../apps/promo/README.md) (`pnpm render`), built from the real registry components.
+- **[`campaign/`](campaign/)** — the primary set: static 2K README hero, animated campaign loop (2K MP4 / GIF / poster), pack spotlights, vertical cut, reduced-motion demo. Source: [`apps/promo/`](../apps/promo/README.md) (`pnpm render`), built from the real registry components.
 - **[`showcase/`](showcase/)** — README mosaic + per-pack showcase cards. Source: `apps/promo` showcase compositions.
 - **[`promo/`](promo/)** — **archive.** Final renders from the retired `tools/promo` (removed 2026-07-19): the ~32 s launch trailer and 11 per-category drip GIFs. No render source remains — treat these files as final; rebuild any category loop in `apps/promo` when it's next needed.
 - **[`launch/`](launch/)** — Playwright-captured launch clips + social preview image, recorded from the live docs previews. Source: [`launch/tools/`](launch/tools/).
 
-The rendered media (`*.gif`, `*.mp4`, `*.png`, `*.jpg`) is **gitignored** — regenerable from `apps/promo` — *except* the files the root README embeds (`campaign/motiq-readme-hero.gif`, `showcase/*.gif`, `showcase/motiq-showcase.png`), which must be committed so GitHub can render them. Distribute everything else via a GitHub Release or upload natively when posting.
+The rendered media (`*.gif`, `*.mp4`, `*.png`, `*.jpg`) is **gitignored** — regenerable from `apps/promo` — *except* the intentionally committed README/marketing assets (`campaign/readme.png`, `campaign/motiq-readme-hero.gif`, `showcase/*.gif`, `showcase/motiq-showcase.png`), which must remain available to GitHub. Distribute everything else via a GitHub Release or upload natively when posting.
 
 Channel rules, timing, and the full launch sequence live in [`LAUNCH.md`](../LAUNCH.md); this file maps assets to channels and gives paste-ready captions. **All claims match LAUNCH.md's fact sheet** (86 components + 8 workflow blocks + 4 packs, stated exactly — never rounded to "90+"; free & open source; shadcn-registry install). Never add user counts or download numbers to a caption.
 
@@ -15,11 +15,12 @@ Channel rules, timing, and the full launch sequence live in [`LAUNCH.md`](../LAU
 
 ## `campaign/` — primary promo kit (from `apps/promo`, real components)
 
-Rendered by [`apps/promo/`](../apps/promo/README.md): `pnpm render` (everything) or per-target (`pnpm render:readme`, `render:social`, `render:poster`).
+Rendered by [`apps/promo/`](../apps/promo/README.md): `pnpm render` (everything) or per-target (`pnpm render:readme-static`, `render:readme`, `render:social`, `render:poster`).
 
 | Asset | Format | Built for | Notes |
 | --- | --- | --- | --- |
-| `motiq-readme-hero.gif` | 1440×810 · 15 fps · ~22.7s loop | **GitHub README hero** (committed) | Full product story: agent run → pipeline retry-to-green → data refresh → approval → install. |
+| `readme.png` | 2560×1440 static | **GitHub README hero** (committed) | Dominant AI incident workspace with supporting deployment, live-data, and collaboration workflows. |
+| `motiq-readme-hero.gif` | 1440×810 · 15 fps · ~22.7s loop | Animated campaign/README alternative (committed) | Full product story: agent run → pipeline retry-to-green → data refresh → approval → install. |
 | `motiq-readme-hero-2k.mp4` | 16:9 · 2560×1440 · 30 fps | X/LinkedIn native upload, docs page | H.264 CRF 18; prefer this over the GIF anywhere video is allowed. |
 | `motiq-readme-poster.png` | 2560×1440 static | Link cards, blog headers, video poster frame | Hero hold frame. |
 | `deployment-pipeline-spotlight.mp4` | 16:9 · 1920×1080 · 8s | Dev-tools pack posts | Fail → logs → focused retry → green. |

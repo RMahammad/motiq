@@ -137,6 +137,7 @@ export type LayoutKind = "landscape" | "square" | "vertical";
 
 /** Output formats. All source compositions are 30 fps. */
 export const formats = {
+  readmeGraphic: { id: "MotiqReadmeGraphic", width: 2560, height: 1440 },
   readme: { id: "MotiqReadmeHero", width: 2560, height: 1440, fps: 30, durationInFrames: heroDuration },
   pipeline: { id: "DeploymentPipelineSpotlight", width: 1200, height: 675, fps: 30, durationInFrames: 240 },
   agent: { id: "AgentWorkflowSpotlight", width: 1080, height: 1080, fps: 30, durationInFrames: 285 },

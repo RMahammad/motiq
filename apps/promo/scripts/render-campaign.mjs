@@ -1,4 +1,5 @@
 // Renders the Motiq campaign to assets/campaign/:
+//   readme-static assets/campaign/readme.png              (2560×1440 PNG)
 //   readme        motiq-readme-hero.gif  (1200×675 source → 15 fps GIF loop, target < 8 MB)
 //   landscape     deployment-pipeline-spotlight.mp4 (H.264, upscaled to 1920×1080)
 //   square-agent  agent-workflow-spotlight.mp4      (H.264 1080×1080)
@@ -57,6 +58,20 @@ const gifOptimize = (gif) => {
 };
 
 const targets = {
+  /** Static GitHub README hero: exact 2560×1440 PNG, rendered from real components. */
+  "readme-static"() {
+    const out = join(outDir, "readme.png");
+    console.log("▶ MotiqReadmeGraphic (2560×1440) …");
+    execFileSync(
+      "npx",
+      ["remotion", "still", "src/index.ts", "MotiqReadmeGraphic", out, "--log=error"],
+      { cwd: appDir, stdio: "inherit" },
+    );
+    const mb = report(out);
+    if (mb >= 2) {
+      console.log(`⚠ README PNG is ${mb} MB — run a visually lossless PNG optimizer before shipping.`);
+    }
+  },
   /** README hero: 2K master MP4 (CRF 18) + 1440×810 GIF loop + 2K poster PNG. */
   readme() {
     const master = join(outDir, "motiq-readme-hero-2k.mp4");

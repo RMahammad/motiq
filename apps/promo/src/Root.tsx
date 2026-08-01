@@ -6,6 +6,7 @@ import { AgentWorkflowSpotlight } from "./compositions/AgentWorkflowSpotlight";
 import { DeploymentPipelineSpotlight } from "./compositions/DeploymentPipelineSpotlight";
 import { LiveDataSpotlight } from "./compositions/LiveDataSpotlight";
 import { MotiqPoster } from "./compositions/MotiqPoster";
+import { MotiqReadmeGraphic } from "./compositions/MotiqReadmeGraphic";
 import { MotiqReadmeHero } from "./compositions/MotiqReadmeHero";
 import { MotiqReducedMotionDemo } from "./compositions/MotiqReducedMotionDemo";
 import {
@@ -27,6 +28,12 @@ const showcaseCards = [
 
 export const Root: React.FC = () => (
   <>
+    <Still
+      id={formats.readmeGraphic.id}
+      component={MotiqReadmeGraphic}
+      width={formats.readmeGraphic.width}
+      height={formats.readmeGraphic.height}
+    />
     <Composition
       id={formats.readme.id}
       component={MotiqReadmeHero}

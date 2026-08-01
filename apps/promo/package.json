@@ -8,13 +8,13 @@
     "studio": "remotion studio src/index.ts",
     "typecheck": "tsc --noEmit",
     "render": "node scripts/render-campaign.mjs",
+    "render:readme-static": "node scripts/render-campaign.mjs readme-static",
     "render:readme": "node scripts/render-campaign.mjs readme",
     "render:social": "node scripts/render-campaign.mjs landscape square-agent square-data vertical",
     "render:poster": "node scripts/render-campaign.mjs poster"
   },
   "dependencies": {
     "@remotion/cli": "4.0.491",
-    "@remotion/google-fonts": "4.0.491",
     "@remotion/tailwind-v4": "4.0.491",
     "clsx": "^2.1.1",
     "motion": "^12.42.2",

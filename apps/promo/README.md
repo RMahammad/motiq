@@ -30,8 +30,9 @@ Everything on screen is a pure function of the Remotion frame:
    library's "application-controlled state" story.
 3. The SVG backgrounds render with their real `reducedMotion` static mode and
    are animated by advancing node *statuses* per frame.
-4. Fonts (Inter, JetBrains Mono) load via `@remotion/google-fonts`; fixed
-   epoch timestamps + `formatTimestamp`/`now` props keep every clock stable.
+4. Vendored Geist and Geist Mono subsets load through Remotion `staticFile()`;
+   the render makes no font-network request. Fixed epoch timestamps +
+   `formatTimestamp`/`now` props keep every clock stable.
 
 Scene choreography (entrances, crossfades, settle-zoom) is layered on top with
 Remotion `spring`/`interpolate` in `src/theme/` and `src/scenes/`.
@@ -46,12 +47,14 @@ Remotion `spring`/`interpolate` in `src/theme/` and `src/scenes/`.
 - `src/scenes/` — shared scene modules reused across aspect ratios
 - `src/compositions/` — the registered compositions
 - `src/theme/` — fonts, animation helpers, stage primitives
+- `public/fonts/` — vendored Geist + Geist Mono render inputs (SIL OFL 1.1)
 
 ## Compositions
 
 | ID | Size | Duration | Purpose |
 | --- | --- | --- | --- |
-| `MotiqReadmeHero` | 2560×1440 (1280×720 logical stage ×2) | ~680 f / ~22.7 s loop (derived from `heroPhases`) | README hero — 2K master MP4 + 1440×810 GIF + poster |
+| `MotiqReadmeGraphic` | 2560×1440 still | — | Static GitHub README hero — dominant AI incident workspace with supporting deployment, data, and collaboration workflows |
+| `MotiqReadmeHero` | 2560×1440 (1280×720 logical stage ×2) | ~680 f / ~22.7 s loop (derived from `heroPhases`) | Animated campaign/README alternative — 2K master MP4 + 1440×810 GIF + poster |
 | `DeploymentPipelineSpotlight` | 1200×675 | 240 f / 8 s | Developer Tools Pack story |
 | `AgentWorkflowSpotlight` | 1080×1080 | 285 f / 9.5 s | AI Interface Pack story |
 | `LiveDataSpotlight` | 1080×1080 | 210 f / 7 s | Data Motion Pack story |
@@ -66,6 +69,7 @@ pnpm install                 # repo root
 cd apps/promo
 pnpm studio                  # live-edit in Remotion Studio
 pnpm render                  # render everything to assets/campaign/
+pnpm render:readme-static    # assets/campaign/readme.png (2560×1440)
 pnpm render:readme           # README GIF only (15 fps, loop, < 8 MB gate)
 pnpm render:social           # landscape/square/vertical MP4s (H.264)
 pnpm render:poster           # 2400×1350 PNG

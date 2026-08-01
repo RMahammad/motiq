@@ -24,7 +24,7 @@ Install the source with shadcn. Own the code. Ship it your way.
 
 <p align="center">
   <a href="https://motiq.dev">
-    <img src="./assets/campaign/readme.png" alt="Motiq: 86 animated React components for real product workflows — an AI agent run with a cited streaming answer, a deployment pipeline recovered to green, live KPI and region data, and an approved release workflow" width="1280" />
+    <img src="./assets/campaign/readme.png" alt="Motiq animated React component system shown as a production AI incident workspace with an agent run, cited response, recovered deployment, live checkout metrics, presence, and release approval" width="1280" />
   </a>
 </p>
 
