@@ -123,6 +123,241 @@ input:focus-visible:not([data-noring]),
   background-size: 22px 22px;
 }
 
+/* ------------------------------------------------------------------ *
+ * Scroll reveal (docs/61 §catalog). Driven by the Reveal client component,
+ * which flips [data-reveal] once the element enters the viewport. Content is
+ * VISIBLE BY DEFAULT — only the explicit "out" state hides it — so a failed
+ * hydration or a no-JS agent can never leave the grid blank.
+ * ------------------------------------------------------------------ */
+.reveal {
+  transition:
+    opacity 0.62s cubic-bezier(0.2, 0, 0, 1),
+    transform 0.62s cubic-bezier(0.2, 0, 0, 1);
+}
+.reveal[data-reveal="out"] {
+  opacity: 0;
+  transform: translateY(20px) scale(0.985);
+}
+.reveal[data-reveal="in"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Card sheen — a slow diagonal light pass on hover, over the scene only. */
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 32%,
+    color-mix(in oklab, var(--color-fg) 9%, transparent) 46%,
+    transparent 60%
+  );
+  background-size: 260% 100%;
+  background-position: 120% 0;
+  transition: opacity 0.3s ease;
+}
+.group:hover .sheen::after {
+  opacity: 1;
+  animation: card-sheen 0.9s cubic-bezier(0.2, 0, 0, 1);
+}
+@keyframes card-sheen {
+  from {
+    background-position: 120% 0;
+  }
+  to {
+    background-position: -40% 0;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Homepage category-scene micro-motion (docs/61 §catalog). One quiet loop per
+ * scene: a deploy stage sweeping, a collaborator's live ring, an upload bar,
+ * a card lifted mid-drag, a signal travelling an active path. The global
+ * reduced-motion rule below collapses every one to a static state.
+ * ------------------------------------------------------------------ */
+@keyframes cat-sweep {
+  from {
+    transform: translateX(-130%);
+  }
+  to {
+    transform: translateX(320%);
+  }
+}
+.cat-sweep {
+  animation: cat-sweep 1.6s linear infinite;
+}
+
+@keyframes cat-blink {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+.cat-blink {
+  animation: cat-blink 1.5s infinite;
+}
+
+@keyframes cat-ring {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.8;
+  }
+  70%,
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+.cat-ring {
+  animation: cat-ring 2.4s ease-out infinite;
+}
+
+@keyframes cat-grow {
+  0% {
+    width: 12%;
+  }
+  65% {
+    width: 78%;
+  }
+  100% {
+    width: 12%;
+  }
+}
+.cat-grow {
+  animation: cat-grow 3s cubic-bezier(0.2, 0, 0, 1) infinite;
+}
+
+@keyframes cat-lift {
+  0%,
+  100% {
+    transform: rotate(-3deg) translateY(-4px);
+  }
+  50% {
+    transform: rotate(-2deg) translateY(-7px);
+  }
+}
+.cat-lift {
+  animation: cat-lift 3s ease-in-out infinite;
+}
+
+@keyframes cat-flow {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+.cat-flow {
+  animation: cat-flow 2.4s linear infinite;
+}
+
+/* ------------------------------------------------------------------ *
+ * Homepage pack "product shot" micro-motion (docs/61 §packs). Static skeleton
+ * regions inside each pack window get one quiet loop each — streamed answer
+ * lines, ticking logs, arriving table rows, a breathing active pipeline stage.
+ * The global reduced-motion rule below collapses all of them to a static shot.
+ * ------------------------------------------------------------------ */
+@keyframes pack-type {
+  0%,
+  22% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  40%,
+  88% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+.pack-type > [data-ln] {
+  transform-origin: left;
+  animation: pack-type 4s ease-out infinite;
+}
+.pack-type > [data-ln]:nth-child(2) {
+  animation-delay: 0.25s;
+}
+.pack-type > [data-ln]:nth-child(3) {
+  animation-delay: 0.5s;
+}
+.pack-type > [data-ln]:nth-child(4) {
+  animation-delay: 0.75s;
+}
+.pack-type > [data-ln]:nth-child(5) {
+  animation-delay: 1s;
+}
+
+@keyframes pack-logfade {
+  0% {
+    opacity: 0.25;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.55;
+  }
+}
+.pack-logs > [data-ln] {
+  animation: pack-logfade 2.8s linear infinite;
+}
+.pack-logs > [data-ln]:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.pack-logs > [data-ln]:nth-child(3) {
+  animation-delay: 0.8s;
+}
+.pack-logs > [data-ln]:nth-child(4) {
+  animation-delay: 1.2s;
+}
+
+@keyframes pack-rowin {
+  0% {
+    transform: translateX(-6px);
+    opacity: 0;
+  }
+  18%,
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+.pack-rows > [data-ln] {
+  animation: pack-rowin 3.2s cubic-bezier(0.2, 0, 0, 1) infinite;
+}
+.pack-rows > [data-ln]:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.pack-rows > [data-ln]:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.pack-rows > [data-ln]:nth-child(4) {
+  animation-delay: 0.9s;
+}
+
+@keyframes pack-blink {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+  }
+  30% {
+    opacity: 1;
+  }
+}
+.pack-blink {
+  animation: pack-blink 1.5s infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -131,5 +366,13 @@ input:focus-visible:not([data-noring]),
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+  /* No rise-and-fade entrance: the grid is simply present from the start. */
+  .reveal[data-reveal="out"] {
+    opacity: 1;
+    transform: none;
+  }
+  .sheen::after {
+    display: none;
   }
 }

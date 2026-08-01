@@ -1758,8 +1758,9 @@ export const catalog: CatalogItem[] = [
     registryItem: "kinetic-emphasis",
     documentationPath: "/components/kinetic-emphasis",
     dateAdded: ADDED,
-    // Independently Strongly Sellable (2026-07-14 premium re-review) — homepage-eligible.
-    featured: true,
+    // 2026-08-01 homepage refresh: Decrypt Text now carries the Text & creative
+    // featured slot; Kinetic Emphasis remains catalog-listed but not featured.
+    featured: false,
     supportsDarkMode: true,
     supportsReducedMotion: true,
     requiresClient: true,
@@ -2033,7 +2034,8 @@ export const catalog: CatalogItem[] = [
     registryItem: "decrypt-text",
     documentationPath: "/components/decrypt-text",
     dateAdded: "2026-07-28",
-    featured: false,
+    // 2026-08-01 homepage refresh: featured — full-width Text & creative finale.
+    featured: true,
     supportsDarkMode: true,
     supportsReducedMotion: true,
     requiresClient: true,

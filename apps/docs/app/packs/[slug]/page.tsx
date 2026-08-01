@@ -26,9 +26,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return pageMetadata({ title: pack.name, description: pack.tagline, path: `/packs/${pack.slug}`, type: "article" });
 }
 
-function Section({ title, sub, children }: { title: string; sub?: string; children: React.ReactNode }) {
+function Section({ title, sub, children, id }: { title: string; sub?: string; children: React.ReactNode; id?: string }) {
   return (
-    <section className="border-t border-[var(--color-border)] py-9">
+    <section id={id} className="scroll-mt-24 border-t border-[var(--color-border)] py-9">
       <h2 className="text-xl font-semibold tracking-tight text-[var(--color-fg)]">{title}</h2>
       {sub ? <p className="mt-1 mb-4 max-w-2xl text-[14px] text-[var(--color-muted)]">{sub}</p> : <div className="mb-4" />}
       {children}
@@ -106,13 +106,18 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
           <span className="text-[13px] text-[var(--color-muted)]">Editable source · accessible · reduced-motion safe</span>
         </div>
 
+        {/* In the free/open catalog `packPrimaryCta` degrades to the same
+            "Explore components" → #included CTA this row used to hardcode, which
+            rendered the identical button twice. Pair it with the install jump
+            instead; when commerce is on (buy / waitlist) the primary differs and
+            "Explore components" is the right companion. */}
         <div className="mt-6 flex flex-wrap items-center gap-4">
           <AccessCta cta={primary} />
           <Link
-            href="#included"
+            href={primary.kind === "explore-components" ? "#install" : "#included"}
             className="inline-flex items-center rounded-lg border border-[var(--color-border)] px-4 py-2.5 text-[14px] font-medium text-[var(--color-fg)] transition-colors hover:bg-[var(--color-bg-secondary)]"
           >
-            Explore components
+            {primary.kind === "explore-components" ? "Install this pack" : "Explore components"}
           </Link>
         </div>
       </header>
@@ -207,7 +212,7 @@ export default async function PackPage({ params }: { params: Promise<{ slug: str
       </Section>
 
       {/* INSTALLATION */}
-      <Section title="Installation" sub={`Installs ${filesInstalled} source files into your repo - you own them after install.`}>
+      <Section id="install" title="Installation" sub={`Installs ${filesInstalled} source files into your repo - you own them after install.`}>
         <p className="mb-3 text-[13px] text-[var(--color-muted)]">
           Install with the shadcn CLI - no account, no config. Every command below works as-is.
         </p>
