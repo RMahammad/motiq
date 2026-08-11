@@ -289,6 +289,13 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
                   it for a demo, and what replaces that in production.
                 </p>
                 <CodeBlock code={doc.driving} />
+                <p className="mt-3 text-[13px] text-[var(--color-muted)]">
+                  Wiring a real source —{" "}
+                  <Link href="/guides/live-data" className="text-[var(--color-accent)] underline underline-offset-2">
+                    streaming responses, sockets, and polling
+                  </Link>
+                  , with the identity rule that stops a list re-animating on every update.
+                </p>
               </Section>
             ) : null}
 
