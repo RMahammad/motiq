@@ -82,6 +82,87 @@ function depsToUrls(deps) {
   return (deps || []).map((d) => (d.startsWith("@") && d.includes("/") ? `${BASE_URL}/${bareName(d)}.json` : d));
 }
 
+/* ---- design tokens shipped with the install (docs/10-design-tokens.md) ----
+ *
+ * Component sources style themselves with `var(--color-surface)`, `var(--color-fg)`,
+ * … . Those live in packages/tokens/styles.css, which only the docs app imports — so
+ * before this, a stranger's `npx shadcn add @motiq/<name>` produced a component whose
+ * surfaces computed to rgba(0,0,0,0) and whose secondary text landed at ~1.09:1
+ * contrast. The tokens must travel WITH the item, or the install is not zero-config.
+ *
+ * Two rules keep this safe inside someone else's project:
+ *   1. Ship only tokens the shipped sources actually reference (computed below, so it
+ *      cannot drift as components change) — never the whole file.
+ *   2. Never ship a name shadcn/Tailwind already owns. `--background`, `--foreground`,
+ *      `--border`, `--accent`, `--ring`, `--font-sans`, `--font-mono` are THEIR scale;
+ *      writing ours into :root would restyle the consumer's own shadcn components.
+ *      Ours are all `--color-*` / `--shadow-*`, which shadcn reaches only through
+ *      `@theme inline` (utilities inline `var(--muted)`, not `var(--color-muted)`),
+ *      so the two systems coexist. Verified against a stock shadcn project.
+ */
+const TOKENS_CSS = join(repoRoot, "packages", "tokens", "styles.css");
+const SHADCN_OWNED = new Set([
+  "--background", "--foreground", "--border", "--accent", "--accent-foreground",
+  "--muted", "--muted-foreground", "--ring", "--radius", "--primary", "--secondary",
+  "--destructive", "--card", "--popover", "--input", "--font-sans", "--font-mono",
+  "--font-serif",
+  // Tailwind's own shadow scale: shipping ours would silently restyle the consumer's
+  // `shadow-sm`/`shadow-md`/`shadow-lg` utilities (measured — it really does).
+  "--shadow-sm", "--shadow-md", "--shadow-lg",
+]);
+
+/** Parse one `selector { … }` block of custom properties into a {name: value} map. */
+function parseTokenBlock(css, selectorPattern) {
+  const match = new RegExp(`${selectorPattern}\\s*\\{(.*?)\\n\\}`, "s").exec(css);
+  if (!match) throw new Error(`tokens: no block matching /${selectorPattern}/ in ${TOKENS_CSS}`);
+  return Object.fromEntries(
+    [...match[1].matchAll(/^\s*(--[a-z0-9-]+)\s*:\s*([^;]+);/gm)].map(([, k, v]) => [k, v.trim()]),
+  );
+}
+
+/** Every `var(--x)` the shipped component sources reference. */
+function collectUsedVars(items) {
+  const used = new Set();
+  for (const item of items) {
+    for (const f of item.files || []) {
+      for (const [, name] of readFileSync(join(pkgRoot, f.path), "utf8").matchAll(/var\((--[a-z0-9-]+)/g)) {
+        used.add(name);
+      }
+    }
+  }
+  return used;
+}
+
+/** shadcn `cssVars`: keys carry no `--` prefix; light → :root, dark → .dark. */
+function buildCssVars(items) {
+  const css = readFileSync(TOKENS_CSS, "utf8");
+  const light = parseTokenBlock(css, ':root,\\s*\\[data-theme="light"\\]');
+  const dark = parseTokenBlock(css, '\\[data-theme="dark"\\],\\s*\\.dark');
+  const used = collectUsedVars(items);
+
+  const shipped = Object.keys(light)
+    .filter((name) => used.has(name) && !SHADCN_OWNED.has(name))
+    .sort();
+  const pick = (block) =>
+    Object.fromEntries(shipped.filter((n) => n in block).map((n) => [n.slice(2), block[n]]));
+
+  const skipped = [...used].filter((n) => n in light && SHADCN_OWNED.has(n)).sort();
+  if (skipped.length) {
+    console.log(`[registry] tokens: left ${skipped.join(", ")} to the consumer (shadcn owns those names)`);
+  }
+  return { vars: { light: pick(light), dark: pick(dark) }, count: shipped.length };
+}
+
+const { vars: CSS_VARS, count: CSS_VAR_COUNT } = buildCssVars(manifest.items);
+
+/* Every item carries the tokens, not just a shared `utils`/`primitives` base item.
+ * The shadcn CLI applies `cssVars` ONLY for the item the user names on the command
+ * line — it installs a registryDependency's FILES but silently ignores that
+ * dependency's cssVars. (Verified against shadcn 4.16: `add <component>` wrote
+ * lib/utils.ts but left globals.css untouched, while `add <utils>` wrote the vars.)
+ * So the tokens have to ride on whichever item is asked for. The block is ~1.5 kB and
+ * the CLI merges it idempotently, so repeat installs add nothing. */
+
 /** Build one installable registry-item document with file contents inlined. */
 function buildItem(item) {
   const files = (item.files || []).map((f) => {
@@ -94,6 +175,7 @@ function buildItem(item) {
     // URLs so `npx shadcn add <this item's url>` resolves every dep zero-config.
     registryDependencies: depsToUrls(item.registryDependencies),
     files,
+    cssVars: CSS_VARS,
   };
 }
 
@@ -127,9 +209,13 @@ for (const item of manifest.items) {
     registryDependencies: normalizeDeps(item.registryDependencies),
     // Public install URL for free items; protected route reference for Pro.
     url: protectedItem ? `${PROTECTED_BASE_URL}/${item.name}` : `${BASE_URL}/${item.name}.json`,
+    // Canonical command uses the `@motiq` namespace — it is listed in the shadcn CLI's
+    // registry directory (shadcn-ui/ui#11220), so it needs no components.json entry.
+    // `installUrl` is the URL form, kept for CLI versions predating the directory.
     install: protectedItem
       ? `npx shadcn@latest add ${PROTECTED_BASE_URL}/${item.name}` // requires auth header (see docs/43)
-      : `npx shadcn@latest add ${BASE_URL}/${item.name}.json`,
+      : `npx shadcn@latest add ${NAMESPACE}/${item.name}`,
+    installUrl: protectedItem ? undefined : `npx shadcn@latest add ${BASE_URL}/${item.name}`,
   });
 }
 
@@ -141,7 +227,11 @@ writeFileSync(
       $schema: manifest.$schema,
       name: config.shortName.toLowerCase(),
       homepage: config.documentationUrl,
-      items: manifest.items.map((it) => ({ ...it, registryDependencies: depsToUrls(it.registryDependencies) })),
+      items: manifest.items.map((it) => ({
+        ...it,
+        registryDependencies: depsToUrls(it.registryDependencies),
+        cssVars: CSS_VARS,
+      })),
     },
     null,
     2,
@@ -164,6 +254,7 @@ writeFileSync(
       items: manifest.items.map((it) => ({
         ...it,
         registryDependencies: depsToUrls(it.registryDependencies),
+        cssVars: CSS_VARS,
         // Authoring paths are relative to packages/registry; from the repo root
         // they must include that prefix or the CLI cannot fetch the source.
         files: (it.files ?? []).map((f) => ({ ...f, path: `${REGISTRY_PKG_PREFIX}${f.path}` })),
@@ -215,3 +306,4 @@ console.log(`[registry] PUBLIC  ${publicWritten.length} files → ${OUT} (${free
 console.log(`[registry] PROTECTED ${protWritten.length} files → ${PROTECTED_OUT} (${protectedCount} pro/block/pack items)`);
 console.log(`[registry] ${catalogItems.length} catalog items · public base ${BASE_URL} · protected base ${PROTECTED_BASE_URL}`);
 console.log(`[registry] source-protection assertion: OK (no protected source under public dir)`);
+console.log(`[registry] tokens: ${CSS_VAR_COUNT} design tokens (light + dark) ship as cssVars on every item`);

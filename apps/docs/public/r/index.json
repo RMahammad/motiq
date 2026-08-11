@@ -18,7 +18,8 @@
       ],
       "registryDependencies": [],
       "url": "https://motiq.dev/r/utils.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/utils.json"
+      "install": "npx shadcn@latest add @motiq/utils",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/utils"
     },
     {
       "name": "primitives",
@@ -33,7 +34,8 @@
       "dependencies": [],
       "registryDependencies": [],
       "url": "https://motiq.dev/r/primitives.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/primitives.json"
+      "install": "npx shadcn@latest add @motiq/primitives",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/primitives"
     },
     {
       "name": "ai-response-stream",
@@ -62,7 +64,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/ai-response-stream.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/ai-response-stream.json"
+      "install": "npx shadcn@latest add @motiq/ai-response-stream",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/ai-response-stream"
     },
     {
       "name": "deployment-pipeline",
@@ -91,7 +94,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/deployment-pipeline.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/deployment-pipeline.json"
+      "install": "npx shadcn@latest add @motiq/deployment-pipeline",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/deployment-pipeline"
     },
     {
       "name": "live-presence-stack",
@@ -118,7 +122,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/live-presence-stack.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/live-presence-stack.json"
+      "install": "npx shadcn@latest add @motiq/live-presence-stack",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/live-presence-stack"
     },
     {
       "name": "kpi-number-morph",
@@ -143,7 +148,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/kpi-number-morph.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/kpi-number-morph.json"
+      "install": "npx shadcn@latest add @motiq/kpi-number-morph",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/kpi-number-morph"
     },
     {
       "name": "tool-call-activity",
@@ -172,7 +178,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/tool-call-activity.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/tool-call-activity.json"
+      "install": "npx shadcn@latest add @motiq/tool-call-activity",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/tool-call-activity"
     },
     {
       "name": "live-log-stream",
@@ -201,7 +208,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/live-log-stream.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/live-log-stream.json"
+      "install": "npx shadcn@latest add @motiq/live-log-stream",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/live-log-stream"
     },
     {
       "name": "activity-stream",
@@ -229,7 +237,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/activity-stream.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/activity-stream.json"
+      "install": "npx shadcn@latest add @motiq/activity-stream",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/activity-stream"
     },
     {
       "name": "streaming-data-rows",
@@ -257,7 +266,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/streaming-data-rows.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/streaming-data-rows.json"
+      "install": "npx shadcn@latest add @motiq/streaming-data-rows",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/streaming-data-rows"
     },
     {
       "name": "luminous-topography",
@@ -282,7 +292,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/luminous-topography.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/luminous-topography.json"
+      "install": "npx shadcn@latest add @motiq/luminous-topography",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/luminous-topography"
     },
     {
       "name": "workflow-topology-field",
@@ -308,7 +319,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/workflow-topology-field.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/workflow-topology-field.json"
+      "install": "npx shadcn@latest add @motiq/workflow-topology-field",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/workflow-topology-field"
     },
     {
       "name": "queue-pulse-lanes",
@@ -334,7 +346,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/queue-pulse-lanes.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/queue-pulse-lanes.json"
+      "install": "npx shadcn@latest add @motiq/queue-pulse-lanes",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/queue-pulse-lanes"
     },
     {
       "name": "adaptive-safe-zone-grid",
@@ -360,7 +373,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/adaptive-safe-zone-grid.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/adaptive-safe-zone-grid.json"
+      "install": "npx shadcn@latest add @motiq/adaptive-safe-zone-grid",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/adaptive-safe-zone-grid"
     },
     {
       "name": "runtime-signal-map",
@@ -386,7 +400,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/runtime-signal-map.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/runtime-signal-map.json"
+      "install": "npx shadcn@latest add @motiq/runtime-signal-map",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/runtime-signal-map"
     },
     {
       "name": "event-propagation-matrix",
@@ -412,7 +427,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/event-propagation-matrix.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/event-propagation-matrix.json"
+      "install": "npx shadcn@latest add @motiq/event-propagation-matrix",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/event-propagation-matrix"
     },
     {
       "name": "data-contour-surface",
@@ -438,7 +454,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/data-contour-surface.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/data-contour-surface.json"
+      "install": "npx shadcn@latest add @motiq/data-contour-surface",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/data-contour-surface"
     },
     {
       "name": "agent-operations-hero",
@@ -469,7 +486,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/agent-operations-hero.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/agent-operations-hero.json"
+      "install": "npx shadcn@latest add @motiq/agent-operations-hero",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/agent-operations-hero"
     },
     {
       "name": "deployment-control-hero",
@@ -500,7 +518,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/deployment-control-hero.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/deployment-control-hero.json"
+      "install": "npx shadcn@latest add @motiq/deployment-control-hero",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/deployment-control-hero"
     },
     {
       "name": "live-data-command-hero",
@@ -531,7 +550,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/live-data-command-hero.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/live-data-command-hero.json"
+      "install": "npx shadcn@latest add @motiq/live-data-command-hero",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/live-data-command-hero"
     },
     {
       "name": "collaborative-launch-hero",
@@ -563,7 +583,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/collaborative-launch-hero.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/collaborative-launch-hero.json"
+      "install": "npx shadcn@latest add @motiq/collaborative-launch-hero",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/collaborative-launch-hero"
     },
     {
       "name": "source-citation-rail",
@@ -592,7 +613,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/source-citation-rail.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/source-citation-rail.json"
+      "install": "npx shadcn@latest add @motiq/source-citation-rail",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/source-citation-rail"
     },
     {
       "name": "api-request-inspector",
@@ -622,7 +644,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/api-request-inspector.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/api-request-inspector.json"
+      "install": "npx shadcn@latest add @motiq/api-request-inspector",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/api-request-inspector"
     },
     {
       "name": "approval-workflow",
@@ -650,7 +673,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/approval-workflow.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/approval-workflow.json"
+      "install": "npx shadcn@latest add @motiq/approval-workflow",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/approval-workflow"
     },
     {
       "name": "filter-result-transition",
@@ -678,7 +702,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/filter-result-transition.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/filter-result-transition.json"
+      "install": "npx shadcn@latest add @motiq/filter-result-transition",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/filter-result-transition"
     },
     {
       "name": "swipe-action-row",
@@ -706,7 +731,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/swipe-action-row.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/swipe-action-row.json"
+      "install": "npx shadcn@latest add @motiq/swipe-action-row",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/swipe-action-row"
     },
     {
       "name": "agent-run-timeline",
@@ -736,7 +762,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/agent-run-timeline.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/agent-run-timeline.json"
+      "install": "npx shadcn@latest add @motiq/agent-run-timeline",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/agent-run-timeline"
     },
     {
       "name": "environment-switcher",
@@ -766,7 +793,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/environment-switcher.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/environment-switcher.json"
+      "install": "npx shadcn@latest add @motiq/environment-switcher",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/environment-switcher"
     },
     {
       "name": "comment-thread",
@@ -794,7 +822,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/comment-thread.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/comment-thread.json"
+      "install": "npx shadcn@latest add @motiq/comment-thread",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/comment-thread"
     },
     {
       "name": "data-refresh-state",
@@ -823,7 +852,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/data-refresh-state.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/data-refresh-state.json"
+      "install": "npx shadcn@latest add @motiq/data-refresh-state",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/data-refresh-state"
     },
     {
       "name": "mobile-filter-sheet",
@@ -853,7 +883,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/mobile-filter-sheet.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/mobile-filter-sheet.json"
+      "install": "npx shadcn@latest add @motiq/mobile-filter-sheet",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/mobile-filter-sheet"
     },
     {
       "name": "prompt-composer",
@@ -883,7 +914,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/prompt-composer.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/prompt-composer.json"
+      "install": "npx shadcn@latest add @motiq/prompt-composer",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/prompt-composer"
     },
     {
       "name": "webhook-event-stream",
@@ -913,7 +945,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/webhook-event-stream.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/webhook-event-stream.json"
+      "install": "npx shadcn@latest add @motiq/webhook-event-stream",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/webhook-event-stream"
     },
     {
       "name": "mention-suggestions",
@@ -942,7 +975,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/mention-suggestions.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/mention-suggestions.json"
+      "install": "npx shadcn@latest add @motiq/mention-suggestions",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/mention-suggestions"
     },
     {
       "name": "data-quality-status",
@@ -971,7 +1005,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/data-quality-status.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/data-quality-status.json"
+      "install": "npx shadcn@latest add @motiq/data-quality-status",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/data-quality-status"
     },
     {
       "name": "keyboard-safe-form",
@@ -1001,7 +1036,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/keyboard-safe-form.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/keyboard-safe-form.json"
+      "install": "npx shadcn@latest add @motiq/keyboard-safe-form",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/keyboard-safe-form"
     },
     {
       "name": "file-upload-pipeline",
@@ -1030,7 +1066,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/file-upload-pipeline.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/file-upload-pipeline.json"
+      "install": "npx shadcn@latest add @motiq/file-upload-pipeline",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/file-upload-pipeline"
     },
     {
       "name": "product-variant-selector",
@@ -1059,7 +1096,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/product-variant-selector.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/product-variant-selector.json"
+      "install": "npx shadcn@latest add @motiq/product-variant-selector",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/product-variant-selector"
     },
     {
       "name": "passkey-setup-flow",
@@ -1088,7 +1126,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/passkey-setup-flow.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/passkey-setup-flow.json"
+      "install": "npx shadcn@latest add @motiq/passkey-setup-flow",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/passkey-setup-flow"
     },
     {
       "name": "message-delivery-states",
@@ -1117,7 +1156,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/message-delivery-states.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/message-delivery-states.json"
+      "install": "npx shadcn@latest add @motiq/message-delivery-states",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/message-delivery-states"
     },
     {
       "name": "kanban-card-movement",
@@ -1147,7 +1187,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/kanban-card-movement.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/kanban-card-movement.json"
+      "install": "npx shadcn@latest add @motiq/kanban-card-movement",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/kanban-card-movement"
     },
     {
       "name": "multi-file-queue",
@@ -1177,7 +1218,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/multi-file-queue.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/multi-file-queue.json"
+      "install": "npx shadcn@latest add @motiq/multi-file-queue",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/multi-file-queue"
     },
     {
       "name": "cart-item-transition",
@@ -1207,7 +1249,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/cart-item-transition.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/cart-item-transition.json"
+      "install": "npx shadcn@latest add @motiq/cart-item-transition",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/cart-item-transition"
     },
     {
       "name": "two-factor-setup-flow",
@@ -1236,7 +1279,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/two-factor-setup-flow.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/two-factor-setup-flow.json"
+      "install": "npx shadcn@latest add @motiq/two-factor-setup-flow",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/two-factor-setup-flow"
     },
     {
       "name": "typing-and-presence",
@@ -1265,7 +1309,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/typing-and-presence.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/typing-and-presence.json"
+      "install": "npx shadcn@latest add @motiq/typing-and-presence",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/typing-and-presence"
     },
     {
       "name": "task-dependency-map",
@@ -1295,7 +1340,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/task-dependency-map.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/task-dependency-map.json"
+      "install": "npx shadcn@latest add @motiq/task-dependency-map",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/task-dependency-map"
     },
     {
       "name": "processing-timeline",
@@ -1324,7 +1370,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/processing-timeline.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/processing-timeline.json"
+      "install": "npx shadcn@latest add @motiq/processing-timeline",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/processing-timeline"
     },
     {
       "name": "checkout-progress",
@@ -1353,7 +1400,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/checkout-progress.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/checkout-progress.json"
+      "install": "npx shadcn@latest add @motiq/checkout-progress",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/checkout-progress"
     },
     {
       "name": "session-security-center",
@@ -1382,7 +1430,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/session-security-center.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/session-security-center.json"
+      "install": "npx shadcn@latest add @motiq/session-security-center",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/session-security-center"
     },
     {
       "name": "thread-expansion",
@@ -1411,7 +1460,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/thread-expansion.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/thread-expansion.json"
+      "install": "npx shadcn@latest add @motiq/thread-expansion",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/thread-expansion"
     },
     {
       "name": "project-timeline",
@@ -1440,7 +1490,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/project-timeline.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/project-timeline.json"
+      "install": "npx shadcn@latest add @motiq/project-timeline",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/project-timeline"
     },
     {
       "name": "ai-agent-workspace",
@@ -1469,7 +1520,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/ai-agent-workspace.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/ai-agent-workspace.json"
+      "install": "npx shadcn@latest add @motiq/ai-agent-workspace",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/ai-agent-workspace"
     },
     {
       "name": "deployment-command-center",
@@ -1498,7 +1550,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/deployment-command-center.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/deployment-command-center.json"
+      "install": "npx shadcn@latest add @motiq/deployment-command-center",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/deployment-command-center"
     },
     {
       "name": "collaborative-review-workspace",
@@ -1527,7 +1580,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/collaborative-review-workspace.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/collaborative-review-workspace.json"
+      "install": "npx shadcn@latest add @motiq/collaborative-review-workspace",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/collaborative-review-workspace"
     },
     {
       "name": "live-operations-dashboard",
@@ -1556,7 +1610,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/live-operations-dashboard.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/live-operations-dashboard.json"
+      "install": "npx shadcn@latest add @motiq/live-operations-dashboard",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/live-operations-dashboard"
     },
     {
       "name": "ai-interface-pack",
@@ -1584,7 +1639,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/ai-interface-pack.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/ai-interface-pack.json"
+      "install": "npx shadcn@latest add @motiq/ai-interface-pack",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/ai-interface-pack"
     },
     {
       "name": "developer-tools-pack",
@@ -1612,7 +1668,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/developer-tools-pack.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/developer-tools-pack.json"
+      "install": "npx shadcn@latest add @motiq/developer-tools-pack",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/developer-tools-pack"
     },
     {
       "name": "collaboration-pack",
@@ -1640,7 +1697,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/collaboration-pack.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/collaboration-pack.json"
+      "install": "npx shadcn@latest add @motiq/collaboration-pack",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/collaboration-pack"
     },
     {
       "name": "data-motion-pack",
@@ -1668,7 +1726,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/data-motion-pack.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/data-motion-pack.json"
+      "install": "npx shadcn@latest add @motiq/data-motion-pack",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/data-motion-pack"
     },
     {
       "name": "kinetic-emphasis",
@@ -1695,7 +1754,8 @@
         "@motiq/utils"
       ],
       "url": "https://motiq.dev/r/kinetic-emphasis.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/kinetic-emphasis.json"
+      "install": "npx shadcn@latest add @motiq/kinetic-emphasis",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/kinetic-emphasis"
     },
     {
       "name": "blur-text",
@@ -1720,7 +1780,8 @@
         "@motiq/utils"
       ],
       "url": "https://motiq.dev/r/blur-text.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/blur-text.json"
+      "install": "npx shadcn@latest add @motiq/blur-text",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/blur-text"
     },
     {
       "name": "spotlight-card",
@@ -1747,7 +1808,8 @@
         "@motiq/utils"
       ],
       "url": "https://motiq.dev/r/spotlight-card.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/spotlight-card.json"
+      "install": "npx shadcn@latest add @motiq/spotlight-card",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/spotlight-card"
     },
     {
       "name": "animated-dialog",
@@ -1773,7 +1835,8 @@
         "@motiq/utils"
       ],
       "url": "https://motiq.dev/r/animated-dialog.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/animated-dialog.json"
+      "install": "npx shadcn@latest add @motiq/animated-dialog",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/animated-dialog"
     },
     {
       "name": "animated-tabs",
@@ -1799,7 +1862,8 @@
         "@motiq/utils"
       ],
       "url": "https://motiq.dev/r/animated-tabs.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/animated-tabs.json"
+      "install": "npx shadcn@latest add @motiq/animated-tabs",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/animated-tabs"
     },
     {
       "name": "animated-accordion",
@@ -1825,7 +1889,8 @@
         "@motiq/utils"
       ],
       "url": "https://motiq.dev/r/animated-accordion.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/animated-accordion.json"
+      "install": "npx shadcn@latest add @motiq/animated-accordion",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/animated-accordion"
     },
     {
       "name": "animated-button",
@@ -1850,7 +1915,8 @@
         "@motiq/utils"
       ],
       "url": "https://motiq.dev/r/animated-button.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/animated-button.json"
+      "install": "npx shadcn@latest add @motiq/animated-button",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/animated-button"
     },
     {
       "name": "rotating-text",
@@ -1875,7 +1941,8 @@
         "@motiq/utils"
       ],
       "url": "https://motiq.dev/r/rotating-text.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/rotating-text.json"
+      "install": "npx shadcn@latest add @motiq/rotating-text",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/rotating-text"
     },
     {
       "name": "animated-list",
@@ -1900,7 +1967,8 @@
         "@motiq/utils"
       ],
       "url": "https://motiq.dev/r/animated-list.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/animated-list.json"
+      "install": "npx shadcn@latest add @motiq/animated-list",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/animated-list"
     },
     {
       "name": "animated-grid",
@@ -1926,7 +1994,8 @@
         "@motiq/utils"
       ],
       "url": "https://motiq.dev/r/animated-grid.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/animated-grid.json"
+      "install": "npx shadcn@latest add @motiq/animated-grid",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/animated-grid"
     },
     {
       "name": "loom-draft",
@@ -1952,7 +2021,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/loom-draft.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/loom-draft.json"
+      "install": "npx shadcn@latest add @motiq/loom-draft",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/loom-draft"
     },
     {
       "name": "copperplate-hatch",
@@ -1978,7 +2048,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/copperplate-hatch.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/copperplate-hatch.json"
+      "install": "npx shadcn@latest add @motiq/copperplate-hatch",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/copperplate-hatch"
     },
     {
       "name": "chart-recorder",
@@ -2004,7 +2075,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/chart-recorder.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/chart-recorder.json"
+      "install": "npx shadcn@latest add @motiq/chart-recorder",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/chart-recorder"
     },
     {
       "name": "riso-registration",
@@ -2030,7 +2102,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/riso-registration.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/riso-registration.json"
+      "install": "npx shadcn@latest add @motiq/riso-registration",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/riso-registration"
     },
     {
       "name": "core-strata",
@@ -2057,7 +2130,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/core-strata.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/core-strata.json"
+      "install": "npx shadcn@latest add @motiq/core-strata",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/core-strata"
     },
     {
       "name": "animated-icons",
@@ -2082,7 +2156,8 @@
         "@motiq/utils"
       ],
       "url": "https://motiq.dev/r/animated-icons.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/animated-icons.json"
+      "install": "npx shadcn@latest add @motiq/animated-icons",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/animated-icons"
     },
     {
       "name": "magnetic-dock",
@@ -2109,7 +2184,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/magnetic-dock.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/magnetic-dock.json"
+      "install": "npx shadcn@latest add @motiq/magnetic-dock",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/magnetic-dock"
     },
     {
       "name": "cursor-comet",
@@ -2136,7 +2212,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/cursor-comet.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/cursor-comet.json"
+      "install": "npx shadcn@latest add @motiq/cursor-comet",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/cursor-comet"
     },
     {
       "name": "lens-card",
@@ -2163,7 +2240,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/lens-card.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/lens-card.json"
+      "install": "npx shadcn@latest add @motiq/lens-card",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/lens-card"
     },
     {
       "name": "torch-reveal",
@@ -2190,7 +2268,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/torch-reveal.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/torch-reveal.json"
+      "install": "npx shadcn@latest add @motiq/torch-reveal",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/torch-reveal"
     },
     {
       "name": "gooey-actions",
@@ -2217,7 +2296,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/gooey-actions.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/gooey-actions.json"
+      "install": "npx shadcn@latest add @motiq/gooey-actions",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/gooey-actions"
     },
     {
       "name": "decrypt-text",
@@ -2243,7 +2323,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/decrypt-text.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/decrypt-text.json"
+      "install": "npx shadcn@latest add @motiq/decrypt-text",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/decrypt-text"
     },
     {
       "name": "proximity-type",
@@ -2269,7 +2350,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/proximity-type.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/proximity-type.json"
+      "install": "npx shadcn@latest add @motiq/proximity-type",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/proximity-type"
     },
     {
       "name": "split-flap",
@@ -2295,7 +2377,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/split-flap.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/split-flap.json"
+      "install": "npx shadcn@latest add @motiq/split-flap",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/split-flap"
     },
     {
       "name": "liquid-fill-headline",
@@ -2321,7 +2404,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/liquid-fill-headline.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/liquid-fill-headline.json"
+      "install": "npx shadcn@latest add @motiq/liquid-fill-headline",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/liquid-fill-headline"
     },
     {
       "name": "word-cascade",
@@ -2347,7 +2431,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/word-cascade.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/word-cascade.json"
+      "install": "npx shadcn@latest add @motiq/word-cascade",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/word-cascade"
     },
     {
       "name": "holo-card",
@@ -2374,7 +2459,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/holo-card.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/holo-card.json"
+      "install": "npx shadcn@latest add @motiq/holo-card",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/holo-card"
     },
     {
       "name": "border-beam-panel",
@@ -2401,7 +2487,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/border-beam-panel.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/border-beam-panel.json"
+      "install": "npx shadcn@latest add @motiq/border-beam-panel",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/border-beam-panel"
     },
     {
       "name": "card-stack-deck",
@@ -2428,7 +2515,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/card-stack-deck.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/card-stack-deck.json"
+      "install": "npx shadcn@latest add @motiq/card-stack-deck",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/card-stack-deck"
     },
     {
       "name": "glass-refraction-panel",
@@ -2454,7 +2542,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/glass-refraction-panel.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/glass-refraction-panel.json"
+      "install": "npx shadcn@latest add @motiq/glass-refraction-panel",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/glass-refraction-panel"
     },
     {
       "name": "aurora-panel",
@@ -2480,7 +2569,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/aurora-panel.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/aurora-panel.json"
+      "install": "npx shadcn@latest add @motiq/aurora-panel",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/aurora-panel"
     },
     {
       "name": "sticky-zoom-hero",
@@ -2506,7 +2596,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/sticky-zoom-hero.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/sticky-zoom-hero.json"
+      "install": "npx shadcn@latest add @motiq/sticky-zoom-hero",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/sticky-zoom-hero"
     },
     {
       "name": "depth-parallax-scene",
@@ -2532,7 +2623,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/depth-parallax-scene.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/depth-parallax-scene.json"
+      "install": "npx shadcn@latest add @motiq/depth-parallax-scene",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/depth-parallax-scene"
     },
     {
       "name": "mask-wipe-sections",
@@ -2558,7 +2650,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/mask-wipe-sections.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/mask-wipe-sections.json"
+      "install": "npx shadcn@latest add @motiq/mask-wipe-sections",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/mask-wipe-sections"
     },
     {
       "name": "scroll-count-stats",
@@ -2584,7 +2677,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/scroll-count-stats.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/scroll-count-stats.json"
+      "install": "npx shadcn@latest add @motiq/scroll-count-stats",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/scroll-count-stats"
     },
     {
       "name": "velocity-skew-feed",
@@ -2610,7 +2704,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/velocity-skew-feed.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/velocity-skew-feed.json"
+      "install": "npx shadcn@latest add @motiq/velocity-skew-feed",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/velocity-skew-feed"
     },
     {
       "name": "orbital-gallery",
@@ -2637,7 +2732,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/orbital-gallery.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/orbital-gallery.json"
+      "install": "npx shadcn@latest add @motiq/orbital-gallery",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/orbital-gallery"
     },
     {
       "name": "flow-warp-image",
@@ -2664,7 +2760,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/flow-warp-image.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/flow-warp-image.json"
+      "install": "npx shadcn@latest add @motiq/flow-warp-image",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/flow-warp-image"
     },
     {
       "name": "velocity-marquee",
@@ -2691,7 +2788,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/velocity-marquee.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/velocity-marquee.json"
+      "install": "npx shadcn@latest add @motiq/velocity-marquee",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/velocity-marquee"
     },
     {
       "name": "filmstrip-scrub",
@@ -2718,7 +2816,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/filmstrip-scrub.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/filmstrip-scrub.json"
+      "install": "npx shadcn@latest add @motiq/filmstrip-scrub",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/filmstrip-scrub"
     },
     {
       "name": "compare-reveal",
@@ -2745,7 +2844,8 @@
         "@motiq/primitives"
       ],
       "url": "https://motiq.dev/r/compare-reveal.json",
-      "install": "npx shadcn@latest add https://motiq.dev/r/compare-reveal.json"
+      "install": "npx shadcn@latest add @motiq/compare-reveal",
+      "installUrl": "npx shadcn@latest add https://motiq.dev/r/compare-reveal"
     }
   ]
 }
