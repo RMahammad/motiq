@@ -1,6 +1,6 @@
 {
   "name": "@scope/registry",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "shadcn-compatible registry: authoring manifest + generator that emits public/r/*.json.",

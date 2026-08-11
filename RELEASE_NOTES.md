@@ -1,3 +1,66 @@
+# v0.2.0 — installs that look like the previews
+
+Two things a stranger installing Motiq would have hit, and one they asked for.
+
+https://motiq.dev
+
+---
+
+## Design tokens now install with the component
+
+Components style themselves with `var(--color-surface)`, `var(--color-fg)`, … . Those
+tokens lived only in the docs app, so **motiq.dev looked right while a real install did
+not**: in a stock `create-next-app` + `shadcn init` project, 11 of the 14 `--color-*`
+properties a component used were undefined. Card and code-block backgrounds computed to
+`rgba(0,0,0,0)`, and secondary text fell back to shadcn's near-white *background* colours
+— about **1.09:1** contrast.
+
+The registry now ships 29 tokens (light + dark) as a `cssVars` block on every item, so
+`shadcn add` writes them into your `globals.css` once. Measured after the fix: **4.97:1**
+in light, **7.52:1** in dark, cards and code surfaces solid in both themes.
+
+Names shadcn and Tailwind own — `--background`, `--foreground`, `--border`, `--accent`,
+`--ring`, `--font-sans`, `--font-mono`, `--shadow-sm/md/lg` — are deliberately **not**
+shipped, so your own components are untouched. Verified: shadcn's `bg-muted`, `bg-accent`,
+`shadow-sm` and `Button` render identically before and after.
+
+## `npx shadcn@latest add @motiq/<name>`
+
+[shadcn-ui/ui#11220](https://github.com/shadcn-ui/ui/pull/11220) merged, so `@motiq` ships
+in the shadcn CLI's own registry directory and the short form resolves with **no
+`components.json` entry**. The full registry URL keeps working for older CLI versions.
+
+## Driving the live components
+
+Many components animate content **as it arrives** — a response that types itself, a log
+that scrolls, a pipeline that advances. That movement comes from your data, and the feed
+that produced it in the previews was never part of what you installed. Hand one a finished
+array and it animates once, then sits still.
+
+- **`useSequence`**, a new primitive in `@motiq/primitives`, drives those props from a list
+  over time — for demos, fixtures and onboarding tours.
+- **“Driving the live data”** now appears on all **27** components whose motion depends on
+  the app feeding them, each with a snippet matched to its own props.
+- **[Connecting live data](https://motiq.dev/guides/live-data)** is a new guide covering
+  real wiring: reading a `fetch` stream, subscribing to SSE/WebSocket, and polling — plus
+  the identity rule that stops a list re-animating on every update. Its examples are
+  typechecked *and* executed against a mocked network.
+
+## Compatibility
+
+No breaking changes; nothing to migrate. Installing a component adds the token block to
+your `globals.css` — expected, and idempotent across further installs.
+
+Verified on **motion 12.42.2 and 13.1.0** (696 tests pass on both), React 19, Next.js 16
+App Router and Vite 7, in clean-room installs rather than only in-repo.
+
+**Known limitations.** Verification is Chromium-only; there is no cross-browser E2E yet
+(Safari QA is still outstanding for the `riso-registration` background). Two interaction
+tests are order-dependent under heavy parallel load and pass in isolation. The `motion`
+dependency is unpinned, so a future major reaches consumers untested.
+
+---
+
 # v0.1.0 — first public release
 
 Motiq is a free, MIT-licensed catalog of animated React components for **product

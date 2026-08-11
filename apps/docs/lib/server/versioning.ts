@@ -14,7 +14,9 @@ import type { EntitlementRecord } from "./model";
 /** The catalog-wide release identity (one entry covers "everything at once"). */
 export const CATALOG_COMPLETE = "catalog.complete" as const;
 
-/** Default version every catalog item starts at until it is bumped here. */
+/** Fallback only, for the defensive branch of `catalogBaseline()`. What items
+ *  actually inherit is the CURRENT baseline row — read `catalogBaseline().version`,
+ *  never this, or the copy drifts the moment the catalog is re-versioned. */
 export const DEFAULT_VERSION = "0.1.0" as const;
 
 export interface ReleaseEntry {
@@ -35,11 +37,32 @@ export interface ReleaseEntry {
 }
 
 // ---------------------------------------------------------------------------
-// The releases table. Seeded with a single 0.1.0 baseline for the complete
-// catalog. Per-item versions default to DEFAULT_VERSION (0.1.0) until an item
-// gets its own bumped entry here — so a single baseline row is enough for v0.1.0.
+// The releases table. Per-item versions default to DEFAULT_VERSION until an item
+// gets its own bumped entry here, so one catalog-wide row covers a release that
+// touches everything.
+//
+// ORDER MATTERS: `catalogBaseline()` takes the FIRST catalog.complete row, so the
+// newest catalog release goes at the TOP. (The Updates page sorts by date itself.)
 // ---------------------------------------------------------------------------
 export const releases: readonly ReleaseEntry[] = [
+  {
+    itemName: CATALOG_COMPLETE,
+    version: "0.2.0",
+    releaseDate: "2026-08-11",
+    changelog: [
+      "Design tokens now install with every component. They previously lived only in the docs app, so an installed component rendered with transparent surfaces and ~1.09:1 contrast on secondary text; it is now 4.97:1 in light and 7.52:1 in dark.",
+      "Install commands use the @motiq namespace - `npx shadcn@latest add @motiq/<name>` needs no components.json entry, now that the namespace ships in the shadcn CLI's own registry directory. The full registry URL keeps working.",
+      "New `useSequence` primitive for driving live components from data that arrives over time, plus a 'Driving the live data' section on all 27 components whose motion depends on it.",
+      "New guide - Connecting live data: streaming responses, sockets and polling, including the identity rule that stops a list re-animating on every update.",
+    ],
+    breaking: false,
+    minDeps: {
+      react: ">=18.2.0",
+      next: ">=14.0.0",
+      // Verified against both majors: the suite passes on 12.42.2 and on 13.1.0.
+      motion: ">=12.42.2",
+    },
+  },
   {
     itemName: CATALOG_COMPLETE,
     version: "0.1.0",
@@ -79,7 +102,7 @@ export function releaseFor(itemName: string): ReleaseEntry | null {
 
 /**
  * The current version string for an item. Items without an explicit entry
- * default to the baseline version (0.1.0) — they inherit the catalog baseline.
+ * inherit the catalog baseline — whatever the newest catalog.complete row says.
  */
 export function currentVersion(itemName: string): string {
   const own = releaseFor(itemName);
