@@ -11,7 +11,7 @@ export interface ProductConfig {
   tagline: string;
   /** Internal workspace npm scope — configurable, NEVER shown to visitors. */
   npmScope: string;
-  /** Registry namespace for install commands (temporary preview value). */
+  /** Registry namespace for install commands. Listed in the shadcn CLI directory. */
   registryNamespace: string;
   registryBaseUrl: string;
   documentationUrl: string;
@@ -75,28 +75,21 @@ export const commerce = product.commerce;
 
 /**
  * User-facing shadcn install command for a registry item, from config. Uses the
- * extensionless registry URL (no `.json`) so the command is clean and needs no namespace
- * setup — the docs app rewrites `/r/<name>` to the generated `/r/<name>.json`.
+ * `@motiq/<name>` namespace form: since shadcn-ui/ui#11220 merged (2026-08-11) the
+ * namespace ships in the CLI's own registry directory, so it resolves with NO
+ * `components.json` entry and no setup step — same zero-config guarantee the URL
+ * form had, in a shorter command. Keep `registryUrlInstall()` for surfaces that
+ * must work on CLI versions predating the directory.
  */
 export function installCommand(itemName: string): string {
-  return `npx shadcn@latest add ${product.registryBaseUrl}/${itemName}`;
-}
-
-/** Namespaced short install form (once the namespace is registered). */
-export function namespacedInstall(itemName: string): string {
   return `npx shadcn@latest add ${product.registryNamespace}/${itemName}`;
 }
 
 /**
- * The one-time `components.json` `registries` entry a consumer adds to enable the
- * `@namespace/name` short install. shadcn substitutes `{name}` with the item name,
- * so `@motiq/blur-text` resolves to `<base>/blur-text.json`. Config-driven — the
- * namespace and base URL come from product.config.json.
+ * Extensionless registry-URL install form — the universal fallback that works on
+ * any shadcn CLI version. The docs app rewrites `/r/<name>` to the generated
+ * `/r/<name>.json` (see next.config.ts), so no `.json` shows in the command.
  */
-export function registriesConfig(): string {
-  return JSON.stringify(
-    { registries: { [product.registryNamespace]: `${product.registryBaseUrl}/{name}.json` } },
-    null,
-    2,
-  );
+export function registryUrlInstall(itemName: string): string {
+  return `npx shadcn@latest add ${product.registryBaseUrl}/${itemName}`;
 }

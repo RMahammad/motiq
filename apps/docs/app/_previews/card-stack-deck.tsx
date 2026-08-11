@@ -28,7 +28,7 @@ const ITEMS: CardStackDeckItem[] = CATEGORIES.map((c) => ({
         <span className="text-[16px] font-semibold tracking-tight text-[var(--color-fg)]">{c.name}</span>
         <span className="font-mono text-[11px] text-[var(--color-muted)]">{c.count} components · MIT</span>
         <span className="mt-auto truncate font-mono text-[10px] text-[var(--color-accent-text)]">
-          npx shadcn add https://motiq.dev/r/{c.id}
+          npx shadcn add @motiq/{c.id}
         </span>
       </div>
     </>

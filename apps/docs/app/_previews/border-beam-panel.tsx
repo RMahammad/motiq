@@ -37,7 +37,7 @@ export function BorderBeamPanelPreview() {
               themeable, with nothing to version or configure.
             </p>
             <div className="mt-4 overflow-x-auto whitespace-nowrap rounded-md border border-[var(--color-border)] bg-[var(--color-code-bg)] px-3.5 py-2.5 font-mono text-[12px] text-[var(--color-code-fg)]">
-              <span className="text-[var(--color-secondary-accent)]">$</span> npx shadcn add https://motiq.dev/r/border-beam-panel
+              <span className="text-[var(--color-secondary-accent)]">$</span> npx shadcn add @motiq/border-beam-panel
             </div>
             <div className="mt-4 flex gap-4 font-mono text-[11px] text-[var(--color-muted)]">
               <span>

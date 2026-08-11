@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { catalog } from "../../lib/catalog";
-import { product, installCommand } from "../../lib/product";
+import { product, installCommand, registryUrlInstall } from "../../lib/product";
 import { pageMetadata } from "../../lib/seo";
 import { InstallCommand } from "../_components/code-block";
 import { StarButton } from "../_components/github-star";
@@ -71,6 +71,20 @@ export default function GettingStartedPage() {
           automatically:
         </p>
         <InstallCommand command={installCommand(example.registryItem)} />
+        {/* The namespace resolves with no components.json entry because @motiq ships in the
+            shadcn CLI's registry directory; the URL form is the pre-directory fallback. */}
+        <p className="mt-3 text-[13px] text-[var(--color-muted)]">
+          <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">
+            {product.registryNamespace}
+          </code>{" "}
+          is listed in the shadcn CLI&apos;s registry directory, so nothing goes in your{" "}
+          <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">components.json</code>. On
+          an older CLI, the full registry URL works the same way:{" "}
+          <code className="rounded bg-[var(--color-code-bg)] px-1 py-0.5 font-mono text-[12px]">
+            {registryUrlInstall(example.registryItem)}
+          </code>
+          .
+        </p>
         <p className="mt-3 text-[13px] text-[var(--color-muted)]">
           Browse the full catalog on the{" "}
           <Link href="/components" className="text-[var(--color-accent)] underline underline-offset-2">

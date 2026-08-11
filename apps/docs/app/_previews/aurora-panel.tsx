@@ -40,7 +40,7 @@ export function AuroraPanelPreview() {
               cards, not another full-page background.
             </p>
             <div className="mt-4 overflow-x-auto whitespace-nowrap rounded-md border border-[var(--color-border)] bg-[var(--color-code-bg)] px-3 py-2.5 font-mono text-[11.5px] text-[var(--color-code-fg)]">
-              npx shadcn add https://motiq.dev/r/aurora-panel
+              npx shadcn add @motiq/aurora-panel
             </div>
             <div className="mt-3.5 flex gap-4 font-mono text-[11px] text-[var(--color-muted)]">
               <span>
