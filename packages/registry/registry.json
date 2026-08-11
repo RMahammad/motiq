@@ -28,7 +28,7 @@
       "name": "primitives",
       "type": "registry:lib",
       "title": "Motion primitives",
-      "description": "Shared, dependency-free hooks used across workflow components: useReducedMotion, useVisibilityPause (offscreen pause), formatNumber (locale), useAnimatedNumber.",
+      "description": "Shared, dependency-free hooks used across workflow components: useReducedMotion, useVisibilityPause (offscreen pause), useSequence (drive live data over time), formatNumber (locale), useAnimatedNumber.",
       "dependencies": [],
       "files": [
         {

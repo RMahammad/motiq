@@ -315,6 +315,110 @@ export const streamItemVariants = {
   exit: { opacity: 0, y: -6 },
 } as const;
 
+export interface UseSequenceOptions {
+  /** Delay between steps. Clamped to a minimum of one frame. */
+  intervalMs?: number;
+  /** Return to the first step instead of stopping at the last. */
+  loop?: boolean;
+  /** Begin advancing on mount. */
+  autoStart?: boolean;
+  /** Hold position without losing it — pair with `useVisibilityPause`. */
+  paused?: boolean;
+  /** Step to begin (and to return to on `reset`). */
+  startIndex?: number;
+}
+
+export interface Sequence<T> {
+  /** Current step position. */
+  index: number;
+  /** Current step, or `undefined` when `steps` is empty. */
+  value: T | undefined;
+  /** True once the last step is reached (never true when looping). */
+  done: boolean;
+  running: boolean;
+  /** Restart from `startIndex`. */
+  start: () => void;
+  stop: () => void;
+  /** Return to `startIndex` and stop. */
+  reset: () => void;
+  setIndex: (index: number) => void;
+}
+
+/**
+ * Advance an index through `steps` on a timer — the missing half of every
+ * "live" component in this library.
+ *
+ * These components are deliberately presentation-only: they render the data
+ * they are handed and animate each item AS IT ARRIVES. Hand one a finished
+ * array and every item arrives in the same frame, so it fades in once and looks
+ * static. The motion in the docs previews comes from the app feeding data in
+ * over time, and this hook is that feed — for demos, fixtures, and onboarding
+ * tours. In production you drive the same props from your real source (a token
+ * stream, a socket, a poll) and this hook simply is not involved.
+ *
+ * Both live shapes come off the same index:
+ *
+ *   // a list that grows
+ *   const { index } = useSequence(EVENTS, { intervalMs: 900 });
+ *   <WebhookEventStream events={EVENTS.slice(0, index + 1)} />
+ *
+ *   // a lifecycle that advances
+ *   const { value: status } = useSequence(["queued", "running", "passed"] as const);
+ *   <DeploymentPipeline status={status} />
+ *
+ * Pair with `useVisibilityPause` so a demo does not burn through itself in a
+ * background tab: `useSequence(steps, { paused: !visible })`.
+ */
+export function useSequence<T>(
+  steps: readonly T[],
+  {
+    intervalMs = 900,
+    loop = false,
+    autoStart = true,
+    paused = false,
+    startIndex = 0,
+  }: UseSequenceOptions = {},
+): Sequence<T> {
+  const count = steps.length;
+  const [index, setIndex] = React.useState(startIndex);
+  const [running, setRunning] = React.useState(autoStart);
+
+  const atEnd = count > 0 && index >= count - 1;
+  const done = !loop && atEnd;
+
+  // Stop in an effect rather than inside the interval callback: a setState
+  // updater must stay pure, so it cannot also flip `running`.
+  React.useEffect(() => {
+    if (done) setRunning(false);
+  }, [done]);
+
+  React.useEffect(() => {
+    if (!running || paused || count === 0) return;
+    const id = setInterval(() => {
+      setIndex((i) => {
+        const next = i + 1;
+        if (next < count) return next;
+        return loop ? 0 : i;
+      });
+    }, Math.max(16, intervalMs));
+    return () => clearInterval(id);
+    // `index` is deliberately absent: including it would rebuild the interval
+    // on every tick and reset the delay each time.
+  }, [running, paused, count, loop, intervalMs]);
+
+  const start = React.useCallback(() => {
+    setIndex(startIndex);
+    setRunning(true);
+  }, [startIndex]);
+  const stop = React.useCallback(() => setRunning(false), []);
+  const reset = React.useCallback(() => {
+    setIndex(startIndex);
+    setRunning(false);
+  }, [startIndex]);
+
+  return { index, value: steps[index], done, running, start, stop, reset, setIndex };
+}
+
 /**
  * Copy-to-clipboard with a transient "copied" state for accessible feedback.
  * The component is responsible for rendering an sr-only status; this hook owns
