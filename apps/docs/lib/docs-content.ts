@@ -111,7 +111,7 @@ const { index } = useSequence(SESSIONS, { intervalMs: 900, paused: !visible });
 
 <SessionSecurityCenter sessions={SESSIONS.slice(0, index + 1)} />
 
-// In production your sessions endpoint drives the same props; useSequence is only for demos,
+// In production this comes from your sessions endpoint; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "sessions", type: "Session[]", def: "-", desc: "{ id, device, browser, os, location?, ipSummary?, createdTime, lastActiveTime, current?, trustLabel?, riskLabel?, authMethod?, organization?, metadata? }. IP/location/risk are app-supplied verbatim." },
@@ -155,7 +155,7 @@ const { index } = useSequence(NODES, { intervalMs: 900, paused: !visible });
 
 <ThreadExpansion nodes={NODES.slice(0, index + 1)} />
 
-// In production your thread query drives the same props; useSequence is only for demos,
+// In production this comes from your thread query; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "nodes", type: "ThreadNode[]", def: "-", desc: "{ id, parentId?, author, body?, timestamp, replyCount?, unreadCount?, unread?, resolved?, deleted?, collapsed?, metadata?, children? }. Flat parentId or nested." },
@@ -200,7 +200,7 @@ const { index } = useSequence(ITEMS, { intervalMs: 900, paused: !visible });
 
 <ProjectTimeline items={ITEMS.slice(0, index + 1)} />
 
-// In production your project data drives the same props; useSequence is only for demos,
+// In production this comes from your project data; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "items", type: "TimelineItem[]", def: "-", desc: "{ id, title, type, startDate, endDate, status, progress?, group?, milestone?, dependencyIds?, assignee?, priority?, metadata? }. type phase/task/milestone/release/event; status planned/active/blocked/completed/delayed/cancelled." },
@@ -277,7 +277,7 @@ const { value: item } = useSequence([ITEM, { ...ITEM, quantity: 2 }] as const, {
 
 <CartItemTransition item={item} />
 
-// In production your cart mutations drives the same props; useSequence is only for demos,
+// In production this comes from your cart mutations; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "item", type: "CartLineItem", def: "-", desc: "{ id, productName, variantSummary?, image?, unitPrice, quantity, total, previousPrice?, discount?, availability?, inventoryMessage?, fulfilmentMessage?, subscriptionInterval?, metadata? }. App-owned." },
@@ -351,7 +351,7 @@ const { index } = useSequence(PARTICIPANTS, { intervalMs: 900, paused: !visible 
 
 <TypingAndPresence participants={PARTICIPANTS.slice(0, index + 1)} />
 
-// In production your presence channel drives the same props; useSequence is only for demos,
+// In production this comes from your presence channel; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "participants", type: "Participant[]", def: "-", desc: "{ id, displayName, avatar?, presenceState, typingState?, activeContext?, lastActiveTime?, color?, role?, connectionState? }. Presence online/active/idle/away/offline/reconnecting; typing typing/recording/uploading/editing." },
@@ -397,7 +397,7 @@ const { index } = useSequence(TASKS, { intervalMs: 900, paused: !visible });
 
 <TaskDependencyMap tasks={TASKS.slice(0, index + 1)} />
 
-// In production your task store drives the same props; useSequence is only for demos,
+// In production this comes from your task store; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "tasks", type: "Task[]", def: "-", desc: "{ id, title, status, priority?, assignee?, startDate?, dueDate?, progress?, dependencyIds, blockedReason?, group?, milestone?, metadata? }. Statuses planned/ready/active/blocked/completed/cancelled." },
@@ -444,7 +444,7 @@ const { index } = useSequence(UPLOADS, { intervalMs: 900, paused: !visible });
 
 <FileUploadPipeline items={UPLOADS.slice(0, index + 1)} />
 
-// In production your upload progress events drives the same props; useSequence is only for demos,
+// In production this comes from your upload progress events; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "items", type: "UploadItem[]", def: "-", desc: "{ id, fileName, fileType, fileSize, progress, status, speed?, remainingTime?, error?, retryCount?, processingStage?, thumbnail?, metadata? }. App-owned (required)." },
@@ -491,7 +491,7 @@ const { value: loadingAvailability } = useSequence([true, false] as const, { int
 
 <ProductVariantSelector loadingAvailability={loadingAvailability} value={variant} onChange={setVariant} />
 
-// In production your availability lookup drives the same props; useSequence is only for demos,
+// In production this comes from your availability lookup; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "groups", type: "OptionGroup[]", def: "-", desc: "color/size/material/finish/storage/plan/bundle/custom; each value = { value, label, swatch?, image?, priceAdjustment?, availability, inventoryState, disabledReason?, recommended?, metadata? }." },
@@ -538,7 +538,7 @@ const { value: state } = useSequence(["intro", "naming", "registration-starting"
 
 <PasskeySetupFlow state={state} />
 
-// In production the WebAuthn ceremony's real stages drives the same props; useSequence is only for demos,
+// In production this comes from the WebAuthn ceremony's real stages; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "state", type: "PasskeyState", def: "-", desc: "App-owned phase. The component never calls navigator.credentials or fakes success." },
@@ -582,7 +582,7 @@ const { index } = useSequence(MESSAGES, { intervalMs: 900, paused: !visible });
 
 <MessageDeliveryStates messages={MESSAGES.slice(0, index + 1)} />
 
-// In production your chat transport's delivery receipts drives the same props; useSequence is only for demos,
+// In production this comes from your chat transport's delivery receipts; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "messages", type: "DeliveryMessage[]", def: "-", desc: "{ id, body, author, timestamp, deliveryState, readRecipients?, error?, attachmentState? }. deliveryState ∈ draft|sending|sent|delivered|read|failed|retrying|scheduled|cancelled|edited." },
@@ -626,7 +626,7 @@ const { index } = useSequence(CARDS, { intervalMs: 900, paused: !visible });
 
 <KanbanCardMovement cards={CARDS.slice(0, index + 1)} />
 
-// In production your board's realtime updates drives the same props; useSequence is only for demos,
+// In production this comes from your board's realtime updates; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "columns / cards", type: "KanbanColumn[] / KanbanCard[]", def: "-", desc: "column = { id, title, limit? }; card = { id, columnId, title, order, disabled?, meta? }. App-owned." },
@@ -678,7 +678,7 @@ const { value: value } = useSequence(["Summarise", "Summarise the incident", "Su
 
 <PromptComposer value={value} onChange={setValue} />
 
-// In production the user typing (drop the hook and use plain state) drives the same props; useSequence is only for demos,
+// In production this comes from the user typing (drop the hook and use plain state); useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "value / defaultValue / onValueChange", type: "string / cb", def: "-", desc: "Controlled or uncontrolled prompt text; the app owns the value." },
@@ -726,7 +726,7 @@ const { index, done } = useSequence(EVENTS, { intervalMs: 900, paused: !visible 
 
 <WebhookEventStream events={EVENTS.slice(0, index + 1)} status={done ? "delivered" : "pending"} />
 
-// In production your webhook delivery feed drives the same props; useSequence is only for demos,
+// In production this comes from your webhook delivery feed; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "events", type: "WebhookEvent[]", def: "-", desc: "{ id, endpoint, status, statusCode?, retryCount?, timestamp, payload?, headers? }. App-owned (required)." },
@@ -774,7 +774,7 @@ const { value: loading } = useSequence([true, false] as const, { intervalMs: 120
 
 <MentionSuggestions loading={loading} open query={query} />
 
-// In production your mention search drives the same props; useSequence is only for demos,
+// In production this comes from your mention search; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "open / query / items", type: "boolean / string / MentionUser[]", def: "-", desc: "Fully controlled: the app detects the trigger and drives open/query; items are app-owned." },
@@ -822,7 +822,7 @@ const { value: validating } = useSequence([true, false] as const, { intervalMs: 
 
 <DataQualityStatus validating={validating} />
 
-// In production your validation job drives the same props; useSequence is only for demos,
+// In production this comes from your validation job; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "metrics", type: "DataQualityMetrics", def: "-", desc: "{ freshness, completeness, accuracy }, each QualityMetric | null. A null metric renders \"Unknown\" - the component never invents a value." },
@@ -1003,7 +1003,7 @@ const { index } = useSequence(STEPS, { intervalMs: 900, paused: !visible });
 
 <AgentRunTimeline run={{ ...RUN, steps: STEPS.slice(0, index + 1) }} />
 
-// In production your agent's run events drives the same props; useSequence is only for demos,
+// In production this comes from your agent's run events; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "run", type: "AgentRun", def: "-", desc: "App-owned: { title, status, startedAt?, endedAt?, currentStepId?, steps[], summary? }. Run statuses: queued|running|waiting|completed|failed|cancelled|paused (required)." },
@@ -1049,7 +1049,7 @@ const { value: switching } = useSequence([true, false] as const, { intervalMs: 1
 
 <EnvironmentSwitcher switching={switching} value={env} onChange={setEnv} />
 
-// In production your environment switch request drives the same props; useSequence is only for demos,
+// In production this comes from your environment switch request; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "environments", type: "Environment[]", def: "-", desc: "{ id, name, type, status, region?, branch?, version?, lastDeploy?, url?, health?, warning?, disabled?, disabledReason?, group? }. App-owned (required)." },
@@ -1101,7 +1101,7 @@ const { index } = useSequence(COMMENTS, { intervalMs: 900, paused: !visible });
 
 <CommentThread comments={COMMENTS.slice(0, index + 1)} />
 
-// In production your comments subscription drives the same props; useSequence is only for demos,
+// In production this comes from your comments subscription; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "comments", type: "Comment[]", def: "-", desc: "App-owned; flat via parentId or nested via replies. Each: { id, author, body, createdAt, editedAt?, parentId?, replies?, mentions?, reactions?, attachments?, status?, resolved?, permissions? }." },
@@ -1157,7 +1157,7 @@ const { value: state } = useSequence(["idle", "checking", "refreshing", "success
 
 <DataRefreshState state={state} />
 
-// In production your refresh lifecycle drives the same props; useSequence is only for demos,
+// In production this comes from your refresh lifecycle; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "state", type: "RefreshState", def: "-", desc: "Host-owned: idle · checking · refreshing · partially_updated · success · stale · offline · error · paused · cancelled (required)." },
@@ -1213,7 +1213,7 @@ const { value: mode } = useSequence(["sheet", "fullscreen"] as const, { interval
 
 <MobileFilterSheet mode={mode} open onOpenChange={setOpen} />
 
-// In production your own breakpoint or route state drives the same props; useSequence is only for demos,
+// In production this comes from your own breakpoint or route state; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "groups", type: "FilterGroup[]", def: "-", desc: "App-defined groups: checkbox · radio · range · date · search · hierarchical · custom. Options support { count, disabled, disabledReason, children }." },
@@ -1291,7 +1291,7 @@ const { value: state } = useSequence(["idle", "loading", "success"] as const, { 
 
 <ApiRequestInspector state={state} response={RESPONSE} />
 
-// In production your fetch lifecycle drives the same props; useSequence is only for demos,
+// In production this comes from your fetch lifecycle; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "request", type: "ApiRequest", def: "-", desc: "{ method, url, headers?, query?, body?, requestId?, environment?, timestamp? }. The app owns it (required)." },
@@ -1363,6 +1363,21 @@ const items = assets.filter(matchesQueryAndFacets);
   onFocusFallback={() => searchRef.current?.focus()}
   renderItem={(a) => <AssetCard asset={a} />}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { value: state } = useSequence(["loading", "idle"] as const, { intervalMs: 1200, loop: true, paused: !visible });
+
+<FilterResultTransition state={state} items={RESULTS} getItemId={(i) => i.id} renderItem={renderItem} />
+
+// In production this comes from your own query lifecycle — set it while a search request is in flight; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "items / getItemId", type: "T[] / (item) => string", def: "-", desc: "Already-filtered items + stable identity - the key to continuity, focus preservation, and not replaying survivors (required)." },
       { prop: "renderItem", type: "(item, ctx) => ReactNode", def: "-", desc: "Renders one card; ctx = { index, layout, focused }. Keep controls inside the card, not nested (required)." },
@@ -1443,7 +1458,7 @@ const { index } = useSequence(CALLS, { intervalMs: 900, paused: !visible });
 
 <ToolCallActivity calls={CALLS.slice(0, index + 1)} />
 
-// In production your agent's tool-call events drives the same props; useSequence is only for demos,
+// In production this comes from your agent's tool-call events; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "calls", type: "ToolCall[]", def: "-", desc: "Tool calls in display order: { id, name, category?, status, startedAt?, durationMs?, input?, output?, error?, progress?, details? }. Statuses: queued|running|completed|failed|cancelled|waiting_approval|approved|rejected (required)." },
@@ -1491,7 +1506,7 @@ const { index, done } = useSequence(ENTRIES, { intervalMs: 900, paused: !visible
 
 <LiveLogStream entries={ENTRIES.slice(0, index + 1)} status={done ? "completed" : "streaming"} />
 
-// In production your log socket or SSE endpoint drives the same props; useSequence is only for demos,
+// In production this comes from your log socket or SSE endpoint; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "entries", type: "LogEntry[]", def: "-", desc: "Lines { id, level, message, timestamp?, source? }; level debug|info|success|warning|error. The app owns this (required)." },
@@ -1553,6 +1568,21 @@ const columns: Column<Order>[] = [
 ];
 
 <StreamingDataRows rows={orders} columns={columns} getRowId={(r) => r.id} sort={sort} onSortChange={setSort} caption="Live order queue." />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(ORDERS, { intervalMs: 900, paused: !visible });
+
+<StreamingDataRows rows={ORDERS.slice(0, index + 1)} />
+
+// In production this comes from your realtime table feed — rows arriving, changing status, and disappearing; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "rows / columns", type: "T[] / Column<T>[]", def: "-", desc: "Controlled rows + column defs (header, render?, value, sortable?, numeric?, format?, align?) (required)." },
       { prop: "getRowId", type: "(row) => string", def: "-", desc: "Stable identity - the key to focus preservation and continuity on update/resort (required)." },
@@ -1942,7 +1972,7 @@ const segments = React.useMemo(() => {
 
 <AiResponseStream segments={segments} state={done ? "complete" : "streaming"} sources={SOURCES} />
 
-// In production your model's token stream — append to \`segments\` as chunks arrive, then set \`state\` to "complete" drives the same props; useSequence is only for demos,
+// In production this comes from your model's token stream — append to \`segments\` as chunks arrive, then set \`state\` to "complete"; useSequence is only for demos,
 // fixtures, and onboarding tours.`,
     api: [
       { prop: "segments", type: "ResponseSegment[]", def: "-", desc: "Ordered content: text | code | citation. The app streams these in (required)." },
@@ -1975,6 +2005,27 @@ const stages: Stage[] = [
 ];
 
 <DeploymentPipeline stages={stages} defaultExpandedId="test" onRetry={(id) => rerun(id)} />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+// One index walks the run: stages before it have passed, the one at it is running.
+const { index } = useSequence(STAGES, { intervalMs: 1400, paused: !visible });
+
+const stages = STAGES.map((stage, i) => ({
+  ...stage,
+  status: i < index ? "passed" : i === index ? "running" : "queued",
+}));
+
+<DeploymentPipeline stages={stages} />
+
+// In production this comes from your CI provider's stage events; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "stages", type: "Stage[]", def: "-", desc: "Ordered stages { id, name, status, durationMs?, logs? }. Status: queued|running|passed|failed|cancelled|skipped. The app owns this data (required)." },
       { prop: "onRetry", type: "(stageId: string) => void", def: "-", desc: "Called when Retry on a failed/cancelled stage is activated." },
