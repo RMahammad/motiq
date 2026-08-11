@@ -36,6 +36,7 @@ const PRODUCTS: { label: string; href: string; desc: string }[] = [
   { label: "Blocks", href: "/components?kind=block", desc: "Composed workflows" },
   { label: "Packs", href: "/packs", desc: "Installable bundles" },
   { label: "Featured", href: "/components?featured=1", desc: "Standout designs" },
+  { label: "Connecting live data", href: "/guides/live-data", desc: "Wire real data in" },
   { label: "Pro access", href: "/access", desc: "Private registry" },
 ];
 

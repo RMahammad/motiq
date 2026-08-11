@@ -45,6 +45,11 @@ jobs:
       - run: node docs/tooling/check-stale-dates.mjs
       - run: node docs/tooling/check-inventory.mjs
       - run: node docs/tooling/check-catalog-counts.mjs
+      # Fails when a component's preview moves over time but nothing documents how the
+      # app feeds it — the gap that makes a correct install look broken.
+      - run: node scripts/check-live-drivers.mjs
+      # The guide's code is generated from a typechecked file; fail if it drifted.
+      - run: node scripts/sync-guide-examples.mjs --check
 
       # Code gates
       - run: pnpm lint            # import-boundary firewall (docs/03)

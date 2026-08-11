@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { product } from "../../lib/product";
-import { allReleases, CATALOG_COMPLETE, DEFAULT_VERSION } from "../../lib/server/versioning";
+import { allReleases, catalogBaseline, CATALOG_COMPLETE } from "../../lib/server/versioning";
 import { pageMetadata } from "../../lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -30,8 +30,8 @@ export default function UpdatesPage() {
         </h1>
         <p className="mt-3 max-w-[62ch] text-[15px] leading-relaxed text-[var(--color-muted)]">
           Every release is versioned. Items without their own entry ship at the
-          baseline version ({DEFAULT_VERSION}). Breaking changes are flagged and
-          carry migration guidance.
+          current baseline ({catalogBaseline().version}). Breaking changes are
+          flagged and carry migration guidance.
         </p>
       </header>
 

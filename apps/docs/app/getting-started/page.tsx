@@ -94,6 +94,22 @@ export default function GettingStartedPage() {
         </p>
       </Step>
 
+      <Step n={3} title="Give it your data">
+        <p className="mb-3 text-[14px] leading-relaxed text-[var(--color-muted)]">
+          The components render what you pass them - they never fetch and never invent content. That
+          matters most for the live ones (streaming responses, log feeds, pipelines): they animate each
+          item <em>as it arrives</em>, so a finished array animates once and then sits still. Feed the
+          same data in over time and it comes alive.
+        </p>
+        <p className="text-[14px] leading-relaxed text-[var(--color-muted)]">
+          <Link href="/guides/live-data" className="text-[var(--color-accent)] underline underline-offset-2">
+            Connecting live data
+          </Link>{" "}
+          covers the two prop shapes and shows real wiring for streaming responses, sockets, and polling -
+          plus how to drive a component before your backend exists.
+        </p>
+      </Step>
+
       <section className="border-t border-[var(--color-border)] py-8">
         <h2 className="mb-3 text-xl font-semibold tracking-tight text-[var(--color-fg)]">What you get</h2>
         <ul className="space-y-2 text-[14px] leading-relaxed text-[var(--color-muted)]">
