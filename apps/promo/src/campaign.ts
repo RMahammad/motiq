@@ -10,7 +10,9 @@
  * - "4 complete workflow packs" = ai-interface-pack, developer-tools-pack,
  *   collaboration-pack, data-motion-pack.
  * - Install command matches apps/docs/lib/product.ts (`npx shadcn@latest add
- *   <registryBaseUrl>/<item>`), registryBaseUrl from product.config.json.
+ *   <registryNamespace>/<item>`), registryNamespace from product.config.json.
+ *   Already-rendered campaign assets still show the older URL form — they only
+ *   change when the campaign is re-rendered.
  */
 
 export const brand = {
@@ -28,8 +30,8 @@ export const claims = {
   licenseSub: "MIT · no signup · shadcn-compatible registry",
 } as const;
 
-export const installCommand = "npx shadcn@latest add https://motiq.dev/r/ai-response-stream";
-export const installCommandPipeline = "npx shadcn@latest add https://motiq.dev/r/deployment-pipeline";
+export const installCommand = "npx shadcn@latest add @motiq/ai-response-stream";
+export const installCommandPipeline = "npx shadcn@latest add @motiq/deployment-pipeline";
 
 /** Real pack names from packages/registry/registry.json. */
 export const packs = {

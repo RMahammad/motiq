@@ -646,7 +646,7 @@ function PackCard({ p }: { p: Pack }) {
       <div className="mt-5 flex items-center gap-3 border-t border-[var(--color-border)] px-[18px] pb-[18px] pt-[15px]">
         <InstallChip
           command={installCommand(p.packRegistryItem)}
-          display={`${product.registryBaseUrl.replace(/^https?:\/\//, "")}/${p.packRegistryItem}`}
+          display={`${product.registryNamespace}/${p.packRegistryItem}`}
         />
         <Link
           href={`/packs/${p.slug}`}

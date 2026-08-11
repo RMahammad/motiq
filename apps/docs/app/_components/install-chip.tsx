@@ -3,8 +3,8 @@
 import * as React from "react";
 
 /**
- * Compact one-click install command (homepage pack cards). Displays the short
- * extensionless form; copies the full canonical command from `installCommand()`.
+ * Compact one-click install command (homepage pack cards). Displays the bare
+ * `@motiq/<item>` target; copies the full command from `installCommand()`.
  */
 export function InstallChip({ command, display }: { command: string; display: string }) {
   const [copied, setCopied] = React.useState(false);

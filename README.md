@@ -98,6 +98,14 @@ npx shadcn@latest add https://motiq.dev/r/ai-response-stream
 The command copies the component and its registry dependencies into your project.
 Every component page has its exact copy-ready command.
 
+`@motiq` is listed in the shadcn CLI's
+[registry directory](https://github.com/shadcn-ui/ui/blob/main/apps/v4/registry/directory.json),
+so on a current CLI the short form works with no `components.json` entry:
+
+```bash
+npx shadcn@latest add @motiq/ai-response-stream
+```
+
 This repository is also a shadcn registry in its own right, so you can install
 straight from GitHub and pin to a tag:
 
