@@ -11,6 +11,7 @@ export default defineConfig({
       "@/components/motiq/data-refresh-state": new URL("./registry/data/data-refresh-state.tsx", import.meta.url).pathname,
       "@/components/motiq/streaming-data-rows": new URL("./registry/data/streaming-data-rows.tsx", import.meta.url).pathname,
       "@/components/motiq/filter-result-transition": new URL("./registry/data/filter-result-transition.tsx", import.meta.url).pathname,
+      "@/components/motiq/ai-response-stream": new URL("./registry/ai/ai-response-stream.tsx", import.meta.url).pathname,
       "@/components/motiq/agent-run-timeline": new URL("./registry/ai/agent-run-timeline.tsx", import.meta.url).pathname,
       "@/components/motiq/tool-call-activity": new URL("./registry/ai/tool-call-activity.tsx", import.meta.url).pathname,
       "@/components/motiq/source-citation-rail": new URL("./registry/ai/source-citation-rail.tsx", import.meta.url).pathname,

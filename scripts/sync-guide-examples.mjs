@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 /**
- * Keeps the code shown on /guides/live-data identical to the real, typechecked code
- * in examples.tsx.
+ * Keeps the code shown on /guides/live-data identical to the real, tested code
+ * in registry/examples/live-data.tsx.
  *
  * A page can only render strings, and a string copy of a component's API is exactly
  * how documentation goes quietly wrong — a prop gets renamed, the component and its
  * tests are updated, and the guide keeps teaching the old name. Here the snippets are
- * generated from examples.tsx, which is typechecked like any other source file, so a
- * renamed prop breaks the build.
+ * generated from that file, which is typechecked AND executed against a mocked
+ * network by its sibling test, so a renamed prop breaks the build and broken logic
+ * breaks the tests.
  *
  *   node scripts/sync-guide-examples.mjs           # regenerate the page's constants
  *   node scripts/sync-guide-examples.mjs --check   # fail if they are out of date (CI)
@@ -18,7 +19,10 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const GUIDE = path.join(root, "apps/docs/app/guides/live-data/page.tsx");
-const EXAMPLES = path.join(root, "apps/docs/app/guides/live-data/examples.tsx");
+// Lives in the registry package so vitest can EXECUTE it against a mocked network
+// (registry/examples/live-data.test.tsx) — typechecking alone would only prove the
+// props exist, not that the stream/subscription/polling logic behaves as documented.
+const EXAMPLES = path.join(root, "packages/registry/registry/examples/live-data.tsx");
 
 /** region id in examples.tsx → the `const NAME = \`…\`` it fills on the page */
 const REGIONS = { streaming: "STREAMING", subscription: "SUBSCRIPTION", polling: "POLLING" };
@@ -30,7 +34,7 @@ const stale = [];
 
 for (const [region, constName] of Object.entries(REGIONS)) {
   const m = new RegExp(`// #region ${region}\\n([\\s\\S]*?)\\n// #endregion`).exec(examples);
-  if (!m) throw new Error(`examples.tsx: no "#region ${region}" block`);
+  if (!m) throw new Error(`live-data.tsx: no "#region ${region}" block`);
 
   // "use client" belongs at the top of the real file; each snippet needs its own,
   // since a consumer pastes one snippet, not the whole file.
@@ -62,13 +66,13 @@ function importsFor(region) {
 }
 
 if (!stale.length) {
-  console.log("sync-guide-examples: OK — the guide matches examples.tsx.");
+  console.log("sync-guide-examples: OK — the guide matches registry/examples/live-data.tsx.");
   process.exit(0);
 }
 
 if (check) {
   console.error(
-    `❌ sync-guide-examples: ${stale.join(", ")} on /guides/live-data no longer match examples.tsx.\n` +
+    `❌ sync-guide-examples: ${stale.join(", ")} on /guides/live-data no longer match registry/examples/live-data.tsx.\n` +
       `   Run \`node scripts/sync-guide-examples.mjs\` and commit the result.\n`,
   );
   process.exit(1);

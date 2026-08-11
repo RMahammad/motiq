@@ -3,16 +3,18 @@
 /**
  * The code shown on /guides/live-data, as real code.
  *
- * The page renders these as snippets, and a page can only render strings — which
- * is exactly how documentation drifts from the components it documents. So the
- * snippets are GENERATED from this file by scripts/sync-guide-examples.mjs, and
- * CI re-runs that script with --check. This file is typechecked like any other,
- * so a prop that changes name breaks the build instead of quietly making the
- * guide wrong.
+ * Not shipped: this file is absent from registry.json, so nothing installs it. It
+ * exists so the guide's snippets are a projection of working code rather than
+ * prose. A page can only render strings, and a string copy of a component's API
+ * is exactly how documentation goes quietly wrong — so the snippets are GENERATED
+ * from here by scripts/sync-guide-examples.mjs, CI re-runs that with --check, and
+ * live-data.test.tsx EXECUTES every example against a mocked network. Typechecking
+ * alone would prove the props exist; the tests prove the stream-reading,
+ * subscription and polling logic actually behaves as the guide claims.
  *
  * Regions are delimited by "#region <id>" / "#endregion" markers.
  * Imports use the CONSUMER paths (@/components/motiq/...) that installed code
- * uses; the tsconfig maps them to the registry sources.
+ * uses; tsconfig and vitest both map them to the registry sources.
  */
 
 import * as React from "react";
