@@ -15,11 +15,12 @@
     "lint": "eslint .",
     "size": "size-limit",
     "check:exports": "publint packages/tokens && publint packages/motion && publint packages/react",
-    "docs:check": "node docs/tooling/check-links.mjs && node docs/tooling/check-adr-index.mjs && node docs/tooling/check-duplicate-titles.mjs && node docs/tooling/check-stale-dates.mjs && node docs/tooling/check-inventory.mjs && node docs/tooling/check-catalog-counts.mjs",
+    "docs:check": "node docs/tooling/check-links.mjs && node docs/tooling/check-adr-index.mjs && node docs/tooling/check-duplicate-titles.mjs && node docs/tooling/check-stale-dates.mjs && node docs/tooling/check-inventory.mjs && node docs/tooling/check-catalog-counts.mjs && node scripts/check-live-drivers.mjs",
     "check:launch": "node scripts/check-launch-config.mjs",
     "check:registry-submission": "node scripts/check-registry-submission.mjs",
     "check:exposure": "node scripts/audit-pro-exposure.mjs",
-    "test:staging": "node scripts/staging-lifecycle-test.mjs"
+    "test:staging": "node scripts/staging-lifecycle-test.mjs",
+    "check:live-drivers": "node scripts/check-live-drivers.mjs"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.0",
