@@ -11,6 +11,15 @@ export interface ApiRow {
 
 export interface DocContent {
   usage: string;
+  /**
+   * For components whose motion comes from DATA ARRIVING OVER TIME rather than
+   * from anything the component does by itself. They are presentation-only:
+   * hand one a finished array and every item mounts in the same frame, so it
+   * animates once and looks static — while the preview above, fed by a timer,
+   * looks alive. That is by design, but it is invisible from this page, so every
+   * such component documents its driver here, in the same shape.
+   */
+  driving?: string;
   api: ApiRow[];
   accessibility: string[];
   performance: string[];
@@ -89,6 +98,21 @@ export const docsContent: Record<string, DocContent> = {
   onRevokeAllOthers={revokeOthers}
   onRefresh={refresh}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(SESSIONS, { intervalMs: 900, paused: !visible });
+
+<SessionSecurityCenter sessions={SESSIONS.slice(0, index + 1)} />
+
+// In production your sessions endpoint drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "sessions", type: "Session[]", def: "-", desc: "{ id, device, browser, os, location?, ipSummary?, createdTime, lastActiveTime, current?, trustLabel?, riskLabel?, authMethod?, organization?, metadata? }. IP/location/risk are app-supplied verbatim." },
       { prop: "onRevoke / onRevokeAllOthers / onRenameDevice / onMarkTrusted / onRemoveTrust / onRefresh", type: "cb", def: "-", desc: "Intents. Bulk revocation is confirmed and provably excludes the current session unless allowRevokeCurrent." },
@@ -118,6 +142,21 @@ export const docsContent: Record<string, DocContent> = {
   onLoadMore={(id) => loadReplies(id)}
   onNavigateUnread={jumpUnread}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(NODES, { intervalMs: 900, paused: !visible });
+
+<ThreadExpansion nodes={NODES.slice(0, index + 1)} />
+
+// In production your thread query drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "nodes", type: "ThreadNode[]", def: "-", desc: "{ id, parentId?, author, body?, timestamp, replyCount?, unreadCount?, unread?, resolved?, deleted?, collapsed?, metadata?, children? }. Flat parentId or nested." },
       { prop: "expandedIds / onExpandedChange / defaultExpandDepth / maxAutoDepth", type: "misc", def: "-", desc: "Controlled expansion; auto-expand/expand-all are depth-capped so deep threads never render unbounded." },
@@ -148,6 +187,21 @@ export const docsContent: Record<string, DocContent> = {
   selectedItemId={selected}
   onSelectedItemChange={setSelected}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(ITEMS, { intervalMs: 900, paused: !visible });
+
+<ProjectTimeline items={ITEMS.slice(0, index + 1)} />
+
+// In production your project data drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "items", type: "TimelineItem[]", def: "-", desc: "{ id, title, type, startDate, endDate, status, progress?, group?, milestone?, dependencyIds?, assignee?, priority?, metadata? }. type phase/task/milestone/release/event; status planned/active/blocked/completed/delayed/cancelled." },
       { prop: "today / scale / onScaleChange", type: "number / day|week|month / cb", def: "-", desc: "Current-date marker from a prop (never Date.now); day/week/month scale (onScaleChange = zoom)." },
@@ -210,6 +264,21 @@ export const docsContent: Record<string, DocContent> = {
   onRetry={retry}
   maxQuantity={line.availability?.limit}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { value: item } = useSequence([ITEM, { ...ITEM, quantity: 2 }] as const, { intervalMs: 1200, loop: true, paused: !visible });
+
+<CartItemTransition item={item} />
+
+// In production your cart mutations drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "item", type: "CartLineItem", def: "-", desc: "{ id, productName, variantSummary?, image?, unitPrice, quantity, total, previousPrice?, discount?, availability?, inventoryMessage?, fulfilmentMessage?, subscriptionInterval?, metadata? }. App-owned." },
       { prop: "onQuantityChange / onRemove / onUndoRemove / onChangeVariant / onSaveForLater / onRetry", type: "cb", def: "-", desc: "Intents. Mutations are optimistic (via useOptimisticAction) and roll back on a rejected handler; never touches a backend/payment." },
@@ -269,6 +338,21 @@ export const docsContent: Record<string, DocContent> = {
   mode="inline" // compact | inline | floating-panel
   maxVisible={4}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(PARTICIPANTS, { intervalMs: 900, paused: !visible });
+
+<TypingAndPresence participants={PARTICIPANTS.slice(0, index + 1)} />
+
+// In production your presence channel drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "participants", type: "Participant[]", def: "-", desc: "{ id, displayName, avatar?, presenceState, typingState?, activeContext?, lastActiveTime?, color?, role?, connectionState? }. Presence online/active/idle/away/offline/reconnecting; typing typing/recording/uploading/editing." },
       { prop: "typingParticipantIds / context", type: "string[] / string", def: "-", desc: "Who is currently typing; summarised (\"Jamie and Morgan are typing\" / \"Three people are typing\")." },
@@ -300,6 +384,21 @@ export const docsContent: Record<string, DocContent> = {
   onMoveTask={async (id, group) => move(id, group)}
   activePath={activePath}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(TASKS, { intervalMs: 900, paused: !visible });
+
+<TaskDependencyMap tasks={TASKS.slice(0, index + 1)} />
+
+// In production your task store drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "tasks", type: "Task[]", def: "-", desc: "{ id, title, status, priority?, assignee?, startDate?, dueDate?, progress?, dependencyIds, blockedReason?, group?, milestone?, metadata? }. Statuses planned/ready/active/blocked/completed/cancelled." },
       { prop: "onAddDependency / onRemoveDependency / onMoveTask", type: "cb", def: "-", desc: "Intents. onMoveTask may be async → optimistic move with rollback (useOptimisticAction). The app updates tasks + supplies cycleError on a loop." },
@@ -332,6 +431,21 @@ export const docsContent: Record<string, DocContent> = {
   onRemove={(i) => remove(i.id)}
   onClearCompleted={clearCompleted}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(UPLOADS, { intervalMs: 900, paused: !visible });
+
+<FileUploadPipeline items={UPLOADS.slice(0, index + 1)} />
+
+// In production your upload progress events drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "items", type: "UploadItem[]", def: "-", desc: "{ id, fileName, fileType, fileSize, progress, status, speed?, remainingTime?, error?, retryCount?, processingStage?, thumbnail?, metadata? }. App-owned (required)." },
       { prop: "onAddFiles", type: "(files: File[]) => void", def: "-", desc: "Fired from the file input or keyboard drop-zone alternative; your app starts the upload." },
@@ -364,6 +478,21 @@ export const docsContent: Record<string, DocContent> = {
   getVariantState={(sel) => availability(sel)}
   loadingAvailability={checking}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { value: loadingAvailability } = useSequence([true, false] as const, { intervalMs: 1200, loop: true, paused: !visible });
+
+<ProductVariantSelector loadingAvailability={loadingAvailability} value={variant} onChange={setVariant} />
+
+// In production your availability lookup drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "groups", type: "OptionGroup[]", def: "-", desc: "color/size/material/finish/storage/plan/bundle/custom; each value = { value, label, swatch?, image?, priceAdjustment?, availability, inventoryState, disabledReason?, recommended?, metadata? }." },
       { prop: "value / defaultValue / onValueChange", type: "VariantSelection / cb", def: "-", desc: "Controlled or uncontrolled selection." },
@@ -396,6 +525,21 @@ export const docsContent: Record<string, DocContent> = {
   onComplete={finish}
   onUseAlternative={usePassword}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { value: state } = useSequence(["intro", "naming", "registration-starting", "system-prompt-waiting", "success"] as const, { intervalMs: 1200, loop: true, paused: !visible });
+
+<PasskeySetupFlow state={state} />
+
+// In production the WebAuthn ceremony's real stages drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "state", type: "PasskeyState", def: "-", desc: "App-owned phase. The component never calls navigator.credentials or fakes success." },
       { prop: "capability / error / existingCredential", type: "app-supplied", def: "-", desc: "Device capability, the app's failure detail (shown verbatim), and any existing credential." },
@@ -425,6 +569,21 @@ export const docsContent: Record<string, DocContent> = {
   onCancel={(m) => cancel(m.id)}
   onEdit={(m) => edit(m.id)}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(MESSAGES, { intervalMs: 900, paused: !visible });
+
+<MessageDeliveryStates messages={MESSAGES.slice(0, index + 1)} />
+
+// In production your chat transport's delivery receipts drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "messages", type: "DeliveryMessage[]", def: "-", desc: "{ id, body, author, timestamp, deliveryState, readRecipients?, error?, attachmentState? }. deliveryState ∈ draft|sending|sent|delivered|read|failed|retrying|scheduled|cancelled|edited." },
       { prop: "currentUserId", type: "string", def: "-", desc: "Distinguishes own vs others' messages for alignment + receipts." },
@@ -454,6 +613,21 @@ export const docsContent: Record<string, DocContent> = {
   moveValidation={(from, to) => allowed(from, to)}
   onAddCard={(columnId) => addCard(columnId)}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(CARDS, { intervalMs: 900, paused: !visible });
+
+<KanbanCardMovement cards={CARDS.slice(0, index + 1)} />
+
+// In production your board's realtime updates drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "columns / cards", type: "KanbanColumn[] / KanbanCard[]", def: "-", desc: "column = { id, title, limit? }; card = { id, columnId, title, order, disabled?, meta? }. App-owned." },
       { prop: "onMove", type: "(cardId, toColumnId, toIndex) => void | Promise", def: "-", desc: "May be async: movement is optimistic and rolls back if the promise rejects." },
@@ -491,6 +665,21 @@ const models: PromptModel[] = [{ id: "fast", name: "Fast" }, { id: "long", name:
   variables={[{ id: "name", label: "Customer name" }]}
   templates={templates}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { value: value } = useSequence(["Summarise", "Summarise the incident", "Summarise the incident report"] as const, { intervalMs: 1200, loop: true, paused: !visible });
+
+<PromptComposer value={value} onChange={setValue} />
+
+// In production the user typing (drop the hook and use plain state) drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "value / defaultValue / onValueChange", type: "string / cb", def: "-", desc: "Controlled or uncontrolled prompt text; the app owns the value." },
       { prop: "models / selectedModelId / onModelChange", type: "PromptModel[] / string / cb", def: "-", desc: "Model selector integration point. Real model names come from your app; the component hardcodes none." },
@@ -524,6 +713,21 @@ const models: PromptModel[] = [{ id: "fast", name: "Fast" }, { id: "long", name:
   onRetry={(e) => resend(e.id)}
   onReplay={(e) => replay(e.id)}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index, done } = useSequence(EVENTS, { intervalMs: 900, paused: !visible });
+
+<WebhookEventStream events={EVENTS.slice(0, index + 1)} status={done ? "delivered" : "pending"} />
+
+// In production your webhook delivery feed drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "events", type: "WebhookEvent[]", def: "-", desc: "{ id, endpoint, status, statusCode?, retryCount?, timestamp, payload?, headers? }. App-owned (required)." },
       { prop: "status / errorMessage", type: '"streaming"|"paused"|"idle"|"error" / string', def: '"streaming"', desc: "Stream lifecycle; error surfaces a banner with onReconnect." },
@@ -557,6 +761,21 @@ const models: PromptModel[] = [{ id: "fast", name: "Fast" }, { id: "long", name:
   onSelect={(user, ctx) => insertMention(user, ctx)}
   onOpenChange={setOpen}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { value: loading } = useSequence([true, false] as const, { intervalMs: 1200, loop: true, paused: !visible });
+
+<MentionSuggestions loading={loading} open query={query} />
+
+// In production your mention search drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "open / query / items", type: "boolean / string / MentionUser[]", def: "-", desc: "Fully controlled: the app detects the trigger and drives open/query; items are app-owned." },
       { prop: "inputRef", type: "RefObject<HTMLInputElement | HTMLTextAreaElement>", def: "-", desc: "The app's field. DOM focus stays there; the popup uses aria-activedescendant." },
@@ -590,6 +809,21 @@ const models: PromptModel[] = [{ id: "fast", name: "Fast" }, { id: "long", name:
   onRetry={revalidate}
   validating={validating}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { value: validating } = useSequence([true, false] as const, { intervalMs: 1200, loop: true, paused: !visible });
+
+<DataQualityStatus validating={validating} />
+
+// In production your validation job drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "metrics", type: "DataQualityMetrics", def: "-", desc: "{ freshness, completeness, accuracy }, each QualityMetric | null. A null metric renders \"Unknown\" - the component never invents a value." },
       { prop: "checks", type: "QualityCheck[]", def: "-", desc: "{ id, label, state: pass|warning|failure|unknown, summary, affectedRecords?, issues? }. App-owned." },
@@ -756,6 +990,21 @@ const run: AgentRun = {
 };
 
 <AgentRunTimeline run={run} followActive compactCompleted onApprove={approve} onReject={reject} onRetryStep={retry} onCancelRun={cancel} />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(STEPS, { intervalMs: 900, paused: !visible });
+
+<AgentRunTimeline run={{ ...RUN, steps: STEPS.slice(0, index + 1) }} />
+
+// In production your agent's run events drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "run", type: "AgentRun", def: "-", desc: "App-owned: { title, status, startedAt?, endedAt?, currentStepId?, steps[], summary? }. Run statuses: queued|running|waiting|completed|failed|cancelled|paused (required)." },
       { prop: "run.steps[]", type: "RunStep[]", def: "-", desc: "Ordered steps { id, title, description?, status, toolCall?, output?, error?, attempts?, stages?, summary? }. Step statuses: pending|active|completed|failed|skipped|waiting_approval|cancelled." },
@@ -787,6 +1036,21 @@ const environments: Environment[] = [
 ];
 
 <EnvironmentSwitcher environments={environments} value={envId} onValueChange={runSwitch} switching={switching} error={error} onRetry={retry} requireProductionConfirmation />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { value: switching } = useSequence([true, false] as const, { intervalMs: 1200, loop: true, paused: !visible });
+
+<EnvironmentSwitcher switching={switching} value={env} onChange={setEnv} />
+
+// In production your environment switch request drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "environments", type: "Environment[]", def: "-", desc: "{ id, name, type, status, region?, branch?, version?, lastDeploy?, url?, health?, warning?, disabled?, disabledReason?, group? }. App-owned (required)." },
       { prop: "value / defaultValue / onValueChange", type: "string / cb", def: "-", desc: "Controlled or uncontrolled selection; onValueChange fires only after production confirmation when required. Your app performs the real switch." },
@@ -824,6 +1088,21 @@ const currentUser: CommentAuthor = { id: "you", name: "You", role: "Reviewer" };
   onResolve={(c) => api.resolve(c.id)}
   onReopen={(c) => api.reopen(c.id)}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(COMMENTS, { intervalMs: 900, paused: !visible });
+
+<CommentThread comments={COMMENTS.slice(0, index + 1)} />
+
+// In production your comments subscription drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "comments", type: "Comment[]", def: "-", desc: "App-owned; flat via parentId or nested via replies. Each: { id, author, body, createdAt, editedAt?, parentId?, replies?, mentions?, reactions?, attachments?, status?, resolved?, permissions? }." },
       { prop: "currentUser", type: "CommentAuthor", def: "-", desc: "The composer; drives optimistic authorship + reaction toggles (required)." },
@@ -865,6 +1144,21 @@ const currentUser: CommentAuthor = { id: "you", name: "You", role: "Reviewer" };
   onPause={pause}
   onResume={resume}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { value: state } = useSequence(["idle", "checking", "refreshing", "success"] as const, { intervalMs: 1200, loop: true, paused: !visible });
+
+<DataRefreshState state={state} />
+
+// In production your refresh lifecycle drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "state", type: "RefreshState", def: "-", desc: "Host-owned: idle · checking · refreshing · partially_updated · success · stale · offline · error · paused · cancelled (required)." },
       { prop: "progress", type: "number | null", def: "-", desc: "Determinate 0–1 (role=progressbar + aria-valuenow); omit/null → an honestly-labelled indeterminate bar (never a fake number)." },
@@ -906,6 +1200,21 @@ const groups: FilterGroup[] = [
   mode="sheet"                // "sheet" | "fullscreen" | "panel" (desktop)
   confirmDiscard
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { value: mode } = useSequence(["sheet", "fullscreen"] as const, { intervalMs: 1200, loop: true, paused: !visible });
+
+<MobileFilterSheet mode={mode} open onOpenChange={setOpen} />
+
+// In production your own breakpoint or route state drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "groups", type: "FilterGroup[]", def: "-", desc: "App-defined groups: checkbox · radio · range · date · search · hierarchical · custom. Options support { count, disabled, disabledReason, children }." },
       { prop: "open / defaultOpen / onOpenChange", type: "boolean / cb", def: "false", desc: "Controlled or uncontrolled sheet visibility." },
@@ -969,6 +1278,21 @@ const request: ApiRequest = {
 };
 
 <ApiRequestInspector request={request} response={response} state={state} redact={["x-internal-id"]} onRetry={resend} onCancel={abort} />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { value: state } = useSequence(["idle", "loading", "success"] as const, { intervalMs: 1200, loop: true, paused: !visible });
+
+<ApiRequestInspector state={state} response={RESPONSE} />
+
+// In production your fetch lifecycle drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "request", type: "ApiRequest", def: "-", desc: "{ method, url, headers?, query?, body?, requestId?, environment?, timestamp? }. The app owns it (required)." },
       { prop: "response", type: "ApiResponse", def: "-", desc: "{ status?, durationMs?, headers?, body?, error?, retryCount?, phases? }. Timing phases draw a proportional breakdown." },
@@ -1106,6 +1430,21 @@ const right: SwipeAction[] = [
   onRetry={(id) => retry(id)}
   compactCompleted
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index } = useSequence(CALLS, { intervalMs: 900, paused: !visible });
+
+<ToolCallActivity calls={CALLS.slice(0, index + 1)} />
+
+// In production your agent's tool-call events drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "calls", type: "ToolCall[]", def: "-", desc: "Tool calls in display order: { id, name, category?, status, startedAt?, durationMs?, input?, output?, error?, progress?, details? }. Statuses: queued|running|completed|failed|cancelled|waiting_approval|approved|rejected (required)." },
       { prop: "activeCallId", type: "string", def: "first running", desc: "Call emphasized as current (accent bar + ring)." },
@@ -1139,6 +1478,21 @@ const [entries, setEntries] = React.useState<LogEntry[]>([]);
   maxEntries={500}
   onClear={() => setEntries([])}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const { index, done } = useSequence(ENTRIES, { intervalMs: 900, paused: !visible });
+
+<LiveLogStream entries={ENTRIES.slice(0, index + 1)} status={done ? "completed" : "streaming"} />
+
+// In production your log socket or SSE endpoint drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "entries", type: "LogEntry[]", def: "-", desc: "Lines { id, level, message, timestamp?, source? }; level debug|info|success|warning|error. The app owns this (required)." },
       { prop: "status", type: `"streaming" | "idle" | "completed" | "error"`, def: `"streaming"`, desc: "Lifecycle; streaming shows a live pulse; error shows a banner." },
@@ -1556,6 +1910,40 @@ const columns: Column<Order>[] = [
   onStop={() => controller.abort()}
   onRetry={() => refetch()}
 />`,
+    driving: `import * as React from "react";
+import { useSequence, useVisibilityPause } from "@/lib/motiq";
+
+// This component renders what it is handed and animates each item AS IT ARRIVES,
+// so a finished array animates once and then sits still. The motion in the preview
+// comes from the data being fed in over time — that feed is the app's job.
+// Text streams word-by-word, so split the segments into atoms and re-join them; a
+// component-level array grows one whole segment at a time, which reads as chunky.
+const ref = React.useRef<HTMLDivElement>(null);
+const visible = useVisibilityPause(ref); // hold position offscreen / in a background tab
+
+const ATOMS = PIECES.flatMap((p) =>
+  p.type === "text"
+    ? p.text.split(/(\\s+)/).filter(Boolean).map((text) => ({ type: "text", text }) as ResponseSegment)
+    : [p],
+);
+
+const { index, done } = useSequence(ATOMS, { intervalMs: 95, paused: !visible });
+
+// Re-join consecutive text atoms so the rendered paragraphs stay intact.
+const segments = React.useMemo(() => {
+  const out: ResponseSegment[] = [];
+  for (const atom of ATOMS.slice(0, index + 1)) {
+    const last = out[out.length - 1];
+    if (atom.type === "text" && last?.type === "text") last.text += atom.text;
+    else out.push({ ...atom });
+  }
+  return out;
+}, [index]);
+
+<AiResponseStream segments={segments} state={done ? "complete" : "streaming"} sources={SOURCES} />
+
+// In production your model's token stream — append to \`segments\` as chunks arrive, then set \`state\` to "complete" drives the same props; useSequence is only for demos,
+// fixtures, and onboarding tours.`,
     api: [
       { prop: "segments", type: "ResponseSegment[]", def: "-", desc: "Ordered content: text | code | citation. The app streams these in (required)." },
       { prop: "state", type: `"streaming" | "stopped" | "complete" | "error"`, def: "-", desc: "Lifecycle state, owned by the application (required)." },

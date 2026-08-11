@@ -99,6 +99,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
     { id: "preview", label: "Preview" },
     { id: "installation", label: "Installation" },
     ...(doc ? [{ id: "usage", label: "Usage" }] : []),
+    ...(doc?.driving ? [{ id: "driving", label: "Driving the live data" }] : []),
     { id: "when-to-use", label: "When to use" },
     ...(doc ? [{ id: "api", label: "API reference" }] : []),
     { id: "dependencies", label: "Dependencies" },
@@ -273,6 +274,21 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
             {doc ? (
               <Section id="usage" title="Usage">
                 <CodeBlock code={doc.usage} />
+              </Section>
+            ) : null}
+
+            {/* Driving live data — only for components whose motion comes from the app
+                feeding them over time. Without this the preview above promises movement
+                the installed component cannot produce on its own. */}
+            {doc?.driving ? (
+              <Section id="driving" title="Driving the live data">
+                <p className="mb-3 text-[14px] leading-relaxed text-[var(--color-muted)]">
+                  The preview above moves because data is arriving over time. This component is
+                  presentation-only — it animates each item as it arrives, so a finished array
+                  animates once and then sits still. Your app owns the feed; here is how to drive
+                  it for a demo, and what replaces that in production.
+                </p>
+                <CodeBlock code={doc.driving} />
               </Section>
             ) : null}
 
