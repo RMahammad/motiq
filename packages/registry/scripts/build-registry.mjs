@@ -227,10 +227,13 @@ writeFileSync(
       $schema: manifest.$schema,
       name: config.shortName.toLowerCase(),
       homepage: config.documentationUrl,
+      // No cssVars here: nothing installs from this manifest. The CLI reads it for
+      // `shadcn search @motiq` (name/type/description only) and installs from the
+      // per-item payloads, which carry the tokens. Repeating the block 100 times
+      // would add ~6.4k lines of noise to every registry diff for no effect.
       items: manifest.items.map((it) => ({
         ...it,
         registryDependencies: depsToUrls(it.registryDependencies),
-        cssVars: CSS_VARS,
       })),
     },
     null,
@@ -254,6 +257,9 @@ writeFileSync(
       items: manifest.items.map((it) => ({
         ...it,
         registryDependencies: depsToUrls(it.registryDependencies),
+        // Unlike the published manifest, this one IS an install surface
+        // (`npx shadcn add RMahammad/motiq/<item>` resolves items from it), so the
+        // tokens have to be here too or that path installs untokenised components.
         cssVars: CSS_VARS,
         // Authoring paths are relative to packages/registry; from the repo root
         // they must include that prefix or the CLI cannot fetch the source.
