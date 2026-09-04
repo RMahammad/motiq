@@ -14,7 +14,7 @@
   "devDependencies": {
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-dialog": "^1.1.23",
-    "@radix-ui/react-tabs": "^1.1.0",
+    "@radix-ui/react-tabs": "^1.1.21",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.0.0",
