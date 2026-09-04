@@ -2,6 +2,16 @@ packages:
   - packages/*
   - apps/*
 
+# Security overrides for transitive dependencies (OSV / Dependabot alerts).
+# Every entry is a PATCH-level bump inside the same major, forced only because the
+# vulnerable copy is pinned deep in the build toolchain (webpack, babel, css-loader,
+# ajv) where no direct dependency of ours can reach it. Nothing here changes an API
+# we call. Remove an entry once the parent ships a range that resolves past it.
+overrides:
+  browserslist: '^4.28.7'   # pinned by @babel/helper-compilation-targets, webpack
+  fast-uri: '^3.1.6'        # pinned by ajv@8
+  postcss: '^8.5.28'        # pinned by css-loader + postcss-modules-*
+
 # Native postinstall scripts, explicitly allow-listed (supply-chain hygiene).
 # pnpm 11 requires an explicit build-approval decision per dependency, or a
 # fresh install fails with ERR_PNPM_IGNORED_BUILDS (e.g. on CI / Vercel).
