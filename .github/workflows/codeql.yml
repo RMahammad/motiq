@@ -1,0 +1,49 @@
+# CodeQL — static analysis, and the concrete thing that satisfies the OpenSSF Scorecard
+# "SAST" check. Free for public repositories.
+#
+# Scope is the JS/TS in this repository: component source, the docs app, and the build
+# and check scripts. `build-mode: none` is correct here — CodeQL analyses TypeScript
+# without needing the turbo/tsdown build to run, so this stays independent of CI.
+name: CodeQL
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Weekly, so a newly published query rule finds an old vulnerability even when
+    # nothing has been pushed.
+    - cron: "41 5 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: Analyze JS/TS
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write # write findings to the code-scanning tab
+      packages: read
+      actions: read
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
+        with:
+          languages: javascript-typescript
+          build-mode: none
+          # security-extended adds the lower-severity queries. This repo ships source
+          # that other people paste into their apps, so a "maybe" finding in a component
+          # is worth a human look.
+          queries: security-extended
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
+        with:
+          category: /language:javascript-typescript

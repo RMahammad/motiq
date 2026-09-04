@@ -1,0 +1,61 @@
+# OpenSSF Scorecard — automated audit of this repository's security posture.
+#
+# Scorecard grades ~18 checks (branch protection, pinned dependencies, SAST, token
+# permissions, security policy, signed releases...) and writes the result to GitHub's
+# code-scanning tab. `publish_results: true` also pushes the score to the public OpenSSF
+# API, which is what makes the README badge resolve and what lets downstream consumers
+# see the score without asking.
+#
+# NOTE: Scorecard is a SECURITY-PRACTICE score (0-10). It is not the criticality score
+# (0-1), which measures how much the ecosystem depends on this repo and cannot be moved
+# by configuration. See scripts/openssf-criticality.mjs and docs/17.
+name: Scorecard
+
+on:
+  branch_protection_rule: # re-grade when branch protection changes
+  schedule:
+    - cron: "27 4 * * 1" # Mondays; off the hour to avoid the scheduler stampede
+  push:
+    branches: [main]
+
+# Least privilege at the workflow level; the one job that needs more declares it.
+permissions: read-all
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write # upload the SARIF result to code scanning
+      id-token: write # OIDC token used to publish results to the OpenSSF API
+      contents: read
+      actions: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      - name: Run analysis
+        uses: ossf/scorecard-action@2d1146689b8cda280b9bc96326124645441f03bc # v2.4.4
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          # Publishing is what produces the public score + badge. It publishes only the
+          # check results for this public repo — no source, no secrets.
+          publish_results: true
+
+      # Kept for 5 days so a regression can be diffed against the previous week without
+      # waiting for the next scheduled run.
+      - name: Upload artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: SARIF file
+          path: results.sarif
+          retention-days: 5
+
+      - name: Upload to code scanning
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
+        with:
+          sarif_file: results.sarif
