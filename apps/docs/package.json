@@ -19,7 +19,7 @@
     "@scope/tokens": "workspace:*",
     "clsx": "^2.1.1",
     "motion": "^12.42.2",
-    "next": "latest",
+    "next": "^16.3.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.6.0"

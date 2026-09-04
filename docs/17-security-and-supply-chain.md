@@ -80,6 +80,24 @@ for a young single-maintainer project and is not a defect to be fixed in a workf
 denominator, so a failed collection reports a *higher* score, not a lower one. Never
 compare two runs that collected different signals.
 
+### Transitive-dependency overrides
+
+`pnpm-workspace.yaml` carries an `overrides` block for vulnerable packages that no
+direct dependency of ours can reach — pinned deep in the build toolchain by webpack,
+babel, css-loader or ajv. Rules for that block:
+
+- **Patch-level, same major, only.** An override that crosses a major is not a security
+  fix, it is an unreviewed upgrade wearing one.
+- **Only when the vulnerable copy is unreachable otherwise.** If bumping a direct
+  dependency clears it, do that instead — an override outlives the problem it solved.
+- **Each entry names the parent that pins it**, so a future reader can tell when it is
+  safe to delete.
+- **Delete on resolution.** Once the parent ships a range that resolves past the
+  vulnerable version, the entry is dead weight that silently freezes a dependency.
+
+Overrides are load-bearing supply-chain configuration: they change what every consumer
+of the lockfile installs. Treat adding one as a decision, not a chore.
+
 ### Scorecard — what is implemented
 
 | Check | Status | Where |
