@@ -14,6 +14,13 @@ async function noViolations(container: HTMLElement) {
   expect(res.violations.map((v) => v.id)).toEqual([]);
 }
 
+/**
+ * useAnimatedNumber tweens the line total over 520ms, so any assertion on a settled
+ * total must outwait the animation — not just the state commit. Generous headroom on
+ * top, because the failures only ever showed up under full-suite load.
+ */
+const ANIMATED_NUMBER_TIMEOUT_MS = 3000;
+
 const ITEM: CartLineItem = {
   id: "sku-1",
   productName: "Range 24 backpack",
@@ -50,8 +57,14 @@ describe("CartItemTransition", () => {
     const user = userEvent.setup();
     render(<Host />);
     await user.click(screen.getByRole("button", { name: /increase quantity/i }));
-    // App resolved → committed quantity 3, total 444.
-    await waitFor(() => expect(screen.getByText(/\$444\.00/)).toBeTruthy());
+    // App resolved → committed quantity 3, total 444. getAllByText because the polite
+    // announcer echoes the settled line total alongside the visible one.
+    // TIMEOUT: the visible total is tweened by useAnimatedNumber over 520ms, so it passes
+    // through intermediate values that match neither figure. waitFor's 1s default is not
+    // enough headroom for that under full-suite load — see the rollback case below.
+    await waitFor(() => expect(screen.getAllByText(/\$444\.00/).length).toBeGreaterThan(0), {
+      timeout: ANIMATED_NUMBER_TIMEOUT_MS,
+    });
   });
 
   it("rolls back the optimistic quantity + total when the app's mutation rejects", async () => {
@@ -59,9 +72,24 @@ describe("CartItemTransition", () => {
     render(<Host fail />);
     await user.click(screen.getByRole("button", { name: /increase quantity/i }));
     // Optimistic total (3 × 148 = 444) appears, then rolls back to 296 with an error + Retry.
-    await waitFor(() => expect(screen.getByRole("alert")).toBeTruthy());
-    expect(screen.getByText(/\$296\.00/)).toBeTruthy();
-    expect(screen.queryByText(/\$444\.00/)).toBeNull();
+    // Two separate reasons this needs one waitFor with a raised timeout, both of which
+    // produced intermittent CI failures:
+    //   1. The alert and the rolled-back total land in SEPARATE commits, so waiting only
+    //      on the alert and then asserting the total synchronously races the rollback.
+    //   2. The visible total is tweened by useAnimatedNumber over 520ms (see the
+    //      component), so on the way from 444 back to 296 it renders intermediate values
+    //      matching NEITHER figure. waitFor's 1s default leaves too little headroom for a
+    //      520ms animation once the full suite is competing for the event loop.
+    // getAllByText, not getByText: the polite announcer echoes the line total once the
+    // error clears, so a match count of exactly one is not guaranteed either.
+    await waitFor(
+      () => {
+        expect(screen.getByRole("alert")).toBeTruthy();
+        expect(screen.getAllByText(/\$296\.00/).length).toBeGreaterThan(0);
+        expect(screen.queryAllByText(/\$444\.00/)).toHaveLength(0);
+      },
+      { timeout: ANIMATED_NUMBER_TIMEOUT_MS },
+    );
     expect(screen.getByRole("button", { name: /retry/i })).toBeTruthy();
   });
 
