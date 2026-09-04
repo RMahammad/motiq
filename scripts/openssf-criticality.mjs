@@ -116,18 +116,25 @@ async function orgCount(slug) {
   return orgs.size;
 }
 
-/** Average commits per week over the trailing year. */
+/**
+ * Average commits per week over the trailing year.
+ *
+ * Counted from the commits endpoint via the Link header, NOT /stats/commit_activity.
+ * The stats endpoints answer 202 ("computing, ask again") and for a low-traffic repo can
+ * stay that way across many polls — which silently dropped the signal, and a dropped
+ * signal leaves the denominator, so an impatient run reported a HIGHER score. Counting
+ * commits is deterministic and reproduces upstream exactly (19 commits / 52 = 0.37).
+ */
 async function commitFrequency(slug) {
-  // /stats/* returns 202 with an empty body while GitHub computes the cache.
-  for (let attempt = 0; attempt < 4; attempt += 1) {
-    const { body } = await gh(`/repos/${slug}/stats/commit_activity`);
-    if (Array.isArray(body) && body.length) {
-      const total = body.reduce((sum, w) => sum + w.total, 0);
-      return total / body.length;
-    }
-    await new Promise((r) => setTimeout(r, 2000));
-  }
-  throw new Error("commit_activity stats never materialized");
+  const since = new Date(Date.now() - 365 * 24 * 3600 * 1000).toISOString();
+  const { body, headers } = await gh(
+    `/repos/${slug}/commits?since=${since}&per_page=1`,
+  );
+  const last = (headers.get("link") || "").match(/[?&]page=(\d+)>; rel="last"/);
+  // One page of one item means Link is absent: 0 or 1 commits, and body says which.
+  const perWeek = (last ? Number(last[1]) : body.length) / 52;
+  // Upstream rounds this signal to 2dp before scoring; without it we land 0.00005 low.
+  return Math.round(perWeek * 100) / 100;
 }
 
 async function recentReleaseCount(slug) {
@@ -153,7 +160,9 @@ async function searchCount(q) {
  * undefined rather than zero, so it is dropped.
  */
 async function issueCommentFrequency(slug, updatedIssues) {
-  if (!updatedIssues) return null;
+  // Upstream emits 0 here rather than omitting the signal, which keeps weight 1 in the
+  // denominator. Dropping it instead was worth ~+0.02 of pure inflation.
+  if (!updatedIssues) return 0;
   const { body } = await gh(
     `/repos/${slug}/issues/comments?since=${iso(90)}&per_page=100`,
   );
@@ -177,8 +186,10 @@ async function collect(slug) {
   const months = (from) =>
     (Date.now() - Date.parse(from)) / (30.4375 * 24 * 3600 * 1000);
 
-  signals.created_since = months(repo.created_at);
-  signals.updated_since = months(repo.pushed_at);
+  // Upstream reports these as WHOLE months (legacy.created_since: 1 for a 1.7-month-old
+  // repo). Keeping the fraction inflated the score against the reference implementation.
+  signals.created_since = Math.floor(months(repo.created_at));
+  signals.updated_since = Math.floor(months(repo.pushed_at));
 
   await record("contributor_count", () => contributorCount(slug));
   await record("org_count", () => orgCount(slug));

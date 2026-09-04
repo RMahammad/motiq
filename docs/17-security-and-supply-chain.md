@@ -50,28 +50,35 @@ leaving on the table — which is the only useful way to read it. A signal that 
 collected is dropped from the denominator, exactly as upstream does, so a partial run
 reports an *optimistic* score; the script says which ones were dropped.
 
-Baseline on 2026-09-04, nine of ten signals collected: **0.215**.
+Baseline on 2026-09-05, all ten signals collected: **0.18891**.
 
 | signal | raw | normalized |
 |---|---|---|
-| created_since | 1.7 months | 0.21 |
-| updated_since | 0.8 months | 1.00 |
+| created_since | 1 month | 0.14 |
+| updated_since | 0 months | 1.00 |
 | contributor_count | 1 | 0.08 |
 | org_count | 0 | 0.00 |
-| commit_frequency | 0.35 / week | 0.04 |
+| commit_frequency | 0.37 / week | 0.05 |
 | recent_release_count | 2 | 0.33 |
 | updated_issues_count | 0 | 0.00 |
 | closed_issues_count | 0 | 0.00 |
+| issue_comment_frequency | 0 | 0.00 |
 | github_mention_count | 20 | 0.23 |
+
+Validated against the reference implementation — `go run
+github.com/ossf/criticality_score/v2/cmd/criticality_score@latest -depsdev-disable
+https://github.com/RMahammad/motiq` reports the same 0.18891 from the same signals. Run
+that whenever this script is changed; agreement to five decimal places is the only
+evidence the script is measuring the real thing.
 
 Recency is already maxed; everything else is adoption. The binding constraints are
 contributor count, contributor orgs, issue traffic, and downstream mentions — none of
 which CI can manufacture. Repo age accrues on its own schedule. This is the expected shape
 for a young single-maintainer project and is not a defect to be fixed in a workflow.
 
-(A run that drops a signal reports higher — 0.235 when commit-frequency stats were
-unavailable — because the dropped weight leaves the denominator. Compare runs only when
-the same signals were collected.)
+**Reading a partial run:** a signal that cannot be collected is dropped from the
+denominator, so a failed collection reports a *higher* score, not a lower one. Never
+compare two runs that collected different signals.
 
 ### Scorecard — what is implemented
 
