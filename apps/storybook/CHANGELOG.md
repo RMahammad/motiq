@@ -1,5 +1,14 @@
 # storybook-app
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [6cbaf22]
+  - @scope/motion@0.3.0
+  - @scope/react@0.2.1
+  - @scope/sections@0.2.1
+
 ## 0.0.1
 
 ### Patch Changes
