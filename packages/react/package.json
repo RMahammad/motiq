@@ -59,7 +59,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@radix-ui/react-dialog": "^1.1.0",
+    "@radix-ui/react-dialog": "^1.1.23",
     "@radix-ui/react-popover": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.0",
     "@scope/motion": "workspace:*",
