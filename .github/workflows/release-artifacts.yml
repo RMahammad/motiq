@@ -17,13 +17,17 @@ name: Release artifacts
 on:
   release:
     types: [published]
-  # Backfill: attach artifacts to a release that predates this workflow. The tarballs are
-  # built fresh from that tag now, and the attestation says exactly that — it does not
-  # claim to describe a build that happened at release time.
+  # Backfill, with a hard limit worth knowing before you reach for it: this checks out the
+  # TAG, so it runs that tag's toolchain. v0.1.0 and v0.2.0 both pin "pnpm@11.13.0" — the
+  # broken release whose "@pnpm/exe" ships no binary — so a dispatch against either dies
+  # at pnpm/action-setup with ERR_PNPM_BROKEN_PNPM_RELEASE before anything is built.
+  # Tried on v0.2.0; it fails, and uploads nothing. Only tags cut after the pnpm fix
+  # (a095a2c) can be backfilled. Signed-Releases therefore moves on the next RELEASE,
+  # not by retrofitting the old ones.
   workflow_dispatch:
     inputs:
       tag:
-        description: "Existing release tag to build and attach artifacts to"
+        description: "Release tag to build and attach artifacts to (must post-date a095a2c)"
         required: true
         type: string
 
