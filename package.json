@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.13.0",
+  "packageManager": "pnpm@11.25.0",
   "engines": {
     "node": ">=22.13"
   },
@@ -21,7 +21,8 @@
     "check:exposure": "node scripts/audit-pro-exposure.mjs",
     "test:staging": "node scripts/staging-lifecycle-test.mjs",
     "check:live-drivers": "node scripts/check-live-drivers.mjs",
-    "check:guide-examples": "node scripts/sync-guide-examples.mjs --check"
+    "check:guide-examples": "node scripts/sync-guide-examples.mjs --check",
+    "openssf:criticality": "node scripts/openssf-criticality.mjs"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.0",

@@ -13,6 +13,12 @@ on:
   pull_request:
     paths-ignore: *docs-only
 
+# Least privilege for GITHUB_TOKEN: nothing here writes to the repository, so a
+# compromised dependency in a build step gets a read-only token (OpenSSF Scorecard
+# "Token-Permissions"). A job that needs more must ask for it explicitly.
+permissions:
+  contents: read
+
 # Auto-cancel a superseded run when new commits land on the same branch/PR, so rapid
 # pushes don't queue up full builds behind each other.
 concurrency:
@@ -28,9 +34,9 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           # Single source of truth for the supported floor (README + CONTRIBUTING
           # + package.json engines all state 22.13); CI proves that floor works.
@@ -64,9 +70,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: verify
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           # Single source of truth for the supported floor (README + CONTRIBUTING
           # + package.json engines all state 22.13); CI proves that floor works.

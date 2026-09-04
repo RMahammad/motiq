@@ -1,0 +1,28 @@
+# Satisfies the OpenSSF Scorecard "Dependency-Update-Tool" check, and — more usefully —
+# keeps the two ecosystems that can actually compromise a release current: the npm tree
+# that gets built into published packages, and the GitHub Actions that do the building.
+#
+# Actions are pinned to commit SHAs in the workflows (Scorecard "Pinned-Dependencies").
+# A SHA pin is invisible to a human reviewer, so Dependabot's github-actions updater is
+# what keeps those pins from silently rotting into unpatched versions.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # One PR per ecosystem-wide bump keeps review load proportional to risk: dev
+      # tooling churns constantly and is not shipped to users.
+      dev-dependencies:
+        dependency-type: development
+        update-types: [minor, patch]
+    labels: [dependencies]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels: [dependencies, ci]

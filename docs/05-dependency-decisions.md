@@ -45,7 +45,7 @@ Run through [`dependency-review`](../.claude/skills/component-review/SKILL.md); 
 | `axe-core` / `@axe-core/playwright` | A11y assertions | **devDep** | MPL-2.0 | current | — | — | pa11y | ✅ (MPL fine as devDep) | 2026-07-14 |
 | `@changesets/cli` | Versioning/changelog | **devDep** | MIT | current | — | — | semantic-release | ✅ | 2026-07-14 |
 | `turbo` | Task orchestration/cache | **devDep** | MIT | current | — | — | Nx (heavier) | ✅ | 2026-07-14 |
-| `pnpm` | Package manager | tool | MIT | 11.x (11.13.0 present 🟢) | — | — | npm, yarn | ✅ 🟢 available | 2026-07-14 |
+| `pnpm` | Package manager | tool | MIT | 11.x (11.25.0 present 🟢) | — | — | npm, yarn | ✅ 🟢 available (11.12.0–11.13.0 are broken releases — `@pnpm/exe` shipped without a binary; do not pin them) | 2026-09-04 |
 | `size-limit` + preset | Bundle budgets in CI | **devDep** | MIT | current | — | — | bundlewatch | ✅ | 2026-07-14 |
 | `lucide-react` | Icons | **peer/optional** | ISC | current | tree-shakeable | ✅ | heroicons, tabler | ✅ (don't ship own icon pkg) | 2026-07-14 |
 | `eslint` + `@typescript-eslint` + boundary plugin | Lint/import boundaries | **devDep** | MIT | current | — | — | biome | ✅ | 2026-07-14 |
