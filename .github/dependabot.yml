@@ -13,11 +13,26 @@ updates:
       interval: weekly
     open-pull-requests-limit: 5
     groups:
-      # One PR per ecosystem-wide bump keeps review load proportional to risk: dev
-      # tooling churns constantly and is not shipped to users.
+      # PATCH ONLY, deliberately. The first run grouped 10 dev-dep updates into one PR
+      # and it failed CI, because "minor" is not a safety guarantee below 1.0: the group
+      # carried tsdown 0.15.12 -> 0.22.14, which broke @scope/tokens#build, and the nine
+      # harmless bumps around it made that invisible. Under semver a 0.x minor IS a
+      # breaking change, and several build-critical tools here (tsdown, publint,
+      # @arethetypeswrong/cli) are 0.x. Patch-only grouping keeps the batch genuinely
+      # low-risk; every minor now arrives as its own PR that can be read and reverted
+      # on its own.
       dev-dependencies:
         dependency-type: development
-        update-types: [minor, patch]
+        update-types: [patch]
+
+    ignore:
+      # engines pins Node >=22.13 and CI proves that floor via .nvmrc. Typing against
+      # Node 26 APIs while shipping support for 22 gets the dependency backwards: it
+      # hides breakage from the version we actually support. Track the runtime, not
+      # the newest types.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
     labels: [dependencies]
 
   - package-ecosystem: github-actions
