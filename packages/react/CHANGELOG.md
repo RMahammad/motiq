@@ -1,5 +1,12 @@
 # @scope/react
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [6cbaf22]
+  - @scope/motion@0.3.0
+
 ## 0.1.0
 
 ### Minor Changes
