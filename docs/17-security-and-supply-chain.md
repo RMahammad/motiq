@@ -111,6 +111,7 @@ of the lockfile installs. Treat adding one as a decision, not a chore.
 | Token-Permissions | ✅ explicit `permissions:` per workflow | all workflows |
 | Dangerous-Workflow | ✅ no `pull_request_target`, no untrusted checkout | — |
 | Scorecard itself | ✅ weekly, results published | [`scorecard.yml`](../.github/workflows/scorecard.yml) |
+| Signed-Releases | ✅ Sigstore build provenance on every published release | [`release-artifacts.yml`](../.github/workflows/release-artifacts.yml) |
 
 The README badge is deliberately **not** added yet. `publish_results` has to run on the
 default branch once before `img.shields.io/ossf-scorecard/...` resolves to anything, and
@@ -120,15 +121,22 @@ belongs above the fold.
 
 ### Scorecard — what is not, and why
 
-- **Branch-Protection** — a repository *setting*, not a file. Requires, on `main`: require
-  a PR before merging, require status checks (`verify`, `fixtures`), and dismiss stale
-  approvals. Must be set by the owner in repo settings.
-- **Signed-Releases / Packaging** — needs a publish workflow with npm provenance
-  (`npm publish --provenance`, `id-token: write`). Deliberately not written yet: the
-  changeset config still declares `"access": "restricted"`, so the publishing target is an
-  open decision ([`18`](18-release-process.md)). Provenance is the requirement recorded above.
-- **Code-Review** — needs a second reviewer on merged PRs. Structurally unavailable to a
-  single maintainer; will improve only with contributors.
+- **Branch-Protection** — capped by choice, not neglect. The `main-guardrails` and
+  `main-protection` rulesets already block deletion and force-pushes and require the
+  `verify` + `fixtures` checks, and stale-review dismissal is on. The remaining points
+  need `required_approving_review_count >= 1` **with the RepositoryRole bypass removed** —
+  which, with one maintainer, means no PR can ever be merged, security fixes included.
+  A score of 3–4 is the honest ceiling here until there is a second reviewer.
+- **Packaging** — still open. Needs a real publish workflow, and the changeset config
+  still declares `"access": "restricted"` with every package `"private": true`, so the
+  publishing target is an undecided product question ([`18`](18-release-process.md)).
+  `npm publish --provenance` is the recorded requirement for when it is decided.
+- **Code-Review** — needs a human other than the author to approve merged PRs. GitHub
+  does not permit approving your own pull request, so with one maintainer this check
+  cannot be earned, and it will stay 0 until there is a second reviewer. It must not be
+  worked around with a second account: the score is consumed by downstream users as a
+  claim about how this project actually operates, and a fabricated approval trail is a
+  false claim, not a passing grade.
 - **Contributors** — needs contributors from ≥ 2 organizations. Same constraint.
 - **Fuzzing** — not pursued. This is a presentational component library with no parser and
   no untrusted input surface; a fuzzer here would buy points, not safety.

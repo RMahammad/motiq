@@ -1,0 +1,85 @@
+# Attaches BUILD PROVENANCE to every published release, satisfying the OpenSSF Scorecard
+# "Signed-Releases" check — and, more usefully, letting anyone verify that a tarball they
+# hold was built by this workflow from this repository at a specific commit.
+#
+# Scope note: this is NOT the publish pipeline. docs/18 still blocks `changeset publish`
+# on the packaging decision (packages are "private": true, registry undecided). Signing
+# the artifacts of releases we already cut does not depend on that decision, so it lands
+# separately rather than waiting.
+#
+# What a consumer can do with the result:
+#   gh attestation verify scope-react-<version>.tgz --repo RMahammad/motiq
+#
+# The uploaded .intoto.jsonl bundle is the same attestation in offline form — for anyone
+# verifying without the GitHub API, and for Scorecard, which reads release assets.
+name: Release artifacts
+
+on:
+  release:
+    types: [published]
+  # Backfill: attach artifacts to a release that predates this workflow. The tarballs are
+  # built fresh from that tag now, and the attestation says exactly that — it does not
+  # claim to describe a build that happened at release time.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing release tag to build and attach artifacts to"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  npm_config_verify_deps_before_run: "false"
+
+jobs:
+  attest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # upload assets onto the release
+      id-token: write # Sigstore OIDC — the identity the attestation is bound to
+      attestations: write # write into GitHub's attestation store
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.tag || github.event.release.tag_name }}
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      # tokens/motion/react are the publishable three — the same set
+      # fixtures/tarball-consumer/verify.sh packs and CI already proves installable.
+      # Keep these two lists in step.
+      - name: Pack publishable packages
+        run: |
+          mkdir -p dist-artifacts
+          for p in tokens motion react; do
+            (cd "packages/$p" && pnpm pack --pack-destination "$GITHUB_WORKSPACE/dist-artifacts")
+          done
+          ls -l dist-artifacts
+
+      - name: Attest build provenance
+        id: attest
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: dist-artifacts/*.tgz
+
+      - name: Attach artifacts + provenance to the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.tag || github.event.release.tag_name }}
+        run: |
+          # Scorecard reads release ASSETS, so the bundle is uploaded alongside the
+          # tarballs rather than left only in GitHub's attestation store. The
+          # .intoto.jsonl suffix is what marks it as provenance.
+          cp "${{ steps.attest.outputs.bundle-path }}" "dist-artifacts/${TAG}.intoto.jsonl"
+          gh release upload "$TAG" dist-artifacts/*.tgz "dist-artifacts/${TAG}.intoto.jsonl" --clobber
