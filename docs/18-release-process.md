@@ -40,6 +40,10 @@ Driven by [`release-readiness`](../.claude/skills/registry-release/SKILL.md) and
 - [ ] Migration guide present for any breaking change.
 - [ ] `npm publish --provenance`; 2FA; least-privilege token ([`17`](17-security-and-supply-chain.md)).
 - [ ] Git tag + GitHub release notes.
+- [ ] Release published → [`release-artifacts.yml`](../.github/workflows/release-artifacts.yml)
+      attaches the packed `tokens`/`motion`/`react` tarballs plus a Sigstore provenance
+      bundle. Verify one before announcing:
+      `gh attestation verify scope-react-<version>.tgz --repo RMahammad/motiq`.
 - [ ] Go/no-go report produced.
 
 ## Rollback
