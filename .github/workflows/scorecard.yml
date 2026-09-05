@@ -17,6 +17,11 @@ on:
     - cron: "27 4 * * 1" # Mondays; off the hour to avoid the scheduler stampede
   push:
     branches: [main]
+  # Some checks grade things that never touch main. Signed-Releases reads the assets on
+  # published releases, and publishing a release pushes no commit — so cutting v0.3.0
+  # with signed artifacts left the public score reporting the pre-release state until the
+  # next unrelated merge happened to re-trigger this. Manual dispatch closes that gap.
+  workflow_dispatch:
 
 # Least privilege at the workflow level; the one job that needs more declares it.
 permissions: read-all
