@@ -111,7 +111,7 @@ of the lockfile installs. Treat adding one as a decision, not a chore.
 | Token-Permissions | ✅ explicit `permissions:` per workflow | all workflows |
 | Dangerous-Workflow | ✅ no `pull_request_target`, no untrusted checkout | — |
 | Scorecard itself | ✅ weekly, results published | [`scorecard.yml`](../.github/workflows/scorecard.yml) |
-| Signed-Releases | ⏳ workflow ready; scores on the **next** release | [`release-artifacts.yml`](../.github/workflows/release-artifacts.yml) |
+| Signed-Releases | ✅ v0.3.0 ships signed tarballs + provenance | [`release-artifacts.yml`](../.github/workflows/release-artifacts.yml) |
 
 The README badge is deliberately **not** added yet. `publish_results` has to run on the
 default branch once before `img.shields.io/ossf-scorecard/...` resolves to anything, and
@@ -119,12 +119,20 @@ the first score will be held down by the four checks below. Read the real number
 <https://scorecard.dev/viewer/?uri=github.com/RMahammad/motiq>, then decide whether it
 belongs above the fold.
 
-**Signed-Releases scores releases, not workflows.** Merging the workflow does nothing to
-the number; the check reads the assets on recent releases, and v0.1.0 and v0.2.0 carry
-only promo media. It cannot be retrofitted either: both tags pin the broken
-`pnpm@11.13.0`, so a build from them fails at install (verified — the dispatch errors with
-`ERR_PNPM_BROKEN_PNPM_RELEASE` and uploads nothing). The check moves the first time a
-release is cut from a commit after the pnpm fix.
+**Signed-Releases scores releases, not workflows** — and the published score lags them.
+The check reads assets on recent releases; v0.1.0 and v0.2.0 carry only promo media and
+cannot be retrofitted, because both tags pin the broken `pnpm@11.13.0` and fail at install
+(verified: the dispatch errors with `ERR_PNPM_BROKEN_PNPM_RELEASE` and uploads nothing).
+v0.3.0 is the first release with signed artifacts:
+
+```bash
+gh attestation verify scope-motion-0.3.0.tgz --repo RMahammad/motiq
+```
+
+Note the reporting lag that caused real confusion here. Publishing a release pushes no
+commit, so it does not re-trigger `scorecard.yml` — the public score kept reporting the
+pre-release state after v0.3.0 shipped. `workflow_dispatch` on that workflow is the fix;
+run it after any release, or the score waits for the Monday cron or the next merge.
 
 ### Scorecard — what is not, and why
 
